@@ -20,12 +20,14 @@ export enum MainPopupPage {
 export interface HomeInfoState {
   mainPopupPage: MainPopupPage;
   mainPopupUserProfile: User;
+  mainPopupButton: Button;
   version: string;
 }
 
 export const homeInfoStateInitial = {
   mainPopupPage: MainPopupPage.HIDE,
   mainPopupUserProfile: null,
+  mainPopupButton: null,
   version: '?'
 };
 
@@ -54,6 +56,16 @@ export class SetMainPopupCurrentProfile implements UpdateEvent {
     return produce(state, (newState) => {
       newState.homeInfo.mainPopupPage = MainPopupPage.HIDE
       newState.homeInfo.mainPopupUserProfile = this.profile;
+    });
+  }
+}
+
+export class SetMainPopupCurrentButton implements UpdateEvent {
+  public constructor(private button: Button) {}
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      newState.homeInfo.mainPopupPage = MainPopupPage.HIDE;
+      newState.homeInfo.mainPopupButton = this.button;
     });
   }
 }

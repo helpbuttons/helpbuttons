@@ -18,7 +18,6 @@ export interface GlobalState {
   explore: ExploreState;
   alerts: Alert[];
   config: SetupDtoOut;
-  showFilters: boolean;
   draftNewCommentPost: any;
   invites: Invite[];
   homeInfo: HomeInfoState;
@@ -42,7 +41,6 @@ export const store = new Store<GlobalState>({
   explore: exploreInitial,
   alerts: [],
   config: null,
-  showFilters: false,
   unreadActivities: 0,
   draftNewCommentPost: null,
   invites: [],

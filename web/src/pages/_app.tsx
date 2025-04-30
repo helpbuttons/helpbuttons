@@ -14,8 +14,6 @@ import { SetupSteps } from '../shared/setupSteps';
 
 import { Role } from 'shared/types/roles';
 import {
-  getHref,
-  getLocale,
   getLocaleFromUrl,
   isRoleAllowed,
   locale,
@@ -25,7 +23,6 @@ import t, { updateNomeclature } from 'i18n';
 import { useSearchParams } from 'next/navigation';
 import NavHeader from 'components/nav/NavHeader';
 import { ShowDesktopOnly, ShowMobileOnly } from 'elements/SizeOnly';
-import { MetadataSEO } from 'components/seo';
 import Loading, { LoadabledComponent } from 'components/loading';
 import MainPopup from 'components/popup/Main/';
 import { useConfig } from 'state/Setup';
@@ -33,12 +30,10 @@ import { UpdateMetadata } from 'state/Metadata';
 import { usePoolFindNewActivities } from 'state/Activity';
 import { randomBytes } from 'crypto'
 import MetadataSEOFromStore from 'components/seo';
-import { useRebuildUrl } from 'components/uri/builder';
-import { LocalStorageVars, localStorageService } from 'services/LocalStorage';
-import Btn, { BtnType, ContentAlignment, IconType } from 'elements/Btn';
 import dconsole from 'shared/debugger';
 import Head from 'next/head';
 import CookiesBanner from 'components/home/CookiesBanner';
+import { useParamsBtn, useParamsMainPopup } from 'components/uri/builder';
 
 export default appWithTranslation(MyApp);
 
@@ -51,7 +46,7 @@ function MyApp({ Component, pageProps }) {
   const [fetchingNetworkError, setFetchingNetworkError] = useState(false)
   const path = router.asPath.split('?')[0];
   const nonce = randomBytes(128).toString('base64')
-  useRebuildUrl(router);
+  
   const messagesUnread = useGlobalStore(
     (state: GlobalState) => state.activities.messages.unread
   );
@@ -75,7 +70,7 @@ function MyApp({ Component, pageProps }) {
     dconsole.log(error);
     return;
   };
-  const [pageName, setPageName] = useState('HomeInfo')
+  const [pageName, setPageName] = useState(null)
   useEffect(() => {
     setPageName(() => getPageName(path.split('/')[1]))
     function getPageName(urlString) {
@@ -89,8 +84,6 @@ function MyApp({ Component, pageProps }) {
       return urlString;
     }
   }, [path])
-
-
 
   const config = useConfig(pageProps._config, onFetchingConfigError);
   const selectedNetwork = useSelectedNetwork(
@@ -115,8 +108,9 @@ function MyApp({ Component, pageProps }) {
     }
   }, [fetchingNetworkError, sessionUser])
 
+  useParamsBtn(router, pageName )
+  useParamsMainPopup(router)
   useEffect(() => {
-    dconsole.log(path)
     if (setupPaths.includes(path)) {
       setIsSetup(() => true);
     } else {
@@ -222,6 +216,7 @@ function MyApp({ Component, pageProps }) {
   useWhichLocale({ sessionLocale: sessionUser?.locale, networkLocale: selectedNetwork.locale });
 
   const searchParams = useSearchParams();
+
   const triedToLogin = useRef(false);
   useEffect(() => {
     const loginToken = searchParams.get('loginToken');
@@ -260,6 +255,7 @@ function MyApp({ Component, pageProps }) {
 
   return <>
     <MetadataSEOFromStore {...pageProps.metadata} nonce={nonce} />
+    
     {(function () {
 
       if (isSetup) {
@@ -344,17 +340,13 @@ const useWhichLocale = ({ sessionLocale, networkLocale }) => {
   useEffect(() => {
     const localeFromUrl = getLocaleFromUrl();
     if (localeFromUrl) {
-      dconsole.log('set from url')
       setLocale(localeFromUrl);
     } else if (sessionLocale && networkLocale) {
-      dconsole.log('set user session')
       setLocale(sessionLocale);
     } else if (networkLocale) {
-      dconsole.log('set from network')
       setLocale(networkLocale);
     }
     set_Locale((prevLocale) => {
-      dconsole.log(locale + ' > ' + prevLocale)
       if (locale !== prevLocale && prevLocale && locale) {
         return locale;
       }

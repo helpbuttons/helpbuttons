@@ -1,6 +1,6 @@
 import ButtonForm from 'components/button/ButtonForm';
 import { GlobalState, store } from 'state';
-import { CreateButton, SaveButtonDraft, UpdateCachedHexagons, updateCurrentButton } from 'state/Explore';
+import { CreateButton, SaveButtonDraft, UpdateCachedHexagons } from 'state/Explore';
 import { alertService } from 'services/Alert';
 import { useForm } from 'react-hook-form';
 import router from 'next/router';
@@ -17,6 +17,7 @@ import Loading from 'components/loading';
 import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
 import { useMetadataTitle } from 'state/Metadata';
 import { useSelectedNetwork } from 'state/Networks';
+import { markerFocusZoom } from 'components/map/Map/Map.consts';
 
 export default function ButtonNew({ metadata }) {
   const selectedNetwork = useSelectedNetwork()
@@ -94,11 +95,12 @@ function ButtonNewForm({ selectedNetwork }) {
           if(buttonData.awaitingApproval)
           {
             setIsSubmitting(() => false)
-            router.push(`/ButtonFile/${buttonData.id}`);
+            alertService.info(t('button.awaitingApproval'));
+            router.push(`/Explore`);
           }else{
-            alertService.success(t('button.created'))
             store.emit(new UpdateCachedHexagons([]))
-            router.push(`/ButtonFile/${buttonData.id}`);
+            router.push(`/Explore/${markerFocusZoom}/${buttonData.latitude}/${buttonData.longitude}/?btn=${buttonData.id}`);
+            alertService.success(t('button.created'))
           }
         },
         (errorMessage) => {

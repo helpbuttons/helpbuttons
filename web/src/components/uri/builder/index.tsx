@@ -1,72 +1,75 @@
-import { NextRouter } from "next/router";
 import { GlobalState, store } from "state";
-import { useEffect } from "react";
-import { FindButton, updateCurrentButton } from "state/Explore";
-import { MainPopupPage, SetMainPopup } from "state/HomeInfo";
+import { useEffect, useState } from "react";
+import { FindButton } from "state/Explore";
+import { MainPopupPage, SetMainPopup, SetMainPopupCurrentButton } from "state/HomeInfo";
 import { useGlobalStore } from 'state';
-import dconsole from "shared/debugger";
+import { alertService } from "services/Alert";
 
-export const useRebuildUrl = (router: NextRouter) => {
-    const currentButton = useGlobalStore((state: GlobalState) => state.explore.currentButton)
-    const popupPage: MainPopupPage = useGlobalStore((state: GlobalState) => state.homeInfo.mainPopupPage)
-    useEffect(() => {
-        if (window && currentButton) {
-            window.history.replaceState(null, '', `/Explore?btn=${currentButton.id}`);
-        }
-    }, [currentButton]);
-    useEffect(() => {
-        const btnId = giveParam('btn');
-        const url = new URL(window.location.href);
+export function updateUrl(router, queryParams = null) {
+  if (queryParams === null) {
+    router.push(
+      {
+      },
+      undefined,
+      { shallow: true }
+    );
+  } else {
+    router.push(
+      {
+        query: queryParams,
+      },
+      undefined,
+      { shallow: true }
+    );
+  }
 
-        if (btnId) {
-            store.emit(
-                new FindButton(btnId, (buttonFetched) => {
-                    store.emit(new updateCurrentButton(buttonFetched));
-                }),
-            );
-        }
-    }, [router])
+}
 
-    useEffect(() => {
-        if (window) {
-            if (popupPage != MainPopupPage.HIDE) {
-                const newUrl = giveMeUrl([{ name: 'v', value: popupPage }])
-                dconsole.log(newUrl)
-                window.history.replaceState(null, '', newUrl);
-            }
-        }
-    }, [popupPage])
 
-    useEffect(() => {
-        const _popupPage: MainPopupPage = giveParam('v') as MainPopupPage;
-        if (_popupPage) {
-            store.emit(
-                new SetMainPopup(_popupPage)
-            );
-        }
-    }, [router])
-
-    const giveMeUrl = (_params) => {
-        const addTrailingSlash = str => str.endsWith('/') ? str : `${str}/`;
-        if (window) {
-            const path = router.asPath.split('?')[0];
-            const url = new URL(window.location.href);
-            const params = new URLSearchParams(url.search);
-            _params.map((_param) => {
-                if (!_param.value) {
-                    params.delete(_param.name)
-                }
-
-                params.set(_param.name, _param.value)
-            })
-            return `${addTrailingSlash(path)}?${params.toString()}`;
-        }
+export function useParamsBtn(router, pageName) {
+  const [btnParam, setBtnParam] = useState(router.query.btn || '');
+  const mainPopupButton = useGlobalStore((state: GlobalState) => state.homeInfo.mainPopupButton)
+  
+  useEffect(() => {
+    if (mainPopupButton) {
+      updateUrl(router, { btn: mainPopupButton.id, ...router.query })
+    } else{
+      const { btn, ...restParams } = router.query;
+      updateUrl(router, restParams)
     }
+  }, [mainPopupButton, pageName])
 
-    const giveParam = (param) => {
-        const url = new URL(window.location.href);
-        const params = new URLSearchParams(url.search);
-        return params.get(param)
+  useEffect(() => {
+    if (!mainPopupButton && btnParam) {
+      store.emit(new FindButton(btnParam, (button) => {
+        store.emit(new SetMainPopupCurrentButton(button));
+        if(['Explore'].indexOf(pageName) < 0)
+        {
+          store.emit(new SetMainPopup(MainPopupPage.BUTTON))
+        }
+        
+      }, () => alertService.error('button not found')))
     }
+  }, [btnParam])
 
-};
+}
+
+export function useParamsMainPopup(router) {
+  const [v, setV] = useState(router.query.v || '');
+
+  const mainPopupPage: MainPopupPage = useGlobalStore((state: GlobalState) => state.homeInfo.mainPopupPage)
+  useEffect(() => {
+    if (mainPopupPage && MainPopupPage.HIDE != mainPopupPage) {
+      updateUrl(router, { v: mainPopupPage, ...router.query })
+    } else {
+      const { v, ...restParams } = router.query;
+      updateUrl(router, restParams)
+    }
+  }, [mainPopupPage])
+
+  useEffect(() => {
+    if (v && mainPopupPage != v) {
+      store.emit(new SetMainPopup(v))
+    }
+  }, [v])
+}

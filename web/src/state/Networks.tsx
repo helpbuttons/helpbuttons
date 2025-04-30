@@ -46,7 +46,6 @@ export const useSelectedNetwork = (_selectedNetwork = null, onError = () => { co
   useEffect(() => {
     if (!initialized) {
       if (_selectedNetwork?.id) {
-        dconsole.log('got network ..', _selectedNetwork)
         store.emit(new SelectedNetworkFetched(_selectedNetwork))
         return;
       } else if (!(selectedNetwork?.id)) {

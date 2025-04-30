@@ -23,6 +23,7 @@ import {
 import {
   buttonColorStyle,
   isEventAndIsExpired,
+  useButtonType,
 } from 'shared/buttonTypes';
 import { SetupDtoOut } from 'shared/entities/setup.entity';
 import { useRef } from 'store/Store';
@@ -55,15 +56,7 @@ import dconsole from 'shared/debugger';
 import { ButtonPin, ButtonUnpin } from 'state/Button';
 
 export default function CardButton({ button, buttonTypes, toggleShowReplyFirstPost }) {
-  const [buttonType, setButtonType] = useState(null);
-  useEffect(() => {
-    setButtonType(() =>
-      buttonTypes.find(
-        (buttonType) => buttonType.name == button.type,
-      ),
-    );
-  }, [buttonTypes]);
-
+  const buttonType = useButtonType(button, buttonTypes);
   return (
     <>
       {!(button && buttonType) && <Loading />}
@@ -323,11 +316,7 @@ function SendMessageButton({toggleShowReplyFirstPost, sessionUser})
         />
 }
 export function CardButtonHeadBig({ button, buttonTypes, toggleShowReplyFirstPost }) {
-  const { cssColor, caption, customFields, icon } = buttonTypes.find(
-    (buttonType) => {
-      return buttonType.name === button.type;
-    },
-  );
+  const { cssColor, caption, customFields, icon } = useButtonType(button, buttonTypes)
   const sessionUser = useRef(
     store,
     (state: GlobalState) => state.sessionUser,

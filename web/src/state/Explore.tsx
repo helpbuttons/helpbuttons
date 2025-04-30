@@ -20,7 +20,7 @@ import { cellToZoom, getZoomResolution, roundCoords } from 'shared/honeycomb.uti
 import { cellToParent, getResolution } from 'h3-js';
 import { of } from 'rxjs';
 import { ButtonsOrderBy } from 'components/search/AdvancedFilters';
-import { maxZoom } from 'components/map/Map/Map.consts';
+import { markerFocusZoom } from 'components/map/Map/Map.consts';
 import _ from 'lodash';
 import { nextElement, previousElement } from 'shared/sys.helper';
 import dconsole from 'shared/debugger';
@@ -295,21 +295,21 @@ export class updateCurrentButton implements UpdateEvent {
         }
 
         newState.explore.settings.center = roundCoords([this.button.latitude, this.button.longitude])
-        newState.explore.settings.zoom = maxZoom - 1
+        newState.explore.settings.zoom = markerFocusZoom
         dconsole.log('[updateCurrentButton] update')
         newState.explore.map.boundsFilteredButtons = [this.button]
         
       } else if (!this.button) {
-        newState.explore.settings.center = state.explore.settings.prevCenter
-        if (newState.explore.settings.zoom == state.explore.settings.prevZoom)
-        {
-          newState.explore.settings.zoom = state.networks.selectedNetwork.exploreSettings.zoom;
-        }else{
-          newState.explore.settings.zoom = state.explore.settings.prevZoom;
-        }
+        // newState.explore.settings.center = state.explore.settings.prevCenter
+        // if (newState.explore.settings.zoom == state.explore.settings.prevZoom)
+        // {
+        //   newState.explore.settings.zoom = state.networks.selectedNetwork.exploreSettings.zoom;
+        // }else{
+        //   newState.explore.settings.zoom = state.explore.settings.prevZoom;
+        // }
         
       }
-      console.log(`[updateCurrentButton] changing zoom to ${newState.explore.settings.zoom}`)
+      dconsole.log(`[updateCurrentButton] update`)
     });
   }
 }
@@ -321,7 +321,6 @@ export class UpdateFilters implements UpdateEvent {
       if (this.filters?.where.center) {
         const newZoom = getZoomFromRadius(this.filters.where.radius)
         newState.explore.settings.zoom = newZoom
-        console.log(`[UpdateFilters] changing zoom to ${newState.explore.settings.zoom}`)
         newState.explore.settings.center = this.filters.where.center
       }
       
@@ -341,6 +340,8 @@ export class UpdateFilters implements UpdateEvent {
       newFilters.tags = _.uniq([...tagsFound, ...this.filters.tags])
       newFilters.query = newQuery
       newState.explore.map.filters = newFilters;
+      dconsole.log(`[UpdateFilters] update`)
+
     });
   }
 }
@@ -381,6 +382,7 @@ export class UpdateFiltersToFilterTag implements UpdateEvent {
   public update(state: GlobalState) {
     return produce(state, (newState) => {
       // use query to filter tag...
+      newState.explore.currentButton = null;
       newState.explore.map.filters = {
         ...defaultFilters,
         tags: [this.tag]
@@ -576,7 +578,7 @@ export class UpdateExploreSettings implements UpdateEvent {
 
     return produce(state, (newState) => {
       const prevSettings = state.explore.settings;
-
+      dconsole.log('[UpdateExploreSettings] update')
       let newExploreSettings = {
         loading: false,
       };
@@ -595,6 +597,7 @@ export class UpdateExploreSettings implements UpdateEvent {
         newState.explore.map.showInstructions = false;
       }
       newState.explore.settings = { ...state.explore.settings, ...newExploreSettings };
+      dconsole.log(`[UpdateExploreSettings] update`)
     });
   }
 }
