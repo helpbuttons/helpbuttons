@@ -25,6 +25,7 @@ import { readableTimeLeftToDate } from 'shared/date.utils';
 import { Role } from 'shared/types/roles';
 import { ButtonApprove, ButtonModerationList } from 'state/Button';
 import { ModerationList, UpdateRole } from 'state/Users';
+import { getEmailPrefix } from 'shared/sys.helper';
 
 export default function Moderation() {
   
@@ -94,16 +95,6 @@ function ModerationUsersList() {
 
   const [users, setUsers] = useState(null);
   const [page, setPage] = useState(0);
-
-  const getEmailPrefix = (email) => {
-    if (!email) return '';
-    const atIndex = 3;
-    let atIndex1 = email.indexOf('@');
-    if (atIndex1 >= 4) 
-      atIndex1 = 4 ;
-    const atIndex2 = email.length - 1;
-    return email.substring(0, atIndex1) +"***";
-  };
 
   useEffect(() => {
     store.emit(
