@@ -504,7 +504,11 @@
     "nomeclaturePluralPlaceHolder": "",
     "setType": "Set _helpbutton_ type properties",
     "addType": "+ Create _helpbutton_ type",
-    "areaPicked": "Center: ({0},{1}) zoom: {2}"
+    "areaPicked": "Center: ({0},{1}) zoom: {2}",
+    "hideLocationByDefaultLabel": "Exact location protection",
+    "hideLocationByDefaultExplain": "Protect exact location in _helpbuttons_ by showing a wide area, users can deactivate this individually.",
+    "hideLocationByDefaultText": "Hide exact location by default"
+
   },
   "configure": {
     "browsePins": "",
