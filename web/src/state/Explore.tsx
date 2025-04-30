@@ -20,7 +20,7 @@ import { cellToZoom, getZoomResolution, roundCoords } from 'shared/honeycomb.uti
 import { cellToParent, getResolution } from 'h3-js';
 import { of } from 'rxjs';
 import { ButtonsOrderBy } from 'components/search/AdvancedFilters';
-import { maxZoom } from 'components/map/Map/Map.consts';
+import { markerFocusZoom } from 'components/map/Map/Map.consts';
 import _ from 'lodash';
 import { nextElement, previousElement } from 'shared/sys.helper';
 import dconsole from 'shared/debugger';
@@ -295,7 +295,7 @@ export class updateCurrentButton implements UpdateEvent {
         }
 
         newState.explore.settings.center = roundCoords([this.button.latitude, this.button.longitude])
-        newState.explore.settings.zoom = maxZoom - 1
+        newState.explore.settings.zoom = markerFocusZoom
         dconsole.log('[updateCurrentButton] update')
         newState.explore.map.boundsFilteredButtons = [this.button]
         
