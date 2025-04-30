@@ -292,6 +292,10 @@ $btn-font-size-medium: $font-size-medium;
 
 }
 
+.btn-with-icon__text:first-letter {
+  text-transform: uppercase;
+}
+
 .btn--file-upload {
   margin: 12px 0;
   background: #f0f0f0;

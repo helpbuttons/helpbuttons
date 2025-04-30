@@ -171,3 +171,11 @@ export function previousElement(currentId, elements) {
 
   return null;
 }
+
+export const getEmailPrefix = (email) => {
+  if (!email) return '';
+  return email.replace(/^(.{1,4})(?=[^@]*@)|(?!^)[^@](?=[^@]*@)/g, (match, p1) => 
+    p1 ? p1 + '***' : '***'
+  
+  );
+};
