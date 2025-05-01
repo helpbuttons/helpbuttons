@@ -14,7 +14,6 @@ interface DraggableProps {
 }
 
 const DraggableList: React.FC<DraggableProps> = ({
-  initialPos = { x: 0, y: 68 }, // Default `y` to 68px
   children,
   className,
   onScroll,
@@ -52,7 +51,7 @@ const DraggableList: React.FC<DraggableProps> = ({
       initialY = getOpenListHeight(); // Adjust for BOTH mode
     
     } else if (viewMode === ExploreViewMode.LIST) {
-      initialY = 68; // Adjust for BOTH mode
+      initialY = 68; // Adjust for LIST mode
     }
     setPos({ x: 0, y: initialY });
   }, [viewMode]);
