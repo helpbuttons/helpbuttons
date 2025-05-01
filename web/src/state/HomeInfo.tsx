@@ -22,13 +22,15 @@ export interface HomeInfoState {
   mainPopupUserProfile: User;
   mainPopupButton: Button;
   version: string;
+  isInstallable: boolean;
 }
 
 export const homeInfoStateInitial = {
   mainPopupPage: MainPopupPage.HIDE,
   mainPopupUserProfile: null,
   mainPopupButton: null,
-  version: '?'
+  version: '?',
+  isInstallable: false,
 };
 
 export class SetMainPopup implements UpdateEvent {
@@ -67,5 +69,14 @@ export class SetMainPopupCurrentButton implements UpdateEvent {
       newState.homeInfo.mainPopupPage = MainPopupPage.HIDE;
       newState.homeInfo.mainPopupButton = this.button;
     });
+  }
+}
+
+export class SetIsInstallable implements UpdateEvent{
+  public constructor(){}
+  public update(state: GlobalState){
+    return produce(state, (newState) => {
+      newState.homeInfo.isInstallable = true;
+    })
   }
 }
