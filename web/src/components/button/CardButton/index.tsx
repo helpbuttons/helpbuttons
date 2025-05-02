@@ -27,7 +27,7 @@ import {
 } from 'shared/buttonTypes';
 import { SetupDtoOut } from 'shared/entities/setup.entity';
 import { useRef } from 'store/Store';
-import { GlobalState, store } from 'state';
+import { GlobalState, store, useGlobalStore } from 'state';
 import Link from 'next/link';
 import { GetPhone, isAdmin } from 'state/Users';
 import { TextFormatted, formatMessage } from 'elements/Message';
@@ -536,10 +536,16 @@ export function CardButtonHeadActions({
 }
 
 export function CardButtonAuthorSection({ button }) {
-
+  const sessionUser = useGlobalStore((state: GlobalState) => state.sessionUser);
   const onClick = (e) => {
     e.preventDefault()
-    store.emit(new SetMainPopupCurrentProfile(button.owner))
+    if(sessionUser.id == button.owner.id)
+    {
+      router.push('/Profile', undefined, {shallow: true})
+    }else{
+      store.emit(new SetMainPopupCurrentProfile(button.owner))
+    }
+    
   }
   return (
     <div className="card-button__author">

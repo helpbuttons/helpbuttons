@@ -45,7 +45,7 @@ body {
   background: $color-white;
   box-shadow: unset;
   padding: 0;
-  z-index: $z-index-04;
+  z-index: $z-index-03;
   height: 100%;
 
   // Header Top Content Bottom
@@ -157,8 +157,9 @@ body {
 
 .popup__section {
 
-  padding: $padding-big;
+  padding: $padding-huge;
   height: auto;
+  position: relative;
   
 }
 

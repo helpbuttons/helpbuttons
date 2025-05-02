@@ -233,7 +233,22 @@ $avatar-margin: $padding-big;
 
 .card-profile__submenu {
 
-  // margin-top: 0;
+  .card-button__submenu {
+
+    margin-top: 0;
+    padding-top: 0;
+    padding-right: 0;
+    right: 0;
+    position: absolute;
+    
+
+  }
+
+  .card-button__dropdown-container {
+
+    top: 2rem;
+
+  }
 
 }
 
