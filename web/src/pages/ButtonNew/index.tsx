@@ -95,7 +95,7 @@ function ButtonNewForm({ selectedNetwork }) {
           if(buttonData.awaitingApproval)
           {
             setIsSubmitting(() => false)
-            alertService.info(t('button.awaitingApproval'));
+            alertService.info(t('moderation.awaitingApproval'));
             router.push(`/Explore`);
           }else{
             store.emit(new UpdateCachedHexagons([]))
