@@ -34,6 +34,7 @@ export default function CardProfile({ user }) {
     }
   }
   
+  
   const publishedButtonsCount = publishedButtons ? publishedButtons.length.toString() : '...'
   const ownProfile = sessionUser.id == user.id
   const showAdminOptions = sessionUser?.role == Role.admin && !ownProfile

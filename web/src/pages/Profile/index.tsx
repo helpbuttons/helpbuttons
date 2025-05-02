@@ -25,6 +25,7 @@ export default function Profile() {
             <LoadabledComponent loading={!sessionUser}>
               <CardProfile user={sessionUser}/>
               
+              
                 {sessionUser?.username == sessionUser?.username && (
                   <div className="card-profile__actions">
                     <Link href="/ProfileEdit">

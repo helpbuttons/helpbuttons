@@ -67,6 +67,7 @@ export function ShowProfile({
     
   }, [userProfile]);
 
+  
   const knownUsers = useRef(
     store,
     (state: GlobalState) => state.knownUsers,

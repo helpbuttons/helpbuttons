@@ -47,7 +47,6 @@ export class FindUser implements WatchEvent {
   }
 }
 
-
 export class UpdateRole implements WatchEvent {
   public constructor(
     private userId: string,
