@@ -168,8 +168,12 @@ export class ButtonController {
 
   @AllowGuest()
   @Get('findByOwner/:userId')
-  async findByOwner(@Param('userId') userId: string) {
-    return await this.userService.findById(userId)
+  findByOwner(@Param('userId') userId: string, @CurrentUser() user: User) {
+    if(userId == user.id)
+    {
+      return this.buttonService.findByOwner(userId);
+    }
+    return this.userService.findById(userId)
     .then((user) => {
       if(user.showButtons)
       {

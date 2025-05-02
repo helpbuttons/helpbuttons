@@ -10,7 +10,7 @@ import {
 import ContentList from 'components/list/ContentList';
 import t from 'i18n';
 import { AdvancedFiltersSortDropDown } from 'components/search/AdvancedFilters';
-import { GlobalState, store } from 'state';
+import { GlobalState, store, useGlobalStore } from 'state';
 import { useStore } from 'state';
 import {
   ExploreViewMode,
@@ -25,6 +25,7 @@ import { ShowDesktopOnly, ShowMobileOnly } from 'elements/SizeOnly';
 import { useButtonTypes } from 'shared/buttonTypes';
 import DraggableList from '../DraggableList';
 import { ButtonLinkType } from '../CardButtonList';
+import Loading from 'components/loading';
 
 function List({
   onLeftColumnToggle,
@@ -33,7 +34,7 @@ function List({
   showMap,
   isListOpen,
   setListOpen,
-  toggleShowMap = (e) => {},
+  toggleShowMap = (e) => { },
 }) {
   const filters = useStore(
     store,
@@ -111,6 +112,10 @@ function List({
 
   const buttonTypes = useButtonTypes();
 
+  const isLoadingButtons = useGlobalStore(
+    (state: GlobalState) => state.explore.map.loading,
+  );
+
   return (
     <>
       <>
@@ -160,17 +165,19 @@ function List({
               </div>
               <div
                 className={
-                  'list__content list__content--full-screen' 
+                  'list__content list__content--full-screen'
                 }
               >
-                {buttonTypes?.length > 0 && (
+                <>{buttonTypes?.length > 0 && (
                   <ContentList
                     buttons={buttons}
                     buttonTypes={buttonTypes}
                     showMap={showMap}
                     linkType={ButtonLinkType.EXPLORE}
+                    isLoading={isLoadingButtons}
+                    showResetFiltersButton={true}
                   />
-                )}
+                )}</>
               </div>
               {/* </div>     */}
             </DraggableList>
@@ -253,6 +260,8 @@ function List({
                   buttonTypes={buttonTypes}
                   showMap={showMap}
                   linkType={ButtonLinkType.EXPLORE}
+                  isLoading={isLoadingButtons}
+                  showResetFiltersButton={true}
                 />
               )}
             </div>

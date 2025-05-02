@@ -12,7 +12,7 @@ import t from 'i18n';
 import { useButtonTypes } from 'shared/buttonTypes';
 import { NextPageContext } from 'next';
 import { setMetadata } from 'services/ServerProps';
-import CardProfile from 'components/user/CardProfile';
+import CardProfile, { displayListTypes } from 'components/user/CardProfile';
 import ContentList from 'components/list/ContentList';
 import { useMetadataTitle } from 'state/Metadata';
 import dconsole from 'shared/debugger';
@@ -53,39 +53,11 @@ export default function p(props) {
   );
 }
 
+
 export function ShowProfile({
   userProfile,
   sessionUser,
 }) {
-  const [userButtons, setUserButtons] = useState(null);
-
-  const [extraFields, setExtraFields] = useState([]);
-  useEffect(() => {
-    // if user is admin... get more data!
-    if (userProfile) {
-      if (userProfile.showButtons && !userButtons) {
-        dconsole.log('getting user btns');
-        store.emit(
-          new FindUserButtons(userProfile.id, (userButtons) =>
-            setUserButtons(userButtons),
-          ),
-        );
-      }
-
-      if (sessionUser?.role == Role.admin) {
-        store.emit(
-          new FindExtraFieldsUser(
-            userProfile.id,
-            (extraFields) => {
-              setExtraFields(extraFields);
-            },
-            () => {},
-          ),
-        );
-      }
-    }
-    // store.emit(FindExtraFieldsUser(userProfile.id))
-  }, []);
 
   useEffect(() => {
     if(userProfile)
@@ -111,20 +83,8 @@ export function ShowProfile({
       {userProfile && (
         <CardProfile
           user={userProfile}
-          showAdminOptions={sessionUser?.role == Role.admin}
         />
       )}
-      {userProfile?.showButtons &&
-        userButtons &&
-        userButtons?.length > 0 && (
-          <div className="card-profile__button-list">
-            <ContentList
-              buttons={userButtons}
-              buttonTypes={buttonTypes}
-              linkType={ButtonLinkType.MAINPOPUP}
-            />
-          </div>
-        )}
     </>
   );
 }

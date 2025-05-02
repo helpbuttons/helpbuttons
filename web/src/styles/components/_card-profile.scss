@@ -43,15 +43,11 @@ $avatar-margin: $padding-big;
   display: flex;
   width: auto;
   height: auto;
-  margin-left: 0;
   background-size: contain;
-  margin: 0 auto 0 auto;
-  margin-bottom: 0;
+  margin: 10px auto 0 auto;
   overflow: auto;
   
   font-weight: $font-weight-bold;
-  border-top: $border-style-basic;
-  border-bottom: $border-style-basic;
 
   & svg {
     width: 1rem;
@@ -65,11 +61,17 @@ $avatar-margin: $padding-big;
   justify-content: center;
   align-items: center;
   padding: $padding-medium $padding-medium;
+  border-radius:  $border-radius-basic $border-radius-basic 0 0;
   color: $color-gray;
+  background-color: $color-ligth-gray;
+  border: none;
+  color: $color-gray;
+  border-bottom: $border-style-basic;
+  margin-right: $padding-xxsmall;
 
   &:hover {
 
-    background-color: $color-ligth-gray;
+    background-color: $color-white;
     cursor: pointer;
 
   }
@@ -79,13 +81,17 @@ $avatar-margin: $padding-big;
 .card-profile__rate--enabled {
 
   font-weight: $font-weight-bolder;
+  background-color: $color-white;
+  border: $border-style-basic;
   color: $color-black;
+  border-bottom: $color-white;
 }
 
 .card-profile__rate-label {
 
   font-size: $font-size-small;
   padding-right: $padding-medium;
+  text-wrap: nowrap;
 
 
 
@@ -266,6 +272,9 @@ $avatar-margin: $padding-big;
     margin-top: 0;
     padding-top: 0;
     padding-right: 0;
+    right: 0;
+    position: absolute;
+    
 
   }
 
@@ -346,14 +355,19 @@ $avatar-margin: $padding-big;
   }
 
   .card-profile__rating {
+
+    width: 100%;
     
-    margin-bottom: 10px;
     & svg {
       width: 20px;
 
     }
   }
+  .card-profile__rate {
 
+    width: 100%;
+    
+  }
 
 
   .card-profile__location {
