@@ -29,7 +29,7 @@ import { useConfig } from 'state/Setup';
 import { UpdateMetadata } from 'state/Metadata';
 import { usePoolFindNewActivities } from 'state/Activity';
 import { randomBytes } from 'crypto'
-import MetadataSEOFromStore from 'components/seo';
+import MetadataSEOFromStore, { MetadataSEO } from 'components/seo';
 import dconsole from 'shared/debugger';
 import Head from 'next/head';
 import CookiesBanner from 'components/home/CookiesBanner';
@@ -254,7 +254,7 @@ function MyApp({ Component, pageProps }) {
   });
 
   return <>
-    <MetadataSEOFromStore {...pageProps.metadata} nonce={nonce} />
+    <MetadataSEO {...pageProps.metadata} nonce={nonce} />
     
     {(function () {
 

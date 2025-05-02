@@ -76,6 +76,19 @@ release_new_version() {
     
 }
 
+docker_push_version() {
+    version=$(cat version)
+    cd ../dev
+    git checkout main
+    git pull
+    docker-compose -f docker-compose.main.yml build
+    docker-compose -f docker-compose.main.yml push
+
+    git checkout $version
+    VERSION="$version" docker-compose -f docker-compose.release.yml build
+    VERSION="$version" docker-compose -f docker-compose.release.yml push
+}
+
 prepare_release() {
     last_version=$(cat version)
     request_new_version
@@ -104,5 +117,6 @@ case $what_u_want in
     ;;
 "p")
     release_new_version
+    docker_push_version
     ;;
 esac

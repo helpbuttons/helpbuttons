@@ -1,6 +1,9 @@
 import Loading from "components/loading";
+import t from "i18n";
+import { NextPageContext } from "next";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+import { setMetadata } from "services/ServerProps";
 import { GlobalState, store, useGlobalStore } from "state";
 import { RecenterExplore, UpdateFilters } from "state/Explore";
 
@@ -29,3 +32,7 @@ function useParams(router)
     
   }, [exploreSettings])
 }
+
+export const getServerSideProps = async (ctx: NextPageContext) => {
+  return setMetadata(t('menu.explore'), ctx);
+};
