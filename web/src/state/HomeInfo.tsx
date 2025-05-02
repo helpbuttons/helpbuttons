@@ -57,6 +57,7 @@ export class SetMainPopupCurrentProfile implements UpdateEvent {
     return produce(state, (newState) => {
       newState.homeInfo.mainPopupPage = MainPopupPage.HIDE
       newState.homeInfo.mainPopupUserProfile = this.profile;
+      newState.homeInfo.mainPopupButton = null;
     });
   }
 }
@@ -67,6 +68,7 @@ export class SetMainPopupCurrentButton implements UpdateEvent {
     return produce(state, (newState) => {
       newState.homeInfo.mainPopupPage = MainPopupPage.HIDE;
       newState.homeInfo.mainPopupButton = this.button;
+      newState.homeInfo.mainPopupUserProfile = null;
     });
   }
 }
