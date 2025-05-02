@@ -283,7 +283,6 @@ function HomeInfoStatsCard({ selectedNetwork, config }) {
         ])}
         <div className="homeinfo__hashtags">
           <ListButtonTypes
-            selectedNetwork={selectedNetwork}
             pageName={'HomeInfo'}
           />
         </div>

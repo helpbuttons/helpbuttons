@@ -1,4 +1,3 @@
-import CheckBox from "elements/MultiSelectOption";
 import React, { useEffect, useState } from "react";
 import { IoCheckmark } from "react-icons/io5";
 import FieldError from "../FieldError";

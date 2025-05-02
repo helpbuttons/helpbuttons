@@ -45,7 +45,7 @@ function NavHeader({ selectedNetwork, pageName = '' }) {
       </div>
       <ShowDesktopOnly>
         <div className="nav-header__filters">
-          <ListButtonTypes pageName={pageName} selectedNetwork={selectedNetwork}/>
+          <ListButtonTypes pageName={pageName}/>
         </div>
       </ShowDesktopOnly>
     </div>

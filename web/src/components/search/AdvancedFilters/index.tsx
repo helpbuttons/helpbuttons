@@ -14,7 +14,6 @@ import { useStore } from 'state';
 import { useButtonTypes } from 'shared/buttonTypes';
 import FieldMultiSelect from 'elements/Fields/FieldMultiSelect';
 import { uniqueArray } from 'shared/sys.helper';
-import MultiSelectOption from 'elements/MultiSelectOption';
 import { AdvancedFiltersCustomFields, getCustomDropDownOrderBy } from 'components/button/ButtonType/CustomFields/AdvancedFiltersCustomFields';
 import { Dropdown, DropdownField } from 'elements/Dropdown/Dropdown';
 import { alertService } from 'services/Alert';
@@ -29,6 +28,7 @@ import Accordion from 'elements/Accordion';
 import { IoBook, IoList } from 'react-icons/io5';
 import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
 import { SetSignupTags } from 'state/Users';
+import { FieldMultiSelectButtonTypes, MultiSelectButtonTypes } from 'components/nav/ButtonTypes';
 
 
 
@@ -86,7 +86,7 @@ export default function AdvancedFilters({
   const address = watch('where.address');
   const center = watch('where.center');
   const radius = watch('where.radius');
-  const helpButtonTypes = watch('helpButtonTypes');
+  const selectedButtonTypes = watch('helpButtonTypes');
   const tags = watch('tags')
   const days = watch('days')
   const query = watch('query');
@@ -101,14 +101,14 @@ export default function AdvancedFilters({
     if (value) {
       setValue(
         'helpButtonTypes',
-        uniqueArray([...helpButtonTypes, name]),
+        uniqueArray([...selectedButtonTypes, name]),
       );
       return;
     }
     setValue(
       'helpButtonTypes',
       uniqueArray(
-        helpButtonTypes.filter((prevValue) => prevValue != name),
+        selectedButtonTypes.filter((prevValue) => prevValue != name),
       ),
     );
   };
@@ -156,35 +156,9 @@ export default function AdvancedFilters({
                       <TagFollow tags={tags}/>
                     </FieldText>
                     <Accordion icon={<IoList/>} title={t('buttonFilters.byCategory')}>
-                      <FieldMultiSelect
-                        label={t('buttonFilters.types')}
-                        validationError={null}
-                        explain={t('buttonFilters.typesExplain')}
-                      > 
-                        {(helpButtonTypes && buttonTypes) && buttonTypes.map((buttonType, idx) => {
-                          return (
-
-                            <MultiSelectOption
-                                defaultValue={
-                                  helpButtonTypes.indexOf(buttonType.name) > -1
-                                } 
-                                iconLink={buttonType.icon}
-                                color={buttonType.cssColor}
-                                icon='emoji'
-                                name={buttonType.name}
-                                handleChange={(name, newValue) => {
+                      <FieldMultiSelectButtonTypes selectedTypes={selectedButtonTypes} types={buttonTypes} handleChange={(name, newValue) => {
                                   setButtonTypeValue(name, newValue);
-                                }}
-                                key={idx}
-                              >
-                                {/* <div className="btn-filter__icon"></div> */}
-                                <div className="btn-with-icon__text">
-                                  {buttonType.caption}
-                                </div>
-                              </MultiSelectOption>
-                        );
-                      })}
-                      </FieldMultiSelect>
+                                }}/>
                     </Accordion>
 
                     <AdvancedFiltersSortDropDown
