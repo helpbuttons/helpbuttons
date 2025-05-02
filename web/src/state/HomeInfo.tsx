@@ -15,7 +15,6 @@ export enum MainPopupPage {
   SHARE = 'share',
   FAQS = 'faqs',
   PROFILE = 'profile',
-  BUTTON = 'button'
 }
 export interface HomeInfoState {
   mainPopupPage: MainPopupPage;

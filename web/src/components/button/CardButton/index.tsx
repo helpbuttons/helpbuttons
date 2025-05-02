@@ -232,8 +232,7 @@ function CardButtonSubmenu({ button }) {
   useEffect(() => {
     if (config) {
       setLinkButton(() => {
-        const shareLink = getShareLink(`/Explore/?btn=${button.id}`);
-        return shareLink;
+        return window ? window.location : getShareLink(`/?btn=${button.id}`);
       });
     }
   }, [config]);

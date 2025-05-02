@@ -1,8 +1,6 @@
 import Loading from "components/loading";
-import { updateUrl } from "components/uri/builder";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-import { roundCoord } from "shared/honeycomb.utils";
+import { useEffect } from "react";
 import { GlobalState, store, useGlobalStore } from "state";
 import { RecenterExplore, UpdateFilters } from "state/Explore";
 
