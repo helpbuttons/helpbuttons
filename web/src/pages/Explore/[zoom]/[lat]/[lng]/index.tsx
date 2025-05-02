@@ -19,7 +19,6 @@ export default function Explore({
         store,
         (state: GlobalState) => state.networks.selectedNetwork,
     );
-    useMetadataTitle(t('menu.explore'))
     
     const router = useRouter();
     useParams(router)
