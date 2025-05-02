@@ -12,18 +12,15 @@ request_new_version() {
         ;;
     "M")
         major=$(((${last_version:1:1} + 1)))
-        version="v${major}.${last_version:3:1}.${last_version:5:1}"
+        version="v${major}.0.0"
         ;;
     "m")
         minor=$(((${last_version:3:1} + 1)))
-        version="v${last_version:1:1}.${minor}.${last_version:5:1}"
+        version="v${last_version:1:1}.${minor}.0"
         ;;
     "p")
         patch=$(((${last_version:5:1} + 1)))
         version="v${last_version:1:1}.${last_version:3:1}.${patch}"
-        ;;
-    "n")
-        echo "not creating new release"
         ;;
     *)
         echo "Invalid choice. Please run the script again and enter major(M), minor(m), or patch(p)."
@@ -64,7 +61,7 @@ release_new_version() {
     # List of diffs of last master/tag
     git log ${last_version}..HEAD --pretty=format:"%ad - %an - %s %h" --date="format:%d %b,%y"
     
-    echo "Did you tested everything on dev (y/n)?"
+    echo "Are you sure you merged everything from dev to main (y/n)?"
     read -r -n 1 -p "" tested
 
     case $tested in
@@ -73,7 +70,7 @@ release_new_version() {
         create_release_github
         ;;
     *)
-        echo "please teste! <3"
+        echo "please merge <3"
         ;;
     esac
     
@@ -92,17 +89,17 @@ prepare_release() {
 }
 
 
-echo "Do you want to prepare new release(p), push new release(r) ?"
-    read -r -n 1 -p "" what_u_want
+echo "Prepare new version release (n) push new version (p)?"
+read -r -n 1 -p "" what_u_want
 
-    case $what_u_want in
-    "p")
-        prepare_release
-        ;;
-    "r")
-        release_new_version
-        ;;
-    *)
-        echo "not building/pushing new version"
-        ;;
-    esac
+case $what_u_want in
+"n")
+    echo "Create new version files, please do commit to dev, and then merge to main"
+    prepare_release
+    echo "Please commit and push to dev, and merge to main"
+    echo "git commit -m "preparing release: $version" version last_version api/src/version.json web/public/version.js"
+    ;;
+"p")
+    release_new_version
+    ;;
+esac
