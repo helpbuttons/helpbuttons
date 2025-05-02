@@ -15,14 +15,18 @@ $avatar-margin: $padding-big;
   display: flex;
   flex-direction: row;
   gap: $padding-small;
+  font-size: $font-size-general;
+  max-width: inherit;
+  flex-wrap: wrap;
+  overflow: hidden;
 
 }
 
 .card-profile__description {
   font-size: $font-size-general;
   font-weight: $font-weight-regular;
-  margin: $margin-small 0;
-  margin-top: $margin-xsmall;
+  margin-top: $margin-small;
+  margin-bottom: $margin-xxsmall 0;
 
   color: $color-gray;
 
@@ -31,7 +35,7 @@ $avatar-margin: $padding-big;
 
 .card-profile__tags {
 
-  padding-top: $padding-small;
+  padding-top: $margin-small;
 
 }
 
@@ -39,15 +43,11 @@ $avatar-margin: $padding-big;
   display: flex;
   width: auto;
   height: auto;
-  margin-left: 0;
   background-size: contain;
-  margin: $margin-small auto;
-  margin-bottom: 0;
-  padding: $padding-medium 0;
+  margin: 10px auto 0 auto;
+  overflow: auto;
+  
   font-weight: $font-weight-bold;
-  border-top: $border-style-basic;
-  border-bottom: $border-style-basic;
-  gap: $padding-big;
 
   & svg {
     width: 1rem;
@@ -60,15 +60,49 @@ $avatar-margin: $padding-big;
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: $padding-medium $padding-medium;
+  border-radius:  $border-radius-basic $border-radius-basic 0 0;
+  color: $color-gray;
+  background-color: $color-ligth-gray;
+  border: none;
+  color: $color-gray;
+  border-bottom: $border-style-basic;
+  margin-right: $padding-xxsmall;
 
+  &:hover {
+
+    background-color: $color-white;
+    cursor: pointer;
+
+  }
+
+}
+
+.card-profile__rate--enabled {
+
+  font-weight: $font-weight-bolder;
+  background-color: $color-white;
+  border: $border-style-basic;
+  color: $color-black;
+  border-bottom: $color-white;
 }
 
 .card-profile__rate-label {
 
-  color: $color-gray;
-  font-weight: $font-weight-light;
   font-size: $font-size-small;
   padding-right: $padding-medium;
+  text-wrap: nowrap;
+
+
+
+}
+
+
+.card-profile__rate-label--enable {
+
+  color: $color-black;
+  font-weight: $font-weight-bolder;
+
 }
 
 .card-profile__icon {
@@ -195,15 +229,15 @@ $avatar-margin: $padding-big;
   text-overflow: ellipsis;
   
   gap: $margin-xxxsmall;
-  max-width: 200px;
+  max-width: 45vw;
 }
 
 .card-profile__username {
-  font-size: $font-size-general;
+  font-size: $font-size-small;
   font-weight: $font-weight-light;
   color: $color-gray;
   position: relative;
-  top: -15px;
+  align-self: flex-start;
 }
 
 .grid-one__column-mid-element {
@@ -233,15 +267,58 @@ $avatar-margin: $padding-big;
 
 .card-profile__submenu {
 
-  // margin-top: 0;
+  .card-button__submenu {
+
+    margin-top: 0;
+    padding-top: 0;
+    padding-right: 0;
+    right: 0;
+    position: absolute;
+    
+
+  }
+
+  .card-button__dropdown-container {
+
+    top: 2rem;
+
+  }
+
+}
+
+.card-profile__role  {
+
+  margin: 0;
+  padding: $padding-xxsmall $padding-medium;
+  font-size: $font-size-small;
+
+  &:hover {
+    pointer-events: none;
+    background-color: $color-blue;
+  }
 
 }
 
 @media #{$breakpoints-medium} {
 
+  .card-profile__name {
+
+    display: flex;
+    flex-direction: row;
+    gap: $padding-small;
+    font-size: $font-size-title;
+    padding-bottom: 0;
+  
+  }
+
+  .card-profile__username {
+    font-size: $font-size-general;
+  }
+
   .card-profile__avatar-container-name {
     max-width: 300px;
     flex-direction: row;
+    gap: $margin-xsmall;
   }
 
   .card-profile__username {
@@ -278,14 +355,19 @@ $avatar-margin: $padding-big;
   }
 
   .card-profile__rating {
+
+    width: 100%;
     
-    margin-bottom: 10px;
     & svg {
       width: 20px;
 
     }
   }
+  .card-profile__rate {
 
+    width: 100%;
+    
+  }
 
 
   .card-profile__location {

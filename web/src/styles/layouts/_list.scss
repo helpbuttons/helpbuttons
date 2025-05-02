@@ -252,6 +252,7 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
   .list__element {
     width: 100%;
     flex-basis: 30%;
+    
     min-width: $card-button-list-width;
   }
 

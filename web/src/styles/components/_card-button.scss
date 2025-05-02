@@ -603,9 +603,9 @@ $card-button-border-height: $border-general-height;
 // }
 
 .card-button__edit-icon {
-  width: auto;
-  height: 30px;
-  position: relative;
+    width: auto;
+    height: 30px;
+    position: relative;
 }
 
 .card-button__options-menu {
@@ -675,7 +675,7 @@ $card-button-border-height: $border-general-height;
   height: 35px;
   border-radius: 1px;
   width: 100%;
-  line-height: 35px;
+  line-height: $text-line-height-xsmall;
   align-items: center;
   padding: 25px;
   display: flex;
@@ -969,6 +969,11 @@ $card-button-border-height: $border-general-height;
 
     right: $padding-xxsmall;
     top: calc($margin-big + $margin-big);
+
+  }
+
+  .card-button__submenu {
+
 
   }
 
