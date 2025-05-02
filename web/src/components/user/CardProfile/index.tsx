@@ -149,5 +149,5 @@ function ProfileAdminOptions({ user }) {
     }
   };
 
-  return <CardSubmenu>{user && getOptions(user)}</CardSubmenu>;
+  return <CardSubmenu extraClass="card-profile__submenu" >{user && getOptions(user)}</CardSubmenu>;
 }
