@@ -118,7 +118,7 @@ export default function HexagonExploreMap({
             mapCenter={exploreSettings.center}
             mapZoom={exploreSettings.zoom}
             onBoundsChanged={onBoundsChanged}
-            tileType={exploreSettings.tileType}
+            tileType={selectedNetwork.exploreSettings.tileType}
             handleClick={onMapClick}
           >
             <DisplayInstructions />
