@@ -391,7 +391,7 @@
     "endDatesExpired": "La fecha de finalización de este _helpbutton_ ya pasó, por lo que se estableció como vencida y no se mostrará en la lista pública.",
     "renewLink": "Renovar tu _helpbutton_",
     "createUpdate": "Publicar Novedad",
-    "authorTitle": "Autor:",
+    "authorTitle": "Publicado por ",
     "notFound": "No puedo encontrar tu button, talvez fue borrado?",
     "invalidDates": "",
     "followErrorAlert": "",
