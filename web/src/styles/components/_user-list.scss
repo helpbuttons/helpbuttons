@@ -5,6 +5,28 @@
 
 }
 
+.user-list__table-header-cell {
+  padding: $padding-medium;
+  min-width: 100px;
+  font-weight: $font-weight-bolder;
+}
+
+.user-list__table-header-cell:first-letter,
+.user-list__table-body-cell:first-letter {
+  text-transform: uppercase;
+}
+
+.user-list__table-body-cell {
+
+  padding: $padding-small;
+}
+
+.user-list__table-body-cell--email {
+
+  font-weight: $font-weight-bolder;
+
+}
+
 .user-list__table-container {
     min-width: 800px;
   }
@@ -54,10 +76,6 @@
     }
   }
   
-  @media (max-width: 768px) {
-    .user-list__table--header--cell,
-    .user-list__table--body--cell {
-      padding: 8px;
-    }
-  }
+
+
   

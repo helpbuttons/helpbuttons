@@ -27,7 +27,7 @@ export function EmojiPicker({updateEmoji, pickerEmoji, label = null, explain = n
         showPopup={showPopup} 
         openPopup={openPopup} 
         closePopup={closePopup}>
-             <Picker data={data} onEmojiSelect={(emoji) => {setEmoji(() => emoji.native);console.log('close popup..'); closePopup()}} locale={getLocale()} noCountryFlags={true} emojiSize={16} theme="light"/>
+             <Picker data={data} onEmojiSelect={(emoji) => {setEmoji(() => emoji.native);closePopup()}} locale={getLocale()} noCountryFlags={true} emojiSize={16} theme="light"/>
         </PickerField>
     )
 }

@@ -18,6 +18,7 @@ import { getLocale } from 'shared/sys.helper';
 import { SetupDtoOut } from 'shared/entities/setup.entity';
 import { Role } from 'shared/types/roles';
 import { setValidationErrors } from 'state/helper';
+import dconsole from 'shared/debugger';
 
 export default CreateAdminForm;
 
@@ -57,17 +58,17 @@ function CreateAdminForm() {
     store.emit(
       new GetConfig(
         (configuration) => {
-          console.log('config got!')
+          dconsole.log('config got!')
         },
         (error) => {
           
           if(error == 'not-found')
           {
-            console.log('config not found?!')
+            dconsole.log('config not found?!')
             return;
           }
 
-          console.log(error)
+          dconsole.error(error)
           return;
         },
       ),
@@ -125,8 +126,12 @@ function CreateAdminForm() {
             }else if(error?.validationErrors)
             {
               setValidationErrors(error?.validationErrors, setError);
+            }else if(error.message == 'invalid-username'){
+              setError('username', { type: 'custom', message: 'invalid username' });
+            }else{
+              dconsole.error(error);
             }
-            console.log(error);
+            
           },
         ),
       );

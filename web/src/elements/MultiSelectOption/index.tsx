@@ -28,7 +28,6 @@ export function MultiSelectOptionIcon({checked, icon, iconLink }: { icon: IconTy
 }
 
 export default function MultiSelectOption({
-  defaultValue,
   name,
   handleChange = (name: string, value: any) => {},
   children,
@@ -36,8 +35,8 @@ export default function MultiSelectOption({
   iconLink,
   ref,
   color,
+  checked = false,
 }: {
-  defaultValue: boolean;
   name: string;
   handleChange?: (name: string, value: any) => void;
   children: any;
@@ -45,11 +44,10 @@ export default function MultiSelectOption({
   ref: any;
   iconLink:string;
   color:string;
+  checked: boolean;
 }) {
-  const [checked, setChecked] = useState<boolean>(defaultValue);
 
   const onChange = () => {
-    setChecked((prevValue) => !prevValue);
     handleChange(name, !checked);
   };
 

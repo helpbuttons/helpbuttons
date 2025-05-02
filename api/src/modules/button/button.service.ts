@@ -150,6 +150,7 @@ export class ButtonService {
       hasPhone,
       eventData: createDto.eventData,
       awaitingApproval,
+      isCustomAddress: createDto.isCustomAddress
     };
 
     await getManager().transaction(
@@ -170,10 +171,34 @@ export class ButtonService {
             });
         }
 
-        button.images =
-          await this.storageService.storageMultipleImages(
-            createDto.images,
+        if (createDto.images?.length > 0) {
+          await Promise.all(
+            createDto.images.map(async (image) => {
+              if (isImageData(image)) {
+                try {
+                  const newImage = await this.storageService.newImage64(
+                    image,
+                  );
+                  if (newImage) {
+                    button.images.push(newImage);
+                  }
+                } catch (err) {
+                  throw new CustomHttpException(
+                    ErrorName.InvalidMimetype,
+                  );
+                }
+              } else if (isImageUrl(image)) {
+                if(image)
+                {
+                  button.images.push(image);
+                }
+              } else {
+                console.error('no image data, or image url?');
+                console.log(image);
+              }
+            }),
           );
+        }
         if (button.images.length > 0) {
           button.image = button.images[0];
         }
@@ -207,6 +232,8 @@ export class ButtonService {
     updateDto: UpdateButtonDto,
     currentUser: User,
   ) {
+    console.log('updating...')
+    console.log(updateDto)
     const currentButton = await this.findById(id, true);
     this.cacheManager.del(CacheKeys.FINDH3_CACHE_KEY)
     let location = {};
@@ -269,6 +296,8 @@ export class ButtonService {
     }
     if (button.images.length > 0) {
       button.image = button.images[0];
+    }else{
+      button.image = null;
     }
 
     this.buttonRepository
@@ -442,16 +471,6 @@ export class ButtonService {
     return true;
   }
 
-  async getPhone(buttonId: string) {
-    const query = `SELECT public.user.phone from button, public.user WHERE button.id = '${buttonId}' AND "ownerId" = public.user.id`;
-    const result = await this.entityManager.query(query);
-
-    if (result.length > 0) {
-      return result[0].phone;
-    }
-    return '';
-  }
-
   findDeletedAndRemoveMedia() {
     // created more than 1 month ago
     return this.entityManager
@@ -515,9 +534,7 @@ export class ButtonService {
   }
 
   updateModifiedDate(buttonId: string) {
-    return this.entityManager.query(
-      `UPDATE button SET updated_at = CURRENT_TIMESTAMP, deleted = false, expired = false WHERE id = '${buttonId}'`,
-    );
+    return this.entityManager.query(`UPDATE button SET updated_at = CURRENT_TIMESTAMP, deleted = false, expired = false WHERE id = $1`, [buttonId]);
   }
 
   checkAndSetExpired(button: Button) {
@@ -570,6 +587,22 @@ export class ButtonService {
 
   setExpired(buttonId: string) {
     return this.buttonRepository.update(buttonId, { expired: true });
+  }
+
+  setPin(buttonId: string, status: boolean) {
+    return this.buttonRepository.update(buttonId, { pin: status });
+  }
+
+  findByPin(
+    includeExpired: boolean = false,
+  ) {
+    return this.buttonRepository.find({
+      where: {
+        pin: true,
+        ...this.expiredBlockedConditions(includeExpired)
+      },
+      relations: ['owner'],
+    });
   }
 
   public deleteme(ownerId: string) {

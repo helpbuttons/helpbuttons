@@ -5,7 +5,7 @@ import FieldText from 'elements/Fields/FieldText';
 import t from 'i18n';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { GlobalState, store } from 'state';
+import { GlobalState, store, useGlobalStore } from 'state';
 import { useEffect, useState } from 'react';
 import { Network } from 'shared/entities/network.entity';
 import { getHostname } from 'shared/sys.helper';
@@ -22,6 +22,7 @@ export default function NewUserFields({
   isInitAdminForm=false,
 }) {
   const [hostname, setHostname] = useState('');
+  const [showUsername, setshowUsername] = useState(false);
   const selectedNetwork: Network = useStore(
     store,
     (state: GlobalState) => state.networks.selectedNetwork,
@@ -32,16 +33,14 @@ export default function NewUserFields({
     }
   }, []);
 
+  const signupTags = useGlobalStore((state: GlobalState) => state.signupTags);
+  
   const router = useRouter();
   const params: URLSearchParams = new URLSearchParams(router.query);
   useEffect(() => {
-    if (router?.query) {
-      const follow = params.get('follow');
-      if (follow) {
-        setValue('tags', [params.get('follow')]);
-      }
-    }
-  }, [router]);
+    setValue('tags', signupTags);  
+  }, [signupTags]);
+  
   const name = watch('name');
   useEffect(() => {
     const nameToUsername = (name) => {
@@ -58,6 +57,7 @@ export default function NewUserFields({
       setValue('username', nameToUsername(name));
     }
   }, [name]);
+  const username = watch('username')
 
   return (
     <>
@@ -80,13 +80,25 @@ export default function NewUserFields({
         placeholder={t('user.namePlaceHolder')}
         validationError={errors.name}
         {...register('name', { required: true })}
-      ></FieldText>
-      {!short &&
+      >
+      { username &&  !showUsername &&
+          <div className="form__input-subtitle-side">
+              <label className="form__input-subtitle--text">
+                {`${t('user.usernameWillBe')}`} 
+                <span className='highlight'>
+                  {`${username}@${hostname}`}
+                </span>
+                  <span onClick={() => setshowUsername(true) } className="link">
+                      {t('common.edit')}
+                  </span> 
+              </label>
+          </div>
+        }
+      </FieldText>
+      {showUsername &&
         <FieldText
           name="username"
-          label={`${t('user.username')} ${watch(
-            'username',
-          )}@${hostname}`}
+          label={`${t('user.username')} ${username}@${hostname}`}
           explain={t('user.usernameCreateExplain')}
           classNameInput="squared"
           placeholder={t('user.usernamePlaceHolder')}

@@ -14,8 +14,6 @@ import { SetupSteps } from '../shared/setupSteps';
 
 import { Role } from 'shared/types/roles';
 import {
-  getHref,
-  getLocale,
   getLocaleFromUrl,
   isRoleAllowed,
   locale,
@@ -25,7 +23,6 @@ import t, { updateNomeclature } from 'i18n';
 import { useSearchParams } from 'next/navigation';
 import NavHeader from 'components/nav/NavHeader';
 import { ShowDesktopOnly, ShowMobileOnly } from 'elements/SizeOnly';
-import { MetadataSEO } from 'components/seo';
 import Loading, { LoadabledComponent } from 'components/loading';
 import MainPopup from 'components/popup/Main/';
 import { useConfig } from 'state/Setup';
@@ -33,9 +30,10 @@ import { UpdateMetadata } from 'state/Metadata';
 import { usePoolFindNewActivities } from 'state/Activity';
 import { randomBytes } from 'crypto'
 import MetadataSEOFromStore from 'components/seo';
-import { useRebuildUrl } from 'components/uri/builder';
-import { LocalStorageVars, localStorageService } from 'services/LocalStorage';
-import Btn, { BtnType, ContentAlignment, IconType } from 'elements/Btn';
+import dconsole from 'shared/debugger';
+import Head from 'next/head';
+import CookiesBanner from 'components/home/CookiesBanner';
+import { useParamsBtn, useParamsMainPopup } from 'components/uri/builder';
 
 export default appWithTranslation(MyApp);
 
@@ -48,26 +46,19 @@ function MyApp({ Component, pageProps }) {
   const [fetchingNetworkError, setFetchingNetworkError] = useState(false)
   const path = router.asPath.split('?')[0];
   const nonce = randomBytes(128).toString('base64')
-  useRebuildUrl(router);
+  
   const messagesUnread = useGlobalStore(
     (state: GlobalState) => state.activities.messages.unread
   );
 
   const sessionUser = useGlobalStore((state: GlobalState) => state.sessionUser)
-  const selectedNetworkLoading = useGlobalStore((state: GlobalState) =>
-    state.networks.selectedNetworkLoading)
-  const onFetchingNetworkError = (error) => {
-    if (error === 'network-not-found') {
-      setFetchingNetworkError(true)
-    }
-  };
 
   const onFetchingConfigError = (error) => {
-    console.log(error);
-    console.log('fetching config error...');
+    dconsole.error(error);
+    dconsole.error('fetching config error...');
     if (error == 'not-found' || error == 'nosysadminconfig') {
       console.error(error);
-      console.log('config not found? contact your sysadmin');
+      dconsole.error('config not found? contact your sysadmin');
     }
 
     if (error == 'nobackend') {
@@ -76,28 +67,28 @@ function MyApp({ Component, pageProps }) {
       );
       router.push('/Error');
     }
-    console.log(error);
+    dconsole.log(error);
     return;
   };
-  const [pageName, setPageName] = useState('HomeInfo')
+  const [pageName, setPageName] = useState(null)
   useEffect(() => {
-    setPageName(getPageName(path.split('/')[1]))
-
+    setPageName(() => getPageName(path.split('/')[1]))
     function getPageName(urlString) {
       const finit = urlString.indexOf("#") !== -1 ? urlString.indexOf("#") : (urlString.indexOf("?") !== -1 ? urlString.indexOf("?") !== -1 : null)
       if (finit) {
         return urlString.substr(0, finit)
       }
+      if (!urlString) {
+        return 'HomeInfo'
+      }
       return urlString;
     }
   }, [path])
 
-
-
   const config = useConfig(pageProps._config, onFetchingConfigError);
   const selectedNetwork = useSelectedNetwork(
     pageProps._selectedNetwork,
-    onFetchingNetworkError,
+    () => setFetchingNetworkError(() => true)
   );
   const setupPaths: string[] = [
     SetupSteps.CREATE_ADMIN_FORM,
@@ -117,6 +108,8 @@ function MyApp({ Component, pageProps }) {
     }
   }, [fetchingNetworkError, sessionUser])
 
+  useParamsBtn(router, pageName )
+  useParamsMainPopup(router)
   useEffect(() => {
     if (setupPaths.includes(path)) {
       setIsSetup(() => true);
@@ -182,7 +175,7 @@ function MyApp({ Component, pageProps }) {
       alertService.error(
         `You are not allowed in here!`
       );
-      router.push('/Error')
+      router.push('/')
       return;
     }
     setAuthorized(isAllowed);
@@ -215,11 +208,15 @@ function MyApp({ Component, pageProps }) {
         selectedNetwork.nomeclaturePlural,
       );
     }
+    if(([SetupSteps.CREATE_ADMIN_FORM.toString(), SetupSteps.FIRST_OPEN.toString(), SetupSteps.NETWORK_CREATION.toString()].indexOf(path) > -1 )&& selectedNetwork && selectedNetwork.id ){
+      router.push('/')
+    }
   }, [selectedNetwork]);
 
   useWhichLocale({ sessionLocale: sessionUser?.locale, networkLocale: selectedNetwork.locale });
 
   const searchParams = useSearchParams();
+
   const triedToLogin = useRef(false);
   useEffect(() => {
     const loginToken = searchParams.get('loginToken');
@@ -256,61 +253,70 @@ function MyApp({ Component, pageProps }) {
     setLoading(false);
   });
 
-  if (isSetup) {
-    return <Component {...pageProps} />;
-  } else if (pageName == 'Embbed') {
-    return (
-      <LoadabledComponent loading={!selectedNetwork || loading}>
-        <Component {...pageProps} />
-      </LoadabledComponent>
-    );
-  } else if (!selectedNetworkLoading) {
-    return (
-      <>
-        <MetadataSEOFromStore {...pageProps.metadata} nonce={nonce} />
-        <ActivityPool sessionUser={sessionUser} messagesUnread={messagesUnread} />
-        <div
-          className="index__container"
-          style={
-            selectedNetwork
-              ? ({
-                '--network-background-color':
-                  selectedNetwork.backgroundColor,
-                '--network-text-color': selectedNetwork.textColor,
-              } as React.CSSProperties)
-              : ({
-                '--network-background-color': 'grey',
-                '--network-text-color': 'pink',
-              } as React.CSSProperties)
-          }
-        > 
-          <CookiesBanner/>
-          <Alert />
-          <div className="index__content">
-            <ShowDesktopOnly>
-              <NavHeader
-                pageName={pageName}
-                selectedNetwork={selectedNetwork}
-              />
-            </ShowDesktopOnly>
-            {authorized && <Component {...pageProps} />}
-            {!authorized && <><Loading /></>}
-            <ShowMobileOnly>
-              <ClienteSideRendering>
-                <NavBottom
-                  pageName={pageName}
-                  sessionUser={sessionUser}
-                />
-              </ClienteSideRendering>
-            </ShowMobileOnly>
-            <MainPopup pageName={pageName} />
-          </div>
-        </div>
-      </>
-    );
-  }
+  return <>
+    <MetadataSEOFromStore {...pageProps.metadata} nonce={nonce} />
+    
+    {(function () {
 
-  return <><MetadataSEO {...pageProps.metadata} nonce={nonce} /><Loading /></>;
+      if (isSetup) {
+        return <> <Head>
+          <title>Creating new helpbuttons network...</title></Head><Component {...pageProps} /></>;
+      } else if (pageName == 'Embbed') {
+        return (
+          <LoadabledComponent loading={!selectedNetwork || loading}>
+            <Component {...pageProps} />
+          </LoadabledComponent>
+        );
+      } else if (selectedNetwork.id) {
+        return (
+          <>
+            {/* <MetadataSEOFromStore {...pageProps.metadata} nonce={nonce} /> */}
+            <ActivityPool sessionUser={sessionUser} messagesUnread={messagesUnread} />
+            <div
+              className="index__container"
+              style={
+                selectedNetwork
+                  ? ({
+                    '--network-background-color':
+                      selectedNetwork.backgroundColor,
+                    '--network-text-color': selectedNetwork.textColor,
+                  } as React.CSSProperties)
+                  : ({
+                    '--network-background-color': 'grey',
+                    '--network-text-color': 'pink',
+                  } as React.CSSProperties)
+              }
+            >
+              <CookiesBanner />
+              <Alert />
+              <div className="index__content">
+                <ShowDesktopOnly>
+                  <NavHeader
+                    pageName={pageName}
+                    selectedNetwork={selectedNetwork}
+                  />
+                </ShowDesktopOnly>
+                {authorized && <Component {...pageProps} />}
+                {!authorized && <><Loading /></>}
+                <ShowMobileOnly>
+                  <ClienteSideRendering>
+                    <NavBottom
+                      pageName={pageName}
+                      sessionUser={sessionUser}
+                    />
+                  </ClienteSideRendering>
+                </ShowMobileOnly>
+                <MainPopup pageName={pageName} />
+              </div>
+            </div>
+          </>
+        );
+      } else {
+        return <><Loading /></>;
+      }
+
+    }).call(this)}
+  </>
 }
 
 export const ClienteSideRendering = ({ children }) => {
@@ -326,42 +332,6 @@ function ActivityPool({ sessionUser, messagesUnread }) {
   return (<></>);
 }
 
-export function CookiesBanner() {
-  const [showCookiesBanner, setShowCookiesBanner] = useState(false);
-  useEffect(() => {
-    const cookiesAccepted = localStorageService.read(LocalStorageVars.COOKIES_ACCEPTANCE);
-    if (!cookiesAccepted) {
-      setShowCookiesBanner(true);
-    }
-  }, []);
-  const handleAcceptCookies = () => {
-    localStorageService.save(LocalStorageVars.COOKIES_ACCEPTANCE, true);
-    setShowCookiesBanner(false);
-  };
-
-  return (
-    <>{showCookiesBanner &&
-    <div className="card-alert__container">
-      <div className="cookies-banner__content">
-        <p>
-        {t('faqs.cookiesExplanation')}
-          <a href="/Faqs" target="_blank" rel="noopener noreferrer">
-          {t('faqs.cookiesPolicy')}
-          </a>
-          .
-        </p>
-        <Btn
-            btnType={BtnType.submit}
-            iconLeft={IconType.circle}
-            caption={t('faqs.cookieAccept')}
-            contentAlignment={ContentAlignment.center}
-            onClick={handleAcceptCookies}
-          />
-      </div>
-    </div>
-    }</>
-  );
-}
 
 const useWhichLocale = ({ sessionLocale, networkLocale }) => {
 
@@ -370,17 +340,13 @@ const useWhichLocale = ({ sessionLocale, networkLocale }) => {
   useEffect(() => {
     const localeFromUrl = getLocaleFromUrl();
     if (localeFromUrl) {
-      console.log('set from url')
       setLocale(localeFromUrl);
     } else if (sessionLocale && networkLocale) {
-      console.log('set user session')
       setLocale(sessionLocale);
     } else if (networkLocale) {
-      console.log('set from network')
       setLocale(networkLocale);
     }
     set_Locale((prevLocale) => {
-      console.log(locale + ' > ' + prevLocale)
       if (locale !== prevLocale && prevLocale && locale) {
         return locale;
       }

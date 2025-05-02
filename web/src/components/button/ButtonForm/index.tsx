@@ -99,7 +99,6 @@ export default function ButtonForm({
   } }, [images])
 
   const onError = (errors, e) => alertService.error(t('validation.error'))
-
   return (
     <LoadabledComponent loading={!selectedNetwork}>
       {selectedNetwork &&
@@ -128,7 +127,7 @@ export default function ButtonForm({
                     setValue={setValue}
                     explain={t('button.titleExplain')}
                     setFocus={setFocus}
-                    {...register('title', { required: true })}
+                    {...register('title', { required: true, minLength: 10 })}
                   />
                   <FieldTextArea
                     label={t('button.descriptionLabel')}
@@ -139,10 +138,7 @@ export default function ButtonForm({
                     watch={watch}
                     setValue={setValue}
                     setFocus={setFocus}
-                    {...register('description', {
-                      required: true,
-                      minLength: 10,
-                    })}
+                    {...register('description')}
                   />
 
                   {/* TODO: Warning: Cannot update a component (`ButtonNew`) while rendering a different component (`FieldTags`). To locate the bad setState() call inside `FieldTags`, follow the stack trace as described in https://reactjs.org */}
@@ -169,22 +165,22 @@ export default function ButtonForm({
                   <div className="form__btn-search">
                     <FieldLocation
                       label={t('button.whereLabel')}
-                      setMarkerPosition={([lat, lng]) => {
-                        setValue('latitude', lat);
-                        setValue('longitude', lng);
-                      }}
+                      setLatitude={(lat) => setValue('latitude', lat)}
+                      setLongitude={(lng) => setValue('longitude', lng)}
                       markerPosition={[watch('latitude'), watch('longitude')]}
-                      updateAddress={(address) => {
+                      setMarkerAddress={(address) => {
                         setValue('address', address);
                       }}
+                      setHideAddress={(value) => setValue('hideAddress', value)}
+                      hideAddress={watch('hideAddress')}
                       markerAddress={watch('address')}
                       markerImage={image}
                       markerCaption={watch('title')}
                       markerColor={markerColor}
                       selectedNetwork={selectedNetwork}
                       validationError={errors.address}
-                      watch={watch}
-                      setValue={setValue}
+                      isCustomAddress={watch('isCustomAddress')}
+                      setIsCustomAddress={(value) => setValue('isCustomAddress', value)}
                     />
                   </div>
                   <FieldCustomFields customFields={customFields} watch={watch} setValue={setValue} setFocus={setFocus} register={register} errors={errors} currency={selectedNetwork.currency} />

@@ -180,6 +180,7 @@ $card-notification-delete-size: 100px;
   gap: $padding-small 0;
   align-items: baseline;
   flex-wrap: wrap;
+  border-radius: 0 0 $border-radius-basic $border-radius-basic;
 
     button {
 
@@ -193,21 +194,19 @@ $card-notification-delete-size: 100px;
 
   border-top: 1px dashed $color-ligth-gray ;
   padding-top: $padding-big;
+  background-color: $color-ligth-gray;
 
 }
 
-.card-notification--reply {
-  padding-left: 20%;
-}
 
 .card-notification--comment-private {
 
     background: repeating-linear-gradient(
     45deg,
-    $color-ligth-gray,
+    $color-white,
+    $color-white 1px,
     $color-ligth-gray 4px,
-    #fff 4px,
-    #fff 20px
+    $color-ligth-gray 20px
   );
 
 }
@@ -227,6 +226,7 @@ $card-notification-delete-size: 100px;
 
   padding: $padding-small $padding-big;
   padding-bottom: 0;
+  min-height: 10px;
   cursor: pointer;
   position: relative;
   border-top: 1px solid var(--button-color);
@@ -331,8 +331,12 @@ $card-notification-delete-size: 100px;
 }
 
 .card-notification__paragraph {
-  @extend .card-button__author-description;
-  font-size: $font-size-general;
+
+  color: $color-gray;
+  text-overflow: ellipsis;
+  word-wrap: break-word;
+  line-height: $text-line-height-xsmall;
+  font-size: $font-size-small;
   color: $color-gray;
 }
 
@@ -358,4 +362,8 @@ $card-notification-delete-size: 100px;
 
   }
 
+}
+
+.card-notification-comment-focus {
+  border: 2px solid $color-blue;
 }

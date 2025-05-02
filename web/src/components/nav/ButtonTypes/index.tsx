@@ -1,105 +1,121 @@
 import { BtnCaption } from 'elements/Btn';
 import router from 'next/router';
-import { GlobalState, store } from 'state';
+import { GlobalState, store, useGlobalStore } from 'state';
 import { useEffect, useState } from 'react';
 import { useButtonTypes } from 'shared/buttonTypes';
 import {
-  ToggleAdvancedFilters,
+  UpdateFilters,
   UpdateFiltersToFilterButtonType,
-  updateCurrentButton,
 } from 'state/Explore';
 import { useStore } from 'state';
+import FieldMultiSelect from 'elements/Fields/FieldMultiSelect';
+import MultiSelectOption from 'elements/MultiSelectOption';
+import t from 'i18n';
 
-export function ListButtonTypes({ selectedNetwork, pageName }) {
-  const showAdvancedFilters = useStore(
+export function ListButtonTypes({ pageName }) {
+  const filters = useStore(
     store,
-    (state: GlobalState) => state.explore.map.showAdvancedFilters,
-    false,
+    (state: GlobalState) => state.explore.map.filters,
+    false
   );
+  const buttonTypes = useButtonTypes();
+  const selectedNetwork = useGlobalStore((state: GlobalState) => state.networks.selectedNetwork)
 
-  const [buttonTypes, setButtonTypes] = useState([]);
+  const [types, setTypes] = useState([]);
   useEffect(() => {
     if (buttonTypes) {
-      if (selectedNetwork) {
-        setButtonTypes(() => {
-          return selectedNetwork.buttonTemplates.map((buttonType) => {
-            const typeCount = selectedNetwork.buttonTypesCount.find(
-              (buttonTypeCount) =>
-                buttonTypeCount.type == buttonType.name,
-            );
-            if (typeCount) {
-              return { ...buttonType, count: typeCount.count };
-            }
-            return buttonType;
-          });
+      setTypes(() => {
+        return buttonTypes.map((buttonType) => {
+          const typeCount = selectedNetwork.buttonTypesCount.find(
+            (buttonTypeCount) =>
+              buttonTypeCount.type == buttonType.name,
+          )?.count;
+          return {
+            ...buttonType,
+            caption: `${buttonType.caption} ${typeCount ? typeCount : 0}`,
+            selected: false,
+          }
         });
-      } else {
-        setButtonTypes(() => {
-          return selectedNetwork.buttonTemplates;
-        });
-      }
+      });
     }
-  }, [selectedNetwork]);
+  }, [buttonTypes]);
 
-  return (
-    <ButtonTypesNav buttonTypes={buttonTypes} pageName={pageName} />
-  );
-}
+  useEffect(() => {
+    const selectedTypes = filters.helpButtonTypes;
+    if (selectedTypes) {
+      setTypes(() => types.map((type) => {
+        if (selectedTypes.indexOf(type.name) > -1) {
+          return { ...type, selected: true, }
+        }
+        return { ...type, selected: false };
+      }))
+    }
+  }, [filters.helpButtonTypes])
+  const handleClick = (type) => {
 
-export function ButtonTypesNav({ buttonTypes, pageName = '' }) {
-
-  return (
-    <>
-      {buttonTypes &&
-        buttonTypes.map((buttonType, idx) => {
-          const buttoTypeCountText =
-            (buttonType?.count ? buttonType?.count : 0).toString() +
-            ' ' +
-            buttonType.caption;
-          return (
-            <div className="hashtags__list-item" key={idx}>
-              <BtnButtonType
-                buttonTypeName={buttonType.name}
-                preCaption={
-                  (buttonType?.count
-                    ? buttonType?.count
-                    : 0
-                  ).toString() + ' '
-                }
-                pageName={pageName}
-              />
-            </div>
-          );
-        })}
-    </>
-  );
-}
-
-export function BtnButtonType({ buttonTypeName, preCaption = '', pageName = ''}) {
-  const filterButtonType = (buttonType) => {
-    store.emit(new ToggleAdvancedFilters(false));
-    store.emit(new UpdateFiltersToFilterButtonType(buttonType));
-    store.emit(new updateCurrentButton(null));
+    const newFilters = { ...filters, helpButtonTypes: [type] }
+    store.emit(new UpdateFilters(newFilters));
     if (pageName != 'Explore') {
       router.push('/Explore');
     }
-  };
-  const buttonTypes = useButtonTypes();
-  const buttonType = buttonTypes.find(
-    (_buttonType) => _buttonType.name == buttonTypeName,
-  );
+  }
+
   return (
     <>
-      {buttonType && (
-        <BtnCaption
-          caption={preCaption + buttonType.caption}
-          icon={buttonType?.icon}
-          color={buttonType.cssColor}
-          onClick={() =>
-            filterButtonType(buttonType.name)
-          }
-        />
-      )}
+      {types.map((buttonType) => {
+        return <div className="hashtags__list-item"><BtnButtonType type={buttonType} onClick={handleClick} /></div>
+
+      })}
     </>
   );
+}
+
+export function BtnButtonType({ type, onClick = (type) => { } }) {
+  return (
+    <BtnCaption
+      caption={`${type.caption}`}
+      // caption={`${type.caption} ${type.selected ? '!': ''}`}
+      icon={type?.icon}
+      color={type.cssColor}
+      onClick={() =>
+        onClick(type.name)
+      }
+    />
+  );
+}
+
+export function FieldMultiSelectButtonTypes({ selectedTypes, types, handleChange }) {
+  return (<FieldMultiSelect
+    label={t('buttonFilters.types')}
+    validationError={null}
+    explain={t('buttonFilters.typesExplain')}
+  >
+    <MultiSelectButtonTypes selectedTypes={selectedTypes} types={types} handleChange={handleChange} />
+  </FieldMultiSelect>
+  )
+}
+export function MultiSelectButtonTypes({ selectedTypes, types, handleChange }) {
+  return <>
+    {(selectedTypes && types) && types.map((buttonType, idx) => {
+      return (
+
+        <MultiSelectOption
+          iconLink={buttonType.icon}
+          color={buttonType.cssColor}
+          icon='emoji'
+          name={buttonType.name}
+          handleChange={(name, newValue) => {
+            handleChange(name, newValue)
+          }}
+          key={idx}
+          checked={selectedTypes.indexOf(buttonType.name) > -1}
+        >
+          {/* <div className="btn-filter__icon"></div> */}
+          <div className="btn-with-icon__text">
+            {buttonType.caption}
+          </div>
+        </MultiSelectOption>
+      );
+    })}</>
+
 }

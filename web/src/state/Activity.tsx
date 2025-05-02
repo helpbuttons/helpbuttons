@@ -17,11 +17,13 @@ import {
 } from 'services/LocalStorage';
 import { ActivityMessageDto } from 'shared/dtos/activity.dto';
 import _ from 'lodash';
+import dconsole from 'shared/debugger';
 export interface Activities {
   messages: Messages;
   notifications: ActivityDtoOut[];
   notificationsPage: number;
   notificationsPermissionGranted: boolean;
+  focusMessageId: number;
 }
 export interface Messages {
   read: ActivityMessageDto[];
@@ -40,6 +42,7 @@ export const activitiesInitialState: Activities = {
   notifications: [],
   notificationsPage: 0,
   notificationsPermissionGranted: false,
+  focusMessageId: -1,
 };
 
 export class PermissionGranted implements UpdateEvent {
@@ -131,7 +134,7 @@ export class FoundMessagesRead implements UpdateEvent {
           ...state.activities.messages.read,
           ...this.messages,
         ], 'id');
-
+        newState.activities.focusMessageId = -1;
         if(this.messages.length > 0)
         {
           newState.activities.messages.readPage =
@@ -204,6 +207,18 @@ export class ActivityNotificationsMarkAllAsRead
   }
 }
 
+
+export class SetFocusOnMessage
+  implements UpdateEvent
+{
+  public constructor(private messageId) {}
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      newState.activities.focusMessageId = this.messageId
+    });
+  }
+}
+
 export class FindMoreNotifications implements WatchEvent {
   public constructor(private onSuccess) {}
 
@@ -230,6 +245,7 @@ export class FoundNotifications implements UpdateEvent {
           ...state.activities.notifications,
           ...this.notifications,
         ], 'id');
+        newState.activities.focusMessageId = -1;
         if(this.notifications.length > 0)
         {
           newState.activities.notificationsPage =
@@ -265,7 +281,7 @@ export class ActivityNotified implements UpdateEvent {
 }
 
 export const activityTo = (activity: Activity) => {
-  console.log(activity);
+  dconsole.log(activity);
   switch (activity.eventName) {
     case '':
       return { type: 'this', message: 'oloooow' };

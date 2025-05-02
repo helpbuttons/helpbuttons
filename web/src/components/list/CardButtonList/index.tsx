@@ -7,13 +7,21 @@ import { buttonColorStyle } from 'shared/buttonTypes';
 import { HiglightHexagonFromButton, updateCurrentButton } from 'state/Explore';
 import { store } from 'state';
 import router from 'next/router';
+import { MainPopupPage, SetMainPopup, SetMainPopupCurrentButton } from 'state/HomeInfo';
+import { alertService } from 'services/Alert';
 
-export default function CardButtonList({ buttonTypes, button, showMap, linkToPopup, linkIframe }) {
+export enum ButtonLinkType {
+  EXPLORE,
+  IFRAME,
+  MAINPOPUP,
+}
+export default function CardButtonList({ buttonTypes, button, showMap, linkType = null }) {
   const buttonType = buttonTypes.find(
     (buttonTemplate) => buttonTemplate.name == button.type,
   );
-  if(!buttonType)
+  if(!buttonType && buttonTypes.length > 0)
   {
+    alertService.error(`type of button not found '${button.type}'`)
     console.error(`type of button not found '${button.type}'`)
   }
   return (
@@ -23,12 +31,15 @@ export default function CardButtonList({ buttonTypes, button, showMap, linkToPop
           onMouseEnter={() => {store.emit(new HiglightHexagonFromButton(button.hexagon))}}
           onMouseLeave={() => {store.emit(new HiglightHexagonFromButton(null))}}
           onClick={() => {
-            if(linkToPopup)
+            if(linkType == ButtonLinkType.EXPLORE)
             {
               store.emit(new HiglightHexagonFromButton(button.hexagon))
               store.emit(new updateCurrentButton(button))
-            }else if(linkIframe){
+
+            }else if(linkType == ButtonLinkType.IFRAME){
               window.open(`/ButtonFile/${button.id}`,'_blank')
+            }else if(linkType == ButtonLinkType.MAINPOPUP){
+              store.emit(new SetMainPopupCurrentButton(button));
             }else{
               router.push(`/ButtonFile/${button.id}`)
             }

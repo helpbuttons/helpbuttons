@@ -27,6 +27,7 @@ import { UserService } from '../user/user.service';
 import { isImageData } from '@src/shared/helpers/imageIsFile';
 import { removeUndefined } from '@src/shared/helpers/removeUndefined';
 import {
+  CACHE_MANAGER,
   CacheInterceptor,
   CacheKey,
   CacheTTL,
@@ -36,6 +37,7 @@ import { getConfig } from '@src/shared/helpers/config.helper';
 import { SetupDtoOut } from '../setup/setup.entity';
 import configs from '@src/config/configuration';
 import { uploadDir } from '../storage/storage.utils';
+import { Cache } from 'cache-manager';
 
 @Injectable()
 export class NetworkService {
@@ -48,7 +50,8 @@ export class NetworkService {
     private readonly userService: UserService,
     @InjectEntityManager()
     private readonly entityManager: EntityManager,
-  ) {}
+    @Inject(CACHE_MANAGER) private cacheManager: Cache
+  ) { }
 
   async create(createDto: CreateNetworkDto) {
     const network = {
@@ -69,7 +72,8 @@ export class NetworkService {
       currency: createDto.currency,
       nomeclature: createDto.nomeclature,
       nomeclaturePlural: createDto.nomeclaturePlural,
-      requireApproval: createDto.requireApproval
+      requireApproval: createDto.requireApproval,
+      hideLocationDefault: createDto.hideLocationDefault
     };
     await getManager().transaction(
       async (transactionalEntityManager) => {
@@ -116,66 +120,78 @@ export class NetworkService {
     });
   }
 
-  @UseInterceptors(CacheInterceptor)
-  @CacheKey('defaultNetwork')
-  @CacheTTL(30) // override TTL to 30 seconds
   findDefaultNetwork(includeHidden = false): Promise<NetworkDto> {
-    return this.networkRepository
-      .find({ order: { created_at: 'ASC' } })
-      .then((networks) => {
-        if (networks.length < 1) {
-          console.log('no networks found?')
-          throw new HttpException(
-            {message: '🙆🏼‍♂️Default network not found'},
-            HttpStatus.NOT_FOUND,
-          );
+    // @ts-ignore
+    return this.cacheManager.get('defaultNetwork')
+      .then((network) => {
+        if (!network) {
+          return this.networkRepository
+            .find({ order: { created_at: 'ASC' } })
+            .then((networks) => {
+              if (networks.length < 1) {
+                console.log('no networks found?')
+                throw new HttpException(
+                  { message: '🙆🏼‍♂️Default network not found' },
+                  HttpStatus.NOT_FOUND,
+                );
+              }
+              return networks[0];
+            })
+            .then((defaultNetwork) => {
+              return this.entityManager
+                .query(`select type,count(button.id) from button LEFT JOIN public.user on "ownerId" = public.user.id where public.user.role <> 'blocked' AND button.expired = false AND button."awaitingApproval" = false AND deleted = false group by type;`)
+                .then((networkByButtonTypes) => {
+                  updateNomeclature(
+                    defaultNetwork.nomeclature,
+                    defaultNetwork.nomeclaturePlural,
+                  );
+                  const buttonTemplates = (templates) => {
+                    return templates.filter((temp) => !temp?.hide)
+                  }
+                  return {
+                    ...defaultNetwork,
+                    buttonTypesCount: networkByButtonTypes,
+                    exploreSettings: defaultNetwork.exploreSettings,
+                    buttonCount: networkByButtonTypes.reduce(
+                      (totalCount, buttonType) =>
+                        totalCount + parseInt(buttonType.count),
+                      0,
+                    ),
+                    buttonTemplates: buttonTemplates(defaultNetwork.buttonTemplates),
+                  };
+                });
+            })
+            .then((network) => {
+              return this.entityManager
+                .query(
+                  `select tag,count(tag) as count from (select unnest(tags) as tag from button where expired = false AND deleted = FALSE) as tags group by tag order by count desc limit 30`,
+                )
+                .then((topTags) => {
+                  return { ...network, topTags: topTags };
+                });
+            })
+            .then((network) => {
+              // find admins...
+              return this.userService
+                .findAdministrators()
+                .then((administrators) => {
+                  return { ...network, administrators };
+                });
+            })
+            .then((fullNetwork) => {
+              this.cacheManager.set('defaultNetwork', fullNetwork, 6000)
+              return fullNetwork
+            })
+        } else {
+          return network
         }
-        return networks[0];
-      })
-      .then((defaultNetwork) => {
-        return this.entityManager
-          .query(`select type,count(button.id) from button LEFT JOIN public.user on "ownerId" = public.user.id where public.user.role <> 'blocked' AND button.expired = false AND button."awaitingApproval" = false AND deleted = false group by type;`)
-          .then((networkByButtonTypes) => {
-            updateNomeclature(
-              defaultNetwork.nomeclature,
-              defaultNetwork.nomeclaturePlural,
-            );
-            const buttonTemplates = (templates) => {
-              return templates.filter((temp) => !temp?.hide)
-            }
-            
-            return {
-              ...defaultNetwork,
-              buttonTypesCount: networkByButtonTypes,
-              exploreSettings: defaultNetwork.exploreSettings,
-              buttonCount: networkByButtonTypes.reduce(
-                (totalCount, buttonType) =>
-                  totalCount + parseInt(buttonType.count),
-                0,
-              ),
-              buttonTemplates: buttonTemplates(defaultNetwork.buttonTemplates),
-            };
-          });
-      })
-      .then((network) => {
-        return this.entityManager
-          .query(
-            `select tag,count(tag) as count from (select unnest(tags) as tag from button where expired = false AND deleted = FALSE) as tags group by tag order by count desc limit 30`,
-          )
-          .then((topTags) => {
-            return { ...network, topTags: topTags };
-          });
-      })
-      .then((network) => {
-        // find admins...
-        return this.userService
-          .findAdministrators()
-          .then((administrators) => {
-            return { ...network, administrators };
-          });
       })
   }
 
+  async getCenter(): Promise<any> {
+    //@ts-ignore
+    return (await this.findDefaultNetwork()).exploreSettings.center;
+  }
   async findOne(id: string): Promise<any> {
     return this.findDefaultNetwork();
   }
@@ -201,24 +217,23 @@ export class NetworkService {
       currency: updateDto.currency,
       nomeclature: updateDto.nomeclature,
       nomeclaturePlural: updateDto.nomeclaturePlural,
-      requireApproval: updateDto.requireApproval
+      requireApproval: updateDto.requireApproval,
+      hideLocationDefault: updateDto.hideLocationDefault
     };
-    
     const buttonTemplatesNew = network.buttonTemplates.filter((btnTemplate) => !btnTemplate.hide).map((btnTemplate) => btnTemplate.name)
 
     const buttonTemplateActive = await this.entityManager.query(`select count(id), type from button group by type;`)
 
     const orphanButtonTemplates = buttonTemplateActive.filter((btnTemplate) => {
-      return !(buttonTemplatesNew.find((name) => name == btnTemplate.type) !==  undefined);
-    } )
+      return !(buttonTemplatesNew.find((name) => name == btnTemplate.type) !== undefined);
+    })
 
-    if(orphanButtonTemplates.length > 0)
-    {
+    if (orphanButtonTemplates.length > 0) {
       const undeletedButtonTemplates = orphanButtonTemplates.map((btnTemplate) => btnTemplate.type)
-      throw new ValidationException({ buttonTemplates: 'cant delete button template ' + JSON.stringify(undeletedButtonTemplates)});
+      throw new ValidationException({ buttonTemplates: 'cant delete button template ' + JSON.stringify(undeletedButtonTemplates) });
     }
-    
 
+    await this.cacheManager.del('defaultNetwork');
     await getManager().transaction(
       async (transactionalEntityManager) => {
         if (Array.isArray(updateDto.tags)) {
@@ -237,7 +252,7 @@ export class NetworkService {
             network.logo = await this.storageService.newImage64(
               updateDto.logo,
             );
-            if(defaultNetwork.logo != network.logo){
+            if (defaultNetwork.logo != network.logo) {
               await this.storageService.delete(defaultNetwork.logo)
             }
           } catch (err) {
@@ -250,7 +265,7 @@ export class NetworkService {
             network.jumbo = await this.storageService.newImage64(
               updateDto.jumbo,
             );
-            if(defaultNetwork.jumbo != network.jumbo){
+            if (defaultNetwork.jumbo != network.jumbo) {
               await this.storageService.delete(defaultNetwork.jumbo)
             }
           } catch (err) {
@@ -270,39 +285,8 @@ export class NetworkService {
   getConfig(): Promise<SetupDtoOut> {
     return getConfig();
   }
-  
-  async buttonsToDeleteFromButtonTemplates(
-    currentBtnTypes,
-    _newBtnTypes,
-  ) {
-    const networkBtnTypes = currentBtnTypes.map(
-      (btnType) => btnType.name,
-    );
-    const newNetworkBtnTypes = _newBtnTypes.map(
-      (btnType) => btnType.name,
-    );
 
-    const deletedFromNetwork = networkBtnTypes.filter((btnType) => {
-      return !(newNetworkBtnTypes.indexOf(btnType) > -1);
-    });
-    if (deletedFromNetwork.length > 0) {
-      const types = deletedFromNetwork.reduce((result, btnType) => {
-        if (result.length > 0) {
-          return `${result},'${btnType}'`;
-        } else {
-          return `'${btnType}'`;
-        }
-      }, '');
-      const query = `select count(id), type from button where type IN (${types}) group by type`;
-
-      return await this.entityManager.query(query);
-    }
-    return [];
-  }
-
-
-  getButtonTypesWithEventField()
-  {
+  getButtonTypesWithEventField() {
     return this.findButtonTypes()
       .then((buttonTemplates) => {
         return buttonTemplates
@@ -325,8 +309,7 @@ export class NetworkService {
       })
   }
 
-  async getLogo(res, resolution :number)
-  {
+  async getLogo(res, resolution: number) {
     return await this.findDefaultNetwork().then(async (network) => {
       const fs = require('fs');
       const logo = network.logo.replace('/files/get/', '');
@@ -341,9 +324,9 @@ export class NetworkService {
       }
       return await res.sendFile(logoResized, { root: uploadDir });
     })
-    
+
   }
-  
+
   manifest() {
     return this.findDefaultNetwork().then(network => {
       const apiUrl = `${configs().WEB_URL}/api/networks`
@@ -356,7 +339,7 @@ export class NetworkService {
         description: network.description,
         icons: [
           {
-            src:  `${apiUrl}/logo/48`,
+            src: `${apiUrl}/logo/48`,
             sizes: '48x48',
             type: 'image/png',
           },
@@ -388,14 +371,14 @@ export class NetworkService {
         ],
       };
     })
-    
+
   }
 
-  public findButtonTypes(){
+  public findButtonTypes() {
     return this.findDefaultNetwork()
-    .then((network) => {
-      return network.buttonTemplates
-    })
+      .then((network) => {
+        return network.buttonTemplates
+      })
   }
 }
 

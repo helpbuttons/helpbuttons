@@ -8,6 +8,7 @@ import {
 import { featureToH3Set, h3SetToFeature } from 'geojson2h3';
 import _ from 'lodash';
 import { maxResolution } from './types/honeycomb.const';
+import dconsole from './debugger';
 
 export function convertBoundsToGeoJsonPolygon(bounds: Bounds) {
   return {
@@ -237,9 +238,9 @@ export function calculateDensityMap(
             buttons: [button],
           });
         } catch (error) {
-          console.log(button.hexagon)
-          console.log(button);
-          console.error(error);
+          dconsole.log(button.hexagon)
+          dconsole.log(button);
+          dconsole.error(error);
           console.trace();
         }
       }
@@ -305,3 +306,14 @@ export function cellToZoom(hexagon, zoom)
   const resolution = getZoomResolution(zoom)
   return cellToParent(hexagon, resolution)
 }
+
+export const getHexagonCenter = (latLng, zoom) => {
+  const cell = latLngToCell(
+    latLng[0],
+    latLng[1],
+    getZoomResolution(zoom),
+  );
+  const center = cellToLatLng(cell);
+
+  return center;
+};

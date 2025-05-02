@@ -1,9 +1,8 @@
-import { Controller, Get, Param, Res, UseInterceptors } from '@nestjs/common';
+import { CacheTTL, Controller, Get, Param, UseInterceptors } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { AllowGuest } from '@src/shared/decorator/roles.decorator';
 import { GeoService } from './geo.service';
 import { CacheInterceptor } from '@nestjs/cache-manager';
-import { Response } from 'express';
 @ApiTags('geo')
 @Controller('geo')
 @UseInterceptors(CacheInterceptor)
@@ -11,14 +10,34 @@ export class GeoController {
   constructor(private readonly geoService: GeoService) {}
 
   @AllowGuest()
-  @Get('search/:address')
-  new(@Param('address') address: string) {
-    return this.geoService.search(address)
+  @UseInterceptors(CacheInterceptor)
+  @CacheTTL(1000*60*60)
+  @Get('search/full/:lat/:lon/:address')
+  full(@Param('address') address: string, @Param('lat') lat: string, @Param('lon') lon: string) {
+    return this.geoService.search(address, lat, lon)
   }
 
   @AllowGuest()
-  @Get('reverse/:lat/:lng')
-  reverse(@Param('lat') lat: string, @Param('lng') lng: string) {
-    return this.geoService.findAddress(lat,lng)
+  @UseInterceptors(CacheInterceptor)
+  @CacheTTL(1000*60*60)
+  @Get('search/limited/:lat/:lon/:address')
+  limited(@Param('address') address: string, @Param('lat') lat: string, @Param('lon') lon: string) {
+    return this.geoService.searchLimited(address, lat, lon)
+  }
+
+  @AllowGuest()
+  @UseInterceptors(CacheInterceptor)
+  @CacheTTL(1000*60*60)
+  @Get('reverse/full/:lat/:lon')
+  reverse(@Param('lat') lat: string, @Param('lon') lon: string) {
+    return this.geoService.findAddress(lat,lon)
+  }
+
+  @AllowGuest()
+  @UseInterceptors(CacheInterceptor)
+  @CacheTTL(1000*60*60)
+  @Get('reverse/limited/:lat/:lon')
+  reverseLimited(@Param('lat') lat: string, @Param('lon') lon: string) {
+    return this.geoService.findAddressLimited(lat,lon)
   }
 }

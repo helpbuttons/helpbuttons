@@ -99,7 +99,26 @@ margin: $margin-medium 0;
   margin-bottom: 0;
 }
 
-.form__field--location {
+.form__input--slider {
+  
+  margin: $margin-big;
+
+}
+
+.form__input--slider-value {
+
+  position: absolute;
+  bottom: 68px;
+  left: -20px;
+  font-weight: $font-weight-bolder;
+  padding: $padding-xxsmall $padding-small;
+  background-color: $color-white;
+  border-radius: $border-radius-circle;
+
+
+}
+
+.form__field-dropdown--input-location {
 
   display: flex;
   flex-direction: row;
@@ -108,6 +127,7 @@ margin: $margin-medium 0;
   justify-content: space-between;
   align-items: center;
   flex-direction: row;
+  min-height: 60px;
   // background-color: $color-white;
   // padding: $padding-small 0;
   gap: $padding-small;
@@ -118,6 +138,19 @@ margin: $margin-medium 0;
 
   }
 
+}
+
+.form__field-dropdown--location {
+
+  position: absolute;
+  z-index: $z-index-06;
+  width: 100%;
+
+}
+
+.form__field--location-wrapper {
+  position: relative;
+  min-height: 90px;
 }
 
 .form__field--feed {
@@ -150,14 +183,12 @@ margin: $margin-medium 0;
 
 }
 
+
 .form__explain,
 .form__label {
 
   margin-bottom: $margin-xsmall;
 
-}
-.form__input__field {
-  margin: $margin-xsmall 0;
 }
 
 //REVISE DE LAS CLASES DEL INPUT
@@ -194,11 +225,37 @@ margin: $margin-medium 0;
 
 }
 
+.form__input__field {
+  margin: $margin-xsmall 0;
+}
+
+
+.form__input--edit-address {
+  border: 1px solid $color-corporative;
+}
+
+.form__input--dropdown-search {
+
+  @extend .form__input;
+  display: flex;
+  flex-direction: row;
+
+}
+
+.form__input--dropdown-search__input {
+
+  height: 100%;
+  width: 100%;
+  
+}
+
+
 .form__input--text-length {
 
   font-size: $font-size-small;
   display: block;
   position: relative;
+  margin: $margin-small 0;
   color: $color-gray;
   bottom: 1rem;
   left: 0.3rem;
@@ -510,6 +567,9 @@ width: 100%;
 
   margin: 0 0 $margin-xxsmall $margin-small;
   font-size: $font-size-small;
+  display: flex;
+  gap: $padding-small;
+  flex-direction: row;
 
   &:hover {
 
@@ -603,6 +663,12 @@ width: 100%;
   bottom: -20px;
   right: -20px;
   
+}
+
+.form__input--location-loading {
+  display: flex;
+  align-items: center;
+
 }
 
 @media #{$breakpoints-medium} {

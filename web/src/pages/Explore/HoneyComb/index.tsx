@@ -50,10 +50,11 @@ import {
 import PopupButtonFile from 'components/popup/PopupButtonFile';
 import { alertService } from 'services/Alert';
 import { ButtonShow } from 'components/button/ButtonShow';
-import { maxZoom, showMarkersZoom } from 'components/map/Map/Map.consts';
+import { maxZoom, minZoom, showMarkersZoom } from 'components/map/Map/Map.consts';
 import { applyFiltersHex, isFiltering } from 'components/search/AdvancedFilters/filters.type';
 import { Button } from 'shared/entities/button.entity';
 import { filter } from 'rxjs';
+import dconsole from 'shared/debugger';
 
 const defaultZoomPlace = 13;
 
@@ -189,12 +190,6 @@ function useExploreSettings({
   const handleUrl = () => {
     const params = new URLSearchParams(window.location.search);
 
-    let [zoom, lat, lng] = [null, null, null];
-    try {
-      [zoom, lat, lng] = Array.from(router.query.params);
-    } catch (err) {
-      store.emit(new RecenterExplore());
-    }
     const btnId = params.get('btn');
     const hex = params.get('hex');
 
@@ -252,25 +247,11 @@ function useExploreSettings({
             store.emit(new updateCurrentButton(buttonFetched));
           },
           (errorMessage) => {
-            console.log(errorMessage);
+            dconsole.error(errorMessage);
             alertService.error(`Error fetching button`);
           },
         ),
       );
-    }
-    if (lat && lng) {
-      let newUpdateSettings: Partial<ExploreSettings> = {
-        center: [lat, lng],
-      };
-      if (Number(zoom) > 0 && Number(zoom) < maxZoom) {
-        newUpdateSettings = {
-          ...newUpdateSettings,
-          zoom: Number(zoom),
-        };
-      }
-
-      newUpdateSettings = { ...newUpdateSettings, urlUpdated: true };
-      store.emit(new UpdateExploreSettings(newUpdateSettings));
     }
   };
   useEffect(() => {

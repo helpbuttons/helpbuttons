@@ -1,13 +1,16 @@
-.component-header {
-  z-index: $z-index-02; // Revise
-  position: relative;
+.footer__wrapper {
+
+  padding: $padding-huge ;
+  background-color: $color-ligth-gray;
+  display: flex;
+  justify-content: flex-end;
 
 }
 
-// Avatar
-.component-header__user-header-menu {
-  background: #343a40;
-  padding: 8px;
-  border-radius: $border-radius-basic;
-  cursor: pointer;
+.footer__section--attr {
+
+  font-size: $font-size-xsmall;
+  color: $color-gray;
+
+
 }

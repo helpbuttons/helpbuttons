@@ -7,6 +7,7 @@ import { updateCurrentButton } from 'state/Explore';
 import { HbMap } from '.';
 import { BrowseType } from './Map.consts';
 import { featuresToGeoJson, getBoundsHexFeatures } from 'shared/honeycomb.utils';
+import dconsole from 'shared/debugger';
 const SCROLL_PIXELS_FOR_ZOOM_LEVEL = 150;
 
 export default function ExploreMap({
@@ -60,7 +61,7 @@ export default function ExploreMap({
             <GeoJson
               data={honeyCombFeatures.bounds}
               onClick={(feature) => {
-                console.log(feature.payload.properties.hex);
+                dconsole.log(feature.payload.properties.hex);
               }}
               styleCallback={(feature, hover) => {
                 if (hover) {

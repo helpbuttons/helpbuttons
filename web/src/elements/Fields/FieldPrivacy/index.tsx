@@ -1,4 +1,3 @@
-import CheckBox from 'elements/MultiSelectOption';
 import React from 'react';
 import { useState } from 'react';
 import { FieldCheckbox } from '../FieldCheckbox';

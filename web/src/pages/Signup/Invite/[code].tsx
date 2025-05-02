@@ -17,6 +17,7 @@ import { getLocale } from 'shared/sys.helper';
 import { LoadabledComponent } from 'components/loading';
 import { NextPageContext } from 'next';
 import { setMetadata } from 'services/ServerProps';
+import dconsole from 'shared/debugger';
 
 export default function Invite() {
   const router = useRouter();
@@ -65,9 +66,9 @@ export default function Invite() {
         if(err == 'login-incorrect')
         {
           setLoading(false)
-          console.log('tryin to login, failed, its ok, qr code is not registered yet')
+          dconsole.log('tryin to login, failed, its ok, qr code is not registered yet')
         }else{
-          console.log(err)
+          dconsole.error(err)
         }
       }))
     }

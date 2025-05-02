@@ -13,7 +13,7 @@ import { readableTimeLeftToDate } from 'shared/date.utils';
 import { ActivityMessageDto } from 'shared/dtos/activity.dto';
 import { ButtonTemplate } from 'shared/dtos/button.dto';
 import { PrivacyType } from 'shared/types/privacy.enum';
-import { ActivityMarkAsRead } from 'state/Activity';
+import { ActivityMarkAsRead, SetFocusOnMessage } from 'state/Activity';
 import { FindButton } from 'state/Explore';
 import { SetMainPopupCurrentButton } from 'state/HomeInfo';
 
@@ -36,7 +36,7 @@ export function ActivityMessageCard({
   }, [buttonTypes, button]);
   const [markingAsRead, setMarkingAsRead] = useState(false);
 
-  const jumpToButtonMessage = (messageId, read) => {
+  const jumpToButtonMessage = (id, read, messageId) => {
     const showPopupButton = (buttonId) => 
     {
       store.emit(
@@ -48,7 +48,7 @@ export function ActivityMessageCard({
     if (!read) {
       setMarkingAsRead(() => true);
       store.emit(
-        new ActivityMarkAsRead(messageId, () => {
+        new ActivityMarkAsRead(id, () => {
           setMarkingAsRead(() => false);
           alertService.info(t('notificaction.markedAsRead'));
           const buttonId = message.button.id;
@@ -60,6 +60,8 @@ export function ActivityMessageCard({
       const buttonId = message.button.id;
       showPopupButton(buttonId)
     }
+
+    store.emit(new SetFocusOnMessage(messageId))
   };
 
   return (
@@ -70,7 +72,7 @@ export function ActivityMessageCard({
         <Link
           href="#"
           onClick={() =>
-            jumpToButtonMessage(message.id, message.read)
+            jumpToButtonMessage(message.id, message.read, message.messageId)
           }
           className="card-notification card-notification--ribbon"
           // style={buttonColorStyle(buttonType?.cssColor)}

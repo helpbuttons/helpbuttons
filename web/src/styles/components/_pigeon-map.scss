@@ -96,10 +96,11 @@ $map-btns-size-mobile: 30px;
 .pigeon-map__hex-info {
 
     display: flex;
-    justify-content: center; /* Horizontally aligns children at the center */
+    justify-content: space-between; /* Horizontally aligns children at the center */
     align-items: center; /* Vertically aligns children at the center */
     height: 100%; /* Or any specific height */
     flex-wrap: wrap;
+    gap: 2px;
 
 }
 
@@ -112,7 +113,7 @@ $map-btns-size-mobile: 30px;
     flex-wrap:nowrap;
     margin-left: auto;
     width: 4rem;
-    left: -0.8rem;
+    left: -1rem;
     position: relative;
 
 }
@@ -149,12 +150,14 @@ $map-btns-size-mobile: 30px;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    pointer-events: none;
 
 
 }
 
 .pigeon-map__hex-wrap {
 
+    pointer-events: auto;
     top: 50%;
     transform: translateX(20%) translateY(-50%);
     transition: cubic-bezier(0.68, -0.55, 0.265, 1.55);
@@ -163,8 +166,13 @@ $map-btns-size-mobile: 30px;
     flex-direction: column;
     align-items: baseline;
     // line-height: $line-height-;
+    align-items: center;
+    justify-content: center;
+    /* margin: 1em; */
+    border-radius: 30px;
 
 }
+
 
 .pigeon-map__hex-wrap--selected::before {
     content: "";
@@ -175,14 +183,47 @@ $map-btns-size-mobile: 30px;
     animation: createBox .25s;
     // width: 100%;
     // padding-top: 100%;
-    width: 300%;
-    padding-top: 300%; /* This creates a square that scales to cover the height */
-    background-color: $color-white;
-    border-radius: 50%; /* This makes the square a circle */
+    background-color: $color-white-transparent;
+    width: 80%;
+    padding-top: 80%; /* This creates a square that scales to cover the height */
+    border-radius: $border-radius-circle; /* This makes the square a circle */
     z-index: -1;
     transition: cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
   }
+
+
+
+.pigeon-map__hex-wrap--selected {
+
+    position: relative;
+
+    display: flex;
+    min-width: 90px;
+    max-width: 120px;
+    flex-direction: row;
+    justify-content: center;
+    left: -50%;
+    gap: $padding-xsmall;
+    margin-left: auto;
+    flex-wrap: wrap;
+    align-items: center;
+
+
+
+  }
+
+
+.pigeon-map__hex-element--selected {
+
+    background: white;
+    padding: $padding-medium;
+    padding: $padding-small;
+    padding-left: $padding-medium;
+    border-radius: $border-radius-basic;
+    min-width: 30px;
+    
+}
 
 
   @keyframes createBox {

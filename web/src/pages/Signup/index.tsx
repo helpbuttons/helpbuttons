@@ -32,6 +32,7 @@ import { NextPageContext } from 'next';
 import { setMetadata } from 'services/ServerProps';
 import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
 import { useMetadataTitle } from 'state/Metadata';
+import dconsole from 'shared/debugger';
 
 export default function Signup() {
   const {
@@ -89,12 +90,13 @@ export default function Signup() {
   const onSuccess = (userData) => {
     setIsSubmitting(false)
     store.emit(new SetMainPopup(MainPopupPage.HIDE))
+    alertService.success(t('user.signupSuccess', [selectedNetwork.name]))
   };
 
   const onError = (error) => {
     setIsSubmitting(false)
     setValidationErrors(error?.validationErrors, setError);
-    console.log(error);
+    dconsole.error(error);
     alertService.error(error.caption);
   };
 

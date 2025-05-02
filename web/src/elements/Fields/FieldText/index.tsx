@@ -17,6 +17,7 @@ interface IFieldText {
     defaultValue?: string;
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
     onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
+    onFocus?: (e: React.FocusEvent<HTMLInputElement>) => void;
 }
 
 const FieldText = React.forwardRef<HTMLInputElement, IFieldText>(
@@ -28,6 +29,7 @@ const FieldText = React.forwardRef<HTMLInputElement, IFieldText>(
         placeholder,
         onChange,
         onBlur,
+        onFocus = () => {},
         validationError,
         multiInput = false,
         explain,
@@ -69,6 +71,7 @@ const FieldText = React.forwardRef<HTMLInputElement, IFieldText>(
             }`}
             defaultValue={defaultValue}
             onInput={onInput}
+            onFocus={onFocus}
           />
           <div className="form__input-subtitle">
               {maxLength > 0 && (
@@ -76,19 +79,12 @@ const FieldText = React.forwardRef<HTMLInputElement, IFieldText>(
                   {textLength} / {maxLength}
                 </label>
               )}
+              
                 <FieldError
                   validationError={validationError}
                   extraMessage={extraMessage}
                 />
-  
-            {/* {subInputLink &&
-  
-                      <div className="form__input-subtitle-side">
-                          <a href={subInputLink} className="form__input-subtitle--text link">
-                              {subInputLinkText}
-                          </a>
-                      </div>
-                  } */}
+
           </div>
           {children}
         </div>

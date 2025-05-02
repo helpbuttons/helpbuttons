@@ -8,6 +8,7 @@ import Loading from 'components/loading';
 import { useEffect } from 'react';
 import { FindButton, NextCurrentButton, PreviousCurrentButton, updateCurrentButton } from 'state/Explore';
 import { useSwipeable } from 'react-swipeable';
+import Footer from 'components/footer';
 
 
 export function ButtonShow({button}) {
@@ -23,8 +24,11 @@ export function ButtonShow({button}) {
       // }
     }
   });
+  const [showReplyFirstPost, toggleShowReplyFirstPost] =  useToggle(false);
+  const [isPrivateMessage, setPrivateMessage] = useToggle(false);
 
   const buttonTypes = useButtonTypes();
+
   return (
      <div {...handlers}> 
       {button && buttonTypes && (
@@ -32,8 +36,16 @@ export function ButtonShow({button}) {
           <CardButton
             button={button}
             buttonTypes={buttonTypes}
+            showReplyFirstPost={showReplyFirstPost}
+            toggleShowReplyFirstPost={toggleShowReplyFirstPost}
           />
-          <Feed button={button} />
+          <Feed 
+            button={button}
+            showReplyFirstPost={showReplyFirstPost}
+            isprivateMessage={isPrivateMessage}
+            toggleShowReplyFirstPost={toggleShowReplyFirstPost}
+          />
+          <Footer />
         </>
       )}
       {!(button && buttonTypes) && <Loading />}

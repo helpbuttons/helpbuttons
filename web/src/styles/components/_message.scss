@@ -5,7 +5,7 @@ $message-min-width: 50px;
 $message-me-after-top: 1rem solid $color-corporative;
 $message-me-after-lateral: .75rem solid transparent;
 $message-padding-big: $padding-big;
-$message-you-margin-left:40px;
+$message-you-margin-left: $margin-xbig;
 
 .message {
   border-radius: $message-border-radius;
@@ -21,7 +21,7 @@ $message-you-margin-left:40px;
     background: $color-white;
     border-radius: $message-border-radius-semicircle $message-border-radius-semicircle 0 $message-border-radius-semicircle;
     margin-left: auto;
-    margin-right: $margin-small;
+    margin-right: $message-you-margin-left;
     padding-bottom: 0;
 
     .message__hour {
@@ -74,8 +74,6 @@ $message-you-margin-left:40px;
 
 }
 
-
-
 .message__name {
 
     width: 100%;
@@ -92,7 +90,6 @@ $message-you-margin-left:40px;
 
       // width: calc(100% - 80px);
 
-
 }
 
 .message__content {
@@ -102,14 +99,12 @@ $message-you-margin-left:40px;
 
 }
 
-
-
 .message--you {
 
-  background-color: $color-gray;
+  background-color: $color-white;
   margin-right: auto;
   margin-left: $message-you-margin-left;
-  min-width: $message-min-width;
+  min-width: 50%;
   border-radius: $message-border-radius-semicircle $message-border-radius-semicircle $message-border-radius-semicircle 0;
   margin-bottom: $margin-xsmall;
 
@@ -127,11 +122,25 @@ $message-you-margin-left:40px;
 
   }
 
+
+  .message__avatar {
+
+    left: -40px;
+    bottom: 0;
+    height: 35px;
+    position: absolute;
+    display: flex;
+    border-radius: $border-radius-circle;
+    overflow: hidden;
+    border-radius: 100%;
+
+  }
+
 }
 
 .message--others {
 
-  background-color: $color-ligth-gray;
+  background-color: $color-white;
   min-width: 50%;
   border-radius: $message-border-radius-semicircle $message-border-radius-semicircle 0 $message-border-radius-semicircle ;
   margin-bottom: $margin-xsmall;
@@ -164,5 +173,13 @@ $message-you-margin-left:40px;
   margin-right: $margin-xxsmall;
   padding: $padding-small 0;
 
+
+}
+
+.message__actions--you {
+
+  margin-right: auto;
+  display: flex;
+  justify-content: flex-start;
 
 }

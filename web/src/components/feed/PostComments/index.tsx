@@ -3,7 +3,7 @@ import Btn, {
   ContentAlignment,
   IconType,
 } from 'elements/Btn';
-import { store } from 'state';
+import { GlobalState, store, useGlobalStore } from 'state';
 import { DeleteComment } from 'state/Posts';
 import { alertService } from 'services/Alert';
 import { isAdmin } from 'state/Users';
@@ -23,7 +23,7 @@ import { PrivacyType } from 'shared/types/privacy.enum';
 import { formatMessage } from 'elements/Message';
 import { uniqueArray } from 'shared/sys.helper';
 import { Compose } from 'layouts/Feed';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useToggle } from 'shared/custom.hooks';
 import t from 'i18n';
 import { mentionsOfMessage } from 'shared/types/message.helper';
@@ -82,7 +82,7 @@ export function PostComment({
   reloadPosts,
   post,
   replies,
-  isReply = false
+  isReply = false,
 }) {
   const deleteComment = (commentId) => {
     store.emit(
@@ -101,6 +101,25 @@ export function PostComment({
       setShowComposeComment(() => ComposeCommentState.HIDE);
     }
   };
+
+  const [focus, setFocus] = useState(false)
+  const focusMessageId = useGlobalStore(
+    (state: GlobalState) => state.activities.focusMessageId,
+  );
+  useEffect(() => {
+    if(focusMessageId == comment.id){
+      setFocus(() => true)
+    }else{
+      setFocus(() => false)
+    }
+  }, [focusMessageId])
+
+  const alertRef = useRef(null);
+  useEffect(() => {
+    if (alertRef.current) {
+      alertRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [focus]); 
   return (
     <>
     <div
@@ -110,10 +129,13 @@ export function PostComment({
           ? ' card-notification--comment-private'
           : '') +
         (isReply ? ' card-notification--reply' : '')
+        +( focus ? ' card-notification-comment-focus' : '')
       }
     >
-      <Comment comment={comment} />
-      <div className="message__actions">
+      {focus && <div ref={alertRef}></div>}
+      
+      <Comment comment={comment} sessionUser={sessionUser}/>
+      <div className={'message__actions ' + (sessionUser && (sessionUser.id == comment.author.id) ? ' ' : 'message__actions--you') }>
         {sessionUser && (
           <>
             {comment.privacy == PrivacyType.PRIVATE && (
@@ -202,46 +224,87 @@ export function PostComment({
       </>
   );
 }
-export function Comment({ comment }) {
+export function Comment({ comment, sessionUser }) {
     const onClick = (e) =>{
       e.preventDefault()
       store.emit(new FindAndSetMainPopupCurrentProfile(comment.author.username))
     }
+
+    const isAuthor = sessionUser?.id === comment?.author?.id;
+    
   return (
     <>
-      <div className="message message--others">
-        <div className="message__header">
-          <div className="message__user-name-container">
-            <p className="message__author">
-              <span className="message__name">
-                {comment.author.name}
-              </span>{' '}
-              {/* @{comment.author.username} */}
-            </p>
+    {!isAuthor &&
+        <div className="message message--you">
+          <div className="message__header">
+            <div className="message__user-name-container">
+              <p className="message__author">
+                <span className="message__name">
+                  {comment.author.name}
+                </span>{' '}
+                {/* @{comment.author.username} */}
+              </p>
+            </div>
           </div>
-        </div>
-        <div className="message__content">
-          {formatMessage(comment.message, comment.mentions)}
-        </div>
+          <div className="message__content">
+            {formatMessage(comment.message, comment.mentions)}
+          </div>
 
-        <div className="message__hour">
-          {readableTimeLeftToDate(comment.created_at)},{' '}
-          {comment.privacy == PrivacyType.PRIVATE && (
-            <span style={{ color: 'red' }}>private</span>
-          )}
-        </div>
+          <div className="message__hour">
+            {readableTimeLeftToDate(comment.created_at)},{' '}
+            {comment.privacy == PrivacyType.PRIVATE && (
+              <span style={{ color: 'red' }}>private</span>
+            )}
+          </div>
 
-        <div className="message__avatar">
-        <Link href="#" onClick={onClick}>
-          <ImageWrapper
-            imageType={ImageType.avatar}
-            src={comment.author.avatar}
-            alt="Avatar"
-          />
-        </Link>
+          <div className="message__avatar">
+          <Link href="#" onClick={onClick}>
+            <ImageWrapper
+              imageType={ImageType.avatar}
+              src={comment.author.avatar}
+              alt="Avatar"
+            />
+          </Link>
+          </div>
+          <ImageGallery images={comment?.images?.map((image) => {return {src: image, alt: comment.message} })} />
         </div>
-        <ImageGallery images={comment?.images?.map((image) => {return {src: image, alt: comment.message} })} />
-      </div>
+      }
+      {isAuthor &&
+        <div className="message message--others">
+
+          <div className="message__header">
+            <div className="message__user-name-container">
+              <p className="message__author">
+                <span className="message__name">
+                  {comment.author.name}
+                </span>{' '}
+                {/* @{comment.author.username} */}
+              </p>
+            </div>
+          </div>
+          <div className="message__content">
+            {formatMessage(comment.message, comment.mentions)}
+          </div>
+
+          <div className="message__hour">
+            {readableTimeLeftToDate(comment.created_at)},{' '}
+            {comment.privacy == PrivacyType.PRIVATE && (
+              <span style={{ color: 'red' }}>private</span>
+            )}
+          </div>
+          <div className="message__avatar">
+          <Link href="#" onClick={onClick}>
+            <ImageWrapper
+              imageType={ImageType.avatar}
+              src={comment.author.avatar}
+              alt="Avatar"
+            />
+          </Link>
+          </div>
+          
+          <ImageGallery images={comment?.images?.map((image) => {return {src: image, alt: comment.message} })} />
+        </div>
+      }
     </>
   );
 }

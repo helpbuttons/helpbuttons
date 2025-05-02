@@ -1,6 +1,6 @@
 import ButtonForm from 'components/button/ButtonForm';
 import { GlobalState, store } from 'state';
-import { CreateButton, SaveButtonDraft, UpdateCachedHexagons, updateCurrentButton } from 'state/Explore';
+import { CreateButton, SaveButtonDraft, UpdateCachedHexagons } from 'state/Explore';
 import { alertService } from 'services/Alert';
 import { useForm } from 'react-hook-form';
 import router from 'next/router';
@@ -16,19 +16,17 @@ import { useStore } from 'state';
 import Loading from 'components/loading';
 import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
 import { useMetadataTitle } from 'state/Metadata';
+import { useSelectedNetwork } from 'state/Networks';
+import { markerFocusZoom } from 'components/map/Map/Map.consts';
 
 export default function ButtonNew({ metadata }) {
-  const selectedNetwork = useStore(
-    store,
-    (state: GlobalState) => state.networks.selectedNetwork,
-    null
-  );
+  const selectedNetwork = useSelectedNetwork()
 
   useMetadataTitle(t('menu.create'))
 
   return (
     <>
-    {selectedNetwork.exploreSettings ? 
+    {selectedNetwork?.exploreSettings?.center ? 
       <ButtonNewForm selectedNetwork={selectedNetwork} />
      : <Loading/>
     }
@@ -48,10 +46,11 @@ function ButtonNewForm({ selectedNetwork }) {
     title: '',
     images: [],
     radius: 1,
-    address: '',
+    address: null,
     when: { dates: [], type: null },
-    hideAddress: false,
-    eventData: null
+    hideAddress: selectedNetwork.hideLocationDefault,
+    eventData: null,
+    isCustomAddress: false
   };
   const {
     register,
@@ -69,7 +68,7 @@ function ButtonNewForm({ selectedNetwork }) {
     defaultValues
   });
 
-  register("address", { required: true })
+  register("address", { required: true })  
 
   const [isSubmitting, setIsSubmitting] = useState(false)
   const onSubmit = (data) => {
@@ -96,11 +95,12 @@ function ButtonNewForm({ selectedNetwork }) {
           if(buttonData.awaitingApproval)
           {
             setIsSubmitting(() => false)
-            router.push(`/ButtonFile/${buttonData.id}`);
+            alertService.info(t('moderation.awaitingApproval'));
+            router.push(`/Explore`);
           }else{
-            alertService.success(t('button.created'))
             store.emit(new UpdateCachedHexagons([]))
-            router.push(`/ButtonFile/${buttonData.id}`);
+            router.push(`/Explore/${markerFocusZoom}/${buttonData.latitude}/${buttonData.longitude}/?btn=${buttonData.id}`);
+            alertService.success(t('button.created'))
           }
         },
         (errorMessage) => {
@@ -122,7 +122,9 @@ function ButtonNewForm({ selectedNetwork }) {
     }else if(err.errorName == ErrorName.invalidDates){
       alertService.error(t('button.invalidDates'))
     }else if(err.errorName == ErrorName.InvalidMimetype){
-      alertService.error(t('validation.invalidMimeType'))
+      alertService.error(err.caption);
+    }else if(err.errorName == ErrorName.validationError){
+      alertService.error(err.caption);
     }else{
       console.error(JSON.stringify(err))
     }
@@ -132,7 +134,7 @@ function ButtonNewForm({ selectedNetwork }) {
   const {loadedDraft} = useButtonDraft({watch, getValues, reset, defaultValues})
   return (
     <>
-    {loadedDraft && 
+    {loadedDraft &&
       <ButtonForm
         watch={watch}
         reset={reset}

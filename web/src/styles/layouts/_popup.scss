@@ -45,7 +45,7 @@ body {
   background: $color-white;
   box-shadow: unset;
   padding: 0;
-  z-index: $z-index-04;
+  z-index: $z-index-03;
   height: 100%;
 
   // Header Top Content Bottom
@@ -53,7 +53,6 @@ body {
   flex-flow: column;
   top: 0;
   // Scroll popup content
-  max-width: 100%;
   position: absolute;
   justify-content: flex-start;
 
@@ -158,8 +157,9 @@ body {
 
 .popup__section {
 
-  padding: $padding-big;
+  padding: $padding-huge;
   height: auto;
+  position: relative;
   
 }
 
@@ -450,8 +450,8 @@ body {
 
   .popup--button-file {
 
-    max-width: $list-width-desktop;
+    max-width: $grid-max-width;
+  } 
 
-  }  
 
 }

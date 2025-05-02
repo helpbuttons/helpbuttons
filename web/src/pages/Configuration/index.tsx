@@ -18,6 +18,7 @@ import {
   UpdateNetworkTextColor,
 } from 'state/Networks';
 import { useStore } from 'state';
+import dconsole from 'shared/debugger';
 
 export default Configuration;
 
@@ -28,7 +29,6 @@ function Configuration() {
     false,
   );
 
-  const [loadingNetwork, setLoadingNetwork] = useToggle(true);
   const {
     handleSubmit,
     formState: { errors, isSubmitting },
@@ -43,15 +43,15 @@ function Configuration() {
 
   const backgroundColor = watch('backgroundColor');
   useUpdateBackgroundColor(backgroundColor);
-
+  const [on, setOn] = useState(false)
   const textColor = watch('textColor');
   useTextColor(textColor);
   const { pathname, asPath, query } = useRouter();
 
   const [selectedNetwork, setSelectedNetwork] = useState(null);
   useEffect(() => {
-    if (selectedNetwork && !selectedNetwork?.init && loadingNetwork) {
-      setLoadingNetwork(false);
+    if (selectedNetwork && !selectedNetwork?.init) {
+      setOn(() => true)
       reset(selectedNetwork);
     }
   }, [selectedNetwork]);
@@ -83,7 +83,8 @@ function Configuration() {
           nomeclature: data.nomeclature,
           nomeclaturePlural: data.nomeclaturePlural,
           requireApproval: data.requireApproval,
-          slogan: data.slogan
+          slogan: data.slogan,
+          hideLocationDefault: data.hideLocationDefault
         },
         (network) => {
           store.emit(new UpdateExploreSettings(data.exploreSettings));
@@ -101,7 +102,7 @@ function Configuration() {
             new FetchDefaultNetwork(
               () => {},
               (error) => {
-                console.log(error);
+                dconsole.error(error);
               },
             ),
           );
@@ -116,7 +117,7 @@ function Configuration() {
               const mimetype = err.validationErrors.jumbo.substr(
                 mimetypeError.length,
               );
-              console.log(mimetype);
+              dconsole.log(mimetype);
               const mimetypeErrorMessage = t(
                 'common.invalidMimeType',
                 ['background image', mimetype],
@@ -148,7 +149,7 @@ function Configuration() {
               );
             }
           } else {
-            console.log(err);
+            dconsole.error(err);
           }
         },
       ),
@@ -156,9 +157,9 @@ function Configuration() {
   };
   return (
     <>
-      {selectedNetwork &&
+      {(selectedNetwork &&
         sessionUser &&
-        sessionUser.role == Role.admin && (
+        sessionUser.role == Role.admin && on) && (
           <Popup title={t('configuration.title')} linkBack="/Profile">
              {/* <Plugins customFields={'ld'} setCustomFields={() => {}} /> */}
             <NetworkForm
@@ -174,7 +175,6 @@ function Configuration() {
               captionAction={t('common.save')}
               linkFwd="/Profile"
               description={t('configuration.description')}
-              defaultExploreSettings={selectedNetwork.exploreSettings}
             />
           </Popup>
         )}

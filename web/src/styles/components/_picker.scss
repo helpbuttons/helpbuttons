@@ -309,7 +309,7 @@ $picker-comments-item-padding: 25px;
   height: auto;
   width: auto;
   display: flex;
-  margin-bottom: $margin-medium;
+  margin: $margin-medium 0;
   min-height: 250px;
 
   .pigeon-zoom-buttons {
@@ -320,6 +320,18 @@ $picker-comments-item-padding: 25px;
   }
 
 }
+
+.picker__map:hover {
+
+ cursor: grab;
+
+}
+
+.picker__map:active {
+
+  cursor: grabbing;
+ 
+ }
 
 .picker--over {
 

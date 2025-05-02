@@ -1,14 +1,10 @@
 import ButtonForm from 'components/button/ButtonForm';
-import { GlobalState, store } from 'state';
+import { store } from 'state';
 import {
-  CreateButton,
   FindButton,
-  SaveButtonDraft,
   UpdateButton,
   updateCurrentButton,
 } from 'state/Explore';
-import { NavigateTo } from 'state/Routes';
-import { useRef } from 'store/Store';
 import { alertService } from 'services/Alert';
 import { Button } from 'shared/entities/button.entity';
 import { useEffect, useState } from 'react';
@@ -17,13 +13,9 @@ import { UpdateButtonDto } from 'shared/dtos/button.dto';
 import t from 'i18n';
 import { useRouter } from 'next/router';
 import { ErrorName } from 'shared/types/error.list';
+import { markerFocusZoom } from 'components/map/Map/Map.consts';
 
 export default function ButtonEdit() {
-  const selectedNetwork = useRef(
-    store,
-    (state: GlobalState) => state.networks.selectedNetwork,
-  );
-
 
   const {
     register,
@@ -48,7 +40,6 @@ export default function ButtonEdit() {
   const router = useRouter()
   const onSubmit = (data) => {
     setIsSubmitting(() => true)
-
     store.emit(
       new UpdateButton(id,
         data,
@@ -59,8 +50,7 @@ export default function ButtonEdit() {
   };
 
   const onSuccess = (data) => {
-
-    router.push(`/Explore?lat=${data.lat}&lng=${data.lng}&btn=${data.id}`);
+    router.push(`/Explore/${markerFocusZoom}/${data.latitude}/${data.longitude}?btn=${data.id}`);
   };
 
   const onError = (err) => {
@@ -85,7 +75,6 @@ export default function ButtonEdit() {
       new FindButton(
         router.query.id as string,
         (buttonFetched) => {
-          store.emit(new updateCurrentButton(buttonFetched))
           setButton(buttonFetched);
           reset(buttonFetched);
         }

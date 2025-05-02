@@ -1,15 +1,16 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { GeoJson, GeoJsonFeature, Marker, Overlay, Point } from 'pigeon-maps';
-import { GlobalState, store } from 'state';
+import { GlobalState, store, useGlobalStore } from 'state';
 import {
   RecenterExplore,
   UpdateHexagonClicked, updateCurrentButton,
 } from 'state/Explore';
 import { HbMap } from '.';
 import {
-  convertH3DensityToFeatures} from 'shared/honeycomb.utils';
+  convertH3DensityToFeatures,
+  getZoomResolution} from 'shared/honeycomb.utils';
 import _ from 'lodash';
-import { buttonColorStyle } from 'shared/buttonTypes';
+import { buttonColorStyle, useButtonType } from 'shared/buttonTypes';
 import Loading from 'components/loading';
 import { IoStorefrontSharp } from 'react-icons/io5';
 import { ShowMobileOnly } from 'elements/SizeOnly';
@@ -19,6 +20,10 @@ import { Button } from 'shared/entities/button.entity';
 import { MarkerButton } from './MarkerButton';
 import t from 'i18n';
 import { PoweredBy } from 'components/brand/powered';
+import { circleGeoJSON } from 'shared/geo.utils';
+import dconsole from 'shared/debugger';
+import { h3SetToFeature } from 'geojson2h3';
+import { cellToParent } from 'h3-js';
 
 export default function HexagonExploreMap({
   h3TypeDensityHexes,
@@ -29,6 +34,7 @@ export default function HexagonExploreMap({
 }) {
   const [centerBounds, setCenterBounds] = useState<Point>(null);
   const [geoJsonFeatures, setGeoJsonFeatures] = useState([])
+  const [currentButtonHexagon, setCurrentButtonHexagon] = useState(null)
 
   const maxButtonsHexagon = useRef(1)
 
@@ -48,6 +54,32 @@ export default function HexagonExploreMap({
     false,
   );
 
+  const filtersByLocation = useGlobalStore(
+    (state: GlobalState) => state.explore.map.filters.where
+  );
+
+  const currentButton = useGlobalStore((state: GlobalState) => state.explore.currentButton)
+
+  useEffect(() => {
+    if(currentButton && currentButton.hideAddress)
+    {
+      const hexagon = cellToParent(currentButton.hexagon, getZoomResolution(exploreSettings.zoom))
+      
+      setCurrentButtonHexagon(() => h3SetToFeature([hexagon]))
+    }else{
+      setCurrentButtonHexagon(() => null)
+    }
+  }, [currentButton, exploreSettings.zoom])
+
+  const [filteredCircle, setFilteredCircle] = useState(null)
+  useEffect(() => {
+    if(filtersByLocation?.center && filtersByLocation?.radius)
+    {
+      setFilteredCircle(() => circleGeoJSON(filtersByLocation.center[1],filtersByLocation.center[0], filtersByLocation.radius*0.001));
+    }else{
+      setFilteredCircle(() => null)
+    }
+  }, [filtersByLocation])
   const onBoundsChanged = ({ center, zoom, bounds }) => {
     handleBoundsChange(bounds, center, zoom)
     setCenterBounds(center);
@@ -66,7 +98,7 @@ export default function HexagonExploreMap({
   }, [h3TypeDensityHexes]);
 
   const buttonTypes = selectedNetwork.buttonTemplates;
-
+  const currentButtonType = useButtonType(currentButton, buttonTypes);
   const [hexagonClickedFeatures, setHexagonClickedFeatures] = useState(null)
   useEffect(() => {
     if (!hexagonHighlight && !hexagonClicked) {
@@ -78,48 +110,6 @@ export default function HexagonExploreMap({
     }
   }, [hexagonHighlight, hexagonClicked, geoJsonFeatures])
 
-  const places = [
-    {
-      address: 'Eiffel Tower, Paris, France',
-      coords: {
-        lat: 48.8584,
-        lng: 2.2945,
-      },
-      id: '1',
-    },
-    {
-      address: 'Colosseum, Rome, Italy',
-      coords: {
-        lat: 41.8902,
-        lng: 12.4922,
-      },
-      id: '2',
-    },
-    {
-      address: 'Brandenburg Gate, Berlin, Germany',
-      coords: {
-        lat: 52.5163,
-        lng: 13.3777,
-      },
-      id: '3',
-    },
-    {
-      address: 'Buckingham Palace, London, UK',
-      coords: {
-        lat: 51.5014,
-        lng: -0.1419,
-      },
-      id: '4',
-    },
-    {
-      address: 'Sagrada Família, Barcelona, Spain',
-      coords: {
-        lat: 41.4036,
-        lng: 2.1744,
-      },
-      id: '5',
-    },
-  ];
   return (
     <>
       {(exploreSettings.center && selectedNetwork) && (
@@ -128,14 +118,17 @@ export default function HexagonExploreMap({
             mapCenter={exploreSettings.center}
             mapZoom={exploreSettings.zoom}
             onBoundsChanged={onBoundsChanged}
-            tileType={exploreSettings.tileType}
+            tileType={selectedNetwork.exploreSettings.tileType}
             handleClick={onMapClick}
           >
             <DisplayInstructions />
             <DisplayHiddenButtonsWarning countFilteredButtons={countFilteredButtons} />
             <GeoJson>
+              
+            {filteredCircle && <GeoJsonFeature feature={filteredCircle}/>}
+            
               {/* DRAW HEXAGONS ON MAP */}
-              {!(exploreSettings.zoom >= showMarkersZoom) && geoJsonFeatures.map((hexagonFeature) => (
+              {!(exploreSettings.zoom >= showMarkersZoom)  && !currentButton && geoJsonFeatures.map((hexagonFeature) => (
                 <GeoJsonFeature
                   onClick={(feature) => {
                     if (hexagonFeature.properties.count > 0) {
@@ -207,11 +200,24 @@ export default function HexagonExploreMap({
                     }}
                   />
                 )}
+                {currentButtonHexagon &&
+                  <GeoJsonFeature
+                    feature={currentButtonHexagon}
+                    key={`currentButtonHexagon}`}
+                    styleCallback={(feature, hover) => {
+                      return {
+                        fill: 'red',
+                        opacity: '0.4',
+                      };
+                    }}
+                  />
+                }
             </GeoJson>
             {/*
         show count of buttons per hexagon
         */}
             {!exploreSettings.loading &&
+            !currentButton &&
               !(exploreSettings.zoom >= showMarkersZoom) &&
               geoJsonFeatures.map((hexagonFeature) => {
                 if (hexagonFeature.properties.count > 0) {
@@ -247,6 +253,7 @@ export default function HexagonExploreMap({
 
             {/* draw clicked hexagon */}
             {!exploreSettings.loading &&
+             !currentButton &&
               hexagonClickedFeatures &&
               !(exploreSettings.zoom >= showMarkersZoom) && (
                 <Overlay
@@ -269,7 +276,7 @@ export default function HexagonExploreMap({
                         }
                         return (
                           <span
-                            className="pigeon-map__hex-element"
+                            className="pigeon-map__hex-element--selected"
                             style={{
                               color: btnType.cssColor,
                               fontWeight: 'bold',
@@ -295,7 +302,7 @@ export default function HexagonExploreMap({
                   </div>
                 </Overlay>
               )}
-            {exploreSettings.zoom >= showMarkersZoom &&
+            {!currentButton && exploreSettings.zoom >= showMarkersZoom &&
               boundsFilteredButtons.filter(button => { return button.hideAddress ? false : button }).map((button, idx) => {
                 const btnType = buttonTypes.find((type) => {
                   return type.name == button.type;
@@ -311,7 +318,15 @@ export default function HexagonExploreMap({
                   />
                 );
               })}
-
+            {(currentButton && !currentButton.hideAddress) &&
+              <MarkerButton
+                anchor={[currentButton.latitude, currentButton.longitude]}
+                offset={[35, 65]}
+                button={currentButton}
+                handleMarkerClicked={() => {}}
+                color={currentButtonType.cssColor}
+              />
+            }
             {/* draw go to center icon */}
             <Overlay
               anchor={[100, 100]}

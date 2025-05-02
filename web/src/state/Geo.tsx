@@ -3,11 +3,12 @@ import { catchError, map, of } from "rxjs";
 import { GeoService } from "services/Geo";
 import { WatchEvent } from "store/Event";
 import { CacheMatch, CachePut } from "./Cache";
+import dconsole from "shared/debugger";
 
 export class GeoFindAddress implements WatchEvent {
     uid = '';
-    public constructor(private query: string, private onReady) {
-      this.uid = `places_${query}`
+    public constructor(private query: string,private lat: string,private lon: string, private limited: boolean , private onReady, private onError) {
+      this.uid = `places_${JSON.stringify(limited)}_${query}`
     }
     
     public watch(state: GlobalState) {
@@ -17,13 +18,14 @@ export class GeoFindAddress implements WatchEvent {
         this.onReady(found.response)
         return of(undefined);
       }
-      return GeoService.find(this.query).pipe(
+      return GeoService.find(this.query, this.lat, this.lon, this.limited).pipe(
         map((places) => {
             store.emit(new CachePut(this.uid, places))
             this.onReady(places)
         }),
         catchError((error) => {
           console.error(error)
+          this.onError(error)
           return of(undefined)
         }),
       );
@@ -32,20 +34,20 @@ export class GeoFindAddress implements WatchEvent {
 
   export class GeoReverseFindAddress implements WatchEvent {
     uid = '';
-    public constructor(private lat: number, private lng: number, private onReady, private onError) {  
-      this.uid = `place_${lat}${lng}`
+    public constructor(private lat: number, private lng: number, private limited: boolean, private onReady, private onError) {  
+      this.uid = `place_${limited}_${lat}${lng}`
     }
   
     public watch(state: GlobalState) {
       const found = CacheMatch(state, this.uid)
       if(found)
       {
-        console.log('hit')
-        console.log(found)
+        dconsole.log('hit')
+        dconsole.log(found)
         this.onReady(found.response)
         return of(undefined);
       }
-      return GeoService.reverse(this.lat, this.lng).pipe(
+      return GeoService.reverse(this.lat, this.lng, this.limited).pipe(
         map((place) => {
             store.emit(new CachePut(this.uid, place))
             this.onReady(place)
@@ -61,7 +63,6 @@ export class GeoFindAddress implements WatchEvent {
   export function emptyPlace(position = {lat:'0' ,lng: '0'}) {
     return {
       formatted: 'Unknown place',
-      formatted_city: 'Unknown place',
       geometry: position,
       id: '',
     }

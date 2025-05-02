@@ -458,6 +458,7 @@ export class ActivityService {
             message: comment.message,
             createdAt: activity.created_at,
             read: activity.read,
+            messageId: comment.id.toString(),
             id: activity.id.toString(),
             excerpt: excerptMessage,
           };
@@ -479,30 +480,16 @@ export class ActivityService {
       page,
       Not(In([ActivityEventName.NewPostComment])),
       (activity, buttonTypes): ActivityDtoOut => {
-        try {
-          return transformToMessage(
-            activity,
-            userId,
-            buttonTypes,
-            locale,
-          );
-        } catch (error) {
-          console.log(error);
-        }
-        return {
-          id: activity.id,
-          eventName: activity.eventName,
-          read: activity.read,
-          createdAt: 'fail',
-          title: 'ops.',
-          message: 'ops.',
-          image: 'image',
-          referenceId: 'ddd',
-          isPrivate: false,
-          isOwner: false,
-        };
+        return transformToMessage(
+          activity,
+          userId,
+          buttonTypes,
+          locale,
+        );
       },
-    );
+    )
+    //@ts-ignore
+    .then((activities) => activities.filter((activity) => activity))
   }
 
   public markAllMessagesAsRead(userId) {
@@ -538,7 +525,8 @@ export class ActivityService {
                 locale,
               );
             });
-          });
+          })
+          .then((activities) => activities.filter((activity) => activity))
       });
   }
 }

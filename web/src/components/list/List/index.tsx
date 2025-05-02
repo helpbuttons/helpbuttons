@@ -24,6 +24,7 @@ import Btn, {
 import { ShowDesktopOnly, ShowMobileOnly } from 'elements/SizeOnly';
 import { useButtonTypes } from 'shared/buttonTypes';
 import DraggableList from '../DraggableList';
+import { ButtonLinkType } from '../CardButtonList';
 
 function List({
   onLeftColumnToggle,
@@ -62,6 +63,10 @@ function List({
     store.emit(new UpdateFilters(newFilters));
   };
 
+  const [isListFullScreen, setListFullScreen] =
+  useState<boolean>(true);
+// const [isListOpen, setListOpen] = useState<boolean>(true);
+
   useEffect(() => {
     switch (viewMode) {
       case ExploreViewMode.MAP: {
@@ -97,9 +102,7 @@ function List({
     }
   }, [hexagonClicked]);
 
-  const [isListFullScreen, setListFullScreen] =
-    useState<boolean>(false);
-  // const [isListOpen, setListOpen] = useState<boolean>(true);
+
 
   const toggleListOpen = (value1, value2) => {
     setListOpen(value1);
@@ -108,21 +111,6 @@ function List({
 
   const buttonTypes = useButtonTypes();
 
-  let dropdownExploreViewOptions = [
-    {
-      value: ExploreViewMode.BOTH,
-      name: t('explore.both'),
-    },
-    {
-      value: ExploreViewMode.MAP,
-      name: t('explore.map'),
-    },
-    {
-      value: ExploreViewMode.LIST,
-      name: t('explore.list'),
-    },
-  ];
-
   return (
     <>
       <>
@@ -130,14 +118,15 @@ function List({
           {!showAdvancedFilters && (
             <DraggableList
               className={'list__container '}
-              initialPos={{
-                x: 0,
-                y: window.innerHeight - 110,
-              }}
+              // initialPos={{
+              //   x: 0,
+              //   y: window.innerHeight - 110,
+              // }}
               onFullScreen={toggleListOpen}
               isListOpen={isListOpen}
               isListFullScreen={isListFullScreen}
               setListOpen={setListOpen}
+              viewMode= {ExploreViewMode.LIST}
             >
               <div
                 className={
@@ -179,6 +168,7 @@ function List({
                     buttons={buttons}
                     buttonTypes={buttonTypes}
                     showMap={showMap}
+                    linkType={ButtonLinkType.EXPLORE}
                   />
                 )}
               </div>
@@ -262,6 +252,7 @@ function List({
                   buttons={buttons}
                   buttonTypes={buttonTypes}
                   showMap={showMap}
+                  linkType={ButtonLinkType.EXPLORE}
                 />
               )}
             </div>

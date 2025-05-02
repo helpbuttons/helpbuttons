@@ -50,6 +50,7 @@
 @import "components/card-button-map";
 @import "components/card-button-list";
 @import "components/card-feed";
+@import "components/card-button-featured";
 @import "components/nav-bottom";
 @import "components/nav-header";
 @import "components/_homeinfo";
@@ -71,11 +72,11 @@
 @import "layouts/header-desktop";
 @import "layouts/trending-tags";
 @import "layouts/feed";
+@import "layouts/footer";
 @import "layouts/button-new-location";
 @import "layouts/button-new-date";
 @import "layouts/button-share";
 @import "layouts/popup-create-net";
-@import "layouts/feed";
 @import "layouts/list";
 @import "layouts/popup";
 @import "layouts/repository";

@@ -141,7 +141,7 @@ export const findError = (errorsToFind, errors) => {
 export function readableDistance(distanceInMeters){
   if(!distanceInMeters)
   {
-    return <>&infin; m</>
+    return `∞ m`
   }
   if(distanceInMeters < 1001)
   {
@@ -171,3 +171,11 @@ export function previousElement(currentId, elements) {
 
   return null;
 }
+
+export const getEmailPrefix = (email) => {
+  if (!email) return '';
+  return email.replace(/^(.{1,4})(?=[^@]*@)|(?!^)[^@](?=[^@]*@)/g, (match, p1) => 
+    p1 ? p1 + '***' : '***'
+  
+  );
+};

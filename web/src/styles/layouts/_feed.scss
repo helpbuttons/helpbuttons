@@ -15,13 +15,21 @@ $feed-new-message-radius: $border-radius-circle;
 
 .feed-line {
 
-  display: none;
-  // position: absolute; revise
-  // height: 100%;
-  // width: 10px;
-  // background-color: $color-black;
-  // margin: 0 auto;
-  // left: 50%;
+  // display: none;
+  position: relative; 
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: $padding-huge;
+  align-items: center;
+  font-weight: $font-weight-bold;
+  color: $color-gray;
+  font-size: $font-size-small;
+  margin: auto;
+  max-width: $grid-max-width--mobile;
+
+
 }
 
 .feed-section {
@@ -65,7 +73,7 @@ $feed-new-message-radius: $border-radius-circle;
   height: $feed-selector-height;
   background-color: $feed-color-corporative;
   padding: $padding-big;
-  border-bottom: $border-style-basic;
+  border-bottom: none;
 }
 
 .feed-selector--list-toggle {
@@ -77,6 +85,22 @@ $feed-new-message-radius: $border-radius-circle;
   padding: 0;
   background-color: $color-ligth-gray;
 
+}
+
+.feed-selector__toggle-button {
+
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+}
+
+.feed-selector__notif-circle {
+  margin-top: $padding-medium;
+  margin-right: $padding-medium;
+  padding: $padding-medium;
+  
 }
 
 .feed-selector--activity {
@@ -217,6 +241,8 @@ $feed-new-message-radius: $border-radius-circle;
   .feed-section {
 
     padding-bottom: $padding-small;
+    max-width: $grid-max-width;
+    margin: auto;
 
   }
 

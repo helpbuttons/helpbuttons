@@ -18,13 +18,13 @@ export interface GlobalState {
   explore: ExploreState;
   alerts: Alert[];
   config: SetupDtoOut;
-  showFilters: boolean;
   draftNewCommentPost: any;
   invites: Invite[];
   homeInfo: HomeInfoState;
   activities: Activities;
   metadata: MetadataState;
   cacheValues: CacheValue[];
+  signupTags: string[];
   // newNotifications: NewNotification[]
 }
 
@@ -41,7 +41,6 @@ export const store = new Store<GlobalState>({
   explore: exploreInitial,
   alerts: [],
   config: null,
-  showFilters: false,
   unreadActivities: 0,
   draftNewCommentPost: null,
   invites: [],
@@ -49,6 +48,7 @@ export const store = new Store<GlobalState>({
   activities: activitiesInitialState,
   metadata: metadataInitialState,
   cacheValues: [],
+  signupTags: []
 });
 
 export function useGlobalStore(localState) {

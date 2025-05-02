@@ -15,6 +15,8 @@ import { setMetadata } from 'services/ServerProps';
 import CardProfile from 'components/user/CardProfile';
 import ContentList from 'components/list/ContentList';
 import { useMetadataTitle } from 'state/Metadata';
+import dconsole from 'shared/debugger';
+import { ButtonLinkType } from 'components/list/CardButtonList';
 
 export default function p(props) {
   const sessionUser = useRef(
@@ -62,7 +64,7 @@ export function ShowProfile({
     // if user is admin... get more data!
     if (userProfile) {
       if (userProfile.showButtons && !userButtons) {
-        console.log('getting user btns');
+        dconsole.log('getting user btns');
         store.emit(
           new FindUserButtons(userProfile.id, (userButtons) =>
             setUserButtons(userButtons),
@@ -112,9 +114,6 @@ export function ShowProfile({
           showAdminOptions={sessionUser?.role == Role.admin}
         />
       )}
-      {sessionUser?.role == Role.admin && (
-        <>Email: {extraFields.email}</>
-      )}
       {userProfile?.showButtons &&
         userButtons &&
         userButtons?.length > 0 && (
@@ -122,7 +121,7 @@ export function ShowProfile({
             <ContentList
               buttons={userButtons}
               buttonTypes={buttonTypes}
-              linkToPopup={false}
+              linkType={ButtonLinkType.MAINPOPUP}
             />
           </div>
         )}

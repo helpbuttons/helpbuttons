@@ -14,20 +14,22 @@ export enum MainPopupPage {
   REQUEST_LINK = 'requestLink',
   SHARE = 'share',
   FAQS = 'faqs',
-  PROFILE = 'profile'
+  PROFILE = 'profile',
 }
 export interface HomeInfoState {
   mainPopupPage: MainPopupPage;
-  mainPopupCurrentButton: Button;
   mainPopupUserProfile: User;
+  mainPopupButton: Button;
   version: string;
+  isInstallable: boolean;
 }
 
 export const homeInfoStateInitial = {
   mainPopupPage: MainPopupPage.HIDE,
-  mainPopupCurrentButton: null,
   mainPopupUserProfile: null,
-  version: '?'
+  mainPopupButton: null,
+  version: '?',
+  isInstallable: false,
 };
 
 export class SetMainPopup implements UpdateEvent {
@@ -36,15 +38,6 @@ export class SetMainPopup implements UpdateEvent {
   public update(state: GlobalState) {
     return produce(state, (newState) => {
       newState.homeInfo.mainPopupPage = this.newPage;
-    });
-  }
-}
-
-export class SetMainPopupCurrentButton implements UpdateEvent {
-  public constructor(private button: Button) {}
-  public update(state: GlobalState) {
-    return produce(state, (newState) => {
-      newState.homeInfo.mainPopupCurrentButton = this.button;
     });
   }
 }
@@ -62,7 +55,29 @@ export class SetMainPopupCurrentProfile implements UpdateEvent {
   public constructor(private profile: User) {}
   public update(state: GlobalState) {
     return produce(state, (newState) => {
+      newState.homeInfo.mainPopupPage = MainPopupPage.HIDE
       newState.homeInfo.mainPopupUserProfile = this.profile;
+      newState.homeInfo.mainPopupButton = null;
     });
+  }
+}
+
+export class SetMainPopupCurrentButton implements UpdateEvent {
+  public constructor(private button: Button) {}
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      newState.homeInfo.mainPopupPage = MainPopupPage.HIDE;
+      newState.homeInfo.mainPopupButton = this.button;
+      newState.homeInfo.mainPopupUserProfile = null;
+    });
+  }
+}
+
+export class SetIsInstallable implements UpdateEvent{
+  public constructor(){}
+  public update(state: GlobalState){
+    return produce(state, (newState) => {
+      newState.homeInfo.isInstallable = true;
+    })
   }
 }

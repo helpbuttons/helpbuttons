@@ -23,10 +23,11 @@ import {
 import {
   buttonColorStyle,
   isEventAndIsExpired,
+  useButtonType,
 } from 'shared/buttonTypes';
 import { SetupDtoOut } from 'shared/entities/setup.entity';
 import { useRef } from 'store/Store';
-import { GlobalState, store } from 'state';
+import { GlobalState, store, useGlobalStore } from 'state';
 import Link from 'next/link';
 import { GetPhone, isAdmin } from 'state/Users';
 import { TextFormatted, formatMessage } from 'elements/Message';
@@ -49,19 +50,13 @@ import MarkerViewMap from 'components/map/Map/MarkerSelectorMap';
 import { TagsNav } from 'elements/Fields/FieldTags';
 import { ImageGallery } from 'elements/ImageGallery';
 import Loading from 'components/loading';
-import { FindAndSetMainPopupCurrentProfile, SetMainPopupCurrentButton, SetMainPopupCurrentProfile } from 'state/HomeInfo';
+import { SetMainPopupCurrentProfile } from 'state/HomeInfo';
 import React from 'react';
+import dconsole from 'shared/debugger';
+import { ButtonPin, ButtonUnpin } from 'state/Button';
 
-export default function CardButton({ button, buttonTypes }) {
-  const [buttonType, setButtonType] = useState(null);
-  useEffect(() => {
-    setButtonType(() =>
-      buttonTypes.find(
-        (buttonType) => buttonType.name == button.type,
-      ),
-    );
-  }, [buttonTypes]);
-
+export default function CardButton({ button, buttonTypes, toggleShowReplyFirstPost }) {
+  const buttonType = useButtonType(button, buttonTypes);
   return (
     <>
       {!(button && buttonType) && <Loading />}
@@ -85,6 +80,7 @@ export default function CardButton({ button, buttonTypes }) {
               <CardButtonHeadBig
                 button={button}
                 buttonTypes={buttonTypes}
+                toggleShowReplyFirstPost={toggleShowReplyFirstPost}
               />
             </div>
           </div>
@@ -96,7 +92,6 @@ export default function CardButton({ button, buttonTypes }) {
 
           <CardButtonAuthorSection
             button={button}
-            buttonTypes={buttonTypes}
           />
         </>
       )}
@@ -106,6 +101,7 @@ export default function CardButton({ button, buttonTypes }) {
 
 // card button list on explore
 export function CardButtonHeadMedium({ button, buttonType }) {
+
   return (
     <div className="card-button__content card-button__content--small">
       <div className="card-button__header">
@@ -236,8 +232,7 @@ function CardButtonSubmenu({ button }) {
   useEffect(() => {
     if (config) {
       setLinkButton(() => {
-        const shareLink = getShareLink(`/Explore/?btn=${button.id}`);
-        return shareLink;
+        return window ? window.location : getShareLink(`/?btn=${button.id}`);
       });
     }
   }, [config]);
@@ -278,30 +273,49 @@ function CardButtonSubmenu({ button }) {
       {FollowButtonMenuOption(button)}
       {(isButtonOwner(sessionUser, button) ||
         isAdmin(sessionUser)) && (
-          <>
-            <CardSubmenuOption
-              onClick={() => {
-                router.push(`/ButtonEdit/${button.id}`);
-              }}
-              label={t('button.edit')}
-            />
-            <CardSubmenuOption
-              onClick={() => {
-                router.push(`/ButtonRemove/${button.id}`);
-              }}
-              label={t('button.delete')}
-            />
-          </>
-        )}
+        <>
+          <CardSubmenuOption
+            onClick={() => {
+              router.push(`/ButtonEdit/${button.id}`);
+            }}
+            label={t('button.edit')}
+          />
+          <CardSubmenuOption
+            onClick={() => {
+              router.push(`/ButtonRemove/${button.id}`);
+            }}
+            label={t('button.delete')}
+          />
+          <CardSubmenuOption
+            onClick={() => {
+              button.pin ? store.emit(new ButtonUnpin(button.id, () => alertService.success(t('button.unpinSuccess')))) : store.emit(new ButtonPin(button.id,() => alertService.success(t('button.pinSuccess'))))
+            }}
+            label={button.pin ? t('button.unpin') : t('button.pin')}
+          />
+        </>
+      )}
     </CardSubmenu>
   );
 }
-export function CardButtonHeadBig({ button, buttonTypes }) {
-  const { cssColor, caption, customFields, icon } = buttonTypes.find(
-    (buttonType) => {
-      return buttonType.name === button.type;
-    },
-  );
+
+function SendMessageButton({toggleShowReplyFirstPost, sessionUser})
+{
+  if(!sessionUser)
+  {
+    return ;
+  }
+  return <Btn
+          btnType={BtnType.smallCircle}
+          contentAlignment={ContentAlignment.center}
+          iconLeft={IconType.circle}
+          iconLink={<IoMailOutline />}
+          onClick={()=> {
+            toggleShowReplyFirstPost(true)
+        }}
+        />
+}
+export function CardButtonHeadBig({ button, buttonTypes, toggleShowReplyFirstPost }) {
+  const { cssColor, caption, customFields, icon } = useButtonType(button, buttonTypes)
   const sessionUser = useRef(
     store,
     (state: GlobalState) => state.sessionUser,
@@ -311,17 +325,15 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
 
   return (
     <>
-      <CardButtonSubmenu button={button} />
-      {/* <Btn
-          btnType={BtnType.filterCorp}
-          contentAlignment={ContentAlignment.center}
-          iconRight={IconType.circle}
-          iconLink={<IoMailOutline />}
-          onClick={() => {
-            console.log('scrolling...')
-            onScollToCompose()
-          }}
-      /> */}
+      <div className='card-button__head-actions'>
+        <FollowButtonHeart
+          button={button}
+          sessionUser={sessionUser}
+        />
+        <SendMessageButton toggleShowReplyFirstPost={toggleShowReplyFirstPost} sessionUser={sessionUser}/>
+        
+        <CardButtonSubmenu button={button} />
+      </div>
       <ExpiringAlert
         button={button}
         isOwner={isButtonOwner(sessionUser, button)}
@@ -351,10 +363,6 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
 
         <div className="card-button__title">
           {button.title}
-          <FollowButtonHeart
-            button={button}
-            sessionUser={sessionUser}
-          />
         </div>
 
         <div className="card-button__paragraph">
@@ -388,7 +396,7 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
         </div>
         {!button.hideAddress && showMap && (
           <MarkerViewMap
-            markerPosition={[button.latitude, button.longitude]}
+            pickedPosition={[button.latitude, button.longitude]}
             zoom={maxZoom}
             markerColor={cssColor}
             markerImage={button.image}
@@ -432,49 +440,38 @@ function ExpiringAlert({
 }
 
 export function ButtonOwnerPhone({ user, button }) {
-  const [showPhone, toggleShowPhone] = useState(false);
   const [phone, setPhone] = useState(null);
-  const isLoadingPhone = React.useRef(false)
-  const sessionUser = useRef(
-    store,
-    (state: GlobalState) => state.sessionUser,
-    false,
-  );
-
-  useEffect(() => {
-    if (phone == null && !isLoadingPhone.current) {
-      isLoadingPhone.current = true;
-      store.emit(
+  
+  const showPhone = () => {
+    store.emit(
         new GetPhone(
           user.id,
           (phone) => {
-            setPhone(phone);
+            setPhone(() => phone);
           },
           () => { },
         ),
       );
-    }
-  }, [showPhone])
-
+  }
   const jumpTo = (url) => {
     window.location.replace(url);
   }
-
   return (
     <>
       {user?.publishPhone && (
         <>
-          {!showPhone && isButtonOwner(user, button) && 
+        {JSON.stringify(showPhone)}
+          {!phone && 
             <Btn
               btnType={BtnType.corporative}
-              contentAlignment={ContentAlignment.center}
+              contentAlignment={ContentAlignment.left}
               caption={t('button.showPhone')}
               iconLeft={IconType.svg}
               iconLink={<IoCallOutline />}
-              onClick={() => toggleShowPhone(true)}
+              onClick={showPhone}
             />
           }
-          {showPhone && 
+          {phone && 
             <div className="card-button__phone-section">
             <Btn
               btnType={BtnType.filterCorp}
@@ -489,8 +486,9 @@ export function ButtonOwnerPhone({ user, button }) {
           {user.showWassap &&
               <Btn
                 btnType={BtnType.corporative}
-                contentAlignment={ContentAlignment.center}
-                iconLeft={IconType.circle}
+                contentAlignment={ContentAlignment.left}
+                caption={t('button.whatsapp')}
+                iconLeft={IconType.svg}
                 iconLink={<IoLogoWhatsapp />}
                 onClick={() => jumpTo(`https://wa.me/+${phone}`)}
               />
@@ -512,8 +510,9 @@ export function CardButtonHeadActions({
       {action && !isButtonOwner && (
         <Btn
           btnType={BtnType.corporative}
-          contentAlignment={ContentAlignment.center}
-          iconLeft={IconType.circle}
+          contentAlignment={ContentAlignment.left}
+          iconLeft={IconType.svg}
+          caption={t('button.sendPrivateMessage', [button.owner.name])}
           iconLink={<IoMailOutline />}
           submit={true}
           onClick={action}
@@ -536,49 +535,20 @@ export function CardButtonHeadActions({
   );
 }
 
-export function CardButtonAuthorSection({ button, buttonTypes }) {
-  const { cssColor, caption, customFields } = buttonTypes.find(
-    (buttonType) => {
-      return buttonType.name === button.type;
-    },
-  );
-  const sessionUser = useRef(
-    store,
-    (state: GlobalState) => state.sessionUser,
-    false,
-  );
-  const [showMap, setShowMap] = useState(false);
-  // const profileHref = isButtonOwner(sessionUser, button)
-  //   ? `/Profile/`
-  //   : `/p/${button.owner.username}`;
-  // const closeButton = () => {
-  //   store.emit(new SetMainPopupCurrentButton(null))
-  //   store.emit(new updateCurrentButton(null))
-  // };
+export function CardButtonAuthorSection({ button }) {
+  const sessionUser = useGlobalStore((state: GlobalState) => state.sessionUser);
   const onClick = (e) => {
     e.preventDefault()
-    console.log('this goes for dev test.. make sure it works..')
-    store.emit(new SetMainPopupCurrentProfile(button.owner))
+    if(sessionUser.id == button.owner.id)
+    {
+      router.push('/Profile', undefined, {shallow: true})
+    }else{
+      store.emit(new SetMainPopupCurrentProfile(button.owner))
+    }
+    
   }
   return (
     <div className="card-button__author">
-      <div className="card-button__info">
-        <div className="card-button__author-title">
-          {t('button.authorTitle')}
-        </div>
-        <Link href="#" onClick={onClick}>
-          <div className="card-button__name">
-            {button.owner.name}{' '}
-            <span className="card-button__username">
-              {' '}
-              {/* @{button.owner.username} */}
-            </span>
-          </div>
-          <div className="card-button__author-description">
-            <TextFormatted maxChars={600} text={button.owner.description} />
-          </div>
-        </Link>
-      </div>
       <div className="card-button__avatar">
         <div className="avatar-big">
           <Link href="#" onClick={onClick}>
@@ -590,46 +560,21 @@ export function CardButtonAuthorSection({ button, buttonTypes }) {
           </Link>
         </div>
       </div>
-    </div>
-  );
-}
-
-export function CardButtonOptions() {
-  return (
-    <div className="card-button__options-menu">
-      <div className="card-button__trigger">
-        <div className="card-button__edit-icon card-button__submenu">
-          <IoEllipsisHorizontalSharp />
-        </div>
-      </div>
-
-      <div className="card-button__dropdown-container">
-        <div className="card-button__dropdown-arrow"></div>
-        <div className="card-button__dropdown-content">
-          <div className="card-button__trigger-options">
-            Editar botón
+      <div className="card-button__info">
+        <Link href="#" onClick={onClick}>
+          <div className="card-button__name">
+          {t('button.authorTitle')}{button.owner.name}
           </div>
-
-          <button className="card-button__trigger-options card-button__trigger-button">
-            Quitar botón de la red
-          </button>
-
-          <button className="card-button__trigger-options card-button__trigger-button">
-            Borrar botón
-          </button>
-
-          <button className="card-button__trigger-options card-button__trigger-button">
-            Compartir botón
-          </button>
-
-          <button className="card-button__trigger-options card-button__trigger-button">
-            Reportar botón
-          </button>
-        </div>
+          <div className="card-button__author-description">
+            <TextFormatted maxChars={600} text={button.owner.description} />
+          </div>
+        </Link>
       </div>
+      
     </div>
   );
 }
+
 
 function FollowButtonHeart({ button, sessionUser }) {
   if (!canFollowButton(button, sessionUser)) {
@@ -638,24 +583,30 @@ function FollowButtonHeart({ button, sessionUser }) {
 
   if (isFollowingButton(button, sessionUser)) {
     return (
-      <Btn
-        btnType={BtnType.iconActions}
-        contentAlignment={ContentAlignment.center}
-        iconLink={<IoHeartOutline />}
-        iconLeft={IconType.circle}
-        onClick={() => followButton(button.id)}
-      />
+      <div className='card-button__follow-wrap'>
+        {t('button.followme')}
+        <Btn
+          btnType={BtnType.iconActions}
+          contentAlignment={ContentAlignment.center}
+          iconLink={<IoHeartOutline />}
+          iconLeft={IconType.circle}
+          onClick={() => followButton(button.id)}
+        />
+      </div>  
     );
   }
 
   return (
-    <Btn
-      btnType={BtnType.iconActions}
-      contentAlignment={ContentAlignment.center}
-      iconLink={<IoHeart />}
-      iconLeft={IconType.circle}
-      onClick={() => unFollowButton(button.id)}
-    />
+    <div className='card-button__follow-wrap'>
+      {t('button.following')}
+      <Btn
+        btnType={BtnType.iconActions}
+        contentAlignment={ContentAlignment.center}
+        iconLink={<IoHeart />}
+        iconLeft={IconType.circle}
+        onClick={() => unFollowButton(button.id)}
+      />
+    </div>  
   );
 }
 

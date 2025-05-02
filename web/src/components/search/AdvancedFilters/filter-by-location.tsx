@@ -1,10 +1,12 @@
 import PickerField from 'components/picker/PickerField';
 import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
-import DropDownSearchLocation from 'elements/DropDownSearchLocation';
+import { LocationSearchBarSimple } from 'elements/LocationSearchBar';
 import t from 'i18n';
 import Slider from 'rc-slider';
 import { useState } from 'react';
+import { IoLocation, IoLocationOutline } from 'react-icons/io5';
 import { readableDistance } from 'shared/sys.helper';
+import { useNetworkCenter, useSelectedNetwork } from 'state/Networks';
 
 export function FilterByLocationRadius({
   handleSelectedPlace,
@@ -14,6 +16,8 @@ export function FilterByLocationRadius({
   setRadius,
 }) {
   const [showPopup, setShowPopup] = useState(false);
+
+  const focusPoint = useNetworkCenter()
 
   const closePopup = () => setShowPopup(() => false);
   const openPopup = () => setShowPopup(() => true);
@@ -64,44 +68,40 @@ export function FilterByLocationRadius({
       label={t('buttonFilters.where')}
       explain={t('buttonFilters.whereExplain')}
       title={t('buttonFilters.where')}
+      iconLink = {<IoLocationOutline/>}
       btnLabel={
-        address ? (
+        pickedAddress ? (
           <>
             {t('buttonFilters.locationLimited', [
-              address,
-              readableDistance(radius),
+              pickedAddress,
+              readableDistance(pickedRadius),
             ])}
           </>
         ) : (
           t('buttonFilters.pickLocationLimits')
         )
       }
+
       showPopup={showPopup}
       openPopup={openPopup}
       closePopup={discardAndClose}
     >
-      <DropDownSearchLocation
+      <LocationSearchBarSimple 
         placeholder={t('homeinfo.searchlocation')}
-        handleSelectedPlace={(place) => {
-          setPickedAddress(() => place.formatted);
-          setPickedPosition(() => [
-            place.geometry.lat,
-            place.geometry.lng,
-          ]);
-        }}
-        markerPosition={pickedPosition}
-        toggleLoadingNewAddress={() => {}}
-        address={pickedAddress}
+        markerAddress={pickedAddress}
+        setMarkerAddress={(address) => setPickedAddress(() => address)}
+        focusPoint={focusPoint}
+        setMarkerPosition={(markerPosition) => setPickedPosition(() => markerPosition)}
       />
-      {address && (
+      {pickedAddress && (
         <div className="form__field">
           <label className="form__label">
             {t('buttonFilters.distance')} -&nbsp;
-            {readableDistance(pickedRadius)}
+            <>{readableDistance(pickedRadius)}</>
           </label>
           <div style={{ padding: '1rem' }}>
             <Slider
-              min={1}
+              min={0}
               max={(marks.length - 1) * 100}
               onChange={(radiusValue) => {
                 setPickedRadius(() =>

@@ -1,10 +1,12 @@
 import { useState, MouseEvent, TouchEvent, useEffect } from 'react';
+import { ExploreViewMode } from 'state/Explore';
 
 interface DraggableProps {
-  initialPos: { x: number; y: number };
+  initialPos?: { x: number; y: number }; // Default to optional
   className?: string;
   style?: React.CSSProperties;
   onScroll: any;
+  viewMode: ExploreViewMode; // Added viewMode for dynamic handling
   onFullScreen: any;
   isListOpen?: boolean; // New prop for isListOpen
   setListOpen: any;
@@ -12,25 +14,27 @@ interface DraggableProps {
 }
 
 const DraggableList: React.FC<DraggableProps> = ({
-  initialPos,
   children,
   className,
   onScroll,
   style,
+  viewMode,
   onFullScreen,
   isListOpen,
   setListOpen,
-  isListFullScreen
+  isListFullScreen,
 }) => {
-  const [pos, setPos] = useState<{ x: number; y: number }>(initialPos || { x: 0, y: window.innerHeight - 0 });
+  // Set initial position using `initialPos` or default values
+  const getFullScreenListHeight = () => 68;
+  const [pos, setPos] = useState<{ x: number; y: number }>({ x: 0, y: getFullScreenListHeight() });
+
   const [dragging, setDragging] = useState<boolean>(false);
   const [rel, setRel] = useState<{ x: number; y: number } | null>(null);
 
   const getClosedListHeight = () => window.innerHeight - 110;
   const getOpenListHeight = () => window.innerHeight - 360;
-  const getFullScreenListHeight = () => 68;
 
-  const functionHandler = (data) => {
+  const functionHandler = (data: number) => {
     if (data < getOpenListHeight()) {
       onFullScreen(true, true);
     } else {
@@ -38,11 +42,26 @@ const DraggableList: React.FC<DraggableProps> = ({
     }
   };
 
+  // Update position based on viewMode initially
+  useEffect(() => {
+    let initialY = 68; // Default to 68px for LIST mode
+    if (viewMode === ExploreViewMode.MAP) {
+      initialY = getClosedListHeight(); // Adjust for MAP mode
+    } else if (viewMode === ExploreViewMode.BOTH) {
+      initialY = getOpenListHeight(); // Adjust for BOTH mode
+    
+    } else if (viewMode === ExploreViewMode.LIST) {
+      initialY = 68; // Adjust for LIST mode
+    }
+    setPos({ x: 0, y: initialY });
+  }, [viewMode]);
+
+  // Handle resizing the window and adjusting position
   useEffect(() => {
     const handleResize = () => {
       setPos((prevPos) => {
         let newY = prevPos.y;
-        if (prevPos.y < getOpenListHeight()-100) {
+        if (prevPos.y < getOpenListHeight() - 100) {
           newY = getFullScreenListHeight();
         } else if (prevPos.y > window.innerHeight - 200) {
           newY = getClosedListHeight();
@@ -60,19 +79,23 @@ const DraggableList: React.FC<DraggableProps> = ({
     };
   }, []);
 
+  // Handle isListOpen changes
   useEffect(() => {
-    if(pos.y == getClosedListHeight())
-    {
-      setListOpen(() => false)
-    } 
-  }, [pos])
+    if (pos.y === getClosedListHeight()) {
+      setListOpen(() => false);
+    }
+  }, [pos]);
 
   useEffect(() => {
-    if (isListOpen) {
+    if (isListOpen && !isListFullScreen) {
       const targetY = getOpenListHeight();
       setPos((prevPos) => ({ ...prevPos, y: targetY }));
       setDragging(true);
-      
+    }
+    else if (isListFullScreen) {
+      const targetY = 68;
+      setPos((prevPos) => ({ ...prevPos, y: targetY }));
+      setDragging(true);
     } else {
       const targetY = getClosedListHeight();
       setPos((prevPos) => ({ ...prevPos, y: targetY }));
