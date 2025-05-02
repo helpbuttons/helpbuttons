@@ -332,11 +332,12 @@ $card-notification-delete-size: 100px;
 
 .card-notification__paragraph {
 
+  font-size: $font-size-small;
   color: $color-gray;
   text-overflow: ellipsis;
   word-wrap: break-word;
   line-height: $text-line-height-xsmall;
-  font-size: $font-size-small;
+  font-size: $font-size-general;
   color: $color-gray;
 }
 

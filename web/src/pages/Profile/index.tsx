@@ -26,7 +26,49 @@ export default function Profile() {
               {(sessionUser && !sessionUser.phone && sessionUser?.role == Role.admin) && 
                <span style={{"color": "red"}}>{t('user.addSupport')}</span>
               }
-                
+                {sessionUser?.username == sessionUser?.username && (
+                  <div className="card-profile__actions">
+                    <Link href="/ProfileEdit">
+                      <Btn
+                        iconLeft={IconType.svg}
+                        iconLink={<IoHammerOutline />}
+                        caption={t('user.editProfile')}
+                      />
+                    </Link>
+                    {false && 
+                      <Link href="/">
+                        <Btn
+                          iconLeft={IconType.svg}
+                          iconLink={<IoFolderOutline />}
+                          caption={t('user.myHelpbuttons')}
+                        />
+                      </Link>
+                    }
+                    {/* {selectedNetwork?.inviteOnly &&  */}
+                      {/* <Link href="/Profile/Invites">
+                        <Btn
+                          iconLeft={IconType.svg}
+                          iconLink={<IoQrCodeOutline/>}
+                          caption={t('invite.title')}
+                        />
+                      </Link> */}
+                    {/* } */}
+                    {sessionUser?.role == Role.admin && 
+                      <AdminOptions/>
+                    }
+                    <Link href="/">
+                      <div onClick={() => router.push('/Logout')} className="btn-with-icon">
+                        <div className="btn-with-icon__icon">
+                          <IoLogOutOutline />
+                        </div>
+                        <span className="btn-with-icon__text">
+                          {t('user.logout')}
+                        </span>
+                      </div>
+                    </Link>
+                  </div>
+                )}
+              
             </LoadabledComponent>
           </Popup>
     </>
