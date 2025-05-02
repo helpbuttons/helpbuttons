@@ -98,6 +98,9 @@ case $what_u_want in
     prepare_release
     echo "Please commit and push to dev, and merge to main"
     echo "git commit -m 'preparing release: $version' version api/src/version.json web/public/version.json"
+    echo "git push"
+    echo "git checkout main"
+    echo "git merge dev"
     ;;
 "p")
     release_new_version
