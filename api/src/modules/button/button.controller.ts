@@ -122,6 +122,7 @@ export class ButtonController {
       });
   }
 
+  
   // only allow owner of buttonId or Admin
   @OnlyRegistered()
   @Delete('delete/:buttonId')

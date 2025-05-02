@@ -122,6 +122,7 @@ export function SuggestedTags({
     </div>
   );
 }
+
 export function TagList({ tags, remove = null }) {
   return (
     <div className="form__tags-list">
