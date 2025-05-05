@@ -62,8 +62,10 @@ $nav-bottom-border: 32px;
 }
 
 .nav-bottom__text {
-  font-size: 12px;
+  font-size: $font-size-xsmall;
+  word-break: keep-all;
   text-decoration: none;
+
 }
 
 .nav-bottom__link--current{
