@@ -287,9 +287,12 @@ export class updateCurrentButton implements UpdateEvent {
     return produce(state, (newState) => {
       newState.explore.currentButton = this.button;
       if (this.button) {
-        newState.explore.settings.prevCenter = state.explore.settings.center
-        newState.explore.settings.prevZoom = state.explore.settings.zoom
-
+        if(!state.explore.currentButton)
+        {
+          newState.explore.settings.prevCenter = state.explore.settings.center
+          newState.explore.settings.prevZoom = state.explore.settings.zoom  
+        }
+        
         if (this.button.hideAddress) {
           newState.explore.settings.hexagonClicked = this.button.hexagon
         }
@@ -300,14 +303,8 @@ export class updateCurrentButton implements UpdateEvent {
         newState.explore.map.boundsFilteredButtons = [this.button]
         
       } else if (!this.button) {
-        // newState.explore.settings.center = state.explore.settings.prevCenter
-        // if (newState.explore.settings.zoom == state.explore.settings.prevZoom)
-        // {
-        //   newState.explore.settings.zoom = state.networks.selectedNetwork.exploreSettings.zoom;
-        // }else{
-        //   newState.explore.settings.zoom = state.explore.settings.prevZoom;
-        // }
-        
+        newState.explore.settings.center = state.explore.settings.prevCenter
+        newState.explore.settings.zoom = state.explore.settings.prevZoom;
       }
       dconsole.log(`[updateCurrentButton] update`)
     });
