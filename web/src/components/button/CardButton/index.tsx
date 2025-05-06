@@ -539,7 +539,7 @@ export function CardButtonAuthorSection({ button }) {
   const sessionUser = useGlobalStore((state: GlobalState) => state.sessionUser);
   const onClick = (e) => {
     e.preventDefault()
-    if(sessionUser.id == button.owner.id)
+    if(sessionUser?.id == button.owner.id)
     {
       router.push('/Profile', undefined, {shallow: true})
     }else{
