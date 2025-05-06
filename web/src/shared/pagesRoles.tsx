@@ -22,7 +22,8 @@ export const allowedPathsPerRole =
             '/Unsubscribe',
             '/Error',
             '/Logout',
-            '/HomeInfo'
+            '/HomeInfo',
+            '/Embbed/:number'
         ]
     },
     {

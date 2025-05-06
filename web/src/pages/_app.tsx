@@ -146,7 +146,7 @@ function MyApp({ Component, pageProps }) {
     }
 
     // check if local storage has a token
-    if (sessionUser === false) {
+    if (sessionUser === false && ['Embbed'].indexOf(pageName) < 0) {
       if (!isLoadingUser) {
         setIsLoadingUser(true);
         store.emit(
@@ -243,19 +243,9 @@ function MyApp({ Component, pageProps }) {
       store.emit(new UpdateMetadata(pageProps.metadata))
     }
   }, [pageProps])
-  const [loading, setLoading] = useState<boolean>(false);
-
-  Router.events.on('routeChangeStart', (url) => {
-    setLoading(true);
-  });
-
-  Router.events.on('routeChangeComplete', (url) => {
-    setLoading(false);
-  });
 
   return <>
     <MetadataSEO {...pageProps.metadata} nonce={nonce} />
-    
     {(function () {
 
       if (isSetup) {
@@ -263,9 +253,7 @@ function MyApp({ Component, pageProps }) {
           <title>Creating new helpbuttons network...</title></Head><Component {...pageProps} /></>;
       } else if (pageName == 'Embbed') {
         return (
-          <LoadabledComponent loading={!selectedNetwork || loading}>
-            <Component {...pageProps} />
-          </LoadabledComponent>
+          <Component {...pageProps} />
         );
       } else if (selectedNetwork.id) {
         return (
