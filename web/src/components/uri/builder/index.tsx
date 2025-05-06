@@ -51,6 +51,11 @@ export function useParamsBtn(router, pageName) {
           store.emit(new SetMainPopupCurrentButton(button));
         }
       }, () => alertService.error('button not found')))
+    }else if(mainPopupButton && !buttonId)
+    {
+      if (['Explore'].indexOf(pageName) < 0) {
+        store.emit(new SetMainPopupCurrentButton(null));
+      }
     }
   }, [buttonId])
 
@@ -73,6 +78,9 @@ export function useParamsMainPopup(router) {
   useEffect(() => {
     if (v && mainPopupPage != v) {
       store.emit(new SetMainPopup(v as MainPopupPage))
+    }else if(mainPopupPage && !v)
+    {
+      store.emit(new SetMainPopup(MainPopupPage.HIDE))
     }
   }, [v])
 }
