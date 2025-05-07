@@ -144,12 +144,22 @@ $card-alert-icon-size: 30px;
     }
   }
 
+  .cookies-banner__buttons {
+
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    gap: 10px;
+    justify-content: space-between;
+
+  }
+
 
 @media #{$breakpoints-medium} {
 
   .cookies-banner__content {
 
-    width: 40%;
+    max-width: 500px;
     border-radius: $border-radius-basic;
     border: $border-style-basic;
     bottom: $padding-big;
