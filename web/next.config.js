@@ -17,6 +17,17 @@ module.exports = {
         destination: `${process.env.API_URL}/:path*`,
       },
       {
+        source: '/.well-known/:path*',
+        destination: `${process.env.API_URL}/.well-known/:path*`,
+        // has: [
+        //   {
+        //     type: 'header',
+        //     key: 'Accept',
+        //     value: 'application/activity+json'
+        //   }
+        // ],
+      },
+      {
         source: '/manifest.json',
         destination: `${process.env.API_URL}/networks/manifest.json`,
       },
