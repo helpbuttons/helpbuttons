@@ -249,7 +249,7 @@ function TagFollow({tags}) {
       store.emit(new SetSignupTags(tags))
       return;
     }
-    store.emit(new FollowTags(tags, () => {alertService.success(t('buttonFilters.followTagsSucess', [tags]))}));
+    store.emit(new FollowTags(tags, () => {alertService.success(t('buttonFilters.followTagSucess', [tags]))}));
   }
 
   const [tagsToFollow, setTagsToFollow] = useState(tags)
