@@ -2,8 +2,8 @@ import {
   MailerOptions,
   MailerOptionsFactory,
 } from '@nestjs-modules/mailer';
-import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
-import configs from '@src/config/configuration';
+import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter.js';
+import configs from '@src/config/configuration.js';
 
 export class MailerModuleConfig implements MailerOptionsFactory {
   constructor(

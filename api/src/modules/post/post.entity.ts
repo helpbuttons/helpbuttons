@@ -1,9 +1,9 @@
 import {  Column, Entity, ManyToOne, OneToMany, PrimaryColumn } from "typeorm"
-import { BaseEntity } from '@src/shared/types/base.entity';
+import { BaseEntity } from '@src/shared/types/base.entity.js';
 
-import { Button } from "../button/button.entity";
-import { User } from "../user/user.entity";
-import { Comment } from "./comment.entity";
+import { Button } from "../button/button.entity.js";
+import { User } from "../user/user.entity.js";
+import { Comment } from "./comment.entity.js";
 import { Exclude, Expose } from "class-transformer";
 
 @Entity()

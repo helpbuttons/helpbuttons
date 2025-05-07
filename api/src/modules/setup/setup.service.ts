@@ -3,9 +3,9 @@ import {
   HttpStatus,
   Injectable,
 } from '@nestjs/common';
-import { SetupDtoOut, SmtpConfigTest } from './setup.entity';
-import { getConfig } from '@src/shared/helpers/config.helper';
-const nodemailer = require('nodemailer');
+import { SetupDtoOut, SmtpConfigTest } from './setup.entity.js';
+import { getConfig } from '@src/shared/helpers/config.helper.js';
+import nodemailer from "nodemailer";
 
 @Injectable()
 export class SetupService {

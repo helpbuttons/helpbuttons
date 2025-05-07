@@ -1,14 +1,14 @@
 import { seeder } from 'nestjs-seeder';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ButtonsSeeder } from './buttons.seed';
-import { Button } from '@src/modules/button/button.entity';
+import { ButtonsSeeder } from './buttons.seed.js';
+import { Button } from '@src/modules/button/button.entity.js';
 import { ConfigModule } from '@nestjs/config';
-import { dataSourceOptions } from '@src/app/configs/orm.config';
-import webAppConfig from '@src/app/configs/web-app.config';
-import { validate } from '@src/app/validators/env.validator';
-import { User } from '@src/modules/user/user.entity';
-import { Post } from '@src/modules/post/post.entity';
-import { Network } from '@src/modules/network/network.entity';
+import { dataSourceOptions } from '@src/app/configs/orm.config.js';
+import webAppConfig from '@src/app/configs/web-app.config.js';
+import { validate } from '@src/app/validators/env.validator.js';
+import { User } from '@src/modules/user/user.entity.js';
+import { Post } from '@src/modules/post/post.entity.js';
+import { Network } from '@src/modules/network/network.entity.js';
 
 
 seeder({

@@ -1,5 +1,5 @@
 import { Column } from 'typeorm';
-import { User } from './user.entity';
+import { User } from './user.entity.js';
 import {
   IsBoolean,
   IsEmail,

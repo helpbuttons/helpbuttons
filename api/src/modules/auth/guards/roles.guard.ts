@@ -4,9 +4,9 @@ import {
   Injectable,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { CustomHttpException } from '@src/shared/middlewares/errors/custom-http-exception.middleware';
-import { ErrorName } from '@src/shared/types/error.list';
-import { Role } from '@src/shared/types/roles';
+import { CustomHttpException } from '@src/shared/middlewares/errors/custom-http-exception.middleware.js';
+import { ErrorName } from '@src/shared/types/error.list.js';
+import { Role } from '@src/shared/types/roles.js';
 import { Observable } from 'rxjs';
 
 @Injectable()

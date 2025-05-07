@@ -1,10 +1,10 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Invite } from "./invite.entity";
+import { Invite } from "./invite.entity.js";
 import { Repository } from "typeorm";
-import { InviteCreateDto } from "./invite.dto";
-import { dbIdGenerator } from "@src/shared/helpers/nanoid-generator.helper";
-import { User } from "../user/user.entity";
+import { InviteCreateDto } from "./invite.dto.js";
+import { dbIdGenerator } from "@src/shared/helpers/nanoid-generator.helper.js";
+import { User } from "../user/user.entity.js";
 
 @Injectable()
 export class InviteService {

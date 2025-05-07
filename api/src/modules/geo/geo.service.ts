@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
-import configs from '@src/config/configuration';
+import configs from '@src/config/configuration.js';
 // import { KomootGeoProvider } from './providers/komoot';
-import { PeliasProvider } from './providers/pelias';
-import { HttpHelper } from '@src/shared/helpers/http.helper';
-import { KomootGeoProvider } from './providers/komoot';
-import { SimulateGeoProvider } from './providers/simulate';
+import { PeliasProvider } from './providers/pelias.js';
+import { HttpHelper } from '@src/shared/helpers/http.helper.js';
+import { KomootGeoProvider } from './providers/komoot.js';
+import { SimulateGeoProvider } from './providers/simulate.js';
 import { InjectEntityManager } from '@nestjs/typeorm';
 import { EntityManager } from 'typeorm';
-import { GeoAddress } from './providers/provider.interface';
-import { NetworkService } from '../network/network.service';
+import { GeoAddress } from './providers/provider.interface.js';
+import { NetworkService } from '../network/network.service.js';
 
 @Injectable()
 export class GeoService {

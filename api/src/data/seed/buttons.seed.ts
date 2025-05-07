@@ -2,13 +2,13 @@ import { Injectable } from '@nestjs/common';
 import {
   InjectRepository,
 } from '@nestjs/typeorm';
-import { Button } from '@src/modules/button/button.entity';
-import { Network } from '@src/modules/network/network.entity';
-import { Post } from '@src/modules/post/post.entity';
-import { User } from '@src/modules/user/user.entity';
-import { dbIdGenerator } from '@src/shared/helpers/nanoid-generator.helper';
-import { maxResolution } from '@src/shared/types/honeycomb.const';
-import { Role } from '@src/shared/types/roles';
+import { Button } from '@src/modules/button/button.entity.js';
+import { Network } from '@src/modules/network/network.entity.js';
+import { Post } from '@src/modules/post/post.entity.js';
+import { User } from '@src/modules/user/user.entity.js';
+import { dbIdGenerator } from '@src/shared/helpers/nanoid-generator.helper.js';
+import { maxResolution } from '@src/shared/types/honeycomb.const.js';
+import { Role } from '@src/shared/types/roles.js';
 import { Seeder } from 'nestjs-seeder';
 import { Repository } from 'typeorm';
 

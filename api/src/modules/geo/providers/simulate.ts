@@ -2,7 +2,7 @@ import {
   GeoAddress,
   GeoPosition,
   GeoProvider,
-} from './provider.interface';
+} from './provider.interface.js';
 
 export class SimulateGeoProvider implements GeoProvider {
   constructor() {}

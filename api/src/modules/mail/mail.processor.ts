@@ -1,7 +1,7 @@
 import { Processor, Process, OnQueueFailed } from '@nestjs/bull';
 import { Job } from 'bull';
-import { NetworkService } from '../network/network.service';
-import { MailService } from './mail.service';
+import { NetworkService } from '../network/network.service.js';
+import { MailService } from './mail.service.js';
 export interface MailJob {
     to: string;
     cc: string;

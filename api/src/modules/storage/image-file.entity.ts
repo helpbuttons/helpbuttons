@@ -1,4 +1,4 @@
-import { BaseEntity } from '@src/shared/types/base.entity';
+import { BaseEntity } from '@src/shared/types/base.entity.js';
 import { Column, Entity, PrimaryColumn } from 'typeorm';
 
 @Entity()

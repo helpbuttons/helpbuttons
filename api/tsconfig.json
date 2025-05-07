@@ -1,31 +1,27 @@
 {
-  "include": ["src/**/*", "src/**/*.json", "prisma/**/*.json"],
-  "compilerOptions": {
-    "module": "commonjs",
-    "declaration": true,
-    "removeComments": true,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "allowSyntheticDefaultImports": true,
-    "target": "es2017",
-    "sourceMap": true,
-    "outDir": "./dist",
-    "baseUrl": "./",
-    "incremental": true,
-    "skipLibCheck": true,
-    "strictNullChecks": false,
-    "noImplicitAny": false,
-    "strictBindCallApply": false,
-    "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false,
-    "paths": {
-      "@src/*": ["src/*"]
-    },
-    "resolveJsonModule": true
-  },
-  "exclude": ["node_modules", "test", "dist", "**/*spec.ts"],
-  "ts-node": {
-    // Do not forget to `npm i -D tsconfig-paths`
-    "require": ["tsconfig-paths/register"]
-  }
+	"include": ["src/**/*", "src/**/*.json", "prisma/**/*.json"],
+	"compilerOptions": {
+		"module": "nodenext",
+		"declaration": true,
+		"removeComments": true,
+		"emitDecoratorMetadata": true,
+		"experimentalDecorators": true,
+		"allowSyntheticDefaultImports": true,
+		"target": "es2017",
+		"sourceMap": true,
+		"outDir": "./dist",
+		"baseUrl": "./",
+		"incremental": true,
+		"skipLibCheck": true,
+		"strictNullChecks": false,
+		"noImplicitAny": false,
+		"strictBindCallApply": false,
+		"forceConsistentCasingInFileNames": false,
+		"noFallthroughCasesInSwitch": false,
+		"paths": {"@src/*": ["src/*"]},
+		"resolveJsonModule": true,
+		"moduleResolution": "nodenext"
+	},
+	"exclude": ["node_modules", "test", "dist", "**/*spec.ts"],
+	"ts-node": {"require": ["tsconfig-paths/register"]}
 }

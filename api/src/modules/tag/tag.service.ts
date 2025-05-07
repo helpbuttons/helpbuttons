@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { dbIdGenerator } from '@src/shared/helpers/nanoid-generator.helper';
+import { dbIdGenerator } from '@src/shared/helpers/nanoid-generator.helper.js';
 import { Repository } from 'typeorm';
-import { Tag } from './tag.entity';
-import { tagify } from '@src/shared/helpers/tagify.helper';
+import { Tag } from './tag.entity.js';
+import { tagify } from '@src/shared/helpers/tagify.helper.js';
 
 @Injectable()
 export class TagService {

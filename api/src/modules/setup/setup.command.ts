@@ -1,6 +1,6 @@
 // import { Command } from 'nestjs-command';
 import { Injectable } from '@nestjs/common';
-import configs from '@src/config/configuration';
+import configs from '@src/config/configuration.js';
 
 @Injectable()
 export class SetupCommand {

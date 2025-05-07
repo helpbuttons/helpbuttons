@@ -1,6 +1,6 @@
-require('dotenv').config()
-const fs = require('fs')
+import fs from "fs";
 
+require('dotenv').config()
 let configs = {
   hostName: process.env.hostName,
   postgresHostName: process.env?.POSTGRES_HOSTNAME ? process.env.POSTGRES_HOSTNAME : 'localhost',

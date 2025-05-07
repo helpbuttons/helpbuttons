@@ -3,19 +3,19 @@ import {
   HttpStatus,
   Injectable,
 } from '@nestjs/common';
-import { User } from './user.entity';
+import { User } from './user.entity.js';
 import {
   InjectEntityManager,
   InjectRepository,
 } from '@nestjs/typeorm';
 import { EntityManager, In, Not, Repository } from 'typeorm';
-import { Role } from '@src/shared/types/roles';
-import { removeUndefined } from '@src/shared/helpers/removeUndefined';
-import { TagService } from '../tag/tag.service';
-import { publicNanoidGenerator } from '@src/shared/helpers/nanoid-generator.helper';
+import { Role } from '@src/shared/types/roles.js';
+import { removeUndefined } from '@src/shared/helpers/removeUndefined.js';
+import { TagService } from '../tag/tag.service.js';
+import { publicNanoidGenerator } from '@src/shared/helpers/nanoid-generator.helper.js';
 import { plainToClass } from 'class-transformer';
-import { StorageService } from '../storage/storage.service';
-import { MailService } from '../mail/mail.service';
+import { StorageService } from '../storage/storage.service.js';
+import { MailService } from '../mail/mail.service.js';
 
 @Injectable()
 export class UserService {

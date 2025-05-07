@@ -1,6 +1,6 @@
 // import { Command, Positional, Option } from 'nestjs-command';
 import { Injectable } from '@nestjs/common';
-import { ActivityCron } from './activity.cron';
+import { ActivityCron } from './activity.cron.js';
 
 @Injectable()
 export class ActivityCommand {
