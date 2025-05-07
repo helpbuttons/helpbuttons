@@ -5,6 +5,7 @@
   "author": "",
   "private": true,
   "license": "UNLICENSED",
+  "type": "module",
   "scripts": {
     "seed": "node dist/data/seed/seeder",
     "prebuild": "rimraf dist",
