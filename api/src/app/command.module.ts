@@ -29,7 +29,7 @@ import {
   import { InviteModule } from '@src/modules/invite/invite.module';
   import { GeoModule } from '@src/modules/geo/geo.module';
   import { BullModule } from '@nestjs/bull';
-  import { CommandModule } from 'nestjs-command';
+  // import { CommandModule } from 'nestjs-command';
   import { ButtonCron } from '@src/modules/button/button.cron';
   import { SetupModule } from '@src/modules/setup/setup.module';
   @Module({
@@ -42,7 +42,7 @@ import {
         load: [webAppConfig],
         validate: validate,
       }),
-      CommandModule,
+      // CommandModule,
       MailModule,
       // FIXME: READ this confs using ConfigService
       TypeOrmModule.forRoot(dataSourceOptions),

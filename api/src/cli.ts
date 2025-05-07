@@ -1,5 +1,5 @@
 import { NestFactory } from '@nestjs/core';
-import { CommandModule, CommandService } from 'nestjs-command';
+// import { CommandModule, CommandService } from 'nestjs-command';
 import { SetupModule } from './modules/setup/setup.module';
 import { AppModule } from './app/app.module';
 
@@ -20,10 +20,10 @@ async function bootstrap () {
     logger: ['error', 'warn']
   });
   try {
-    await app
-      .select(CommandModule)
-      .get(CommandService)
-      .exec();
+    // await app
+      // .select(CommandModule)
+      // .get(CommandService)
+      // .exec();
     await app.close()
   } catch (error) {
     console.error(error);

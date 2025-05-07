@@ -29,7 +29,6 @@ import { ActivityModule } from '@src/modules/activity/activity.module';
 import { InviteModule } from '@src/modules/invite/invite.module';
 import { GeoModule } from '@src/modules/geo/geo.module';
 import { BullModule } from '@nestjs/bull';
-import { CommandModule } from 'nestjs-command';
 import { ButtonCron } from '@src/modules/button/button.cron';
 import { SetupModule } from '@src/modules/setup/setup.module';
 import { DeletemeModule } from '@src/modules/deleteme/deleteme.module';
@@ -43,7 +42,6 @@ import { DeletemeModule } from '@src/modules/deleteme/deleteme.module';
       load: [webAppConfig],
       validate: validate,
     }),
-    CommandModule,
     MailModule,
     // FIXME: READ this confs using ConfigService
     TypeOrmModule.forRoot(dataSourceOptions),
