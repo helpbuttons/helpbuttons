@@ -41,6 +41,12 @@ export function FaqSections() {
         .
       </Accordion>
 
+      <Accordion
+        title={t('faqs.networkEthics', [selectedNetwork?.name])}
+      >
+        {t('faqs.networksEthicsDescription', [selectedNetwork?.name])}
+      </Accordion>
+
       <Accordion title={t('faqs.helpbuttonsQuestion')}>
         <span className="highlight">
           {t('faqs.helpbuttonsHighlight')}
@@ -67,12 +73,6 @@ export function FaqSections() {
         {t('faqs.communityDescription')}
       </Accordion>
 
-      <Accordion
-        title={t('faqs.networkEthics', [selectedNetwork?.name])}
-      >
-        {t('faqs.networksEthicsDescription', [selectedNetwork?.name])}
-      </Accordion>
-
       <Accordion title={t('faqs.ethicsQuestion')}>
         {t('faqs.ethicsDescription')}
       </Accordion>
@@ -88,7 +88,7 @@ export function FaqSections() {
       </Accordion>
 
       <Accordion title={t('faqs.contactQuestion')}>
-        {t('faqs.contactDescription')}
+        {t('faqs.contactDescription', [selectedNetwork?.name])}
       </Accordion>
     </>
   );
