@@ -68,6 +68,10 @@ $index-content-left--distance: $grid-max-width;
 
 }
 
+.index__explore-map-wrapper {
+  width: 100%;
+}
+
 @media (hover: none) {
 
   .index__content-bottom--hide {
