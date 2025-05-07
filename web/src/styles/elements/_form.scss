@@ -27,11 +27,16 @@ margin: $margin-medium 0;
   left: 24px;
   font-size: $font-size-general;
   font-weight: bold;
+  display: block;
 
-  &:first-letter {
-    text-transform: uppercase;
-  }
+}
 
+.form__label::first-letter {
+  text-transform: uppercase;
+}
+
+.form__section-title::first-letter {
+  text-transform: uppercase;
 }
 
 .form__section-title {
@@ -570,6 +575,7 @@ width: 100%;
   display: flex;
   gap: $padding-small;
   flex-direction: row;
+  flex-wrap: wrap;
 
   &:hover {
 
@@ -583,8 +589,9 @@ width: 100%;
 
   display: flex;
   flex-direction: column;
-
+  
 }
+
 
 .form__input-subtitle--error {
 

@@ -83,7 +83,7 @@ export default function NewUserFields({
       >
       { username &&  !showUsername &&
           <div className="form__input-subtitle-side">
-              <label className="form__input-subtitle--text">
+              <label className="form__input-subtitle--text form__input-subtitle--multiline">
                 {`${t('user.usernameWillBe')}`} 
                 <span className='highlight'>
                   {`${username}@${hostname}`}

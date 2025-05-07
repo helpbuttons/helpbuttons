@@ -1,6 +1,6 @@
 import t from 'i18n';
 import ActivityNotificationCard from './ActivityNotificationCard';
-import Btn, { ContentAlignment } from 'elements/Btn';
+import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
 import router from 'next/router';
 import { useRef, useState } from 'react';
 import { useScroll } from 'shared/helpers/scroll.helper';
@@ -50,9 +50,11 @@ export function ActivityNotificationList() {
                   {t('activities.noactivity', ['activities'])}
                 </div>
                 <Btn
+                  btnType={BtnType.submit}
                   caption={t('explore.createEmpty')}
                   onClick={() => router.push('/ButtonNew')}
                   contentAlignment={ContentAlignment.center}
+                  iconLeft={<IoChatbox/>}
                 />
               </div>
             )}

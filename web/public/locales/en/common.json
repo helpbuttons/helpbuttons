@@ -300,7 +300,7 @@
     "emailExplain": "This is your login email and where you'll receive notifications",
     "emailPlaceHolder": "email@example.tld",
     "username": "Username",
-    "usernameWillBe": "Your username will be ",
+    "usernameWillBe": "Username will be ",
     "usernameExplain": "The username is what will identify you in this network and others",
     "usernameCreateExplain": "Create your username. The username is your alias used to identify you.",
     "usernamePlaceHolder": "Type a unique name",

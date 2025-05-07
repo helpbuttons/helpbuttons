@@ -1,7 +1,8 @@
 import t from "i18n";
 import ActivityNotificationCard from "../ActivityNotification/ActivityNotificationCard";
-import Btn, { ContentAlignment } from "elements/Btn";
+import Btn, { BtnType, ContentAlignment, IconType } from "elements/Btn";
 import router from "next/router";
+import { IoAddCircle, IoChatbox } from "react-icons/io5";
 
 
 export function ActivityList({ activities }) {
@@ -25,6 +26,9 @@ export function ActivityList({ activities }) {
               {t('activities.noactivity', ['activities'])}
             </div>
             <Btn
+              btnType={BtnType.submit}
+              iconLink={<IoAddCircle />}
+              iconLeft={IconType.svg}
               caption={t('explore.createEmpty')}
               onClick={() => router.push('/ButtonNew')}
               contentAlignment={ContentAlignment.center}
