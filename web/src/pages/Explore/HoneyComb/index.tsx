@@ -590,11 +590,64 @@ function ExploreHexagonMap({toggleShowLeftColumn, exploreSettings, selectedNetwo
     
   }, [boundsFilteredButtons, exploreSettings.zoom])
 
-  return (<HexagonExploreMap
-            exploreSettings={exploreSettings}
-            h3TypeDensityHexes={h3TypeDensityHexes}
-            handleBoundsChange={handleBoundsChange}
-            selectedNetwork={selectedNetwork}
-            countFilteredButtons={countFilteredButtons}
-          />)
+  // const modalRef = useRef<HTMLDivElement>(null);
+
+  // useEffect(() => {
+  //   const handlePress = (event: MouseEvent) => {
+  //     if (modalRef.current && modalRef.current.contains(event.target as Node)) {
+  //       setStartLongPress(true);
+  //     }
+  //   };
+
+  //   const handleRelease = (event: MouseEvent) => {
+  //     if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+  //       setStartLongPress(false);
+  //     }
+  //   };
+
+  //   document.addEventListener("mousedown", handlePress, true);
+  //   document.addEventListener("mouseup", handleRelease, true);
+
+  //   return () => {
+  //     document.removeEventListener("mousedown", handlePress, true);
+  //     document.removeEventListener("mouseup", handleRelease, true);
+  //   };
+  // }, [modalRef]);
+
+
+  const [startLongPress, setStartLongPress] = useState(false);
+
+  useEffect(() => {
+    let timerId;
+    if (startLongPress) {
+      console.log('-.')
+      timerId = setTimeout(() => { console.log('FINISHED!') }, 300);
+    } else {
+      clearTimeout(timerId);
+    }
+
+    return () => {
+      clearTimeout(timerId);
+    };
+  }, [startLongPress]);
+
+  const events = {
+    onMouseDown: () => setStartLongPress(true),
+    onMouseUp: () => setStartLongPress(false),
+    onMouseLeave: () => setStartLongPress(false),
+    onTouchStart: () => setStartLongPress(true),
+    onTouchEnd: () => setStartLongPress(false)
   }
+
+  return ( 
+    // <div ref={modalRef}>
+    <div {...events}>
+    <HexagonExploreMap
+        // ref={modalRef}
+        exploreSettings={exploreSettings}
+        h3TypeDensityHexes={h3TypeDensityHexes}
+        handleBoundsChange={handleBoundsChange}
+        selectedNetwork={selectedNetwork}
+        countFilteredButtons={countFilteredButtons}
+      /></div>)
+}
