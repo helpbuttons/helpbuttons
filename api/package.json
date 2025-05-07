@@ -37,6 +37,7 @@
   "dependencies": {
     "@faker-js/faker": "^7.6.0",
     "@fastify/helmet": "^13.0.0",
+    "@fedify/express": "^0.2.0",
     "@fedify/fedify": "^1.5.1",
     "@nestjs-modules/mailer": "^1.8.1",
     "@nestjs/axios": "^3.0.0",

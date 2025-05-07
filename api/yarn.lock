@@ -448,6 +448,11 @@
     fastify-plugin "^5.0.0"
     helmet "^8.0.0"
 
+"@fedify/express@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@fedify/express/-/express-0.2.0.tgz#a60a1c12e5d1cc603066af34ffe37b433f31a517"
+  integrity sha512-DLQ9RBm1gwzYfyj7KOeOfQRTYtcxB7DCU7ZvWuJQTDWVrtLAVowRk2jEBjs7ep15Z8ZHzDlbsNV6myws7RjPXQ==
+
 "@fedify/fedify@^1.5.1":
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/@fedify/fedify/-/fedify-1.5.1.tgz#750ad79c5bf6b9df02b0ca14395ca9fc8e92628e"
