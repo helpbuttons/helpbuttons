@@ -641,7 +641,7 @@ function ExploreHexagonMap({toggleShowLeftColumn, exploreSettings, selectedNetwo
 
   return ( 
     // <div ref={modalRef}>
-    <div {...events}>
+    <div className='index__explore-map-wrapper' {...events}>
     <HexagonExploreMap
         // ref={modalRef}
         exploreSettings={exploreSettings}
