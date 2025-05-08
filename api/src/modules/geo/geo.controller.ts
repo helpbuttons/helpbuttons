@@ -1,8 +1,8 @@
-import { CacheTTL, Controller, Get, Param, UseInterceptors } from '@nestjs/common';
+import {  Controller, Get, Param, UseInterceptors } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { AllowGuest } from '@src/shared/decorator/roles.decorator';
 import { GeoService } from './geo.service';
-import { CacheInterceptor } from '@nestjs/cache-manager';
+import { CacheInterceptor, CacheTTL } from '@nestjs/cache-manager';
 @ApiTags('geo')
 @Controller('geo')
 @UseInterceptors(CacheInterceptor)

@@ -44,7 +44,7 @@ export class StorageService {
     return sharp(buffer)
       .resize(1024)
       .toFile(pathfilename)
-      .then((result: string) => {
+      .then((result) => {
         const fileName = `${getFilesRoute}${fileImageName}`;
         return {
           id: uuid(),
