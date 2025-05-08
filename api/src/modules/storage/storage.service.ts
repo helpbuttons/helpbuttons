@@ -5,7 +5,7 @@ import {
 import { HttpStatus } from '@src/shared/types/http-status.enum';
 
 import { InjectRepository } from '@nestjs/typeorm';
-import { dbIdGenerator } from '@src/shared/helpers/nanoid-generator.helper';
+import { uuid } from '@src/shared/helpers/uuid.helper';
 import { Repository } from 'typeorm';
 import { ImageFile } from './image-file.entity';
 import { getFilesRoute, uploadDir } from './storage.utils';
@@ -35,7 +35,7 @@ export class StorageService {
       throw ErrorName.InvalidMimetype;
     }
 
-    const fileImageName = `${dbIdGenerator()}.${
+    const fileImageName = `${uuid()}.${
       mimetype.split('/')[1]
     }`;
     let buffer = Buffer.from(data, 'base64');
@@ -47,7 +47,7 @@ export class StorageService {
       .then((result: string) => {
         const fileName = `${getFilesRoute}${fileImageName}`;
         return {
-          id: dbIdGenerator(),
+          id: uuid(),
           name: fileName,
           mimetype: mimetype,
           originalname: 'unknown',

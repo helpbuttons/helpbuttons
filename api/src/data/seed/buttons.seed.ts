@@ -6,7 +6,7 @@ import { Button } from '@src/modules/button/button.entity';
 import { Network } from '@src/modules/network/network.entity';
 import { Post } from '@src/modules/post/post.entity';
 import { User } from '@src/modules/user/user.entity';
-import { dbIdGenerator } from '@src/shared/helpers/nanoid-generator.helper';
+import { uuid } from '@src/shared/helpers/uuid.helper';
 import { maxResolution } from '@src/shared/types/honeycomb.const';
 import { Role } from '@src/shared/types/roles';
 import { Seeder } from 'nestjs-seeder';
@@ -45,14 +45,14 @@ export class ButtonsSeeder implements Seeder {
     const usersId = []
     const userMails = []
     const usersToAdd = users.users.map((userJson) => {
-      const userId = dbIdGenerator()
+      const userId = uuid()
       userMails.push({ id: userId, mail: userJson.email })
       return {
         username: userJson.username,
         email: userJson.email,
         role: Role.registered,
         name: userJson.name,
-        verificationToken: dbIdGenerator(),
+        verificationToken: uuid(),
         emailVerified: true,
         id: userId,
         avatar: '/files/get/' + userJson.avatar,
@@ -88,7 +88,7 @@ export class ButtonsSeeder implements Seeder {
     let buttonsAdded = await this.buttonRepository.insert(buttonsToAdd);
     const postsToAdd = buttonsToAdd.map((button) => {
       return {
-        id: dbIdGenerator(),
+        id: uuid(),
         button: button.id,
         author: button.owner,
         message: `Hi! I created this helpbutton at ${readableDate(new Date(), 'en')}, leave a comment if you want`
@@ -133,7 +133,7 @@ export class ButtonsSeeder implements Seeder {
       }
       
       events.push({
-        id: dbIdGenerator(),
+        id: uuid(),
         type: getRandomItem(buttonTypes),
         description: `This is a description for event ${i + 1}. It includes details about the event and its purpose.`,
         latitude: city.latitude,

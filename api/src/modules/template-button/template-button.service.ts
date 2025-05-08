@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { dbIdGenerator } from '@src/shared/helpers/nanoid-generator.helper';
+import { uuid } from '@src/shared/helpers/uuid.helper';
 import { Repository } from 'typeorm';
 import { CreateTemplateButtonDto,UpdateTemplateButtonDto } from './template-button.dto';
 import { TemplateButton } from './template-button.entity';
@@ -15,7 +15,7 @@ export class TemplateButtonService {
   async create(createDto: CreateTemplateButtonDto) {
     
     let templateButton = {
-      id: dbIdGenerator(),
+      id: uuid(),
       name: createDto.name,
       description: createDto.description,
       type: createDto.type,

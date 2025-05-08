@@ -1,6 +1,7 @@
 import { Command } from 'nestjs-command';
 import { Injectable } from '@nestjs/common';
 import configs from '@src/config/configuration';
+import { uuid } from '@src/shared/helpers/uuid.helper';
 
 @Injectable()
 export class SetupCommand {
@@ -12,8 +13,8 @@ export class SetupCommand {
   })
   async generateJwt() {
     const fs = require('fs');
-    const { nanoid } = require('nanoid');
-    console.log(`jwtSecret=${nanoid(36)}`)
+    const jwt = uuid()
+    console.log(`jwtSecret=${jwt}`)
   }
 
   @Command({

@@ -1,6 +1,6 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { dbIdGenerator } from "@src/shared/helpers/nanoid-generator.helper";
+import { uuid } from "@src/shared/helpers/uuid.helper";
 import { Repository } from "typeorm";
 import { User } from "../user/user.entity";
 import { Comment } from "./comment.entity";
@@ -23,7 +23,7 @@ export class CommentService {
     .then((imagesStored ) => {
       return this.postSerice.findById(postId).then((post) => {
         const comment = {
-          id: dbIdGenerator(),
+          id: uuid(),
           message,
           images: imagesStored,
           post,
@@ -42,7 +42,7 @@ export class CommentService {
     .then((imagesStored ) => {
     return this.postSerice.findById(postId).then((post) => {
       const comment = {
-        id: dbIdGenerator(),
+        id: uuid(),
         message,
         images: imagesStored,
         post,
