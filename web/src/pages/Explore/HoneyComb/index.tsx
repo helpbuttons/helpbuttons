@@ -30,7 +30,7 @@ import {
   convertBoundsToGeoJsonHexagons,
   getZoomResolution,
 } from 'shared/honeycomb.utils';
-import _ from 'lodash';
+import _, { update } from 'lodash';
 import {
   useBackButton,
   useDebounce,
@@ -55,6 +55,8 @@ import { applyFiltersHex, isFiltering } from 'components/search/AdvancedFilters/
 import { Button } from 'shared/entities/button.entity';
 import { filter } from 'rxjs';
 import dconsole from 'shared/debugger';
+import { updateUrl } from 'components/uri/builder';
+import { useSearchParams } from 'next/navigation';
 
 const defaultZoomPlace = 13;
 
@@ -261,6 +263,14 @@ function useExploreSettings({
   }, [selectedNetwork]);
 
   const currentProfile = useGlobalStore((state: GlobalState) => state.homeInfo.mainPopupUserProfile)
+  const currentUrlParams = useSearchParams();
+  const hasSelectedButton = currentUrlParams.has('btn')
+  useEffect(() => {
+    if (!hasSelectedButton) {
+      store.emit(new updateCurrentButton(null))
+    }
+  }, [hasSelectedButton])
+
   useEffect(() => {
     if (
       exploreSettings?.center &&
@@ -293,32 +303,15 @@ function useExploreSettings({
       const urlParams = new URLSearchParams(obj);
       const newUrl = `/Explore/${Math.floor(exploreSettings.zoom)}/${exploreSettings.center[0]
         }/${exploreSettings.center[1]}/?${urlParams.toString()}`;
-
-      const currentButtonFromUrl = getCurrentButtonFromUrl();
-      const updateUrl =
-        obj?.btn != currentButtonFromUrl ? true : false;
-      const windowUrl =
-        window.location.pathname + window.location.search;
-      if (newUrl != windowUrl && (updateUrl || !obj?.btn)) {
-        window.history.pushState(
-          { ...window.history.state, as: newUrl, url: newUrl },
-          '',
+        router.push(
           newUrl,
+          undefined,
+          { shallow: true }
         );
       }
-    }
   }, [exploreSettings, currentButton, filters, currentProfile]);
 }
 
-const getCurrentButtonFromUrl = () => {
-  const windowUrl = window.location.pathname + window.location.search;
-
-  /** dont update url if button is the same... */
-  const currentUrlSearchParams = new URLSearchParams(windowUrl);
-  return currentUrlSearchParams.has('btn')
-    ? currentUrlSearchParams.get('btn')
-    : null;
-};
 
 function useHexagonMap({
   toggleShowLeftColumn,
