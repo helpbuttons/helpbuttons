@@ -1,7 +1,9 @@
 import t from 'i18n';
 import { TimePick } from './timepick';
-import { readableTime } from 'shared/date.utils';
+import { mergeDateTime, readableTime } from 'shared/date.utils';
 import CalendarHb from 'components/calendar';
+import { useEffect, useState } from 'react';
+import { alertService } from 'services/Alert';
 
 export default function PickerEventTypeOnceForm({
   eventStart,
@@ -10,53 +12,45 @@ export default function PickerEventTypeOnceForm({
   setEventStart,
 }) {
 
-  const setStartDate = (newDate) => {
-    const newStartTimeDate = new Date(newDate);
-    newStartTimeDate.setHours(
-      eventStart ? eventStart.getHours() : '0',
-    );
-    newStartTimeDate.setMinutes(
-      eventStart ? eventStart.getMinutes() : '01',
-    );
+  const [timeStart, setTimeStart] = useState(eventStart);
+  const [timeEnd, setTimeEnd] = useState(eventStart);
 
-    setEventStart(newStartTimeDate);
+  const [dateStart, setDateStart] = useState(eventEnd)
+  const [dateEnd, setDateEnd] = useState(eventEnd)
 
-    const newEndTimeDate = new Date(newDate);
-    newEndTimeDate.setHours(
-      eventEnd ? eventEnd.getHours() : '23',
-    );
-    newEndTimeDate.setMinutes(
-      eventEnd ? eventEnd.getMinutes() : '59',
-    );
-
-    setEventEnd(newEndTimeDate)
-  };
-
+  useEffect(() => {
+      setEventStart(mergeDateTime(dateStart, timeStart))
+  }, [timeStart, dateStart])
+  
+  useEffect(() => {
+      setEventEnd(mergeDateTime(dateStart, timeEnd))
+  }, [timeEnd, dateStart])
+  
   return (
     <>
       <div className="picker__row">
         <CalendarHb
           onChange={(newDate) => {
-            setStartDate(newDate);
+            setDateStart(newDate);
           }}
-          value={eventStart}
+          value={dateStart}
           minDate={new Date()}
         />
       </div>
-        {eventStart && (
-          <div className="picker__row">
-            <TimePick
-              dateTime={eventStart}
-              setDateTime={(value) => setEventStart(value)}
-              label={t('eventType.from') + readableTime(eventStart)}
-            />
-            <TimePick
-              dateTime={eventEnd}
-              setDateTime={(value) => setEventEnd(value)}
-              label={t('eventType.until') + readableTime(eventEnd)}
-            />
-          </div>
-        )}
+      {dateStart && (
+        <div className="picker__row">
+          <TimePick
+            time={timeStart}
+            setTime={(value) => setTimeStart(() => value)}
+            maxTime={timeEnd}
+          />
+          <TimePick
+            time={timeEnd}
+            setTime={(value) => setTimeEnd(() => value)}
+            minTime={timeStart}
+          />
+        </div>
+      )}
     </>
   );
 }
