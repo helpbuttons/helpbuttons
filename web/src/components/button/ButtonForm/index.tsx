@@ -37,6 +37,7 @@ export default function ButtonForm({
   setFocus,
   isSubmitting,
   title,
+  clearErrors
 }) {
   const selectedNetwork: Network = useRef(
     store,
@@ -98,6 +99,9 @@ export default function ButtonForm({
     setImage(null)
   } }, [images])
 
+  useEffect(() => {
+    clearErrors('eventStart')
+  }, [watch('eventStart')])
   const onError = (errors, e) => alertService.error(t('validation.error'))
   return (
     <LoadabledComponent loading={!selectedNetwork}>
@@ -107,7 +111,8 @@ export default function ButtonForm({
             onSubmit={handleSubmit(onSubmit, onError)}
             classNameExtra="publish_btn"
           >
-            {isSubmitting ? <Loading /> :
+              {/* <fieldset disabled={isSubmitting}> */}
+              {isSubmitting ? <Loading /> :
               <>
                 <div className="form__inputs-wrapper">
                   <FieldButtonType
@@ -187,15 +192,18 @@ export default function ButtonForm({
                   <ButtonShare />
                 </div>
                 <div className="publish__submit">
-                  <Btn
-                    btnType={BtnType.submit}
-                    contentAlignment={ContentAlignment.center}
-                    caption={t('common.publish')}
-                    isSubmitting={isSubmitting}
-                    submit={true}
-                  />
+                  {isSubmitting ? <Loading /> : 
+                    <Btn
+                      btnType={BtnType.submit}
+                      contentAlignment={ContentAlignment.center}
+                      caption={t('common.publish')}
+                      isSubmitting={isSubmitting}
+                      submit={true}
+                    />
+                  }
                 </div>
-              </>}
+                {/* </fieldset> */}
+                </>}
           </Form>
         </Popup>
       }

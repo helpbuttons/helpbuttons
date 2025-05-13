@@ -28,6 +28,7 @@ export default function FieldDate({
   register,
   setEventData,
   eventData = null,
+  validationError
 }) {
   const [showPopup, setShowPopup] =  useState(false)
   const [invalidDates, setInvalidDates] = useState(false);
@@ -119,6 +120,7 @@ export default function FieldDate({
               />
             </div>
     </PickerField>
+    <FieldError validationError={validationError} />
     </>
     
     // <>

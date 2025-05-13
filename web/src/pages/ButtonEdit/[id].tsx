@@ -14,6 +14,7 @@ import t from 'i18n';
 import { useRouter } from 'next/router';
 import { ErrorName } from 'shared/types/error.list';
 import { markerFocusZoom } from 'components/map/Map/Map.consts';
+import { onButtonValidationError } from 'pages/ButtonNew';
 
 export default function ButtonEdit() {
 
@@ -32,6 +33,8 @@ export default function ButtonEdit() {
     setValue,
     getValues,
     setFocus,
+    setError,
+    clearErrors
   } = useForm();
 
   const [button, setButton] = useState<Button>(null);
@@ -54,15 +57,7 @@ export default function ButtonEdit() {
   };
 
   const onError = (err) => {
-    if (err.errorName == ErrorName.invalidDates) {
-      alertService.error(t('button.invalidDates'));
-    } else if (err.errorName == ErrorName.InvalidMimetype) {
-      alertService.error(t('validation.invalidMimeType'));
-    } else if (err.caption) {
-      alertService.error(err.caption);
-    } else {
-      console.error(JSON.stringify(err));
-    }
+    onButtonValidationError(err, setError)
 
     setIsSubmitting(() => false);
   };
@@ -98,6 +93,7 @@ export default function ButtonEdit() {
         isSubmitting={isSubmitting}
         onSubmit={onSubmit}
         title={t('common.editTitle', ['button'])}
+        clearErrors={clearErrors}
       ></ButtonForm>
     }
     </>
