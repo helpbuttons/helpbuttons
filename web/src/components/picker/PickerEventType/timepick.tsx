@@ -99,6 +99,7 @@ export function TimePick({ time, setTime, minTime = null, maxTime = null }) {
                   iconLeft={IconType.circle}
                   contentAlignment={ContentAlignment.center}
                   onClick={() => {trySaveNewTime()}}
+                  disabled={_time == null}
                   />
               </>
           }
