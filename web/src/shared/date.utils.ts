@@ -156,3 +156,16 @@ export function checkIfDateHitsEvent(dateStart, dateEnd, recrule, date) {
   }
   return false;
 }
+
+export const mergeDateTime = (date, time) => {
+  const newDateTime = new Date(date);
+  if(time){
+    newDateTime.setHours(
+      time.getHours()
+     );
+     newDateTime.setMinutes(
+      time.getMinutes()
+    );
+  }
+  return newDateTime
+}
