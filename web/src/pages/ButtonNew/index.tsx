@@ -64,6 +64,8 @@ function ButtonNewForm({ selectedNetwork }) {
     watch,
     setValue,
     getValues,
+    setError,
+    clearErrors
   } = useForm({
     defaultValues
   });
