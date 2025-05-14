@@ -1,0 +1,45 @@
+.react-timekeeper {
+
+    width: 100% !important;
+    border: none;
+    box-shadow: none;
+
+}
+
+.react-timekeeper__clock-wrapper {
+
+    background-color: transparent !important;
+
+}
+
+.react-timekeeper__tb-meridiem{
+
+    @extend .btn ;
+
+    background-color: $color-white !important;
+    color: $color-black  !important;
+    border-color: $color-black !important;
+    border: 1px solid $color-black !important;
+
+    padding: $padding-medium  !important;
+
+}
+
+.react-timekeeper__meridiem-toggle {
+
+    @extend .btn ;
+
+    background-color: $color-white !important;
+    color: $color-black  !important;
+    border-color: $color-black !important;
+    border: 1px solid $color-black !important;
+
+
+}
+
+.react-timekeeper__meridiem--active {
+
+    background-color: $color-black !important;
+    color: $color-white  !important;
+
+}

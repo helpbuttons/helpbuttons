@@ -83,7 +83,7 @@ export function TimePick({ time, setTime, minTime = null, maxTime = null }) {
       openPopup={showPickTime}
       closePopup={hidePickTime}
     >
-      <div className="picker__row">
+      <div className="picker__section">
         <TimeKeeper
           time={_time}
           onChange={(newTime) => {
@@ -94,12 +94,13 @@ export function TimePick({ time, setTime, minTime = null, maxTime = null }) {
                 {errorTime < 0 && <FieldError validationError={{message: t('eventType.afterStart', [readableTime(minTime)])}} />}
                 {errorTime > 0 && <FieldError validationError={{message: t('eventType.beforeEnd', [readableTime(maxTime)])}} />}
                 <Btn
-                  btnType={BtnType.corporative}
+                  btnType={BtnType.submit}
                   iconLink={<IoSaveOutline />}
                   iconLeft={IconType.circle}
                   contentAlignment={ContentAlignment.center}
                   onClick={() => {trySaveNewTime()}}
                   disabled={_time == null}
+                  caption={t('common.save')} 
                   />
               </>
           }
