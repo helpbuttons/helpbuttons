@@ -29,7 +29,7 @@ export default function FieldDate({
   eventData = null,
   validationError
 }) {
-  const [showPopup, setShowPopup] =  useState(true)
+  const [showPopup, setShowPopup] =  useState(false)
 
   const closePopup = () => {setShowPopup(() => false)}
   const openPopup = () => {setShowPopup(() => true)}
