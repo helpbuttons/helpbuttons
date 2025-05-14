@@ -10,6 +10,7 @@ export default function PickerEventTypeOnceForm({
   eventEnd,
   setEventEnd,
   setEventStart,
+  handleChangeToMultipleDates
 }) {
 
   const [timeStart, setTimeStart] = useState(eventStart);
@@ -19,13 +20,13 @@ export default function PickerEventTypeOnceForm({
   const [dateEnd, setDateEnd] = useState(eventEnd)
 
   useEffect(() => {
-      setEventStart(mergeDateTime(dateStart, timeStart))
+    setEventStart(mergeDateTime(dateStart, timeStart))
   }, [timeStart, dateStart])
-  
+
   useEffect(() => {
-      setEventEnd(mergeDateTime(dateStart, timeEnd))
+    setEventEnd(mergeDateTime(dateStart, timeEnd))
   }, [timeEnd, dateStart])
-  
+
   return (
     <>
       <div className="picker__row">
@@ -40,14 +41,21 @@ export default function PickerEventTypeOnceForm({
       {dateStart && (
         <div className="picker__row">
           <TimePick
+            preLabel={t('eventType.from')}
             time={timeStart}
             setTime={(value) => setTimeStart(() => value)}
             maxTime={timeEnd}
           />
           <TimePick
+            preLabel={t('eventType.until')}
             time={timeEnd}
             setTime={(value) => setTimeEnd(() => value)}
             minTime={timeStart}
+            handleChangeToMultipleDates={(neededTime) => {
+              const _newEnd = mergeDateTime(dateStart, neededTime)
+              _newEnd.setDate(_newEnd.getDate() + 1)
+              handleChangeToMultipleDates(mergeDateTime(dateStart, timeStart), _newEnd)
+            }}
           />
         </div>
       )}

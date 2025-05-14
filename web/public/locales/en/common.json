@@ -402,7 +402,8 @@
     "onceExplain": "Select date and time for your event",
     "recurringExplain": "Select starting and finish dates, days of the week and time",
     "afterStart": "Please select a time/date after {0}",
-    "beforeEnd": "Please select a time/date before {0}"
+    "beforeEnd": "Please select a time/date after {0}",
+    "changeToMultipleDates": "Do you want the event to be multiple days?"
   },
   "validation": {
     "fieldRequired": "{0} is required.",
