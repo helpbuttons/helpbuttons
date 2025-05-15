@@ -583,38 +583,13 @@ function ExploreHexagonMap({toggleShowLeftColumn, exploreSettings, selectedNetwo
     
   }, [boundsFilteredButtons, exploreSettings.zoom])
 
-  // const modalRef = useRef<HTMLDivElement>(null);
-
-  // useEffect(() => {
-  //   const handlePress = (event: MouseEvent) => {
-  //     if (modalRef.current && modalRef.current.contains(event.target as Node)) {
-  //       setStartLongPress(true);
-  //     }
-  //   };
-
-  //   const handleRelease = (event: MouseEvent) => {
-  //     if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
-  //       setStartLongPress(false);
-  //     }
-  //   };
-
-  //   document.addEventListener("mousedown", handlePress, true);
-  //   document.addEventListener("mouseup", handleRelease, true);
-
-  //   return () => {
-  //     document.removeEventListener("mousedown", handlePress, true);
-  //     document.removeEventListener("mouseup", handleRelease, true);
-  //   };
-  // }, [modalRef]);
-
-
   const [startLongPress, setStartLongPress] = useState(false);
-
+  const [showLongPressMenu, setShowLongPressMenu] = useState(false)
   useEffect(() => {
     let timerId;
     if (startLongPress) {
-      console.log('-.')
-      timerId = setTimeout(() => { console.log('FINISHED!') }, 300);
+      setShowLongPressMenu(() => false)
+      timerId = setTimeout(() => { setShowLongPressMenu(() => true) }, 300);
     } else {
       clearTimeout(timerId);
     }
@@ -633,10 +608,9 @@ function ExploreHexagonMap({toggleShowLeftColumn, exploreSettings, selectedNetwo
   }
 
   return ( 
-    // <div ref={modalRef}>
     <div className='index__explore-map-wrapper' {...events}>
+      {showLongPressMenu && <div>show menu</div>}
     <HexagonExploreMap
-        // ref={modalRef}
         exploreSettings={exploreSettings}
         h3TypeDensityHexes={h3TypeDensityHexes}
         handleBoundsChange={handleBoundsChange}
