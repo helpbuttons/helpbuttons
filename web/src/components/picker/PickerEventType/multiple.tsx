@@ -11,11 +11,11 @@ export default function PickerEventTypeMultipleForm({
   setEventStart,
 }) {
 
-  const [timeStart, setTimeStart] = useState(eventStart);
-  const [timeEnd, setTimeEnd] = useState(eventStart);
-
-  const [dateStart, setDateStart] = useState(eventEnd)
+  const [dateStart, setDateStart] = useState(eventStart)
+  const [timeStart, setTimeStart] = useState(eventStart)
+  
   const [dateEnd, setDateEnd] = useState(eventEnd)
+  const [timeEnd, setTimeEnd] = useState(eventEnd)
 
   useEffect(() => {
       setEventStart(mergeDateTime(dateStart, timeStart))
@@ -48,10 +48,12 @@ export default function PickerEventTypeMultipleForm({
       {(dateStart && dateEnd) && (
         <div className="picker__row">
           <TimePick
+            preLabel={t('eventType.from')}
             time={timeStart}
             setTime={(value) => setTimeStart(value)}
           />
           <TimePick
+            preLabel={t('eventType.until')}
             time={timeEnd}
             setTime={(value) => setTimeEnd(value)}
           />

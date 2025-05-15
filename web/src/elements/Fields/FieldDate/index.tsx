@@ -1,6 +1,5 @@
 //is the component or element integrated in buttonNewPublish. Right before activate button. It displays the current selected date and a button to chang it, that ddisplays a picker with the date options for the net that's selecte
-import { Picker } from 'components/picker/Picker';
-import React, { useState } from 'react';
+import React, {  useState } from 'react';
 import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
 import {
   DateTypes,
@@ -15,7 +14,7 @@ import PickerEventTypeMultipleForm from 'components/picker/PickerEventType/multi
 import FieldError from '../FieldError';
 import PickerEventTypeRecurrentForm, { loadRrules, recurrentToText } from 'components/picker/PickerEventType/recurrent';
 import PickerField from 'components/picker/PickerField';
-import { IoLocationOutline, IoTime, IoTimeOutline } from 'react-icons/io5';
+import { IoTimeOutline } from 'react-icons/io5';
 
 export default function FieldDate({
   title,
@@ -30,10 +29,15 @@ export default function FieldDate({
   eventData = null,
   validationError
 }) {
-  const [showPopup, setShowPopup] =  useState(true)
+  const [showPopup, setShowPopup] =  useState(false)
 
-  const closePopup = () => setShowPopup(() => false)
-  const openPopup = () => setShowPopup(() => true)
+  const closePopup = () => {setShowPopup(() => false)}
+  const openPopup = () => {setShowPopup(() => true)}
+  const discardDates = () => {
+    _setEventStart(() => eventStart)
+    _setEventEnd(() => eventEnd)
+    closePopup()
+  }
   const saveNewDates = () => {
     setEventStart(_eventStart)
     setEventEnd(_eventEnd)
@@ -41,6 +45,12 @@ export default function FieldDate({
   }
   const [_eventStart, _setEventStart] = useState(eventStart)
   const [_eventEnd, _setEventEnd] = useState(eventEnd)
+
+  const handleChangeToMultipleDates = (newStartTimeDate, newEndTimeDate) => {
+    _setEventStart(newStartTimeDate)
+    _setEventEnd(newEndTimeDate)
+    setEventType(DateTypes.MULTIPLE)
+  }
   // https://www.npmjs.com/package/react-time-picker
   return (
     <>
@@ -60,7 +70,7 @@ export default function FieldDate({
       headerText={t('eventType.typePicker')}
       label={t('button.whenLabel')}
       openPopup={openPopup}
-      closePopup={closePopup}
+      closePopup={discardDates}
     >
       <div className="picker__section">
               <EventType
@@ -74,7 +84,8 @@ export default function FieldDate({
                   eventStart={_eventStart}
                   eventEnd={_eventEnd}
                   setEventEnd={_setEventEnd}
-                  setEventStart={_setEventStart}
+                  setEventStart={_setEventStart} 
+                  handleChangeToMultipleDates={handleChangeToMultipleDates}                  
                 ></PickerEventTypeOnceForm>
               )}
               {eventType == DateTypes.MULTIPLE && (

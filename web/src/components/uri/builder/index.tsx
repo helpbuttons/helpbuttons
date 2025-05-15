@@ -34,7 +34,7 @@ export function useParamsBtn(router, pageName) {
   const buttonId = searchParams.get('btn')
 
   useEffect(() => {
-    if (['Explore'].indexOf(pageName) < 0) {
+    if (['Explore', 'ButtonEdit'].indexOf(pageName) < 0) {
       if (mainPopupButton) {
         updateUrl(router, { btn: mainPopupButton.id, ...router.query })
       } else {
@@ -45,7 +45,7 @@ export function useParamsBtn(router, pageName) {
   }, [mainPopupButton, pageName])
 
   useEffect(() => {
-    if (['Explore'].indexOf(pageName) < 0) {
+    if (['Explore', 'ButtonEdit'].indexOf(pageName) < 0) {
     if (!mainPopupButton && buttonId) {
       store.emit(new FindButton(buttonId, (button) => {
         
