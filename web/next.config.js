@@ -23,6 +23,10 @@ module.exports = {
       {
         source: '/rss',
         destination: `${process.env.API_URL}/buttons/rss`,
+      },
+      {
+        source: '/.well-known/:path*',
+        destination: `${process.env.API_URL}/federation/.well-known/:path*`,
       }
     ];
   },
