@@ -3,7 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Invite } from "./invite.entity";
 import { Repository } from "typeorm";
 import { InviteCreateDto } from "./invite.dto";
-import { dbIdGenerator } from "@src/shared/helpers/nanoid-generator.helper";
+import { uuid } from "@src/shared/helpers/uuid.helper";
 import { User } from "../user/user.entity";
 
 @Injectable()
@@ -17,7 +17,7 @@ export class InviteService {
   async create(newInvitation: InviteCreateDto, currentUser: User)
   {
     const invitation: Invite = {
-        id: dbIdGenerator(),
+        id: uuid(),
         usage: 0,
         maximumUsage: newInvitation.maximumUsage,
         expiration: this.getExpirationDate(newInvitation.expirationTimeInSeconds),

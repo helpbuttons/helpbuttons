@@ -15,7 +15,6 @@ seeder({
   imports: [
     ConfigModule.forRoot({
       cache: true,
-      encoding: 'utf-8',
       envFilePath: ['.env', '.postgres.env'],
       isGlobal: true,
       load: [webAppConfig],

@@ -34,6 +34,18 @@ export default function ButtonNew({ metadata }) {
   );
 }
 
+export const onButtonValidationError = (err, setError) => {
+  if(err.errorName == ErrorName.invalidDates){
+    alertService.error(t('button.invalidDates'))
+    setError('eventStart', { type: 'server', message: t('button.invalidDates') });
+  }else if(err.errorName == ErrorName.InvalidMimetype){
+    alertService.error(err.caption);
+  }else if(err.errorName == ErrorName.validationError){
+    alertService.error(err.caption);
+  }else{
+    console.error(JSON.stringify(err))
+  }
+};
 
 function ButtonNewForm({ selectedNetwork }) {
   const defaultValues = {
@@ -50,7 +62,8 @@ function ButtonNewForm({ selectedNetwork }) {
     when: { dates: [], type: null },
     hideAddress: selectedNetwork.hideLocationDefault,
     eventData: null,
-    isCustomAddress: false
+    isCustomAddress: false,
+    eventStart: null
   };
   const {
     register,
@@ -64,6 +77,8 @@ function ButtonNewForm({ selectedNetwork }) {
     watch,
     setValue,
     getValues,
+    setError,
+    clearErrors
   } = useForm({
     defaultValues
   });
@@ -115,18 +130,8 @@ function ButtonNewForm({ selectedNetwork }) {
       store.emit(new SaveButtonDraft(getValues()));
       alertService.error(err.caption);
       store.emit(new SetMainPopup(MainPopupPage.LOGIN))
-      // Router.push({
-      //   pathname: '/Login',
-      //   query: { returnUrl: 'ButtonNew' },
-      // });
-    }else if(err.errorName == ErrorName.invalidDates){
-      alertService.error(t('button.invalidDates'))
-    }else if(err.errorName == ErrorName.InvalidMimetype){
-      alertService.error(err.caption);
-    }else if(err.errorName == ErrorName.validationError){
-      alertService.error(err.caption);
     }else{
-      console.error(JSON.stringify(err))
+      onButtonValidationError(err, setError)
     }
     setIsSubmitting(() => false)
   };
@@ -148,6 +153,7 @@ function ButtonNewForm({ selectedNetwork }) {
         isSubmitting={isSubmitting}
         onSubmit={onSubmit}
         title={t('common.publishTitle', ['_helpbutton_'])}
+        clearErrors={clearErrors}
       ></ButtonForm>
     }
     </>

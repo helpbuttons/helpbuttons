@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { dbIdGenerator } from '@src/shared/helpers/nanoid-generator.helper';
+import { uuid } from '@src/shared/helpers/uuid.helper';
 import { Repository } from 'typeorm';
 import { Tag } from './tag.entity';
 import { tagify } from '@src/shared/helpers/tagify.helper';
@@ -19,7 +19,7 @@ export class TagService {
 
   async createTag(tag: Tag) {
     const createdTag = this.tagRepository.create({
-      id: dbIdGenerator(),
+      id: uuid(),
       ...(tag.modelId ? { modelId: tag.modelId } : {}),
       ...(tag.modelName ? { modelName: tag.modelName } : {}),
       tag: tag.tag,
@@ -37,7 +37,7 @@ export class TagService {
   async addTags(modelName: string, modelId: string, tags: string[]) {
     let tagsToInsert = tags.filter(tag => tag.length > 0).map((tag) => {
       return {
-        id: dbIdGenerator(),
+        id: uuid(),
         modelName: modelName,
         modelId: modelId,
         tag: tagify(tag),
@@ -53,7 +53,7 @@ export class TagService {
   ) {
     let tagsToInsert = tags.map((tag) => {
       return {
-        id: dbIdGenerator(),
+        id: uuid(),
         modelName: modelName,
         modelId: modelId,
         tag: tagify(tag),

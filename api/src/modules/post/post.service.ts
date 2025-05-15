@@ -1,6 +1,6 @@
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { dbIdGenerator } from '@src/shared/helpers/nanoid-generator.helper';
+import { uuid } from '@src/shared/helpers/uuid.helper';
 import { Role } from '@src/shared/types/roles';
 import { Repository } from 'typeorm';
 import { ButtonService } from '../button/button.service';
@@ -34,7 +34,7 @@ export class PostService {
       .findById(buttonId, true)
       .then((button) => {
         const post = {
-          id: dbIdGenerator(),
+          id: uuid(),
           message,
           button,
           author,

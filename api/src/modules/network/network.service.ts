@@ -11,7 +11,7 @@ import {
   InjectEntityManager,
   InjectRepository,
 } from '@nestjs/typeorm';
-import { dbIdGenerator } from '@src/shared/helpers/nanoid-generator.helper';
+import { uuid } from '@src/shared/helpers/uuid.helper';
 import { EntityManager, ILike, Repository } from 'typeorm';
 import { TagService } from '../tag/tag.service';
 import {
@@ -55,7 +55,7 @@ export class NetworkService {
 
   async create(createDto: CreateNetworkDto) {
     const network = {
-      id: dbIdGenerator(),
+      id: uuid(),
       description: createDto.description,
       // url: createDto.url,
       tags: this.tagService.formatTags(createDto.tags),

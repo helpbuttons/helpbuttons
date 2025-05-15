@@ -1,6 +1,5 @@
 //is the component or element integrated in buttonNewPublish. Right before activate button. It displays the current selected date and a button to chang it, that ddisplays a picker with the date options for the net that's selecte
-import { Picker } from 'components/picker/Picker';
-import React, { useState } from 'react';
+import React, {  useState } from 'react';
 import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
 import {
   DateTypes,
@@ -15,7 +14,7 @@ import PickerEventTypeMultipleForm from 'components/picker/PickerEventType/multi
 import FieldError from '../FieldError';
 import PickerEventTypeRecurrentForm, { loadRrules, recurrentToText } from 'components/picker/PickerEventType/recurrent';
 import PickerField from 'components/picker/PickerField';
-import { IoLocationOutline, IoTime, IoTimeOutline } from 'react-icons/io5';
+import { IoTimeOutline } from 'react-icons/io5';
 
 export default function FieldDate({
   title,
@@ -28,29 +27,30 @@ export default function FieldDate({
   register,
   setEventData,
   eventData = null,
+  validationError
 }) {
   const [showPopup, setShowPopup] =  useState(false)
-  const [invalidDates, setInvalidDates] = useState(false);
-  
-  const datesAreValid = (eventEnd, eventStart) => {
-    if (eventEnd?.getTime() < eventStart?.getTime()) {
-      return false;
-    }
-    return true;
-  };
 
-  let closeMenu = () => {
-    if (datesAreValid(eventEnd, eventStart)) {
-      closePopup()
-      setInvalidDates(() => false);
-    }else{
-      setInvalidDates(() => true);
-    }
-  };
+  const closePopup = () => {setShowPopup(() => false)}
+  const openPopup = () => {setShowPopup(() => true)}
+  const discardDates = () => {
+    _setEventStart(() => eventStart)
+    _setEventEnd(() => eventEnd)
+    closePopup()
+  }
+  const saveNewDates = () => {
+    setEventStart(_eventStart)
+    setEventEnd(_eventEnd)
+    closePopup()
+  }
+  const [_eventStart, _setEventStart] = useState(eventStart)
+  const [_eventEnd, _setEventEnd] = useState(eventEnd)
 
-  const closePopup = () => setShowPopup(() => false)
-  const openPopup = () => setShowPopup(() => true)
-
+  const handleChangeToMultipleDates = (newStartTimeDate, newEndTimeDate) => {
+    _setEventStart(newStartTimeDate)
+    _setEventEnd(newEndTimeDate)
+    setEventType(DateTypes.MULTIPLE)
+  }
   // https://www.npmjs.com/package/react-time-picker
   return (
     <>
@@ -70,7 +70,7 @@ export default function FieldDate({
       headerText={t('eventType.typePicker')}
       label={t('button.whenLabel')}
       openPopup={openPopup}
-      closePopup={closePopup}
+      closePopup={discardDates}
     >
       <div className="picker__section">
               <EventType
@@ -81,22 +81,19 @@ export default function FieldDate({
               />
               {eventType == DateTypes.ONCE && (
                 <PickerEventTypeOnceForm
-                  eventStart={eventStart}
-                  eventEnd={eventEnd}
-                  setEventEnd={setEventEnd}
-                  setEventStart={setEventStart}
-                  onChange={(datetime) => {}}
-                  closeMenu={closeMenu}
+                  eventStart={_eventStart}
+                  eventEnd={_eventEnd}
+                  setEventEnd={_setEventEnd}
+                  setEventStart={_setEventStart} 
+                  handleChangeToMultipleDates={handleChangeToMultipleDates}                  
                 ></PickerEventTypeOnceForm>
               )}
               {eventType == DateTypes.MULTIPLE && (
                   <PickerEventTypeMultipleForm
-                    eventStart={eventStart}
-                    eventEnd={eventEnd}
-                    setEventEnd={setEventEnd}
-                    setEventStart={setEventStart}
-                    onChange={(datetime) => {}}
-                    closeMenu={closeMenu}
+                    eventStart={_eventStart}
+                    eventEnd={_eventEnd}
+                    setEventEnd={_setEventEnd}
+                    setEventStart={_setEventStart}
                   ></PickerEventTypeMultipleForm>
               )}
               {eventType == DateTypes.RECURRENT && (
@@ -104,90 +101,21 @@ export default function FieldDate({
                   rrule={loadRrules(eventData)}
                   setRrule={(rrule) => {
                     setEventData(rrule); 
-                    setEventStart(new Date(rrule.dtstart)); setEventEnd(new Date(rrule.until))}}
-                  closeMenu={closePopup}
+                    _setEventStart(new Date(rrule.dtstart)); 
+                    _setEventEnd(new Date(rrule.until))}}
                 />
               )}
-              {invalidDates && 
-                <FieldError validationError={{message: t('validation.dates')}} />
-              }
-              <Btn
-                btnType={BtnType.submit}
-                caption={t('common.save')}
-                contentAlignment={ContentAlignment.center}
-                onClick={closeMenu}
-              />
+                <Btn
+                  btnType={BtnType.submit}
+                  caption={t('common.save')}
+                  contentAlignment={ContentAlignment.center}
+                  onClick={saveNewDates}
+                  disabled={!_eventStart || !_eventEnd}
+                />
             </div>
     </PickerField>
+    <FieldError validationError={validationError} />
     </>
-    
-    // <>
-    //   <div className="form__field">
-    //     <ShowDate
-    //       eventStart={eventStart}
-    //       eventEnd={eventEnd}
-    //       eventType={eventType}
-    //       eventData={eventData}
-    //       title={title}
-    //     />
-    //     <div className="btn" onClick={() => setHideMenu(true)}>
-    //     </div>
-    //   </div>
-    //   {showHideMenu && (
-        
-    //     <Picker
-    //       closeAction={closeMenu}
-    //       headerText={t('eventType.headerText')}
-    //     >
-    //         <div className="picker__section">
-    //           <EventType
-    //             name="eventType"
-    //             label={t('eventType.typePicker')}
-    //             value={eventType}
-    //             {...register('eventType')}
-    //           />
-    //           {eventType == DateTypes.ONCE && (
-    //             <PickerEventTypeOnceForm
-    //               eventStart={eventStart}
-    //               eventEnd={eventEnd}
-    //               setEventEnd={setEventEnd}
-    //               setEventStart={setEventStart}
-    //               onChange={(datetime) => {}}
-    //               closeMenu={closeMenu}
-    //             ></PickerEventTypeOnceForm>
-    //           )}
-    //           {eventType == DateTypes.MULTIPLE && (
-    //               <PickerEventTypeMultipleForm
-    //                 eventStart={eventStart}
-    //                 eventEnd={eventEnd}
-    //                 setEventEnd={setEventEnd}
-    //                 setEventStart={setEventStart}
-    //                 onChange={(datetime) => {}}
-    //                 closeMenu={closeMenu}
-    //               ></PickerEventTypeMultipleForm>
-    //           )}
-    //           {eventType == DateTypes.RECURRENT && (
-    //             <PickerEventTypeRecurrentForm
-    //               rrule={loadRrules(eventData)}
-    //               setRrule={(rrule) => {
-    //                 setEventData(rrule); 
-    //                 setEventStart(new Date(rrule.dtstart)); setEventEnd(new Date(rrule.until))}}
-    //               closeMenu={closeMenu}
-    //             />
-    //           )}
-    //           {invalidDates && 
-    //             <FieldError validationError={{message: 'invalid dates'}} />
-    //           }
-    //           <Btn
-    //             btnType={BtnType.submit}
-    //             caption={t('common.save')}
-    //             contentAlignment={ContentAlignment.center}
-    //             onClick={closeMenu}
-    //           />
-    //         </div>
-    //     </Picker>
-    //   )}
-    // </>
   );
 }
 

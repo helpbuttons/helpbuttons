@@ -43,7 +43,7 @@ function NavBottom({ sessionUser, pageName }) {
     <>
       <nav id="bottom-nav" className="nav-bottom">
         <NavLink
-          href="/"
+          href="/HomeInfo"
           className={`nav-bottom__link nav-bottom__link--active ${isCurrent(
             'HomeInfo',
           )}`}

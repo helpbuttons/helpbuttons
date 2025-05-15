@@ -4,7 +4,7 @@ import {
   InjectEntityManager,
   InjectRepository,
 } from '@nestjs/typeorm';
-import { dbIdGenerator } from '@src/shared/helpers/nanoid-generator.helper';
+import { uuid } from '@src/shared/helpers/uuid.helper';
 import { ActivityEventName } from '@src/shared/types/activity.list';
 import { EntityManager, In, Not, Repository } from 'typeorm';
 import { Activity } from './activity.entity';
@@ -395,7 +395,7 @@ export class ActivityService {
       console.log(err);
     }
     const activity = {
-      id: dbIdGenerator(),
+      id: uuid(),
       owner: user,
       eventName: payload.activityEventName,
       data: JSON.stringify(payload.data),
@@ -407,7 +407,7 @@ export class ActivityService {
 
   private newNetworkActivity(payload) {
     const activity = {
-      id: dbIdGenerator(),
+      id: uuid(),
       eventName: payload.activityEventName,
       data: JSON.stringify(payload.data),
       homeinfo: true,

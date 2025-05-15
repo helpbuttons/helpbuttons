@@ -1,7 +1,8 @@
 import t from 'i18n';
-import { readableTime } from 'shared/date.utils';
+import { mergeDateTime, readableTime } from 'shared/date.utils';
 import { TimePick } from './timepick';
 import CalendarHb from 'components/calendar';
+import { useEffect, useState } from 'react';
 
 export default function PickerEventTypeMultipleForm({
   eventStart,
@@ -10,24 +11,27 @@ export default function PickerEventTypeMultipleForm({
   setEventStart,
 }) {
 
+  const [dateStart, setDateStart] = useState(eventStart)
+  const [timeStart, setTimeStart] = useState(eventStart)
+  
+  const [dateEnd, setDateEnd] = useState(eventEnd)
+  const [timeEnd, setTimeEnd] = useState(eventEnd)
+
+  useEffect(() => {
+      setEventStart(mergeDateTime(dateStart, timeStart))
+  }, [timeStart, dateStart])
+  
+  useEffect(() => {
+      setEventEnd(mergeDateTime(dateEnd, timeEnd))
+  }, [timeEnd, dateEnd])
+
+  
   const setDates = (newDates) => {
     const newStartTimeDate = new Date(newDates[0]);
-    newStartTimeDate.setHours(
-      eventStart ? eventStart.getHours() : '0',
-    );
-    newStartTimeDate.setMinutes(
-      eventStart ? eventStart.getMinutes() : '01',
-    );
-
-    setEventStart(newStartTimeDate);
+    setDateStart(() => newStartTimeDate);
 
     const newEndTimeDate = new Date(newDates[1]);
-    newEndTimeDate.setHours(eventEnd ? eventEnd.getHours() : '23');
-    newEndTimeDate.setMinutes(
-      eventEnd ? eventEnd.getMinutes() : '59',
-    );
-
-    setEventEnd(newEndTimeDate);
+    setDateEnd(() => newEndTimeDate);
   };
   return (
     <>
@@ -36,22 +40,22 @@ export default function PickerEventTypeMultipleForm({
           onChange={(newDates) => {
             setDates(newDates);
           }}
-          value={[eventStart, eventEnd]}
+          value={[dateStart, dateEnd]}
           selectRange
           minDate={new Date()}
         />
       </div>
-      {(eventStart && eventEnd) && (
+      {(dateStart && dateEnd) && (
         <div className="picker__row">
           <TimePick
-            dateTime={eventStart}
-            setDateTime={(value) => setEventStart(value)}
-            label={t('eventType.from') + readableTime(eventStart)}
+            preLabel={t('eventType.from')}
+            time={timeStart}
+            setTime={(value) => setTimeStart(value)}
           />
           <TimePick
-            dateTime={eventEnd}
-            setDateTime={(value) => setEventEnd(value)}
-            label={t('eventType.until') + readableTime(eventEnd)}
+            preLabel={t('eventType.until')}
+            time={timeEnd}
+            setTime={(value) => setTimeEnd(value)}
           />
         </div>
       )}
