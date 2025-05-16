@@ -84,25 +84,11 @@ export function ShowProfile({
         );
       }
     }
-    // store.emit(FindExtraFieldsUser(userProfile.id))
   }, []);
 
-  useEffect(() => {
-    if(userProfile)
-    {
-      window.history.replaceState(null, '', `/p/${userProfile.username}`);
-    }
-    
-  }, [userProfile]);
 
-  const knownUsers = useRef(
-    store,
-    (state: GlobalState) => state.knownUsers,
-  );
 
   useMetadataTitle(t('menu.profile'));
-
-  const [adminButtonId, setAdminButtonId] = useState(null);
 
   const buttonTypes = useButtonTypes();
 

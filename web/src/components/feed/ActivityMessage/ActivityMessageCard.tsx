@@ -69,8 +69,7 @@ export function ActivityMessageCard({
       {/* {markingAsRead && <Loading />} */}
 
       {message?.button && (
-        <Link
-          href="#"
+        <span
           onClick={() =>
             jumpToButtonMessage(message.id, message.read, message.messageId)
           }
@@ -138,7 +137,7 @@ export function ActivityMessageCard({
               </div>
             </div>
           </div>
-        </Link>
+        </span>
       )}
       {!message?.button && (
         <ErrorLink

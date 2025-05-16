@@ -10,12 +10,9 @@ import {
   UpdateExploreUpdating,
   UpdateExploreSettings,
   ExploreSettings,
-  ClearCachedHexagons,
   UpdateHexagonClicked,
   updateCurrentButton,
-  FindButton,
   UpdateFilters,
-  RecenterExplore,
 } from 'state/Explore';
 import NavHeader from 'components/nav/NavHeader'; //just for mobile
 import { useStore } from 'state';
@@ -30,7 +27,7 @@ import {
   convertBoundsToGeoJsonHexagons,
   getZoomResolution,
 } from 'shared/honeycomb.utils';
-import _, { update } from 'lodash';
+import _ from 'lodash';
 import {
   useBackButton,
   useDebounce,
@@ -39,7 +36,7 @@ import {
 import AdvancedFilters, {
   ButtonsOrderBy,
 } from 'components/search/AdvancedFilters';
-import { getDistance, isPointWithinRadius } from 'geolib';
+import { getDistance } from 'geolib';
 import { ShowMobileOnly } from 'elements/SizeOnly';
 import { ShowDesktopOnly } from 'elements/SizeOnly';
 import { uniqueArray } from 'shared/sys.helper';
@@ -48,17 +45,12 @@ import {
   orderByPrice,
 } from 'components/button/ButtonType/CustomFields/AdvancedFiltersCustomFields';
 import PopupButtonFile from 'components/popup/PopupButtonFile';
-import { alertService } from 'services/Alert';
 import { ButtonShow } from 'components/button/ButtonShow';
-import { maxZoom, minZoom, showMarkersZoom } from 'components/map/Map/Map.consts';
-import { applyFiltersHex, isFiltering } from 'components/search/AdvancedFilters/filters.type';
+import { showMarkersZoom } from 'components/map/Map/Map.consts';
+import { applyFiltersHex } from 'components/search/AdvancedFilters/filters.type';
 import { Button } from 'shared/entities/button.entity';
-import { filter } from 'rxjs';
-import dconsole from 'shared/debugger';
-import { updateUrl } from 'components/uri/builder';
-import { useSearchParams } from 'next/navigation';
+import { replaceUrl } from 'components/uri/builder';
 
-const defaultZoomPlace = 13;
 
 function HoneyComb({ selectedNetwork }) {
   const currentButton = useStore(
@@ -173,7 +165,6 @@ function HoneyComb({ selectedNetwork }) {
   );
 }
 
-// export default withRouter(HoneyComb);
 export default HoneyComb;
 
 function useExploreSettings({
@@ -192,7 +183,6 @@ function useExploreSettings({
   const handleUrl = () => {
     const params = new URLSearchParams(window.location.search);
 
-    const btnId = params.get('btn');
     const hex = params.get('hex');
 
     let newFilters = null;
@@ -241,20 +231,7 @@ function useExploreSettings({
     if (newFilters) {
       store.emit(new UpdateFilters({ ...filters, ...newFilters }));
     }
-    if (btnId) {
-      store.emit(
-        new FindButton(
-          btnId,
-          (buttonFetched) => {
-            store.emit(new updateCurrentButton(buttonFetched));
-          },
-          (errorMessage) => {
-            dconsole.error(errorMessage);
-            alertService.error(`Error fetching button`);
-          },
-        ),
-      );
-    }
+
   };
   useEffect(() => {
     if (selectedNetwork && exploreSettings) {
@@ -263,27 +240,12 @@ function useExploreSettings({
   }, [selectedNetwork]);
 
   const currentProfile = useGlobalStore((state: GlobalState) => state.homeInfo.mainPopupUserProfile)
-  const currentUrlParams = useSearchParams();
-  const hasSelectedButton = currentUrlParams.has('btn')
-  useEffect(() => {
-    if (!hasSelectedButton) {
-      store.emit(new updateCurrentButton(null))
-    }
-  }, [hasSelectedButton])
 
   useEffect(() => {
     if (
-      exploreSettings?.center &&
-      !exploreSettings.urlUpdated &&
-      filters &&
-      !currentProfile
+      exploreSettings?.center 
     ) {
       let obj = {};
-
-      if (currentButton) {
-        obj = { ...obj, btn: currentButton.id };
-      }
-
       if (filters.helpButtonTypes.length > 0) {
         obj = { ...obj, hbTypes: filters.helpButtonTypes };
       }
@@ -302,12 +264,8 @@ function useExploreSettings({
 
       const urlParams = new URLSearchParams(obj);
       const newUrl = `/Explore/${Math.floor(exploreSettings.zoom)}/${exploreSettings.center[0]
-        }/${exploreSettings.center[1]}/?${urlParams.toString()}`;
-        router.push(
-          newUrl,
-          undefined,
-          { shallow: true }
-        );
+        }/${exploreSettings.center[1]}/${currentButton ? currentButton.id + '/': ''}${urlParams.size ? '?' + urlParams.toString() : ''}`;
+        replaceUrl(newUrl)
       }
   }, [exploreSettings, currentButton, filters, currentProfile]);
 }
