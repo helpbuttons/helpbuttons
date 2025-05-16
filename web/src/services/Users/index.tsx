@@ -125,4 +125,11 @@ export class UserService {
     return httpService.get<any>(`users/deleteme`)
   }
   
+  public static endorse(userId: string): Observable<any>{
+    return httpService.get<any>(`users/endorse/${userId}`)
+  }
+  public static revokeEndorse(userId: string): Observable<any>{
+    return httpService.get<any>(`users/revokeEndorse/${userId}`)
+  }
+  
 }

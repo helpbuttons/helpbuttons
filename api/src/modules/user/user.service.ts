@@ -266,4 +266,16 @@ COALESCE(
   public findQrCode(qrcode: string) {
     return this.userRepository.findOne({ where: { qrcode: qrcode } })
   }
+
+  public endorse(userId: string) {
+    return this.userRepository.update(userId, {
+      endorsed: true
+    });
+  }
+
+  public revokeEndorse(userId: string) {
+    return this.userRepository.update(userId, {
+      endorsed: false
+    });
+  }
 }

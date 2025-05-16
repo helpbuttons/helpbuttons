@@ -382,7 +382,9 @@
     "commentsAmount": "Commented",
     "signupSuccess": "Your signup was sucessful! Welcome to {0} ",
     "deletedAccount": "Your data was deleted sucessfuly!",
-    "pleaseAcceptCookies": "You have to accept the usage of cookies if you wish to signup or login"
+    "pleaseAcceptCookies": "You have to accept the usage of cookies if you wish to signup or login",
+    "endorse": "Endorse",
+    "revokeEndorse": "Withdraw endorsement"
   },
   "picker": {
     

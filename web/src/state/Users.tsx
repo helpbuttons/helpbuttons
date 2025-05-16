@@ -174,3 +174,40 @@ export class SetSignupTags implements UpdateEvent{
     });
   }
 }
+
+
+export class UserEndorse implements WatchEvent, UpdateEvent {
+  public constructor(
+    private userId: string,
+  ) {}
+  public watch(state: GlobalState) {
+    return UserService.endorse(this.userId)
+  }
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      // if(newState.homeInfo.mainPopupUserProfile)
+      // {
+      //   newState.homeInfo.mainPopupUserProfile.endorsed = true
+      // }
+    });
+  }
+}
+
+export class UserRevokeEndorse implements WatchEvent, UpdateEvent {
+  public constructor(
+    private userId: string,
+  ) {}
+  public watch(state: GlobalState) {
+    return UserService.revokeEndorse(this.userId)
+  }
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      // if(newState.homeInfo.mainPopupUserProfile)
+      // {
+      //   newState.homeInfo.mainPopupUserProfile.endorsed = false
+      // }
+      
+    });
+  }
+}
+
