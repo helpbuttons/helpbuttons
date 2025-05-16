@@ -258,7 +258,7 @@ function MyApp({ Component, pageProps }) {
       } else if (selectedNetwork.id) {
         return (
           <>
-            {/* <MetadataSEOFromStore {...pageProps.metadata} nonce={nonce} /> */}
+            <MetadataSEOFromStore {...pageProps.metadata} nonce={nonce} />
             <ActivityPool sessionUser={sessionUser} messagesUnread={messagesUnread} />
             <div
               className="index__container"
