@@ -609,7 +609,20 @@ function ExploreHexagonMap({toggleShowLeftColumn, exploreSettings, selectedNetwo
 
   return ( 
     <div className='index__explore-map-wrapper' {...events}>
-      {showLongPressMenu && <div>show menu</div>}
+      {showLongPressMenu && 
+      
+        <div className='index__explore-map-menu-overflow'>
+          <div className="card-button__dropdown-container">
+          <div className="card-button__dropdown-arrow"></div>
+            <div className="card-button__dropdown-content" id="listid">
+            <a className="card-button__trigger-options" >
+              option
+            </a>
+            </div>
+        </div>
+        
+        </div>}
+
     <HexagonExploreMap
         exploreSettings={exploreSettings}
         h3TypeDensityHexes={h3TypeDensityHexes}

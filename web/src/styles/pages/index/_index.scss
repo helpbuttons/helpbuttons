@@ -73,6 +73,19 @@ $index-content-left--distance: $grid-max-width;
   height: 100%;
 }
 
+.index__explore-map-menu-overflow {
+
+  position: absolute;
+  top:0;
+  z-index: $z-index-03;
+  background-color: $color-white;
+  box-shadow: $box-shadow-divs;
+  width: 100px;
+  padding: $padding-big;
+  border-radius: $border-radius-circle;
+
+}
+
 @media (hover: none) {
 
   .index__content-bottom--hide {
