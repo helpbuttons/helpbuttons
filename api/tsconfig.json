@@ -1,7 +1,7 @@
 {
   "include": ["src/**/*", "src/**/*.json", "prisma/**/*.json"],
   "compilerOptions": {
-    "module": "commonjs",
+    "module": "nodenext",
     "declaration": true,
     "removeComments": true,
     "emitDecoratorMetadata": true,
