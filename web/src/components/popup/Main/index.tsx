@@ -2,8 +2,7 @@ import { Picker } from "components/picker/Picker";
 import { GlobalState, store } from "state";
 import { MainPopupPage, SetMainPopup, SetMainPopupCurrentButton, SetMainPopupCurrentProfile } from "state/HomeInfo";
 import { useGlobalStore } from 'state';
-import Login from "../../../pages/Login";
-import Signup from "../../../pages/Signup";
+import { SignupForm } from "../../../pages/Signup";
 import LoginClick from "../../../pages/LoginClick";
 import t from "i18n";
 import { ShareForm } from "components/share";
@@ -12,6 +11,7 @@ import { ButtonShow } from "components/button/ButtonShow";
 import { ShowProfile } from "pages/p/[username]";
 import { useEffect } from "react";
 import { replaceUrl, usePreviousUrl } from "components/uri/builder";
+import LoginForm from "components/user/LoginForm";
 
 export default function MainPopup({ pageName }) {
   const previousUrl = usePreviousUrl();
@@ -26,15 +26,14 @@ export default function MainPopup({ pageName }) {
   const mainPopupUserProfile = useGlobalStore((state: GlobalState) => state.homeInfo.mainPopupUserProfile)
   const mainPopupButton = useGlobalStore((state: GlobalState) => state.homeInfo.mainPopupButton)
 
-  useProfileUrl(mainPopupUserProfile)
-  usePopupButtonUrl(mainPopupButton)
+  useReplaceUrl(mainPopupUserProfile, mainPopupButton, popupPage)
   const allowedCurrentButton = ['HomeInfo', 'Activity', '', '#']
   return (
     <>
-      <LogginInUserNowAllowed sessionUser={sessionUser}>
+      <OnlyGuest sessionUser={sessionUser}>
         {(popupPage == MainPopupPage.LOGIN) && (
           <Picker closeAction={closePopup} headerText={t('user.login')}>
-            <Login />
+            <LoginForm />
           </Picker>
         )}
         {(popupPage == MainPopupPage.SIGNUP) && (
@@ -42,7 +41,7 @@ export default function MainPopup({ pageName }) {
             headerText={t('user.signup')}
             closeAction={closePopup}
           >
-            <Signup />
+            <SignupForm />
           </Picker>
         )}
         {popupPage == MainPopupPage.REQUEST_LINK && (
@@ -50,7 +49,7 @@ export default function MainPopup({ pageName }) {
             <LoginClick />
           </Picker>
         )}
-      </LogginInUserNowAllowed>
+      </OnlyGuest>
 
       {popupPage == MainPopupPage.SHARE && (
         <Picker
@@ -71,7 +70,7 @@ export default function MainPopup({ pageName }) {
       {(mainPopupUserProfile) && (
         <Picker
           headerText={t('user.otherProfileView')}
-          closeAction={() => { store.emit(new SetMainPopupCurrentProfile(null)); closePopup()}}
+          closeAction={() => { store.emit(new SetMainPopupCurrentProfile(null)); closePopup() }}
         >
           <ShowProfile userProfile={mainPopupUserProfile} sessionUser={sessionUser} />
         </Picker>
@@ -90,16 +89,13 @@ export default function MainPopup({ pageName }) {
 }
 
 
-function useProfileUrl(mainPopupUserProfile) {
+function useReplaceUrl(mainPopupUserProfile, mainPopupButton, popupPage) {
   useEffect(() => {
     if (mainPopupUserProfile) {
-      window.history.replaceState(null, '', `/p/${mainPopupUserProfile.username}`);
+      replaceUrl(`/p/${mainPopupUserProfile.username}`);
     }
 
   }, [mainPopupUserProfile]);
-}
-
-function usePopupButtonUrl(mainPopupButton) {
 
   useEffect(() => {
     if (mainPopupButton) {
@@ -107,9 +103,29 @@ function usePopupButtonUrl(mainPopupButton) {
     }
   }, [mainPopupButton])
 
+  useEffect(() => {
+    console.log(popupPage)
+    if (popupPage != MainPopupPage.HIDE) {
+      switch (popupPage) {
+        case MainPopupPage.FAQS:
+          replaceUrl(`/Faqs`);
+          break;
+        case MainPopupPage.LOGIN:
+          replaceUrl(`/Login`);
+          break;
+        case MainPopupPage.SIGNUP:
+          replaceUrl(`/Signup`);
+          break;
+        case MainPopupPage.PROFILE:
+        case MainPopupPage.SHARE:
+        case MainPopupPage.REQUEST_LINK:
+      }
+    }
+  }, [popupPage])
+
 }
 
-function LogginInUserNowAllowed({ sessionUser, children }) {
+function OnlyGuest({ sessionUser, children }) {
   if (sessionUser) {
     return <></>
   }
