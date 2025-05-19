@@ -19,6 +19,7 @@ import { Invite } from 'shared/entities/invite.entity';
 import { InviteCreateDto } from 'shared/dtos/invite.dto';
 import { activitiesInitialState } from './Activity';
 import dconsole from 'shared/debugger';
+import { SetMainPopupCurrentProfile } from './HomeInfo';
 
 export class AddUserToKnownUsers implements UpdateEvent {
   public constructor(private newUser: IUser) {}
@@ -59,6 +60,7 @@ export class UpdateRole implements WatchEvent {
   public watch(state: GlobalState) {
     return UserService.updateRole(this.userId,this.newRole).pipe(
       map((data) => {
+        store.emit(new SetMainPopupCurrentProfile(data))
         this.onSuccess(true)
       }),
       catchError((error) => {  
@@ -185,10 +187,10 @@ export class UserEndorse implements WatchEvent, UpdateEvent {
   }
   public update(state: GlobalState) {
     return produce(state, (newState) => {
-      // if(newState.homeInfo.mainPopupUserProfile)
-      // {
-      //   newState.homeInfo.mainPopupUserProfile.endorsed = true
-      // }
+      if(newState.homeInfo.mainPopupUserProfile)
+      {
+        newState.homeInfo.mainPopupUserProfile.endorsed = true
+      }
     });
   }
 }
@@ -202,10 +204,10 @@ export class UserRevokeEndorse implements WatchEvent, UpdateEvent {
   }
   public update(state: GlobalState) {
     return produce(state, (newState) => {
-      // if(newState.homeInfo.mainPopupUserProfile)
-      // {
-      //   newState.homeInfo.mainPopupUserProfile.endorsed = false
-      // }
+      if(newState.homeInfo.mainPopupUserProfile)
+      {
+        newState.homeInfo.mainPopupUserProfile.endorsed = false
+      }
       
     });
   }

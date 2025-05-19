@@ -176,7 +176,9 @@ COALESCE(
   }
 
   updateRole(userId, newRole) {
-    return this.userRepository.update(userId, { role: newRole });
+    return this.userRepository.update(userId, { role: newRole }).then(() => {
+      return this.findById(userId)
+    })
   }
 
   moderationList(user: User, page: number) {

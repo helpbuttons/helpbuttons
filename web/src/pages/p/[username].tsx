@@ -17,39 +17,20 @@ import ContentList from 'components/list/ContentList';
 import { useMetadataTitle } from 'state/Metadata';
 import dconsole from 'shared/debugger';
 import { ButtonLinkType } from 'components/list/CardButtonList';
+import { SetMainPopupCurrentProfile } from 'state/HomeInfo';
+import HomeInfo from 'pages/HomeInfo';
 
 export default function p(props) {
-  const sessionUser = useRef(
-    store,
-    (state: GlobalState) => state.sessionUser,
-  );
+  useMetadataTitle(t('menu.login'))
   const { userProfile } = props;
-
-  const router = useRouter();
-
   useEffect(() => {
-    if (!router.isReady) return;
-    const username = router.query.username as string;
-    let newUserProfile = '';
-
-    if (sessionUser) {
-      if (sessionUser.username == username) {
-        router.push('/Profile');
-      }
-    }
-  }, [userProfile, sessionUser, router.isReady]);
-  const closeAction = () => router.back();
+      // store.emit(new SetMainPopup(MainPopupPage.LOGIN))
+      store.emit(new SetMainPopupCurrentProfile(userProfile))
+  }, [])
+  
   return (
-    <Popup
-      linkBack={closeAction}
-      title={t('user.otherProfileView')}
-      onScroll={() => {}}
-    >
-      <ShowProfile
-        userProfile={userProfile}
-        sessionUser={sessionUser}
-      />
-    </Popup>
+
+          <HomeInfo metadata={props.metadata}/>
   );
 }
 
@@ -61,9 +42,9 @@ export function ShowProfile({
 
   const [extraFields, setExtraFields] = useState([]);
   useEffect(() => {
-    // if user is admin... get more data!
+    console.log(userProfile)
     if (userProfile) {
-      if (userProfile.showButtons && !userButtons) {
+      if (userProfile.showButtons) {
         dconsole.log('getting user btns');
         store.emit(
           new FindUserButtons(userProfile.id, (userButtons) =>
@@ -84,7 +65,7 @@ export function ShowProfile({
         );
       }
     }
-  }, []);
+  }, [userProfile]);
 
 
 

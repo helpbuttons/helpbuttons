@@ -36,7 +36,7 @@ export default function CardProfile({ user, showAdminOptions = false}) {
             
               <div className="card-profile__avatar-container-name">
 
-                <div className="card-profile__name">{user.name} {user?.role == Role.admin && <div className="hashtag hashtag--blue">Admin</div>}</div>
+                <div className="card-profile__name">{user.name} {user?.role == Role.admin && <div className="hashtag hashtag--blue"> {t('roles.administrator')}</div>}{user?.endorsed && <div className="hashtag hashtag--blue">{t('user.endorsed')}</div>}</div>
                 <span className="card-profile__username">{ user.username }</span>
                 
               </div>
@@ -93,7 +93,7 @@ function ProfileAdminOptions({ user }) {
         newRole,
         () => {
           alertService.info(t('common.done'));
-          router.reload()
+          // router.reload()
         },
         () => {
           alertService.error(t('common.error'));
