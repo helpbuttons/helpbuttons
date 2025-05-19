@@ -86,7 +86,7 @@ export function TimePick({ time, setTime, minTime = null, maxTime = null, handle
       openPopup={showPickTime}
       closePopup={hidePickTime}
     >
-      <div className="picker__row">
+      <div className="picker__section">
         <TimeKeeper
           time={_time}
           onChange={(newTime) => {

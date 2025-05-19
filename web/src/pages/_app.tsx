@@ -4,7 +4,7 @@ import { Router, useRouter } from 'next/router';
 import NavBottom from 'components/nav/NavBottom'; //just for mobile
 import Alert from 'components/overlay/Alert';
 import { appWithTranslation } from 'next-i18next';
-import { GlobalState, store } from 'state/';
+import { GlobalState, SetPageName, store } from 'state/';
 import { useSelectedNetwork } from 'state/Networks';
 import { FetchUserData, LoginToken } from 'state/Profile';
 
@@ -23,7 +23,7 @@ import t, { updateNomeclature } from 'i18n';
 import { useSearchParams } from 'next/navigation';
 import NavHeader from 'components/nav/NavHeader';
 import { ShowDesktopOnly, ShowMobileOnly } from 'elements/SizeOnly';
-import Loading, { LoadabledComponent } from 'components/loading';
+import Loading from 'components/loading';
 import MainPopup from 'components/popup/Main/';
 import { useConfig } from 'state/Setup';
 import { UpdateMetadata } from 'state/Metadata';
@@ -33,7 +33,6 @@ import MetadataSEOFromStore, { MetadataSEO } from 'components/seo';
 import dconsole from 'shared/debugger';
 import Head from 'next/head';
 import CookiesBanner from 'components/home/CookiesBanner';
-import { useParamsBtn, useParamsMainPopup } from 'components/uri/builder';
 
 export default appWithTranslation(MyApp);
 
@@ -108,8 +107,6 @@ function MyApp({ Component, pageProps }) {
     }
   }, [fetchingNetworkError, sessionUser])
 
-  useParamsBtn(router, pageName )
-  useParamsMainPopup(router)
   useEffect(() => {
     if (setupPaths.includes(path)) {
       setIsSetup(() => true);
@@ -169,6 +166,7 @@ function MyApp({ Component, pageProps }) {
       setAuthorized(isRoleAllowed(sessionUser.role, path));
       return;
     }
+    console.log('checking if ' + path + ' is allowed')
     const isAllowed = isRoleAllowed(Role.guest, path)
 
     if (!isAllowed) {

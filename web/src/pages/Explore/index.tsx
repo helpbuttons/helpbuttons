@@ -2,10 +2,12 @@ import Loading from "components/loading";
 import t from "i18n";
 import { NextPageContext } from "next";
 import { useRouter } from "next/router";
+import { ClienteSideRendering } from "pages/_app";
 import { useEffect } from "react";
 import { setMetadata } from "services/ServerProps";
 import { GlobalState, store, useGlobalStore } from "state";
-import { RecenterExplore, UpdateFilters } from "state/Explore";
+import { RecenterExplore } from "state/Explore";
+import HoneyComb from "./HoneyComb";
 
 export default function Explore({
   metadata
@@ -32,6 +34,22 @@ function useParams(router)
     
   }, [exploreSettings])
 }
+
+
+export const ExplorePage = () => {
+  const selectedNetwork = useGlobalStore((state: GlobalState) => state.networks.selectedNetwork);
+  return (
+      <>
+          <ClienteSideRendering>
+              {selectedNetwork &&
+                  <HoneyComb selectedNetwork={selectedNetwork} />
+              }
+              {!selectedNetwork && <Loading />}
+          </ClienteSideRendering>
+      </>
+  );
+}
+
 
 export const getServerSideProps = async (ctx: NextPageContext) => {
   return setMetadata(t('menu.explore'), ctx);

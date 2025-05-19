@@ -133,7 +133,7 @@ export function NotificationCard(props) {
     {
 
     return (
-      <Link
+      <span
         href="#"
         onClick={() =>
           store.emit(new FindButton(props.buttonId, (_button) => {
@@ -146,7 +146,7 @@ export function NotificationCard(props) {
           {...props}
           button
         />
-      </Link>
+      </span>
     );
   }
 
