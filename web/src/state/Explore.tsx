@@ -174,7 +174,7 @@ export class FindButton implements WatchEvent {
   public constructor(
     private buttonId: string,
     private onSuccess = (button) => { },
-    private onError = () => { },
+    private onError = (error) => { },
   ) { }
 
   public watch(state: GlobalState) {

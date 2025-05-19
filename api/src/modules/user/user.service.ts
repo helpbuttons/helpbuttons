@@ -176,7 +176,9 @@ COALESCE(
   }
 
   updateRole(userId, newRole) {
-    return this.userRepository.update(userId, { role: newRole });
+    return this.userRepository.update(userId, { role: newRole }).then(() => {
+      return this.findById(userId)
+    })
   }
 
   moderationList(user: User, page: number) {
@@ -265,5 +267,17 @@ COALESCE(
 
   public findQrCode(qrcode: string) {
     return this.userRepository.findOne({ where: { qrcode: qrcode } })
+  }
+
+  public endorse(userId: string) {
+    return this.userRepository.update(userId, {
+      endorsed: true
+    });
+  }
+
+  public revokeEndorse(userId: string) {
+    return this.userRepository.update(userId, {
+      endorsed: false
+    });
   }
 }
