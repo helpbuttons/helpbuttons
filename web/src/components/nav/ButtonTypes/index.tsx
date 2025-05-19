@@ -62,8 +62,8 @@ export function ListButtonTypes({ pageName }) {
 
   return (
     <>
-      {types.map((buttonType) => {
-        return <div className="hashtags__list-item"><BtnButtonType type={buttonType} onClick={handleClick} /></div>
+      {types.map((buttonType, idx) => {
+        return <div key={idx} className="hashtags__list-item"><BtnButtonType type={buttonType} onClick={handleClick} /></div>
 
       })}
     </>
