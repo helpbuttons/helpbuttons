@@ -219,7 +219,7 @@ export class ButtonService {
     });
     if (!button) {
       throw new HttpException(
-        'button not found',
+        'button-not-found',
         HttpStatus.NOT_FOUND,
       );
     }

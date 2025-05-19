@@ -19,7 +19,8 @@ import { Invite } from 'shared/entities/invite.entity';
 import { InviteCreateDto } from 'shared/dtos/invite.dto';
 import { activitiesInitialState } from './Activity';
 import dconsole from 'shared/debugger';
-import { SetMainPopupCurrentProfile } from './HomeInfo';
+import { SetMainPopupCurrentButton, SetMainPopupCurrentProfile } from './HomeInfo';
+import { updateCurrentButton } from './Explore';
 
 export class AddUserToKnownUsers implements UpdateEvent {
   public constructor(private newUser: IUser) {}
@@ -61,6 +62,12 @@ export class UpdateRole implements WatchEvent {
     return UserService.updateRole(this.userId,this.newRole).pipe(
       map((data) => {
         store.emit(new SetMainPopupCurrentProfile(data))
+        if(this.newRole == Role.blocked)
+        {
+          store.emit(new updateCurrentButton(null))
+          store.emit(new SetMainPopupCurrentButton(null))
+        }
+        
         this.onSuccess(true)
       }),
       catchError((error) => {  

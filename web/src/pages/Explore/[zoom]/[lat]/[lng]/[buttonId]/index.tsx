@@ -8,6 +8,8 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { markerFocusZoom } from 'components/map/Map/Map.consts';
 import { ExplorePage } from 'pages/Explore';
+import { ErrorName } from 'shared/types/error.list';
+import { alertService } from 'services/Alert';
 
 export default function Explore({
     metadata
@@ -19,9 +21,14 @@ export default function Explore({
     useEffect(() => {
         if(buttonId && currentButton?.id != buttonId)
         {
-            console.log('setting buttonId...')
           store.emit(new FindButton(String(buttonId), (button) => {
             store.emit(new updateCurrentButton(button))
+          }, (error) => {
+            if(error.errorName == ErrorName.ButtonNotFound)
+            {
+              alertService.error(error.caption)
+              router.push(`/Explore/${zoom}/${lat}/${lng}`)
+            }
           }))
         }else{
             const _updateSettings: Partial<ExploreSettings> = {

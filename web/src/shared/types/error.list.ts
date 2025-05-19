@@ -20,7 +20,8 @@ export enum ErrorName{
     invalidDates = 'invalid-dates',
     InvalidUsername = 'invalid-username',
     expiredDates = 'expired-dates',
-    InvalidQrCode = 'invalid-qrcode'
+    InvalidQrCode = 'invalid-qrcode',
+    ButtonNotFound = 'button-not-found'
 }
 
 export const errorsList: ErrorText[] = 
@@ -100,4 +101,9 @@ export const errorsList: ErrorText[] =
         caption: `Invalid QR Code`,
         status: HttpStatus.FORBIDDEN
     },
+    {
+        name: ErrorName.ButtonNotFound,
+        caption: 'Invalid button',
+        status: HttpStatus.NOT_FOUND
+    }
 ]
