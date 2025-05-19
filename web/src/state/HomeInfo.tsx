@@ -38,6 +38,8 @@ export class SetMainPopup implements UpdateEvent {
   public update(state: GlobalState) {
     return produce(state, (newState) => {
       newState.homeInfo.mainPopupPage = this.newPage;
+      newState.homeInfo.mainPopupButton = null;
+      newState.homeInfo.mainPopupUserProfile = null;
     });
   }
 }
