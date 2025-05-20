@@ -57,6 +57,8 @@ import { filter } from 'rxjs';
 import dconsole from 'shared/debugger';
 import { updateUrl } from 'components/uri/builder';
 import { useSearchParams } from 'next/navigation';
+import t from 'i18n';
+import { CardSubmenuOption } from 'components/card/CardSubmenu';
 
 const defaultZoomPlace = 13;
 
@@ -615,9 +617,12 @@ function ExploreHexagonMap({toggleShowLeftColumn, exploreSettings, selectedNetwo
           <div className="card-button__dropdown-container">
           <div className="card-button__dropdown-arrow"></div>
             <div className="card-button__dropdown-content" id="listid">
-            <a className="card-button__trigger-options" >
-              option
-            </a>
+            <CardSubmenuOption
+                onClick={() => {
+                  router.push(`/ButtonNew`);
+                }}
+                label={t('explore.create')}
+              />
             </div>
         </div>
         
