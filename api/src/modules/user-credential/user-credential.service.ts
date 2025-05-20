@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 
 import { UserCredential } from './user-credential.entity';
-import { dbIdGenerator } from '@src/shared/helpers/nanoid-generator.helper';
+import { uuid } from '@src/shared/helpers/uuid.helper';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../user/user.entity';
@@ -20,7 +20,7 @@ export class UserCredentialService {
       createUserCredentialDto;
     const createdUserCredential =
       this.userCredentialRepository.create({
-        id: dbIdGenerator(),
+        id: uuid(),
         userId,
         password: hashedPassword,
       });

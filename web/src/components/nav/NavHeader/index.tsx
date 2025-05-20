@@ -11,10 +11,10 @@ import router from 'next/router';
 import { ListButtonTypes } from '../ButtonTypes';
 import { ExploreMapState, ToggleAdvancedFilters } from 'state/Explore';
 
-function NavHeader({ selectedNetwork, pageName = '' }) {
-
+function NavHeader({ selectedNetwork }){
   const exploreMapState : ExploreMapState = useGlobalStore((state: GlobalState) => state.explore.map);
   const sessionUser = useGlobalStore((state: GlobalState) => state.sessionUser);
+  const pageName = useGlobalStore((state: GlobalState) => state.homeInfo.pageName)
 
   const toggleAdvancedFilters = () => {
     store.emit(new ToggleAdvancedFilters())
@@ -33,19 +33,18 @@ function NavHeader({ selectedNetwork, pageName = '' }) {
           <div className="nav-header__content-message">
             <HeaderSearch
               toggleAdvancedFilters={toggleAdvancedFilters}
-              pageName={pageName}
               selectedNetwork={selectedNetwork}
               exploreMapState={exploreMapState}
             />
           </div>
         </form>
         <ShowDesktopOnly>
-          <NavBottom pageName={pageName} sessionUser={sessionUser} />
+          <NavBottom sessionUser={sessionUser} />
         </ShowDesktopOnly>
       </div>
       <ShowDesktopOnly>
         <div className="nav-header__filters">
-          <ListButtonTypes pageName={pageName}/>
+          <ListButtonTypes/>
         </div>
       </ShowDesktopOnly>
     </div>

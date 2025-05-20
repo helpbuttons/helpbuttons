@@ -33,8 +33,17 @@ import { setMetadata } from 'services/ServerProps';
 import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
 import { useMetadataTitle } from 'state/Metadata';
 import dconsole from 'shared/debugger';
+import HomeInfo from 'pages/HomeInfo';
 
-export default function Signup() {
+export default function Signup( {metadata})
+{
+  useEffect(() => {
+    store.emit(new SetMainPopup(MainPopupPage.SIGNUP))
+  }, [])
+  
+  return <HomeInfo metadata={metadata}/>
+}
+export function SignupForm() {
   const {
     register,
     handleSubmit,

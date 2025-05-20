@@ -13,7 +13,7 @@ import { IoLogInOutline } from 'react-icons/io5';
 import { IoGlobeOutline } from 'react-icons/io5';
 import { IoHomeOutline } from 'react-icons/io5';
 import t from 'i18n';
-import { store } from 'state';
+import { GlobalState, store, useGlobalStore } from 'state';
 import { RecenterExplore } from 'state/Explore';
 import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
 import { useActivities } from 'state/Activity';
@@ -21,8 +21,10 @@ import { useEffect, useState } from 'react';
 
 export default NavBottom;
 
-function NavBottom({ sessionUser, pageName }) {
+function NavBottom({ sessionUser }) {
   // const {unreadActivities, activities} = useActivities()
+  const pageName = useGlobalStore((state: GlobalState) => state.homeInfo.pageName)
+
   const { notifications, messages } = useActivities();
   const [countUnreadNotifications, setCountUnreadNotifications] =
     useState(0);
@@ -43,7 +45,7 @@ function NavBottom({ sessionUser, pageName }) {
     <>
       <nav id="bottom-nav" className="nav-bottom">
         <NavLink
-          href="/"
+          href="/HomeInfo"
           className={`nav-bottom__link nav-bottom__link--active ${isCurrent(
             'HomeInfo',
           )}`}

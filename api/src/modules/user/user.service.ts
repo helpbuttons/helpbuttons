@@ -12,7 +12,7 @@ import { EntityManager, In, Not, Repository } from 'typeorm';
 import { Role } from '@src/shared/types/roles';
 import { removeUndefined } from '@src/shared/helpers/removeUndefined';
 import { TagService } from '../tag/tag.service';
-import { publicNanoidGenerator } from '@src/shared/helpers/nanoid-generator.helper';
+import { token } from '@src/shared/helpers/uuid.helper';
 import { plainToClass } from 'class-transformer';
 import { StorageService } from '../storage/storage.service';
 import { MailService } from '../mail/mail.service';
@@ -176,7 +176,9 @@ COALESCE(
   }
 
   updateRole(userId, newRole) {
-    return this.userRepository.update(userId, { role: newRole });
+    return this.userRepository.update(userId, { role: newRole }).then(() => {
+      return this.findById(userId)
+    })
   }
 
   moderationList(user: User, page: number) {
@@ -225,7 +227,7 @@ COALESCE(
   }
 
   createNewLoginToken(userId) {
-    const verificationToken = publicNanoidGenerator();
+    const verificationToken = token();
     return this.userRepository
       .update(userId, { verificationToken: verificationToken })
       .then((result) => {
@@ -265,5 +267,17 @@ COALESCE(
 
   public findQrCode(qrcode: string) {
     return this.userRepository.findOne({ where: { qrcode: qrcode } })
+  }
+
+  public endorse(userId: string) {
+    return this.userRepository.update(userId, {
+      endorsed: true
+    });
+  }
+
+  public revokeEndorse(userId: string) {
+    return this.userRepository.update(userId, {
+      endorsed: false
+    });
   }
 }

@@ -10,6 +10,7 @@ export const allowedPathsPerRole =
             '/Faqs',
             '/',
             '/ButtonNew',
+            '/Show/:btn',
             '/Explore',
             '/Explore/:zoom/:lat/:lng',
             '/Explore/:zoom/:lat/:lng/:btn',
@@ -22,7 +23,8 @@ export const allowedPathsPerRole =
             '/Unsubscribe',
             '/Error',
             '/Logout',
-            '/HomeInfo'
+            '/HomeInfo',
+            '/Embbed/:number'
         ]
     },
     {

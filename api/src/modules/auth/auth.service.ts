@@ -3,9 +3,8 @@ import { JwtService } from '@nestjs/jwt';
 import { SignupQRRequestDto, SignupRequestDto } from './auth.dto';
 import { UserService } from '../user/user.service';
 import {
-  dbIdGenerator,
-  publicNanoidGenerator,
-} from '@src/shared/helpers/nanoid-generator.helper';
+  uuid,token
+} from '@src/shared/helpers/uuid.helper';
 import { UserCredentialService } from '../user-credential/user-credential.service';
 import { MailService } from '../mail/mail.service';
 import { User } from '../user/user.entity';
@@ -50,7 +49,7 @@ export class AuthService {
         qrcode: signupQRUserDto.qrCode,
         email: signupQRUserDto.qrCode + nomailString,
         name: signupQRUserDto.name,
-        password: publicNanoidGenerator(),
+        password: token(),
         locale: signupQRUserDto.locale,
         acceptPrivacyPolicy: signupQRUserDto.acceptPrivacyPolicy
       }
@@ -61,9 +60,9 @@ export class AuthService {
       email: signupUserDto.email,
       role: Role.registered,
       name: signupUserDto.name,
-      verificationToken: publicNanoidGenerator(),
+      verificationToken: token(),
       emailVerified: false,
-      id: dbIdGenerator(),
+      id: uuid(),
       avatar: null,
       description: '',
       locale: signupUserDto.locale,
@@ -86,7 +85,7 @@ export class AuthService {
       });
   }
   async signup(signupUserDto: SignupRequestDto) {
-    const verificationToken = publicNanoidGenerator();
+    const verificationToken = token();
     let emailVerified = false;
     let accessToken = {};
 
@@ -116,9 +115,9 @@ export class AuthService {
       email: signupUserDto.email,
       role: userRole,
       name: signupUserDto.name,
-      verificationToken: publicNanoidGenerator(),
+      verificationToken: token(),
       emailVerified: emailVerified,
-      id: dbIdGenerator(),
+      id: uuid(),
       avatar: null,
       description: '',
       locale: signupUserDto.locale,

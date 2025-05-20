@@ -5,12 +5,12 @@ import {
 import { HttpStatus } from '@src/shared/types/http-status.enum';
 
 import { InjectRepository } from '@nestjs/typeorm';
-import { dbIdGenerator } from '@src/shared/helpers/nanoid-generator.helper';
+import { uuid } from '@src/shared/helpers/uuid.helper';
 import { Repository } from 'typeorm';
 import { ImageFile } from './image-file.entity';
 import { getFilesRoute, uploadDir } from './storage.utils';
 import { ErrorName } from '@src/shared/types/error.list';
-import * as sharp from 'sharp';
+import sharp from 'sharp';
 import { isImageData } from '@src/shared/helpers/imageIsFile';
 import { CustomHttpException } from '@src/shared/middlewares/errors/custom-http-exception.middleware';
 
@@ -35,7 +35,7 @@ export class StorageService {
       throw ErrorName.InvalidMimetype;
     }
 
-    const fileImageName = `${dbIdGenerator()}.${
+    const fileImageName = `${uuid()}.${
       mimetype.split('/')[1]
     }`;
     let buffer = Buffer.from(data, 'base64');
@@ -44,10 +44,10 @@ export class StorageService {
     return sharp(buffer)
       .resize(1024)
       .toFile(pathfilename)
-      .then((result: string) => {
+      .then((result) => {
         const fileName = `${getFilesRoute}${fileImageName}`;
         return {
-          id: dbIdGenerator(),
+          id: uuid(),
           name: fileName,
           mimetype: mimetype,
           originalname: 'unknown',

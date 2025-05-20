@@ -6,6 +6,7 @@ import { catchError, map } from 'rxjs/operators';
 import { handleError } from './helper';
 import { PrivacyType } from 'shared/types/privacy.enum';
 import { produce } from 'immer';
+import dconsole from 'shared/debugger';
 
 export class CreateNewPost implements WatchEvent {
   public constructor(
@@ -78,6 +79,7 @@ export class CreateNewPostComment implements WatchEvent, UpdateEvent {
       newState.explore.currentButton.followedBy = [...state.explore.currentButton.followedBy,state.sessionUser.id]
       newState.explore.map.boundsFilteredButtons = []
       newState.explore.map.cachedHexagons = []
+      dconsole.log('[CreateNewPostComment]')
       newState.explore.map.listButtons = []
     });
   }
@@ -104,6 +106,7 @@ export class CreateNewCommentReply implements WatchEvent, UpdateEvent {
       newState.explore.currentButton.followedBy = [...state.explore.currentButton.followedBy,state.sessionUser.id]
       newState.explore.map.boundsFilteredButtons = []
       newState.explore.map.cachedHexagons = []
+      dconsole.log('[CreateNewCommentReply]')
       newState.explore.map.listButtons = []
     });
   }

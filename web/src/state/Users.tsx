@@ -19,6 +19,8 @@ import { Invite } from 'shared/entities/invite.entity';
 import { InviteCreateDto } from 'shared/dtos/invite.dto';
 import { activitiesInitialState } from './Activity';
 import dconsole from 'shared/debugger';
+import { SetMainPopupCurrentButton, SetMainPopupCurrentProfile } from './HomeInfo';
+import { updateCurrentButton } from './Explore';
 
 export class AddUserToKnownUsers implements UpdateEvent {
   public constructor(private newUser: IUser) {}
@@ -59,6 +61,13 @@ export class UpdateRole implements WatchEvent {
   public watch(state: GlobalState) {
     return UserService.updateRole(this.userId,this.newRole).pipe(
       map((data) => {
+        store.emit(new SetMainPopupCurrentProfile(data))
+        if(this.newRole == Role.blocked)
+        {
+          store.emit(new updateCurrentButton(null))
+          store.emit(new SetMainPopupCurrentButton(null))
+        }
+        
         this.onSuccess(true)
       }),
       catchError((error) => {  
@@ -174,3 +183,40 @@ export class SetSignupTags implements UpdateEvent{
     });
   }
 }
+
+
+export class UserEndorse implements WatchEvent, UpdateEvent {
+  public constructor(
+    private userId: string,
+  ) {}
+  public watch(state: GlobalState) {
+    return UserService.endorse(this.userId)
+  }
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      if(newState.homeInfo.mainPopupUserProfile)
+      {
+        newState.homeInfo.mainPopupUserProfile.endorsed = true
+      }
+    });
+  }
+}
+
+export class UserRevokeEndorse implements WatchEvent, UpdateEvent {
+  public constructor(
+    private userId: string,
+  ) {}
+  public watch(state: GlobalState) {
+    return UserService.revokeEndorse(this.userId)
+  }
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      if(newState.homeInfo.mainPopupUserProfile)
+      {
+        newState.homeInfo.mainPopupUserProfile.endorsed = false
+      }
+      
+    });
+  }
+}
+

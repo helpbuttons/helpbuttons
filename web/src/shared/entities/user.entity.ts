@@ -125,6 +125,10 @@ export class User extends BaseEntity {
   @Expose()
   @Column({default: false})
   showWassap: boolean;
+
+  @Expose()
+  @Column({default: false})
+  endorsed?: boolean;
 }
 
 export interface UserRelations {

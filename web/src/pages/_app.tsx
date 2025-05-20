@@ -23,7 +23,7 @@ import t, { updateNomeclature } from 'i18n';
 import { useSearchParams } from 'next/navigation';
 import NavHeader from 'components/nav/NavHeader';
 import { ShowDesktopOnly, ShowMobileOnly } from 'elements/SizeOnly';
-import Loading, { LoadabledComponent } from 'components/loading';
+import Loading from 'components/loading';
 import MainPopup from 'components/popup/Main/';
 import { useConfig } from 'state/Setup';
 import { UpdateMetadata } from 'state/Metadata';
@@ -33,7 +33,7 @@ import MetadataSEOFromStore, { MetadataSEO } from 'components/seo';
 import dconsole from 'shared/debugger';
 import Head from 'next/head';
 import CookiesBanner from 'components/home/CookiesBanner';
-import { useParamsBtn, useParamsMainPopup } from 'components/uri/builder';
+import { SetPageName } from 'state/HomeInfo';
 
 export default appWithTranslation(MyApp);
 
@@ -52,6 +52,7 @@ function MyApp({ Component, pageProps }) {
   );
 
   const sessionUser = useGlobalStore((state: GlobalState) => state.sessionUser)
+  const pageName = useGlobalStore((state: GlobalState) => state.homeInfo.pageName)
 
   const onFetchingConfigError = (error) => {
     dconsole.error(error);
@@ -70,9 +71,9 @@ function MyApp({ Component, pageProps }) {
     dconsole.log(error);
     return;
   };
-  const [pageName, setPageName] = useState(null)
+  
   useEffect(() => {
-    setPageName(() => getPageName(path.split('/')[1]))
+    store.emit(new SetPageName(getPageName(path.split('/')[1])))
     function getPageName(urlString) {
       const finit = urlString.indexOf("#") !== -1 ? urlString.indexOf("#") : (urlString.indexOf("?") !== -1 ? urlString.indexOf("?") !== -1 : null)
       if (finit) {
@@ -108,8 +109,6 @@ function MyApp({ Component, pageProps }) {
     }
   }, [fetchingNetworkError, sessionUser])
 
-  useParamsBtn(router, pageName )
-  useParamsMainPopup(router)
   useEffect(() => {
     if (setupPaths.includes(path)) {
       setIsSetup(() => true);
@@ -146,7 +145,7 @@ function MyApp({ Component, pageProps }) {
     }
 
     // check if local storage has a token
-    if (sessionUser === false) {
+    if (sessionUser === false && ['Embbed'].indexOf(pageName) < 0) {
       if (!isLoadingUser) {
         setIsLoadingUser(true);
         store.emit(
@@ -243,19 +242,9 @@ function MyApp({ Component, pageProps }) {
       store.emit(new UpdateMetadata(pageProps.metadata))
     }
   }, [pageProps])
-  const [loading, setLoading] = useState<boolean>(false);
-
-  Router.events.on('routeChangeStart', (url) => {
-    setLoading(true);
-  });
-
-  Router.events.on('routeChangeComplete', (url) => {
-    setLoading(false);
-  });
 
   return <>
     <MetadataSEO {...pageProps.metadata} nonce={nonce} />
-    
     {(function () {
 
       if (isSetup) {
@@ -263,14 +252,12 @@ function MyApp({ Component, pageProps }) {
           <title>Creating new helpbuttons network...</title></Head><Component {...pageProps} /></>;
       } else if (pageName == 'Embbed') {
         return (
-          <LoadabledComponent loading={!selectedNetwork || loading}>
-            <Component {...pageProps} />
-          </LoadabledComponent>
+          <Component {...pageProps} />
         );
       } else if (selectedNetwork.id) {
         return (
           <>
-            {/* <MetadataSEOFromStore {...pageProps.metadata} nonce={nonce} /> */}
+            <MetadataSEOFromStore {...pageProps.metadata} nonce={nonce} />
             <ActivityPool sessionUser={sessionUser} messagesUnread={messagesUnread} />
             <div
               className="index__container"
@@ -292,7 +279,6 @@ function MyApp({ Component, pageProps }) {
               <div className="index__content">
                 <ShowDesktopOnly>
                   <NavHeader
-                    pageName={pageName}
                     selectedNetwork={selectedNetwork}
                   />
                 </ShowDesktopOnly>
@@ -301,12 +287,11 @@ function MyApp({ Component, pageProps }) {
                 <ShowMobileOnly>
                   <ClienteSideRendering>
                     <NavBottom
-                      pageName={pageName}
                       sessionUser={sessionUser}
                     />
                   </ClienteSideRendering>
                 </ShowMobileOnly>
-                <MainPopup pageName={pageName} />
+                <MainPopup/>
               </div>
             </div>
           </>

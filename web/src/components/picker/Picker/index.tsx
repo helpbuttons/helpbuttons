@@ -2,21 +2,38 @@ import React from "react";
 import NextLink from "next/link";
 import { IoClose } from "react-icons/io5";
 
-///small popup to pick small data by the user
-export function Picker({ closeAction, headerText, children, extraClass = ''}) {
+import { useEffect, useRef } from "react";
+
+
+export function Picker({ closeAction, headerText, children, extraClass = '' }) {
+  const modalRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClick = (event: MouseEvent) => {
+      if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+        closeAction();
+      }
+    };
+
+    document.addEventListener("click", handleClick, true);
+
+    return () => {
+      document.removeEventListener("click", handleClick, true);
+    };
+  }, [modalRef]);
   return (
     <>
       <div className="picker__close-container">
-        <div className="picker--over picker picker-box-shadow picker__content picker__options-v">
-          <div  className="picker__header">
-            <div  className="picker__header-content">
-              <div  className="picker__header-left"></div>
-              <div  className="picker__header-center">
+        <div ref={modalRef} className="picker--over picker picker-box-shadow picker__content picker__options-v">
+          <div className="picker__header">
+            <div className="picker__header-content">
+              <div className="picker__header-left"></div>
+              <div className="picker__header-center">
                 <h1 className="picker__header-title">
                   {headerText}
                 </h1>
               </div>
-              <div  className="picker__header-right">
+              <div className="picker__header-right">
                 <a onClick={() => closeAction()} className="picker__header-button">
                   <div className="btn-circle__icon">
                     <IoClose />
@@ -26,7 +43,7 @@ export function Picker({ closeAction, headerText, children, extraClass = ''}) {
             </div>
           </div>
           <div className={"picker__content " + extraClass}>
-           {children}
+            {children}
           </div>
         </div>
       </div>

@@ -11,7 +11,7 @@ import {
   InjectEntityManager,
   InjectRepository,
 } from '@nestjs/typeorm';
-import { dbIdGenerator } from '@src/shared/helpers/nanoid-generator.helper';
+import { uuid } from '@src/shared/helpers/uuid.helper';
 import {
   Repository,
   In,
@@ -123,7 +123,7 @@ export class ButtonService {
       awaitingApproval = true;
     }
     const button = {
-      id: dbIdGenerator(),
+      id: uuid(),
       type: createDto.type,
       description: createDto.description,
       latitude: createDto.latitude,
@@ -219,7 +219,7 @@ export class ButtonService {
     });
     if (!button) {
       throw new HttpException(
-        'button not found',
+        'button-not-found',
         HttpStatus.NOT_FOUND,
       );
     }
