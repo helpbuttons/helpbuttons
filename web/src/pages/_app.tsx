@@ -4,7 +4,7 @@ import { Router, useRouter } from 'next/router';
 import NavBottom from 'components/nav/NavBottom'; //just for mobile
 import Alert from 'components/overlay/Alert';
 import { appWithTranslation } from 'next-i18next';
-import { GlobalState, SetPageName, store } from 'state/';
+import { GlobalState, store } from 'state/';
 import { useSelectedNetwork } from 'state/Networks';
 import { FetchUserData, LoginToken } from 'state/Profile';
 
@@ -33,6 +33,7 @@ import MetadataSEOFromStore, { MetadataSEO } from 'components/seo';
 import dconsole from 'shared/debugger';
 import Head from 'next/head';
 import CookiesBanner from 'components/home/CookiesBanner';
+import { SetPageName } from 'state/HomeInfo';
 
 export default appWithTranslation(MyApp);
 
@@ -51,6 +52,7 @@ function MyApp({ Component, pageProps }) {
   );
 
   const sessionUser = useGlobalStore((state: GlobalState) => state.sessionUser)
+  const pageName = useGlobalStore((state: GlobalState) => state.homeInfo.pageName)
 
   const onFetchingConfigError = (error) => {
     dconsole.error(error);
@@ -69,9 +71,9 @@ function MyApp({ Component, pageProps }) {
     dconsole.log(error);
     return;
   };
-  const [pageName, setPageName] = useState(null)
+  
   useEffect(() => {
-    setPageName(() => getPageName(path.split('/')[1]))
+    store.emit(new SetPageName(getPageName(path.split('/')[1])))
     function getPageName(urlString) {
       const finit = urlString.indexOf("#") !== -1 ? urlString.indexOf("#") : (urlString.indexOf("?") !== -1 ? urlString.indexOf("?") !== -1 : null)
       if (finit) {
@@ -278,7 +280,6 @@ function MyApp({ Component, pageProps }) {
               <div className="index__content">
                 <ShowDesktopOnly>
                   <NavHeader
-                    pageName={pageName}
                     selectedNetwork={selectedNetwork}
                   />
                 </ShowDesktopOnly>
@@ -287,12 +288,11 @@ function MyApp({ Component, pageProps }) {
                 <ShowMobileOnly>
                   <ClienteSideRendering>
                     <NavBottom
-                      pageName={pageName}
                       sessionUser={sessionUser}
                     />
                   </ClienteSideRendering>
                 </ShowMobileOnly>
-                <MainPopup pageName={pageName} />
+                <MainPopup/>
               </div>
             </div>
           </>

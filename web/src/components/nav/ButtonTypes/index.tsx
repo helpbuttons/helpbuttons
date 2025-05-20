@@ -12,12 +12,13 @@ import FieldMultiSelect from 'elements/Fields/FieldMultiSelect';
 import MultiSelectOption from 'elements/MultiSelectOption';
 import t from 'i18n';
 
-export function ListButtonTypes({ pageName }) {
+export function ListButtonTypes() {
   const filters = useStore(
     store,
     (state: GlobalState) => state.explore.map.filters,
     false
   );
+  const pageName = useGlobalStore((state: GlobalState) => state.homeInfo.pageName)
   const buttonTypes = useButtonTypes();
   const selectedNetwork = useGlobalStore((state: GlobalState) => state.networks.selectedNetwork)
 

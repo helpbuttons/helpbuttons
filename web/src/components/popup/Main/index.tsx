@@ -13,7 +13,9 @@ import { useEffect } from "react";
 import { replaceUrl, usePreviousUrl } from "components/uri/builder";
 import LoginForm from "components/user/LoginForm";
 
-export default function MainPopup({ pageName }) {
+export default function MainPopup() {
+  const pageName = useGlobalStore((state: GlobalState) => state.homeInfo.pageName)
+
   const previousUrl = usePreviousUrl();
   const closePopup = () => {
     replaceUrl(previousUrl)

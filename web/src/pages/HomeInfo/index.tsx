@@ -82,7 +82,6 @@ export default function HomeInfo({ metadata }) {
           <div className="homeinfo__search-section">
             <NavHeader
               selectedNetwork={selectedNetwork}
-              pageName={'HomeInfo'}
             />
             <AdvancedFilters isHome={true} />
           </div>
@@ -282,9 +281,7 @@ function HomeInfoStatsCard({ selectedNetwork, config }) {
           config?.userCount.toString(),
         ])}
         <div className="homeinfo__hashtags">
-          <ListButtonTypes
-            pageName={'HomeInfo'}
-          />
+          <ListButtonTypes/>
         </div>
       </div>
     </div></>)

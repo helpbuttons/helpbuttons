@@ -1,7 +1,6 @@
 import produce from 'immer';
 import { GlobalState, store } from 'state';
 import { map } from 'rxjs';
-import { NetworkService } from 'services/Networks';
 import { UserService } from 'services/Users';
 import { Button } from 'shared/entities/button.entity';
 import { User } from 'shared/entities/user.entity';
@@ -22,6 +21,7 @@ export interface HomeInfoState {
   mainPopupButton: Button;
   version: string;
   isInstallable: boolean;
+  pageName: string;
 }
 
 export const homeInfoStateInitial = {
@@ -30,6 +30,7 @@ export const homeInfoStateInitial = {
   mainPopupButton: null,
   version: '?',
   isInstallable: false,
+  pageName: ''
 };
 
 export class SetMainPopup implements UpdateEvent {
@@ -80,6 +81,15 @@ export class SetIsInstallable implements UpdateEvent{
   public update(state: GlobalState){
     return produce(state, (newState) => {
       newState.homeInfo.isInstallable = true;
+    })
+  }
+}
+
+export class SetPageName implements UpdateEvent{
+  public constructor(private pageName: string){}
+  public update(state: GlobalState){
+    return produce(state, (newState) => {
+      newState.homeInfo.pageName = this.pageName;
     })
   }
 }

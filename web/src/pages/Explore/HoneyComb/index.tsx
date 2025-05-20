@@ -122,7 +122,7 @@ function HoneyComb({ selectedNetwork }) {
       <ShowMobileOnly>
         <ExploreContainer>
           <ExploreContainerLeftColumn showLeftColumn={showLeftColumn}>
-            <NavHeader selectedNetwork={selectedNetwork} />
+            <NavHeader selectedNetwork={selectedNetwork}/>
             <AdvancedFilters />
             {currentButton && (
               <PopupButtonFile
