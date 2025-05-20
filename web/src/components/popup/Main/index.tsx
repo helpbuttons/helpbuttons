@@ -106,7 +106,6 @@ function useReplaceUrl(mainPopupUserProfile, mainPopupButton, popupPage) {
   }, [mainPopupButton])
 
   useEffect(() => {
-    console.log(popupPage)
     if (popupPage != MainPopupPage.HIDE) {
       switch (popupPage) {
         case MainPopupPage.FAQS:

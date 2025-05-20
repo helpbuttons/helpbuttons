@@ -168,7 +168,6 @@ function MyApp({ Component, pageProps }) {
       setAuthorized(isRoleAllowed(sessionUser.role, path));
       return;
     }
-    console.log('checking if ' + path + ' is allowed')
     const isAllowed = isRoleAllowed(Role.guest, path)
 
     if (!isAllowed) {

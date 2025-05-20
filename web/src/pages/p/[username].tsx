@@ -42,7 +42,6 @@ export function ShowProfile({
 
   const [extraFields, setExtraFields] = useState([]);
   useEffect(() => {
-    console.log(userProfile)
     if (userProfile) {
       if (userProfile.showButtons) {
         dconsole.log('getting user btns');

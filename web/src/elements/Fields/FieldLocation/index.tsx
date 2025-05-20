@@ -85,7 +85,6 @@ export default function FieldLocation({
   const findAddressFromPosition = (latLng) => {
 
     setIsLoading(() => true)
-    console.log('gettin addresss ', latLng)
     if (latLng[0] && latLng[1]) {
       getLatLngAddress(latLng, false, (place) => {
         dconsole.log('gettings place... ', place)

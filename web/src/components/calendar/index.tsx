@@ -43,7 +43,6 @@ export default function CalendarHb(props) {
         value,
         view,
       }) => {
-        dconsole.log('yellow');
         if (view == 'month') {
           const selectedDate = new Date(activeStartDate);
 
