@@ -1,6 +1,6 @@
 import { IoClose, IoSearch } from 'react-icons/io5';
 import React, { useEffect, useRef, useState } from 'react';
-import { useStore } from 'state';
+import { useGlobalStore, useStore } from 'state';
 import { GlobalState, store } from 'state';
 import { LoadabledComponent } from 'components/loading';
 import t from 'i18n';
@@ -11,12 +11,19 @@ import { ExploreMapState, ResetFilters, ToggleAdvancedFilters } from 'state/Expl
 import { readableDistance } from 'shared/sys.helper';
 import { Network } from 'shared/entities/network.entity';
 
-export function HeaderSearch({ toggleAdvancedFilters, pageName, exploreMapState, selectedNetwork}: {toggleAdvancedFilters: any, pageName: string, exploreMapState: ExploreMapState, selectedNetwork: any}) {
+export function HeaderSearch({ toggleAdvancedFilters, exploreMapState, selectedNetwork}: {toggleAdvancedFilters: any, exploreMapState: ExploreMapState, selectedNetwork: any}) {
   const [buttonCount, setButtonCount] = useState(selectedNetwork.buttonCount)
-  
+  const pageName = useGlobalStore((state: GlobalState) => state.homeInfo.pageName)
+
   useEffect(() => {
-      setButtonCount(() => exploreMapState.listButtons.length)    
-  }, [exploreMapState.listButtons])
+    if(pageName == 'Explore' && exploreMapState.listButtons)
+    {
+      setButtonCount(() => exploreMapState.listButtons.length)
+    }else {
+      setButtonCount(() => selectedNetwork.buttonCount)
+      
+    }
+  }, [exploreMapState.listButtons, selectedNetwork.buttonCount])
 
   const clearButton = useRef(null);
   const filtered = isFiltering()

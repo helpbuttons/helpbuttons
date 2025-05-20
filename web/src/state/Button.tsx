@@ -98,6 +98,7 @@ export class UpdateButtonList implements UpdateEvent {
   public constructor(private buttons: Button[]) { }
   public update(state: GlobalState) {
     return produce(state, (newState) => {
+      dconsole.log('[UpdateButtonList]')
       newState.explore.map.listButtons = this.buttons;
     });
   }

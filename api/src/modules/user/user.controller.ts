@@ -95,4 +95,17 @@ export class UserController {
     const phone = await this.userService.getPhone(userId)
     return JSON.stringify(phone)
   }
+
+  @OnlyAdmin()
+  @Get('endorse/:userId')
+  endorse(@Param('userId') userId: string) {
+    return this.userService.endorse(userId);
+  }
+
+
+  @OnlyAdmin()
+  @Get('revokeEndorse/:userId')
+  untrust(@Param('userId') userId: string) {
+    return this.userService.revokeEndorse(userId);
+  }
 }

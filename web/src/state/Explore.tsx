@@ -174,7 +174,7 @@ export class FindButton implements WatchEvent {
   public constructor(
     private buttonId: string,
     private onSuccess = (button) => { },
-    private onError = () => { },
+    private onError = (error) => { },
   ) { }
 
   public watch(state: GlobalState) {
@@ -305,6 +305,7 @@ export class updateCurrentButton implements UpdateEvent {
       } else if (!this.button) {
         newState.explore.settings.center = state.explore.settings.prevCenter
         newState.explore.settings.zoom = state.explore.settings.prevZoom;
+        newState.explore.settings.hexagonClicked = null
       }
       dconsole.log(`[updateCurrentButton] update`)
     });
@@ -348,6 +349,7 @@ export class ResetFilters implements UpdateEvent {
 
   public update(state: GlobalState) {
     return produce(state, (newState) => {
+      dconsole.log('[ResetFilters]')
       newState.explore.map.filters = defaultFilters;
     });
   }
@@ -379,6 +381,7 @@ export class UpdateFiltersToFilterTag implements UpdateEvent {
   public update(state: GlobalState) {
     return produce(state, (newState) => {
       // use query to filter tag...
+      dconsole.log('[UpdateFiltersToFilterTag]')
       newState.explore.currentButton = null;
       newState.explore.map.filters = {
         ...defaultFilters,
@@ -418,6 +421,7 @@ export class UpdateFiltersToFilterButtonType implements UpdateEvent {
           }
         }
       }
+      dconsole.log('[UpdateFiltersToFilterButtonType]')
       newState.explore.map.filters = newFilters;
     });
   }
@@ -459,6 +463,7 @@ export class UpdateBoundsFilteredButtons implements UpdateEvent, WatchEvent {
 
   public update(state: GlobalState) {
     return produce(state, (newState) => {
+      dconsole.log('[UpdateBoundsFilteredButtons] update')
       newState.explore.map.boundsFilteredButtons =
         this.boundsFilteredButtons;
       if(state.explore.currentButton)
@@ -505,6 +510,7 @@ export class UpdateHexagonClicked implements UpdateEvent {
           newState.explore.settings.viewMode = ExploreViewMode.BOTH
         }
       } else {
+        dconsole.log('[UpdateHexagonClicked] update')
         newState.explore.map.listButtons = state.explore.map.boundsFilteredButtons
       }
     });
@@ -560,22 +566,12 @@ export class UpdateExploreSettings implements UpdateEvent {
   public constructor(
     private newExploreSettings: Partial<ExploreSettings>,
   ) { }
-  public watch(state: GlobalState) {
-    if (this.newExploreSettings?.zoom &&
-      getResolution(state.explore.settings.hexagonClicked) !=
-      getZoomResolution(Math.floor(this.newExploreSettings.zoom))
-    ) {
-
-      store.emit(new UpdateHexagonClicked(null))
-    }
-    return of(undefined)
-  }
 
   public update(state: GlobalState) {
 
     return produce(state, (newState) => {
       const prevSettings = state.explore.settings;
-      dconsole.log('[UpdateExploreSettings] update')
+      dconsole.log('[UpdateExploreSettings] update >')
       let newExploreSettings = {
         loading: false,
       };
@@ -594,7 +590,7 @@ export class UpdateExploreSettings implements UpdateEvent {
         newState.explore.map.showInstructions = false;
       }
       newState.explore.settings = { ...state.explore.settings, ...newExploreSettings };
-      dconsole.log(`[UpdateExploreSettings] update`)
+      dconsole.log(`[UpdateExploreSettings] update <`)
     });
   }
 }

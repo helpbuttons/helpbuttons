@@ -1,13 +1,8 @@
 //Profile Card with the the info displayed by the user in Profile page. It shows different options depending if it's other user profile or your profile when logged.
-import {  IoAddCircleOutline, IoChatbubbleOutline, IoHandLeftOutline, IoHeartOutline, IoPersonOutline, IoRibbonOutline } from "react-icons/io5";
-import { Link } from 'elements/Link';
-import Btn, {ContentAlignment, BtnType, IconType} from 'elements/Btn'
-
 import UserAvatar from '../components';
-import { getHostname } from 'shared/sys.helper';
 import t from 'i18n';
 import { store } from "state";
-import { UpdateRole, isAdmin } from "state/Users";
+import { UpdateRole, UserEndorse, UserRevokeEndorse, isAdmin } from "state/Users";
 import { alertService } from "services/Alert";
 import router from "next/router";
 import { CardSubmenu, CardSubmenuOption } from "components/card/CardSubmenu";
@@ -41,7 +36,7 @@ export default function CardProfile({ user, showAdminOptions = false}) {
             
               <div className="card-profile__avatar-container-name">
 
-                <div className="card-profile__name">{user.name} {user?.role == Role.admin && <div className="hashtag hashtag--blue">Admin</div>}</div>
+                <div className="card-profile__name">{user.name} {user?.role == Role.admin && <div className="hashtag hashtag--blue"> {t('roles.administrator')}</div>}{user?.endorsed && <div className="hashtag hashtag--blue">{t('user.endorsed')}</div>}</div>
                 <span className="card-profile__username">{ user.username }</span>
                 
               </div>
@@ -98,7 +93,7 @@ function ProfileAdminOptions({ user }) {
         newRole,
         () => {
           alertService.info(t('common.done'));
-          router.reload()
+          // router.reload()
         },
         () => {
           alertService.error(t('common.error'));
@@ -118,8 +113,23 @@ function ProfileAdminOptions({ user }) {
               }}
               label={t('moderation.revoke')}
             />
-          </>
-        );
+            {user.endorsed &&
+              <CardSubmenuOption
+              onClick={() => {
+                store.emit(new UserRevokeEndorse(user.id));
+              }}
+              label={t('user.revokeEndorse')}
+            />
+            }
+            {!user.endorsed &&
+              <CardSubmenuOption
+              onClick={() => {
+                store.emit(new UserEndorse(user.id));
+              }}
+              label={t('user.endorse')}
+            />
+            }
+          </>)
       case Role.registered:
         return (
           <>
