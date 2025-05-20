@@ -305,6 +305,7 @@ export class updateCurrentButton implements UpdateEvent {
       } else if (!this.button) {
         newState.explore.settings.center = state.explore.settings.prevCenter
         newState.explore.settings.zoom = state.explore.settings.prevZoom;
+        newState.explore.settings.hexagonClicked = null
       }
       dconsole.log(`[updateCurrentButton] update`)
     });
