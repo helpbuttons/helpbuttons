@@ -1,6 +1,6 @@
 import { IoClose, IoSearch } from 'react-icons/io5';
 import React, { useEffect, useRef, useState } from 'react';
-import { useStore } from 'state';
+import { useGlobalStore, useStore } from 'state';
 import { GlobalState, store } from 'state';
 import { LoadabledComponent } from 'components/loading';
 import t from 'i18n';
@@ -15,7 +15,9 @@ export function HeaderSearch({ toggleAdvancedFilters, pageName, exploreMapState,
   const [buttonCount, setButtonCount] = useState(selectedNetwork.buttonCount)
   
   useEffect(() => {
+    if(exploreMapState.listButtons){
       setButtonCount(() => exploreMapState.listButtons.length)    
+    }
   }, [exploreMapState.listButtons])
 
   const clearButton = useRef(null);
