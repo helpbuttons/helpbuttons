@@ -3,7 +3,7 @@ import { setMetadata } from 'services/ServerProps';
 import t from 'i18n';
 import { store } from 'state';
 import { ExploreSettings, UpdateExploreSettings } from 'state/Explore';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
 import { roundCoord } from 'shared/honeycomb.utils';
 import { ExplorePage } from 'pages/Explore';
@@ -14,13 +14,18 @@ export default function Explore({
 
     const router = useRouter();
     const { zoom, lat, lng } = router.query;
+    const loadedNewSettings = useRef(false);
     useEffect(() => {
-        const _updateSettings: Partial<ExploreSettings> = {
-            center: [roundCoord(Number(lat)), roundCoord(Number(lng))],
-            zoom: Number(zoom),
+        if(loadedNewSettings.current == false){
+            const _updateSettings: Partial<ExploreSettings> = {
+                center: [roundCoord(Number(lat)), roundCoord(Number(lng))],
+                zoom: Number(zoom),
+            }
+            store.emit(new UpdateExploreSettings(_updateSettings));
+            loadedNewSettings.current = true;
         }
-        store.emit(new UpdateExploreSettings(_updateSettings));
-    }, [zoom, lat, lng]);
+        
+    }, [router]);
     return <ExplorePage/>
 }
 

@@ -4,6 +4,7 @@ import { ButtonService } from 'services/Buttons';
 import { UpdateEvent, WatchEvent } from 'store/Event';
 import { handleError } from './helper';
 import produce from 'immer';
+import dconsole from 'shared/debugger';
 
 export class FollowButton implements WatchEvent, UpdateEvent {
   public constructor(
@@ -23,6 +24,7 @@ export class FollowButton implements WatchEvent, UpdateEvent {
       newState.explore.currentButton.followedBy = [...state.explore.currentButton.followedBy,state.sessionUser.id]
       newState.explore.map.boundsFilteredButtons = []
       newState.explore.map.cachedHexagons = []
+      dconsole.log('[FollowButton]')
       newState.explore.map.listButtons = []
     });
   }
@@ -44,6 +46,7 @@ export class UnfollowButton implements WatchEvent, UpdateEvent {
   public update(state: GlobalState) {
     return produce(state, (newState) => {
       const index = state.explore.currentButton.followedBy.indexOf(state.sessionUser.id);
+      dconsole.log('[UnfollowButton]')
       if (index > -1) {
         let followedBy = [...state.explore.currentButton.followedBy];
         followedBy.splice(index,1)

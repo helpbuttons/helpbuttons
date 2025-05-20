@@ -282,6 +282,7 @@ function useHexagonMap({
   const [hexagonsToFetch, setHexagonsToFetch] = useState({
     resolution: 1,
     hexagons: [],
+    init: false,
   });
   const debounceHexagonsToFetch = useDebounce(hexagonsToFetch, 100);
 
@@ -379,14 +380,16 @@ function useHexagonMap({
     seth3TypeDensityHexes(() => {
       return filteredHexagons;
     });
-
     store.emit(
       new UpdateBoundsFilteredButtons(orderedFilteredButtons),
     );
   }
 
   useEffect(() => {
-    updateDensityMap();
+    if(hexagonsToFetch.init)
+    {
+      updateDensityMap();
+    }
   }, [filters]);
 
   const handleBoundsChange = (bounds, center: Point, zoom) => {
@@ -414,6 +417,7 @@ function useHexagonMap({
       return {
         resolution: getZoomResolution(zoomFloor),
         hexagons: hexagonsForBounds,
+        init: true,
       };
     });
   };
