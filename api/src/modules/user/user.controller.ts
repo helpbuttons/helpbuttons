@@ -63,8 +63,11 @@ export class UserController {
 
   @OnlyAdmin()
   @Post('/updateRole/:userId/:role')
-  async updateRole(@Param('userId') userId: string, @Param('role') role: Role) {
-    return await this.userService.updateRole(userId, role);
+  updateRole(@CurrentUser() sessionUser: User, @Param('userId') userId: string, @Param('role') role: Role) {
+    return this.userService.updateRole(userId, role).then((user) => {
+      notifyUser(this.eventEmitter,ActivityEventName.RoleUpdate, {user, sessionUser, role: role})
+      return user;
+    })
   }
 
   @OnlyAdmin()

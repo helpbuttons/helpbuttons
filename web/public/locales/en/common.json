@@ -192,7 +192,8 @@
     "expiredEventType": "_helpbutton_ ended",
     "expiredEventTitle": "'{0}' has passed its end date, it won't show no more on the public list.",
     "endorsed": "You have been endorsed by the administration, now you have a 'trusted' badge on your profile",
-    "revokeEndorse": "Unfortunately you're 'trusted' badge has been removed"
+    "revokeEndorse": "Unfortunately you're 'trusted' badge has been removed",
+    "roleupdate": "Your role has been updated to '{0}'"
   },
   "activitiesWithSubject": {
     "newbutton": "{0} published a new _helpbutton_ in {1}",
