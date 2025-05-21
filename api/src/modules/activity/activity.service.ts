@@ -282,6 +282,18 @@ export class ActivityService {
     this.createActivity(button.owner, payload, false);
   }
 
+  @OnEvent(ActivityEventName.Endorsed)
+  async endorsed(payload: any) {
+    const { user } = payload.data;
+    this.createActivity(user, payload, false);
+  }
+
+  @OnEvent(ActivityEventName.RevokeEndorsed)
+  async revokeEndorsed(payload: any) {
+    const { user } = payload.data;
+    this.createActivity(user, payload, false);
+  }
+
   findByUserId(
     userId: string,
     locale: string,

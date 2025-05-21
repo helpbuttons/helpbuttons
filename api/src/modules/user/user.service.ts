@@ -272,12 +272,12 @@ COALESCE(
   public endorse(userId: string) {
     return this.userRepository.update(userId, {
       endorsed: true
-    });
+    }).then((result) => this.findById(userId));
   }
 
   public revokeEndorse(userId: string) {
     return this.userRepository.update(userId, {
       endorsed: false
-    });
+    }).then((result) => this.findById(userId));
   }
 }

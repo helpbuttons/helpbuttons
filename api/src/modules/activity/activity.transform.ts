@@ -160,6 +160,26 @@ export const transformToMessage = (
             referenceId: button.id,
           };
     }
+    case ActivityEventName.Endorsed:
+      {
+        const user = getUserActivity(activity.data)
+        return {
+            ...activityOut,
+            message: '',
+            title: translate(locale, 'activities.endorsed'),
+            image: user.image,
+          };
+    }
+    case ActivityEventName.RevokeEndorsed:
+    {
+      const user = getUserActivity(activity.data)
+      return {
+          ...activityOut,
+          message: '',
+          title: translate(locale, 'activities.revokeEndorse'),
+          image: user.image,
+        };
+    }
     default: {
       console.log(
         activity.eventName +

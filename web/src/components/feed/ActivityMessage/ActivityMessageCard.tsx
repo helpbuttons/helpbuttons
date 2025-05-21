@@ -139,11 +139,6 @@ export function ActivityMessageCard({
           </div>
         </span>
       )}
-      {!message?.button && (
-        <ErrorLink
-          errorMessage={`Error message has an error, please contact the administrator of your network with this message, including this ${message.id} which identifies your message. Thank you`}
-        />
-      )}
     </>
   );
 }

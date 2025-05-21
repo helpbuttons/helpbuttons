@@ -1,15 +1,7 @@
 import ImageWrapper, { ImageType } from 'elements/ImageWrapper';
 import { readableTimeLeftToDate } from 'shared/date.utils';
 import { ActivityEventName } from 'shared/types/activity.list';
-import {
-  IoAddCircleOutline,
-  IoChatbubbleOutline,
-  IoNotificationsOutline,
-  IoPersonOutline,
-} from 'react-icons/io5';
-import Link from 'next/link';
 import { formatMessage } from 'elements/Message';
-import t from 'i18n';
 import { FindButton, } from 'state/Explore';
 import { store } from 'state';
 import { SetMainPopupCurrentButton } from 'state/HomeInfo';
@@ -19,83 +11,33 @@ export default function ActivityNotificationCard({ activity }) {
     <div>
       {(() => {
         switch (activity.eventName) {
-          case ActivityEventName.NewButton: {
-            return (
-              <NotificationCardCustomIcon
-                icon={<IoAddCircleOutline />}
-                badgeTitle={t('activities.newbuttonType')}
-                activity={activity}
-              />
-            );
-          }
-
-          case ActivityEventName.NewPost: {
-            return (
-              <NotificationCardCustomIcon
-                icon={<IoPersonOutline />}
-                badgeTitle={t('activities.creatorUpdate')}
-                activity={activity}
-              />
-            );
-          }
-
           case ActivityEventName.NewPostComment: {
             // its a message.. nothing to do..
             return <></>;
           }
-
-          case ActivityEventName.NewFollowingButton: {
+          case ActivityEventName.NewButton: 
+          case ActivityEventName.NewPost: 
+          case ActivityEventName.NewFollowingButton: 
+          case ActivityEventName.NewFollowedButton: 
+          case ActivityEventName.ExpiredButton: 
+          case ActivityEventName.DeleteButton: 
+          case ActivityEventName.RevokeEndorsed:
+          case ActivityEventName.Endorsed: {
             return (
               <NotificationCardCustomIcon
-                icon={<IoChatbubbleOutline />}
-                badgeTitle={t('activities.newfollowType')}
                 activity={activity}
               />
             );
           }
-          case ActivityEventName.NewFollowedButton: {
-            return (
-              <NotificationCardCustomIcon
-                icon={<IoChatbubbleOutline />}
-                badgeTitle={t('activities.newfollowType')}
-                activity={activity}
-              />
-            );
-          }
-
-          case ActivityEventName.ExpiredButton: {
-            return (
-              <NotificationCardCustomIcon
-                icon={<IoChatbubbleOutline />}
-                badgeTitle={t('activities.expiredEventType')}
-                activity={activity}
-              />
-            );
-          }
-
-          case ActivityEventName.DeleteButton: {
-            return (
-              <NotificationCardCustomIcon
-                icon={<IoAddCircleOutline />}
-                badgeTitle={t('activities.deletedType')}
-                activity={activity}
-              />
-            );
-          }
-
           default: {
-            const notifIcon = <IoNotificationsOutline />;
-
             return (
               <NotificationCard
                 title={'activities.notification'}
-                notifIcon={notifIcon}
                 image={'no'}
                 date={activity.created_at}
                 message={activity.eventName}
                 buttonId={0}
                 read={activity.read}
-                type="unknown"
               />
             );
           }
@@ -106,17 +48,13 @@ export default function ActivityNotificationCard({ activity }) {
 }
 
 export function NotificationCardCustomIcon({
-  activity,
-  icon,
-  badgeTitle,
+  activity
 }) {
   
   return (
     // <>{JSON.stringify(activity)}
     <NotificationCard
-      type={badgeTitle}
       image={activity.image}
-      notifIcon={icon}
       date={activity.createdAt}
       buttonId={activity.referenceId}
       title={activity.title}
@@ -154,13 +92,11 @@ export function NotificationCard(props) {
 }
 
 function InnerNotificationCard({
-  notifIcon,
   image,
   read,
   date,
   title,
-  message,
-  type
+  message
 }) {
   return (
     <>

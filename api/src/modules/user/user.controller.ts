@@ -9,6 +9,9 @@ import { InviteService } from '../invite/invite.service';
 import { InviteCreateDto } from '../invite/invite.dto';
 import { plainToClass } from 'class-transformer';
 import { nomailString } from '../auth/auth.service';
+import { notifyUser } from '@src/app/app.event';
+import { ActivityEventName } from '@src/shared/types/activity.list';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 
 @ApiTags('User')
 @Controller('users')
@@ -16,6 +19,7 @@ export class UserController {
   constructor(
     private readonly userService: UserService,
     private readonly inviteService: InviteService,
+    private eventEmitter: EventEmitter2,
   ) {}
 
   @OnlyRegistered()
@@ -98,14 +102,19 @@ export class UserController {
 
   @OnlyAdmin()
   @Get('endorse/:userId')
-  endorse(@Param('userId') userId: string) {
-    return this.userService.endorse(userId);
+  endorse(@CurrentUser() sessionUser: User, @Param('userId') userId: string) {
+    return this.userService.endorse(userId)
+    .then((user) => {
+      notifyUser(this.eventEmitter,ActivityEventName.Endorsed, {user, sessionUser})
+    });
   }
 
 
   @OnlyAdmin()
   @Get('revokeEndorse/:userId')
-  untrust(@Param('userId') userId: string) {
-    return this.userService.revokeEndorse(userId);
+  untrust(@CurrentUser() sessionUser: User, @Param('userId') userId: string) {
+    return this.userService.revokeEndorse(userId).then((user) => {
+      notifyUser(this.eventEmitter,ActivityEventName.RevokeEndorsed, {user, sessionUser})
+    });
   }
 }

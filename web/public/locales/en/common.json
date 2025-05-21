@@ -190,7 +190,9 @@
     "myhelpbuttons": "My _helpbuttons_",
     "deletebutton": "{0} was deleted",
     "expiredEventType": "_helpbutton_ ended",
-    "expiredEventTitle": "'{0}' has passed its end date, it won't show no more on the public list."
+    "expiredEventTitle": "'{0}' has passed its end date, it won't show no more on the public list.",
+    "endorsed": "You have been endorsed by the administration, now you have a 'trusted' badge on your profile",
+    "revokeEndorse": "Unfortunately you're 'trusted' badge has been removed"
   },
   "activitiesWithSubject": {
     "newbutton": "{0} published a new _helpbutton_ in {1}",
