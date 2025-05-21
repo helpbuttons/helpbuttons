@@ -36,7 +36,7 @@ export default function CardProfile({ user, showAdminOptions = false}) {
             
               <div className="card-profile__avatar-container-name">
 
-                <div className="card-profile__name">{user.name} {user?.role == Role.admin && <div className="hashtag hashtag--blue"> {t('roles.administrator')}</div>}{user?.endorsed && <div className="hashtag hashtag--blue">{t('user.endorsed')}</div>}</div>
+                <div className="card-profile__name">{user.name} {user?.role == Role.admin && <div className="hashtag hashtag--blue"> {t('roles.administrator')}</div>}{user?.endorsed && <div className="hashtag hashtag--badge">{t('user.endorsed')}</div>}</div>
                 <span className="card-profile__username">{ user.username }</span>
                 
               </div>
@@ -113,22 +113,7 @@ function ProfileAdminOptions({ user }) {
               }}
               label={t('moderation.revoke')}
             />
-            {user.endorsed &&
-              <CardSubmenuOption
-              onClick={() => {
-                store.emit(new UserRevokeEndorse(user.id));
-              }}
-              label={t('user.revokeEndorse')}
-            />
-            }
-            {!user.endorsed &&
-              <CardSubmenuOption
-              onClick={() => {
-                store.emit(new UserEndorse(user.id));
-              }}
-              label={t('user.endorse')}
-            />
-            }
+            {getOptionEndorse(user)}
           </>)
       case Role.registered:
         return (
@@ -145,6 +130,7 @@ function ProfileAdminOptions({ user }) {
               }}
               label={t('moderation.block')}
             />
+            {getOptionEndorse(user)}
           </>
         );
       case Role.blocked:
@@ -158,6 +144,25 @@ function ProfileAdminOptions({ user }) {
         );
     }
   };
+  const getOptionEndorse = (user) => {
 
+    return <>
+      {user.endorsed &&
+        <CardSubmenuOption
+          onClick={() => {
+            store.emit(new UserRevokeEndorse(user.id));
+          }}
+          label={t('user.revokeEndorse')}
+        />
+      }
+      {!user.endorsed &&
+        <CardSubmenuOption
+          onClick={() => {
+            store.emit(new UserEndorse(user.id));
+          }}
+          label={t('user.endorse')}
+        />
+      }</>
+  }
   return <CardSubmenu extraClass="card-profile__submenu" >{user && getOptions(user)}</CardSubmenu>;
 }

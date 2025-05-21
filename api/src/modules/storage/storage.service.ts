@@ -10,7 +10,7 @@ import { Repository } from 'typeorm';
 import { ImageFile } from './image-file.entity';
 import { getFilesRoute, uploadDir } from './storage.utils';
 import { ErrorName } from '@src/shared/types/error.list';
-import sharp from 'sharp';
+import * as sharp from 'sharp';
 import { isImageData } from '@src/shared/helpers/imageIsFile';
 import { CustomHttpException } from '@src/shared/middlewares/errors/custom-http-exception.middleware';
 

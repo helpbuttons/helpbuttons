@@ -27,6 +27,7 @@ import { unique } from '@src/shared/helpers/array.helper';
 import { excerpt } from './activity.utils';
 import { Comment } from '../post/comment.entity';
 import { PostService } from '../post/post.service';
+import { getAction } from './activity.types';
 
 @Injectable()
 export class ActivityService {
@@ -280,6 +281,14 @@ export class ActivityService {
   async newFollowedButton(payload: any) {
     const { user, button } = payload.data;
     this.createActivity(button.owner, payload, false);
+  }
+
+  @OnEvent(ActivityEventName.Endorsed)
+  @OnEvent(ActivityEventName.RevokeEndorsed)
+  @OnEvent(ActivityEventName.RoleUpdate)
+  async onEvent(payload: any) {
+    const {user, addToDaily} = getAction(ActivityEventName.Endorsed).onEvent(payload)
+    this.createActivity(user, payload, addToDaily)
   }
 
   findByUserId(

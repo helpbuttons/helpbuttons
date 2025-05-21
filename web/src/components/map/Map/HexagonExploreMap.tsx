@@ -208,7 +208,7 @@ export default function HexagonExploreMap({
                     key={`currentButtonHexagon}`}
                     styleCallback={(feature, hover) => {
                       return {
-                        fill: 'red',
+                        fill: '#18AAD2',
                         opacity: '0.4',
                       };
                     }}
@@ -385,7 +385,7 @@ function DisplayHiddenButtonsWarning({ countFilteredButtons }) {
     <>
       {countFilteredButtons > 0 &&
         <div className="search-map__hidden-buttons-warning">
-          {t('explore.hiddenButtons', [countFilteredButtons])}
+          {t('explore.hiddenButtons')}
         </div>
       }
     </>

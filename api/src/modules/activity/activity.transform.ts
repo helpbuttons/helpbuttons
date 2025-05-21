@@ -2,6 +2,7 @@ import { ActivityEventName } from '@src/shared/types/activity.list';
 import { Activity } from './activity.entity';
 import translate, { readableDate } from '@src/shared/helpers/i18n.helper';
 import { PrivacyType } from '@src/shared/types/privacy.enum';
+import { getAction } from './activity.types';
 
 export const transformToMessage = (
   activity: Activity,
@@ -160,6 +161,10 @@ export const transformToMessage = (
             referenceId: button.id,
           };
     }
+    case ActivityEventName.RoleUpdate:
+    case ActivityEventName.Endorsed:
+    case ActivityEventName.RevokeEndorsed:
+      return getAction(activity.eventName).transform(locale, activityOut, activity)
     default: {
       console.log(
         activity.eventName +
@@ -171,7 +176,7 @@ export const transformToMessage = (
 
   }catch(err)
   {
-    console.log(activity)
+    console.log(activity.eventName)
     console.trace()  
     console.error(err)
     return null;
