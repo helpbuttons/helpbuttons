@@ -3,7 +3,7 @@ import { readableTimeLeftToDate } from 'shared/date.utils';
 import { ActivityEventName } from 'shared/types/activity.list';
 import { formatMessage } from 'elements/Message';
 import { FindButton, } from 'state/Explore';
-import { store } from 'state';
+import { GlobalState, store, useGlobalStore } from 'state';
 import { SetMainPopupCurrentButton } from 'state/HomeInfo';
 
 export default function ActivityNotificationCard({ activity }) {
@@ -22,7 +22,9 @@ export default function ActivityNotificationCard({ activity }) {
           case ActivityEventName.ExpiredButton: 
           case ActivityEventName.DeleteButton: 
           case ActivityEventName.RevokeEndorsed:
-          case ActivityEventName.Endorsed: {
+          case ActivityEventName.Endorsed:
+          case ActivityEventName.RoleUpdate: 
+             {
             return (
               <NotificationCardCustomIcon
                 activity={activity}
@@ -98,6 +100,8 @@ function InnerNotificationCard({
   title,
   message
 }) {
+  const sessionUser = useGlobalStore((state: GlobalState) => state.sessionUser);
+
   return (
     <>
       <div
@@ -127,7 +131,7 @@ function InnerNotificationCard({
           <div className="avatar-medium">
             <ImageWrapper
               imageType={ImageType.avatarMed}
-              src={image}
+              src={image ? image : sessionUser.avatar}
               alt="image"
             />
           </div>

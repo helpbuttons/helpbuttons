@@ -9,6 +9,6 @@ export enum ActivityEventName {
   ExpiredButton = 'expired.button',
   Endorsed = 'user.endorsed',
   RevokeEndorsed = 'user.revokeEndorsed',
-  RoleChange = 'user.roleChange',
+  RoleUpdate = 'user.roleChange',
 }
 
