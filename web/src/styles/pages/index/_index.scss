@@ -77,13 +77,22 @@ $index-content-left--distance: $grid-max-width;
 
   position: absolute;
   z-index: $z-index-03;
-  width: 100px;
-  display: block;
-  padding: $padding-big;
+  max-width: 200px;
+  background-color: $color-white;
+  display: flex;
+  flex-wrap: wrap;
+  padding: $padding-small $padding-big ;
+  gap: $padding-small;
+  padding-bottom: $padding-big;
   border-radius: $border-radius-circle;
   /** comment for overlay in pigeon-maps **/
-  left: var(--long-press-menu-x);
-  top: var(--long-press-menu-y);
+  left: calc(var(--long-press-menu-x) - 120px);
+  top: calc(var(--long-press-menu-y) + 140px);
+  font-size: $font-size-small;
+  line-height: $text-line-height-xsmall;
+  box-shadow: $box-shadow-divs;
+  color: $color-med-gray;
+  
 }
 
 @media (hover: none) {

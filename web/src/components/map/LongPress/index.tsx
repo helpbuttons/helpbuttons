@@ -58,14 +58,12 @@ export const useMapLongPress = () => {
   
   
     const menu = (<>{showLongPressMenu && <div className='index__explore-map-menu-overflow' style={{ '--long-press-menu-x': `${menuPosition[0]}px`, '--long-press-menu-y': `${menuPosition[1]}px` }}>
-      <div className="card-button__dropdown-container">
-        <div className="card-button__dropdown-arrow"></div>
-        <div className="card-button__dropdown-content" id="listid">
-          {t('explore.create')}
+        
+          
           <Btn
             btnType={BtnType.submit}
             contentAlignment={ContentAlignment.center}
-            caption={t('common.publish')}
+            caption={t('explore.create')}
             onClick={() => router.push(`/ButtonNew/${zoom}/${mapClickCoords[0]}/${mapClickCoords[1]}`)}
             submit={false}
           />
@@ -75,9 +73,9 @@ export const useMapLongPress = () => {
           address={address}
           label={''}
         />
-        </div>
-      </div>
   
-    </div>}</>)
+    </div>
+    }
+    </>)
     return { events, menu,  showMenu: showLongPressMenu}
   }
