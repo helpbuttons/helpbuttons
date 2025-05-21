@@ -48,7 +48,8 @@
     "notificationsPermission": "Permitir notificaciones",
     "share": "Compartir esta app",
     "featured": "Destacados",
-    "powered": "Powered by"
+    "powered": "Powered by",
+    "install": "Instala {0} y recibe notificaciones:"
   },
   "share": {
     "showSharePopup": "Comparte esta aplicación",
@@ -61,7 +62,7 @@
     "optionIframe": "Iframe para insertar en otras webs",
     "optionBulletin": "Imprimir lista de _helpbuttons_",
     "optionInvitations": "Invitaciones personales para imprimir",
-    "share": ""
+    "share": "Compartir"
   },
   "feed": {
     "write": "Escribir mensaje",
@@ -80,8 +81,9 @@
     "read": "No hay mensajes aún",
     "said": "dijo",
     "privateBadge": "privado",
-    "noMoreNotifications": "There are no more notifications",
-    "noMoreMessages": "There are no more messages"
+    "noMoreNotifications": "No hay más notificaciones",
+    "noMoreMessages": "No hay más mensajes",
+    "activitiesHistory": "Historial de actividades"
   },
   "hostname": "nombre de host",
   "common": {
@@ -160,8 +162,12 @@
     "dateFieldAddLabel": "Muestra una fecha en tu tipo de _helpbutton_ para que se comporte como un evento y se pueda buscar por calendario",
     "addType": "+ Crear tipo de _helpbutton_",
     "currencyLabel": "Divisa",
-    "setType": "Set _helpbutton_ type properties",
-    "buttonTemplatePlaceHolder": "Write your _helpbutton_ type name here"
+    "setType": "Configuración de propiedades de _helpbutton_ ",
+    "buttonTemplatePlaceHolder": "Escribe aquí el nombre de tu tipo de _helpbutton_",
+    "sloganExplain": "Esta es una frase breve que da la bienvenida a tu red.",
+    "hideLocationByDefaultExplain": "Protege por defecto la ubicación exacta de tus _helpbuttons_ mostrando un área amplia, los usuarios podrán desactivar esto si lo desean.",
+    "areaPicked": "Centro: ({0},{1}) zoom: {2}",
+    "zoomLevel": "Nivel de Zoom"
   },
   "activities": {
     "messages": "Mensajes",
@@ -250,7 +256,7 @@
     "textReceiveNotifications": "Recibir notificaciones por email",
     "receiveNotifications": "Notificaciones por email",
     "receiveNotificationsExplain": "Selecciona si quieres recibir notificaciones por email cuando algún usuario te escriba algún mensaje o se publique algo sobre _helpbuttons_ o temas que sigues",
-    "unsubscribed": "No vas a recibir mas este tipo de emails",
+    "unsubscribed": "No recibirás más este tipo de emails",
     "showButtonsProfileLabel": "Contenido en tu página de perfil",
     "showButtonsProfileExplain": "Marca esta opción si quieres mostrar una lista pública de tus _helpbuttons_ en tu página de perfil",
     "showButtons": "Mostrar mis _helpbuttons_ en mi pagina de perfil",
@@ -279,8 +285,16 @@
     "pressToAccept": "Haga clic aquí para aceptar",
     "iAccept": "Acepto",
     "pleaseAcceptPrivacy": "Por favor acepte nuestra política de privacidad",
-    "loginError": "",
-    "errorRequestNewLoginToken": ""
+    "loginError": "Error al entrar, por favor inténtelo de nuevo o contacte al administrador",
+    "errorRequestNewLoginToken": "",
+    "pleaseAcceptCookies": "Es obligatorio que aceptar la política de cookies para continuar",
+    "helpbuttonsPublishedAmount": "Publicado",
+    "revokeEndorse": "Cancelar aceptación ",
+    "usernameWillBe": "Tu nombre de usuario será ",
+    "hidePassword": "Esconder contraseña",
+    "deletedAccount": "¡Tus datos fueron borados con éxito!",
+    "signupSuccess": "Tu registro fu exitoso, Bienvenido/a a {0} ",
+    "showWassapExplain": "Muestra un link a Whatsapp si quieres. Necesitas publicar tu teléfono antes para ello."
   },
   "configure": {
     "browsePins": "Mapa con pins de ubicación",
@@ -391,15 +405,20 @@
     "endDatesExpired": "La fecha de finalización de este _helpbutton_ ya pasó, por lo que se estableció como vencida y no se mostrará en la lista pública.",
     "renewLink": "Renovar tu _helpbutton_",
     "createUpdate": "Publicar Novedad",
-    "authorTitle": "Autor:",
+    "authorTitle": "Publicado por ",
     "notFound": "No puedo encontrar tu button, talvez fue borrado?",
-    "invalidDates": "",
-    "followErrorAlert": "",
-    "unfollowErrorAlert": "",
-    "pin": "Pin",
-    "unpin": "Unpin",
-    "pinSuccess": "Pin satisfactorio",
-    "unpinSuccess":"Unpin satisfactorio"
+    "invalidDates": "Comprueba la fecha y/o la hora",
+    "followErrorAlert": "No puedes seguir ahora, lo sentimos",
+    "unfollowErrorAlert": "No puedes dejar de seguir ahora, lo sentimos",
+    "pin": "Fijar",
+    "unpin": "Desfijar",
+    "pinSuccess": "Fijado con éxito",
+    "unpinSuccess": "Desfijado con éxito",
+    "whatsapp": "Conectar s Whatsapp",
+    "following": "!Siguiendo!",
+    "whenExplain": "Especifica la fecha",
+    "placeHodlerCustomAddress": "Escribe un nuevo nombre y selecciona el lugar sobre el mapa",
+    "publishComment": "Publicar comentario"
   },
   "calendarOnce": {
     "label": "Una vez",
@@ -473,7 +492,7 @@
     "sendPublic": "Responder",
     "sendPrivate": "Responder en privado",
     "send": "Enviar",
-    "posted": "Comment posted"
+    "posted": "Comentario publicado"
   },
   "picker": {
     "headerText": "Elige una localización"
@@ -490,7 +509,9 @@
     "recurring": "Evento recurrente",
     "multipleExplain": "Selecciona el día y la hora para tus eventos",
     "onceExplain": "Selecciona el día y la hora para tu evento",
-    "recurringExplain": "Selecciona días de inicio y final, días de la semana y la hora para tus eventos"
+    "recurringExplain": "Selecciona días de inicio y final, días de la semana y la hora para tus eventos",
+    "afterStart": "Por favor selecciona una fecha/hora posterior a {0}",
+    "beforeEnd": "Por favor selecciona una fecha/hora anterior a {0}"
   },
   "faqs": {
     "title": "Preguntas frecuentes",
@@ -517,8 +538,10 @@
     "contactDescription": "Si quieres comunicar con los gestores de la página, acude a la sección de Inicio. Si quieres ponerte en contacto con los programadores que hacen posible la app, por favor, dirige tus preguntas al siguiente correo electrónico: help@helpbuttons.org",
     "cookiesQuestion": "Cookies policy",
     "cookiesDescription": "Este sitio utiliza cookies para ofrecer una experiencia segura y personalizada. A continuación, se describe el uso específico de cada cookie: 1. ACCESS_TOKEN (access_token): Esta cookie almacena de forma segura tu token de acceso, permitiéndote permanecer conectado durante la sesión sin necesidad de reautenticación. Tipo: Esencial Duración: Basada en la sesión 2. TOKEN_TYPE (token_type): Se usa para identificar el tipo de token de acceso que estás utilizando, garantizando una autenticación y seguridad adecuadas. Tipo: Esencial Duración: Basada en la sesión 3. NETWORK_SELECTED (network_id): Almacena información sobre la red seleccionada que estás utilizando en nuestra plataforma, ofreciendo una experiencia personalizada según tu elección. Tipo: Funcionalidad Duración: Basada en la sesión 4. EXPLORE_SETTINGS (explore_settings): Guarda tus preferencias y configuraciones en la función de exploración, haciendo que tu experiencia de navegación sea más consistente y personalizada. Tipo: Funcionalidad Duración: Persistente 5. HAS_PERMISSION_NOTIFICATIONS (has_permission_notifications): Registra si has dado permiso para recibir notificaciones, permitiéndonos mostrar u ocultar notificaciones según tu preferencia. Tipo: Preferencia Duración: Persistente Puedes gestionar la configuración de cookies a través de las preferencias de tu navegador. ",
-    "cookiesExplanation": "This site uses cookies only when you log in. For more details, see our ",
-    "cookieAccept": "Accept"
+    "cookiesExplanation": "Este sitio utiliza cookies. Para más detalles, consulta nuestra ",
+    "cookieAccept": "Aceptar",
+    "cookiesPolicy": "Política de Cookies",
+    "cookieReject": "Rechazar"
   },
   "invite": {
     "never": "Nunca",
@@ -543,7 +566,8 @@
   "customFields": {
     "priceLabel": "Precio ({0})",
     "consult": "Precio a consultar",
-    "free": "Gratis"
+    "free": "Gratis",
+    "priceExplain": "Especifica un valor. Usa 0 si es gratis o seleciona Precio a Consultar si es variable."
   },
   "email": {
     "loginTokenContent": "Bienvenido a {0}",
@@ -578,7 +602,7 @@
     "deactivate": "Desactivar",
     "remove": "Borrar",
     "actions": "Acciones",
-    "role": "Role",
+    "role": "Rol",
     "usersList": "Usuarios",
     "emptyButtonList": "No hay _helpbuttons_ para ser aprobados",
     "buttonsList": "Lista de aprobación de _helpbuttons_",
@@ -593,7 +617,8 @@
     "confirm": "confirmar",
     "adminCommunication": "Comunicaciones de administrador",
     "adminCommunicationLabel": "Comunicaciones de administradores",
-    "adminCommunicationExplain": "Mensajes que envíes a través de este formulario serán notificados a todos los usuarios de la Red."
+    "adminCommunicationExplain": "Mensajes que envíes a través de este formulario serán notificados a todos los usuarios de la Red.",
+    "edit": "Editar"
   },
   "roles": {
     "blocked": "bloqueado",
@@ -602,10 +627,10 @@
     "guest": "invitado"
   },
   "notificaction": {
-    "markedAsRead": ""
+    "markedAsRead": "Marcado como leído"
   },
   "bulletin": {
-    "since": "Since {0}",
+    "since": "Desde {0}",
     "filter": "",
     "noButtons": ""
   },

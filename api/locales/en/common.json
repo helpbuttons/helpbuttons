@@ -80,7 +80,7 @@
     "read": "No messages yet",
     "from": "From",
     "privateBadge": "private",
-    "activitiesHistory": "Historial de actividades",
+    "activitiesHistory": "Activity list",
     "said": "said",
     "noMoreMessages": "There are no more messages",
     "noMoreNotifications": "There are no more notifications"
@@ -100,7 +100,7 @@
     "both": "Map & List",
     "list": "List",
     "map": "Map",
-    "hiddenButtons": "For privacy, some _helpbuttons_ are hidden."
+    "hiddenButtons": "For privacy, there are {0} hidden _helpbuttons_."
   },
   "buttonFilters": {
     "filters": "Search filters",
@@ -110,8 +110,8 @@
     "queryExplain": "Specify whatever you want to find",
     "queryPlaceHolder": "Type here the words",
     "followTag": "Notify me about",
-    "where": "Where ?",
-    "whereExplain": "Search the place you want or click the icon to check your location.",
+    "where": "Where do you search?",
+    "whereExplain": "Filter by distance to a specific location",
     "distance": "Search Distance",
     "allButtonTypes": "All types",
     "types": "Filter by _helpbuttons_ types",
@@ -190,7 +190,9 @@
     "myhelpbuttons": "My _helpbuttons_",
     "deletebutton": "{0} was deleted",
     "expiredEventType": "_helpbutton_ ended",
-    "expiredEventTitle": "'{0}' has passed its end date, it won't show no more on the public list."
+    "expiredEventTitle": "'{0}' has passed its end date, it won't show no more on the public list.",
+    "endorsed": "You have been endorsed by the administration, now you have a 'trusted' badge on your profile",
+    "revokeEndorse": "Unfortunately you're 'trusted' badge has been removed"
   },
   "activitiesWithSubject": {
     "newbutton": "{0} published a new _helpbutton_ in {1}",
@@ -276,7 +278,7 @@
     "pin": "Pin",
     "unpin": "Unpin",
     "pinSuccess": "Success pin",
-    "unpinSuccess":"Sucess unpin",
+    "unpinSuccess": "Sucess unpin",
     "followErrorAlert": "Can`t follow now, sorry",
     "unfollowErrorAlert": "Can`t unfollow now, sorry",
     "extraOptions": "Extra editing options",
@@ -285,7 +287,7 @@
     "whatsapp": "Connect in Whatsapp",
     "followme": "Follow for news",
     "following": "following!",
-    "seeHashtags":"See tags",
+    "seeHashtags": "See tags",
     "publishComment": "Publish comment",
     "placeHodlerCustomAddress": "Write the new name and select place on the map",
     "sendPrivateMessage": "Send private message to {0}"
@@ -382,10 +384,12 @@
     "commentsAmount": "Commented",
     "signupSuccess": "Your signup was sucessful! Welcome to {0} ",
     "deletedAccount": "Your data was deleted sucessfuly!",
-    "pleaseAcceptCookies": "You have to accept the usage of cookies if you wish to signup or login"
+    "pleaseAcceptCookies": "You have to accept the usage of cookies if you wish to signup or login",
+    "endorse": "Endorse",
+    "revokeEndorse": "Withdraw endorsement",
+    "endorsed": "Trusted"
   },
   "picker": {
-    
     "headerText": "Choose a location"
   },
   "eventType": {
@@ -400,7 +404,10 @@
     "recurring": "Recurring Dates",
     "multipleExplain": "Select the days and a time for your events",
     "onceExplain": "Select date and time for your event",
-    "recurringExplain": "Select starting and finish dates, days of the week and time"
+    "recurringExplain": "Select starting and finish dates, days of the week and time",
+    "afterStart": "Please select a time/date after {0}",
+    "beforeEnd": "Please select a time/date after {0}",
+    "changeToMultipleDates": "Do you want the event to be multiple days?"
   },
   "validation": {
     "fieldRequired": "{0} is required.",
@@ -418,7 +425,7 @@
     "inviteOnly": "Invite only network",
     "address": "Error getting address",
     "dates": "Invalid dates, the end date time should not be before the start",
-    "invalidMimeType": ""
+    "invalidMimeType": "Invalid mime type"
   },
   "post": {
     "comment": "comment",
@@ -439,7 +446,7 @@
     "sendPublic": "Answer",
     "sendPrivate": "Answer privately",
     "send": "Send",
-    "makePublic":"Show message in public"
+    "makePublic": "Show message in public"
   },
   "configuration": {
     "config": "Advanced options",
@@ -503,7 +510,10 @@
     "nomeclaturePluralPlaceHolder": "",
     "setType": "Set _helpbutton_ type properties",
     "addType": "+ Create _helpbutton_ type",
-    "areaPicked": "Center: ({0},{1}) zoom: {2}"
+    "areaPicked": "Center: ({0},{1}) zoom: {2}",
+    "hideLocationByDefaultLabel": "Exact location protection",
+    "hideLocationByDefaultExplain": "Protect exact location in _helpbuttons_ by showing a wide area, users can deactivate this individually.",
+    "hideLocationByDefaultText": "Hide exact location by default"
   },
   "configure": {
     "browsePins": "",
@@ -626,7 +636,7 @@
     "edit": "Edit"
   },
   "roles": {
-    "blocked": "Blocked",
+    "blocked": "blocked",
     "administrator": "administrator",
     "registered": "registered",
     "guest": "guest"
@@ -641,7 +651,7 @@
     "noButtons": ""
   },
   "notificaction": {
-    "markedAsRead": ""
+    "markedAsRead": "Marked as read"
   },
   "places": {
     "addNew": "",
