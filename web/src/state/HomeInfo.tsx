@@ -70,8 +70,17 @@ export class SetMainPopupCurrentButton implements UpdateEvent {
   public update(state: GlobalState) {
     return produce(state, (newState) => {
       newState.homeInfo.mainPopupPage = MainPopupPage.HIDE;
-      newState.homeInfo.mainPopupButton = this.button;
+      
       newState.homeInfo.mainPopupUserProfile = null;
+      
+      if(state.homeInfo.pageName == 'Explore')
+      {
+        newState.homeInfo.mainPopupButton = null;
+        newState.explore.currentButton = this.button;
+        newState.explore.settings.center = [this.button.latitude,this.button.longitude]
+      }else{
+        newState.homeInfo.mainPopupButton = this.button;
+      }
     });
   }
 }
