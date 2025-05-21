@@ -547,6 +547,24 @@ function ExploreHexagonMap({toggleShowLeftColumn, exploreSettings, selectedNetwo
     
   }, [boundsFilteredButtons, exploreSettings.zoom])
 
+  const {menu, events} = useMapLongPress()
+
+  return ( 
+    <div className='index__explore-map-wrapper' {...events}>
+      {menu}
+
+    <HexagonExploreMap
+        exploreSettings={exploreSettings}
+        h3TypeDensityHexes={h3TypeDensityHexes}
+        handleBoundsChange={handleBoundsChange}
+        selectedNetwork={selectedNetwork}
+        countFilteredButtons={countFilteredButtons}
+      /></div>)
+}
+
+
+const useMapLongPress = () => {
+
   const [startLongPress, setStartLongPress] = useState(false);
   const [showLongPressMenu, setShowLongPressMenu] = useState(false)
   useEffect(() => {
@@ -564,37 +582,32 @@ function ExploreHexagonMap({toggleShowLeftColumn, exploreSettings, selectedNetwo
   }, [startLongPress]);
 
   const events = {
-    onMouseDown: () => setStartLongPress(true),
+    onMouseDown: (e) => {setStartLongPress(true); console.log(e.pageX); console.log(e.pageY)},
     onMouseUp: () => setStartLongPress(false),
     onMouseLeave: () => setStartLongPress(false),
     onTouchStart: () => setStartLongPress(true),
     onTouchEnd: () => setStartLongPress(false)
   }
 
-  return ( 
-    <div className='index__explore-map-wrapper' {...events}>
-      {showLongPressMenu && 
-      
-        <div className='index__explore-map-menu-overflow'>
-          <div className="card-button__dropdown-container">
-          <div className="card-button__dropdown-arrow"></div>
-            <div className="card-button__dropdown-content" id="listid">
-            <CardSubmenuOption
-                onClick={() => {
-                  router.push(`/ButtonNew`);
-                }}
-                label={t('explore.create')}
-              />
-            </div>
-        </div>
-        
-        </div>}
+  // ? ({
+  //   '--network-background-color':
+  //     selectedNetwork.backgroundColor,
+  //   '--network-text-color': selectedNetwork.textColor,
+  // } as React.CSSProperties)
 
-    <HexagonExploreMap
-        exploreSettings={exploreSettings}
-        h3TypeDensityHexes={h3TypeDensityHexes}
-        handleBoundsChange={handleBoundsChange}
-        selectedNetwork={selectedNetwork}
-        countFilteredButtons={countFilteredButtons}
-      /></div>)
+  const menu = (<>{showLongPressMenu && <div className='index__explore-map-menu-overflow'>
+    <div className="card-button__dropdown-container">
+      <div className="card-button__dropdown-arrow"></div>
+      <div className="card-button__dropdown-content" id="listid">
+        <CardSubmenuOption
+          onClick={() => {
+            router.push(`/ButtonNew`);
+          }}
+          label={t('explore.create')}
+        />
+      </div>
+    </div>
+
+  </div>}</>)
+  return {events, menu}
 }
