@@ -256,7 +256,7 @@
     "textReceiveNotifications": "Recibir notificaciones por email",
     "receiveNotifications": "Notificaciones por email",
     "receiveNotificationsExplain": "Selecciona si quieres recibir notificaciones por email cuando algún usuario te escriba algún mensaje o se publique algo sobre _helpbuttons_ o temas que sigues",
-    "unsubscribed": "No vas a recibir mas este tipo de emails",
+    "unsubscribed": "No recibirás más este tipo de emails",
     "showButtonsProfileLabel": "Contenido en tu página de perfil",
     "showButtonsProfileExplain": "Marca esta opción si quieres mostrar una lista pública de tus _helpbuttons_ en tu página de perfil",
     "showButtons": "Mostrar mis _helpbuttons_ en mi pagina de perfil",
@@ -627,7 +627,7 @@
     "guest": "invitado"
   },
   "notificaction": {
-    "markedAsRead": ""
+    "markedAsRead": "Marcado como leído"
   },
   "bulletin": {
     "since": "Desde {0}",

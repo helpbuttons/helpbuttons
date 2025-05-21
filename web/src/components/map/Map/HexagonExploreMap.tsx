@@ -206,7 +206,7 @@ export default function HexagonExploreMap({
                     key={`currentButtonHexagon}`}
                     styleCallback={(feature, hover) => {
                       return {
-                        fill: 'red',
+                        fill: '#18AAD2',
                         opacity: '0.4',
                       };
                     }}
