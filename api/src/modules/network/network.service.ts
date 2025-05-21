@@ -93,6 +93,7 @@ export class NetworkService {
             createDto.logo,
           );
         } catch (err) {
+          console.log(err)
           throw new ValidationException({ logo: err.message });
         }
 

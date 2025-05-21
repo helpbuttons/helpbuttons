@@ -5,13 +5,13 @@ import { GlobalState } from 'state';
 import { useEffect, useState } from 'react';
 import { useGlobalStore } from 'state';
 
-export default function MetadataSEOFromStore() {
+export default function MetadataSEOFromStore({nonce}) {
   const metadataStore = useGlobalStore(
     (state: GlobalState) => state.metadata,
   );
 
   return (
-    <MetadataSEO {...metadataStore} />
+    <MetadataSEO {...metadataStore} nonce={nonce} />
   );
 }
 export function MetadataSEO(props) {
