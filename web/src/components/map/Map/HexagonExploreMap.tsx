@@ -3,6 +3,7 @@ import { GeoJson, GeoJsonFeature, Marker, Overlay, Point } from 'pigeon-maps';
 import { GlobalState, store, useGlobalStore } from 'state';
 import {
   RecenterExplore,
+  SetMapClick,
   UpdateHexagonClicked, updateCurrentButton,
 } from 'state/Explore';
 import { HbMap } from '.';
@@ -85,7 +86,8 @@ export default function HexagonExploreMap({
     setCenterBounds(center);
   };
 
-  const onMapClick = () => {
+  const onMapClick = (e) => {
+    store.emit(new SetMapClick(e.latLng))
     store.emit(new UpdateHexagonClicked(null))
   };
 

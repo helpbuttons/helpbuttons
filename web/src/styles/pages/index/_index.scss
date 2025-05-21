@@ -81,7 +81,8 @@ $index-content-left--distance: $grid-max-width;
   display: block;
   padding: $padding-big;
   border-radius: $border-radius-circle;
-
+  left: var(--long-press-menu-x);
+  top: var(--long-press-menu-y);
 }
 
 @media (hover: none) {

@@ -53,6 +53,7 @@ import t from 'i18n';
 import { CardSubmenuOption } from 'components/card/CardSubmenu';
 
 import { replaceUrl } from 'components/uri/builder';
+import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
 
 
 function HoneyComb({ selectedNetwork }) {
@@ -541,25 +542,25 @@ function ExploreHexagonMap({toggleShowLeftColumn, exploreSettings, selectedNetwo
     
     if(exploreSettings.zoom >= showMarkersZoom ){
       setCountFilteredButtons(allHiddenButtons.length)
-    }else{
+    } else {
       setCountFilteredButtons(0)
     }
-    
+
   }, [boundsFilteredButtons, exploreSettings.zoom])
 
-  const {menu, events} = useMapLongPress()
+  const { menu, events } = useMapLongPress()
 
-  return ( 
-    <div className='index__explore-map-wrapper' {...events}>
-      {menu}
+  return (
+    <>{menu}
+      <div className='index__explore-map-wrapper' {...events}>
 
-    <HexagonExploreMap
-        exploreSettings={exploreSettings}
-        h3TypeDensityHexes={h3TypeDensityHexes}
-        handleBoundsChange={handleBoundsChange}
-        selectedNetwork={selectedNetwork}
-        countFilteredButtons={countFilteredButtons}
-      /></div>)
+        <HexagonExploreMap
+          exploreSettings={exploreSettings}
+          h3TypeDensityHexes={h3TypeDensityHexes}
+          handleBoundsChange={handleBoundsChange}
+          selectedNetwork={selectedNetwork}
+          countFilteredButtons={countFilteredButtons}
+        /></div></>)
 }
 
 
@@ -567,6 +568,9 @@ const useMapLongPress = () => {
 
   const [startLongPress, setStartLongPress] = useState(false);
   const [showLongPressMenu, setShowLongPressMenu] = useState(false)
+  const [clickPosition, setClickPosition] = useState([0, 0])
+  const [menuPosition, setMenuPosition] = useState([0, 0])
+  const mapClickCoords = useGlobalStore((state: GlobalState) => state.explore.settings.mapClick)
   useEffect(() => {
     let timerId;
     if (startLongPress) {
@@ -581,33 +585,36 @@ const useMapLongPress = () => {
     };
   }, [startLongPress]);
 
+  useEffect(() => {
+    if (showLongPressMenu) {
+      setMenuPosition(() => [clickPosition[0] + 20, clickPosition[1] - 200])
+    }
+
+  }, [showLongPressMenu])
   const events = {
-    onMouseDown: (e) => {setStartLongPress(true); console.log(e.pageX); console.log(e.pageY)},
+    onMouseDown: (e) => { setStartLongPress(true); setClickPosition([e.pageX, e.pageY]) },
     onMouseUp: () => setStartLongPress(false),
     onMouseLeave: () => setStartLongPress(false),
     onTouchStart: () => setStartLongPress(true),
     onTouchEnd: () => setStartLongPress(false)
   }
 
-  // ? ({
-  //   '--network-background-color':
-  //     selectedNetwork.backgroundColor,
-  //   '--network-text-color': selectedNetwork.textColor,
-  // } as React.CSSProperties)
 
-  const menu = (<>{showLongPressMenu && <div className='index__explore-map-menu-overflow'>
+  const menu = (<>{showLongPressMenu && <div className='index__explore-map-menu-overflow' style={{ '--long-press-menu-x': `${menuPosition[0]}px`, '--long-press-menu-y': `${menuPosition[1]}px` }}>
     <div className="card-button__dropdown-container">
       <div className="card-button__dropdown-arrow"></div>
       <div className="card-button__dropdown-content" id="listid">
-        <CardSubmenuOption
-          onClick={() => {
-            router.push(`/ButtonNew`);
-          }}
-          label={t('explore.create')}
+        {t('explore.create')}
+        <Btn
+          btnType={BtnType.submit}
+          contentAlignment={ContentAlignment.center}
+          caption={t('common.publish')}
+          onClick={() => router.push(`/ButtonNew/${mapClickCoords[0]}/${mapClickCoords[1]}`)}
+          submit={false}
         />
       </div>
     </div>
 
   </div>}</>)
-  return {events, menu}
+  return { events, menu }
 }

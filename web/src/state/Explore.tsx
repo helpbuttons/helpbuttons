@@ -50,6 +50,7 @@ export interface ExploreSettings {
   hexagonHighlight: string;
   viewMode: ExploreViewMode;
   urlUpdated: boolean;
+  mapClick: number[];
 }
 
 export const exploreSettingsDefault: ExploreSettings = {
@@ -64,6 +65,7 @@ export const exploreSettingsDefault: ExploreSettings = {
   hexagonHighlight: null,
   viewMode: ExploreViewMode.LIST,
   urlUpdated: false,
+  mapClick: [0,0]
 };
 export interface ExploreMapState {
   filters: ButtonFilters;
@@ -652,6 +654,16 @@ export class UpdateExploreViewMode implements UpdateEvent {
   public update(state: GlobalState) {
     return produce(state, (newState) => {
       newState.explore.settings.viewMode = this.viewMode
+    });
+  }
+}
+
+export class SetMapClick implements UpdateEvent {
+  public constructor(private latLng: number[]) { }
+
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      newState.explore.settings.mapClick = roundCoords(this.latLng)
     });
   }
 }

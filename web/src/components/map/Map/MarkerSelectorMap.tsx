@@ -89,7 +89,7 @@ export default function MarkerViewMap({
   return (
     <>
       <div className="picker__map">
-        <LoadabledComponent loading={!mapCenter}>
+        <LoadabledComponent loading={!mapCenter}> 
           <HbMapUncontrolled
             mapCenter={mapCenter}
             mapZoom={zoom}

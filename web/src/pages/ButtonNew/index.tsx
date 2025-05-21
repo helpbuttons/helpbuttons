@@ -47,7 +47,7 @@ export const onButtonValidationError = (err, setError) => {
   }
 };
 
-function ButtonNewForm({ selectedNetwork }) {
+export function ButtonNewForm({ selectedNetwork, center = null }) {
   const defaultValues = {
     image: null,
     description: '',
