@@ -31,7 +31,8 @@ export default function HexagonExploreMap({
   handleBoundsChange,
   exploreSettings,
   selectedNetwork,
-  countFilteredButtons
+  countFilteredButtons,
+  showMarkerOnClicked = false
 }) {
   const [centerBounds, setCenterBounds] = useState<Point>(null);
   const [geoJsonFeatures, setGeoJsonFeatures] = useState([])
@@ -58,6 +59,8 @@ export default function HexagonExploreMap({
   const filtersByLocation = useGlobalStore(
     (state: GlobalState) => state.explore.map.filters.where
   );
+
+  const mapClickCoords = useGlobalStore((state: GlobalState) => state.explore.settings.mapClick)
 
   const currentButton = useGlobalStore((state: GlobalState) => state.explore.currentButton)
 
@@ -325,10 +328,18 @@ export default function HexagonExploreMap({
                 anchor={[currentButton.latitude, currentButton.longitude]}
                 offset={[35, 65]}
                 button={currentButton}
-                handleMarkerClicked={() => {}}
+                handleMarkerClicked={() => { }}
                 color={currentButtonType.cssColor}
               />
             }
+            {showMarkerOnClicked &&
+              <Marker
+                width={50}
+                anchor={mapClickCoords}
+                color={'grey'}
+              />
+            }
+
             {/* draw go to center icon */}
             <Overlay
               anchor={[100, 100]}

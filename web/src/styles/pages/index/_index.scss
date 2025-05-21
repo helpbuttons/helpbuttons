@@ -81,6 +81,7 @@ $index-content-left--distance: $grid-max-width;
   display: block;
   padding: $padding-big;
   border-radius: $border-radius-circle;
+  /** comment for overlay in pigeon-maps **/
   left: var(--long-press-menu-x);
   top: var(--long-press-menu-y);
 }

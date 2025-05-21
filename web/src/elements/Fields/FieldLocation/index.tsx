@@ -9,7 +9,7 @@ import t from 'i18n';
 import { roundCoord, roundCoords } from 'shared/honeycomb.utils';
 import { FieldCheckbox } from '../FieldCheckbox';
 import PickerField from 'components/picker/PickerField';
-import { markerFocusZoom, minZoom } from 'components/map/Map/Map.consts';
+import { markerFocusZoom, showMarkersZoom } from 'components/map/Map/Map.consts';
 import { useGeoReverse } from './location.helpers';
 import { IoLocation, IoLocationOutline, IoLocationSharp, IoSearchOutline } from 'react-icons/io5';
 import LocationSearchBar from 'elements/LocationSearchBar';
@@ -88,7 +88,6 @@ export default function FieldLocation({
     setIsLoading(() => true)
     if (latLng[0] && latLng[1]) {
       getLatLngAddress(latLng, false, (place) => {
-        dconsole.log('gettings place... ', place)
         setPickedAddress(() => place.formatted)
         setIsLoading(() => false)
       },
@@ -106,15 +105,15 @@ export default function FieldLocation({
     }
   }, [isCustomAddress])
 
-  useQueryLocation((latLng) => {
+  useQueryLocation((latLng, _zoom) => {
     getLatLngAddress(latLng, false, (place) => {
       const address = place.formatted;
       setMarkerAddress(address)
       setLatitude(latLng[0])
       setLongitude(latLng[1])
       setPickedAddress(() => address)
-      setPickedPosition(() => latLng)
-      setZoom(() => markerFocusZoom)
+      setPickedPosition(() => roundCoords(latLng))
+      setZoom(() => Number(_zoom))
       setIsLoading(() => false)
     },
     (error) => {
@@ -218,11 +217,11 @@ export function LocationCoordinates({
 
 const useQueryLocation = (saveLocation) => {
   const router = useRouter();
-  const { lat, lng } = router.query;
+  const { lat, lng, zoom } = router.query;
   useEffect(() => {
     if(lat && lng)
     {
-      saveLocation([lat,lng])
+      saveLocation([lat,lng], zoom)
     }
   }, [router])
   

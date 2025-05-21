@@ -43,7 +43,6 @@ export class GeoFindAddress implements WatchEvent {
       if(found)
       {
         dconsole.log('hit')
-        dconsole.log(found)
         this.onReady(found.response)
         return of(undefined);
       }

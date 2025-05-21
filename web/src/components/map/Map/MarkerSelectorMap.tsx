@@ -32,7 +32,7 @@ export default function MarkerViewMap({
 }) {
   const [markerHexagonGeoJson, setMarkerHexagonGeoJson] =
     useState(null);
-  const [mapCenter, setMapCenter] = useState(null);
+  const [mapCenter, setMapCenter] = useState(pickedPosition);
   const mapCenterIsReady = useRef(false);
   const onBoundsChanged = ({ center, zoom, bounds, initial }) => {
     setZoom(() => zoom);
@@ -89,7 +89,6 @@ export default function MarkerViewMap({
   return (
     <>
       <div className="picker__map">
-        <LoadabledComponent loading={!mapCenter}> 
           <HbMapUncontrolled
             mapCenter={mapCenter}
             mapZoom={zoom}
@@ -125,7 +124,6 @@ export default function MarkerViewMap({
               />
             )}
           </HbMapUncontrolled>
-        </LoadabledComponent>
       </div>
     </>
   );
