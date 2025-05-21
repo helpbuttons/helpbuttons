@@ -385,7 +385,7 @@
     "pleaseAcceptCookies": "You have to accept the usage of cookies if you wish to signup or login",
     "endorse": "Endorse",
     "revokeEndorse": "Withdraw endorsement",
-    "endorsed": "trusted"
+    "endorsed": "Trusted"
   },
   "picker": {
     "headerText": "Choose a location"
@@ -423,7 +423,7 @@
     "inviteOnly": "Invite only network",
     "address": "Error getting address",
     "dates": "Invalid dates, the end date time should not be before the start",
-    "invalidMimeType": ""
+    "invalidMimeType": "Invalid mime type"
   },
   "post": {
     "comment": "comment",
@@ -649,7 +649,7 @@
     "noButtons": ""
   },
   "notificaction": {
-    "markedAsRead": ""
+    "markedAsRead": "Marked as read"
   },
   "places": {
     "addNew": "",
