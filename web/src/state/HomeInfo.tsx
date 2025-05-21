@@ -40,6 +40,7 @@ export class SetMainPopup implements UpdateEvent {
     return produce(state, (newState) => {
       newState.homeInfo.mainPopupPage = this.newPage;
       newState.homeInfo.mainPopupButton = null;
+      newState.explore.currentButton = null;
       newState.homeInfo.mainPopupUserProfile = null;
     });
   }
@@ -72,15 +73,13 @@ export class SetMainPopupCurrentButton implements UpdateEvent {
       newState.homeInfo.mainPopupPage = MainPopupPage.HIDE;
       
       newState.homeInfo.mainPopupUserProfile = null;
-      
-      if(state.homeInfo.pageName == 'Explore')
-      {
-        newState.homeInfo.mainPopupButton = null;
-        newState.explore.currentButton = this.button;
-        newState.explore.settings.center = [this.button.latitude,this.button.longitude]
-      }else{
-        newState.homeInfo.mainPopupButton = this.button;
-      }
+      newState.explore.currentButton = this.button;
+      newState.homeInfo.mainPopupButton = this.button;
+      if(state.homeInfo.pageName == 'Explore' && this.button)
+        {
+          newState.homeInfo.mainPopupButton = null;
+          newState.explore.settings.center = [this.button.latitude,this.button.longitude]
+        }
     });
   }
 }
