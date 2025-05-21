@@ -131,7 +131,7 @@ function InnerNotificationCard({
           <div className="avatar-medium">
             <ImageWrapper
               imageType={ImageType.avatarMed}
-              src={image ? image : sessionUser.avatar}
+              src={image ? image : sessionUser?.avatar}
               alt="image"
             />
           </div>
