@@ -100,7 +100,8 @@
     "both": "Map & List",
     "list": "List",
     "map": "Map",
-    "hiddenButtons": "For privacy, there are {0} hidden _helpbuttons_."
+    "hiddenButtons": "For privacy, there are {0} hidden _helpbuttons_.",
+    "create":"Create _helpbutton_ here"
   },
   "buttonFilters": {
     "filters": "Search filters",

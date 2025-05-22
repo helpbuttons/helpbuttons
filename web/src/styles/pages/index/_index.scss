@@ -68,6 +68,33 @@ $index-content-left--distance: $grid-max-width;
 
 }
 
+.index__explore-map-wrapper {
+  width: 100%;
+  height: 100%;
+}
+
+.index__explore-map-menu-overflow {
+
+  position: absolute;
+  z-index: $z-index-03;
+  max-width: 200px;
+  background-color: $color-white;
+  display: flex;
+  flex-wrap: wrap;
+  padding: $padding-small $padding-big ;
+  gap: $padding-small;
+  padding-bottom: $padding-big;
+  border-radius: $border-radius-circle;
+  /** comment for overlay in pigeon-maps **/
+  left: calc(var(--long-press-menu-x) - 120px);
+  top: calc(var(--long-press-menu-y) + 140px);
+  font-size: $font-size-small;
+  line-height: $text-line-height-xsmall;
+  box-shadow: $box-shadow-divs;
+  color: $color-med-gray;
+  
+}
+
 @media (hover: none) {
 
   .index__content-bottom--hide {

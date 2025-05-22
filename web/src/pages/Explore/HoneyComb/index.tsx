@@ -49,7 +49,9 @@ import { ButtonShow } from 'components/button/ButtonShow';
 import { showMarkersZoom } from 'components/map/Map/Map.consts';
 import { applyFiltersHex } from 'components/search/AdvancedFilters/filters.type';
 import { Button } from 'shared/entities/button.entity';
+
 import { replaceUrl } from 'components/uri/builder';
+import { useMapLongPress } from 'components/map/LongPress';
 
 
 function HoneyComb({ selectedNetwork }) {
@@ -263,8 +265,7 @@ function useExploreSettings({
       }
 
       const urlParams = new URLSearchParams(obj);
-      const newUrl = `/Explore/${Math.floor(exploreSettings.zoom)}/${exploreSettings.center[0]
-        }/${exploreSettings.center[1]}/${currentButton ? currentButton.id + '/': ''}${urlParams.size ? '?' + urlParams.toString() : ''}`;
+      const newUrl = `/Explore/${Math.floor(exploreSettings.zoom)}/${exploreSettings.center[0]}/${exploreSettings.center[1]}/${currentButton ? currentButton.id + '/': ''}${urlParams.size ? '?' + urlParams.toString() : ''}`;
         replaceUrl(newUrl)
       }
   }, [exploreSettings, currentButton, filters, currentProfile]);
@@ -539,17 +540,25 @@ function ExploreHexagonMap({toggleShowLeftColumn, exploreSettings, selectedNetwo
     
     if(exploreSettings.zoom >= showMarkersZoom ){
       setCountFilteredButtons(allHiddenButtons.length)
-    }else{
+    } else {
       setCountFilteredButtons(0)
     }
-    
+
   }, [boundsFilteredButtons, exploreSettings.zoom])
 
-  return (<HexagonExploreMap
-            exploreSettings={exploreSettings}
-            h3TypeDensityHexes={h3TypeDensityHexes}
-            handleBoundsChange={handleBoundsChange}
-            selectedNetwork={selectedNetwork}
-            countFilteredButtons={countFilteredButtons}
-          />)
-  }
+  const { menu, events, location } = useMapLongPress()
+
+  return (
+      
+      <div className='index__explore-map-wrapper' {...events}>
+        <HexagonExploreMap
+          exploreSettings={exploreSettings}
+          h3TypeDensityHexes={h3TypeDensityHexes}
+          handleBoundsChange={handleBoundsChange}
+          selectedNetwork={selectedNetwork}
+          countFilteredButtons={countFilteredButtons}
+          longPressMenu={menu}
+          longPressMenuLocation={location}
+        /></div>)
+}
+

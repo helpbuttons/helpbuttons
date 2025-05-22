@@ -3,12 +3,14 @@ import { GeoJson, GeoJsonFeature, Marker, Overlay, Point } from 'pigeon-maps';
 import { GlobalState, store, useGlobalStore } from 'state';
 import {
   RecenterExplore,
+  SetMapClick,
   UpdateHexagonClicked, updateCurrentButton,
 } from 'state/Explore';
 import { HbMap } from '.';
 import {
   convertH3DensityToFeatures,
-  getZoomResolution} from 'shared/honeycomb.utils';
+  getZoomResolution,
+} from 'shared/honeycomb.utils';
 import _ from 'lodash';
 import { buttonColorStyle, useButtonType } from 'shared/buttonTypes';
 import Loading from 'components/loading';
@@ -30,7 +32,9 @@ export default function HexagonExploreMap({
   handleBoundsChange,
   exploreSettings,
   selectedNetwork,
-  countFilteredButtons
+  countFilteredButtons,
+  longPressMenu = null,
+  longPressMenuLocation = null
 }) {
   const [centerBounds, setCenterBounds] = useState<Point>(null);
   const [geoJsonFeatures, setGeoJsonFeatures] = useState([])
@@ -57,6 +61,8 @@ export default function HexagonExploreMap({
   const filtersByLocation = useGlobalStore(
     (state: GlobalState) => state.explore.map.filters.where
   );
+
+  const mapClickCoords = useGlobalStore((state: GlobalState) => state.explore.settings.mapClick)
 
   const currentButton = useGlobalStore((state: GlobalState) => state.explore.currentButton)
 
@@ -85,7 +91,8 @@ export default function HexagonExploreMap({
     setCenterBounds(center);
   };
 
-  const onMapClick = () => {
+  const onMapClick = (e) => {
+    store.emit(new SetMapClick(e.latLng))
     store.emit(new UpdateHexagonClicked(null))
   };
 
@@ -323,9 +330,30 @@ export default function HexagonExploreMap({
                 anchor={[currentButton.latitude, currentButton.longitude]}
                 offset={[35, 65]}
                 button={currentButton}
-                handleMarkerClicked={() => {}}
+                handleMarkerClicked={() => { }}
                 color={currentButtonType.cssColor}
               />
+            }
+            {longPressMenu &&
+
+              <Marker
+                width={50}
+                anchor={mapClickCoords}
+                color={'black'}
+              />
+            } 
+            
+            {longPressMenu &&
+              <Overlay
+                anchor={mapClickCoords}
+                offset={[100,150]}
+              >{longPressMenuLocation}</Overlay>
+            }
+            {longPressMenu &&
+              <Overlay
+                anchor={mapClickCoords}
+                offset={[100, 80]}
+              >{longPressMenu}</Overlay>
             }
             {/* draw go to center icon */}
             <Overlay

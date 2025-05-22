@@ -162,7 +162,7 @@ export function roundCoords(point) {
 
 export function roundCoord(number :number):number
 {
-  return (Math.floor(number * 10000000) / 10000000)
+  return (Math.floor(number * 10000) / 10000)
 }
 
 export function convertH3DensityToFeatures(hexagones) {

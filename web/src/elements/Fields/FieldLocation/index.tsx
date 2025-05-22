@@ -9,11 +9,12 @@ import t from 'i18n';
 import { roundCoord, roundCoords } from 'shared/honeycomb.utils';
 import { FieldCheckbox } from '../FieldCheckbox';
 import PickerField from 'components/picker/PickerField';
-import { minZoom } from 'components/map/Map/Map.consts';
+import { markerFocusZoom, showMarkersZoom } from 'components/map/Map/Map.consts';
 import { useGeoReverse } from './location.helpers';
 import { IoLocation, IoLocationOutline, IoLocationSharp, IoSearchOutline } from 'react-icons/io5';
 import LocationSearchBar from 'elements/LocationSearchBar';
 import dconsole from 'shared/debugger';
+import { useRouter } from 'next/router';
 
 
 export default function FieldLocation({
@@ -87,7 +88,6 @@ export default function FieldLocation({
     setIsLoading(() => true)
     if (latLng[0] && latLng[1]) {
       getLatLngAddress(latLng, false, (place) => {
-        dconsole.log('gettings place... ', place)
         setPickedAddress(() => place.formatted)
         setIsLoading(() => false)
       },
@@ -105,15 +105,37 @@ export default function FieldLocation({
     }
   }, [isCustomAddress])
 
+  useQueryLocation((latLng, _zoom) => {
+    getLatLngAddress(latLng, false, (place) => {
+      const address = place.formatted;
+      setMarkerAddress(address)
+      setLatitude(latLng[0])
+      setLongitude(latLng[1])
+      setPickedAddress(() => address)
+      setPickedPosition(() => roundCoords(latLng))
+      setZoom(() => Number(_zoom))
+      setIsLoading(() => false)
+    },
+    (error) => {
+      const address = t('button.unknownPlace')
+      setMarkerAddress(address)
+      setLatitude(latLng[0])
+      setLongitude(latLng[1])
+      setPickedPosition(() => latLng)
+      setZoom(() => markerFocusZoom)
+      setIsLoading(() => false)
+    })
+  })
+
   return <PickerField
     iconLink={<IoLocationOutline />}
     showPopup={showPopup}
     validationError={validationError}
     label={t('button.whereLabel')}
     btnLabel={
-      markerPosition ? <LocationCoordinates
-        latitude={markerPosition[0]}
-        longitude={markerPosition[1]}
+      pickedPosition ? <LocationCoordinates
+        latitude={pickedPosition[0]}
+        longitude={pickedPosition[1]}
         address={markerAddress}
         label={label}
       /> : t('button.whereLabel')
@@ -190,4 +212,17 @@ export function LocationCoordinates({
       )}
     </>
   );
+}
+
+
+const useQueryLocation = (saveLocation) => {
+  const router = useRouter();
+  const { lat, lng, zoom } = router.query;
+  useEffect(() => {
+    if(lat && lng)
+    {
+      saveLocation([lat,lng], zoom)
+    }
+  }, [router])
+  
 }
