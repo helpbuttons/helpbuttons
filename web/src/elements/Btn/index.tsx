@@ -210,7 +210,7 @@ export function BtnAction({ icon, onClick }) {
   );
 }
 
-export function BtnCaption({ caption, icon, onClick, color }) {
+export function BtnCaption({ caption, icon, onClick, color, disabled}) {
   const cssColor = (cssColor: string) => {
     return { '--button-color': cssColor } as React.CSSProperties;
   };
@@ -221,6 +221,7 @@ export function BtnCaption({ caption, icon, onClick, color }) {
         btnType={BtnType.filterEmoji}
         iconLeft={IconType.svg}
         iconLink={icon}
+        disabled={disabled}
         caption={caption}
         onClick={onClick}
       />
