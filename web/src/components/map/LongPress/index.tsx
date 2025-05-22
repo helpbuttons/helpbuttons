@@ -59,9 +59,11 @@ export const useMapLongPress = () => {
         />
     </div>) : null
 
-    const location = (<div><LocationCoordinates
-          latitude={mapClickCoords[0]}
-          longitude={mapClickCoords[1]}
+    const location = (
+        <div className="card-long-press">
+        <LocationCoordinates
+          latitude={!address ? mapClickCoords[0] : ''}
+          longitude={!address ? mapClickCoords[1] : ''}
           address={address}
           label={''}
         /></div>)

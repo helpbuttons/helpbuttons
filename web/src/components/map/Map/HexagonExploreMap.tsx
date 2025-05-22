@@ -346,7 +346,7 @@ export default function HexagonExploreMap({
             {longPressMenu &&
               <Overlay
                 anchor={mapClickCoords}
-                offset={[100, 100]}
+                offset={[100,150]}
               >{longPressMenuLocation}</Overlay>
             }
             {longPressMenu &&
