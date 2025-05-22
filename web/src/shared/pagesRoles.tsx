@@ -10,6 +10,7 @@ export const allowedPathsPerRole =
             '/Faqs',
             '/',
             '/ButtonNew',
+            '/ButtonNew/:zoom/:lat/:lng',
             '/Show/:btn',
             '/Explore',
             '/Explore/:zoom/:lat/:lng',

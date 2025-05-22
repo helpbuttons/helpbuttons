@@ -11,71 +11,59 @@ export const useMapLongPress = () => {
 
     const [startLongPress, setStartLongPress] = useState(false);
     const [showLongPressMenu, setShowLongPressMenu] = useState(false)
-    const [clickPosition, setClickPosition] = useState([0, 0])
-    const [menuPosition, setMenuPosition] = useState([0, 0])
     const mapClickCoords = useGlobalStore((state: GlobalState) => state.explore.settings.mapClick)
     const zoom = useGlobalStore((state: GlobalState) => state.explore.settings.zoom)
     const [address, setAddress] = useState(null)
+
     useEffect(() => {
-      let timerId;
-      if (startLongPress) {
-        setShowLongPressMenu(() => false)
-        timerId = setTimeout(() => { setShowLongPressMenu(() => true) }, 500);
-      } else {
-        clearTimeout(timerId);
-      }
-  
-      return () => {
-        clearTimeout(timerId);
-      };
+        let timerId;
+        if (startLongPress) {
+            setShowLongPressMenu(() => false)
+            timerId = setTimeout(() => { setShowLongPressMenu(() => true) }, 500);
+        } else {
+            clearTimeout(timerId);
+        }
+
+        return () => {
+            clearTimeout(timerId);
+        };
     }, [startLongPress]);
-  
+
     useEffect(() => {
-      if (showLongPressMenu) {
-        setMenuPosition(() => [clickPosition[0] + 20, clickPosition[1] - 380])
-      }
-      if(!showLongPressMenu)
-      {
-        setAddress(() => null)
-      }
+        if (!showLongPressMenu) {
+            setAddress(() => null)
+        }
     }, [showLongPressMenu])
     const events = {
-      onMouseDown: (e) => { setStartLongPress(true); setClickPosition([e.pageX, e.pageY]) },
-      onMouseUp: () => setStartLongPress(false),
-      onMouseLeave: () => setStartLongPress(false),
-      onTouchStart: () => setStartLongPress(true),
-      onTouchEnd: () => setStartLongPress(false)
+        onMouseDown: (e) => { if(e.target.tagName != 'BUTTON') {setStartLongPress(true); }},
+        onMouseUp: () => setStartLongPress(false),
+        onMouseLeave: () => setStartLongPress(false),
+        onTouchStart: () => setStartLongPress(true),
+        onTouchEnd: () => setStartLongPress(false),
     }
-  
+
     const findGeoReverse = useGeoReverse();
     useEffect(() => {
-      if(showLongPressMenu)
-      {
-        findGeoReverse(mapClickCoords, false, (place) => {setAddress(() => place.formatted)}, () => alertService.error('unknown place'))
-      }
+        if (showLongPressMenu) {
+            findGeoReverse(mapClickCoords, false, (place) => { setAddress(() => place.formatted) }, () => alertService.error('unknown place'))
+        }
     }, [mapClickCoords])
-    
-  
-  
-    const menu = (<>{showLongPressMenu && <div className='index__explore-map-menu-overflow' style={{ '--long-press-menu-x': `${menuPosition[0]}px`, '--long-press-menu-y': `${menuPosition[1]}px` }}>
-        
-          
-          <Btn
+
+    const menu = showLongPressMenu ? (<div>
+        <Btn
             btnType={BtnType.submit}
             contentAlignment={ContentAlignment.center}
             caption={t('explore.create')}
             onClick={() => router.push(`/ButtonNew/${zoom}/${mapClickCoords[0]}/${mapClickCoords[1]}`)}
             submit={false}
-          />
-          <LocationCoordinates
+        />
+    </div>) : null
+
+    const location = (<div><LocationCoordinates
           latitude={mapClickCoords[0]}
           longitude={mapClickCoords[1]}
           address={address}
           label={''}
-        />
-  
-    </div>
-    }
-    </>)
-    return { events, menu,  showMenu: showLongPressMenu}
-  }
+        /></div>)
+    return { events, menu, location }
+}

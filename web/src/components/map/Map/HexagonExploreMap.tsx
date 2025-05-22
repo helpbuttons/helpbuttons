@@ -9,7 +9,8 @@ import {
 import { HbMap } from '.';
 import {
   convertH3DensityToFeatures,
-  getZoomResolution} from 'shared/honeycomb.utils';
+  getZoomResolution,
+} from 'shared/honeycomb.utils';
 import _ from 'lodash';
 import { buttonColorStyle, useButtonType } from 'shared/buttonTypes';
 import Loading from 'components/loading';
@@ -32,7 +33,8 @@ export default function HexagonExploreMap({
   exploreSettings,
   selectedNetwork,
   countFilteredButtons,
-  showMarkerOnClicked = false
+  longPressMenu = null,
+  longPressMenuLocation = null
 }) {
   const [centerBounds, setCenterBounds] = useState<Point>(null);
   const [geoJsonFeatures, setGeoJsonFeatures] = useState([])
@@ -332,14 +334,27 @@ export default function HexagonExploreMap({
                 color={currentButtonType.cssColor}
               />
             }
-            {showMarkerOnClicked &&
+            {longPressMenu &&
+
               <Marker
                 width={50}
                 anchor={mapClickCoords}
-                color={'grey'}
+                color={'black'}
               />
+            } 
+            
+            {longPressMenu &&
+              <Overlay
+                anchor={mapClickCoords}
+                offset={[100, 100]}
+              >{longPressMenuLocation}</Overlay>
             }
-
+            {longPressMenu &&
+              <Overlay
+                anchor={mapClickCoords}
+                offset={[100, 80]}
+              >{longPressMenu}</Overlay>
+            }
             {/* draw go to center icon */}
             <Overlay
               anchor={[100, 100]}

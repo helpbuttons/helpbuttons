@@ -546,19 +546,19 @@ function ExploreHexagonMap({toggleShowLeftColumn, exploreSettings, selectedNetwo
 
   }, [boundsFilteredButtons, exploreSettings.zoom])
 
-  const { menu, events, showMenu } = useMapLongPress()
+  const { menu, events, location } = useMapLongPress()
 
   return (
-    <>{menu}
+      
       <div className='index__explore-map-wrapper' {...events}>
-
         <HexagonExploreMap
           exploreSettings={exploreSettings}
           h3TypeDensityHexes={h3TypeDensityHexes}
           handleBoundsChange={handleBoundsChange}
           selectedNetwork={selectedNetwork}
           countFilteredButtons={countFilteredButtons}
-          showMarkerOnClicked={showMenu}
-        /></div></>)
+          longPressMenu={menu}
+          longPressMenuLocation={location}
+        /></div>)
 }
 
