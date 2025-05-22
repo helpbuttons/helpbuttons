@@ -25,19 +25,25 @@ export function ListButtonTypes() {
   const [types, setTypes] = useState([]);
   useEffect(() => {
     if (buttonTypes) {
+
       setTypes(() => {
-        return buttonTypes.map((buttonType) => {
-          const typeCount = selectedNetwork.buttonTypesCount.find(
-            (buttonTypeCount) =>
-              buttonTypeCount.type == buttonType.name,
-          )?.count;
-          return {
-            ...buttonType,
-            caption: `${buttonType.caption} ${typeCount ? typeCount : 0}`,
-            selected: false,
-          }
-        });
+      return buttonTypes.map((buttonType) => {
+        const typeCount = selectedNetwork.buttonTypesCount.find(
+          (buttonTypeCount) =>
+            buttonTypeCount.type == buttonType.name,
+        )?.count;
+
+        const disabled = !typeCount;
+
+        return {
+          ...buttonType,
+          caption: `${buttonType.caption}`,
+          selected: false,
+          disabled,
+        }
       });
+    });
+
     }
   }, [buttonTypes]);
 
@@ -73,17 +79,20 @@ export function ListButtonTypes() {
 
 export function BtnButtonType({ type, onClick = (type) => { } }) {
   return (
-    <BtnCaption
-      caption={`${type.caption}`}
-      // caption={`${type.caption} ${type.selected ? '!': ''}`}
-      icon={type?.icon}
-      color={type.cssColor}
-      onClick={() =>
-        onClick(type.name)
-      }
-    />
+      <BtnCaption
+        caption={`${type.caption}`}
+        // caption={`${type.caption} ${type.selected ? '!': ''}`}
+        icon={type?.icon}
+        color={type.cssColor}
+        disabled={type.disabled}
+        onClick={() =>
+          onClick(type.name)
+        }
+      />
   );
 }
+
+
 
 export function FieldMultiSelectButtonTypes({ selectedTypes, types, handleChange }) {
   return (<FieldMultiSelect
