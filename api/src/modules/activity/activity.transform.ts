@@ -1,7 +1,8 @@
-import { ActivityEventName } from '@src/shared/types/activity.list';
-import { Activity } from './activity.entity';
-import translate, { readableDate } from '@src/shared/helpers/i18n.helper';
-import { PrivacyType } from '@src/shared/types/privacy.enum';
+import { ActivityEventName } from '@src/shared/types/activity.list.js';
+import { Activity } from './activity.entity.js';
+import translate, { readableDate } from '@src/shared/helpers/i18n.helper.js';
+import { PrivacyType } from '@src/shared/types/privacy.enum.js';
+import { getAction } from './activity.types.js';
 
 export const transformToMessage = (
   activity: Activity,
@@ -160,6 +161,10 @@ export const transformToMessage = (
             referenceId: button.id,
           };
     }
+    case ActivityEventName.RoleUpdate:
+    case ActivityEventName.Endorsed:
+    case ActivityEventName.RevokeEndorsed:
+      return getAction(activity.eventName).transform(locale, activityOut, activity)
     default: {
       console.log(
         activity.eventName +
@@ -171,7 +176,7 @@ export const transformToMessage = (
 
   }catch(err)
   {
-    console.log(activity)
+    console.log(activity.eventName)
     console.trace()  
     console.error(err)
     return null;

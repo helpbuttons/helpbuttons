@@ -2,8 +2,8 @@ import {
   MailerOptions,
   MailerOptionsFactory,
 } from '@nestjs-modules/mailer';
-import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
-import configs from '@src/config/configuration';
+import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter.js';
+import configs from '@src/config/configuration.js';
 
 export class MailerModuleConfig implements MailerOptionsFactory {
   constructor(
@@ -42,7 +42,7 @@ export class MailerModuleConfig implements MailerOptionsFactory {
         from: configs().from,
       },
       template: {
-        dir: __dirname + '/templates',
+        dir: `${process.platform === 'win32' ? '' : '/'}${/file:\/{2,3}(.+)\/[^/]/.exec(import.meta.url)![1]}` + '/templates',
         adapter: new HandlebarsAdapter(helpers),
         options: {
           strict: true,
@@ -50,7 +50,7 @@ export class MailerModuleConfig implements MailerOptionsFactory {
       },
       options: {
         partials: {
-          dir: __dirname + '/templates/partials',
+          dir: `${process.platform === 'win32' ? '' : '/'}${/file:\/{2,3}(.+)\/[^/]/.exec(import.meta.url)![1]}` + '/templates/partials',
           options: {
             strict: true,
           },

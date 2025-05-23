@@ -1,19 +1,19 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post } from "@nestjs/common";
 import { ApiTags } from "@nestjs/swagger";
-import { CurrentUser } from "@src/shared/decorator/current-user";
-import { AllowGuest, OnlyRegistered } from "@src/shared/decorator/roles.decorator";
-import { CustomHttpException } from "@src/shared/middlewares/errors/custom-http-exception.middleware";
-import { ErrorName } from "@src/shared/types/error.list";
-import { ButtonService } from "../button/button.service";
-import { User } from "../user/user.entity";
-import { CommentService } from "./comment.service";
-import { MessageDto } from "./post.dto";
-import { PostService } from "./post.service";
-import { ActivityEventName } from "@src/shared/types/activity.list";
-import { notifyUser } from "@src/app/app.event";
+import { CurrentUser } from "@src/shared/decorator/current-user.js";
+import { AllowGuest, OnlyRegistered } from "@src/shared/decorator/roles.decorator.js";
+import { CustomHttpException } from "@src/shared/middlewares/errors/custom-http-exception.middleware.js";
+import { ErrorName } from "@src/shared/types/error.list.js";
+import { ButtonService } from "../button/button.service.js";
+import { User } from "../user/user.entity.js";
+import { CommentService } from "./comment.service.js";
+import { MessageDto } from "./post.dto.js";
+import { PostService } from "./post.service.js";
+import { ActivityEventName } from "@src/shared/types/activity.list.js";
+import { notifyUser } from "@src/app/app.event.js";
 import { EventEmitter2 } from "@nestjs/event-emitter";
-import { Role } from "@src/shared/types/roles";
-import { PrivacyType } from "@src/shared/types/privacy.enum";
+import { Role } from "@src/shared/types/roles.js";
+import { PrivacyType } from "@src/shared/types/privacy.enum.js";
 
 @ApiTags('post')
 @Controller('post')

@@ -144,6 +144,14 @@ $card-alert-icon-size: 30px;
     }
   }
 
+.cookies-banner__buttons {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  gap: $padding-big;
+
+}
+
 
 @media #{$breakpoints-medium} {
 

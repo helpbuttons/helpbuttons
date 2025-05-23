@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { ButtonService } from '../button/button.service';
-import { ActivityService } from '../activity/activity.service';
-import { CommentService } from '../post/comment.service';
-import { PostService } from '../post/post.service';
-import { UserService } from '../user/user.service';
+import { ButtonService } from '../button/button.service.js';
+import { ActivityService } from '../activity/activity.service.js';
+import { CommentService } from '../post/comment.service.js';
+import { PostService } from '../post/post.service.js';
+import { UserService } from '../user/user.service.js';
 
 @Injectable()
 export class DeletemeService {

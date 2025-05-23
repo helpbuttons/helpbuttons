@@ -1,12 +1,12 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { uuid } from "@src/shared/helpers/uuid.helper";
+import { uuid } from "@src/shared/helpers/uuid.helper.js";
 import { Repository } from "typeorm";
-import { User } from "../user/user.entity";
-import { Comment } from "./comment.entity";
-import { PostService } from "./post.service";
-import { PrivacyType } from "@src/shared/types/privacy.enum";
-import { StorageService } from "../storage/storage.service";
+import { User } from "../user/user.entity.js";
+import { Comment } from "./comment.entity.js";
+import { PostService } from "./post.service.js";
+import { PrivacyType } from "@src/shared/types/privacy.enum.js";
+import { StorageService } from "../storage/storage.service.js";
 
 @Injectable()
 export class CommentService {

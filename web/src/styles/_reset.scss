@@ -78,8 +78,17 @@ td {
   -webkit-hyphenate-limit-after:1;
   -webkit-hyphenate-limit-before:3;
   -moz-hyphens:auto;
+  -webkit-tap-highlight-color: transparent;
+
 }
 
+button {
+  color: $color-black;
+}
+
+select {
+  color: $color-black;
+}
 
 /* remember to define focus styles! */
 :focus {

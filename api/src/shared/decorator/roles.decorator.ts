@@ -1,7 +1,7 @@
 import { applyDecorators, ClassSerializerInterceptor, SetMetadata, UseGuards, UseInterceptors } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
-import { Role } from "../types/roles";
-import { Auth } from "./auth.decorator";
+import { Role } from "../types/roles.js";
+import { Auth } from "./auth.decorator.js";
 
 export const AllowedRoles = (roles: Role[]) => SetMetadata('roles', roles)
 

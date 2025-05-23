@@ -44,7 +44,9 @@
     "latestActivity": "Azken jarduerak",
     "installButton": "Instalatu",
     "powered": "Powered by",
-    "featured": "Featured"
+    "featured": "Featured",
+    "share": "Share options",
+    "install": "Install {0} and receive notifications:"
   },
   "feed": {
     "write": "Idatzi mezu bat",
@@ -58,7 +60,11 @@
     "markMessagesAsRead": "Mark all as read",
     "nounread": "No unread messages",
     "noMoreMessages": "There are no more messages",
-    "said": "said"
+    "said": "said",
+    "unreadMessages": "Unread messages",
+    "readMessages": "Read messages",
+    "read": "No messages yet",
+    "activitiesHistory": "Historial de actividades"
   },
   "hostname": "host izena",
   "common": {
@@ -138,7 +144,11 @@
     "addType": "+ Sortu goiko eremuak dituen _helpbutton_ mota",
     "currencyLabel": "Moneta",
     "setType": "Set _helpbutton_ type properties",
-    "buttonTemplatePlaceHolder": "Write your _helpbutton_ type name here"
+    "buttonTemplatePlaceHolder": "Write your _helpbutton_ type name here",
+    "sloganExplain": "This is a short slogan that welcomes people to your network",
+    "hideLocationByDefaultExplain": "Protect exact location in _helpbuttons_ by showing a wide area, users can deactivate this individually.",
+    "areaPicked": "Center: ({0},{1}) zoom: {2}",
+    "zoomLevel": "Zoom level"
   },
   "activities": {
     "allNotifications": "Aldaketa guztiak",
@@ -166,7 +176,8 @@
     "myhelpbuttons": "Nire _helpbuttons_",
     "expiredEventType": "_helpbutton_ amaituta",
     "expiredEventTitle": "'{0}' amaiera-data {1} egunean gainditu du, ez da jendaurrean gehiago erakutsiko.",
-    "notifications": "Notifications"
+    "notifications": "Notifications",
+    "messages": "Messages"
   },
   "activitiesWithSubject": {
     "newbutton": "{0}ek _helpbutton_ argitaratu du {1}",
@@ -253,9 +264,17 @@
     "pressToAccept": "Egin klik hemen onartzeko",
     "iAccept": "Onartzen dut",
     "pleaseAcceptPrivacy": "Mesedez, onartu gure pribatutasun politika",
-    "loginError": "",
+    "loginError": "Failed to login, please try again or contact the admin",
     "errorRequestNewLoginToken": "",
-    "myHelpbuttons": "Your _helpbuttons_"
+    "myHelpbuttons": "Your _helpbuttons_",
+    "pleaseAcceptCookies": "You have to accept the usage of cookies if you wish to signup or login",
+    "helpbuttonsPublishedAmount": "Published",
+    "revokeEndorse": "Withdraw endorsement",
+    "usernameWillBe": "Your username will be ",
+    "hidePassword": "Hide Password",
+    "deletedAccount": "Your data was deleted sucessfuly!",
+    "signupSuccess": "Your signup was sucessful! Welcome to {0} ",
+    "showWassapExplain": "Show a link to your whatsapp app if you want. You need to have public phone enabled."
   },
   "configure": {
     "browsePins": "Mapa kokapen pinen bidez",
@@ -276,7 +295,8 @@
     "both": "Mapa & Zerrenda",
     "list": "Zerrenda",
     "map": "Mapa",
-    "showList": "Show List"
+    "showList": "Show List",
+    "hiddenButtons": "For privacy, there are {0} hidden _helpbuttons_."
   },
   "buttonFilters": {
     "filters": "Bilatu eta iragazi",
@@ -363,13 +383,18 @@
     "createUpdate": "Argitaratu berritasuna",
     "authorTitle": "Egilea:",
     "notFound": "Ezin dut zure botoia aurkitu, ezabatuta izan daiteke?",
-    "invalidDates": "",
-    "followErrorAlert": "",
-    "unfollowErrorAlert": "",
+    "invalidDates": "Check date and/or hour",
+    "followErrorAlert": "Can`t follow now, sorry",
+    "unfollowErrorAlert": "Can`t unfollow now, sorry",
     "pin": "Pineatu",
     "unpin": "Unpineatu",
     "pinSuccess": "Pin arrakastaztatsua",
-    "unpinSuccess":"Unpin arrakastaztatsua"
+    "unpinSuccess": "Unpin arrakastaztatsua",
+    "whatsapp": "Connect in Whatsapp",
+    "following": "following!",
+    "whenExplain": "Specify the date",
+    "placeHodlerCustomAddress": "Write the new name and select place on the map",
+    "publishComment": "Publish comment"
   },
   "calendarOnce": {
     "label": "Behin",
@@ -453,7 +478,9 @@
     "recurring": "Ekitaldi errepikakorra",
     "multipleExplain": "Aukeratu zure ekitaldien eguna eta ordua",
     "onceExplain": "Aukeratu zure ekitaldiaren eguna eta ordua",
-    "recurringExplain": "Aukeratu hasiera eta amaiera egun, aste-egunak eta zure ekitaldien ordua"
+    "recurringExplain": "Aukeratu hasiera eta amaiera egun, aste-egunak eta zure ekitaldien ordua",
+    "afterStart": "Please select a time/date after {0}",
+    "beforeEnd": "Please select a time/date after {0}"
   },
   "faqs": {
     "title": "Ohiko galderak",
@@ -480,7 +507,9 @@
     "contactDescription": "Orriaren arduradunekin harremanetan jarri nahi baduzu, joan Hasiera atalera. Aplikazioa posible egiten duten programatzaileekin harremanetan jarri nahi baduzu, bidali zure galderak hurrengo helbide elektronikora mesedez: help@helpbuttons.org",
     "cookiesExplanation": "This site uses cookies only when you log in. For more details, see our ",
     "cookieAccept": "Accept",
-    "cookiesQuestion": "Cookies policy"
+    "cookiesQuestion": "Cookies policy",
+    "cookiesPolicy": "Cookie Policy",
+    "cookieReject": "Reject"
   },
   "invite": {
     "never": "Inoiz ez",
@@ -505,7 +534,8 @@
   "customFields": {
     "priceLabel": "Prezioa ({0})",
     "consult": "Kontsultatu prezioa",
-    "free": "Doan"
+    "free": "Doan",
+    "priceExplain": "Specify a value. Use 0 if it's free or select Price to consult if it's not exactly defined."
   },
   "email": {
     "loginTokenContent": "Ongi etorri {0}-ra",
@@ -522,7 +552,7 @@
     "eachMonthFrom": "hilean behin",
     "until": "arte",
     "of": "tik",
-    "the": "",
+    "the": "The",
     "each": "Bakoitz",
     "from": "tik",
     "at": "tik aurrera"
@@ -551,10 +581,12 @@
     "awaitingApproval": "_helpbutton_ moderazio zerrendara gehitu da, mesedez itxaron administratzaile batek onartzea",
     "created_at": "Sortua",
     "title": "",
-    "created": "",
     "confirm": "Confirm",
     "adminCommunication": "Administrator communications",
-    "adminCommunicationExplain": "Messages that you share here will be send to all admins or all users of the network"
+    "adminCommunicationExplain": "Messages that you share here will be send to all admins or all users of the network",
+    "description": "Here you can review the users of your network, and the buttons!",
+    "adminCommunicationLabel": "Administrator communications",
+    "edit": "Edit"
   },
   "role": {
     "blocked": "desaktibatuta",
@@ -580,7 +612,11 @@
     "optionIframe": "List Iframe to insert in other sites",
     "optionInvitations": "Printable invitations",
     "shareTypeExplain": "Choose the type of share you want to do",
-    "share": ""
+    "share": "",
+    "header": "Share this app",
+    "optionBulletin": "Printable bulletin",
+    "shareTypeLabel": "Sharing types",
+    "explainInvitations": "Generate individual invitation cards for your community"
   },
   "places": {
     "addNew": "",
@@ -590,5 +626,8 @@
   "seo": {
     "embbed": "",
     "buttonEdit": ""
+  },
+  "roles": {
+    "administrator": "administrator"
   }
 }

@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { uuid } from '@src/shared/helpers/uuid.helper';
+import { uuid } from '@src/shared/helpers/uuid.helper.js';
 import { Repository } from 'typeorm';
-import { Tag } from './tag.entity';
-import { tagify } from '@src/shared/helpers/tagify.helper';
+import { Tag } from './tag.entity.js';
+import { tagify } from '@src/shared/helpers/tagify.helper.js';
 
 @Injectable()
 export class TagService {

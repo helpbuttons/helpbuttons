@@ -1,19 +1,19 @@
 import { Injectable } from '@nestjs/common';
-import { MailService } from '../mail/mail.service';
+import { MailService } from '../mail/mail.service.js';
 import { Cron } from '@nestjs/schedule';
 import {
   InjectEntityManager,
   InjectRepository,
 } from '@nestjs/typeorm';
-import { Activity } from './activity.entity';
+import { Activity } from './activity.entity.js';
 import { EntityManager, Repository } from 'typeorm';
-import { ActivityEventName } from '@src/shared/types/activity.list';
+import { ActivityEventName } from '@src/shared/types/activity.list.js';
 import translate, {
   readableDate,
-} from '@src/shared/helpers/i18n.helper';
-import { UserService } from '../user/user.service';
-import { getUrl } from '@src/shared/helpers/mail.helper';
-import { NetworkService } from '../network/network.service';
+} from '@src/shared/helpers/i18n.helper.js';
+import { UserService } from '../user/user.service.js';
+import { getUrl } from '@src/shared/helpers/mail.helper.js';
+import { NetworkService } from '../network/network.service.js';
 
 const outboxConditions = `created_at between now() - INTERVAL '2 day' AND now()`;
 @Injectable()

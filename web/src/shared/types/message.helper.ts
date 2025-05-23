@@ -1,4 +1,4 @@
-export const userPattern = /(\s@[\w]+)/gi;
+export const userPattern = /@[\w]+/gi;
 export function mentionsOfMessage(message, username) {
   const matches = message.match(userPattern);
   if (!matches) {

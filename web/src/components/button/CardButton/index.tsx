@@ -541,6 +541,7 @@ export function CardButtonAuthorSection({ button }) {
     e.preventDefault()
     if(sessionUser?.id == button.owner.id)
     {
+      store.emit(new SetMainPopupCurrentProfile(null))
       router.push('/Profile', undefined, {shallow: true})
     }else{
       store.emit(new SetMainPopupCurrentProfile(button.owner))

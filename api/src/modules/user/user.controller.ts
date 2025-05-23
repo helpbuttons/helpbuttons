@@ -1,14 +1,17 @@
 import { Body, Controller, Get, Param, Post, Request } from '@nestjs/common';
-import { UserService } from './user.service';
+import { UserService } from './user.service.js';
 import { ApiTags } from '@nestjs/swagger';
-import { AllowGuest, OnlyAdmin, OnlyRegistered } from '@src/shared/decorator/roles.decorator';
-import { Role } from '@src/shared/types/roles';
-import { CurrentUser } from '@src/shared/decorator/current-user';
-import { User, UserExtended } from './user.entity';
-import { InviteService } from '../invite/invite.service';
-import { InviteCreateDto } from '../invite/invite.dto';
+import { AllowGuest, OnlyAdmin, OnlyRegistered } from '@src/shared/decorator/roles.decorator.js';
+import { Role } from '@src/shared/types/roles.js';
+import { CurrentUser } from '@src/shared/decorator/current-user.js';
+import { User, UserExtended } from './user.entity.js';
+import { InviteService } from '../invite/invite.service.js';
+import { InviteCreateDto } from '../invite/invite.dto.js';
 import { plainToClass } from 'class-transformer';
-import { nomailString } from '../auth/auth.service';
+import { nomailString } from '../auth/auth.service.js';
+import { notifyUser } from '@src/app/app.event.js';
+import { ActivityEventName } from '@src/shared/types/activity.list.js';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 
 @ApiTags('User')
 @Controller('users')
@@ -16,6 +19,7 @@ export class UserController {
   constructor(
     private readonly userService: UserService,
     private readonly inviteService: InviteService,
+    private eventEmitter: EventEmitter2,
   ) {}
 
   @OnlyRegistered()
@@ -59,8 +63,11 @@ export class UserController {
 
   @OnlyAdmin()
   @Post('/updateRole/:userId/:role')
-  async updateRole(@Param('userId') userId: string, @Param('role') role: Role) {
-    return await this.userService.updateRole(userId, role);
+  updateRole(@CurrentUser() sessionUser: User, @Param('userId') userId: string, @Param('role') role: Role) {
+    return this.userService.updateRole(userId, role).then((user) => {
+      notifyUser(this.eventEmitter,ActivityEventName.RoleUpdate, {user, sessionUser, role: role})
+      return user;
+    })
   }
 
   @OnlyAdmin()
@@ -98,14 +105,19 @@ export class UserController {
 
   @OnlyAdmin()
   @Get('endorse/:userId')
-  endorse(@Param('userId') userId: string) {
-    return this.userService.endorse(userId);
+  endorse(@CurrentUser() sessionUser: User, @Param('userId') userId: string) {
+    return this.userService.endorse(userId)
+    .then((user) => {
+      notifyUser(this.eventEmitter,ActivityEventName.Endorsed, {user, sessionUser})
+    });
   }
 
 
   @OnlyAdmin()
   @Get('revokeEndorse/:userId')
-  untrust(@Param('userId') userId: string) {
-    return this.userService.revokeEndorse(userId);
+  untrust(@CurrentUser() sessionUser: User, @Param('userId') userId: string) {
+    return this.userService.revokeEndorse(userId).then((user) => {
+      notifyUser(this.eventEmitter,ActivityEventName.RevokeEndorsed, {user, sessionUser})
+    });
   }
 }

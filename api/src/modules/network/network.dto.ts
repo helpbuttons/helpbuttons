@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Network } from './network.entity';
+import { Network } from './network.entity.js';
 import {
   IsNumber,
   MinLength,
@@ -13,9 +13,9 @@ import {
 } from 'class-validator';
 import { PartialType } from '@nestjs/swagger';
 import { Column } from 'typeorm';
-import { User } from '../user/user.entity';
-import { PrivacyType } from "@src/shared/types/privacy.enum";
-import { ButtonTemplate } from '../button/button.dto';
+import { User } from '../user/user.entity.js';
+import { PrivacyType } from "@src/shared/types/privacy.enum.js";
+import { ButtonTemplate } from '../button/button.dto.js';
 
 // https://github.com/typestack/class-validator
 

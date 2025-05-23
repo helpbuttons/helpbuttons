@@ -44,7 +44,9 @@
     "latestActivity": "Últimes activitats",
     "installButton": "Instal·lar",
     "powered": "Powered by",
-    "featured": "Featured"
+    "featured": "Featured",
+    "share": "Share options",
+    "install": "Install {0} and receive notifications:"
   },
   "feed": {
     "write": "Escriure missatge",
@@ -58,7 +60,11 @@
     "markMessagesAsRead": "Mark all as read",
     "nounread": "No unread messages",
     "noMoreMessages": "There are no more messages",
-    "said": "said"
+    "said": "said",
+    "unreadMessages": "Unread messages",
+    "readMessages": "Read messages",
+    "read": "No messages yet",
+    "activitiesHistory": "Historial de actividades"
   },
   "hostname": "nom de l'amfitrió",
   "common": {
@@ -138,7 +144,11 @@
     "addType": "+ Crear tipus de _helpbutton_ amb els camps superiors",
     "currencyLabel": "Divisa",
     "setType": "Set _helpbutton_ type properties",
-    "buttonTemplatePlaceHolder": "Write your _helpbutton_ type name here"
+    "buttonTemplatePlaceHolder": "Write your _helpbutton_ type name here",
+    "sloganExplain": "This is a short slogan that welcomes people to your network",
+    "hideLocationByDefaultExplain": "Protect exact location in _helpbuttons_ by showing a wide area, users can deactivate this individually.",
+    "areaPicked": "Center: ({0},{1}) zoom: {2}",
+    "zoomLevel": "Zoom level"
   },
   "activities": {
     "allNotifications": "Totes les actualitzacions",
@@ -166,7 +176,8 @@
     "myhelpbuttons": "Els meus _helpbuttons_",
     "expiredEventType": "_helpbutton_ va finalitzar",
     "expiredEventTitle": "'{0}' ha superat la data de finalització el dia {1}, no apareixerà més a la llista pública.",
-    "notifications": "Notifications"
+    "notifications": "Notifications",
+    "messages": "Messages"
   },
   "activitiesWithSubject": {
     "newbutton": "{0} ha publicat un _helpbutton_ a {1}",
@@ -253,9 +264,17 @@
     "pressToAccept": "Prem aquí per acceptar",
     "iAccept": "Accepto",
     "pleaseAcceptPrivacy": "Si us plau, accepta la nostra política de privadesa",
-    "loginError": "",
+    "loginError": "Failed to login, please try again or contact the admin",
     "errorRequestNewLoginToken": "",
-    "myHelpbuttons": "Your _helpbuttons_"
+    "myHelpbuttons": "Your _helpbuttons_",
+    "pleaseAcceptCookies": "You have to accept the usage of cookies if you wish to signup or login",
+    "helpbuttonsPublishedAmount": "Published",
+    "revokeEndorse": "Withdraw endorsement",
+    "usernameWillBe": "Your username will be ",
+    "hidePassword": "Hide Password",
+    "deletedAccount": "Your data was deleted sucessfuly!",
+    "signupSuccess": "Your signup was sucessful! Welcome to {0} ",
+    "showWassapExplain": "Show a link to your whatsapp app if you want. You need to have public phone enabled."
   },
   "configure": {
     "browsePins": "Mapa amb pins de ubicació",
@@ -276,7 +295,8 @@
     "both": "Mapa & Llista",
     "list": "Llista",
     "map": "Mapa",
-    "showList": "Show List"
+    "showList": "Show List",
+    "hiddenButtons": "For privacy, there are {0} hidden _helpbuttons_."
   },
   "buttonFilters": {
     "filters": "Cerca i filtres",
@@ -363,13 +383,18 @@
     "createUpdate": "Publicar Novetat",
     "authorTitle": "Autor:",
     "notFound": "No puc trobar el teu botó, potser va ser esborrat?",
-    "invalidDates": "",
-    "followErrorAlert": "",
-    "unfollowErrorAlert": "",
+    "invalidDates": "Check date and/or hour",
+    "followErrorAlert": "Can`t follow now, sorry",
+    "unfollowErrorAlert": "Can`t unfollow now, sorry",
     "pin": "Pin",
     "unpin": "Unpin",
     "pinSuccess": "Pin satisfactori",
-    "unpinSuccess":"Unpin satisfactori"
+    "unpinSuccess": "Unpin satisfactori",
+    "whatsapp": "Connect in Whatsapp",
+    "following": "following!",
+    "whenExplain": "Specify the date",
+    "placeHodlerCustomAddress": "Write the new name and select place on the map",
+    "publishComment": "Publish comment"
   },
   "calendarOnce": {
     "label": "Una vegada",
@@ -453,7 +478,9 @@
     "recurring": "Esdeveniment recurrent",
     "multipleExplain": "Selecciona el dia i l'hora per als teus esdeveniments",
     "onceExplain": "Selecciona el dia i l'hora per al teu esdeveniment",
-    "recurringExplain": "Selecciona dies d'inici i final, dies de la setmana i l'hora per als teus esdeveniments"
+    "recurringExplain": "Selecciona dies d'inici i final, dies de la setmana i l'hora per als teus esdeveniments",
+    "afterStart": "Please select a time/date after {0}",
+    "beforeEnd": "Please select a time/date after {0}"
   },
   "faqs": {
     "title": "Preguntes freqüents",
@@ -480,7 +507,9 @@
     "contactDescription": "Si vols comunicar amb els gestors de la pàgina, acudeix a la secció d'Inici. Si vols posar-te en contacte amb els programadors que fan possible l'aplicació, si us plau, dirigeix les teves preguntes al següent correu electrònic: help@helpbuttons.org",
     "cookiesExplanation": "This site uses cookies only when you log in. For more details, see our ",
     "cookieAccept": "Accept",
-    "cookiesQuestion": "Cookies policy"
+    "cookiesQuestion": "Cookies policy",
+    "cookiesPolicy": "Cookie Policy",
+    "cookieReject": "Reject"
   },
   "invite": {
     "never": "Mai",
@@ -505,7 +534,8 @@
   "customFields": {
     "priceLabel": "Preu ({0})",
     "consult": "Preu a consultar",
-    "free": "Gratis"
+    "free": "Gratis",
+    "priceExplain": "Specify a value. Use 0 if it's free or select Price to consult if it's not exactly defined."
   },
   "email": {
     "loginTokenContent": "Benvingut a {0}",
@@ -551,10 +581,12 @@
     "awaitingApproval": "_helpbutton_ ha estat afegit a la llista de moderació, si us plau, espera que un administrador l'aprovi",
     "created_at": "Creat",
     "title": "",
-    "created": "",
     "confirm": "Confirm",
     "adminCommunication": "Administrator communications",
-    "adminCommunicationExplain": "Messages that you share here will be send to all admins or all users of the network"
+    "adminCommunicationExplain": "Messages that you share here will be send to all admins or all users of the network",
+    "description": "Here you can review the users of your network, and the buttons!",
+    "adminCommunicationLabel": "Administrator communications",
+    "edit": "Edit"
   },
   "role": {
     "blocked": "desactivat",
@@ -580,7 +612,11 @@
     "optionIframe": "List Iframe to insert in other sites",
     "optionInvitations": "Printable invitations",
     "shareTypeExplain": "Choose the type of share you want to do",
-    "share": ""
+    "share": "",
+    "header": "Share this app",
+    "optionBulletin": "Printable bulletin",
+    "shareTypeLabel": "Sharing types",
+    "explainInvitations": "Generate individual invitation cards for your community"
   },
   "places": {
     "addNew": "",
@@ -590,5 +626,8 @@
   "seo": {
     "embbed": "",
     "buttonEdit": ""
+  },
+  "roles": {
+    "administrator": "administrator"
   }
 }

@@ -1,10 +1,10 @@
 import { ApiTags } from '@nestjs/swagger';
-import { OnlyRegistered } from '@src/shared/decorator/roles.decorator';
+import { OnlyRegistered } from '@src/shared/decorator/roles.decorator.js';
 import { Controller, Get, HttpException, HttpStatus } from '@nestjs/common';
-import { CurrentUser } from '@src/shared/decorator/current-user';
-import { User } from '../user/user.entity';
-import { DeletemeService } from './deleteme.service';
-import { Role } from '@src/shared/types/roles';
+import { CurrentUser } from '@src/shared/decorator/current-user.js';
+import { User } from '../user/user.entity.js';
+import { DeletemeService } from './deleteme.service.js';
+import { Role } from '@src/shared/types/roles.js';
 
 @ApiTags('User')
 @Controller('users')

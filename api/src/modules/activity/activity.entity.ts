@@ -1,6 +1,6 @@
 import {  Column, Entity, ManyToOne, OneToMany, PrimaryColumn } from "typeorm"
-import { BaseEntity } from '@src/shared/types/base.entity';
-import { User } from "../user/user.entity";
+import { BaseEntity } from '@src/shared/types/base.entity.js';
+import { User } from "../user/user.entity.js";
 
 @Entity()
 export class Activity extends BaseEntity {

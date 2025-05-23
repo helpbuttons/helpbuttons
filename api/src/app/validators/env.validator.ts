@@ -7,7 +7,7 @@ import {
   validateSync,
 } from 'class-validator';
 
-import { NodeEnv } from '@src/shared/types';
+import { NodeEnv } from '@src/shared/types/index.js';
 
 class EnvironmentVariables {
   @IsOptional()

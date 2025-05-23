@@ -44,7 +44,9 @@
     "latestActivity": "Últimas atividades",
     "installButton": "Instalar",
     "powered": "Powered by",
-    "featured": "Featured"
+    "featured": "Featured",
+    "share": "Share options",
+    "install": "Install {0} and receive notifications:"
   },
   "feed": {
     "write": "Escrever mensagem",
@@ -58,7 +60,11 @@
     "markMessagesAsRead": "Mark all as read",
     "nounread": "No unread messages",
     "noMoreMessages": "There are no more messages",
-    "said": "said"
+    "said": "said",
+    "unreadMessages": "Unread messages",
+    "readMessages": "Read messages",
+    "read": "No messages yet",
+    "activitiesHistory": "Historial de actividades"
   },
   "hostname": "nome do host",
   "common": {
@@ -138,7 +144,11 @@
     "addType": "+ Criar tipo de _helpbutton_ com os campos acima",
     "currencyLabel": "Moeda",
     "setType": "Set _helpbutton_ type properties",
-    "buttonTemplatePlaceHolder": "Write your _helpbutton_ type name here"
+    "buttonTemplatePlaceHolder": "Write your _helpbutton_ type name here",
+    "sloganExplain": "This is a short slogan that welcomes people to your network",
+    "hideLocationByDefaultExplain": "Protect exact location in _helpbuttons_ by showing a wide area, users can deactivate this individually.",
+    "areaPicked": "Center: ({0},{1}) zoom: {2}",
+    "zoomLevel": "Zoom level"
   },
   "activities": {
     "allNotifications": "Todas as atualizações",
@@ -166,7 +176,8 @@
     "myhelpbuttons": "Meus _helpbuttons_",
     "expiredEventType": "_helpbutton_ expirado",
     "expiredEventTitle": "'{0}' expirou em {1}, não aparecerá mais na lista pública.",
-    "notifications": "Notifications"
+    "notifications": "Notifications",
+    "messages": "Messages"
   },
   "activitiesWithSubject": {
     "newbutton": "{0} publicou um _helpbutton_ em {1}",
@@ -253,9 +264,17 @@
     "pressToAccept": "Clique aqui para aceitar",
     "iAccept": "Eu aceito",
     "pleaseAcceptPrivacy": "Aceite nossa política de privacidade, por favor",
-    "loginError": "",
+    "loginError": "Failed to login, please try again or contact the admin",
     "errorRequestNewLoginToken": "",
-    "myHelpbuttons": "Your _helpbuttons_"
+    "myHelpbuttons": "Your _helpbuttons_",
+    "pleaseAcceptCookies": "You have to accept the usage of cookies if you wish to signup or login",
+    "helpbuttonsPublishedAmount": "Published",
+    "revokeEndorse": "Withdraw endorsement",
+    "usernameWillBe": "Your username will be ",
+    "hidePassword": "Hide Password",
+    "deletedAccount": "Your data was deleted sucessfuly!",
+    "signupSuccess": "Your signup was sucessful! Welcome to {0} ",
+    "showWassapExplain": "Show a link to your whatsapp app if you want. You need to have public phone enabled."
   },
   "configure": {
     "browsePins": "Mapa com pinos de localização",
@@ -276,7 +295,8 @@
     "both": "Mapa & Lista",
     "list": "Lista",
     "map": "Mapa",
-    "showList": "Show List"
+    "showList": "Show List",
+    "hiddenButtons": "For privacy, there are {0} hidden _helpbuttons_."
   },
   "buttonFilters": {
     "filters": "Pesquisa e filtros",
@@ -363,9 +383,16 @@
     "createUpdate": "Publicar Novidade",
     "authorTitle": "Autor:",
     "notFound": "Não consigo encontrar seu botão, talvez tenha sido excluído?",
-    "invalidDates": "",
-    "followErrorAlert": "",
-    "unfollowErrorAlert": ""
+    "invalidDates": "Check date and/or hour",
+    "followErrorAlert": "Can`t follow now, sorry",
+    "unfollowErrorAlert": "Can`t unfollow now, sorry",
+    "pinSuccess": "Success pin",
+    "pin": "Pin",
+    "whatsapp": "Connect in Whatsapp",
+    "following": "following!",
+    "whenExplain": "Specify the date",
+    "placeHodlerCustomAddress": "Write the new name and select place on the map",
+    "publishComment": "Publish comment"
   },
   "calendarOnce": {
     "label": "Uma vez",
@@ -449,7 +476,9 @@
     "recurring": "Evento recorrente",
     "multipleExplain": "Selecione o dia e a hora para seus eventos",
     "onceExplain": "Selecione o dia e a hora para seu evento",
-    "recurringExplain": "Selecione os dias de início e término, os dias da semana e o horário dos seus eventos"
+    "recurringExplain": "Selecione os dias de início e término, os dias da semana e o horário dos seus eventos",
+    "afterStart": "Please select a time/date after {0}",
+    "beforeEnd": "Please select a time/date after {0}"
   },
   "faqs": {
     "title": "Perguntas frequentes",
@@ -476,7 +505,9 @@
     "contactDescription": "Se você deseja se comunicar com os gestores da página, vá até a seção Início. Se você deseja entrar em contato com os programadores que tornam o app possível, por favor, envie suas perguntas para o seguinte e-mail: help@helpbuttons.org",
     "cookiesExplanation": "This site uses cookies only when you log in. For more details, see our ",
     "cookieAccept": "Accept",
-    "cookiesQuestion": "Cookies policy"
+    "cookiesQuestion": "Cookies policy",
+    "cookiesPolicy": "Cookie Policy",
+    "cookieReject": "Reject"
   },
   "invite": {
     "never": "Nunca",
@@ -501,7 +532,8 @@
   "customFields": {
     "priceLabel": "Preço ({0})",
     "consult": "Preço a consultar",
-    "free": "Grátis"
+    "free": "Grátis",
+    "priceExplain": "Specify a value. Use 0 if it's free or select Price to consult if it's not exactly defined."
   },
   "email": {
     "loginTokenContent": "Bem-vindo(a) ao {0}",
@@ -547,10 +579,12 @@
     "awaitingApproval": "_helpbutton_ foi adicionado à lista de moderação, aguarde a aprovação de um administrador",
     "created_at": "Criado",
     "title": "",
-    "created": "",
     "confirm": "Confirm",
     "adminCommunication": "Administrator communications",
-    "adminCommunicationExplain": "Messages that you share here will be send to all admins or all users of the network"
+    "adminCommunicationExplain": "Messages that you share here will be send to all admins or all users of the network",
+    "description": "Here you can review the users of your network, and the buttons!",
+    "adminCommunicationLabel": "Administrator communications",
+    "edit": "Edit"
   },
   "role": {
     "blocked": "desativado",
@@ -576,7 +610,11 @@
     "optionIframe": "List Iframe to insert in other sites",
     "optionInvitations": "Printable invitations",
     "shareTypeExplain": "Choose the type of share you want to do",
-    "share": ""
+    "share": "",
+    "header": "Share this app",
+    "optionBulletin": "Printable bulletin",
+    "shareTypeLabel": "Sharing types",
+    "explainInvitations": "Generate individual invitation cards for your community"
   },
   "places": {
     "addNew": "",
@@ -586,5 +624,8 @@
   "seo": {
     "embbed": "",
     "buttonEdit": ""
+  },
+  "roles": {
+    "administrator": "administrator"
   }
 }

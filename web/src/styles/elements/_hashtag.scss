@@ -42,11 +42,7 @@ $hashtag-color-l-gray: $color-med-gray;
     border: none;
   }
 
-  &--blue {
-    background-color: var(--network-text-color);
-    color: $color-white;
-    border: none;
-  }
+
 
   &--yellow-home {
     background-color: $hashtag-color-black;
@@ -67,6 +63,8 @@ $hashtag-color-l-gray: $color-med-gray;
     }
   }
 
+
+
   & svg {
     // height: 10px;
     // width: 10px;
@@ -75,6 +73,19 @@ $hashtag-color-l-gray: $color-med-gray;
     // padding: $hashtag-padding-xsmall;
     // border-radius: $hashtag-border-radius;
   }
+}
+
+.hashtag--blue {
+  background-color: var(--network-text-color);
+  color: $color-white;
+  border: none;
+
+}
+
+.hashtag--badge {
+  background-color: $color-corporative;
+  color: $color-dark-gray;
+  border: none;
 }
 
 .hashtag--with-icon {

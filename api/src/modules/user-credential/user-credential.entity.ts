@@ -1,6 +1,6 @@
 import { Column, Entity, OneToOne, PrimaryColumn } from 'typeorm';
 
-import { BaseEntity } from '@src/shared/types/base.entity';
+import { BaseEntity } from '@src/shared/types/base.entity.js';
 
 @Entity()
 export class UserCredential extends BaseEntity {
