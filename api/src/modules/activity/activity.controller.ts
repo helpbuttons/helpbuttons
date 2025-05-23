@@ -6,12 +6,12 @@ import {
   Query,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { CurrentUser } from '@src/shared/decorator/current-user';
-import { AllowGuest, OnlyRegistered } from '@src/shared/decorator/roles.decorator';
-import { User } from '../user/user.entity';
-import { ActivityService } from './activity.service';
-import { ActivityCron } from './activity.cron';
-import { ActivityDtoOut, ActivityMessageDto } from './activity.dto';
+import { CurrentUser } from '@src/shared/decorator/current-user.js';
+import { AllowGuest, OnlyRegistered } from '@src/shared/decorator/roles.decorator.js';
+import { User } from '../user/user.entity.js';
+import { ActivityService } from './activity.service.js';
+import { ActivityCron } from './activity.cron.js';
+import { ActivityDtoOut, ActivityMessageDto } from './activity.dto.js';
 
 @ApiTags('activity')
 @Controller('activity')

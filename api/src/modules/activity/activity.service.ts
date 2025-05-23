@@ -4,30 +4,30 @@ import {
   InjectEntityManager,
   InjectRepository,
 } from '@nestjs/typeorm';
-import { uuid } from '@src/shared/helpers/uuid.helper';
-import { ActivityEventName } from '@src/shared/types/activity.list';
+import { uuid } from '@src/shared/helpers/uuid.helper.js';
+import { ActivityEventName } from '@src/shared/types/activity.list.js';
 import { EntityManager, In, Not, Repository } from 'typeorm';
-import { Activity } from './activity.entity';
+import { Activity } from './activity.entity.js';
 
-import { UserService } from '../user/user.service';
-import { MailService } from '../mail/mail.service';
-import translate from '@src/shared/helpers/i18n.helper';
-import { getUrl } from '@src/shared/helpers/mail.helper';
-import { ButtonService } from '../button/button.service';
+import { UserService } from '../user/user.service.js';
+import { MailService } from '../mail/mail.service.js';
+import translate from '@src/shared/helpers/i18n.helper.js';
+import { getUrl } from '@src/shared/helpers/mail.helper.js';
+import { ButtonService } from '../button/button.service.js';
 import {
   getButtonActivity,
   getUserActivity,
   transformToMessage,
-} from './activity.transform';
-import { NetworkService } from '../network/network.service';
-import { ActivityDtoOut, ActivityMessageDto, ExcerptMaxChars } from './activity.dto';
-import { Button } from '../button/button.entity';
-import { User } from '../user/user.entity';
-import { unique } from '@src/shared/helpers/array.helper';
-import { excerpt } from './activity.utils';
-import { Comment } from '../post/comment.entity';
-import { PostService } from '../post/post.service';
-import { getAction } from './activity.types';
+} from './activity.transform.js';
+import { NetworkService } from '../network/network.service.js';
+import { ActivityDtoOut, ActivityMessageDto, ExcerptMaxChars } from './activity.dto.js';
+import { Button } from '../button/button.entity.js';
+import { User } from '../user/user.entity.js';
+import { unique } from '@src/shared/helpers/array.helper.js';
+import { excerpt } from './activity.utils.js';
+import { Comment } from '../post/comment.entity.js';
+import { PostService } from '../post/post.service.js';
+import { getAction } from './activity.types.js';
 
 @Injectable()
 export class ActivityService {

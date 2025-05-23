@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { uuid } from '@src/shared/helpers/uuid.helper';
+import { uuid } from '@src/shared/helpers/uuid.helper.js';
 import { Repository } from 'typeorm';
-import { CreateTemplateButtonDto,UpdateTemplateButtonDto } from './template-button.dto';
-import { TemplateButton } from './template-button.entity';
+import { CreateTemplateButtonDto,UpdateTemplateButtonDto } from './template-button.dto.js';
+import { TemplateButton } from './template-button.entity.js';
 
 @Injectable()
 export class TemplateButtonService {

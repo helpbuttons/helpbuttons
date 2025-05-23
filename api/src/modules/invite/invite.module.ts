@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Invite } from './invite.entity';
-import { InviteService } from './invite.service';
+import { Invite } from './invite.entity.js';
+import { InviteService } from './invite.service.js';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Invite])],

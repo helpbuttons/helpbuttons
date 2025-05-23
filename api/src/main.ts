@@ -4,21 +4,21 @@ import { NestFactory, Reflector } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { initializeTransactionalContext } from 'typeorm-transactional-cls-hooked';
 
-import { AppModule } from '@src/app/app.module';
+import { AppModule } from '@src/app/app.module.js';
 import * as bodyParser from 'body-parser';
 
 // Middleware
-import { HttpExceptionFilter } from './shared/middlewares/errors/global-http-exception-filter.middleware';
+import { HttpExceptionFilter } from './shared/middlewares/errors/global-http-exception-filter.middleware.js';
 import {
   ValidationException,
   ValidationFilter,
-} from './shared/middlewares/errors/validation-filter.middleware';
-import configs from './config/configuration';
-import { GlobalVarHelper } from './shared/helpers/global-var.helper';
-import { checkDatabase } from './shared/helpers/config.helper';
+} from './shared/middlewares/errors/validation-filter.middleware.js';
+import configs from './config/configuration.js';
+import { GlobalVarHelper } from './shared/helpers/global-var.helper.js';
+import { checkDatabase } from './shared/helpers/config.helper.js';
 import { CallHandler, ExecutionContext, Injectable, PlainLiteralObject } from '@nestjs/common';
 import { map, Observable } from 'rxjs';
-import { Role } from './shared/types/roles';
+import { Role } from './shared/types/roles.js';
 
 import helmet from 'helmet';
 

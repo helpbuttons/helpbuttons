@@ -1,4 +1,4 @@
-import { HttpStatus } from './http-status.enum';
+import { HttpStatus } from './http-status.enum.js';
 export interface ErrorText {
     name: ErrorName;
     caption: string;

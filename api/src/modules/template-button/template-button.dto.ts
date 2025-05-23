@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { TemplateButton, TemplateButtonType } from './template-button.entity';
+import { TemplateButton, TemplateButtonType } from './template-button.entity.js';
 import { IsEnum, IsJSON, MinLength } from 'class-validator';
 import { PartialType } from '@nestjs/swagger';
 

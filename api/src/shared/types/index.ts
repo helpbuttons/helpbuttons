@@ -1,1 +1,1 @@
-export { NodeEnv } from './node-env.type';
+export { NodeEnv } from './node-env.type.js';

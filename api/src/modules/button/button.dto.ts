@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Button } from './button.entity';
+import { Button } from './button.entity.js';
 import {
   MinLength,
   IsLatitude,

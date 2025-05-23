@@ -5,38 +5,38 @@ import {
   Injectable,
   UseInterceptors,
 } from '@nestjs/common';
-import { HttpStatus } from '@src/shared/types/http-status.enum';
+import { HttpStatus } from '@src/shared/types/http-status.enum.js';
 
 import {
   InjectEntityManager,
   InjectRepository,
 } from '@nestjs/typeorm';
-import { uuid } from '@src/shared/helpers/uuid.helper';
+import { uuid } from '@src/shared/helpers/uuid.helper.js';
 import { EntityManager, ILike, Repository } from 'typeorm';
-import { TagService } from '../tag/tag.service';
+import { TagService } from '../tag/tag.service.js';
 import {
   CreateNetworkDto,
   NetworkDto,
   UpdateNetworkDto,
-} from './network.dto';
-import { Network } from './network.entity';
+} from './network.dto.js';
+import { Network } from './network.entity.js';
 import { getManager } from 'typeorm';
-import { StorageService } from '../storage/storage.service';
-import { ValidationException } from '@src/shared/middlewares/errors/validation-filter.middleware';
-import { UserService } from '../user/user.service';
-import { isImageData } from '@src/shared/helpers/imageIsFile';
-import { removeUndefined } from '@src/shared/helpers/removeUndefined';
+import { StorageService } from '../storage/storage.service.js';
+import { ValidationException } from '@src/shared/middlewares/errors/validation-filter.middleware.js';
+import { UserService } from '../user/user.service.js';
+import { isImageData } from '@src/shared/helpers/imageIsFile.js';
+import { removeUndefined } from '@src/shared/helpers/removeUndefined.js';
 import {
   CACHE_MANAGER,
   CacheInterceptor,
   CacheKey,
   CacheTTL,
 } from '@nestjs/cache-manager';
-import { updateNomeclature } from '@src/shared/helpers/i18n.helper';
-import { getConfig } from '@src/shared/helpers/config.helper';
-import { SetupDtoOut } from '../setup/setup.entity';
-import configs from '@src/config/configuration';
-import { uploadDir } from '../storage/storage.utils';
+import { updateNomeclature } from '@src/shared/helpers/i18n.helper.js';
+import { getConfig } from '@src/shared/helpers/config.helper.js';
+import { SetupDtoOut } from '../setup/setup.entity.js';
+import configs from '@src/config/configuration.js';
+import { uploadDir } from '../storage/storage.utils.js';
 import { Cache } from 'cache-manager';
 
 @Injectable()

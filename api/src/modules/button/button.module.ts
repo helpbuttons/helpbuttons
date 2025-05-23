@@ -1,16 +1,16 @@
 import { Module, forwardRef } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ButtonService } from './button.service';
-import { ButtonController } from './button.controller';
-import { Button } from './button.entity';
-import { TagModule } from '../tag/tag.module';
-import { NetworkModule } from '../network/network.module';
-import { StorageModule } from '../storage/storage.module';
-import { PostModule } from '../post/post.module';
-import { ButtonCron } from './button.cron';
-import { MailModule } from '../mail/mail.module';
-import { UserModule } from '../user/user.module';
-import { ButtonCommand } from './button.command';
+import { ButtonService } from './button.service.js';
+import { ButtonController } from './button.controller.js';
+import { Button } from './button.entity.js';
+import { TagModule } from '../tag/tag.module.js';
+import { NetworkModule } from '../network/network.module.js';
+import { StorageModule } from '../storage/storage.module.js';
+import { PostModule } from '../post/post.module.js';
+import { ButtonCron } from './button.cron.js';
+import { MailModule } from '../mail/mail.module.js';
+import { UserModule } from '../user/user.module.js';
+import { ButtonCommand } from './button.command.js';
 import { CacheModule } from '@nestjs/cache-manager';
 
 

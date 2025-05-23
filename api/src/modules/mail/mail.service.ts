@@ -1,11 +1,11 @@
 import { MailerService } from '@nestjs-modules/mailer';
 import { Injectable } from '@nestjs/common';
-import { NetworkService } from '../network/network.service';
-import configs from '@src/config/configuration';
+import { NetworkService } from '../network/network.service.js';
+import configs from '@src/config/configuration.js';
 import { Queue } from 'bull';
 import { InjectQueue } from '@nestjs/bull';
-import translate from '@src/shared/helpers/i18n.helper';
-import { getUrl } from '@src/shared/helpers/mail.helper';
+import translate from '@src/shared/helpers/i18n.helper.js';
+import { getUrl } from '@src/shared/helpers/mail.helper.js';
 
 @Injectable()
 export class MailService {

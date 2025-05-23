@@ -1,15 +1,15 @@
-import { Command, Positional, Option } from 'nestjs-command';
+// import { Command, Positional, Option } from 'nestjs-command';
 import { Injectable } from '@nestjs/common';
-import { ActivityCron } from './activity.cron';
+import { ActivityCron } from './activity.cron.js';
 
 @Injectable()
 export class ActivityCommand {
   constructor(private readonly activityCron: ActivityCron) {}
 
-  @Command({
-    command: 'cron:activity:daily',
-    describe: 'show users with pending notifications',
-  })
+  // @Command({
+  //   command: 'cron:activity:daily',
+  //   describe: 'show users with pending notifications',
+  // })
   async cronRemovePastEvents(
     
   ) {

@@ -1,18 +1,18 @@
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { uuid } from '@src/shared/helpers/uuid.helper';
-import { Role } from '@src/shared/types/roles';
+import { uuid } from '@src/shared/helpers/uuid.helper.js';
+import { Role } from '@src/shared/types/roles.js';
 import { Repository } from 'typeorm';
-import { ButtonService } from '../button/button.service';
-import { User } from '../user/user.entity';
-import { Post } from './post.entity';
-import { PrivacyType } from '@src/shared/types/privacy.enum';
+import { ButtonService } from '../button/button.service.js';
+import { User } from '../user/user.entity.js';
+import { Post } from './post.entity.js';
+import { PrivacyType } from '@src/shared/types/privacy.enum.js';
 import translate, {
   readableDate,
-} from '@src/shared/helpers/i18n.helper';
-import { mentionsOfMessage } from '@src/shared/types/message.helper';
-import { UserService } from '../user/user.service';
-import { StorageService } from '../storage/storage.service';
+} from '@src/shared/helpers/i18n.helper.js';
+import { mentionsOfMessage } from '@src/shared/types/message.helper.js';
+import { UserService } from '../user/user.service.js';
+import { StorageService } from '../storage/storage.service.js';
 
 @Injectable()
 export class PostService {

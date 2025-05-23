@@ -7,10 +7,10 @@ import {
     Res,
   } from '@nestjs/common';
   import { ApiTags } from '@nestjs/swagger';
-import { AllowGuest, OnlyAdmin } from '@src/shared/decorator/roles.decorator';
+import { AllowGuest, OnlyAdmin } from '@src/shared/decorator/roles.decorator.js';
   
-  import { CreateNetworkDto, UpdateNetworkDto } from './network.dto';
-  import { NetworkService } from './network.service';
+  import { CreateNetworkDto, UpdateNetworkDto } from './network.dto.js';
+  import { NetworkService } from './network.service.js';
   // import { FilterNetworksOrmDto } from '../dto/requests/filter-networks-orm.dto';
   
   @ApiTags('networks')

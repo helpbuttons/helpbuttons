@@ -8,11 +8,11 @@ import {
   Post,
   UseFilters,
 } from '@nestjs/common';
-import { HttpStatus } from '@src/shared/types/http-status.enum';
+import { HttpStatus } from '@src/shared/types/http-status.enum.js';
 
 import { ApiTags } from '@nestjs/swagger';
-import { SetupDto, SetupDtoOut, SmtpConfigTest } from './setup.entity';
-import { SetupService } from './setup.service';
+import { SetupDto, SetupDtoOut, SmtpConfigTest } from './setup.entity.js';
+import { SetupService } from './setup.service.js';
 
 @ApiTags('setup')
 @Controller('setup')
