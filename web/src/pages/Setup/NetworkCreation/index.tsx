@@ -82,12 +82,7 @@ function NetworkCreation() {
         () => {
           const onComplete = () => {
             alertService.info(t('common.saveSuccess', ['instance']));
-            let url = '/';
-            if(getLocale() !=  data.locale )
-            {
-              url = `/${data.locale}/${url}`
-            }
-            router.push(url)
+            router.replace("/").then(() => router.reload());
           };
           store.emit(
             new FetchDefaultNetwork(onComplete, (error) => {

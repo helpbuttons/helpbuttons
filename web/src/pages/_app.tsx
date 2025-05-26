@@ -34,6 +34,7 @@ import dconsole from 'shared/debugger';
 import Head from 'next/head';
 import CookiesBanner from 'components/home/CookiesBanner';
 import { SetPageName } from 'state/HomeInfo';
+import { localStorageService, LocalStorageVars } from 'services/LocalStorage';
 
 export default appWithTranslation(MyApp);
 
@@ -143,9 +144,8 @@ function MyApp({ Component, pageProps }) {
       setAuthorized(true);
       return;
     }
-
-    // check if local storage has a token
-    if (sessionUser === false && ['Embbed'].indexOf(pageName) < 0) {
+    const loginToken = localStorageService.read(LocalStorageVars.ACCESS_TOKEN);
+    if (loginToken && sessionUser === false && ['Embbed'].indexOf(pageName) < 0) {
       if (!isLoadingUser) {
         setIsLoadingUser(true);
         store.emit(
