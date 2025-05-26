@@ -67,9 +67,6 @@ export function requireAcceptedCookies(pagesRequiringCookies) {
   const mainPopupPage = useGlobalStore((state: GlobalState) => state.homeInfo.mainPopupPage)
 
   useEffect(() => {
-    console.log(pagesRequiringCookies)
-    console.log(pageName)
-    console.log(mainPopupPage)
     const pageRequiresCookies = pagesRequiringCookies.indexOf(pageName) > -1 
     const popupRequiresCookies = pagesRequiringCookies.indexOf(mainPopupPage) > -1
     if (pageRequiresCookies|| popupRequiresCookies) {
