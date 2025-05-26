@@ -8,12 +8,17 @@ import { UpdateEvent, WatchEvent } from 'store/Event';
 
 export enum MainPopupPage {
   HIDE = 'hide',
-  SIGNUP = 'signup',
-  LOGIN = 'login',
+  SIGNUP = 'Signup',
+  LOGIN = 'Login',
   REQUEST_LINK = 'requestLink',
   SHARE = 'share',
   FAQS = 'faqs',
   PROFILE = 'profile',
+}
+export enum CookiesState {
+  ACCEPTED = 'accepted',
+  REJECTED = 'rejected',
+  UNREAD = 'unread',
 }
 export interface HomeInfoState {
   mainPopupPage: MainPopupPage;
@@ -22,6 +27,7 @@ export interface HomeInfoState {
   version: string;
   isInstallable: boolean;
   pageName: string;
+  cookiesState: CookiesState
 }
 
 export const homeInfoStateInitial = {
@@ -30,7 +36,8 @@ export const homeInfoStateInitial = {
   mainPopupButton: null,
   version: '?',
   isInstallable: false,
-  pageName: ''
+  pageName: '',
+  cookiesState: CookiesState.UNREAD
 };
 
 export class SetMainPopup implements UpdateEvent {
@@ -98,6 +105,16 @@ export class SetPageName implements UpdateEvent{
   public update(state: GlobalState){
     return produce(state, (newState) => {
       newState.homeInfo.pageName = this.pageName;
+    })
+  }
+}
+
+
+export class SetCookieState implements UpdateEvent{
+  public constructor(private state: CookiesState){}
+  public update(state: GlobalState){
+    return produce(state, (newState) => {
+      newState.homeInfo.cookiesState = this.state;
     })
   }
 }
