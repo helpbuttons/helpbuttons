@@ -12,19 +12,19 @@ export default function CookiesBanner() {
   const cookiesState = useGlobalStore((state: GlobalState) => state.homeInfo.cookiesState) 
   const sessionUser = useGlobalStore((state: GlobalState) => state.sessionUser)  
 
-  /**  make sure that cookies are set as accepted if user is logged in*/
   useEffect(() => {
-    if(sessionUser)
-    {
-      localStorageService.save(LocalStorageVars.COOKIES_ACCEPTANCE, true)
-    }
-  },[sessionUser])
+    const cookieState = localStorageService.read(LocalStorageVars.COOKIES_ACCEPTANCE) as CookiesState 
+    console.log('cookie is set as ' + cookieState)
+    store.emit(new SetCookieState(cookieState ? cookieState : CookiesState.UNREAD))
+  }, [])
   
   const handleAcceptCookies = () => {
+    localStorageService.save(LocalStorageVars.COOKIES_ACCEPTANCE, CookiesState.ACCEPTED)
     store.emit(new SetCookieState(CookiesState.ACCEPTED))
   };
 
   const handleRejectCookies = () => {
+    localStorageService.save(LocalStorageVars.COOKIES_ACCEPTANCE, CookiesState.REJECTED)
     store.emit(new SetCookieState(CookiesState.REJECTED))
   }
 
