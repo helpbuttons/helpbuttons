@@ -14,7 +14,6 @@ export default function CookiesBanner() {
 
   useEffect(() => {
     const cookieState = localStorageService.read(LocalStorageVars.COOKIES_ACCEPTANCE) as CookiesState 
-    console.log('cookie is set as ' + cookieState)
     store.emit(new SetCookieState(cookieState ? cookieState : CookiesState.UNREAD))
   }, [])
   
@@ -61,29 +60,17 @@ export default function CookiesBanner() {
   );
 }
 
-export function requireAcceptedCookies(pagesRequiringCookies) {
-  const router = useRouter()
-  const pageName = useGlobalStore((state: GlobalState) => state.homeInfo.pageName)
-  const mainPopupPage = useGlobalStore((state: GlobalState) => state.homeInfo.mainPopupPage)
 
-  useEffect(() => {
-    const pageRequiresCookies = pagesRequiringCookies.indexOf(pageName) > -1 
-    const popupRequiresCookies = pagesRequiringCookies.indexOf(mainPopupPage) > -1
-    if (pageRequiresCookies|| popupRequiresCookies) {
-      const acceptedCookies = localStorageService.read(LocalStorageVars.COOKIES_ACCEPTANCE)
-      if (acceptedCookies != CookiesState.ACCEPTED) {
-        store.emit(new SetCookieState(CookiesState.UNREAD))
-        alertService.info(t('user.pleaseAcceptCookies'))
-        if(popupRequiresCookies)
-        {
-          store.emit(new SetMainPopup(null))
-        }
-        if(pageRequiresCookies)
-        {
-          router.push('/HomeInfo')
-        }
-      }
-    }
 
-  }, [pageName, mainPopupPage])
+export function cookiesAreAccepted() {
+
+  const acceptedCookies = localStorageService.read(LocalStorageVars.COOKIES_ACCEPTANCE)
+  if (acceptedCookies != CookiesState.ACCEPTED) {
+    store.emit(new SetCookieState(CookiesState.UNREAD))
+    alertService.info(t('user.pleaseAcceptCookies'))
+    return false;
+  }
+
+  return true;
+
 }

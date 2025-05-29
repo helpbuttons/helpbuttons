@@ -16,6 +16,7 @@ import { useRouter } from 'next/router';
 import t from 'i18n';
 import { alertService } from 'services/Alert';
 import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
+import { cookiesAreAccepted } from 'components/home/CookiesBanner';
 
 export default function LoginForm() {
   const {
@@ -27,6 +28,10 @@ export default function LoginForm() {
   const router = useRouter();
 
   const onSubmit = (data) => {
+    const cookiesAccepted = cookiesAreAccepted()
+    if(!cookiesAccepted){
+      return false;
+    }
     store.emit(
       new Login(data.email.toLowerCase(), data.password, onSuccess, onError),
     );
