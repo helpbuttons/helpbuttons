@@ -49,7 +49,7 @@ import { ButtonShow } from 'components/button/ButtonShow';
 import { showMarkersZoom } from 'components/map/Map/Map.consts';
 import { applyFiltersHex } from 'components/search/AdvancedFilters/filters.type';
 import { Button } from 'shared/entities/button.entity';
-import { replaceUrl } from 'components/uri/builder';
+import { usePathname } from 'next/navigation';
 
 
 function HoneyComb({ selectedNetwork }) {
@@ -240,7 +240,7 @@ function useExploreSettings({
   }, [selectedNetwork]);
 
   const currentProfile = useGlobalStore((state: GlobalState) => state.homeInfo.mainPopupUserProfile)
-
+  const pathname = usePathname()
   useEffect(() => {
     if (
       exploreSettings?.center 
@@ -264,8 +264,10 @@ function useExploreSettings({
 
       const urlParams = new URLSearchParams(obj);
       const newUrl = `/Explore/${Math.floor(exploreSettings.zoom)}/${exploreSettings.center[0]
-        }/${exploreSettings.center[1]}/${currentButton ? currentButton.id + '/': ''}${urlParams.size ? '?' + urlParams.toString() : ''}`;
-        replaceUrl(newUrl)
+        }/${exploreSettings.center[1]}${currentButton ? `/${currentButton.id}/`: ''}${urlParams.size ? '?' + urlParams.toString() : ''}`;
+        if(newUrl != pathname){
+          router.push(newUrl,undefined,{ shallow: true });
+        }
       }
   }, [exploreSettings, currentButton, filters, currentProfile]);
 }

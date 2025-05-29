@@ -1,7 +1,7 @@
 import Loading from "components/loading";
 import t from "i18n";
 import { NextPageContext } from "next";
-import { useRouter } from "next/router";
+import { NextRouter, useRouter } from "next/router";
 import { ClienteSideRendering } from "pages/_app";
 import { useEffect } from "react";
 import { setMetadata } from "services/ServerProps";
@@ -18,7 +18,7 @@ export default function Explore(props) {
   return <Loading/>
 }
 
-function useParams(router)
+function useParams(router: NextRouter)
 {
 
   const exploreSettings = useGlobalStore((state: GlobalState) => state.explore.settings)
@@ -28,10 +28,10 @@ function useParams(router)
     if(exploreSettings?.center)
     {
       // load on last coordinates naviagated...!
-      router.push(`/Explore/${exploreSettings.zoom}/${exploreSettings.center[0]}/${exploreSettings.center[1]}`, undefined, { shallow: true });
+      router.replace(`/Explore/${exploreSettings.zoom}/${exploreSettings.center[0]}/${exploreSettings.center[1]}`, undefined, { shallow: true });
     }else{
       // load from coordinates of network
-      router.push(`/Explore/${selectedNetwork.exploreSettings.zoom}/${selectedNetwork.exploreSettings.center[0]}/${selectedNetwork.exploreSettings.center[1]}`, undefined, { shallow: true });
+      router.replace(`/Explore/${selectedNetwork.exploreSettings.zoom}/${selectedNetwork.exploreSettings.center[0]}/${selectedNetwork.exploreSettings.center[1]}`, undefined, { shallow: true });
     }
     
   }, [exploreSettings])
