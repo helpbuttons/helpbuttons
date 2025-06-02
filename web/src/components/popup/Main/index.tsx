@@ -29,7 +29,6 @@ export default function MainPopup() {
   const mainPopupButton = useGlobalStore((state: GlobalState) => state.homeInfo.mainPopupButton)
 
   useReplaceUrl(mainPopupUserProfile, mainPopupButton, popupPage)
-  const allowedCurrentButton = ['HomeInfo', 'Activity', '', '#']
   return (
     <>
       <OnlyGuest sessionUser={sessionUser}>
@@ -77,7 +76,7 @@ export default function MainPopup() {
           <ShowProfile userProfile={mainPopupUserProfile} sessionUser={sessionUser} />
         </Picker>
       )}
-      {(mainPopupButton && allowedCurrentButton.indexOf(pageName) > -1) && (
+      {mainPopupButton && (
         <Picker
           headerText={mainPopupButton.title}
           closeAction={() => { store.emit(new SetMainPopupCurrentButton(null)); closePopup() }}

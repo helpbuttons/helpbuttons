@@ -5,13 +5,13 @@ import { GlobalState } from 'state';
 import { useEffect, useState } from 'react';
 import { useGlobalStore } from 'state';
 
-export default function MetadataSEOFromStore() {
+export default function MetadataSEOFromStore({nonce}) {
   const metadataStore = useGlobalStore(
     (state: GlobalState) => state.metadata,
   );
 
   return (
-    <MetadataSEO {...metadataStore} />
+    <MetadataSEO {...metadataStore} nonce={nonce} />
   );
 }
 export function MetadataSEO(props) {
@@ -24,7 +24,7 @@ export function MetadataSEO(props) {
     siteTitle,
     color,
     nonce,
-    webUrl
+    webUrl = '/'
   } =  props;
 
   const csp = `object-src 'none'; base-uri 'none'; script-src 'self' 'unsafe-eval' 'unsafe-inline' https: http: 'nonce-${nonce}' 'strict-dynamic'`

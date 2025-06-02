@@ -26,6 +26,7 @@ import { Role } from 'shared/types/roles';
 import { ButtonApprove, ButtonModerationList } from 'state/Button';
 import { ModerationList, UpdateRole } from 'state/Users';
 import { getEmailPrefix } from 'shared/sys.helper';
+import { useButtonTypes } from 'shared/buttonTypes';
 
 export default function Moderation() {
   
@@ -246,7 +247,8 @@ function ModerationHelpButtonsList() {
         })
       );
     }
-  
+  const buttonTypes = useButtonTypes();
+
 
   return (
     <>
@@ -275,7 +277,7 @@ function ModerationHelpButtonsList() {
                   <td className='user-list__table-body-cell'>{readableTimeLeftToDate(button.created_at)}</td>
                   <td className='user-list__table-body-cell'>{button.title}</td>
                   <td className='user-list__table-body-cell'>
-                    <BtnButtonType buttonTypeName={button.type}/>
+                    <BtnButtonType type={buttonTypes.find((type) => type.name == button.type)}/>
                   </td>
                   <td className='user-list__table-body-cell'><TagsNav tags={button.tags}/></td>
                   <td className='user-list__table-body-cell'>{button.address}</td>

@@ -32,8 +32,9 @@ import { randomBytes } from 'crypto'
 import MetadataSEOFromStore, { MetadataSEO } from 'components/seo';
 import dconsole from 'shared/debugger';
 import Head from 'next/head';
-import CookiesBanner from 'components/home/CookiesBanner';
+import CookiesBanner, { requireAcceptedCookies } from 'components/home/CookiesBanner';
 import { SetPageName } from 'state/HomeInfo';
+import { localStorageService, LocalStorageVars } from 'services/LocalStorage';
 
 export default appWithTranslation(MyApp);
 
@@ -143,9 +144,8 @@ function MyApp({ Component, pageProps }) {
       setAuthorized(true);
       return;
     }
-
-    // check if local storage has a token
-    if (sessionUser === false && ['Embbed'].indexOf(pageName) < 0) {
+    const loginToken = localStorageService.read(LocalStorageVars.ACCESS_TOKEN);
+    if (loginToken && sessionUser === false && ['Embbed'].indexOf(pageName) < 0) {
       if (!isLoadingUser) {
         setIsLoadingUser(true);
         store.emit(
@@ -243,6 +243,7 @@ function MyApp({ Component, pageProps }) {
     }
   }, [pageProps])
 
+  requireAcceptedCookies(['Login', 'Signup', 'ButtonNew'])
   return <>
     <MetadataSEO {...pageProps.metadata} nonce={nonce} />
     {(function () {
@@ -257,7 +258,7 @@ function MyApp({ Component, pageProps }) {
       } else if (selectedNetwork.id) {
         return (
           <>
-            <MetadataSEOFromStore {...pageProps.metadata} nonce={nonce} />
+            <MetadataSEOFromStore nonce={nonce} />
             <ActivityPool sessionUser={sessionUser} messagesUnread={messagesUnread} />
             <div
               className="index__container"
