@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
-import { DeletemeController } from './deleteme.controller';
-import { ButtonModule } from '../button/button.module';
-import { PostModule } from '../post/post.module';
-import { ActivityModule } from '../activity/activity.module';
-import { UserModule } from '../user/user.module';
-import { AuthModule } from '../auth/auth.module';
-import { DeletemeService } from './deleteme.service';
+import { DeletemeController } from './deleteme.controller.js';
+import { ButtonModule } from '../button/button.module.js';
+import { PostModule } from '../post/post.module.js';
+import { ActivityModule } from '../activity/activity.module.js';
+import { UserModule } from '../user/user.module.js';
+import { AuthModule } from '../auth/auth.module.js';
+import { DeletemeService } from './deleteme.service.js';
 
 
 @Module({

@@ -1,26 +1,26 @@
-import { Command } from 'nestjs-command';
+// import { Command } from 'nestjs-command';
 import { Injectable } from '@nestjs/common';
-import configs from '@src/config/configuration';
-import { uuid } from '@src/shared/helpers/uuid.helper';
+import configs from '@src/config/configuration.js';
+import { uuid } from '@src/shared/helpers/uuid.helper.js';
 
 @Injectable()
 export class SetupCommand {
   constructor() {}
 
-  @Command({
-    command: 'config:genjwt',
-    describe: 'generate jwt key for env file',
-  })
+  // @Command({
+  //   command: 'config:genjwt',
+  //   describe: 'generate jwt key for env file',
+  // })
   async generateJwt() {
     const fs = require('fs');
     const jwt = uuid()
     console.log(`jwtSecret=${jwt}`)
   }
 
-  @Command({
-    command: 'config:convert',
-    describe: 'converts old config.json to .env',
-  })
+  // @Command({
+  //   command: 'config:convert',
+  //   describe: 'converts old config.json to .env',
+  // })
   
   async convertToEnv() {
     const fs = require('fs');

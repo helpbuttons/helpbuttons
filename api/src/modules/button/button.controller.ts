@@ -17,30 +17,30 @@ import { diskStorage } from 'multer';
 
 import { ApiTags } from '@nestjs/swagger';
 
-import { CreateButtonDto, UpdateButtonDto } from './button.dto';
-import { ButtonService } from './button.service';
+import { CreateButtonDto, UpdateButtonDto } from './button.dto.js';
+import { ButtonService } from './button.service.js';
 // import { FilterButtonsOrmDto } from '../dto/requests/filter-buttons-orm.dto';
 import {
   editFileName,
   imageFileFilter,
-} from '../storage/storage.utils';
-import { CurrentUser } from '@src/shared/decorator/current-user';
-import { User } from '../user/user.entity';
+} from '../storage/storage.utils.js';
+import { CurrentUser } from '@src/shared/decorator/current-user.js';
+import { User } from '../user/user.entity.js';
 import {
   AllowGuest,
   OnlyAdmin,
   OnlyRegistered,
-} from '@src/shared/decorator/roles.decorator';
-import { AllowIfNetworkIsPublic } from '@src/shared/decorator/privacy.decorator';
-import { CustomHttpException } from '@src/shared/middlewares/errors/custom-http-exception.middleware';
-import { ErrorName } from '@src/shared/types/error.list';
+} from '@src/shared/decorator/roles.decorator.js';
+import { AllowIfNetworkIsPublic } from '@src/shared/decorator/privacy.decorator.js';
+import { CustomHttpException } from '@src/shared/middlewares/errors/custom-http-exception.middleware.js';
+import { ErrorName } from '@src/shared/types/error.list.js';
 import { EventEmitter2 } from '@nestjs/event-emitter'
-import { notifyUser } from '@src/app/app.event';
-import { ActivityEventName } from '@src/shared/types/activity.list';
-import { PostService } from '../post/post.service';
+import { notifyUser } from '@src/app/app.event.js';
+import { ActivityEventName } from '@src/shared/types/activity.list.js';
+import { PostService } from '../post/post.service.js';
 import { plainToInstance } from 'class-transformer';
-import { Button } from './button.entity';
-import { UserService } from '../user/user.service';
+import { Button } from './button.entity.js';
+import { UserService } from '../user/user.service.js';
 
 @ApiTags('buttons')
 @Controller('buttons')

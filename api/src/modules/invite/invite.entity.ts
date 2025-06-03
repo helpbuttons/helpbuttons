@@ -1,6 +1,6 @@
-import { BaseEntity } from '@src/shared/types/base.entity';
+import { BaseEntity } from '@src/shared/types/base.entity.js';
 import { Column, Entity, ManyToOne, PrimaryColumn } from 'typeorm';
-import { User } from '../user/user.entity';
+import { User } from '../user/user.entity.js';
 
 @Entity()
 export class Invite extends BaseEntity {

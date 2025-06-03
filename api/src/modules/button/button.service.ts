@@ -11,7 +11,7 @@ import {
   InjectEntityManager,
   InjectRepository,
 } from '@nestjs/typeorm';
-import { uuid } from '@src/shared/helpers/uuid.helper';
+import { uuid } from '@src/shared/helpers/uuid.helper.js';
 import {
   Repository,
   In,
@@ -20,32 +20,32 @@ import {
   Between,
   LessThan,
 } from 'typeorm';
-import { TagService } from '../tag/tag.service';
-import { CreateButtonDto, UpdateButtonDto } from './button.dto';
-import { Button } from './button.entity';
+import { TagService } from '../tag/tag.service.js';
+import { CreateButtonDto, UpdateButtonDto } from './button.dto.js';
+import { Button } from './button.entity.js';
 import { getManager } from 'typeorm';
-import { NetworkService } from '../network/network.service';
-import { StorageService } from '../storage/storage.service';
-import { User } from '../user/user.entity';
-import { Role } from '@src/shared/types/roles';
+import { NetworkService } from '../network/network.service.js';
+import { StorageService } from '../storage/storage.service.js';
+import { User } from '../user/user.entity.js';
+import { Role } from '@src/shared/types/roles.js';
 import {
   isImageData,
   isImageUrl,
-} from '@src/shared/helpers/imageIsFile';
-import { maxResolution } from '@src/shared/types/honeycomb.const';
-import { PostService } from '../post/post.service';
-import { CustomHttpException } from '@src/shared/middlewares/errors/custom-http-exception.middleware';
-import { ErrorName } from '@src/shared/types/error.list';
-import { ActivityEventName } from '@src/shared/types/activity.list';
+} from '@src/shared/helpers/imageIsFile.js';
+import { maxResolution } from '@src/shared/types/honeycomb.const.js';
+import { PostService } from '../post/post.service.js';
+import { CustomHttpException } from '@src/shared/middlewares/errors/custom-http-exception.middleware.js';
+import { ErrorName } from '@src/shared/types/error.list.js';
+import { ActivityEventName } from '@src/shared/types/activity.list.js';
 import * as fs from 'fs';
-import { UserService } from '../user/user.service';
-import { MailService } from '../mail/mail.service';
-import { notifyUser } from '@src/app/app.event';
-import { Network } from '../network/network.entity';
+import { UserService } from '../user/user.service.js';
+import { MailService } from '../mail/mail.service.js';
+import { notifyUser } from '@src/app/app.event.js';
+import { Network } from '../network/network.entity.js';
 // import { RRule } from 'rrule';
 import * as handlebars from 'handlebars';
 import * as path from 'path';
-import configs from '@src/config/configuration';
+import configs from '@src/config/configuration.js';
 import {
   CACHE_MANAGER,
   CacheInterceptor,
@@ -53,7 +53,7 @@ import {
   CacheTTL,
 } from '@nestjs/cache-manager';
 import { Cache } from 'cache-manager';
-import { CacheKeys } from '@src/shared/types/cache.keys';
+import { CacheKeys } from '@src/shared/types/cache.keys.js';
 
 @Injectable()
 export class ButtonService {
@@ -306,7 +306,7 @@ export class ButtonService {
         if (button.images.length < 0) {
           this.storageService.deleteMany(storeButton.images);
         } else {
-          var _ = require('lodash/array');
+          var _ = require('lodash/array.js');
           const deleteImages = _.difference(
             storeButton.images,
             button.images,
@@ -715,7 +715,7 @@ export class ButtonService {
           await this.networkService.findDefaultNetwork();
 
         const templatePath = path.join(
-          __dirname,
+          `${process.platform === 'win32' ? '' : '/'}${/file:\/{2,3}(.+)\/[^/]/.exec(import.meta.url)![1]}`,
           'templates',
           'rss.hbs',
         );

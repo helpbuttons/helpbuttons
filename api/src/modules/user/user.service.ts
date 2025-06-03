@@ -3,19 +3,19 @@ import {
   HttpStatus,
   Injectable,
 } from '@nestjs/common';
-import { User } from './user.entity';
+import { User } from './user.entity.js';
 import {
   InjectEntityManager,
   InjectRepository,
 } from '@nestjs/typeorm';
 import { EntityManager, In, Not, Repository } from 'typeorm';
-import { Role } from '@src/shared/types/roles';
-import { removeUndefined } from '@src/shared/helpers/removeUndefined';
-import { TagService } from '../tag/tag.service';
-import { token } from '@src/shared/helpers/uuid.helper';
+import { Role } from '@src/shared/types/roles.js';
+import { removeUndefined } from '@src/shared/helpers/removeUndefined.js';
+import { TagService } from '../tag/tag.service.js';
+import { token } from '@src/shared/helpers/uuid.helper.js';
 import { plainToClass } from 'class-transformer';
-import { StorageService } from '../storage/storage.service';
-import { MailService } from '../mail/mail.service';
+import { StorageService } from '../storage/storage.service.js';
+import { MailService } from '../mail/mail.service.js';
 
 @Injectable()
 export class UserService {
@@ -216,7 +216,7 @@ COALESCE(
   }
 
   addTags(tags, user: User) {
-    const _ = require('lodash/array');
+    const _ = require('lodash/array.js');
 
     let newTags = [...tags.split(','), ...user.tags]
     newTags = _.uniq(newTags)

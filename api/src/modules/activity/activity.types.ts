@@ -1,6 +1,6 @@
-import translate from "@src/shared/helpers/i18n.helper";
-import { ActivityEventName } from "@src/shared/types/activity.list"
-import { getUserActivity } from "./activity.transform";
+import translate from "@src/shared/helpers/i18n.helper.js";
+import { ActivityEventName } from "@src/shared/types/activity.list.js"
+import { getUserActivity } from "./activity.transform.js";
 
 
 

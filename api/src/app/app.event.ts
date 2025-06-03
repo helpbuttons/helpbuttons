@@ -1,7 +1,7 @@
-import { Button } from "@src/modules/button/button.entity";
-import { Post } from "@src/modules/post/post.entity";
-import { User } from "@src/modules/user/user.entity"
-import { ActivityEventName } from "@src/shared/types/activity.list"
+import { Button } from "@src/modules/button/button.entity.js";
+import { Post } from "@src/modules/post/post.entity.js";
+import { User } from "@src/modules/user/user.entity.js"
+import { ActivityEventName } from "@src/shared/types/activity.list.js"
 import { ClassConstructor, instanceToInstance, plainToInstance } from "class-transformer";
 
 export function notifyUser(eventEmitter, activityEventName : ActivityEventName, data: any) {

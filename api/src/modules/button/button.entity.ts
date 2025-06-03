@@ -1,4 +1,4 @@
-import { BaseEntity } from '@src/shared/types/base.entity';
+import { BaseEntity } from '@src/shared/types/base.entity.js';
 import {
   Column,
   Entity,
@@ -6,9 +6,9 @@ import {
   OneToMany,
   PrimaryColumn,
 } from 'typeorm';
-import { Network } from '../network/network.entity';
-import { Post } from '../post/post.entity';
-import { User } from '../user/user.entity';
+import { Network } from '../network/network.entity.js';
+import { Post } from '../post/post.entity.js';
+import { User } from '../user/user.entity.js';
 import { Exclude, Expose } from 'class-transformer';
 // https://stackoverflow.com/a/67557083
 

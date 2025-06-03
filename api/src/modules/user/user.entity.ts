@@ -1,9 +1,9 @@
-import { BaseEntity } from '@src/shared/types/base.entity';
-import { Role } from '@src/shared/types/roles';
+import { BaseEntity } from '@src/shared/types/base.entity.js';
+import { Role } from '@src/shared/types/roles.js';
 import { Exclude, Expose } from 'class-transformer';
 import { Column, Entity, OneToOne, PrimaryColumn } from 'typeorm';
 
-import { UserCredential } from '../user-credential/user-credential.entity';
+import { UserCredential } from '../user-credential/user-credential.entity.js';
 
 @Entity()
 @Exclude()

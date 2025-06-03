@@ -1,6 +1,6 @@
-require('dotenv').config()
-const fs = require('fs')
+import fs from "fs";
 
+require('dotenv').config()
 let configs = {
   hostName: process.env.hostName,
   postgresHostName: process.env?.POSTGRES_HOSTNAME ? process.env.POSTGRES_HOSTNAME : 'localhost',
@@ -21,8 +21,8 @@ let configs = {
   GEO_SIMULATE : process.env?.GEO_SIMULATE ? true : false,
 }
 
-if (fs.existsSync(`${__dirname}/../../config/config.json`)) {
-  configs = require(`${__dirname}/../../config/config.json`)
+if (fs.existsSync(`${`${process.platform === 'win32' ? '' : '/'}${/file:\/{2,3}(.+)\/[^/]/.exec(import.meta.url)![1]}`}/../../config/config.json`)) {
+  configs = require(`${`${process.platform === 'win32' ? '' : '/'}${/file:\/{2,3}(.+)\/[^/]/.exec(import.meta.url)![1]}`}/../../config/config.json`)
   console.log('loading old config..')
 }
 

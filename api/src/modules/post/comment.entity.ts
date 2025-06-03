@@ -1,8 +1,8 @@
 import { Column, Entity, ManyToOne, PrimaryColumn } from "typeorm";
-import { Post } from "./post.entity";
-import { User } from "../user/user.entity";
-import { BaseEntity } from "@src/shared/types/base.entity";
-import { PrivacyType } from "@src/shared/types/privacy.enum";
+import { Post } from "./post.entity.js";
+import { User } from "../user/user.entity.js";
+import { BaseEntity } from "@src/shared/types/base.entity.js";
+import { PrivacyType } from "@src/shared/types/privacy.enum.js";
 
 @Entity()
 export class Comment extends BaseEntity {

@@ -4,11 +4,11 @@ import {
   HttpException,
   Injectable,
 } from '@nestjs/common';
-import { HttpStatus } from '@src/shared/types/http-status.enum';
+import { HttpStatus } from '@src/shared/types/http-status.enum.js';
 
-import { NetworkService } from '@src/modules/network/network.service';
+import { NetworkService } from '@src/modules/network/network.service.js';
 import { Observable } from 'rxjs';
-import { PrivacyType } from "@src/shared/types/privacy.enum";
+import { PrivacyType } from "@src/shared/types/privacy.enum.js";
 
 @Injectable()
 export class PrivacyGuard implements CanActivate {

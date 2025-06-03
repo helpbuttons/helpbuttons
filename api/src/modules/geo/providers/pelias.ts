@@ -2,8 +2,8 @@ import {
   GeoAddress,
   GeoPosition,
   GeoProvider,
-} from './provider.interface';
-import { HttpHelper } from '@src/shared/helpers/http.helper';
+} from './provider.interface.js';
+import { HttpHelper } from '@src/shared/helpers/http.helper.js';
 export class PeliasProvider implements GeoProvider {
   apiKey = '';
   limitCountries = '';

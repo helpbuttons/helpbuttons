@@ -1,26 +1,26 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { SignupQRRequestDto, SignupRequestDto } from './auth.dto';
-import { UserService } from '../user/user.service';
+import { SignupQRRequestDto, SignupRequestDto } from './auth.dto.js';
+import { UserService } from '../user/user.service.js';
 import {
   uuid,token
-} from '@src/shared/helpers/uuid.helper';
-import { UserCredentialService } from '../user-credential/user-credential.service';
-import { MailService } from '../mail/mail.service';
-import { User } from '../user/user.entity';
-import { StorageService } from '../storage/storage.service';
-import { Role } from '@src/shared/types/roles';
-import { UserCredential } from '../user-credential/user-credential.entity';
+} from '@src/shared/helpers/uuid.helper.js';
+import { UserCredentialService } from '../user-credential/user-credential.service.js';
+import { MailService } from '../mail/mail.service.js';
+import { User } from '../user/user.entity.js';
+import { StorageService } from '../storage/storage.service.js';
+import { Role } from '@src/shared/types/roles.js';
+import { UserCredential } from '../user-credential/user-credential.entity.js';
 import {
   checkHash,
   generateHash,
-} from '@src/shared/helpers/generate-hash.helper';
-import { UserUpdateDto } from '../user/user.dto';
-import { CustomHttpException } from '@src/shared/middlewares/errors/custom-http-exception.middleware';
-import { ErrorName } from '@src/shared/types/error.list';
-import { isImageData } from '@src/shared/helpers/imageIsFile';
-import { NetworkService } from '../network/network.service';
-import { InviteService } from '../invite/invite.service';
+} from '@src/shared/helpers/generate-hash.helper.js';
+import { UserUpdateDto } from '../user/user.dto.js';
+import { CustomHttpException } from '@src/shared/middlewares/errors/custom-http-exception.middleware.js';
+import { ErrorName } from '@src/shared/types/error.list.js';
+import { isImageData } from '@src/shared/helpers/imageIsFile.js';
+import { NetworkService } from '../network/network.service.js';
+import { InviteService } from '../invite/invite.service.js';
 
 export const nomailString = '@nomail.com';
 

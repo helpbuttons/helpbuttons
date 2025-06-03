@@ -1,16 +1,16 @@
 import { Body, Controller, Get, Param, Post, Request } from '@nestjs/common';
-import { UserService } from './user.service';
+import { UserService } from './user.service.js';
 import { ApiTags } from '@nestjs/swagger';
-import { AllowGuest, OnlyAdmin, OnlyRegistered } from '@src/shared/decorator/roles.decorator';
-import { Role } from '@src/shared/types/roles';
-import { CurrentUser } from '@src/shared/decorator/current-user';
-import { User, UserExtended } from './user.entity';
-import { InviteService } from '../invite/invite.service';
-import { InviteCreateDto } from '../invite/invite.dto';
+import { AllowGuest, OnlyAdmin, OnlyRegistered } from '@src/shared/decorator/roles.decorator.js';
+import { Role } from '@src/shared/types/roles.js';
+import { CurrentUser } from '@src/shared/decorator/current-user.js';
+import { User, UserExtended } from './user.entity.js';
+import { InviteService } from '../invite/invite.service.js';
+import { InviteCreateDto } from '../invite/invite.dto.js';
 import { plainToClass } from 'class-transformer';
-import { nomailString } from '../auth/auth.service';
-import { notifyUser } from '@src/app/app.event';
-import { ActivityEventName } from '@src/shared/types/activity.list';
+import { nomailString } from '../auth/auth.service.js';
+import { notifyUser } from '@src/app/app.event.js';
+import { ActivityEventName } from '@src/shared/types/activity.list.js';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 
 @ApiTags('User')
