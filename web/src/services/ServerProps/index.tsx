@@ -66,6 +66,20 @@ export class ServerPropsService {
         },
       };
     }
+    if (
+      networkConfigData?.statusCode == HttpStatus.INTERNAL_SERVER_ERROR
+    ) {
+      const errorMsg = 'error getting network configuration internal server error, did you run migrations?';
+      dconsole.error(errorMsg, networkConfigData);
+
+      return {
+        ...catchMetadata,
+        error: {
+          message: errorMsg,
+          statusCode: networkConfigData?.statusCode,
+        },
+      };
+    }
     setLocale(networkConfigData.locale);
     const version = require('../../../public/version.json').version
     let serverProps = {
