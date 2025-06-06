@@ -8,19 +8,8 @@ import { useEffect, useRef } from "react";
 export function Picker({ closeAction, headerText, children, extraClass = '' }) {
   const modalRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const handleClick = (event: MouseEvent) => {
-      if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
-        closeAction();
-      }
-    };
-
-    document.addEventListener("click", handleClick, true);
-
-    return () => {
-      document.removeEventListener("click", handleClick, true);
-    };
-  }, [modalRef]);
+  // useCloseOnOutsideClick(modalRef, closeAction)
+  
   return (
     <>
       <div className="picker__close-container">
@@ -55,6 +44,22 @@ export function Picker({ closeAction, headerText, children, extraClass = '' }) {
   );
 }
 
+function useCloseOnOutsideClick(modalRef, closeAction){
+  /** this has been deactivated because when you have the signup or login picker, and you didnt accept the cookies, when you accept the cookies the form closes */
+  useEffect(() => {
+    const handleClick = (event: MouseEvent) => {
+      if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+        closeAction();
+      }
+    };
+
+    document.addEventListener("click", handleClick, true);
+
+    return () => {
+      document.removeEventListener("click", handleClick, true);
+    };
+  }, [modalRef]);
+}
 export function PickerSelector({ onHandleChange, label, value }) {
   const onClick = () => {
     onHandleChange(value);

@@ -34,6 +34,7 @@ import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
 import { useMetadataTitle } from 'state/Metadata';
 import dconsole from 'shared/debugger';
 import HomeInfo from 'pages/HomeInfo';
+import { cookiesAreAccepted } from 'components/home/CookiesBanner';
 
 export default function Signup( {metadata})
 {
@@ -98,6 +99,10 @@ export function SignupForm() {
 
   const onSuccess = (userData) => {
     setIsSubmitting(false)
+    const cookiesAccepted = cookiesAreAccepted()
+    if(!cookiesAccepted){
+      return false;
+    }
     store.emit(new SetMainPopup(MainPopupPage.HIDE))
     alertService.success(t('user.signupSuccess', [selectedNetwork.name]))
   };

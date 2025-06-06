@@ -26,8 +26,8 @@ export default function Explore({
           }, (error) => {
             if(error.errorName == ErrorName.ButtonNotFound)
             {
-              alertService.error(error.caption)
-              router.push(`/Explore/${zoom}/${lat}/${lng}`)
+              alertService.error(t(error.caption))
+              router.replace(`/Explore/${zoom}/${lat}/${lng}`)
             }
           }))
         }else{
