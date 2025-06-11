@@ -346,6 +346,8 @@ export class ResetFilters implements UpdateEvent {
   public update(state: GlobalState) {
     return produce(state, (newState) => {
       dconsole.log('[ResetFilters]')
+      newState.explore.settings.hexagonClicked = null;
+      newState.explore.map.listButtons = state.explore.map.boundsFilteredButtons
       newState.explore.map.filters = defaultFilters;
     });
   }
