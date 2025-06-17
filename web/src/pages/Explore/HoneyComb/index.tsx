@@ -280,7 +280,10 @@ function useHexagonMap({
   boundsFilteredButtons,
   cachedHexagons,
   buttonTypes,
+  forceRefetch,
 }) {
+
+  
   const [hexagonsToFetch, setHexagonsToFetch] = useState({
     resolution: 1,
     hexagons: [],
@@ -297,6 +300,12 @@ function useHexagonMap({
       fetchBounds(exploreSettings.bounds, exploreSettings.zoom);
     }
   }, [cachedHexagons]);
+  useEffect(() => {
+    if(forceRefetch)
+    {
+      cachedH3Hexes.current = []
+    }
+  }, [forceRefetch])
   const calculateNonCachedHexagons = (
     debounceHexagonsToFetch,
     cachedH3Hexes,
@@ -533,6 +542,7 @@ function ExploreHexagonMap({toggleShowLeftColumn, exploreSettings, selectedNetwo
     boundsFilteredButtons: boundsFilteredButtons,
     cachedHexagons: exploreMapState.cachedHexagons,
     buttonTypes: selectedNetwork?.buttonTemplates,
+    forceRefetch: exploreSettings.forceRefetch
   });
   const [countFilteredButtons, setCountFilteredButtons] = useState(0)
 

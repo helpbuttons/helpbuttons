@@ -50,6 +50,7 @@ export interface ExploreSettings {
   hexagonHighlight: string;
   viewMode: ExploreViewMode;
   urlUpdated: boolean;
+  forceRefetch: boolean;
 }
 
 export const exploreSettingsDefault: ExploreSettings = {
@@ -64,6 +65,7 @@ export const exploreSettingsDefault: ExploreSettings = {
   hexagonHighlight: null,
   viewMode: ExploreViewMode.LIST,
   urlUpdated: false,
+  forceRefetch: true,
 };
 export interface ExploreMapState {
   filters: ButtonFilters;
@@ -76,7 +78,7 @@ export interface ExploreMapState {
   initialized: boolean;
   showAdvancedFilters: boolean;
   showInstructions: boolean;
-  allTags: string[]
+  allTags: string[];
 }
 export const exploreInitial = {
   draftButton: null,
@@ -151,11 +153,9 @@ export class CreateButton implements WatchEvent, UpdateEvent {
   public update(state: GlobalState) {
     return produce(state, (newState) => {
       dconsole.log('[CreateButton] update')
-      newState.explore.map.boundsFilteredButtons = []
-      newState.explore.map.cachedHexagons = []
-      newState.explore.map.listButtons = []
       newState.explore.map.filters = defaultFilters
       newState.explore.map.showAdvancedFilters = false
+      newState.explore.settings.forceRefetch = true;
     });
   }
 }
@@ -223,9 +223,7 @@ export class ButtonDelete implements WatchEvent, UpdateEvent {
   public update(state: GlobalState) {
     return produce(state, (newState) => {
       dconsole.log('[ButtonDelete] update')
-      newState.explore.map.boundsFilteredButtons = []
-      newState.explore.map.cachedHexagons = []
-      newState.explore.map.listButtons = []
+      newState.explore.settings.forceRefetch = true;
       newState.activities.messages.unread = []
       newState.activities.messages.read = []
     });
@@ -252,9 +250,7 @@ export class UpdateButton implements WatchEvent, UpdateEvent {
   public update(state: GlobalState) {
     return produce(state, (newState) => {
       dconsole.log('[UpdateButton] update')
-      newState.explore.map.boundsFilteredButtons = []
-      newState.explore.map.cachedHexagons = []
-      newState.explore.map.listButtons = []
+      newState.explore.settings.forceRefetch = true;
     });
   }
 }
@@ -350,6 +346,8 @@ export class ResetFilters implements UpdateEvent {
   public update(state: GlobalState) {
     return produce(state, (newState) => {
       dconsole.log('[ResetFilters]')
+      newState.explore.settings.hexagonClicked = null;
+      newState.explore.map.listButtons = state.explore.map.boundsFilteredButtons
       newState.explore.map.filters = defaultFilters;
     });
   }
@@ -431,7 +429,7 @@ export class UpdateBoundsFilteredButtons implements UpdateEvent, WatchEvent {
   public constructor(private boundsFilteredButtons: Button[]) { }
 
   public watch(state: GlobalState) {
-
+    
     /** this functionality is used so that when a button type is clicked, and no buttons are found the map will be recentered */
     if (state.explore.map.buttonTypeClicked) {
       store.emit(new ResetButtonTypeClicked())
@@ -464,6 +462,7 @@ export class UpdateBoundsFilteredButtons implements UpdateEvent, WatchEvent {
   public update(state: GlobalState) {
     return produce(state, (newState) => {
       dconsole.log('[UpdateBoundsFilteredButtons] update')
+      newState.explore.settings.forceRefetch = false;
       newState.explore.map.boundsFilteredButtons =
         this.boundsFilteredButtons;
       if(state.explore.currentButton)
@@ -560,6 +559,17 @@ export class ClearCachedHexagons implements UpdateEvent {
     return produce(state, (newState) => {
       newState.explore.map.cachedHexagons = [];
     });
+  }
+}
+
+export class ResetExploreSettings implements UpdateEvent {
+  public constructor(
+    private newExploreSettings: Partial<ExploreSettings>,
+  ) { }
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      newState.explore.settings = { ...state.explore.settings, ...this.newExploreSettings, ...{forceRefetch: true} };
+    })
   }
 }
 export class UpdateExploreSettings implements UpdateEvent {

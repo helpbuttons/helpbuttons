@@ -232,7 +232,7 @@ function CardButtonSubmenu({ button }) {
   useEffect(() => {
     if (config) {
       setLinkButton(() => {
-        return window ? window.location : getShareLink(`/?btn=${button.id}`);
+        return getShareLink(`/Show/${button.id}`);
       });
     }
   }, [config]);

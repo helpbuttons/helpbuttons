@@ -88,10 +88,7 @@ function MyApp({ Component, pageProps }) {
   }, [path])
 
   const config = useConfig(pageProps._config, onFetchingConfigError);
-  const selectedNetwork = useSelectedNetwork(
-    pageProps._selectedNetwork,
-    () => setFetchingNetworkError(() => true)
-  );
+  const selectedNetwork = useSelectedNetwork(pageProps._selectedNetwork);
   const setupPaths: string[] = [
     SetupSteps.CREATE_ADMIN_FORM,
     SetupSteps.FIRST_OPEN,
