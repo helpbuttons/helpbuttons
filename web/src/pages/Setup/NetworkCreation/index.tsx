@@ -54,7 +54,7 @@ function NetworkCreation() {
     store,
     (state: GlobalState) => state.sessionUser,
   );
-  register("exploreSettings", { required: true })
+  register("exploreSettings", { required: {value: true, message: t('configuration.requiredLocation')} })
   const onSubmit = (data) => {
 
     store.emit(
