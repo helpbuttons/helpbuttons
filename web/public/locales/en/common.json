@@ -515,7 +515,7 @@
     "hideLocationByDefaultLabel": "Exact location protection",
     "hideLocationByDefaultExplain": "Protect exact location in _helpbuttons_ by showing a wide area, users can deactivate this individually.",
     "hideLocationByDefaultText": "Hide exact location by default",
-    "requiredLocation": "Por favor recoge un lugar en el mapa para su red"
+    "requiredLocation": "Please pickup a place in the map for your network"
   },
   "configure": {
     "browsePins": "",
