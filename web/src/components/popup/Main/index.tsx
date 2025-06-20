@@ -12,13 +12,14 @@ import { ShowProfile } from "pages/p/[username]";
 import { useEffect } from "react";
 import { replaceUrl, usePreviousUrl } from "components/uri/builder";
 import LoginForm from "components/user/LoginForm";
+import { useRouter } from "next/router";
 
 export default function MainPopup() {
   const pageName = useGlobalStore((state: GlobalState) => state.homeInfo.pageName)
-
+  const router = useRouter()
   const previousUrl = usePreviousUrl();
   const closePopup = () => {
-    replaceUrl(previousUrl)
+    router.replace(`${previousUrl}`)
     store.emit(new SetMainPopup(MainPopupPage.HIDE));
   }
 
@@ -91,16 +92,18 @@ export default function MainPopup() {
 
 
 function useReplaceUrl(mainPopupUserProfile, mainPopupButton, popupPage) {
+  const router = useRouter()
+
   useEffect(() => {
     if (mainPopupUserProfile) {
-      replaceUrl(`/p/${mainPopupUserProfile.username}`);
+      router.replace(`/p/${mainPopupUserProfile.username}`);
     }
 
   }, [mainPopupUserProfile]);
 
   useEffect(() => {
     if (mainPopupButton) {
-      replaceUrl(`/Show/${mainPopupButton.id}`);
+      router.replace(`/Show/${mainPopupButton.id}`);
     }
   }, [mainPopupButton])
 
@@ -108,13 +111,13 @@ function useReplaceUrl(mainPopupUserProfile, mainPopupButton, popupPage) {
     if (popupPage != MainPopupPage.HIDE) {
       switch (popupPage) {
         case MainPopupPage.FAQS:
-          replaceUrl(`/Faqs`);
+          router.replace(`/Faqs`);
           break;
         case MainPopupPage.LOGIN:
-          replaceUrl(`/Login`);
+          router.replace(`/Login`);
           break;
         case MainPopupPage.SIGNUP:
-          replaceUrl(`/Signup`);
+          router.replace(`/Signup`);
           break;
         case MainPopupPage.PROFILE:
         case MainPopupPage.SHARE:

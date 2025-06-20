@@ -1,10 +1,6 @@
 import { useState } from "react";
 import { useRouter } from 'next/router';
 
-export function replaceUrl(url) {
-  window.history.replaceState(null, '', url);
-}
-
 export function updateUrl(router, queryParams = null) {
   if (queryParams === null) {
     router.push(

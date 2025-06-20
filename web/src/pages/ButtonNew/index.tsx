@@ -18,6 +18,7 @@ import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
 import { useMetadataTitle } from 'state/Metadata';
 import { useSelectedNetwork } from 'state/Networks';
 import { markerFocusZoom } from 'components/map/Map/Map.consts';
+import { cookiesAreAccepted } from 'components/home/CookiesBanner';
 
 export default function ButtonNew({ metadata }) {
   const selectedNetwork = useSelectedNetwork()
@@ -87,6 +88,10 @@ function ButtonNewForm({ selectedNetwork }) {
 
   const [isSubmitting, setIsSubmitting] = useState(false)
   const onSubmit = (data) => {
+    const cookiesAccepted = cookiesAreAccepted()
+    if(!cookiesAccepted){
+      return false;
+    }
     setIsSubmitting(() => true)
     store.emit(
       new CreateButton(
@@ -114,7 +119,7 @@ function ButtonNewForm({ selectedNetwork }) {
             router.push(`/Explore`);
           }else{
             store.emit(new UpdateCachedHexagons([]))
-            router.push(`/Explore/${markerFocusZoom}/${buttonData.latitude}/${buttonData.longitude}/?btn=${buttonData.id}`);
+            router.push(`/Explore/${markerFocusZoom}/${buttonData.latitude}/${buttonData.longitude}/${buttonData.id}`);
             alertService.success(t('button.created'))
           }
         },
