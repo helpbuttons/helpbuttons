@@ -128,7 +128,7 @@ export default function HexagonExploreMap({
             {filteredCircle && <GeoJsonFeature feature={filteredCircle}/>}
             
               {/* DRAW HEXAGONS ON MAP */}
-              {!(exploreSettings.zoom >= showMarkersZoom)  && !currentButton && geoJsonFeatures.map((hexagonFeature) => (
+              {!(exploreSettings.zoom >= showMarkersZoom)  && geoJsonFeatures.map((hexagonFeature) => (
                 <GeoJsonFeature
                   onClick={(feature) => {
                     if (hexagonFeature.properties.count > 0) {
@@ -217,7 +217,6 @@ export default function HexagonExploreMap({
         show count of buttons per hexagon
         */}
             {!exploreSettings.loading &&
-            !currentButton &&
               !(exploreSettings.zoom >= showMarkersZoom) &&
               geoJsonFeatures.map((hexagonFeature) => {
                 if (hexagonFeature.properties.count > 0) {
@@ -253,7 +252,6 @@ export default function HexagonExploreMap({
 
             {/* draw clicked hexagon */}
             {!exploreSettings.loading &&
-             !currentButton &&
               hexagonClickedFeatures &&
               !(exploreSettings.zoom >= showMarkersZoom) && (
                 <Overlay
@@ -302,7 +300,7 @@ export default function HexagonExploreMap({
                   </div>
                 </Overlay>
               )}
-            {!currentButton && exploreSettings.zoom >= showMarkersZoom &&
+            {exploreSettings.zoom >= showMarkersZoom &&
               boundsFilteredButtons.filter(button => { return button.hideAddress ? false : button }).map((button, idx) => {
                 const btnType = buttonTypes.find((type) => {
                   return type.name == button.type;
@@ -318,15 +316,6 @@ export default function HexagonExploreMap({
                   />
                 );
               })}
-            {(currentButton && !currentButton.hideAddress) &&
-              <MarkerButton
-                anchor={[currentButton.latitude, currentButton.longitude]}
-                offset={[35, 65]}
-                button={currentButton}
-                handleMarkerClicked={() => {}}
-                color={currentButtonType.cssColor}
-              />
-            }
             {/* draw go to center icon */}
             <Overlay
               anchor={[100, 100]}

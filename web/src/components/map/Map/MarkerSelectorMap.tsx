@@ -29,6 +29,7 @@ export default function MarkerViewMap({
   editPosition = false,
   onMapClick = (latLng) => { },
   networkMapCenter = null,
+  hideMarker = false,
 }) {
   const [markerHexagonGeoJson, setMarkerHexagonGeoJson] =
     useState(null);
@@ -115,7 +116,7 @@ export default function MarkerViewMap({
                 title={markerCaption}
               />
             )}
-            {hideAddress && (
+            {(hideAddress && !hideMarker )&& (
               <MarkerButtonIcon
                 anchor={getHexagonCenter(pickedPosition, hexagonSizeZoom)}
                 offset={[25, 50]}

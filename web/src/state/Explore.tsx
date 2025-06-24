@@ -63,7 +63,7 @@ export const exploreSettingsDefault: ExploreSettings = {
   loading: true,
   hexagonClicked: null,
   hexagonHighlight: null,
-  viewMode: ExploreViewMode.LIST,
+  viewMode: null,
   urlUpdated: false,
   forceRefetch: true,
 };
@@ -283,25 +283,25 @@ export class updateCurrentButton implements UpdateEvent {
     return produce(state, (newState) => {
       newState.explore.currentButton = this.button;
       if (this.button) {
-        if(!state.explore.currentButton)
-        {
-          newState.explore.settings.prevCenter = state.explore.settings.center
-          newState.explore.settings.prevZoom = state.explore.settings.zoom  
-        }
+        // if(!state.explore.currentButton)
+        // {
+        //   newState.explore.settings.prevCenter = state.explore.settings.center
+        //   newState.explore.settings.prevZoom = state.explore.settings.zoom  
+        // }
         
-        if (this.button.hideAddress) {
-          newState.explore.settings.hexagonClicked = this.button.hexagon
-        }
+        // if (this.button.hideAddress) {
+        //   newState.explore.settings.hexagonClicked = this.button.hexagon
+        // }
 
-        newState.explore.settings.center = roundCoords([this.button.latitude, this.button.longitude])
-        newState.explore.settings.zoom = markerFocusZoom
+        // newState.explore.settings.center = roundCoords([this.button.latitude, this.button.longitude])
+        // newState.explore.settings.zoom = markerFocusZoom
         dconsole.log('[updateCurrentButton] update')
-        newState.explore.map.boundsFilteredButtons = [this.button]
+        // newState.explore.map.boundsFilteredButtons = [this.button]
         
       } else if (!this.button) {
-        newState.explore.settings.center = state.explore.settings.prevCenter
-        newState.explore.settings.zoom = state.explore.settings.prevZoom;
-        newState.explore.settings.hexagonClicked = null
+        // newState.explore.settings.center = state.explore.settings.prevCenter
+        // newState.explore.settings.zoom = state.explore.settings.prevZoom;
+        // newState.explore.settings.hexagonClicked = null
       }
       dconsole.log(`[updateCurrentButton] update`)
     });
@@ -590,12 +590,8 @@ export class UpdateExploreSettings implements UpdateEvent {
         newExploreSettings = { center: roundCoords(this.newExploreSettings.center), ...newExploreSettings }
       }
 
-
       newExploreSettings = { zoom: this.newExploreSettings.zoom, ...newExploreSettings }
 
-      if (!state.explore.currentButton) {
-        newExploreSettings = { prevZoom: state.explore.settings.zoom, prevCenter: state.explore.settings.center, ...newExploreSettings }
-      }
       if (prevSettings.center != null && JSON.stringify(prevSettings.center) != JSON.stringify(this.newExploreSettings.center)) {
         newState.explore.map.showInstructions = false;
       }
