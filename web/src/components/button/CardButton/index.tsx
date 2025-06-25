@@ -44,7 +44,7 @@ import Btn, {
   IconType,
 } from 'elements/Btn';
 import { FixedAlert } from 'components/overlay/Alert';
-import { maxZoom, showMarkersZoom } from 'components/map/Map/Map.consts';
+import { maxZoom, showHexagonsZoom, showMarkersZoom } from 'components/map/Map/Map.consts';
 import { Button } from 'shared/entities/button.entity';
 import MarkerViewMap from 'components/map/Map/MarkerSelectorMap';
 import { TagsNav } from 'elements/Fields/FieldTags';
@@ -396,13 +396,13 @@ export function CardButtonHeadBig({ button, buttonTypes, toggleShowReplyFirstPos
         </div>
         {showMap && (
           <MarkerViewMap
-            pickedPosition={[button.latitude, button.longitude]}
-            zoom={(button.hideAddress ? showMarkersZoom : maxZoom )}
+            markerPosition={[button.latitude, button.longitude]}
+            defaultZoom={(button.hideAddress ? showHexagonsZoom : maxZoom )}
             markerColor={cssColor}
             markerImage={button.image}
             markerCaption={button.title}
             hideAddress={button.hideAddress}
-            hideMarker={button.hideAddress}
+            hexagon={button.hexagon}
           />
         )}
       </div>

@@ -19,7 +19,7 @@ export default function Explore({
     const { buttonId, zoom, lat, lng } = router.query;
     const currentButton = useGlobalStore((state: GlobalState) => state.explore.currentButton)
     useEffect(() => {
-        if(buttonId && currentButton?.id != buttonId)
+        if(buttonId && (!currentButton || currentButton?.id != buttonId))
         {
           store.emit(new FindButton(String(buttonId), (button) => {
             store.emit(new updateCurrentButton(button))
