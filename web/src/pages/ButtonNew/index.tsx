@@ -114,7 +114,7 @@ function ButtonNewForm({ selectedNetwork }) {
             router.push(`/Explore`);
           }else{
             store.emit(new UpdateCachedHexagons([]))
-            router.push(`/Explore/${markerFocusZoom}/${buttonData.latitude}/${buttonData.longitude}/?btn=${buttonData.id}`);
+            router.push(`/Explore/${markerFocusZoom}/${buttonData.latitude}/${buttonData.longitude}/${buttonData.id}`);
             alertService.success(t('button.created'))
           }
         },

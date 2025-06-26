@@ -53,7 +53,7 @@ export default function ButtonEdit() {
   };
 
   const onSuccess = (data) => {
-    router.push(`/Explore/${markerFocusZoom}/${data.latitude}/${data.longitude}?btn=${data.id}`);
+    router.push(`/Explore/${markerFocusZoom}/${data.latitude}/${data.longitude}/${data.id}`);
   };
 
   const onError = (err) => {
