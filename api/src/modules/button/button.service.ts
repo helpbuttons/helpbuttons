@@ -232,8 +232,6 @@ export class ButtonService {
     updateDto: UpdateButtonDto,
     currentUser: User,
   ) {
-    console.log('updating...')
-    console.log(updateDto)
     const currentButton = await this.findById(id, true);
     this.cacheManager.del(CacheKeys.FINDH3_CACHE_KEY)
     let location = {};
@@ -679,6 +677,9 @@ export class ButtonService {
   embbed(page: number, take: number) {
     return this.buttonRepository
       .find({
+        where: {
+          ...this.expiredBlockedConditions(),
+        },
         take: take,
         skip: take * page,
         order: {
