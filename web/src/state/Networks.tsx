@@ -11,7 +11,7 @@ import { GlobalState, store } from 'state';
 import { CreateNetworkDto } from 'shared/dtos/network.dto';
 import { Network } from 'shared/entities/network.entity';
 import { HttpStatus } from 'shared/types/http-status.enum';
-import { UpdateExploreSettings } from './Explore';
+import { ExploreViewMode, UpdateExploreSettings } from './Explore';
 import { useGlobalStore } from 'state';
 import { useEffect, useRef, useState } from 'react';
 import { SetupSteps } from 'shared/setupSteps';
@@ -175,6 +175,7 @@ export class SelectedNetworkFetched implements UpdateEvent {
   public update(state: GlobalState) {
     return produce(state, (newState) => {
       newState.networks.selectedNetwork = this.network
+      newState.explore.settings.viewMode = this.network.exploreSettings?.viewMode ? this.network.exploreSettings.viewMode : ExploreViewMode.LIST
       newState.networks.initialized = true;
     });
   }

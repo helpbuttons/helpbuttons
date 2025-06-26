@@ -100,6 +100,7 @@
     "both": "Map & List",
     "list": "List",
     "map": "Map",
+    "viewMode": "Select default View Mode",
     "hiddenButtons": "For privacy, there are {0} hidden _helpbuttons_."
   },
   "buttonFilters": {

@@ -63,7 +63,7 @@ export const exploreSettingsDefault: ExploreSettings = {
   loading: true,
   hexagonClicked: null,
   hexagonHighlight: null,
-  viewMode: null,
+  viewMode: ExploreViewMode.LIST,
   urlUpdated: false,
   forceRefetch: true,
 };
