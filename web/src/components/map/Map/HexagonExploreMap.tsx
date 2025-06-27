@@ -3,6 +3,7 @@ import { GeoJson, GeoJsonFeature, Marker, Overlay, Point } from 'pigeon-maps';
 import { GlobalState, store, useGlobalStore } from 'state';
 import {
   RecenterExplore,
+  UpdateFiltersToFilterButtonType,
   UpdateHexagonClicked, updateCurrentButton,
 } from 'state/Explore';
 import { HbMap } from '.';
@@ -110,6 +111,9 @@ export default function HexagonExploreMap({
     }
   }, [hexagonHighlight, hexagonClicked, geoJsonFeatures])
 
+  const filterButtonType = (btnTypeName) => {
+    store.emit(new UpdateFiltersToFilterButtonType(btnTypeName))
+  }
   return (
     <>
       {(exploreSettings.center && selectedNetwork) && (
@@ -278,8 +282,10 @@ export default function HexagonExploreMap({
                             style={{
                               color: btnType.cssColor,
                               fontWeight: 'bold',
+                              cursor: 'pointer',
                             }}
                             key={btnType.name}
+                            onClick={() => filterButtonType(btnType.name)}
                           >
                             <div
                               className="pigeon-map__hex-info"
