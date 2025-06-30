@@ -16,6 +16,14 @@ export default function Explore({
 }) {
     const router = useRouter();
 
+    const centerMapToButton = (button) => {
+      const _updateSettings: Partial<ExploreSettings> = {
+        center: [button.latitude, button.longitude],
+        zoom: markerFocusZoom,
+      }
+      store.emit(new UpdateExploreSettings(_updateSettings));
+    }
+
     const { buttonId, zoom, lat, lng } = router.query;
     const currentButton = useGlobalStore((state: GlobalState) => state.explore.currentButton)
     useEffect(() => {
@@ -23,6 +31,7 @@ export default function Explore({
         {
           store.emit(new FindButton(String(buttonId), (button) => {
             store.emit(new updateCurrentButton(button))
+            centerMapToButton(button)
           }, (error) => {
             if(error.errorName == ErrorName.ButtonNotFound)
             {
@@ -31,14 +40,9 @@ export default function Explore({
             }
           }))
         }else{
-            const _updateSettings: Partial<ExploreSettings> = {
-                center: [currentButton.latitude, currentButton.longitude],
-                zoom: markerFocusZoom,
-            }
-            store.emit(new UpdateExploreSettings(_updateSettings));
+          centerMapToButton(currentButton)
         }
       }, [buttonId])
-
     return <ExplorePage/>
 }
 
