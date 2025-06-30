@@ -247,11 +247,12 @@ const getCustomFields = (buttonTypes, selectedButtonTypes) => {
     return []
   }
   const filteredButtonTypes = buttonTypes.filter((buttonType) => {
-      
     if (selectedButtonTypes.indexOf(buttonType.name) > -1) {
       return true;
     }
-    return false;
+    // return false;
+    // return all custom fields, for advanced filters and order by on button list
+    return true;
   });
   let _customFields = filteredButtonTypes.map(
     (btnType) => btnType.customFields,
