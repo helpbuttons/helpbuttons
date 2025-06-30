@@ -353,7 +353,7 @@ export class ButtonService {
             ...this.expiredBlockedConditions(),
           },
           order: {
-            created_at: 'DESC',
+            updated_at: 'DESC',
           },
         })
         .then((buttons) => {
@@ -683,7 +683,7 @@ export class ButtonService {
         take: take,
         skip: take * page,
         order: {
-          created_at: 'DESC',
+          updated_at: 'DESC',
         },
       })
       .then((buttons) => this.filterExpired(buttons));
@@ -707,7 +707,7 @@ export class ButtonService {
         },
         take: 10,
         order: {
-          created_at: 'DESC',
+          updated_at: 'DESC',
         },
       })
       .then((buttons) => this.filterExpired(buttons))
