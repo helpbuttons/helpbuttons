@@ -341,7 +341,6 @@ export class ButtonService {
           `h3_cell_to_parent(cast (button.hexagon as h3index),${resolution}) IN(:...hexagons) AND deleted = false AND expired = false AND "awaitingApproval" = false`,
           { hexagons: hexagons },
         )
-        .limit(1000)
         .execute();
       const buttonsIds = buttonsOnHexagons.map((button) => button.id);
 

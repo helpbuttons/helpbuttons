@@ -465,14 +465,7 @@ const orderByClosestToCenter = (center, buttons) => {
 };
 
 export const orderByCreated = (buttons) => {
-  return [...buttons].sort((buttonA, buttonB) => {
-    if (buttonA.created_at < buttonB.created_at) {
-      return 1;
-    } else if (buttonA.created_at == buttonB.created_at) {
-      return 0;
-    }
-    return -1;
-  });
+  return buttons.sort((a,b) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime());
 };
 
 export const orderBy = (buttons, orderBy, center) => {
