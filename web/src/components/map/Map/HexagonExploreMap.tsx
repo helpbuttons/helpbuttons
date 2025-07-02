@@ -36,7 +36,7 @@ export default function HexagonExploreMap({
   const [centerBounds, setCenterBounds] = useState<Point>(null);
   const [geoJsonFeatures, setGeoJsonFeatures] = useState([])
   const [currentButtonHexagon, setCurrentButtonHexagon] = useState(null)
-
+  const [resolution, setResolution] = useState(0)
   const maxButtonsHexagon = useRef(1)
 
   const hexagonClicked = useStore(
@@ -58,6 +58,8 @@ export default function HexagonExploreMap({
   const filtersByLocation = useGlobalStore(
     (state: GlobalState) => state.explore.map.filters.where
   );
+
+  const [loadingNewResolution, setLoadingNewResolution] = useState(true)
 
   const currentButton = useGlobalStore((state: GlobalState) => state.explore.currentButton)
 
@@ -82,6 +84,13 @@ export default function HexagonExploreMap({
     }
   }, [filtersByLocation])
   const onBoundsChanged = ({ center, zoom, bounds }) => {
+    
+    const zoomFloor = Math.floor(zoom);
+    const newResolution = getZoomResolution(zoomFloor);
+    if(resolution != newResolution){
+      setResolution(() => newResolution)
+      setLoadingNewResolution(() => true)
+    }
     handleBoundsChange(bounds, center, zoom)
     setCenterBounds(center);
   };
@@ -109,6 +118,7 @@ export default function HexagonExploreMap({
     } else if (hexagonHighlight) {
       setHexagonClickedFeatures(() => geoJsonFeatures.find((feature) => feature.properties.hex == hexagonHighlight))
     }
+    setLoadingNewResolution(() => false)
   }, [hexagonHighlight, hexagonClicked, geoJsonFeatures])
 
   const filterButtonType = (btnTypeName) => {
@@ -130,7 +140,6 @@ export default function HexagonExploreMap({
             <GeoJson>
               
             {filteredCircle && <GeoJsonFeature feature={filteredCircle}/>}
-            
               {/* DRAW HEXAGONS ON MAP */}
               {!(exploreSettings.zoom >= showMarkersZoom)  && geoJsonFeatures.map((hexagonFeature) => (
                 <GeoJsonFeature
@@ -336,7 +345,7 @@ export default function HexagonExploreMap({
                 <IoStorefrontSharp />
               </button>
             </Overlay>
-            {exploreSettings.loading && (
+            {(exploreSettings.loading || loadingNewResolution) && (
               <Overlay anchor={centerBounds}>
                 <Loading />
               </Overlay>
