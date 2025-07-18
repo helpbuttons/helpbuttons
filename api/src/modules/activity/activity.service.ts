@@ -398,9 +398,10 @@ export class ActivityService {
   ) {
     try {
       console.log(
-        `new activity [${user.username}] ${payload.activityEventName} outbox? ${addToDailyMailResume}`,
+        `new activity ${user.username} ${payload.activityEventName} outbox? ${addToDailyMailResume}`,
       );
     } catch (err) {
+      console.log(`${JSON.stringify(user)}`)
       console.log(err);
     }
     const activity = {
