@@ -60,9 +60,9 @@ export default function ActivityLayout({ sessionUser }) {
     <div className="feed__container">
       <div className="feed-selector feed-selector--list-toggle">
         <div className='feed-selector__toggle-button'>
-        {countUnreadNotifications > 0 && 
+        {/* {countUnreadNotifications > 0 && 
           <span className='notif-circle feed-selector__notif-circle'>1</span>
-        }
+        } */}
           <Btn
             caption={t('activities.messages')}
             btnType={BtnType.tab}
