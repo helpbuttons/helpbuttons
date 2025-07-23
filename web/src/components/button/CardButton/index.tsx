@@ -286,14 +286,16 @@ function CardButtonSubmenu({ button }) {
             }}
             label={t('button.delete')}
           />
+        </>
+      )}
+      {isAdmin(sessionUser) && 
           <CardSubmenuOption
             onClick={() => {
               button.pin ? store.emit(new ButtonUnpin(button.id, () => alertService.success(t('button.unpinSuccess')))) : store.emit(new ButtonPin(button.id,() => alertService.success(t('button.pinSuccess'))))
             }}
             label={button.pin ? t('button.unpin') : t('button.pin')}
           />
-        </>
-      )}
+      }
     </CardSubmenu>
   );
 }
