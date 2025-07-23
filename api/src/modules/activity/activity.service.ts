@@ -174,7 +174,7 @@ export class ActivityService {
         // - if radius = 0, include user, else check if user is in radius.!
         const getUsersToNotify = (button) => {
           const tagQuery = button.tags
-            .map((tag) => `'${tag}' = any(tags)`)
+            .map((tag) => `'${tag.toLowerCase()}' = any(tags)`)
             .join(' OR ');
           const query = `select id, radius,center,ST_Distance(center, ST_Point(${button.longitude}, ${button.latitude},4326)::geography ) / 1000 as distance, tags from public.user where ${tagQuery}`;
           return this.entityManager
@@ -216,7 +216,6 @@ export class ActivityService {
             console.log(err);
           });
         }
-
         return this.createActivity(button.owner, payload, false);
       })
       .then(() => {
