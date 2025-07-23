@@ -28,6 +28,12 @@ export default function CookiesBanner() {
     store.emit(new SetCookieState(CookiesState.REJECTED))
   }
 
+  useEffect(() => {
+    if(sessionUser){
+      handleAcceptCookies()
+    }
+  }, [sessionUser])
+
   return (
     <>{(cookiesState == CookiesState.UNREAD )&&
       <div className="card-alert__container">

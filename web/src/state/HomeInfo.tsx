@@ -111,10 +111,10 @@ export class SetPageName implements UpdateEvent{
 
 
 export class SetCookieState implements UpdateEvent{
-  public constructor(private state: CookiesState){}
+  public constructor(private cookieState: CookiesState){}
   public update(state: GlobalState){
     return produce(state, (newState) => {
-      newState.homeInfo.cookiesState = this.state;
+      newState.homeInfo.cookiesState = this.cookieState;
     })
   }
 }
