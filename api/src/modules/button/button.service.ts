@@ -648,6 +648,18 @@ export class ButtonService {
     });
   }
 
+  findAll(page: number) {
+    return this.buttonRepository.find({
+      take: 10,
+      skip: page * 10,
+      order: { created_at: 'DESC' },
+      where: {
+        awaitingApproval: false,
+      },
+      relations: ['owner']
+    });
+  }
+
   approve(buttonId: string) {
     return this.buttonRepository.save({
       id: buttonId,

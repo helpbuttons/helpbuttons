@@ -203,3 +203,22 @@ export class ButtonUnpin implements WatchEvent, UpdateEvent {
     });
   }
 }
+
+export class ButtonFindAll implements WatchEvent {
+  public constructor(
+    private page: number = 0,
+    private onSuccess = undefined,
+  ) { }
+
+  public watch(state: GlobalState) {
+    return ButtonService.findAll(this.page).pipe(
+      map((buttonList) => {
+        this.onSuccess(buttonList);
+      }),
+      catchError((error) => {
+        this.onSuccess([]);
+        return of(undefined);
+      }),
+    );
+  }
+}

@@ -464,7 +464,6 @@ export function ButtonOwnerPhone({ user, button }) {
     <>
       {user?.publishPhone && (
         <>
-        {JSON.stringify(showPhone)}
           {!phone && 
             <Btn
               btnType={BtnType.corporative}

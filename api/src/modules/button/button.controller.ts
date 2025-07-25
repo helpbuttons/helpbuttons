@@ -271,4 +271,11 @@ export class ButtonController {
   unpin(@Param('buttonId') buttonId: string) {
     return this.buttonService.setPin(buttonId, false);
   }
+
+  @OnlyAdmin()
+  @Get('findAll/:page')
+  findAll(@Param('page') page: number, @CurrentUser() user: User)
+  {
+    return this.buttonService.findAll(page)
+  }
 }
