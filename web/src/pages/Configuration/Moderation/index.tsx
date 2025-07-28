@@ -6,6 +6,7 @@ import Btn, {
   BtnAction,
   BtnCaption,
   BtnType,
+  IconType,
 } from 'elements/Btn';
 import { TagsNav } from 'elements/Fields/FieldTags';
 import t from 'i18n';
@@ -19,6 +20,7 @@ import {
   IoArrowForward,
   IoBanOutline,
   IoCheckmarkCircleOutline,
+  IoHammerOutline,
 } from 'react-icons/io5';
 import { alertService } from 'services/Alert';
 import { readableTimeLeftToDate } from 'shared/date.utils';
@@ -29,13 +31,21 @@ import { getEmailPrefix } from 'shared/sys.helper';
 import { useButtonTypes } from 'shared/buttonTypes';
 import { SetMainPopupCurrentButton, SetMainPopupCurrentProfile } from 'state/HomeInfo';
 
+enum ModerationMode {
+  USERS,
+  APPROVAL,
+  APPROVED,
+  COMMUNICATION
+}
 export default function Moderation() {
   
+  const [mode, setMode] = useState(null)
+
   return (
     <>
       <Popup
         title={t('configuration.moderationList')}
-        linkBack="/Profile"
+        linkBack={mode == null ? "/Profile" : () => setMode(null)}
       >
         <div className="form__inputs-wrapper">
           <div className="form__field">
@@ -44,32 +54,42 @@ export default function Moderation() {
             </p>
           </div>
 
-          <Accordion title={t('moderation.usersList')}>
-            <ModerationUsersList />
-          </Accordion>
-          <Accordion
-            title={t('moderation.buttonsList')}
-          >
-            <ModerationHelpButtonsList />
-          </Accordion>
-          <Accordion
-            title={t('moderation.buttonsFindAll')}
-          >
-            <AllHelpButtonsList />
-          </Accordion>
+          {mode == null && <>
+            <Link href="#" onClick={() => setMode(ModerationMode.USERS)}>
+              <Btn
+                iconLeft={IconType.svg}
+                iconLink={<IoHammerOutline />}
+                caption={t('moderation.usersList')}
+              />
+            </Link>
+            <Link href="#" onClick={() => setMode(ModerationMode.APPROVAL)}>
+              <Btn
+                iconLeft={IconType.svg}
+                iconLink={<IoHammerOutline />}
+                caption={t('moderation.buttonsList')}
+              />
+            </Link>
+            <Link href="#" onClick={() => setMode(ModerationMode.APPROVED)}>
+              <Btn
+                iconLeft={IconType.svg}
+                iconLink={<IoHammerOutline />}
+                caption={t('moderation.buttonsApproved')}
+              />
+            </Link>
+            <Link href="#" onClick={() => setMode(ModerationMode.COMMUNICATION)}>
+              <Btn
+                iconLeft={IconType.svg}
+                iconLink={<IoHammerOutline />}
+                caption={t('moderation.adminCommunication')}
+              />
+            </Link>
+          </>}
           
-          <Accordion
-            title={t('moderation.adminCommunication')}
-          >
-            <div className="form__inputs-wrapper">
-                <div className="form__field">
-                  <div className="form__label">{t('moderation.adminCommunicationLabel')}</div>
-                  <div className="form__explain">{t('moderation.adminCommunicationExplain')}</div>
-                  <MessageNew onCreate={undefined}/>
-                              
-                </div>
-            </div>
-          </Accordion>
+
+          {mode == ModerationMode.USERS && <ModerationUsersList /> }
+          {mode == ModerationMode.APPROVAL && <ModerationHelpButtonsList /> }
+          {mode == ModerationMode.APPROVED && <AprovedButtonsList /> }
+          {mode == ModerationMode.COMMUNICATION && <NewAdminCommunication /> }
         </div>
       </Popup>
     </>
@@ -327,7 +347,7 @@ function ModerationHelpButtonsList() {
 }
 
 
-function AllHelpButtonsList() {
+function AprovedButtonsList() {
   const {
     handleSubmit,
     formState: { errors, isSubmitting },
@@ -423,4 +443,16 @@ function AllHelpButtonsList() {
 
     </>
   );
+}
+
+function NewAdminCommunication() {
+  return <>
+  <div className="form__inputs-wrapper">
+                <div className="form__field">
+                  <div className="form__label">{t('moderation.adminCommunicationLabel')}</div>
+                  <div className="form__explain">{t('moderation.adminCommunicationExplain')}</div>
+                  <MessageNew onCreate={undefined}/>
+                              
+                </div>
+            </div></>
 }
