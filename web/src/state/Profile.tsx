@@ -350,3 +350,16 @@ export class FindInvites implements WatchEvent {
       });
     }
   }
+
+  export class RequestGuestInvite implements WatchEvent {
+    public constructor(private onSuccess) {}
+  
+    public watch(state: GlobalState) {
+        return UserService.requestGuestInvite().pipe(
+          map((invite: Invite) => {
+            this.onSuccess(invite.id)
+          }),
+          catchError((error) => {return  of(undefined)})
+        )
+      }
+  }

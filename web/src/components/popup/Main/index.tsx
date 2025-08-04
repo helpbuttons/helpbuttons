@@ -12,6 +12,8 @@ import { ShowProfile } from "pages/p/[username]";
 import { useEffect } from "react";
 import { replaceUrl, usePreviousUrl } from "components/uri/builder";
 import LoginForm from "components/user/LoginForm";
+import { InviteForm } from "pages/Signup/Invite";
+import { SignupAsGuestForm } from "pages/Signup/guest";
 
 export default function MainPopup() {
   const pageName = useGlobalStore((state: GlobalState) => state.homeInfo.pageName)
@@ -68,6 +70,22 @@ export default function MainPopup() {
           <FaqSections />
         </Picker>
       )}
+      {(popupPage == MainPopupPage.SIGNUP_AS_GUEST) && (
+          <Picker
+            headerText={t('user.signup')}
+            closeAction={closePopup}
+          >
+            <SignupAsGuestForm />
+          </Picker>
+      )}
+      {popupPage == MainPopupPage.INVITE && (
+        <Picker
+          headerText={t('user.signup')}
+          closeAction={closePopup}
+        >
+          <InviteForm />
+        </Picker>
+      )}
       {(mainPopupUserProfile) && (
         <Picker
           headerText={t('user.otherProfileView')}
@@ -115,6 +133,9 @@ function useReplaceUrl(mainPopupUserProfile, mainPopupButton, popupPage) {
           break;
         case MainPopupPage.SIGNUP:
           replaceUrl(`/Signup`);
+          break;
+        case MainPopupPage.INVITE:
+          replaceUrl('/Signup/Invite')
           break;
         case MainPopupPage.PROFILE:
         case MainPopupPage.SHARE:

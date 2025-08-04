@@ -88,6 +88,7 @@ export function SignupForm() {
             locale: getLocale(),
             inviteCode: data.inviteCode,
             acceptPrivacyPolicy: data.acceptPrivacyPolicy,
+            qrcode: null
           },
           onSuccess,
           onError,
@@ -150,6 +151,13 @@ export function SignupForm() {
                 {t('user.loginLink')}
               </div>
             </div>
+            {selectedNetwork?.allowGuestCreation && 
+              <div className="popup__link">
+                <div onClick={() => store.emit(new SetMainPopup(MainPopupPage.SIGNUP_AS_GUEST))} className={`nav-bottom__link`}>
+                  {t('user.signupAsGuest')}
+                </div>
+              </div>
+            }
           </div>
         </div>
       </Form>
