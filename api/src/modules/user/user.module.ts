@@ -8,10 +8,11 @@ import { MailModule } from '../mail/mail.module';
 import { InviteModule } from '../invite/invite.module';
 import { TagModule } from '../tag/tag.module';
 import { StorageModule } from '../storage/storage.module';
+import { NetworkModule } from '../network/network.module';
 
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User]), MailModule, InviteModule, TagModule, StorageModule],
+  imports: [TypeOrmModule.forFeature([User]), MailModule, InviteModule, TagModule, StorageModule, NetworkModule],
   controllers: [UserController],
   providers: [UserService],
   exports: [UserService],

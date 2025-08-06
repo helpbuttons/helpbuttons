@@ -84,7 +84,8 @@ function Configuration() {
           nomeclaturePlural: data.nomeclaturePlural,
           requireApproval: data.requireApproval,
           slogan: data.slogan,
-          hideLocationDefault: data.hideLocationDefault
+          hideLocationDefault: data.hideLocationDefault,
+          allowGuestCreation: data.allowGuestCreation
         },
         (network) => {
           store.emit(new UpdateExploreSettings(data.exploreSettings));

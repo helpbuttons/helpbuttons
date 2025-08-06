@@ -14,6 +14,8 @@ export enum MainPopupPage {
   SHARE = 'share',
   FAQS = 'faqs',
   PROFILE = 'profile',
+  INVITE = 'invite',
+  SIGNUP_AS_GUEST = 'signupAsGuest'
 }
 export enum CookiesState {
   ACCEPTED = 'accepted',
@@ -27,7 +29,8 @@ export interface HomeInfoState {
   version: string;
   isInstallable: boolean;
   pageName: string;
-  cookiesState: CookiesState
+  cookiesState: CookiesState,
+  invitationCode: string;
 }
 
 export const homeInfoStateInitial = {
@@ -37,7 +40,8 @@ export const homeInfoStateInitial = {
   version: '?',
   isInstallable: false,
   pageName: '',
-  cookiesState: CookiesState.UNREAD
+  cookiesState: CookiesState.UNREAD,
+  invitationCode: null
 };
 
 export class SetMainPopup implements UpdateEvent {
@@ -53,6 +57,19 @@ export class SetMainPopup implements UpdateEvent {
   }
 }
 
+export class SetInvitationPopup implements UpdateEvent {
+  public constructor(private invitationCode) {}
+
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      newState.homeInfo.mainPopupPage = MainPopupPage.INVITE;
+      newState.homeInfo.mainPopupButton = null;
+      newState.explore.currentButton = null;
+      newState.homeInfo.mainPopupUserProfile = null;
+      newState.homeInfo.invitationCode = this.invitationCode;
+    });
+  }
+}
 export class FindAndSetMainPopupCurrentProfile implements WatchEvent {
   public constructor(private username: string) {}
   public watch(state: GlobalState) {
