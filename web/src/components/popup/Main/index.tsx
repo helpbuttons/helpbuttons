@@ -2,7 +2,7 @@ import { Picker } from "components/picker/Picker";
 import { GlobalState, store } from "state";
 import { MainPopupPage, SetMainPopup, SetMainPopupCurrentButton, SetMainPopupCurrentProfile } from "state/HomeInfo";
 import { useGlobalStore } from 'state';
-import { SignupForm } from "../../../pages/Signup";
+import { SignupAsGuestForm, SignupForm } from "../../../pages/Signup";
 import LoginClick from "../../../pages/LoginClick";
 import t from "i18n";
 import { ShareForm } from "components/share";
@@ -13,7 +13,6 @@ import { useEffect } from "react";
 import { replaceUrl, usePreviousUrl } from "components/uri/builder";
 import LoginForm from "components/user/LoginForm";
 import { InviteForm } from "pages/Signup/Invite";
-import { SignupAsGuestForm } from "pages/Signup/guest";
 
 export default function MainPopup() {
   const pageName = useGlobalStore((state: GlobalState) => state.homeInfo.pageName)
