@@ -40,7 +40,7 @@ export const networksInitial = {
 };
 
 
-export const useSelectedNetwork = (_selectedNetwork = null, onError = () => { console.log('error fetching network') }): Network => {
+export const useSelectedNetwork = (_selectedNetwork = null, onError = (err) => { console.log(err) }): Network => {
   const selectedNetwork = useGlobalStore((state: GlobalState) => state.networks.selectedNetwork);
   const initialized = useGlobalStore((state: GlobalState) => state.networks.initialized);
   const fetching = useRef(false)
@@ -53,7 +53,7 @@ export const useSelectedNetwork = (_selectedNetwork = null, onError = () => { co
         fetching.current = true;
         store.emit(new FetchDefaultNetwork(() => {
         }, (err) => {
-          onError()
+          onError(err)
         }))
 
       }

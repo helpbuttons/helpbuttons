@@ -87,12 +87,30 @@ function MyApp({ Component, pageProps }) {
     }
   }, [path])
 
+  const onFetchingNetworkError = (error) => {
+    if (error == 'network-not-found') {
+      alertService.error(t('networkNotFound'))
+      setFetchingNetworkError(true)
+    }
+
+    if (error == 'nobackend') {
+      alertService.error(
+        `Error: Backend not found, something went terribly wrong.`,
+      );
+      router.push('/Error');
+    }
+    dconsole.log(error);
+    return;
+  };
+  
+
   const config = useConfig(pageProps._config, onFetchingConfigError);
-  const selectedNetwork = useSelectedNetwork(pageProps._selectedNetwork);
+  const selectedNetwork = useSelectedNetwork(pageProps._selectedNetwork, onFetchingNetworkError);
   const setupPaths: string[] = [
     SetupSteps.CREATE_ADMIN_FORM,
     SetupSteps.FIRST_OPEN,
     SetupSteps.NETWORK_CREATION,
+    SetupSteps.SETUP_LOGIN
   ];
   useEffect(() => {
     if (
@@ -104,8 +122,15 @@ function MyApp({ Component, pageProps }) {
       path != SetupSteps.NETWORK_CREATION
     ) {
       router.push(SetupSteps.FIRST_OPEN);
-    }
-  }, [fetchingNetworkError, sessionUser])
+    }else if(fetchingNetworkError &&
+      !sessionUser &&
+      config &&
+      config.userCount > 0 &&
+      path != SetupSteps.FIRST_OPEN &&
+      path != SetupSteps.NETWORK_CREATION){
+        router.push(SetupSteps.SETUP_LOGIN);
+      }
+  }, [fetchingNetworkError, sessionUser, config])
 
   useEffect(() => {
     if (setupPaths.includes(path)) {
@@ -141,6 +166,13 @@ function MyApp({ Component, pageProps }) {
       setAuthorized(true);
       return;
     }
+
+    if (config && config.userCount > 0 && (path == SetupSteps.SETUP_LOGIN)
+    ) {
+      setAuthorized(true);
+      return;
+    }
+
     const loginToken = localStorageService.read(LocalStorageVars.ACCESS_TOKEN);
     if (loginToken && sessionUser === false && ['Embbed'].indexOf(pageName) < 0) {
       if (!isLoadingUser) {
