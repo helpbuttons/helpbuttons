@@ -522,7 +522,10 @@
     "hideLocationByDefaultLabel": "Exact location protection",
     "hideLocationByDefaultExplain": "Protect exact location in _helpbuttons_ by showing a wide area, users can deactivate this individually.",
     "hideLocationByDefaultText": "Hide exact location by default",
-    "requiredLocation": "Please pickup a place in the map for your network"
+    "requiredLocation": "Please pickup a place in the map for your network",
+    "allowGuestCreationLabel": "Allow anonymous signups",
+    "allowGuestCreationExplain": "When allowing anonymous signups, is important to remmember that your network will be easier exposed to spam",
+    "allowGuestCreation": "Allow annoymous signup"
   },
   "configure": {
     "browsePins": "",
