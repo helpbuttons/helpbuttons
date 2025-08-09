@@ -1,4 +1,4 @@
-import { PrivacyType } from "@src/shared/types/privacy.enum";
+import { PrivacyType } from "@src/shared/types/privacy.enum.js";
 
 export enum NotificationType {
     All,

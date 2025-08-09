@@ -1,13 +1,13 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { UserService } from './user.service';
-import { UserController } from './user.controller';
-import { User } from './user.entity';
-import { MailModule } from '../mail/mail.module';
-import { InviteModule } from '../invite/invite.module';
-import { TagModule } from '../tag/tag.module';
-import { StorageModule } from '../storage/storage.module';
+import { UserService } from './user.service.js';
+import { UserController } from './user.controller.js';
+import { User } from './user.entity.js';
+import { MailModule } from '../mail/mail.module.js';
+import { InviteModule } from '../invite/invite.module.js';
+import { TagModule } from '../tag/tag.module.js';
+import { StorageModule } from '../storage/storage.module.js';
 
 
 @Module({

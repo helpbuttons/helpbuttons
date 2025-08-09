@@ -1,11 +1,11 @@
 import { Module, forwardRef } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { NetworkService } from './network.service';
-import { NetworkController } from './network.controller';
-import { Network } from './network.entity';
-import { TagModule } from '../tag/tag.module';
-import { StorageModule } from '../storage/storage.module';
-import { UserModule } from '../user/user.module';
+import { NetworkService } from './network.service.js';
+import { NetworkController } from './network.controller.js';
+import { Network } from './network.entity.js';
+import { TagModule } from '../tag/tag.module.js';
+import { StorageModule } from '../storage/storage.module.js';
+import { UserModule } from '../user/user.module.js';
 import { CacheInterceptor, CacheModule } from '@nestjs/cache-manager';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 

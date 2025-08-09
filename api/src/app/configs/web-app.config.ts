@@ -1,6 +1,6 @@
 import { registerAs } from '@nestjs/config';
-import { NodeEnv } from '@src/shared/types';
-import { WebAppConfigs } from '../types/web.type';
+import { NodeEnv } from '@src/shared/types/index.js';
+import { WebAppConfigs } from '../types/web.type.js';
 
 export default registerAs('webAppConfigs', (): WebAppConfigs => {
   const configs = 

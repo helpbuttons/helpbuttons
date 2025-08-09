@@ -10,15 +10,15 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { CurrentUser } from '@src/shared/decorator/current-user';
-import { AllowGuest, OnlyRegistered } from '@src/shared/decorator/roles.decorator';
-import { HttpStatus } from '@src/shared/types/http-status.enum';
-import { UserUpdateDto } from '../user/user.dto';
-import { User } from '../user/user.entity';
+import { CurrentUser } from '@src/shared/decorator/current-user.js';
+import { AllowGuest, OnlyRegistered } from '@src/shared/decorator/roles.decorator.js';
+import { HttpStatus } from '@src/shared/types/http-status.enum.js';
+import { UserUpdateDto } from '../user/user.dto.js';
+import { User } from '../user/user.entity.js';
 
-import { SignupQRRequestDto, SignupRequestDto } from './auth.dto';
-import { AuthService } from './auth.service';
-import { LocalAuthGuard } from './guards/local-auth.guard';
+import { SignupQRRequestDto, SignupRequestDto } from './auth.dto.js';
+import { AuthService } from './auth.service.js';
+import { LocalAuthGuard } from './guards/local-auth.guard.js';
 
 @ApiTags('User')
 @Controller('users')

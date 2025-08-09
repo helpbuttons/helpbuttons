@@ -5,16 +5,16 @@
 
 import { Injectable } from '@nestjs/common';
 import { Cron } from '@nestjs/schedule';
-import { ButtonService } from './button.service';
+import { ButtonService } from './button.service.js';
 import { EntityManager } from 'typeorm';
-import { NetworkService } from '../network/network.service';
-import { MailService } from '../mail/mail.service';
-import { UserService } from '../user/user.service';
-import { User } from '../user/user.entity';
-import translate from '@src/shared/helpers/i18n.helper';
-import { getUrl } from '@src/shared/helpers/mail.helper';
-import { ActivityEventName } from '@src/shared/types/activity.list';
-import { notifyUser } from '@src/app/app.event';
+import { NetworkService } from '../network/network.service.js';
+import { MailService } from '../mail/mail.service.js';
+import { UserService } from '../user/user.service.js';
+import { User } from '../user/user.entity.js';
+import translate from '@src/shared/helpers/i18n.helper.js';
+import { getUrl } from '@src/shared/helpers/mail.helper.js';
+import { ActivityEventName } from '@src/shared/types/activity.list.js';
+import { notifyUser } from '@src/app/app.event.js';
 
 @Injectable()
 export class ButtonCron {

@@ -1,8 +1,8 @@
-import { BaseEntity } from '@src/shared/types/base.entity';
+import { BaseEntity } from '@src/shared/types/base.entity.js';
 import { Column, Entity, OneToMany, PrimaryColumn } from 'typeorm';
-import { Button } from '../button/button.entity';
-import { PrivacyType } from "@src/shared/types/privacy.enum";
-import { ButtonTemplate } from '../button/button.dto';
+import { Button } from '../button/button.entity.js';
+import { PrivacyType } from "@src/shared/types/privacy.enum.js";
+import { ButtonTemplate } from '../button/button.dto.js';
 
 
 @Entity()

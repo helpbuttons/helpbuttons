@@ -1,5 +1,5 @@
 import { DataSource } from 'typeorm';
-import { dataSourceOptions } from './orm.config';
+import { dataSourceOptions } from './orm.config.js';
 
 export default new DataSource({
   ...dataSourceOptions,

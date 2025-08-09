@@ -7,32 +7,32 @@ import { ConfigModule } from '@nestjs/config';
 import { MulterModule } from '@nestjs/platform-express';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { AuthModule } from '@src/modules/auth/auth.module';
-import { ButtonModule } from '@src/modules/button/button.module';
-import { MailModule } from '@src/modules/mail/mail.module';
-import { NetworkModule } from '@src/modules/network/network.module';
+import { AuthModule } from '@src/modules/auth/auth.module.js';
+import { ButtonModule } from '@src/modules/button/button.module.js';
+import { MailModule } from '@src/modules/mail/mail.module.js';
+import { NetworkModule } from '@src/modules/network/network.module.js';
 // import { PostModule } from '@src/modules/post/post.module';
-import { StorageModule } from '@src/modules/storage/storage.module';
-import { TagModule } from '@src/modules/tag/tag.module';
-import { TemplateButtonModule } from '@src/modules/template-button/template-button.module';
-import { UserCredentialModule } from '@src/modules/user-credential/user-credential.module';
-import { UserModule } from '@src/modules/user/user.module';
-import { AppLogger } from '@src/shared/middlewares/app-logger.middleware';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { dataSourceOptions } from './configs/orm.config';
-import webAppConfig from './configs/web-app.config';
-import { validate } from './validators/env.validator';
+import { StorageModule } from '@src/modules/storage/storage.module.js';
+import { TagModule } from '@src/modules/tag/tag.module.js';
+import { TemplateButtonModule } from '@src/modules/template-button/template-button.module.js';
+import { UserCredentialModule } from '@src/modules/user-credential/user-credential.module.js';
+import { UserModule } from '@src/modules/user/user.module.js';
+import { AppLogger } from '@src/shared/middlewares/app-logger.middleware.js';
+import { AppController } from './app.controller.js';
+import { AppService } from './app.service.js';
+import { dataSourceOptions } from './configs/orm.config.js';
+import webAppConfig from './configs/web-app.config.js';
+import { validate } from './validators/env.validator.js';
 import { EventEmitterModule } from '@nestjs/event-emitter';
-import { PostModule } from '@src/modules/post/post.module';
-import { ActivityModule } from '@src/modules/activity/activity.module';
-import { InviteModule } from '@src/modules/invite/invite.module';
-import { GeoModule } from '@src/modules/geo/geo.module';
+import { PostModule } from '@src/modules/post/post.module.js';
+import { ActivityModule } from '@src/modules/activity/activity.module.js';
+import { InviteModule } from '@src/modules/invite/invite.module.js';
+import { GeoModule } from '@src/modules/geo/geo.module.js';
 import { BullModule } from '@nestjs/bull';
-import { CommandModule } from 'nestjs-command';
-import { ButtonCron } from '@src/modules/button/button.cron';
-import { SetupModule } from '@src/modules/setup/setup.module';
-import { DeletemeModule } from '@src/modules/deleteme/deleteme.module';
+// import { CommandModule } from 'nestjs-command';
+import { ButtonCron } from '@src/modules/button/button.cron.js';
+import { SetupModule } from '@src/modules/setup/setup.module.js';
+import { DeletemeModule } from '@src/modules/deleteme/deleteme.module.js';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -42,7 +42,7 @@ import { DeletemeModule } from '@src/modules/deleteme/deleteme.module';
       load: [webAppConfig],
       validate: validate,
     }),
-    CommandModule,
+    // CommandModule,
     MailModule,
     // FIXME: READ this confs using ConfigService
     TypeOrmModule.forRoot(dataSourceOptions),

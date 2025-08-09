@@ -1,4 +1,4 @@
-import { nestedFlattenObjectFieldValue } from './flatten-object.helper';
+import { nestedFlattenObjectFieldValue } from './flatten-object.helper.js';
 
 export function fieldSorter(fields: string[]) {
     return function (a: any, b: any) {

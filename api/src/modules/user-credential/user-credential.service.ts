@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 
-import { UserCredential } from './user-credential.entity';
-import { uuid } from '@src/shared/helpers/uuid.helper';
+import { UserCredential } from './user-credential.entity.js';
+import { uuid } from '@src/shared/helpers/uuid.helper.js';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User } from '../user/user.entity';
+import { User } from '../user/user.entity.js';
 
 @Injectable()
 export class UserCredentialService {

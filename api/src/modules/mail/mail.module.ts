@@ -1,11 +1,11 @@
 import { Module, forwardRef } from '@nestjs/common';
 import { MailerModule } from '@nestjs-modules/mailer';
 
-import { MailService } from './mail.service';
-import { MailerModuleConfig } from './mailer-module.config';
-import { NetworkModule } from '../network/network.module';
+import { MailService } from './mail.service.js';
+import { MailerModuleConfig } from './mailer-module.config.js';
+import { NetworkModule } from '../network/network.module.js';
 import { BullModule } from '@nestjs/bull';
-import { MailConsumer } from './mail.processor';
+import { MailConsumer } from './mail.processor.js';
 @Module({
   imports: [
     MailerModule.forRootAsync({

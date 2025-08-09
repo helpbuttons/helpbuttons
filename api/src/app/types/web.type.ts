@@ -1,4 +1,4 @@
-import { NodeEnv } from '@src/shared/types';
+import { NodeEnv } from '@src/shared/types/index.js';
 
 export interface WebAppConfigs {
   nodeEnv: NodeEnv;

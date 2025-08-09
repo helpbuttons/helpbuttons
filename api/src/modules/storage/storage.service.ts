@@ -2,17 +2,17 @@ import {
   HttpException,
   Injectable,
 } from '@nestjs/common';
-import { HttpStatus } from '@src/shared/types/http-status.enum';
+import { HttpStatus } from '@src/shared/types/http-status.enum.js';
 
 import { InjectRepository } from '@nestjs/typeorm';
-import { uuid } from '@src/shared/helpers/uuid.helper';
+import { uuid } from '@src/shared/helpers/uuid.helper.js';
 import { Repository } from 'typeorm';
-import { ImageFile } from './image-file.entity';
-import { getFilesRoute, uploadDir } from './storage.utils';
-import { ErrorName } from '@src/shared/types/error.list';
+import { ImageFile } from './image-file.entity.js';
+import { getFilesRoute, uploadDir } from './storage.utils.js';
+import { ErrorName } from '@src/shared/types/error.list.js';
 import * as sharp from 'sharp';
-import { isImageData } from '@src/shared/helpers/imageIsFile';
-import { CustomHttpException } from '@src/shared/middlewares/errors/custom-http-exception.middleware';
+import { isImageData } from '@src/shared/helpers/imageIsFile.js';
+import { CustomHttpException } from '@src/shared/middlewares/errors/custom-http-exception.middleware.js';
 
 @Injectable()
 export class StorageService {

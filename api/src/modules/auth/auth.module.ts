@@ -1,18 +1,18 @@
 import { Module } from '@nestjs/common';
-import configs from '@src/config/configuration';
+import configs from '@src/config/configuration.js';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
-import { AuthService } from './auth.service';
-import { AuthController } from './auth.controller';
-import { UserCredentialModule } from '../user-credential/user-credential.module';
-import { UserModule } from '../user/user.module';
-import { MailModule } from '../mail/mail.module';
-import { TagModule } from '../tag/tag.module';
-import { LocalStrategy } from './strategies/local.strategy';
-import { JwtStrategy } from './strategies/jwt.strategy';
-import { StorageModule } from '../storage/storage.module';
-import { NetworkModule } from '../network/network.module';
-import { InviteModule } from '../invite/invite.module';
+import { AuthService } from './auth.service.js';
+import { AuthController } from './auth.controller.js';
+import { UserCredentialModule } from '../user-credential/user-credential.module.js';
+import { UserModule } from '../user/user.module.js';
+import { MailModule } from '../mail/mail.module.js';
+import { TagModule } from '../tag/tag.module.js';
+import { LocalStrategy } from './strategies/local.strategy.js';
+import { JwtStrategy } from './strategies/jwt.strategy.js';
+import { StorageModule } from '../storage/storage.module.js';
+import { NetworkModule } from '../network/network.module.js';
+import { InviteModule } from '../invite/invite.module.js';
 
 @Module({
   imports: [

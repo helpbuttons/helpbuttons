@@ -1,9 +1,7 @@
 import { HttpException, HttpStatus } from '@nestjs/common';
-import configs from '@src/config/configuration';
-import { SetupDtoOut } from '@src/modules/setup/setup.entity';
-
-const { Pool } = require('pg');
-
+import configs from '@src/config/configuration.js';
+import { SetupDtoOut } from '@src/modules/setup/setup.entity.js';
+import { Pool } from "pg";
 export const checkDatabase = async (
   config,
 ): Promise<{

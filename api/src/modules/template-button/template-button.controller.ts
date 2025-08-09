@@ -10,8 +10,8 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
-import { CreateTemplateButtonDto, UpdateTemplateButtonDto } from './template-button.dto';
-import { TemplateButtonService } from './template-button.service';
+import { CreateTemplateButtonDto, UpdateTemplateButtonDto } from './template-button.dto.js';
+import { TemplateButtonService } from './template-button.service.js';
 // import { FilterTemplateButtonsOrmDto } from '../dto/requests/filter-templateButtons-orm.dto';
 
 @ApiTags('templateButtons')
