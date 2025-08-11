@@ -133,7 +133,6 @@ function FieldLocationSearch({ isCustomAddress = false, placeholder, setResults,
 
     const searchAddress = () => {
         setIsSearching(() => true)
-        dconsole.log('searching... ', focusPoint, searchQuery.current)
         geoSearch(searchQuery.current, roundCoord(focusPoint[0]), roundCoord(focusPoint[1]), false, (places) => {
             if (places.length > 0) {
                 const placesFound = places.map((place, key) => {

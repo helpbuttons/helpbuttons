@@ -90,7 +90,7 @@ export function FieldAreaMapSettings({
   }
   const setCenter = (newCenter) => {
     setMapSettings((prevSettings) => {
-      return {...prevSettings, center: newCenter}
+      return {...prevSettings, center: newCenter()}
     })
   };
 

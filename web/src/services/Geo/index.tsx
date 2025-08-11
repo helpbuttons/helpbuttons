@@ -4,7 +4,7 @@ import { roundCoord } from 'shared/honeycomb.utils';
 // const opencage = require('opencage-api-client');
 export class GeoService {
   public static find(address: string, lat: string, lon: string, limited: boolean = false): Observable<any> {
-    const url = `geo/search/${limited ? 'limited' : 'full' }/${lat}/${lon}/${address}`
+    const url = `geo/search/${limited ? 'limited' : 'full' }/${lat ? lat : 0 }/${lon ? lon : 0 }/${address}`
     return httpService.get<any>(url)
   }
 
