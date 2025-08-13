@@ -165,6 +165,8 @@
     "setType": "Configuración de propiedades de _helpbutton_ ",
     "buttonTemplatePlaceHolder": "Escribe aquí el nombre de tu tipo de _helpbutton_",
     "sloganExplain": "Esta es una frase breve que da la bienvenida a tu red.",
+    "sloganLabel": "Frase bienvenida a tua red",
+    "sloganPlaceHolder": "ie. La red que apoya los otros",
     "hideLocationByDefaultExplain": "Protege por defecto la ubicación exacta de tus _helpbuttons_ mostrando un área amplia, los usuarios podrán desactivar esto si lo desean.",
     "areaPicked": "Centro: ({0},{1}) zoom: {2}",
     "zoomLevel": "Nivel de Zoom",
