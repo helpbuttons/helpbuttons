@@ -282,28 +282,6 @@ export class updateCurrentButton implements UpdateEvent {
   public update(state: GlobalState) {
     return produce(state, (newState) => {
       newState.explore.currentButton = this.button;
-      if (this.button) {
-        // if(!state.explore.currentButton)
-        // {
-        //   newState.explore.settings.prevCenter = state.explore.settings.center
-        //   newState.explore.settings.prevZoom = state.explore.settings.zoom  
-        // }
-        
-        // if (this.button.hideAddress) {
-        //   newState.explore.settings.hexagonClicked = this.button.hexagon
-        // }
-
-        // newState.explore.settings.center = roundCoords([this.button.latitude, this.button.longitude])
-        // newState.explore.settings.zoom = markerFocusZoom
-        dconsole.log('[updateCurrentButton] update')
-        // newState.explore.map.boundsFilteredButtons = [this.button]
-        
-      } else if (!this.button) {
-        // newState.explore.settings.center = state.explore.settings.prevCenter
-        // newState.explore.settings.zoom = state.explore.settings.prevZoom;
-        // newState.explore.settings.hexagonClicked = null
-      }
-      dconsole.log(`[updateCurrentButton] update`)
     });
   }
 }
