@@ -32,7 +32,7 @@ import { randomBytes } from 'crypto'
 import MetadataSEOFromStore, { MetadataSEO } from 'components/seo';
 import dconsole from 'shared/debugger';
 import Head from 'next/head';
-import CookiesBanner, { requireAcceptedCookies } from 'components/home/CookiesBanner';
+import CookiesBanner from 'components/home/CookiesBanner';
 import { SetPageName } from 'state/HomeInfo';
 import { localStorageService, LocalStorageVars } from 'services/LocalStorage';
 
@@ -272,7 +272,6 @@ function MyApp({ Component, pageProps }) {
     }
   }, [pageProps])
 
-  requireAcceptedCookies(['Login', 'Signup', 'ButtonNew'])
   return <>
     <MetadataSEO {...pageProps.metadata} nonce={nonce} />
     {(function () {

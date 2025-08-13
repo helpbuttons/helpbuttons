@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 //imported internal classes, variables, files or functions
-import { GlobalState, store } from 'state';
+import { GlobalState, store, useGlobalStore } from 'state';
 import { RequestGuestInvite, SignupUser } from 'state/Profile';
 
 //imported react components
@@ -24,11 +24,12 @@ import { useStore } from 'state';
 import { Network } from 'shared/entities/network.entity';
 import { NextPageContext } from 'next';
 import { setMetadata } from 'services/ServerProps';
-import { MainPopupPage, SetInvitationPopup, SetMainPopup } from 'state/HomeInfo';
+import { CookiesState, MainPopupPage, SetInvitationPopup, SetMainPopup } from 'state/HomeInfo';
 import { useMetadataTitle } from 'state/Metadata';
 import dconsole from 'shared/debugger';
 import HomeInfo from 'pages/HomeInfo';
 import { getInvitationLink } from 'pages/Profile/Invites';
+import { AcceptCookiesWarn } from 'components/home/CookiesBanner';
 
 export default function Signup( {metadata})
 {
@@ -107,6 +108,11 @@ export function SignupForm() {
 
   const inviteCode = watch('inviteCode')
 
+  const cookieState = useGlobalStore(
+    (state: GlobalState) => state.homeInfo.cookiesState,
+  );
+
+
   const params: URLSearchParams = new URLSearchParams(router.query);
   useEffect(() => {
     if(router?.query)
@@ -138,8 +144,9 @@ export function SignupForm() {
                 btnType={BtnType.submit}
                 caption={t('user.register')}
                 contentAlignment={ContentAlignment.center}
-                disabled={isSubmitting}
+                disabled={isSubmitting || cookieState != CookiesState.ACCEPTED}
               />
+              <AcceptCookiesWarn cookieState={cookieState}/>
             </div>
             <div className="popup__link">
               <div onClick={() => store.emit(new SetMainPopup(MainPopupPage.LOGIN))} className={`nav-bottom__link`}>
