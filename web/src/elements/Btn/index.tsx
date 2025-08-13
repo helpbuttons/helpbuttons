@@ -210,13 +210,13 @@ export function BtnAction({ icon, onClick }) {
   );
 }
 
-export function BtnCaption({ caption, icon, onClick, color }) {
+export function BtnCaption({ caption, icon, onClick, color, selected }) {
   const cssColor = (cssColor: string) => {
     return { '--button-color': cssColor } as React.CSSProperties;
   };
 
   return (
-    <span style={cssColor(color)}>
+    <span style={cssColor(color)} className={selected ? 'btn-filter-active' : ''}>
       <Btn
         btnType={BtnType.filterEmoji}
         iconLeft={IconType.svg}

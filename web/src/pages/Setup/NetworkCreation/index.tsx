@@ -46,7 +46,8 @@ function NetworkCreation() {
       nomeclaturePlural: 'Helpbuttons',
       requireApproval: false,
       slogan: '',
-      hideLocationDefault: false
+      hideLocationDefault: false,
+      allowGuestCreation: false
     },
   });
 
@@ -54,7 +55,7 @@ function NetworkCreation() {
     store,
     (state: GlobalState) => state.sessionUser,
   );
-  register("exploreSettings", { required: true })
+  register("exploreSettings", { required: {value: true, message: t('configuration.requiredLocation')} })
   const onSubmit = (data) => {
 
     store.emit(
@@ -77,7 +78,8 @@ function NetworkCreation() {
           locale: data.locale,
           requireApproval: data.requireApproval,
           slogan: data.slogan,
-          hideLocationDefault: data.hideLocationDefault
+          hideLocationDefault: data.hideLocationDefault,
+          allowGuestCreation: data.allowGuestCreation
         },
         () => {
           const onComplete = () => {

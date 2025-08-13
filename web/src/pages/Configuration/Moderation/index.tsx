@@ -6,6 +6,7 @@ import Btn, {
   BtnAction,
   BtnCaption,
   BtnType,
+  IconType,
 } from 'elements/Btn';
 import { TagsNav } from 'elements/Fields/FieldTags';
 import t from 'i18n';
@@ -19,22 +20,32 @@ import {
   IoArrowForward,
   IoBanOutline,
   IoCheckmarkCircleOutline,
+  IoHammerOutline,
 } from 'react-icons/io5';
 import { alertService } from 'services/Alert';
 import { readableTimeLeftToDate } from 'shared/date.utils';
 import { Role } from 'shared/types/roles';
-import { ButtonApprove, ButtonModerationList } from 'state/Button';
+import { ButtonApprove, ButtonFindAll, ButtonModerationList } from 'state/Button';
 import { ModerationList, UpdateRole } from 'state/Users';
 import { getEmailPrefix } from 'shared/sys.helper';
 import { useButtonTypes } from 'shared/buttonTypes';
+import { SetMainPopupCurrentButton, SetMainPopupCurrentProfile } from 'state/HomeInfo';
 
+enum ModerationMode {
+  USERS,
+  APPROVAL,
+  APPROVED,
+  COMMUNICATION
+}
 export default function Moderation() {
   
+  const [mode, setMode] = useState(null)
+
   return (
     <>
       <Popup
         title={t('configuration.moderationList')}
-        linkBack="/Profile"
+        linkBack={mode == null ? "/Profile" : () => setMode(null)}
       >
         <div className="form__inputs-wrapper">
           <div className="form__field">
@@ -43,26 +54,42 @@ export default function Moderation() {
             </p>
           </div>
 
-          <Accordion title={t('moderation.usersList')}>
-            <ModerationUsersList />
-          </Accordion>
-          <Accordion
-            title={t('moderation.buttonsList')}
-          >
-            <ModerationHelpButtonsList />
-          </Accordion>
-          <Accordion
-            title={t('moderation.adminCommunication')}
-          >
-            <div className="form__inputs-wrapper">
-                <div className="form__field">
-                  <div className="form__label">{t('moderation.adminCommunicationLabel')}</div>
-                  <div className="form__explain">{t('moderation.adminCommunicationExplain')}</div>
-                  <MessageNew onCreate={undefined}/>
-                              
-                </div>
-            </div>
-          </Accordion>
+          {mode == null && <>
+            <Link href="#" onClick={() => setMode(ModerationMode.USERS)}>
+              <Btn
+                iconLeft={IconType.svg}
+                iconLink={<IoHammerOutline />}
+                caption={t('moderation.usersList')}
+              />
+            </Link>
+            <Link href="#" onClick={() => setMode(ModerationMode.APPROVAL)}>
+              <Btn
+                iconLeft={IconType.svg}
+                iconLink={<IoHammerOutline />}
+                caption={t('moderation.buttonsList')}
+              />
+            </Link>
+            <Link href="#" onClick={() => setMode(ModerationMode.APPROVED)}>
+              <Btn
+                iconLeft={IconType.svg}
+                iconLink={<IoHammerOutline />}
+                caption={t('moderation.buttonsApproved')}
+              />
+            </Link>
+            <Link href="#" onClick={() => setMode(ModerationMode.COMMUNICATION)}>
+              <Btn
+                iconLeft={IconType.svg}
+                iconLink={<IoHammerOutline />}
+                caption={t('moderation.adminCommunication')}
+              />
+            </Link>
+          </>}
+          
+
+          {mode == ModerationMode.USERS && <ModerationUsersList /> }
+          {mode == ModerationMode.APPROVAL && <ModerationHelpButtonsList /> }
+          {mode == ModerationMode.APPROVED && <AprovedButtonsList /> }
+          {mode == ModerationMode.COMMUNICATION && <NewAdminCommunication /> }
         </div>
       </Popup>
     </>
@@ -249,7 +276,6 @@ function ModerationHelpButtonsList() {
     }
   const buttonTypes = useButtonTypes();
 
-
   return (
     <>
       {buttons?.length > 0 ? (
@@ -282,22 +308,23 @@ function ModerationHelpButtonsList() {
                   <td className='user-list__table-body-cell'><TagsNav tags={button.tags}/></td>
                   <td className='user-list__table-body-cell'>{button.address}</td>
                   <td className='user-list__table-body-cell'>
-                    {button.awaitingApproval == true && 
-                          <Btn
-                          btnType={BtnType.small}
-    
-                          borderColor={'green'}
-                          caption={t('moderation.confirm')}
-                          iconLink={null}
-                          onClick={() => approveButton(button.id)}
-                        />
-                    }
+                      <Btn
+                      btnType={BtnType.small}
+
+                      borderColor={'green'}
+                      caption={t('moderation.confirm')}
+                      iconLink={null}
+                      onClick={() => approveButton(button.id)}
+                    />
                     <Btn
                       btnType={BtnType.small}
                       borderColor={'green'}
                       caption={t('moderation.preview')}
                       iconLink={null}
-                      onClick={() => router.push(`/ButtonFile/${button.id}`)}
+                      onClick={(e) => {
+                        e.preventDefault()
+                        store.emit(new SetMainPopupCurrentButton(button))
+                      }}
                     />
                     <Btn
                       btnType={BtnType.small}
@@ -317,4 +344,115 @@ function ModerationHelpButtonsList() {
 
     </>
   );
+}
+
+
+function AprovedButtonsList() {
+  const {
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    register,
+    setValue,
+    watch,
+    reset,
+  } = useForm();
+
+
+  const [buttons, setButtons] = useState(null);
+  const [page, setPage] = useState(0);
+
+  useEffect(() => {
+    store.emit(
+      new ButtonFindAll(page,(buttonsList) =>
+        setButtons(buttonsList),
+      ),
+    );
+  }, [page]);
+
+  const approveButton = (buttonId) => {
+      store.emit(
+        new ButtonApprove(buttonId,() =>
+        {
+          alertService.info('button approved');
+          setButtons((prevButtons) => prevButtons.filter((button) => button.id != buttonId))
+        })
+      );
+    }
+  const buttonTypes = useButtonTypes();
+
+
+  return (
+    <>
+      {buttons?.length > 0 ? (
+        <div className='user-list__wrapper'>
+          {/* <FieldText
+            name="query"
+            placeholder={t('common.search')}
+            {...register('query')}
+          /> */}
+         
+          
+         <table className='user-list__table'>
+            <thead className='user-list__table-header'>
+              <tr className='user-list__table-header-row'>
+                <th className='user-list__table-header-cell'>{t('button.titleLabel')}</th>
+                <th className='user-list__table-header-cell'>{t('button.typeLabel')}</th>
+                <th className='user-list__table-header-cell'>{t('button.tagsLabel')}</th>
+                <th className='user-list__table-header-cell'>{t('moderation.created_at')}</th>
+                <th className='user-list__table-header-cell'>{t('button.authorTitle')}</th>
+                <th className='user-list__table-header-cell'>{t('moderation.actions')}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {buttons.map((button, idx) => (
+                <tr className='user-list__table-body-row'>
+                  <td className='user-list__table-body-cell'>{button.title}</td>
+                  <td className='user-list__table-body-cell'>
+                    <BtnButtonType type={buttonTypes.find((type) => type.name == button.type)}/>
+                  </td>
+                  <td className='user-list__table-body-cell'><TagsNav tags={button.tags}/></td>
+                  <td className='user-list__table-body-cell'>{readableTimeLeftToDate(button.updated_at)}</td>
+                  <td className='user-list__table-body-cell'><a onClick={() => store.emit(new SetMainPopupCurrentProfile(button.owner))}>{button.owner.name}</a></td>
+                  <td className='user-list__table-body-cell'>
+                    <Btn
+                      btnType={BtnType.small}
+                      borderColor={'green'}
+                      caption={t('moderation.view')}
+                      iconLink={null}
+                      onClick={(e) => {
+                        e.preventDefault()
+                        store.emit(new SetMainPopupCurrentButton(button))
+                      }}
+                    />
+                    <Btn
+                      btnType={BtnType.small}
+                      borderColor={'orange'}
+                      caption={t('moderation.edit')}
+                      iconLink={null}
+                      onClick={() => router.push(`/ButtonEdit/${button.id}`)}
+                    />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      ) : t('moderation.emptyButtonList')}
+      <Pagination page={page} setPage={setPage} array={buttons} take={10}/>
+
+
+    </>
+  );
+}
+
+function NewAdminCommunication() {
+  return <>
+  <div className="form__inputs-wrapper">
+                <div className="form__field">
+                  <div className="form__label">{t('moderation.adminCommunicationLabel')}</div>
+                  <div className="form__explain">{t('moderation.adminCommunicationExplain')}</div>
+                  <MessageNew onCreate={undefined}/>
+                              
+                </div>
+            </div></>
 }

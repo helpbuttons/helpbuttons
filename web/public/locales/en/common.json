@@ -100,6 +100,7 @@
     "both": "Map & List",
     "list": "List",
     "map": "Map",
+    "viewMode": "Select default View Mode",
     "hiddenButtons": "For privacy, there are {0} hidden _helpbuttons_."
   },
   "buttonFilters": {
@@ -388,7 +389,13 @@
     "pleaseAcceptCookies": "You have to accept the usage of cookies if you wish to signup or login",
     "endorse": "Endorse",
     "revokeEndorse": "Withdraw endorsement",
-    "endorsed": "Trusted"
+    "endorsed": "Trusted",
+    "signupAsGuest": "Signup anonymous",
+    "signupGuestDetails": "Proceed with signup details",
+    "explainPublishAsGuest": "Signup as anonymous, please generate a new code, that you can use it for logging in to check your _helpbuttons_",
+    "generateCode": "Generate new anonymous code",
+    "explainUseGuestCode": "Please store this code, it is your only way to keep track of your publications",
+    "explainGuestDetails": "We need some details to complete your signup"
   },
   "picker": {
     "headerText": "Choose a location"
@@ -494,7 +501,7 @@
     "descriptionLabel": "Network description",
     "nomeclatureLabel": "Rename your _helpbuttons_",
     "nomeclatureExplain": "Write a name for your publications on the app, default is 'helpbutton' but you can display any name. Maybe this network is made to receive 'orders', or just something general like 'publications'. This name will be displayed instead of _helpbuttons_ and let your users understand what's about. Write first in singular and then in plural.",
-    "nomeclaturePlaceHolder": "Type new name",
+    "nomeclaturePlaceHolder": "Type n>ew name",
     "moderateNetwork": "Moderate Network",
     "blockedExplain": "These users are blocked from your network. To edit visit their profiles",
     "adminUsers": "These are your Network's Administrator. To edit visit their profiles",
@@ -514,7 +521,11 @@
     "areaPicked": "Center: ({0},{1}) zoom: {2}",
     "hideLocationByDefaultLabel": "Exact location protection",
     "hideLocationByDefaultExplain": "Protect exact location in _helpbuttons_ by showing a wide area, users can deactivate this individually.",
-    "hideLocationByDefaultText": "Hide exact location by default"
+    "hideLocationByDefaultText": "Hide exact location by default",
+    "requiredLocation": "Please pickup a place in the map for your network",
+    "allowGuestCreationLabel": "Allow anonymous signups",
+    "allowGuestCreationExplain": "When allowing anonymous signups, is important to remmember that your network will be easier exposed to spam",
+    "allowGuestCreation": "Allow annoymous signup"
   },
   "configure": {
     "browsePins": "",
@@ -660,7 +671,6 @@
     "save": ""
   },
   "seo": {
-    "embbed": "",
-    "buttonEdit": ""
+    "embbed": ""
   }
 }

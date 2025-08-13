@@ -80,6 +80,10 @@ export class UserService {
     return httpService.post<Invite>(`users/createInvite`, newInvitation);
   }
 
+  public static requestGuestInvite(): Observable<Invite> {
+    return httpService.post<Invite>(`users/requestGuestInvite`);
+  }
+
   public static invite(code: string): Observable<any> {
     return httpService.get<any>(`users/invite/${code}`);
   }

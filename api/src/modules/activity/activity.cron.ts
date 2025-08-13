@@ -14,6 +14,7 @@ import translate, {
 import { UserService } from '../user/user.service';
 import { getUrl } from '@src/shared/helpers/mail.helper';
 import { NetworkService } from '../network/network.service';
+import { getButtonActivity, getPostActivity } from './activity.transform';
 
 const outboxConditions = `created_at between now() - INTERVAL '2 day' AND now()`;
 @Injectable()
@@ -69,10 +70,9 @@ export class ActivityCron {
   sendDailyUserOutbox(userId, outbox: Activity[]) {
     return this.userService.findById(userId).then((user) => {
       const activitiesToSend = outbox.map((activity) => {
-        const payload = JSON.parse(activity.data);
         switch (activity.eventName) {
           case ActivityEventName.NewPost: {
-            const post = payload.post;
+            const post = getPostActivity(activity.data);
             const button = post.button;
             const author = post.author;
             return {
@@ -92,8 +92,7 @@ export class ActivityCron {
             break;
           }
           case ActivityEventName.NewButton: {
-            const { button } = payload;
-            
+            const button = getButtonActivity(activity.data);
             const interests = user.tags.filter(x => button.tags.includes(x));
 
             return {

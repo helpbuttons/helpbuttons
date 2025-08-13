@@ -1,10 +1,10 @@
 //Form component with the main fields for signup in the platform
 //imported from libraries
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 //imported internal classes, variables, files or functions
-import { store } from 'state';
+import { GlobalState, store, useGlobalStore } from 'state';
 import { Login } from 'state/Profile';
 import { NavigateTo } from 'state/Routes';
 import Form from 'elements/Form';
@@ -15,7 +15,8 @@ import { Link } from 'elements/Link';
 import { useRouter } from 'next/router';
 import t from 'i18n';
 import { alertService } from 'services/Alert';
-import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
+import { CookiesState, MainPopupPage, SetMainPopup } from 'state/HomeInfo';
+import { AcceptCookiesWarn } from 'components/home/CookiesBanner';
 
 export default function LoginForm() {
   const {
@@ -26,6 +27,10 @@ export default function LoginForm() {
   const [errorMsg, setErrorMsg] = useState(undefined);
   const router = useRouter();
 
+  const cookieState = useGlobalStore(
+    (state: GlobalState) => state.homeInfo.cookiesState,
+  );
+  
   const onSubmit = (data) => {
     store.emit(
       new Login(data.email.toLowerCase(), data.password, onSuccess, onError),
@@ -73,11 +78,13 @@ export default function LoginForm() {
         <div className="form__btn-wrapper">
           <Btn
             submit={true}
+            disabled={isSubmitting || cookieState != CookiesState.ACCEPTED}
             btnType={BtnType.submit}
             caption={t('user.loginButton')}
             contentAlignment={ContentAlignment.center}
             isSubmitting={isSubmitting}
           />
+          <AcceptCookiesWarn cookieState={cookieState}/>
           <div className="popup__link">
             <div
               onClick={() => store.emit(new SetMainPopup(MainPopupPage.REQUEST_LINK))}

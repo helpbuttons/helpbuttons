@@ -73,7 +73,8 @@ export class NetworkService {
       nomeclature: createDto.nomeclature,
       nomeclaturePlural: createDto.nomeclaturePlural,
       requireApproval: createDto.requireApproval,
-      hideLocationDefault: createDto.hideLocationDefault
+      hideLocationDefault: createDto.hideLocationDefault,
+      allowGuestCreation: createDto.allowGuestCreation,
     };
     await getManager().transaction(
       async (transactionalEntityManager) => {
@@ -219,7 +220,8 @@ export class NetworkService {
       nomeclature: updateDto.nomeclature,
       nomeclaturePlural: updateDto.nomeclaturePlural,
       requireApproval: updateDto.requireApproval,
-      hideLocationDefault: updateDto.hideLocationDefault
+      hideLocationDefault: updateDto.hideLocationDefault,
+      allowGuestCreation: updateDto.allowGuestCreation,
     };
     const buttonTemplatesNew = network.buttonTemplates.filter((btnTemplate) => !btnTemplate.hide).map((btnTemplate) => btnTemplate.name)
 
@@ -379,6 +381,14 @@ export class NetworkService {
     return this.findDefaultNetwork()
       .then((network) => {
         return network.buttonTemplates
+      })
+  }
+
+  public allowedGuestCreation()
+  {
+    return this.findDefaultNetwork()
+      .then((network) => {
+        return network.allowGuestCreation
       })
   }
 }

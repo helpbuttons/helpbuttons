@@ -152,7 +152,7 @@ export default function AdvancedFilters({
                       {...register('query')}
                     >
                       <TagList tags={tags} remove={remove}/>
-                      <AllSuggestedTags word={query.substring(query.lastIndexOf(" ")+1)} maxTags={5} tags={tags} addTag={(tag) => {addTag(tag); setValue('query',updateQueryWhenTagAdded(query, tag))}}/>
+                      <AllSuggestedTags word={query.substring(query.lastIndexOf(" ")+1)} maxTags={10} tags={tags} addTag={(tag) => {addTag(tag); setValue('query',updateQueryWhenTagAdded(query, tag))}}/>
                       <TagFollow tags={tags}/>
                     </FieldText>
                     <Accordion icon={<IoList/>} title={t('buttonFilters.byCategory')}>

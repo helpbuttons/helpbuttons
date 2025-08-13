@@ -149,6 +149,14 @@ function NetworkForm({
               text={t('moderation.requireApproval')}
               onChanged={(value) => setValue('requireApproval', value)}
             />
+            <FieldCheckbox
+              name='allowGuestCreation'
+              label={t('configuration.allowGuestCreationLabel')}
+              explain={t('configuration.allowGuestCreationExplain')}
+              defaultValue={watch('allowGuestCreation')}
+              text={t('configuration.allowGuestCreation')}
+              onChanged={(value) => setValue('allowGuestCreation', value)}
+            />
             <FieldLanguagePick onChange={(value) => setValue('locale',value)} defaultValue={watch('locale')}/>
 
             {/* https://github.com/helpbuttons/helpbuttons/issues/290 */}

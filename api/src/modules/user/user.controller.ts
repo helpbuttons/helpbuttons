@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Request } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Request, UnauthorizedException } from '@nestjs/common';
 import { UserService } from './user.service';
 import { ApiTags } from '@nestjs/swagger';
 import { AllowGuest, OnlyAdmin, OnlyRegistered } from '@src/shared/decorator/roles.decorator';
@@ -12,6 +12,7 @@ import { nomailString } from '../auth/auth.service';
 import { notifyUser } from '@src/app/app.event';
 import { ActivityEventName } from '@src/shared/types/activity.list';
 import { EventEmitter2 } from '@nestjs/event-emitter';
+import { NetworkService } from '../network/network.service';
 
 @ApiTags('User')
 @Controller('users')
@@ -19,6 +20,7 @@ export class UserController {
   constructor(
     private readonly userService: UserService,
     private readonly inviteService: InviteService,
+    private readonly networkService: NetworkService,
     private eventEmitter: EventEmitter2,
   ) {}
 
@@ -59,6 +61,19 @@ export class UserController {
   @Post('createInvite')
   async createInvite(@Body() newInvitation: InviteCreateDto, @CurrentUser() user: User) {
     return await this.inviteService.create(newInvitation, user);
+  }
+
+  @AllowGuest()
+  @Post('requestGuestInvite')
+  async requestGuestInvite() {
+    return await this.networkService.allowedGuestCreation().then((allowedGuestCreation) => {
+      if(!allowedGuestCreation){
+        throw new UnauthorizedException()
+      }
+      return this.inviteService.createGuest();
+      }
+    )
+    
   }
 
   @OnlyAdmin()
@@ -120,4 +135,6 @@ export class UserController {
       notifyUser(this.eventEmitter,ActivityEventName.RevokeEndorsed, {user, sessionUser})
     });
   }
+
+  // create new invite.. per ip address ? 
 }

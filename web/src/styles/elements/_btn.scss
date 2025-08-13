@@ -669,3 +669,9 @@ $btn-font-size-medium: $font-size-medium;
   }
 
 }
+
+
+.nav-header__filters .btn-filter-active button{
+  background-color: black;
+  color: white;
+}

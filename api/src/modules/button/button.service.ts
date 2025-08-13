@@ -341,7 +341,6 @@ export class ButtonService {
           `h3_cell_to_parent(cast (button.hexagon as h3index),${resolution}) IN(:...hexagons) AND deleted = false AND expired = false AND "awaitingApproval" = false`,
           { hexagons: hexagons },
         )
-        .limit(1000)
         .execute();
       const buttonsIds = buttonsOnHexagons.map((button) => button.id);
 
@@ -353,7 +352,7 @@ export class ButtonService {
             ...this.expiredBlockedConditions(),
           },
           order: {
-            created_at: 'DESC',
+            updated_at: 'DESC',
           },
         })
         .then((buttons) => {
@@ -649,6 +648,18 @@ export class ButtonService {
     });
   }
 
+  findAll(page: number) {
+    return this.buttonRepository.find({
+      take: 10,
+      skip: page * 10,
+      order: { created_at: 'DESC' },
+      where: {
+        awaitingApproval: false,
+      },
+      relations: ['owner']
+    });
+  }
+
   approve(buttonId: string) {
     return this.buttonRepository.save({
       id: buttonId,
@@ -683,7 +694,7 @@ export class ButtonService {
         take: take,
         skip: take * page,
         order: {
-          created_at: 'DESC',
+          updated_at: 'DESC',
         },
       })
       .then((buttons) => this.filterExpired(buttons));
@@ -707,7 +718,7 @@ export class ButtonService {
         },
         take: 10,
         order: {
-          created_at: 'DESC',
+          updated_at: 'DESC',
         },
       })
       .then((buttons) => this.filterExpired(buttons))

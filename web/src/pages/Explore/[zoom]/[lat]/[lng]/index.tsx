@@ -2,7 +2,7 @@ import { NextPageContext } from 'next';
 import { setMetadata } from 'services/ServerProps';
 import t from 'i18n';
 import { store } from 'state';
-import { ExploreSettings, UpdateExploreSettings } from 'state/Explore';
+import { ExploreSettings, ResetExploreSettings } from 'state/Explore';
 import { useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
 import { roundCoord } from 'shared/honeycomb.utils';
@@ -21,7 +21,7 @@ export default function Explore({
                 center: [roundCoord(Number(lat)), roundCoord(Number(lng))],
                 zoom: Number(zoom),
             }
-            store.emit(new UpdateExploreSettings(_updateSettings));
+            store.emit(new ResetExploreSettings(_updateSettings));
             loadedNewSettings.current = true;
         }
         

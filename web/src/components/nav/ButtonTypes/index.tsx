@@ -75,7 +75,7 @@ export function BtnButtonType({ type, onClick = (type) => { } }) {
   return (
     <BtnCaption
       caption={`${type.caption}`}
-      // caption={`${type.caption} ${type.selected ? '!': ''}`}
+      selected={type.selected}
       icon={type?.icon}
       color={type.cssColor}
       onClick={() =>
