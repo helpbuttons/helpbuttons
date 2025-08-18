@@ -1,5 +1,6 @@
 import Btn, { BtnType, ContentAlignment, IconType } from "elements/Btn";
 import t from "i18n";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { alertService } from "services/Alert";
@@ -69,6 +70,9 @@ export default function CookiesBanner() {
 
 export function AcceptCookiesWarn({cookieState})
 {
-  return <>{ cookieState != CookiesState.ACCEPTED && t('user.pleaseAcceptCookies')}</>
+  return <>
+          <div>{ cookieState != CookiesState.ACCEPTED && t('user.pleaseAcceptCookies')}</div>
+          <div>{ cookieState == CookiesState.REJECTED && <Link href="#" onClick={() => {store.emit(new SetCookieState(CookiesState.UNREAD))}}>{t('user.showCookiesBanner')}</Link>}</div>
+        </>
 }
 
