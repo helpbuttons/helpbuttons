@@ -387,6 +387,7 @@
     "signupSuccess": "Your signup was sucessful! Welcome to {0} ",
     "deletedAccount": "Your data was deleted sucessfuly!",
     "pleaseAcceptCookies": "You have to accept the usage of cookies if you wish to signup or login",
+    "showCookiesBanner": "Please click here to accept cookies",
     "endorse": "Endorse",
     "revokeEndorse": "Withdraw endorsement",
     "endorsed": "Trusted",
