@@ -49,12 +49,6 @@ export class UserService {
     return httpService.get<IUser>("users/whoami");
   }
 
-  public static findUser(username: string)
-  {
-    return httpService.get<User>(`users/find/${username}`);
-  }
-
-
   public static logout() {
     httpService.clearAccessToken();
   }
