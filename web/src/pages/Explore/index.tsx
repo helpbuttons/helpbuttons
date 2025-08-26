@@ -25,13 +25,16 @@ function useParams(router)
   const selectedNetwork = useSelectedNetwork()
 
   useEffect(() => {
+    
     if(exploreSettings?.center)
     {
       // load on last coordinates naviagated...!
       router.push(`/Explore/${exploreSettings.zoom}/${exploreSettings.center[0]}/${exploreSettings.center[1]}`, undefined, { shallow: true });
     }else{
       // load from coordinates of network
-      router.push(`/Explore/${selectedNetwork.exploreSettings.zoom}/${selectedNetwork.exploreSettings.center[0]}/${selectedNetwork.exploreSettings.center[1]}`, undefined, { shallow: true });
+      const centerLat = selectedNetwork.exploreSettings?.center ? selectedNetwork.exploreSettings?.center[0]: 0;
+      const centerLng = selectedNetwork.exploreSettings?.center ? selectedNetwork.exploreSettings?.center[1]: 0;;
+      router.push(`/Explore/${selectedNetwork.exploreSettings.zoom}/${centerLat}/${centerLng}`, undefined, { shallow: true });
     }
     
   }, [exploreSettings])

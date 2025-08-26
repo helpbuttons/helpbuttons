@@ -32,23 +32,6 @@ export class AddUserToKnownUsers implements UpdateEvent {
   }
 }
 
-export class FindUser implements WatchEvent {
-  public constructor(
-    private username,
-    private onSuccess = undefined,
-    private onError = undefined,
-  ) {}
-
-  public watch(state: GlobalState) {
-    return UserService.findUser(this.username).pipe(
-      map((userData) => { 
-        new AddUserToKnownUsers(userData);
-        this.onSuccess(userData);
-      }),
-    );
-  }
-}
-
 
 export class UpdateRole implements WatchEvent {
   public constructor(

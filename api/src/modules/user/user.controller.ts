@@ -36,14 +36,6 @@ export class UserController {
     return {...userClean, t: 'k'}
   }
 
-  @AllowGuest()
-  @Get('/find/:username')
-  async find(@Param('username') username: string) {
-    const user = await this.userService
-      .findByUsername(username, true);
-     return plainToClass(UserExtended, user, { excludeExtraneousValues: true })
-  }
-
   @OnlyAdmin()
   @Get('findExtra/:userId')
   async findExtra(@Param('userId') userId: string){
