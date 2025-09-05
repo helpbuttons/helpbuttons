@@ -1,12 +1,12 @@
 import Loading, { LoadabledComponent } from "components/loading";
 import Btn, { BtnType, ContentAlignment, IconType } from "elements/Btn";
-import { useGeoSearch } from "elements/Fields/FieldLocation/location.helpers";
+import { formatedCoords, getCoordinatesDegrees, getCoordinatesDMS, useGeoReverse, useGeoSearch } from "elements/Fields/FieldLocation/location.helpers";
 import t from "i18n";
 import { useEffect, useRef, useState } from "react";
 import { IoCloseOutline, IoLocationOutline } from "react-icons/io5";
 import { alertService } from "services/Alert";
 import dconsole from "shared/debugger";
-import { roundCoord, roundCoords } from "shared/honeycomb.utils";
+import { roundCoord } from "shared/honeycomb.utils";
 import { store } from "state";
 import { emptyPlace, GeoReverseFindAddress } from "state/Geo";
 import { useSelectedNetwork } from "state/Networks";
@@ -20,33 +20,36 @@ export function LocationSearchBarSimple({
     markerPosition = null,
     setMarkerPosition,
     focusPoint
-}){
+}) {
     const [searchAddress, setSearchAddress] = useState(markerAddress)
     const [results, setResults] = useState([]);
     const [isLoading, setIsLoading] = useState(false)
+    useEffect(() => {
+        setResults(() => [])
+    }, [markerPosition])
+    const [input, setInput] = useState(pickedAddress ? pickedAddress : '');
 
     const handleAddressPicked = (place) => {
         setSearchAddress(() => place.formatted)
         setMarkerAddress(place.formatted)
         setMarkerPosition([place.geometry.lat, place.geometry.lng])
-        setResults(() => [])
     }
 
     return <>
-    <div className="form__field form__field--location-wrapper">
+        <div className="form__field form__field--location-wrapper">
             {label && <div className="form__label">{label}</div>}
             {explain && <div className="form__explain">{explain}</div>}
             <div className="form__field-dropdown form__field-dropdown--location">
                 <div className="form__field-dropdown--input-location">
-                    <FieldLocationSearch pickedAddress={searchAddress} placeholder={placeholder} setResults={setResults} isLoading={isLoading} setIsLoading={setIsLoading} focusPoint={focusPoint} /> 
-                    <LoadUserLocationButton handleBrowserLocation={handleAddressPicked}/>
+                    <FieldLocationSearch pickedAddress={searchAddress} placeholder={placeholder} setResults={setResults} isLoading={isLoading} setIsLoading={setIsLoading} focusPoint={focusPoint} input={input} setInput={setInput}  />
+                    <LoadUserLocationButton handleBrowserLocation={handleAddressPicked} />
                 </div>
                 {(results && results.length > 0) &&
                     <SearchResultsList handleAddressPicked={handleAddressPicked} results={results} />
                 }
-                {(markerPosition && markerPosition[0] && markerPosition[1] ) && (
+                {(markerPosition && markerPosition[0] && markerPosition[1]) && (
                     <div className='form__input-subtitle-option form__input-subtitle--grayed'>
-                        ( {roundCoords(markerPosition).toString()} )
+                       {getCoordinatesDMS(markerPosition.toString())}
                     </div>
                 )}
             </div>
@@ -70,11 +73,21 @@ export default function LocationSearchBar({
 }) {
     const [results, setResults] = useState([]);
     const [showAddCustomButton, toggleShowAddCustomButton] = useState(false)
+    const [input, setInput] = useState(pickedAddress ? pickedAddress : '');
+
+    useEffect(() => {
+        setResults(() => [])
+    }, [pickedPosition])
+    useEffect(() => {
+        if(!input)
+        {
+            setPickedPosition(() => null)
+        }
+    }, [input])
 
     const handleAddressPicked = (place) => {
         setPickedAddress(() => place.formatted)
         setPickedPosition(() => [place.geometry.lat, place.geometry.lng])
-        setResults(() => [])
         toggleShowAddCustomButton(() => false)
     }
 
@@ -94,20 +107,20 @@ export default function LocationSearchBar({
             {explain && <div className="form__explain">{explain}</div>}
             <div className="form__field-dropdown form__field-dropdown--location">
                 <div className="form__field-dropdown--input-location">
-                    <FieldLocationSearch isCustomAddress={isCustomAddress} pickedAddress={pickedAddress} placeholder={placeholder} setResults={setResults} onFocus={handleFocus} hideAddress={hideAddress} isLoading={isLoading} setIsLoading={setIsLoading} focusPoint={focusPoint} />
-                    <FieldCustomAddress isCustomAddress={isCustomAddress} pickedAddress={pickedAddress} setPickedAddress={setPickedAddress} setIsCustomAddress={setIsCustomAddress} />
+                    <FieldLocationSearch isCustomAddress={isCustomAddress} pickedAddress={pickedAddress} placeholder={placeholder} setResults={setResults} onFocus={handleFocus} hideAddress={hideAddress} isLoading={isLoading} setIsLoading={setIsLoading} focusPoint={focusPoint} input={input} setInput={setInput} />
+                    <FieldCustomAddress isCustomAddress={isCustomAddress} input={input} setInput={setInput} setPickedAddress={setPickedAddress} setIsCustomAddress={setIsCustomAddress} />
                     <LoadUserLocationButton handleBrowserLocation={handleAddressPicked} hideAddress={hideAddress} />
                 </div>
                 {(results && results.length > 0) &&
                     <SearchResultsList handleAddressPicked={handleAddressPicked} results={results} hideAddress={hideAddress} />
                 }
-                {(showAddCustomButton && ( results && results.length < 1 ) && isCustomAddress !== null) &&
-                    <SearchCustomAddress handleClick={() => { setIsCustomAddress(true); toggleShowAddCustomButton(() => false) }} />
+                {(showAddCustomButton && (results && results.length < 1) && isCustomAddress !== null) &&
+                    <SearchCustomAddress handleClick={() => { setIsCustomAddress(() => true); toggleShowAddCustomButton(() => false) }} />
                 }
 
                 {(pickedPosition && pickedPosition[0] !== null && pickedPosition[1] !== null) && (
                     <div className='form__input-subtitle-option form__input-subtitle--grayed'>
-                        ( {roundCoords(pickedPosition).toString()} )
+                    {getCoordinatesDMS(pickedPosition.toString())}
                     </div>
                 )}
             </div>
@@ -115,18 +128,17 @@ export default function LocationSearchBar({
     </>
 }
 
-function FieldLocationSearch({ isCustomAddress = false, placeholder, setResults, hideAddress = false, onFocus = (event) => {}, pickedAddress, isLoading, setIsLoading, focusPoint }) {
+function FieldLocationSearch({ isCustomAddress = false, placeholder, setResults, hideAddress = false, onFocus = (event) => { }, pickedAddress, isLoading, setIsLoading, focusPoint, input, setInput }) {
     const geoSearch = useGeoSearch()
+    const geoSearchReverse = useGeoReverse()
     const [searching, setIsSearching] = useState(false)
-    const [input, setInput] = useState(pickedAddress ? pickedAddress : '');
     const searchQuery = useRef(pickedAddress)
 
     useEffect(() => {
         setIsLoading(() => searching)
     }, [searching])
     useEffect(() => {
-        if(pickedAddress)
-        {
+        if (pickedAddress) {
             setInput(() => pickedAddress)
         }
     }, [pickedAddress])
@@ -153,22 +165,38 @@ function FieldLocationSearch({ isCustomAddress = false, placeholder, setResults,
             return;
         });
     };
+
+    const getLatLngAddress = useGeoReverse()
+    const findAddressFromPosition = (latLng, hideAddress) => {
+        setIsLoading(() => true)
+        getLatLngAddress(latLng, hideAddress, (place) => {
+            setResults(() => [place])
+            setIsLoading(() => false)
+        },
+            (error) => {
+                setIsLoading(() => false)
+                setResults(() => [{formatted: t('button.unknownPlace'), geometry: {lat: latLng[0], lng: latLng[1]}}])
+            }
+        );
+    }
+
     const handleChange = (value) => {
         if (isCustomAddress) {
             return;
         }
-        setInput((prevValue) => {
-            if (prevValue != value) {
-
-                if (value.length > 0) {
-                    searchQuery.current = value;
-                    searchAddress()
-                }else{
-                    setResults(() => [])
-                }
+        setInput(() => value)
+        const coordinates = getCoordinatesDegrees(value)
+        if (coordinates) {
+            findAddressFromPosition(coordinates, false)
+            return;
+        }else{
+            if (value.length > 0) {
+                searchQuery.current = value;
+                searchAddress()
+            } else {
+                setResults(() => [])
             }
-            return value;
-        });
+        }
     };
 
     const handleFocus = (event) => {
@@ -189,9 +217,7 @@ function FieldLocationSearch({ isCustomAddress = false, placeholder, setResults,
     }</>
 
 }
-function FieldCustomAddress({ isCustomAddress, setIsCustomAddress, pickedAddress, setPickedAddress }) {
-
-    const [input, setInput] = useState(pickedAddress);
+function FieldCustomAddress({ isCustomAddress, setIsCustomAddress, setPickedAddress, input, setInput  }) {
 
     const handleFocus = (e) => {
         e.target.select()
@@ -217,7 +243,7 @@ function FieldCustomAddress({ isCustomAddress, setIsCustomAddress, pickedAddress
                     iconLink={<IoCloseOutline />}
                     iconLeft={IconType.circle}
                     contentAlignment={ContentAlignment.center}
-                    onClick={() => { setIsCustomAddress(false) }}
+                    onClick={() => { setIsCustomAddress(false); setInput(() => '') }}
                 />
             </div>
         </div>
@@ -253,53 +279,53 @@ export function SearchResult({ result, handleAddressPicked }) {
             className="dropdown__dropdown-option"
             onClick={(e) => { handleAddressPicked(result) }}
         >
-            {result.formatted}
+            {formatedCoords(result)}
         </div>
     );
 };
 
 
-export function LoadUserLocationButton({ handleBrowserLocation, hideAddress = false}) {
+export function LoadUserLocationButton({ handleBrowserLocation, hideAddress = false }) {
     const [loadingUserAddress, toggleLoadingUserAddress] =
-      useState(false);
-  
+        useState(false);
+
     const setCenterFromBrowser = () => {
-      toggleLoadingUserAddress(true);
-      if ('geolocation' in navigator) {
-        navigator.geolocation.getCurrentPosition(function (position) {
-          store.emit(
-            new GeoReverseFindAddress(
-              position.coords.latitude,
-              position.coords.longitude,
-              hideAddress,
-              (place) => {
-                handleBrowserLocation(place);
-                toggleLoadingUserAddress(false);
-              },
-              (error) => {
-                toggleLoadingUserAddress(() => false);
-                handleBrowserLocation(
-                  emptyPlace({
-                    lat: position.coords.latitude.toString(),
-                    lng: position.coords.longitude.toString(),
-                  }),
+        toggleLoadingUserAddress(true);
+        if ('geolocation' in navigator) {
+            navigator.geolocation.getCurrentPosition(function (position) {
+                store.emit(
+                    new GeoReverseFindAddress(
+                        position.coords.latitude,
+                        position.coords.longitude,
+                        hideAddress,
+                        (place) => {
+                            handleBrowserLocation(place);
+                            toggleLoadingUserAddress(false);
+                        },
+                        (error) => {
+                            toggleLoadingUserAddress(() => false);
+                            handleBrowserLocation(
+                                emptyPlace({
+                                    lat: position.coords.latitude.toString(),
+                                    lng: position.coords.longitude.toString(),
+                                }),
+                            );
+                            console.log(error);
+                        },
+                    ),
                 );
-                console.log(error);
-              },
-            ),
-          );
-        });
-      }
+            });
+        }
     };
     return (<Btn
-      btnType={BtnType.circle}
-      iconLink={
-        <LoadabledComponent loading={loadingUserAddress}>
-          <IoLocationOutline />
-        </LoadabledComponent>
-      }
-      iconLeft={IconType.circle}
-      contentAlignment={ContentAlignment.center}
-      onClick={setCenterFromBrowser}
+        btnType={BtnType.circle}
+        iconLink={
+            <LoadabledComponent loading={loadingUserAddress}>
+                <IoLocationOutline />
+            </LoadabledComponent>
+        }
+        iconLeft={IconType.circle}
+        contentAlignment={ContentAlignment.center}
+        onClick={setCenterFromBrowser}
     />)
-  }
+}

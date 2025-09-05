@@ -6,7 +6,7 @@ import React, {
 import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
 import { MarkerEditorMap } from 'components/map/Map/MarkerSelectorMap';
 import t from 'i18n';
-import { roundCoord, roundCoords } from 'shared/honeycomb.utils';
+import { roundCoord } from 'shared/honeycomb.utils';
 import { FieldCheckbox } from '../FieldCheckbox';
 import PickerField from 'components/picker/PickerField';
 import { minZoom } from 'components/map/Map/Map.consts';
@@ -76,6 +76,7 @@ export default function FieldLocation({
 
   const onMapClick = (latLng) => {
     setPickedPosition(() => latLng)
+    //TODO: THERE IS SCOPE BUG.. WHEN ON CUSTOM, ADDRESS GETS DELETED WHEN NEW PLACE IS CLICKED
     if (!isCustomAddress) {
       findAddressFromPosition(latLng)
     }
@@ -87,7 +88,6 @@ export default function FieldLocation({
     setIsLoading(() => true)
     if (latLng[0] && latLng[1]) {
       getLatLngAddress(latLng, false, (place) => {
-        dconsole.log('gettings place... ', place)
         setPickedAddress(() => place.formatted)
         setIsLoading(() => false)
       },
@@ -134,7 +134,7 @@ export default function FieldLocation({
       setIsLoading={setIsLoading}
       pickedAddress={pickedAddress}
       setPickedAddress={setPickedAddress}
-      focusPoint={pickedPosition}
+      focusPoint={pickedPosition ? pickedPosition : selectedNetwork.exploreSettings.center}
     />
     <MarkerEditorMap
       toggleLoadingNewAddress={() => setIsLoading(() => true)}

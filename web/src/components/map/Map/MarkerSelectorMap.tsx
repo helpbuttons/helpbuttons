@@ -92,7 +92,7 @@ export function MarkerEditorMap({
             width={'100%'}
             height={'16rem'}
           >
-            {hideAddress && (
+            {(hideAddress && pickedPosition) && (
               <GeoJson
                 data={markerHexagonGeoJson}
                 styleCallback={(feature, hover) => {
@@ -100,7 +100,7 @@ export function MarkerEditorMap({
                 }}
               />
             )}
-            {!hideAddress && (
+            {(!hideAddress && pickedPosition) && (
               <MarkerButtonIcon
                 anchor={pickedPosition}
                 offset={[25, 50]}
@@ -109,7 +109,7 @@ export function MarkerEditorMap({
                 title={markerCaption}
               />
             )}
-            {(hideAddress)&& (
+            {(hideAddress  && pickedPosition)&& (
               <MarkerButtonIcon
                 anchor={getHexagonCenter(pickedPosition, hexagonSizeZoom)}
                 offset={[25, 50]}
