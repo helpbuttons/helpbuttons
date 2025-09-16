@@ -18,19 +18,18 @@ Project financed by <a rel="me" href="https://wofreedom.org">Wof!</a>, a nonprof
 
 
 
-[<img src="https://static.fsf.org/nosvn/images/socials/mastodon.png" width="48">
-](https://fosstodon.org/@helpbuttonsorg)
-[<img src="https://lh3.googleusercontent.com/-DE6obBjEEko/YJ_w7v1-0WI/AAAAAAAAI1c/LVh2thnkuk88FBGAbm0hpuzHSXZcwGjaACLcBGAsYHQ/image.png" width="48">
+<a rel="me" href="https://fosstodon.org/@helpbuttonsorg"><img src="https://static.fsf.org/nosvn/images/socials/mastodon.png" width="48"></a>
+[<img src="https://lh3.googleusercontent.com/jVXglyWWL5J2y1vRN-7Jy3_ozvvZc4w5486IAkbAIrWcNN_vn7YuIvhc1JDtGq43BqGl=s180" width="48">
 ](https://t.me/+ls0xkQlG8uBlZjZk)
-[<img src="https://apkbolt.com/wp-content/uploads/2018/08/Discord-Apk.png" width="48">
+[<img src="https://cdn.lo4d.com/t/icon/128/discord.png" width="48">
 ](https://discord.gg/UBKWHuj2Vn)
 
-<a rel="me" href="https://fosstodon.org/@helpbuttonsorg">Mastodon</a>
+
 
 contact us: help _at_ helpbuttons.org
 # Welcome to Helpbuttons Repository
 
-This is the repository for helpbuttons.org. check more documentations at the repo (https://github.com/helpbuttons/hb-docs).
+This is the repository for helpbuttons.org. check [more documentation](https://github.com/helpbuttons/hb-docs).
 
 ## Getting Started
 
