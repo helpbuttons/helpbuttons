@@ -281,7 +281,7 @@ export class updateCurrentButton implements UpdateEvent {
   public constructor(private button: Button) { }
   public update(state: GlobalState) {
     return produce(state, (newState) => {
-      newState.explore.currentButton = this.button;
+      newState.explore.currentButton = this.button;      
     });
   }
 }

@@ -15,7 +15,6 @@ export default function CookiesBanner() {
 
   useEffect(() => {
     const cookieState = localStorageService.read(LocalStorageVars.COOKIES_ACCEPTANCE) as CookiesState 
-    console.log('cookie is set as ' + cookieState)
     store.emit(new SetCookieState(cookieState ? cookieState : CookiesState.UNREAD))
   }, [])
   

@@ -10,19 +10,13 @@ import { markerFocusZoom } from 'components/map/Map/Map.consts';
 import { ExplorePage } from 'pages/Explore';
 import { ErrorName } from 'shared/types/error.list';
 import { alertService } from 'services/Alert';
+import { useSelectedNetwork } from 'state/Networks';
 
 export default function Explore({
     metadata
 }) {
     const router = useRouter();
-
-    const centerMapToButton = (button) => {
-      const _updateSettings: Partial<ExploreSettings> = {
-        center: [button.latitude, button.longitude],
-        zoom: markerFocusZoom,
-      }
-      store.emit(new UpdateExploreSettings(_updateSettings));
-    }
+    const selectedNetwork = useSelectedNetwork()
 
     const { buttonId, zoom, lat, lng } = router.query;
     const currentButton = useGlobalStore((state: GlobalState) => state.explore.currentButton)
@@ -31,16 +25,13 @@ export default function Explore({
         {
           store.emit(new FindButton(String(buttonId), (button) => {
             store.emit(new updateCurrentButton(button))
-            centerMapToButton(button)
           }, (error) => {
             if(error.errorName == ErrorName.ButtonNotFound)
             {
-              alertService.error(error.caption)
-              router.push(`/Explore/${zoom}/${lat}/${lng}`)
+              alertService.error(t(error.caption))
+              router.push(`/Explore/${selectedNetwork.exploreSettings.zoom}/${selectedNetwork.exploreSettings?.center[0]}/${selectedNetwork.exploreSettings?.center[1]}`, undefined, { shallow: true });
             }
           }))
-        }else{
-          centerMapToButton(currentButton)
         }
       }, [buttonId])
     return <ExplorePage/>
