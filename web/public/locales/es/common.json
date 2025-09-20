@@ -390,7 +390,7 @@
     "hideAddress": "Esconder ubicación exacta",
     "created": "creado",
     "follow": "Suscribirme",
-    "unfollow": "Dejar de seguir",
+    "unfollow": "!Siguiendo!",
     "followAlert": "Te has suscrito, recibirás sus novedades.",
     "unfollowAlert": "Te has desuscrito, dejarás de recibir sus novedades",
     "unfollowAlertError": "Error al desuscribir",
@@ -418,7 +418,6 @@
     "pinSuccess": "Fijado con éxito",
     "unpinSuccess": "Desfijado con éxito",
     "whatsapp": "Conectar s Whatsapp",
-    "following": "!Siguiendo!",
     "whenExplain": "Especifica la fecha",
     "placeHodlerCustomAddress": "Escribe un nuevo nombre y selecciona el lugar sobre el mapa",
     "publishComment": "Publicar comentario"

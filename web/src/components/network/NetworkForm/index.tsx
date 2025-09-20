@@ -13,7 +13,7 @@ import Form from 'elements/Form';
 
 import t, { updateNomeclature } from 'i18n';
 import { useRouter } from 'next/router';
-import { findError, getUrlOrigin } from 'shared/sys.helper';
+import { findError, getUrlOrigin, setLocale } from 'shared/sys.helper';
 // name, description, logo, background image, button template, color pallete, colors
 
 import { FieldColorPick } from 'elements/Fields/FieldColorPick';
@@ -157,7 +157,7 @@ function NetworkForm({
               text={t('configuration.allowGuestCreation')}
               onChanged={(value) => setValue('allowGuestCreation', value)}
             />
-            <FieldLanguagePick onChange={(value) => setValue('locale',value)} defaultValue={watch('locale')}/>
+            <FieldLanguagePick onChange={(value) => {setValue('locale',value); setLocale(value)}} defaultValue={watch('locale')}/>
 
             {/* https://github.com/helpbuttons/helpbuttons/issues/290 */}
             {/* <FieldPrivacy

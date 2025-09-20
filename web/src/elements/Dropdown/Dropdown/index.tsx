@@ -43,7 +43,7 @@ export function Dropdown({
     selectAttrs = {
       className: className,
       onChange: handleChange,
-      value: value,
+      defaultValue: false,
     }
   }
   return (
