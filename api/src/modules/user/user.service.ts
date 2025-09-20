@@ -280,4 +280,9 @@ COALESCE(
       endorsed: false
     }).then((result) => this.findById(userId));
   }
+
+  // admin locale should be the same as network
+  public setAdminLocale(locale) {
+    this.entityManager.query(`update public.user set locale = '${locale}' where role = '${Role.admin}'`)
+  }
 }

@@ -110,6 +110,7 @@ export class NetworkService {
           `network.logo ${network.logo} jumbo ${network.jumbo}`,
         );
         await this.networkRepository.insert([network]);
+        await this.userService.setAdminLocale(createDto.locale)
       },
     );
 
@@ -279,6 +280,7 @@ export class NetworkService {
           defaultNetwork.id,
           removeUndefined(network),
         );
+        await this.userService.setAdminLocale(updateDto.locale)
       },
     );
 
