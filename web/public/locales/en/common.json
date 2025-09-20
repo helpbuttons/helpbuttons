@@ -524,7 +524,9 @@
     "requiredLocation": "Please pickup a place in the map for your network",
     "allowGuestCreationLabel": "Allow anonymous signups",
     "allowGuestCreationExplain": "When allowing anonymous signups, is important to remmember that your network will be easier exposed to spam",
-    "allowGuestCreation": "Allow annoymous signup"
+    "allowGuestCreation": "Allow annoymous signup",
+    "showAdvanced": "Show advanced options...",
+    "hideAdvanced": "Hide advanced options..."
   },
   "configure": {
     "browsePins": "",

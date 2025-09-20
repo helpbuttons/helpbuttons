@@ -42,6 +42,8 @@ function NetworkForm({
 }) {
   const router = useRouter();
 
+  const [showAdvancedConfiguration, setShowAdvancedConfiguration] = useState(false)
+
   const buttonTemplates = watch('buttonTemplates');
   const nomeclature = watch('nomeclature')
   const nomeclaturePlural = watch('nomeclaturePlural')
@@ -98,7 +100,7 @@ function NetworkForm({
               <b>{getUrlOrigin()}</b>
             </p>
           </div>
-
+          
 
           <Accordion collapsed={hasErrors('defineNetwork')} title={t('configuration.defineNetwork')}>
             <FieldText
@@ -132,31 +134,35 @@ function NetworkForm({
               setFocus={setFocus}
               {...register('slogan', { required: true })}
             />
-            <FieldCheckbox
-              name='inviteOnly'
-              label={t('invite.inviteOnlyLabel')}
-              explain={t('invite.inviteOnlyExplain')}
-              defaultValue={watch('inviteOnly')}
-              text={t('invite.inviteOnly')}
-              onChanged={(value) => setValue('inviteOnly', value)}
-            />
+            {showAdvancedConfiguration && 
+            <>
+              <FieldCheckbox
+                name='inviteOnly'
+                label={t('invite.inviteOnlyLabel')}
+                explain={t('invite.inviteOnlyExplain')}
+                defaultValue={watch('inviteOnly')}
+                text={t('invite.inviteOnly')}
+                onChanged={(value) => setValue('inviteOnly', value)}
+              />
 
-            <FieldCheckbox
-              name='requireApproval'
-              label={t('moderation.requireApprovalLabel')}
-              explain={t('moderation.requireApprovalExplain')}
-              defaultValue={watch('requireApproval')}
-              text={t('moderation.requireApproval')}
-              onChanged={(value) => setValue('requireApproval', value)}
-            />
-            <FieldCheckbox
-              name='allowGuestCreation'
-              label={t('configuration.allowGuestCreationLabel')}
-              explain={t('configuration.allowGuestCreationExplain')}
-              defaultValue={watch('allowGuestCreation')}
-              text={t('configuration.allowGuestCreation')}
-              onChanged={(value) => setValue('allowGuestCreation', value)}
-            />
+              <FieldCheckbox
+                name='requireApproval'
+                label={t('moderation.requireApprovalLabel')}
+                explain={t('moderation.requireApprovalExplain')}
+                defaultValue={watch('requireApproval')}
+                text={t('moderation.requireApproval')}
+                onChanged={(value) => setValue('requireApproval', value)}
+              />
+              <FieldCheckbox
+                name='allowGuestCreation'
+                label={t('configuration.allowGuestCreationLabel')}
+                explain={t('configuration.allowGuestCreationExplain')}
+                defaultValue={watch('allowGuestCreation')}
+                text={t('configuration.allowGuestCreation')}
+                onChanged={(value) => setValue('allowGuestCreation', value)}
+              />
+            </>
+            }
             <FieldLanguagePick onChange={(value) => {setValue('locale',value); setLocale(value)}} defaultValue={watch('locale')}/>
 
             {/* https://github.com/helpbuttons/helpbuttons/issues/290 */}
@@ -171,7 +177,8 @@ function NetworkForm({
            </Accordion>
          
            <Accordion collapsed={hasErrors('appearance')} title={t('configuration.customizeAppearance')}>
-
+           {showAdvancedConfiguration && 
+           <>
              <FieldText
                 name="nomeclature"
                 label={t('configuration.nomeclatureLabel')}
@@ -188,6 +195,8 @@ function NetworkForm({
                 validationError={errors.nomeclaturePlural}
                 {...register('nomeclaturePlural', { required: true })}
               />
+              </>
+            }
             <div className="form__field">
                 <label className="form__label">{t('configuration.chooseColors')}</label>
                 <p className="form__explain">{t('configuration.chooseColorsExplain')}</p>
@@ -315,6 +324,13 @@ function NetworkForm({
           </div>
 
             */}
+          <div
+              onClick={() => setShowAdvancedConfiguration((prev) => !prev)}
+              className={`nav-bottom__link`}
+            >
+              {!showAdvancedConfiguration && t('configuration.showAdvanced')}
+              {showAdvancedConfiguration && t('configuration.hideAdvanced')}
+          </div>
           <div className="publish__submit">
             <Btn
               btnType={BtnType.submit}
