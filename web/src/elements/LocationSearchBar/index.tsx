@@ -81,7 +81,7 @@ export default function LocationSearchBar({
     useEffect(() => {
         if(!input)
         {
-            setPickedPosition(() => null)
+            setPickedPosition(() => [0,0])
         }
     }, [input])
 

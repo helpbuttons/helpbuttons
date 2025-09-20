@@ -86,7 +86,7 @@ export function FieldAreaMapSettings({
 
   
   const setZoom = (newZoom) => {
-    setMapSettings((prevSettings) => {return {...prevSettings, zoom: newZoom}})
+    setMapSettings((prevSettings) => {return {...prevSettings, zoom: Math.round(newZoom)}})
   }
   const setCenter = (newCenter) => {
     setMapSettings((prevSettings) => {
@@ -114,9 +114,9 @@ export function FieldAreaMapSettings({
     setMapSettings((prevSettings) => {
       if(prevSettings.browseType == BrowseType.HONEYCOMB)
       {
-        return {...prevSettings, center, zoom: zoom, slider: getSliderSettings(zoom, bounds), geometry: circleGeoJSON(center[1],center[0], prevSettings.radius), bounds: bounds, honeyCombFeatures: getBoundsHexFeatures(bounds,zoom)}
+        return {...prevSettings, center, zoom: Math.round(zoom), slider: getSliderSettings(zoom, bounds), geometry: circleGeoJSON(center[1],center[0], prevSettings.radius), bounds: bounds, honeyCombFeatures: getBoundsHexFeatures(bounds,zoom)}
       }
-      return {...prevSettings, center, zoom: zoom, slider: getSliderSettings(zoom, bounds), geometry: circleGeoJSON(center[1],center[0], prevSettings.radius), bounds: bounds}
+      return {...prevSettings, center, zoom: Math.round(zoom), slider: getSliderSettings(zoom, bounds), geometry: circleGeoJSON(center[1],center[0], prevSettings.radius), bounds: bounds}
     })
   }
 
