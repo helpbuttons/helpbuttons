@@ -9,6 +9,8 @@ import {
   IsNotEmpty,
 } from 'class-validator';
 import { PartialType } from '@nestjs/swagger';
+import { User } from '../user/user.entity';
+import { Expose } from 'class-transformer';
 
 // https://github.com/typestack/class-validator
 
@@ -101,4 +103,81 @@ export class ButtonTemplate {
 
 class ButtonTemplateCustomFields {
   type: string;
+}
+
+export class ButtonEntry implements Partial<Button> {
+  @Expose()
+  public id: string;
+  
+  @Expose()
+  title: string;
+
+  @Expose()
+  description: string;
+
+  @Expose()
+  address?: string;
+
+  @Expose()
+  public latitude: number;
+
+  @Expose()
+  public longitude: number;
+
+  @Expose()
+  type: string;
+
+  @Expose()
+  image?: string;
+
+  @Expose()
+  tags: string[];
+
+  @Expose()
+  images: string[];
+
+  @Expose()
+  owner: User;
+
+  @Expose()
+  hexagon: string;
+
+  @Expose()
+  hideAddress: boolean;
+
+  @Expose()
+  price: number;
+
+  @Expose()
+  eventType: string;
+
+  @Expose()
+  eventStart: Date;
+
+  @Expose()
+  eventEnd: Date;
+
+  @Expose()
+  hasPhone: boolean;
+
+  @Expose()
+  eventData?: string;
+
+  @Expose()
+  awaitingApproval: boolean;
+
+  @Expose()
+  pin: boolean;
+
+  @Expose()
+  isCustomAddress: boolean;
+
+  @Expose()
+  postsCount: number;
+
+  @Expose()
+  followCount: number;
+  
+  @Expose()
+  isFollowing: boolean;
 }

@@ -75,7 +75,7 @@ export function CardButtonLink({ button, linkType , children }) {
     
   if(linkType == ButtonLinkType.EXPLORE)
     {
-      return <a href={`/ButtonFile/${button.id}`} onMouseEnter={() => {store.emit(new HiglightHexagonFromButton(button.hexagon))}}
+      return <a href={`/Show/${button.id}`} onMouseEnter={() => {store.emit(new HiglightHexagonFromButton(button.hexagon))}}
       onMouseLeave={() => {store.emit(new HiglightHexagonFromButton(null))}} onClick={(e) => {e.preventDefault();store.emit(new HiglightHexagonFromButton(button.hexagon))
         store.emit(new updateCurrentButton(button))}}>{children}</a>
     }else if(linkType == ButtonLinkType.IFRAME){

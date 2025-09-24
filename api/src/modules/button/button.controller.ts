@@ -17,7 +17,7 @@ import { diskStorage } from 'multer';
 
 import { ApiTags } from '@nestjs/swagger';
 
-import { CreateButtonDto, UpdateButtonDto } from './button.dto';
+import { ButtonEntry, ButtonView, CreateButtonDto, UpdateButtonDto } from './button.dto';
 import { ButtonService } from './button.service';
 // import { FilterButtonsOrmDto } from '../dto/requests/filter-buttons-orm.dto';
 import {
@@ -91,18 +91,19 @@ export class ButtonController {
     @Param('resolution') resolution: number,
     @Body('hexagons', new ParseArrayPipe({ items: String, separator: ',' }))
     hexagons: string[],
+    @CurrentUser() user: User,
   ) {
-    const btns = await this.buttonService.findh3(resolution, hexagons);
+    const btns = await this.buttonService.findh3(resolution, hexagons, user);
     return btns.map((btn) => {
-      return plainToInstance(Button, btn, { excludeExtraneousValues: true })
+      return plainToInstance(ButtonEntry, btn, { excludeExtraneousValues: true })
     })
   }
 
   @AllowGuest()
   @AllowIfNetworkIsPublic()
   @Get('findById/:buttonId')
-  async findOne(@Param('buttonId') buttonId: string) {
-    return this.buttonService.findById(buttonId, true);
+  async findOne(@Param('buttonId') buttonId: string, @CurrentUser() user: User){
+    return this.buttonService.findById(buttonId, true, user)
   }
 
   @OnlyRegistered()

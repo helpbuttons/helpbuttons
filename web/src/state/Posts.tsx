@@ -43,8 +43,6 @@ export class ClearDraftNewPostComment implements UpdateEvent {
     });
   }
 }
-
-
 export class LoadPosts implements WatchEvent {
   public constructor(
     private buttonId: string,
@@ -76,7 +74,7 @@ export class CreateNewPostComment implements WatchEvent, UpdateEvent {
   
   public update(state: GlobalState) {
     return produce(state, (newState) => {
-      newState.explore.currentButton.followedBy = [...state.explore.currentButton.followedBy,state.sessionUser.id]
+      newState.explore.currentButton.isFollowing = true
       dconsole.log('[CreateNewPostComment]')
       newState.explore.settings.forceRefetch = true;
     });
@@ -101,7 +99,7 @@ export class CreateNewCommentReply implements WatchEvent, UpdateEvent {
   
   public update(state: GlobalState) {
     return produce(state, (newState) => {
-      newState.explore.currentButton.followedBy = [...state.explore.currentButton.followedBy,state.sessionUser.id]
+      newState.explore.currentButton.isFollowing = true
       dconsole.log('[CreateNewCommentReply]')
       newState.explore.settings.forceRefetch = true;
     });

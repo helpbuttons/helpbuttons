@@ -166,6 +166,7 @@ export function CardButtonHeadMedium({ button, buttonType }) {
           )}
           
         <div className="card-button__city card-button__everywhere ">
+          {/* show post count and follow count {button.followCount} | {button.postsCount} */}
           <IoLocationOutline/>
           {button.address}{' '}
           {button?.distance && (
@@ -241,25 +242,6 @@ function CardButtonSubmenu({ button }) {
     if (!canFollowButton(button, sessionUser)) {
       return;
     }
-
-    if (isFollowingButton(button, sessionUser)) {
-      return (
-        <CardSubmenuOption
-          onClick={() => {
-            followButton(button.id);
-          }}
-          label={t('button.follow')}
-        />
-      );
-    }
-    return (
-      <CardSubmenuOption
-        onClick={() => {
-          unFollowButton(button.id);
-        }}
-        label={t('button.unfollow')}
-      />
-    );
   };
   return (
     <CardSubmenu>
@@ -324,7 +306,6 @@ export function CardButtonHeadBig({ button, buttonTypes, toggleShowReplyFirstPos
     false,
   );
   const [showMap, setShowMap] = useState(true);
-
   return (
     <>
       <div className='card-button__head-actions'>
@@ -585,10 +566,10 @@ function FollowButtonHeart({ button, sessionUser }) {
     return;
   }
 
-  if (isFollowingButton(button, sessionUser)) {
+  if (!button.isFollowing) {
     return (
       <div className='card-button__follow-wrap'>
-        {t('button.followme')}
+        {t('button.follow')}
         <Btn
           btnType={BtnType.iconActions}
           contentAlignment={ContentAlignment.center}
@@ -602,7 +583,7 @@ function FollowButtonHeart({ button, sessionUser }) {
 
   return (
     <div className='card-button__follow-wrap'>
-      {t('button.following')}
+      {t('button.unfollow')}
       <Btn
         btnType={BtnType.iconActions}
         contentAlignment={ContentAlignment.center}
@@ -623,10 +604,6 @@ const canFollowButton = (button, user) => {
     return false;
   }
   return true;
-};
-
-const isFollowingButton = (button, user) => {
-  return button.followedBy.indexOf(user.id) < 0;
 };
 
 const followButton = (buttonId) => {
