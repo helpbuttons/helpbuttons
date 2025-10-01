@@ -182,7 +182,7 @@ COALESCE(
   }
 
   moderationList(user: User, page: number) {
-    return this.userRepository.find({ take: 10, skip: page * 10, order: { name: 'ASC' }, where: { id: Not(user.id) } })
+    return this.userRepository.find({ take: 10, skip: page * 10, order: { name: 'ASC' }})
   }
 
   async unsubscribe(email) {

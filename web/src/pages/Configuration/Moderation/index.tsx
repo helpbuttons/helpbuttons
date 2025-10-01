@@ -27,9 +27,11 @@ import { readableTimeLeftToDate } from 'shared/date.utils';
 import { Role } from 'shared/types/roles';
 import { ButtonApprove, ButtonFindAll, ButtonModerationList } from 'state/Button';
 import { ModerationList, UpdateRole } from 'state/Users';
-import { getEmailPrefix } from 'shared/sys.helper';
+import { getEmailPrefix, stringContains } from 'shared/sys.helper';
 import { useButtonTypes } from 'shared/buttonTypes';
 import { SetMainPopupCurrentButton, SetMainPopupCurrentProfile } from 'state/HomeInfo';
+import { Pagination, Table, TableBody, TableHeader, TableHeaderCell, TableLine, TableLineCell, useFilterItems } from 'components/table';
+import FieldText from 'elements/Fields/FieldText';
 
 enum ModerationMode {
   USERS,
@@ -38,7 +40,7 @@ enum ModerationMode {
   COMMUNICATION
 }
 export default function Moderation() {
-  
+
   const [mode, setMode] = useState(null)
 
   return (
@@ -84,12 +86,12 @@ export default function Moderation() {
               />
             </Link>
           </>}
-          
 
-          {mode == ModerationMode.USERS && <ModerationUsersList /> }
-          {mode == ModerationMode.APPROVAL && <ModerationHelpButtonsList /> }
-          {mode == ModerationMode.APPROVED && <AprovedButtonsList /> }
-          {mode == ModerationMode.COMMUNICATION && <NewAdminCommunication /> }
+
+          {mode == ModerationMode.USERS && <ModerationUsersList />}
+          {mode == ModerationMode.APPROVAL && <ModerationHelpButtonsList />}
+          {mode == ModerationMode.APPROVED && <AprovedButtonsList />}
+          {mode == ModerationMode.COMMUNICATION && <NewAdminCommunication />}
         </div>
       </Popup>
     </>
@@ -122,53 +124,65 @@ function ModerationUsersList() {
   };
 
   const [users, setUsers] = useState(null);
+  const [pageUsers, setPageUsers] = useState(null);
   const [page, setPage] = useState(0);
+  const [searchString, setSearchString] = useState('')
 
   useEffect(() => {
     store.emit(
-      new ModerationList(page,(usersList) =>
-        setUsers(usersList),
+      new ModerationList(page, (usersList) =>
+        {
+          setPageUsers(usersList)
+          setUsers(usersList)
+        }
+        
       ),
     );
   }, [page]);
+
+  useFilterItems(setUsers, pageUsers, searchString, (searchStr, item) => stringContains(item.email, searchString) || stringContains(item.name,searchString))
+  
+  const onQueryChange = (query) => {
+    setSearchString(() => query.target.value)
+  }
   return (
     <>
-      {users?.length > 0 ? (<>
-      {/* <FieldText
-        name="query"
-        placeholder={t('common.search')}
-        {...register('query')}
-      /> */}
-      <div className='user-list__wrapper'>
-        <table className='user-list__table'>
-          <thead className='user-list__table-header'>
-            <tr className='user-list__table-header-row'>
-              <th className='user-list__table-header-cell'>{t('user.email')}</th>
-              <th className='user-list__table-header-cell'>{t('user.name')}</th>
-              <th className='user-list__table-header-cell'>{t('moderation.role')}</th>
-              <th className='user-list__table-header-cell'>{t('moderation.verified')}</th>
-              <th className='user-list__table-header-cell'>{t('moderation.actions')}</th>
-            </tr>
-          </thead>
-          <tbody className='user-list__table-body'>
+    <FieldText
+            name="query"
+            label={t('common.search')}
+            onChange={onQueryChange}
+          />
+      {users?.length > 0 ? (
+        <>
+          
+          <Table>
+            <TableHeader>
+              <TableHeaderCell>{t('user.email')}</TableHeaderCell>
+              <TableHeaderCell>{t('user.name')}</TableHeaderCell>
+              <TableHeaderCell>{t('moderation.role')}</TableHeaderCell>
+              <TableHeaderCell>{t('moderation.verified')}</TableHeaderCell>
+              <TableHeaderCell>{t('moderation.actions')}</TableHeaderCell>
+            </TableHeader>
+            <TableBody>
               {users.map((user, idx) => (
-                <tr className='user-list__table-body-row' key={idx}>
-
-                  <td className='user-list__table-body-cell--email'>
-
-                      <Link href={`/p/${user.username}`}>{getEmailPrefix(user.email)}</Link> 
-            
-                  </td>
-                  <td className='user-list__table-body-cell'><Link href={`/p/${user.username}`}>{user.username}</Link></td>
-                  <td className='user-list__table-body-cell'>{t(`roles.${user.role}`)}</td>
-                  <td className='user-list__table-body-cell'>
+                <TableLine idx={idx}>
+                  <TableLineCell>
+                    <Link href={`/p/${user.username}`}>{getEmailPrefix(user.email)}</Link>
+                  </TableLineCell>
+                  <TableLineCell>
+                    <Link href={`/p/${user.username}`}>{user.username}</Link>
+                  </TableLineCell>
+                  <TableLineCell>
+                    {t(`roles.${user.role}`)}
+                  </TableLineCell>
+                  <TableLineCell>
                     {user.verified ? (
                       <IoCheckmarkCircleOutline />
                     ) : (
                       <IoBanOutline />
                     )}
-                  </td>
-                  <td className='user-list__table-body-cell'>
+                  </TableLineCell>
+                  <TableLineCell>
                     {user.role == Role.registered &&
                       <Btn
                         btnType={BtnType.small}
@@ -179,13 +193,13 @@ function ModerationUsersList() {
                         onClick={() => updateRole(user.id, Role.admin)}
                       />
                     }
-                    {user.role == Role.admin && 
+                    {user.role == Role.admin &&
                       <Btn
                         btnType={BtnType.small}
                         borderColor={'red'}
                         caption={t('moderation.revoke')}
                         iconLink={null}
-                        onClick={() =>  updateRole(user.id, Role.registered)}
+                        onClick={() => updateRole(user.id, Role.registered)}
                       />
                     }
                     {user.role == Role.registered &&
@@ -206,43 +220,18 @@ function ModerationUsersList() {
                         onClick={() => updateRole(user.id, Role.registered)}
                       />
                     }
-                    {/* <BtnCaption
-                      color={'red'}
-                      caption={t('moderation.remove')}
-                      icon={null}
-                      onClick={() => dconsole.log('remove user')}
-                    /> */}
-                  </td>
-                </tr>
-              ))}
-          </tbody>
-        </table>
-      </div>
-      </>) : t('moderation.emptyUsersList')}
-      <Pagination page={page} setPage={setPage} array={users} take={10}/>
-      
+                  </TableLineCell>
+                </TableLine>
+              ))
+              }
+            </TableBody>
+          </Table></>) : t('moderation.emptyUsersList')}
+      <Pagination page={page} setPage={setPage} array={users} take={10} />
+
     </>
   );
 }
 
-function Pagination({page, setPage, array, take})
-{
-  return (<>
-    {page > 0 &&
-      <BtnAction
-      icon={<IoArrowBack/>}
-      onClick={() => setPage((prevPage) => prevPage-1)}
-      />
-    }
-    {(array && array.length > 0 && array.length == take) &&
-      <BtnAction
-        icon={<IoArrowForward/>}
-        onClick={() => setPage((prevPage) => prevPage+1)}
-      />
-    }
-    </>
-  )
-}
 function ModerationHelpButtonsList() {
   const {
     handleSubmit,
@@ -255,92 +244,102 @@ function ModerationHelpButtonsList() {
 
 
   const [buttons, setButtons] = useState(null);
+  const [pageButtons, setPageButtons] = useState(null);
   const [page, setPage] = useState(0);
 
   useEffect(() => {
     store.emit(
-      new ButtonModerationList(page,(buttonsList) =>
+      new ButtonModerationList(page, (buttonsList) =>
         setButtons(buttonsList),
       ),
     );
   }, [page]);
 
   const approveButton = (buttonId) => {
-      store.emit(
-        new ButtonApprove(buttonId,() =>
-        {
-          alertService.info('button approved');
-          setButtons((prevButtons) => prevButtons.filter((button) => button.id != buttonId))
-        })
-      );
-    }
+    store.emit(
+      new ButtonApprove(buttonId, () => {
+        alertService.info('button approved');
+        setButtons((prevButtons) => prevButtons.filter((button) => button.id != buttonId))
+      })
+    );
+  }
   const buttonTypes = useButtonTypes();
+
+  const [searchString, setSearchString] = useState('')
+  const onQueryChange = (query) => {
+    setSearchString(() => query.target.value)
+  }
+  useFilterItems(setButtons, pageButtons, searchString, (searchStr, item) => stringContains(item.email, searchString) || stringContains(item.name,searchString))
+
 
   return (
     <>
-      {buttons?.length > 0 ? (
-        <div className='user-list__wrapper'>
-          {/* <FieldText
+    <FieldText
             name="query"
-            placeholder={t('common.search')}
-            {...register('query')}
-          /> */}
-         
-          <table className='user-list__table'>
-            <thead className='user-list__table-header'>
-              <tr className='user-list__table-header-row'>
-                <th className='user-list__table-header-cell'>{t('moderation.created_at')}</th>
-                <th className='user-list__table-header-cell'>{t('button.titleLabel')}</th>
-                <th className='user-list__table-header-cell'>{t('button.typeLabel')}</th>
-                <th className='user-list__table-header-cell'>{t('button.tagsLabel')}</th>
-                <th className='user-list__table-header-cell'>{t('button.whereLabel')}</th>
-                <th className='user-list__table-header-cell'>{t('moderation.actions')}</th>
-              </tr>
-            </thead>
-            <tbody>
-              {buttons.map((button, idx) => (
-                <tr className='user-list__table-body-row'>
-                  <td className='user-list__table-body-cell'>{readableTimeLeftToDate(button.created_at)}</td>
-                  <td className='user-list__table-body-cell'>{button.title}</td>
-                  <td className='user-list__table-body-cell'>
-                    <BtnButtonType type={buttonTypes.find((type) => type.name == button.type)}/>
-                  </td>
-                  <td className='user-list__table-body-cell'><TagsNav tags={button.tags}/></td>
-                  <td className='user-list__table-body-cell'>{button.address}</td>
-                  <td className='user-list__table-body-cell'>
-                      <Btn
-                      btnType={BtnType.small}
+            label={t('common.search')}
+            onChange={onQueryChange}
+          />
+      {buttons?.length > 0 ? (
+        <Table>
+        <TableHeader>
+          <TableHeaderCell>{t('moderation.created_at')}</TableHeaderCell>
+          <TableHeaderCell>{t('button.titleLabel')}</TableHeaderCell>
+          <TableHeaderCell>{t('button.typeLabel')}</TableHeaderCell>
+          <TableHeaderCell>{t('button.tagsLabel')}</TableHeaderCell>
+          <TableHeaderCell>{t('button.whereLabel')}</TableHeaderCell>
+          <TableHeaderCell>{t('moderation.actions')}</TableHeaderCell>
+        </TableHeader>
+        <TableBody>
+          {buttons.map((button, idx) => (
+            <TableLine idx={idx}>
+              <TableLineCell>
+                {readableTimeLeftToDate(button.created_at)}
+              </TableLineCell>
+              <TableLineCell>
+                {button.title}
+              </TableLineCell>
+              <TableLineCell>
+                <BtnButtonType type={buttonTypes.find((type) => type.name == button.type)} />
+              </TableLineCell>
+              <TableLineCell>
+                <TagsNav tags={button.tags} />
+              </TableLineCell>
+              <TableLineCell>
+                {button.address}
+              </TableLineCell>
+              <TableLineCell>
+                <Btn
+                  btnType={BtnType.small}
 
-                      borderColor={'green'}
-                      caption={t('moderation.confirm')}
-                      iconLink={null}
-                      onClick={() => approveButton(button.id)}
-                    />
-                    <Btn
-                      btnType={BtnType.small}
-                      borderColor={'green'}
-                      caption={t('moderation.preview')}
-                      iconLink={null}
-                      onClick={(e) => {
-                        e.preventDefault()
-                        store.emit(new SetMainPopupCurrentButton(button))
-                      }}
-                    />
-                    <Btn
-                      btnType={BtnType.small}
-                      borderColor={'orange'}
-                      caption={t('moderation.edit')}
-                      iconLink={null}
-                      onClick={() => router.push(`/ButtonEdit/${button.id}`)}
-                    />
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+                  borderColor={'green'}
+                  caption={t('moderation.confirm')}
+                  iconLink={null}
+                  onClick={() => approveButton(button.id)}
+                />
+                <Btn
+                  btnType={BtnType.small}
+                  borderColor={'green'}
+                  caption={t('moderation.preview')}
+                  iconLink={null}
+                  onClick={(e) => {
+                    e.preventDefault()
+                    store.emit(new SetMainPopupCurrentButton(button))
+                  }}
+                />
+                <Btn
+                  btnType={BtnType.small}
+                  borderColor={'orange'}
+                  caption={t('moderation.edit')}
+                  iconLink={null}
+                  onClick={() => router.push(`/ButtonEdit/${button.id}`)}
+                />
+              </TableLineCell>
+            </TableLine>
+          ))}
+        </TableBody>
+        </Table>
       ) : t('moderation.emptyButtonList')}
-      <Pagination page={page} setPage={setPage} array={buttons} take={10}/>
+      <Pagination page={page} setPage={setPage} array={buttons} take={10} />
 
     </>
   );
@@ -359,30 +358,42 @@ function AprovedButtonsList() {
 
 
   const [buttons, setButtons] = useState(null);
+  const [pageButtons, setPageButtons] = useState(null);
+
   const [page, setPage] = useState(0);
 
   useEffect(() => {
     store.emit(
-      new ButtonFindAll(page,(buttonsList) =>
-        setButtons(buttonsList),
+      new ButtonFindAll(page, (buttonsList) =>
+        {setButtons(buttonsList);
+        setPageButtons(buttonsList)}
       ),
     );
   }, [page]);
 
   const approveButton = (buttonId) => {
-      store.emit(
-        new ButtonApprove(buttonId,() =>
-        {
-          alertService.info('button approved');
-          setButtons((prevButtons) => prevButtons.filter((button) => button.id != buttonId))
-        })
-      );
-    }
+    store.emit(
+      new ButtonApprove(buttonId, () => {
+        alertService.info('button approved');
+        setButtons((prevButtons) => prevButtons.filter((button) => button.id != buttonId))
+      })
+    );
+  }
   const buttonTypes = useButtonTypes();
 
+  const [searchString, setSearchString] = useState('')
+  const onQueryChange = (query) => {
+    setSearchString(() => query.target.value)
+  }
+  useFilterItems(setButtons, pageButtons, searchString, (searchStr, item) => stringContains(item.title, searchString))
 
   return (
     <>
+        <FieldText
+            name="query"
+            label={t('common.search')}
+            onChange={onQueryChange}
+          />
       {buttons?.length > 0 ? (
         <div className='user-list__wrapper'>
           {/* <FieldText
@@ -390,9 +401,9 @@ function AprovedButtonsList() {
             placeholder={t('common.search')}
             {...register('query')}
           /> */}
-         
-          
-         <table className='user-list__table'>
+
+
+          <table className='user-list__table'>
             <thead className='user-list__table-header'>
               <tr className='user-list__table-header-row'>
                 <th className='user-list__table-header-cell'>{t('button.titleLabel')}</th>
@@ -408,9 +419,9 @@ function AprovedButtonsList() {
                 <tr className='user-list__table-body-row'>
                   <td className='user-list__table-body-cell'>{button.title}</td>
                   <td className='user-list__table-body-cell'>
-                    <BtnButtonType type={buttonTypes.find((type) => type.name == button.type)}/>
+                    <BtnButtonType type={buttonTypes.find((type) => type.name == button.type)} />
                   </td>
-                  <td className='user-list__table-body-cell'><TagsNav tags={button.tags}/></td>
+                  <td className='user-list__table-body-cell'><TagsNav tags={button.tags} /></td>
                   <td className='user-list__table-body-cell'>{readableTimeLeftToDate(button.updated_at)}</td>
                   <td className='user-list__table-body-cell'><a onClick={() => store.emit(new SetMainPopupCurrentProfile(button.owner))}>{button.owner.name}</a></td>
                   <td className='user-list__table-body-cell'>
@@ -438,7 +449,7 @@ function AprovedButtonsList() {
           </table>
         </div>
       ) : t('moderation.emptyButtonList')}
-      <Pagination page={page} setPage={setPage} array={buttons} take={10}/>
+      <Pagination page={page} setPage={setPage} array={buttons} take={10} />
 
 
     </>
@@ -447,12 +458,12 @@ function AprovedButtonsList() {
 
 function NewAdminCommunication() {
   return <>
-  <div className="form__inputs-wrapper">
-                <div className="form__field">
-                  <div className="form__label">{t('moderation.adminCommunicationLabel')}</div>
-                  <div className="form__explain">{t('moderation.adminCommunicationExplain')}</div>
-                  <MessageNew onCreate={undefined}/>
-                              
-                </div>
-            </div></>
+    <div className="form__inputs-wrapper">
+      <div className="form__field">
+        <div className="form__label">{t('moderation.adminCommunicationLabel')}</div>
+        <div className="form__explain">{t('moderation.adminCommunicationExplain')}</div>
+        <MessageNew onCreate={undefined} />
+
+      </div>
+    </div></>
 }
