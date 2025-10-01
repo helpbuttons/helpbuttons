@@ -154,8 +154,6 @@ export default function ButtonForm({
                     setFocus={setFocus}
                     {...register('description')}
                   />
-
-                  {/* TODO: Warning: Cannot update a component (`ButtonNew`) while rendering a different component (`FieldTags`). To locate the bad setState() call inside `FieldTags`, follow the stack trace as described in https://reactjs.org */}
                   <FieldTags
                     label={t('button.tagsLabel')}
                     explain={t('button.tagsExplain')}
@@ -195,6 +193,7 @@ export default function ButtonForm({
                       validationError={errors.address}
                       isCustomAddress={watch('isCustomAddress')}
                       setIsCustomAddress={(value) => setValue('isCustomAddress', value)}
+                      //explain={ t('button.whereExplain')}
                     />
                   </div>
                   <FieldCustomFields customFields={customFields} watch={watch} setValue={setValue} setFocus={setFocus} register={register} errors={errors} currency={selectedNetwork.currency} />
