@@ -525,7 +525,10 @@
     "allowGuestCreationExplain": "When allowing anonymous signups, is important to remmember that your network will be easier exposed to spam",
     "allowGuestCreation": "Allow annoymous signup",
     "showAdvanced": "Show advanced options...",
-    "hideAdvanced": "Hide advanced options..."
+    "hideAdvanced": "Hide advanced options...",
+    "locationKeys": "Key Spots",
+    "keyLocationsExplain": "Key spots that will be highlighted in your network. They will appear in the main menus and map for easy access",
+    "addLocationKey": "+ Add Location"
   },
   "configure": {
     "browsePins": "",

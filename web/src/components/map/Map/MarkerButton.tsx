@@ -132,3 +132,37 @@ export function MarkerButtonIcon(props: MarkerButtonIconProps) {
   );
 }
 
+
+export function LocationKeyIcon(props) {
+  return (
+    <div style={buttonColorStyle(props.cssColor)}>
+      <div
+        style={{
+          position: 'absolute',
+          transform: `translate(${props.left}px, ${props.top}px)`,
+          ...(props.style || {}),
+        }}
+        className={'pigeon-click-block'}
+      >
+        <figure
+          id="markerButton"
+          className="marker-button marker-button-selector"
+        >
+          {props.title && 
+            <div className="marker-button__tags marker-button-selector-title">
+              <div className="marker-button__link-tag">
+                {props.title}
+              </div>
+            </div>
+          }
+          {props.title && 
+          <div className=" marker-button__image">
+          </div>
+          }
+          <span className="marker-button__arrow"></span>
+
+        </figure>
+      </div>
+    </div>
+  );
+}
