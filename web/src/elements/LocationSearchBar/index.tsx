@@ -24,15 +24,14 @@ export function LocationSearchBarSimple({
     const [searchAddress, setSearchAddress] = useState(markerAddress)
     const [results, setResults] = useState([]);
     const [isLoading, setIsLoading] = useState(false)
-    useEffect(() => {
-        setResults(() => [])
-    }, [markerPosition])
-    const [input, setInput] = useState(pickedAddress ? pickedAddress : '');
+    
+    const [input, setInput] = useState(markerAddress ? markerAddress : '');
 
     const handleAddressPicked = (place) => {
         setSearchAddress(() => place.formatted)
         setMarkerAddress(place.formatted)
         setMarkerPosition([place.geometry.lat, place.geometry.lng])
+        setResults(() => [])
     }
 
     return <>
