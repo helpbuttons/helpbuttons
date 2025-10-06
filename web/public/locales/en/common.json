@@ -289,7 +289,8 @@
     "seeHashtags": "See tags",
     "publishComment": "Publish comment",
     "placeHodlerCustomAddress": "Write the new name and select place on the map",
-    "sendPrivateMessage": "Send private message to {0}"
+    "sendPrivateMessage": "Send private message to {0}",
+    "showMoreTags": "more tags"
   },
   "user": {
     "login": "Write your credentials",
