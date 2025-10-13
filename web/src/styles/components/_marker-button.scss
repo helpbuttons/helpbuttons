@@ -21,7 +21,7 @@ $cycle: 10;
   margin-bottom: 0;
   position: absolute;
   transition: transform 0.3s ease;
-  cursor: grab;
+  cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: flex-end;
@@ -370,7 +370,7 @@ $cycle: 10;
 }
 
 
-.marker-button__link-tag {
+.marker-button__link-tag, .marker-key-spot {
 
   bottom: 102%;
   min-height: 20px;
@@ -400,3 +400,35 @@ $cycle: 10;
 
 }
 
+
+.marker-key-location__name {
+
+  background-color: $color-white;
+  padding: $padding-small;
+  border-radius: $border-radius-circle;
+  color: $color-black;
+  font-size: $font-size-small;
+
+}
+
+.marker-key-location__arrow::after {
+ border-top: 10px solid $color-white;
+ color: $color-white;
+}
+
+.marker-key-location {
+
+  overflow-x: auto;
+  overflow-y: auto;
+  position: absolute;
+  max-width: fit-content;
+  white-space: nowrap;
+  justify-content: center;
+  width: fit-content;
+  height: auto;
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  max-height: 50px;
+
+}

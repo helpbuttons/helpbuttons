@@ -29,9 +29,7 @@ export function FieldKeySpots() {
     const openPopup = () => setShowPopup(() => true)
 
     return (<PickerField iconLink={<IoLocationOutline />} showPopup={showPopup} validationError={null} label={t('configuration.locationKeys')} btnLabel={t('configuration.locationKeys')} explain={t('configuration.keyLocationsExplain')} headerText={t('picker.headerText')} openPopup={openPopup} closePopup={closePopup}>
-        <div className="location-keys">
             <LocationKeyTable showForm={showForm} setShowForm={setShowForm}/>
-        </div>
     </PickerField>
 
     )
@@ -51,7 +49,7 @@ export function LocationKeyAdd({ addAction }) {
 
 export function LocationKeyItem({ place, deleteAction }) {
 
-    return <div>
+    return <div className="form-list__table-body-row">
         <LocationCoordinates latitude={place.latitude} longitude={place.longitude} address={place.address} label={'no'} />
         <Btn
             btnType={BtnType.iconActions}
@@ -97,23 +95,21 @@ export function LocationKeyTable({showForm,
 
     return (
         <>
-            <div className="location-keys--form">
-                {selectedNetwork?.exploreSettings?.center ?
-                    <FieldLocationKeyMap
-                        onSave={addLocation}
-                        selectedNetwork={selectedNetwork}
-                        showForm={showForm}
-                        setShowForm={setShowForm}
-                    />
-                    : 'Please choose a network location, before adding key spots'}
-            </div>
-            <div>
+        {selectedNetwork?.exploreSettings?.center ?
+            <FieldLocationKeyMap
+                onSave={addLocation}
+                selectedNetwork={selectedNetwork}
+                showForm={showForm}
+                setShowForm={setShowForm}
+            />
+            : 'Please choose a network location, before adding key spots'}
+            <div className="form-list__table form-list__wrapper">
                 {(!showForm && locations?.length > 0) && (
-                    <div>
+                    <>
                         {locations.map((place, idx) =>
                             <LocationKeyItem key={idx} place={place} deleteAction={deleteLocation} />
                         )}
-                    </div>
+                    </>
                 )}
             </div>
         </>

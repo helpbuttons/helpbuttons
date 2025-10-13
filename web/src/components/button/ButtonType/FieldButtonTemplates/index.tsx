@@ -171,35 +171,40 @@ const FieldButtonTemplates = forwardRef(
                       iconLink={val.icon}
                       color={val.cssColor}
                     />
-                    <Btn
-                      btnType={BtnType.iconActions}
-                      iconLink={<IoPencilOutline />}
-                      iconLeft={IconType.circle}
-                      contentAlignment={ContentAlignment.center}
-                      onClick={() => edit(val, idx)}
-                    />
-                    {!val.hide && 
+                    <div className='form__list-item__actions'>
                       <Btn
                         btnType={BtnType.iconActions}
-                        iconLink={<IoTrashBinOutline />}
+                        iconLink={<IoPencilOutline />}
                         iconLeft={IconType.circle}
                         contentAlignment={ContentAlignment.center}
-                        onClick={() => {
-                          hideIdx(idx, val)
-                      }}
+                        onClick={() => edit(val, idx)}
                       />
-                    }
-                    {val.hide && 
-                      <Btn
-                        btnType={BtnType.smallCircle}
-                        iconLink={<IoPowerOutline />}
-                        iconLeft={IconType.circle}
-                        contentAlignment={ContentAlignment.center}
-                        onClick={() => {
-                          showIdx(idx, val)
+                      {!val.hide && 
+                        <Btn
+                          btnType={BtnType.iconActions}
+                          iconLink={<IoTrashBinOutline />}
+                          iconLeft={IconType.circle}
+                          contentAlignment={ContentAlignment.center}
+                          onClick={() => {
+                            hideIdx(idx, val)
                         }}
-                      />
-                    }</>
+                        />
+                      }
+                      {val.hide && 
+                        <Btn
+                          btnType={BtnType.smallCircle}
+                          iconLink={<IoPowerOutline />}
+                          iconLeft={IconType.circle}
+                          contentAlignment={ContentAlignment.center}
+                          onClick={() => {
+                            showIdx(idx, val)
+                          }}
+                        />
+                      }
+                    </div>
+
+                    
+                    </>
                 } 
                 
               </div>
