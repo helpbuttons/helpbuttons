@@ -17,4 +17,6 @@ export class CreateKeyLocationDto implements Partial<KeyLocation> {
     
     @IsLongitude({message: 'invalid-longitude'})
     longitude: number;
+
+    zoom: number;
 }

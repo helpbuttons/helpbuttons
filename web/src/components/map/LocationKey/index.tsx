@@ -35,7 +35,7 @@ export function LocationKeyAdd({ addAction }) {
     const selectedNetwork = useSelectedNetwork()
 
     const onSave = (place) => {
-        addAction({address: place.address, latitude: place.center[0], longitude: place.center[1]})
+        addAction(place)
     }
     return <div className="location-keys--form">
         {selectedNetwork.exploreSettings.center &&
@@ -129,7 +129,7 @@ export function FieldLocationKeyMap({
     }
     const onSaveClicked = () => {
         setShowPopup(() => false)
-        onSave({ address: address, center: center })
+        onSave({ address: address, latitude: center[0], longitude: center[1], zoom: zoom})
         resetForm()
     }
     const onBoundsChange = ({ center, zoom, bounds }) => {
