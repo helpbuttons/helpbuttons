@@ -11,8 +11,6 @@ import { Network } from 'shared/entities/network.entity';
 import { getHostname } from 'shared/sys.helper';
 import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
 import { useStore } from 'state';
-import Btn, { BtnType, ContentAlignment, IconType } from 'elements/Btn';
-import { IoClose } from 'react-icons/io5';
 
 export default function NewUserFields({
   register,
@@ -95,12 +93,6 @@ export default function NewUserFields({
                   </span> 
               </label>
           </div>
-         <div className="form__input-subtitle-side">
-            <div className="form__input-subtitle--text link" onClick={() => setshowUsername(true) } >
-                {t('common.edit')}
-            </div> 
-          </div>
-          </div>
         }
       </FieldText>
       {showUsername &&
@@ -161,8 +153,7 @@ export default function NewUserFields({
           minLength: 8,
         })}
       ></FieldPassword> */}
-      {t('user.acceptPrivacyPolicy')} 
-      <Link onClick={() => store.emit(new SetMainPopup(MainPopupPage.FAQS))} className='link' href="#">{t('user.privacyPolicyLink')}</Link>
+      {t('user.acceptPrivacyPolicy')}<Link onClick={() => store.emit(new SetMainPopup(MainPopupPage.FAQS))} href="#">{t('user.privacyPolicyLink')}</Link>
       <FieldCheckbox
         name="acceptPrivacyPolicy"
         // defaultValue={watch('acceptPrivacyPolicy')}
