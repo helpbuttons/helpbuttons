@@ -5,7 +5,7 @@ import router from 'next/router';
 
 import CardButtonList from 'components/list/CardButtonList';
 import t from 'i18n';
-import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
+import Btn, { BtnType, ContentAlignment, IconType } from 'elements/Btn';
 import { useScroll } from 'shared/helpers/scroll.helper';
 import { FindMoreReadMessages } from 'state/Activity';
 import { GlobalState, store } from 'state';
@@ -14,6 +14,7 @@ import { ResetFilters, ToggleAdvancedFilters } from 'state/Explore';
 import { useGlobalStore } from 'state';
 import { isFiltering } from 'components/search/AdvancedFilters/filters.type';
 import dconsole from 'shared/debugger';
+import { IoAccessibility, IoAdd } from 'react-icons/io5';
 
 export default function ContentList({
   buttons,
@@ -54,6 +55,8 @@ export default function ContentList({
           )}
           <Btn
             caption={t('explore.createEmpty')}
+           iconLeft={IconType.circle}
+            iconLink={<IoAdd/>}
             onClick={() => router.push('/ButtonNew')}
             contentAlignment={ContentAlignment.center}
           />
@@ -100,6 +103,8 @@ export function NoMoreToLoad() {
       <Btn
         caption={t('explore.createEmpty')}
         onClick={() => router.push('/ButtonNew')}
+        iconLeft={IconType.circle}
+        iconLink={<IoAdd/>}
         contentAlignment={ContentAlignment.center}
       />
     </div>
@@ -117,6 +122,8 @@ export function EndListMessage() {
       </div>
       <Btn
         caption={t('explore.createEmpty')}
+        iconLeft={IconType.circle}
+        iconLink={<IoAdd/>}
         onClick={() => router.push('/ButtonNew')}
         contentAlignment={ContentAlignment.center}
       />
