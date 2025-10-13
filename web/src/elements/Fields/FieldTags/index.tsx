@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
 import FieldError from '../FieldError';
-import { IoClose } from 'react-icons/io5';
+import { IoAdd, IoClose } from 'react-icons/io5';
 import { tagify } from 'shared/sys.helper';
 import _ from 'lodash';
 import { useStore } from 'state';
 import { GlobalState, store } from 'state';
 import { UpdateFiltersToFilterTag, updateCurrentButton } from 'state/Explore';
 import router from 'next/router';
+import t from 'i18n';
 
 export function useTagsList({ tags, setTags }) {
   const onInputChange = (e) => {
@@ -89,6 +90,15 @@ export default function FieldTags({
           e.key === 'Enter' && e.preventDefault();
         }}
       />
+      {input && 
+       <div
+       className="hashtag"
+       onClick={() => addTag(input)}
+     >
+       {input}
+        <IoAdd/>
+     </div>
+      }
       <TagList tags={tags} remove={remove} />
       <AllSuggestedTags word={input.substring(input.lastIndexOf(" ")+1)} maxTags={maxTags} tags={tags} addTag={addTag}/>
       <FieldError validationError={validationError} />
@@ -169,6 +179,7 @@ export function AllSuggestedTags({ word, maxTags, tags, addTag }) {
     (state: GlobalState) => state.networks.selectedNetwork.tags,
   );
 
+  const [numberTags, setNumberTags] = useState(maxTags)
   const [suggestedTags, setSuggestedTags] = useState([]);
   const allSuggestedTags = (sort = false) => {
     if (topTags && allTags && networkTags) {
@@ -211,7 +222,7 @@ export function AllSuggestedTags({ word, maxTags, tags, addTag }) {
         .filter(
           (suggestedTag) => !tags.find((tag) => tag == suggestedTag),
         )
-        .slice(0, maxTags)
+        .slice(0, numberTags)
         .map((tag, idx) => {
           return (
             <div
@@ -223,6 +234,7 @@ export function AllSuggestedTags({ word, maxTags, tags, addTag }) {
             </div>
           );
         })}
+        {numberTags < 1000 && <a href="#" onClick={() => {setNumberTags(1000)}}>{t('button.showMoreTags')}</a>}
     </div>
   );
 }

@@ -10,17 +10,17 @@ export default function PickerField({
   children,
   contentAligment = ContentAlignment.left,
   btnType = BtnType.searchPickerField,
+  iconLeft= IconType.svg,
   showPopup,
   headerText = '',
   openPopup,
-  iconLeft = null,
   iconLink = null,
   closePopup,
   button = <Btn
     btnType={btnType}
     caption={btnLabel}
     iconLink= {iconLink}
-    iconLeft={IconType.svg}
+    iconLeft={iconLeft}
     contentAlignment={contentAligment}
     onClick={() => openPopup()}
   />

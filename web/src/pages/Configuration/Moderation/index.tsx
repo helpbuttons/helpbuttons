@@ -71,13 +71,13 @@ export default function Moderation() {
                 caption={t('moderation.buttonsList')}
               />
             </Link>
-            <Link href="#" onClick={() => setMode(ModerationMode.APPROVED)}>
+            {/* <Link href="#" onClick={() => setMode(ModerationMode.APPROVED)}>
               <Btn
                 iconLeft={IconType.svg}
                 iconLink={<IoHammerOutline />}
                 caption={t('moderation.buttonsApproved')}
               />
-            </Link>
+            </Link> */}
             <Link href="#" onClick={() => setMode(ModerationMode.COMMUNICATION)}>
               <Btn
                 iconLeft={IconType.svg}
@@ -90,7 +90,7 @@ export default function Moderation() {
 
           {mode == ModerationMode.USERS && <ModerationUsersList />}
           {mode == ModerationMode.APPROVAL && <ModerationHelpButtonsList />}
-          {mode == ModerationMode.APPROVED && <AprovedButtonsList />}
+          {/* {mode == ModerationMode.APPROVED && <AprovedButtonsList />} */}
           {mode == ModerationMode.COMMUNICATION && <NewAdminCommunication />}
         </div>
       </Popup>

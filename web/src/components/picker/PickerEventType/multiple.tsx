@@ -11,11 +11,11 @@ export default function PickerEventTypeMultipleForm({
   setEventStart,
 }) {
 
-  const [dateStart, setDateStart] = useState(eventStart)
-  const [timeStart, setTimeStart] = useState(eventStart)
-  
+  const [timeStart, setTimeStart] = useState(eventStart);
+  const [timeEnd, setTimeEnd] = useState(eventStart);
+
+  const [dateStart, setDateStart] = useState(eventEnd)
   const [dateEnd, setDateEnd] = useState(eventEnd)
-  const [timeEnd, setTimeEnd] = useState(eventEnd)
 
   useEffect(() => {
       setEventStart(mergeDateTime(dateStart, timeStart))
