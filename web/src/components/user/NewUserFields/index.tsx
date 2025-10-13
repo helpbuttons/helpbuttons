@@ -82,16 +82,20 @@ export default function NewUserFields({
         {...register('name', { required: true })}
       >
       { username &&  !showUsername &&
+          <div className="form__input-subtitle">
           <div className="form__input-subtitle-side">
               <label className="form__input-subtitle--text">
-                {`${t('user.usernameWillBe')}`} 
                 <span className='highlight'>
                   {`${username}@${hostname}`}
                 </span>
-                  <span onClick={() => setshowUsername(true) } className="link">
-                      {t('common.edit')}
-                  </span> 
+
               </label>
+          </div>
+         <div className="form__input-subtitle-side">
+            <div className="form__input-subtitle--text link" onClick={() => setshowUsername(true) } className="link">
+                {t('common.edit')}
+            </div> 
+          </div>
           </div>
         }
       </FieldText>
