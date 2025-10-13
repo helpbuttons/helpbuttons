@@ -39,13 +39,13 @@ export function LocationKeyAdd({ addAction }) {
     }
     return <div className="location-keys--form">
         <FieldLocation
-            label={t('configuration.locationKeys')}
+            label={t('configuration.addLocationKey')}
             headerText={t('configuration.keyLocations')}
             explain={t('configuration.keyLocationsExplain')}
             setLatitude={(lat) => setLatitude(() => lat)}
             setLongitude={(lng) => setLongitude(() => lng)}
             markerPosition={[latitude, longitude]}
-            setMarkerAddress={(address) => { console.log('zzzzz ' + address); setLocationName(() => address) }}
+            setMarkerAddress={(address) => { setLocationName(() => address) }}
             setHideAddress={(value) => { }}
             hideAddress={false}
             markerCaption={locationName}
