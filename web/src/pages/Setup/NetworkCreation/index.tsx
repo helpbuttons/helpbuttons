@@ -36,7 +36,7 @@ function NetworkCreation() {
       privacy: 'public',
       address: '',
       exploreSettings: null,
-      buttonTemplates: JSON.parse('[{"name":"offer","caption":"Offer","color":"custom","cssColor":"#FFDD02"},{"name":"need","caption":"Need","color":"custom","cssColor":"#19AF96"},{"caption":"Business","name":"business","cssColor":"#071315","customFields":[]},{"caption":"Event","name":"event","cssColor":"#c5d51b","customFields":[{"type":"event"}]},{"caption":"Selling","name":"selling","cssColor":"#d51bd1","customFields":[{"type":"price"}]}]'),
+      buttonTemplates: JSON.parse('[{"name":"offer","caption":"Offer","color":"custom","cssColor":"#FFDD02","icon":"😐"},{"name":"need","caption":"Need","color":"custom","cssColor":"#19AF96","icon":"😐"},{"caption":"Business","name":"business","cssColor":"#071315","customFields":[],"icon":"😐"},{"caption":"Event","name":"event","cssColor":"#c5d51b","customFields":[{"type":"event"}],"icon":"😐"},{"caption":"Selling","name":"selling","cssColor":"#d51bd1","customFields":[{"type":"price"}]}],"icon":"😐"'),
       backgroundColor: '#FFDD02',
       textColor: '#0E0E0E',
       inviteOnly: false,
