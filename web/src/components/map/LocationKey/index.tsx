@@ -16,13 +16,21 @@ import { alertService } from "services/Alert";
 
 export function FieldKeySpots() {
     const [showPopup, setShowPopup] = useState(false)
+    const [showForm, setShowForm] = useState(false)
 
-    const closePopup = () => setShowPopup(() => false)
+    const closePopup = () => {
+        if(showForm)
+        {
+            setShowForm(() => false)
+        }else{
+            setShowPopup(() => false) 
+        }
+    }
     const openPopup = () => setShowPopup(() => true)
 
     return (<PickerField iconLink={<IoLocationOutline />} showPopup={showPopup} validationError={null} label={t('configuration.locationKeys')} btnLabel={t('configuration.locationKeys')} explain={t('configuration.keyLocationsExplain')} headerText={t('picker.headerText')} openPopup={openPopup} closePopup={closePopup}>
         <div className="location-keys">
-            <LocationKeyTable />
+            <LocationKeyTable showForm={showForm} setShowForm={setShowForm}/>
         </div>
     </PickerField>
 
@@ -37,14 +45,8 @@ export function LocationKeyAdd({ addAction }) {
     const onSave = (place) => {
         addAction(place)
     }
-    return <div className="location-keys--form">
-        {selectedNetwork?.exploreSettings?.center ?
-            <FieldLocationKeyMap
-                onSave={onSave}
-                selectedNetwork={selectedNetwork}
-            />
-        : 'Please choose a network location, before adding key spots'}
-    </div>
+
+    return
 }
 
 export function LocationKeyItem({ place, deleteAction }) {
@@ -64,7 +66,8 @@ export function LocationKeyItem({ place, deleteAction }) {
 }
 
 
-export function LocationKeyTable() {
+export function LocationKeyTable({showForm,
+    setShowForm}) {
 
     const [locations, setLocations] = useState([])
     const reloadLocations = () => {
@@ -89,11 +92,23 @@ export function LocationKeyTable() {
         store.emit(new DeleteKeyLocation(id))
         setLocations((prevLocations) => prevLocations.filter((place) => place.id != id))
     }
+
+    const selectedNetwork = useSelectedNetwork()
+
     return (
         <>
-            <LocationKeyAdd addAction={addLocation} />
+            <div className="location-keys--form">
+                {selectedNetwork?.exploreSettings?.center ?
+                    <FieldLocationKeyMap
+                        onSave={addLocation}
+                        selectedNetwork={selectedNetwork}
+                        showForm={showForm}
+                        setShowForm={setShowForm}
+                    />
+                    : 'Please choose a network location, before adding key spots'}
+            </div>
             <div>
-                {locations?.length > 0 && (
+                {(!showForm && locations?.length > 0) && (
                     <div>
                         {locations.map((place, idx) =>
                             <LocationKeyItem key={idx} place={place} deleteAction={deleteLocation} />
@@ -108,6 +123,8 @@ export function LocationKeyTable() {
 export function FieldLocationKeyMap({
     onSave,
     selectedNetwork,
+    showForm,
+    setShowForm
 }) {
 
     const [isLoading, setIsLoading] = useState(false)
@@ -122,10 +139,11 @@ export function FieldLocationKeyMap({
     const resetForm = () => {
         setCenter(() => selectedNetwork.exploreSettings.center)
         setAddress(() => '')
+        setShowForm(() => false)
         setZoom(() => selectedNetwork.exploreSettings.zoom)
     }
     const onSaveClicked = () => {
-        onSave({ address: address, latitude: center[0], longitude: center[1], zoom: zoom})
+        onSave({ address: address, latitude: center[0], longitude: center[1], zoom: zoom })
         resetForm()
     }
     const onBoundsChange = ({ center, zoom, bounds }) => {
@@ -159,43 +177,53 @@ export function FieldLocationKeyMap({
     }, [foundAddress])
 
     return (
-        // <PickerField iconLink={<IoLocationOutline />} showPopup={showPopup} btnLabel={t('configuration.addLocationKey')} headerText={t('picker.headerText')} openPopup={openPopup} closePopup={closePopup}>
-            <div className="form__field form__field--location-wrapper">
-                <LocationSearchBar
-                    placeholder={t('button.locationPlaceholder')}
-                    pickedAddress={address}
-                    hideAddress={true}
-                    setPickedAddress={setAddress}
-                    isCustomAddress={isCustomAddress}
-                    setIsCustomAddress={setIsCustomAddress}
-                    setPickedPosition={setCenter}
-                    focusPoint={center}
-                    isLoading={isLoading}
-                    setIsLoading={setIsLoading}
-                    pickedPosition={center}
-                />
-                <MapLocationKey 
-                    center={center}
-                    zoom={zoom}
-                    tileType={undefined}
-                    onBoundsChanged={onBoundsChange}
-                    handleMapClick={onMapClick}
-                >
-                    <LocationKeyIcon 
-                        title={address} anchor={center}
-                        offset={[25, 50]}
-                        cssColor={'red'}
+        <>{!showForm &&
+            <Btn
+                btnType={BtnType.searchPickerField}
+                caption={t('configuration.addLocationKey')}
+                iconLink={<IoLocationOutline />}
+                iconLeft={IconType.svg}
+                contentAlignment={ContentAlignment.left}
+                onClick={() => setShowForm(() => true)}
+            />
+        }
+            {showForm &&
+                <div className="form__field form__field--location-wrapper">
+                    <LocationSearchBar
+                        placeholder={t('button.locationPlaceholder')}
+                        pickedAddress={address}
+                        hideAddress={true}
+                        setPickedAddress={setAddress}
+                        isCustomAddress={isCustomAddress}
+                        setIsCustomAddress={setIsCustomAddress}
+                        setPickedPosition={setCenter}
+                        focusPoint={center}
+                        isLoading={isLoading}
+                        setIsLoading={setIsLoading}
+                        pickedPosition={center}
                     />
-                </MapLocationKey>
-                <FieldMapZoomSlide zoom={zoom} setZoom={(zoom) => setZoom(() => Math.round(zoom))} />
-                <Btn
-                    btnType={BtnType.submit}
-                    caption={t('common.save')}
-                    contentAlignment={ContentAlignment.center}
-                    onClick={() => onSaveClicked()}
-                />
-            </div>
-
-        // </PickerField>
+                    <MapLocationKey
+                        center={center}
+                        zoom={zoom}
+                        tileType={undefined}
+                        onBoundsChanged={onBoundsChange}
+                        handleMapClick={onMapClick}
+                    >
+                        <LocationKeyIcon
+                            title={address} anchor={center}
+                            offset={[25, 50]}
+                            cssColor={'red'}
+                        />
+                    </MapLocationKey>
+                    <FieldMapZoomSlide zoom={zoom} setZoom={(zoom) => setZoom(() => Math.round(zoom))} />
+                    <Btn
+                        btnType={BtnType.submit}
+                        caption={t('common.save')}
+                        contentAlignment={ContentAlignment.center}
+                        onClick={() => onSaveClicked()}
+                    />
+                </div>
+            }
+        </>
     )
 }
