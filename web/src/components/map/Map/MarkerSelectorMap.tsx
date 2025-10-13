@@ -89,8 +89,7 @@ export function MarkerEditorMap({
             mapZoom={zoom}
             onBoundsChanged={onBoundsChanged}
             handleMapClick={handleMapClicked}
-            width={'100%'}
-            height={'16rem'}
+            height={'18'}
           >
             {(hideAddress && pickedPosition) && (
               <GeoJson
@@ -154,8 +153,7 @@ export default function MarkerViewMap({
             mapCenter={mapCenter}
             mapZoom={zoom}
             onBoundsChanged={onBoundsChanged}
-            width={'100%'}
-            height={'16rem'}
+            height={'18'}
           >
             {hideAddress && (
               <GeoJson

@@ -16,11 +16,17 @@ import { store } from 'state';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import {
+  IoAlarmOutline,
+  IoArchiveOutline,
   IoArrowBack,
   IoArrowForward,
+  IoBalloonOutline,
   IoBanOutline,
   IoCheckmarkCircleOutline,
   IoHammerOutline,
+  IoPerson,
+  IoPersonOutline,
+  IoRadioButtonOff,
 } from 'react-icons/io5';
 import { alertService } from 'services/Alert';
 import { readableTimeLeftToDate } from 'shared/date.utils';
@@ -60,14 +66,14 @@ export default function Moderation() {
             <Link href="#" onClick={() => setMode(ModerationMode.USERS)}>
               <Btn
                 iconLeft={IconType.svg}
-                iconLink={<IoHammerOutline />}
+                iconLink={<IoPersonOutline />}
                 caption={t('moderation.usersList')}
               />
             </Link>
             <Link href="#" onClick={() => setMode(ModerationMode.APPROVAL)}>
               <Btn
                 iconLeft={IconType.svg}
-                iconLink={<IoHammerOutline />}
+                iconLink={<IoArchiveOutline />}
                 caption={t('moderation.buttonsList')}
               />
             </Link>
@@ -81,7 +87,7 @@ export default function Moderation() {
             <Link href="#" onClick={() => setMode(ModerationMode.COMMUNICATION)}>
               <Btn
                 iconLeft={IconType.svg}
-                iconLink={<IoHammerOutline />}
+                iconLink={<IoBalloonOutline />}
                 caption={t('moderation.adminCommunication')}
               />
             </Link>
