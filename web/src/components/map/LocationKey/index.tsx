@@ -38,12 +38,12 @@ export function LocationKeyAdd({ addAction }) {
         addAction(place)
     }
     return <div className="location-keys--form">
-        {selectedNetwork.exploreSettings.center &&
+        {selectedNetwork?.exploreSettings?.center ?
             <FieldLocationKeyMap
                 onSave={onSave}
                 selectedNetwork={selectedNetwork}
             />
-        }
+        : 'Please choose a network location, before adding key spots'}
     </div>
 }
 
@@ -109,10 +109,7 @@ export function FieldLocationKeyMap({
     onSave,
     selectedNetwork,
 }) {
-    const [showPopup, setShowPopup] = useState(false)
 
-    const closePopup = () => {setShowPopup(() => false); resetForm()}
-    const openPopup = () => setShowPopup(() => true)
     const [isLoading, setIsLoading] = useState(false)
 
     const [address, setAddress] = useState('')
@@ -128,7 +125,6 @@ export function FieldLocationKeyMap({
         setZoom(() => selectedNetwork.exploreSettings.zoom)
     }
     const onSaveClicked = () => {
-        setShowPopup(() => false)
         onSave({ address: address, latitude: center[0], longitude: center[1], zoom: zoom})
         resetForm()
     }
@@ -163,7 +159,7 @@ export function FieldLocationKeyMap({
     }, [foundAddress])
 
     return (
-        <PickerField iconLink={<IoLocationOutline />} showPopup={showPopup} btnLabel={t('configuration.addLocationKey')} headerText={t('picker.headerText')} openPopup={openPopup} closePopup={closePopup}>
+        // <PickerField iconLink={<IoLocationOutline />} showPopup={showPopup} btnLabel={t('configuration.addLocationKey')} headerText={t('picker.headerText')} openPopup={openPopup} closePopup={closePopup}>
             <div className="form__field form__field--location-wrapper">
                 <LocationSearchBar
                     placeholder={t('button.locationPlaceholder')}
@@ -200,6 +196,6 @@ export function FieldLocationKeyMap({
                 />
             </div>
 
-        </PickerField>
+        // </PickerField>
     )
 }
