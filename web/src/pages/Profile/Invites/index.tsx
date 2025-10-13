@@ -24,6 +24,7 @@ import { alertService } from 'services/Alert';
 import router from 'next/router';
 import QRCode from 'qrcode';
 import dconsole from 'shared/debugger';
+import { IoAdd } from 'react-icons/io5';
 
 export const getInvitationLink = (code) => {
   return '/Signup/Invite/' + code;
@@ -116,43 +117,47 @@ export default function Invites() {
           >
             <Form
               onSubmit={handleSubmit(onSubmit)}
-              classNameExtra="invite"
+              classNameExtra=''
             >
-              <div className="invite__form">
-                <p className="form__explain">
+                <p className="form__header">
                   {t('invite.description')}
                 </p>
-                <div className="form__inputs-wrapper">
+                <div className="form__inputs-wrapper form__subsection">
                   <DropdownField
                     options={expirationOptions}
                     defaultSelected={'never'}
                     onChange={(value) =>
                       setValue('expirationTimeInSeconds', value)
                     }
-                    label={t('invite.expiresIn')}
+                    label={t('invite.setExpiration')}
                   />
                   <Btn
+                    btnType={BtnType.submit}
+                    iconLeft={IconType.circle}
+                    iconLink={<IoAdd/>}
+                    contentAlignment={ContentAlignment.center}
+                  
                     caption={t('invite.generate')}
                     submit={true}
                   ></Btn>
                 </div>
-              </div>
             </Form>
             <p>&nbsp;</p>
-            <div>
+            <div className="form__list">
               {invites?.length > 0 &&
                 invites.map((invitation, idx) => (
                   <div key={idx}>
                     {(!isExpired(invitation.expiration) ||
                       !invitation.expiration) && (
                       <div
-                        className="form__list-item--button-type-field"
+                        className="form__list-row invite__row"
                         key={idx}
                       >
+                        <div className='invite__state'>
                         {captionInvite(invitation)}
+                        </div>
                         {invitation.usage > 0 ? <>&nbsp;{t('invite.registered')}</>: <InvitationQrCode url={invitation} />}
                         
-                        <img src="" />
                       </div>
                     )}
                   </div>
@@ -176,19 +181,18 @@ function InvitationQrCode({ url }) {
   };
 
   return (
-    <>
-      {qrCodeData && <><img src={qrCodeData} />{invitationLink}</>}
+    <div className='invite__wrapper'>
+      {qrCodeData && <div className='invite__card'><img src={qrCodeData} /><div className='invite__link'>{invitationLink}</div></div>}
       {!qrCodeData && (
         <Btn
-          btnType={BtnType.filter}
-          iconLeft={IconType.color}
-          contentAlignment={ContentAlignment.left}
+          btnType={BtnType.filterCorp}
+          contentAlignment={ContentAlignment.center}
           caption={t('invite.generateQr')}
           onClick={() => {
             generateQrCode(url);
           }}
         />
       )}
-    </>
+    </div>
   );
 }

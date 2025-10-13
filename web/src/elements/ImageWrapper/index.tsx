@@ -16,6 +16,8 @@ export enum ImageType {
   avatarBig,
   avatarMed,
   preview,
+  formIllustration,
+
 }
 
 export enum ContentAlignment {
@@ -134,6 +136,17 @@ export default function ImageWrapper({
         alt={alt}
         fill={true}
         
+      />
+    );
+  }
+  if (imageType == ImageType.formIllustration) {
+    return (
+      <HbImage
+        style={{ objectFit: 'cover', objectPosition: 'center' }}
+        src={makeImageUrl(src)}
+        alt={alt}
+        width={100}
+        height={100}
       />
     );
   }

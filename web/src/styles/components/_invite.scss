@@ -1,0 +1,58 @@
+.invite {
+
+    width: 100%;
+    overflow-x: auto;
+
+}
+
+.invite__row {
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  background-color: $color-ligth-gray;
+  padding: $padding-big;
+  border-radius: $border-radius-basic;
+
+}
+
+.invite__wrapper {
+
+  overflow: auto;
+
+}
+
+.invite__card {
+
+  display: flex;
+  align-items: center;
+    flex-direction: row;
+    gap: $padding-big;
+    font-weight: $font-weight-bold;
+    padding: $padding-big;
+    word-wrap: break-word;
+    
+
+
+
+}
+
+.invite__state {
+
+  display: flex;
+  flex-direction: row;
+  padding: $padding-medium 0;
+  font-weight: $font-weight-bold;
+
+}
+
+.invite__link {
+
+  width: auto;
+  word-wrap: break-word;
+
+  
+
+}
