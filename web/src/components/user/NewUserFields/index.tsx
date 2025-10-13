@@ -92,7 +92,7 @@ export default function NewUserFields({
               </label>
           </div>
          <div className="form__input-subtitle-side">
-            <div className="form__input-subtitle--text link" onClick={() => setshowUsername(true) } className="link">
+            <div className="form__input-subtitle--text link" onClick={() => setshowUsername(true) }>
                 {t('common.edit')}
             </div> 
           </div>
