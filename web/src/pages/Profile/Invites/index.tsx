@@ -109,8 +109,6 @@ export default function Invites() {
   };
 
   return (
-    <>
-      {sessionUser && (
           <Popup
             title={t('invite.title')}
             linkBack={() => router.back()}
@@ -164,8 +162,6 @@ export default function Invites() {
                 ))}
             </div>
           </Popup>
-      )}
-    </>
   );
 }
 

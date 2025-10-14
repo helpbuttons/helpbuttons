@@ -35,7 +35,8 @@ export const allowedPathsPerRole =
             '/Activity',
             '/ProfileEdit',
             '/ButtonEdit/:id',
-            '/ProfileDelete'
+            '/ProfileDelete',
+            '/Profile/Invites'
         ]
     },
     {
