@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import FieldError from '../FieldError';
-import { IoAdd, IoClose } from 'react-icons/io5';
+import { IoAdd, IoClose, IoHeartOutline, IoPencilOutline } from 'react-icons/io5';
 import { tagify } from 'shared/sys.helper';
 import _ from 'lodash';
 import { useStore } from 'state';
@@ -8,6 +8,7 @@ import { GlobalState, store } from 'state';
 import { UpdateFiltersToFilterTag, updateCurrentButton } from 'state/Explore';
 import router from 'next/router';
 import t from 'i18n';
+import Btn, { BtnType, ContentAlignment, IconType } from 'elements/Btn';
 
 export function useTagsList({ tags, setTags }) {
   const onInputChange = (e) => {
@@ -234,7 +235,17 @@ export function AllSuggestedTags({ word, maxTags, tags, addTag }) {
             </div>
           );
         })}
-        {numberTags < 1000 && <a href="#" onClick={() => {setNumberTags(1000)}}>{t('button.showMoreTags')}</a>}
+        {numberTags < 1000 && 
+
+          <Btn
+            btnType={BtnType.iconActions}
+            contentAlignment={ContentAlignment.center}
+            iconLink={<IoAdd />}
+            iconLeft={IconType.circle}
+            onClick={() => {setNumberTags(1000)}}
+          />
+        
+         }
     </div>
   );
 }

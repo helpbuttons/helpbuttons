@@ -21,8 +21,7 @@ export function NetworkMapConfigure({
           onBoundsChanged={onBoundsChanged}
           mapCenter={mapSettings.center}
           mapZoom={mapSettings.zoom}
-          width={'100%'}
-          height={'18rem'}
+          height={'18'}
           tileType={mapSettings.tileType}
           handleMapClick={handleMapClick}
         >
@@ -54,8 +53,7 @@ export function MapLocationKey({
           onBoundsChanged={onBoundsChanged}
           mapCenter={center}
           mapZoom={zoom}
-          width={'100%'}
-          height={'18rem'}
+          height={'18'}
           tileType={tileType}
           handleMapClick={handleMapClick}
         >
