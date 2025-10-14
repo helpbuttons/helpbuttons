@@ -3,31 +3,31 @@ import { useEffect } from "react"
 import { IoArrowBack, IoArrowForward } from "react-icons/io5"
 
 export function Table({ children }) {
-    return <div className='user-list__wrapper'>
-        <table className='user-list__table'>{children}</table>
+    return <div className='form-list__wrapper'>
+        <table className='form-list__table'>{children}</table>
     </div>
 }
 
 export function TableHeader({ children }) {
-    return <thead className='user-list__table-header'>
-        <tr className='user-list__table-header-row'>{children}</tr></thead>
+    return <thead className='form-list__table-header'>
+        <tr className='form-list__table-header-row'>{children}</tr></thead>
 }
 
 export function TableHeaderCell({ children }) {
-    return <th className='user-list__table-header-cell'>{children}</th>
+    return <th className='form-list__table-header-cell'>{children}</th>
 }
 
 export function TableBody({ children }) {
-    return <tbody className='user-list__table-body'>{children}</tbody>
+    return <tbody className='form-list__table-body'>{children}</tbody>
 }
 
 
 export function TableLine({ children, idx }) {
-    return <tr className='user-list__table-body-row' key={idx}>{children}</tr>
+    return <tr className='form-list__table-body-row' key={idx}>{children}</tr>
 }
 
 export function TableLineCell({ children }) {
-    return <td className='user-list__table-body-cell'>
+    return <td className='form-list__table-body-cell'>
         {children}
     </td>
 }

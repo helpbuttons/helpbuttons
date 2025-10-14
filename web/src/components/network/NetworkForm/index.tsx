@@ -22,6 +22,7 @@ import Accordion from 'elements/Accordion';
 import { FieldCheckbox } from 'elements/Fields/FieldCheckbox';
 import { FieldLanguagePick } from 'elements/Fields/FieldLanguagePick';
 import FieldButtonTemplates from 'components/button/ButtonType/FieldButtonTemplates';
+import { FieldKeySpots } from 'components/map/LocationKey';
 
 export default NetworkForm;
 
@@ -296,6 +297,7 @@ function NetworkForm({
               value={watch('exploreSettings')}
               markerColor={watch('backgroundColor')}
             />
+            <FieldKeySpots/>
             <FieldCheckbox
               name='hideLocationDefault'
               label={t('configuration.hideLocationByDefaultLabel')}
@@ -324,13 +326,13 @@ function NetworkForm({
           </div>
 
             */}
-          <div
+          {/* <div
               onClick={() => setShowAdvancedConfiguration((prev) => !prev)}
               className={`nav-bottom__link`}
             >
               {!showAdvancedConfiguration && t('configuration.showAdvanced')}
               {showAdvancedConfiguration && t('configuration.hideAdvanced')}
-          </div>
+          </div> */}
           <div className="publish__submit">
             <Btn
               btnType={BtnType.submit}

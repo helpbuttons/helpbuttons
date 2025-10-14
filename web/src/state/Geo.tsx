@@ -1,9 +1,10 @@
 import { GlobalState, store } from "state";
 import { catchError, map, of } from "rxjs";
-import { GeoService } from "services/Geo";
+import { GeoService, KeyLocationService } from "services/Geo";
 import { WatchEvent } from "store/Event";
 import { CacheMatch, CachePut } from "./Cache";
 import dconsole from "shared/debugger";
+import { CreateKeyLocationDto } from "shared/dtos/keylocation.dto";
 
 export class GeoFindAddress implements WatchEvent {
     uid = '';
@@ -67,3 +68,40 @@ export class GeoFindAddress implements WatchEvent {
       id: '',
     }
   }
+
+export class CreateKeyLocation implements WatchEvent {
+  public constructor(
+    private data: CreateKeyLocationDto,
+    private onSuccess
+  ) { }
+  public watch(state: GlobalState) {
+    return KeyLocationService.new(this.data).pipe(
+      map(() => {
+        this.onSuccess();
+      }))
+  }
+}
+
+export class DeleteKeyLocation implements WatchEvent {
+  public constructor(
+    private id: string,
+  ) { }
+  public watch(state: GlobalState) {
+    return KeyLocationService.delete(this.id)
+  }
+}
+
+export class ListKeyLocation implements WatchEvent {
+  public constructor(
+    private onSuccess = undefined,
+  ) {}
+
+  public watch(state: GlobalState) {
+    return KeyLocationService.list().pipe(
+      map((list) => { 
+        this.onSuccess(list);
+      }),
+      catchError((error) => {this.onSuccess([]); return  of(undefined)})
+    )
+  }
+}

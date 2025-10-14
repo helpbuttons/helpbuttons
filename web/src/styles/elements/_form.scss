@@ -473,6 +473,13 @@ width: 100%;
 
 }
 
+.form__list-item__actions {
+
+  display: flex;
+  flex-direction: row;
+  gap: $margin-small;
+
+}
 
 .form__input--button-type-field .form__field {
   flex-basis: 100%; /* Take 60% of the width */

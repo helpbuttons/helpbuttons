@@ -5,6 +5,9 @@ import { HttpModule } from '@nestjs/axios';
 import { NetworkModule } from '../network/network.module';
 import { CacheModule } from '@nestjs/cache-manager';
 import { HttpHelper } from '@src/shared/helpers/http.helper';
+import { KeyLocationService } from './keylocation.service';
+import { KeyLocation } from './keylocation.entity';
+import { TypeOrmModule } from '@nestjs/typeorm';
 @Module({
   imports: [
     HttpModule.register({
@@ -13,10 +16,11 @@ import { HttpHelper } from '@src/shared/helpers/http.helper';
     }),
     forwardRef(() => NetworkModule),
     CacheModule.register(),
-    NetworkModule
+    NetworkModule,
+    TypeOrmModule.forFeature([KeyLocation])
   ],
   controllers: [GeoController],
-  providers: [GeoService, HttpHelper],
+  providers: [GeoService, KeyLocationService, HttpHelper],
   exports: [GeoService],
 })
 export class GeoModule {}
