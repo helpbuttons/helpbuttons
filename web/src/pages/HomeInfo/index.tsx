@@ -574,6 +574,7 @@ function HomeInfoKeyLocations({selectedNetwork}) {
     router.push(`/Explore/${place.zoom}/${place.latitude}/${place.longitude}/`)
   }
   return  (<>
+  {keyLocations.length > 0 && 
     <div className="homeinfo-card">
       <div className="homeinfo-card__header">
         <h3 className="homeinfo-card__header-title">
@@ -603,5 +604,5 @@ function HomeInfoKeyLocations({selectedNetwork}) {
         })}
       </div>
 
-    </div></>)
+    </div>}</>)
 }
