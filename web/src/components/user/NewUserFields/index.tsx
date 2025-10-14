@@ -88,13 +88,14 @@ export default function NewUserFields({
                 <span className='highlight'>
                   {`${username}@${hostname}`}
                 </span>
+                <div className=" link" onClick={() => setshowUsername(true) }>
+                {t('common.edit')}
+                </div> 
 
               </label>
           </div>
          <div className="form__input-subtitle-side">
-            <div className="form__input-subtitle--text link" onClick={() => setshowUsername(true) }>
-                {t('common.edit')}
-            </div> 
+
           </div>
           </div>
         }
