@@ -395,7 +395,8 @@
     "explainPublishAsGuest": "Signup as anonymous, please generate a new code, that you can use it for logging in to check your _helpbuttons_",
     "generateCode": "Generate new anonymous code",
     "explainUseGuestCode": "Please store this code, it is your only way to keep track of your publications",
-    "explainGuestDetails": "We need some details to complete your signup"
+    "explainGuestDetails": "We need some details to complete your signup",
+    "editUsername":"Edit username"
   },
   "picker": {
     "headerText": "Choose a location"

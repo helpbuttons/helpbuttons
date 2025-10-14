@@ -304,6 +304,7 @@
     "deletedAccount": "¡Tus datos fueron borados con éxito!",
     "signupSuccess": "Tu registro fu exitoso, Bienvenido/a a {0} ",
     "showWassapExplain": "Muestra un link a Whatsapp si quieres. Necesitas publicar tu teléfono antes para ello.",
+    "editUsername":"Editar usuario",
     "endorse": "Apoyar",
     "explainPublishAsGuest": "Por favor genera un nuevo código, que entrar usar para y comprobar tus _helpbuttons_",
     "explainUseGuestCode": "Por favor guarda este código, es la única forma que tendrás de entrar para comprobar tus publicaciones"

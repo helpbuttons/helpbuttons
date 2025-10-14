@@ -93,9 +93,9 @@ export default function FieldTags({
       />
       {input && 
        <div
-       className="hashtag"
-       onClick={() => addTag(input)}
-     >
+        className="hashtag"
+        onClick={() => addTag(input)}
+        >
        {input}
         <IoAdd/>
      </div>
@@ -182,7 +182,7 @@ export function AllSuggestedTags({ word, maxTags, tags, addTag }) {
 
   const [numberTags, setNumberTags] = useState(maxTags)
   const [suggestedTags, setSuggestedTags] = useState([]);
-  const allSuggestedTags = (sort = false) => {
+  const allSuggestedTags = () => ['x','y','x','y','y','x','y','y','x','y','y','x','y','y','x','y','y','x','y','y','x','y','y','x','y','y','x','y','y','x','y','y','x','y','y','x','y','y','x','y','y','x','y'] /*(sort = false) => {
     if (topTags && allTags && networkTags) {
       const all= _.uniq([
         ...networkTags,
@@ -196,7 +196,7 @@ export function AllSuggestedTags({ word, maxTags, tags, addTag }) {
       return all
     }
     return [];
-  };
+  };*/
   useEffect(() => {
     if (topTags && allTags) {
       setSuggestedTags(() => {
@@ -235,7 +235,7 @@ export function AllSuggestedTags({ word, maxTags, tags, addTag }) {
             </div>
           );
         })}
-        {numberTags < 1000 && 
+        {(suggestedTags.length > maxTags && numberTags != 1000)  && 
 
           <Btn
             btnType={BtnType.iconActions}
