@@ -431,7 +431,7 @@
     "placeHodlerCustomAddress": "Escribe un nuevo nombre y selecciona el lugar sobre el mapa",
     "publishComment": "Publicar comentario",
     "sendPrivateMessage": "Enviar mensaje privado a {0}",
-    "proposeAddress": "Añadir nuevo lugar a {0}"
+    "proposeAddress": "Añadir o editar nuevo lugar en {0}"
   },
   "calendarOnce": {
     "label": "Una vez",
