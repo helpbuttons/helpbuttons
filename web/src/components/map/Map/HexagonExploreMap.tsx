@@ -3,6 +3,7 @@ import { GeoJson, GeoJsonFeature, Marker, Overlay, Point } from 'pigeon-maps';
 import { GlobalState, store, useGlobalStore } from 'state';
 import {
   RecenterExplore,
+  UpdateExploreSettings,
   UpdateFiltersToFilterButtonType,
   UpdateHexagonClicked, updateCurrentButton,
 } from 'state/Explore';
@@ -360,6 +361,7 @@ export default function HexagonExploreMap({
                     offset={[35, 65]}
                     color={'white'}
                     title={place.address}
+                    onClick={() => store.emit(new UpdateExploreSettings({zoom: place.zoom, center: [place.latitude, place.longitude]}))}
                   />
                 );
               })

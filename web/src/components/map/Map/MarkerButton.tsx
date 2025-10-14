@@ -147,6 +147,7 @@ export function LocationKeyIcon(props) {
         <figure
           id="markerButton"
           className="marker-button marker-button-selector"
+          onClick={props.onClick}
         >
           {props.title && 
             <div className=" marker-key-location marker-button-selector-title">
