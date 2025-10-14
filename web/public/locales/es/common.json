@@ -296,7 +296,8 @@
     "hidePassword": "Esconder contraseña",
     "deletedAccount": "¡Tus datos fueron borados con éxito!",
     "signupSuccess": "Tu registro fu exitoso, Bienvenido/a a {0} ",
-    "showWassapExplain": "Muestra un link a Whatsapp si quieres. Necesitas publicar tu teléfono antes para ello."
+    "showWassapExplain": "Muestra un link a Whatsapp si quieres. Necesitas publicar tu teléfono antes para ello.",
+    "editUsername":"Editar usuario"
   },
   "configure": {
     "browsePins": "Mapa con pins de ubicación",

@@ -89,7 +89,7 @@ export default function NewUserFields({
                   {`${username}@${hostname}`}
                 </span>
                 <div className=" link" onClick={() => setshowUsername(true) }>
-                {t('common.edit')}
+                {t('user.editUsername')}
                 </div> 
 
               </label>
