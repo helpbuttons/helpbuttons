@@ -3,6 +3,7 @@ import { GlobalState, store } from 'state';
 import router from 'next/router';
 import t from 'i18n';
 import Btn, {
+  BtnCaption,
   BtnType,
   ContentAlignment,
   IconType,
@@ -32,7 +33,7 @@ import { useToggle } from 'shared/custom.hooks';
 import { TextFormatted } from 'elements/Message';
 import { LinkAdmins } from 'components/user/LinkAdmins';
 import { ShowDesktopOnly, ShowMobileOnly } from 'elements/SizeOnly';
-import { ListButtonTypes } from 'components/nav/ButtonTypes';
+import { BtnButtonType, ListButtonTypes } from 'components/nav/ButtonTypes';
 import getConfig from 'next/config';
 import { logoImageUri, makeImageUrl } from 'shared/sys.helper';
 import { FindLatestNetworkActivity } from 'state/Networks';
@@ -52,6 +53,7 @@ import { useButtonTypes } from 'shared/buttonTypes';
 import CardButton, { CardButtonHeadMedium } from 'components/button/CardButton';
 import CardButtonList from 'components/list/CardButtonList';
 import HomeInfoPinnedButtons from 'components/home/Pinned';
+import { ListKeyLocation } from 'state/Geo';
 
 export default function HomeInfo({ metadata }) {
 
@@ -114,6 +116,7 @@ export default function HomeInfo({ metadata }) {
 
               <HomeInfoInfoCard selectedNetwork={selectedNetwork} />
 
+              <HomeInfoKeyLocations selectedNetwork={selectedNetwork} />
               <HomeInfoInstallCard selectedNetwork={selectedNetwork} />
               <HomeInfoTopHashTags selectedNetwork={selectedNetwork} />
 
@@ -555,4 +558,50 @@ function HomeInfoActionButton({ children }) {
     <div className="homeinfo-card__action-bottom">
       {children}
     </div></div>)
+}
+
+function HomeInfoKeyLocations({selectedNetwork}) {
+  const [keyLocations, setKeyLocations] = useState([])
+  useEffect(() => {
+    store.emit(
+        new ListKeyLocation((list) => {
+          setKeyLocations(() => list)
+        }),
+    );
+  }, []);
+  
+  const handleClick = (place) => {
+    router.push(`/Explore/${place.zoom}/${place.latitude}/${place.longitude}/`)
+  }
+  return  (<>
+    <div className="homeinfo-card">
+      <div className="homeinfo-card__header">
+        <h3 className="homeinfo-card__header-title">
+          {t('homeinfo.keyLocations')}
+        </h3>
+
+        <div className="homeinfo-card__controls">
+
+        </div>
+      </div>
+      <hr></hr>
+
+      <div className="homeinfo__hashtags">
+        {keyLocations.map((place, idx) => {
+          return <div key={idx} className="hashtags__list-item">
+            <BtnCaption
+              caption={`${place.address}`}
+              selected={false}
+              icon={null}
+              color={'black'}
+              onClick={() =>
+                handleClick(place)
+              }
+            />
+          </div>
+
+        })}
+      </div>
+
+    </div></>)
 }

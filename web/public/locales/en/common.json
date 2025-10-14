@@ -48,7 +48,8 @@
     "share": "Share options",
     "notificationsPermission": "Allow notifications",
     "featured": "Featured",
-    "powered": "Powered by"
+    "powered": "Powered by",
+    "keyLocations": "Key Spots"
   },
   "share": {
     "header": "Share this app",
