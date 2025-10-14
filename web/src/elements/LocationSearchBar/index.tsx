@@ -24,15 +24,14 @@ export function LocationSearchBarSimple({
     const [searchAddress, setSearchAddress] = useState(markerAddress)
     const [results, setResults] = useState([]);
     const [isLoading, setIsLoading] = useState(false)
-    useEffect(() => {
-        setResults(() => [])
-    }, [markerPosition])
-    const [input, setInput] = useState(pickedAddress ? pickedAddress : '');
+    
+    const [input, setInput] = useState(markerAddress ? markerAddress : '');
 
     const handleAddressPicked = (place) => {
         setSearchAddress(() => place.formatted)
         setMarkerAddress(place.formatted)
         setMarkerPosition([place.geometry.lat, place.geometry.lng])
+        setResults(() => [])
     }
 
     return <>
@@ -81,7 +80,7 @@ export default function LocationSearchBar({
     useEffect(() => {
         if(!input)
         {
-            setPickedPosition(() => [0,0])
+            // setPickedPosition(() => [0,0])
         }
     }, [input])
 
@@ -120,9 +119,10 @@ export default function LocationSearchBar({
 
                 {(pickedPosition && pickedPosition[0] !== null && pickedPosition[1] !== null) && (
                     <div className='form__input-subtitle-option form__input-subtitle--grayed'>
-                    {getCoordinatesDMS(pickedPosition.toString())}
+                        {getCoordinatesDMS(pickedPosition.toString())}
                     </div>
                 )}
+
             </div>
         </div>
     </>
@@ -175,7 +175,7 @@ function FieldLocationSearch({ isCustomAddress = false, placeholder, setResults,
         },
             (error) => {
                 setIsLoading(() => false)
-                setResults(() => [{formatted: t('button.unknownPlace'), geometry: {lat: latLng[0], lng: latLng[1]}}])
+                setResults(() => [{ formatted: t('button.unknownPlace'), geometry: { lat: latLng[0], lng: latLng[1] } }])
             }
         );
     }
@@ -189,7 +189,7 @@ function FieldLocationSearch({ isCustomAddress = false, placeholder, setResults,
         if (coordinates) {
             findAddressFromPosition(coordinates, false)
             return;
-        }else{
+        } else {
             if (value.length > 0) {
                 searchQuery.current = value;
                 searchAddress()
@@ -217,7 +217,7 @@ function FieldLocationSearch({ isCustomAddress = false, placeholder, setResults,
     }</>
 
 }
-function FieldCustomAddress({ isCustomAddress, setIsCustomAddress, setPickedAddress, input, setInput  }) {
+function FieldCustomAddress({ isCustomAddress, setIsCustomAddress, setPickedAddress, input, setInput }) {
 
     const handleFocus = (e) => {
         e.target.select()

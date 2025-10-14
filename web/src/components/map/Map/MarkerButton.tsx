@@ -135,7 +135,7 @@ export function MarkerButtonIcon(props: MarkerButtonIconProps) {
 
 export function LocationKeyIcon(props) {
   return (
-    <div style={buttonColorStyle(props.cssColor)}>
+    <div >
       <div
         style={{
           position: 'absolute',
@@ -147,19 +147,16 @@ export function LocationKeyIcon(props) {
         <figure
           id="markerButton"
           className="marker-button marker-button-selector"
+          onClick={props.onClick}
         >
           {props.title && 
-            <div className="marker-button__tags marker-button-selector-title">
-              <div className="marker-button__link-tag">
+            <div className=" marker-key-location marker-button-selector-title">
+              <div className="marker-key-location__name">
                 {props.title}
               </div>
             </div>
           }
-          {props.title && 
-          <div className=" marker-button__image">
-          </div>
-          }
-          <span className="marker-button__arrow"></span>
+          <span className="marker-button__arrow marker-key-location__arrow"></span>
 
         </figure>
       </div>

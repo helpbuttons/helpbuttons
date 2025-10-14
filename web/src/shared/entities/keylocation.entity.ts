@@ -27,4 +27,8 @@ export class KeyLocation extends BaseEntity {
     @Expose()
     @Column('text')
     hexagon: string;
+
+    @Expose()
+    @Column({type: 'integer'})
+    zoom: number;
 }

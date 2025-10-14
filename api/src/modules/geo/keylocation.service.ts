@@ -26,6 +26,7 @@ export class KeyLocationService {
             hexagon: () => `h3_lat_lng_to_cell(POINT(${createDto.longitude}, ${createDto.latitude}), ${maxResolution})`,
             location: () =>
                 `ST_MakePoint(${createDto.latitude}, ${createDto.longitude})`,
+            zoom: createDto.zoom
         }
         console.log(newKeyLocation)
         return this.keyLocationRepository.insert(newKeyLocation)

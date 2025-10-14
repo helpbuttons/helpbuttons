@@ -51,7 +51,7 @@ export class GeoController {
     return this.keyLocationService.new(createDto, user)
   }
 
-  @OnlyAdmin()
+  @AllowGuest()
   @Get('keylocation/list')
   keyLocationList() {
     return this.keyLocationService.list()

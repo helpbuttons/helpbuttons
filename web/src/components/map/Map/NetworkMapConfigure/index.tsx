@@ -1,10 +1,7 @@
 import { HbMapUncontrolled } from '../';
 
 import { MapTileSelector } from './MapTileSelector';
-import t from 'i18n';
 import { BrowseType } from '../Map.consts';
-import { MarkerButtonIcon } from '../MarkerButton';
-import { makeImageUrl } from 'shared/sys.helper';
 export function NetworkMapConfigure({
   mapSettings,
   onBoundsChanged,
@@ -37,6 +34,34 @@ export function NetworkMapConfigure({
       setMapTile={setMapTile}
       tileType={tileType}
       />
+    </>
+  );
+}
+
+
+export function MapLocationKey({
+  center,
+  zoom,
+  tileType,
+  onBoundsChanged,
+  handleMapClick,
+  children
+}) {
+  return (
+    <>
+      <div className="picker__map">
+        <HbMapUncontrolled
+          onBoundsChanged={onBoundsChanged}
+          mapCenter={center}
+          mapZoom={zoom}
+          width={'100%'}
+          height={'18rem'}
+          tileType={tileType}
+          handleMapClick={handleMapClick}
+        >
+          {children}
+        </HbMapUncontrolled>
+      </div>
     </>
   );
 }
