@@ -19,6 +19,7 @@ import { SetupDtoOut } from 'shared/entities/setup.entity';
 import { Role } from 'shared/types/roles';
 import { setValidationErrors } from 'state/helper';
 import dconsole from 'shared/debugger';
+import { localStorageService, LocalStorageVars } from 'services/LocalStorage';
 
 export default CreateAdminForm;
 
@@ -98,6 +99,7 @@ function CreateAdminForm() {
 
   const onSubmit = (data) => {
     // if (passwordsMatch(data, setError)) {
+      localStorageService.save(LocalStorageVars.COOKIES_ACCEPTANCE, true);
       store.emit(
         new CreateAdmin(
           {

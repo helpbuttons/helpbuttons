@@ -14,7 +14,7 @@ import ButtonShare from 'components/button/ButtonShare';
 import FieldTags from 'elements/Fields/FieldTags';
 import { useRef } from 'store/Store';
 // import FieldImageUpload from "elements/Fields/FieldImageUpload";
-import { GlobalState, store } from 'state';
+import { GlobalState, store, useGlobalStore } from 'state';
 import { Network } from 'shared/entities/network.entity';
 import t from 'i18n';
 import Loading, { LoadabledComponent } from 'components/loading';
@@ -23,6 +23,8 @@ import FieldCustomFields from '../ButtonType/CustomFields/FieldCustomFields';
 import FieldImageUploads from 'elements/Fields/FieldImagesUpload';
 import { alertService } from 'services/Alert';
 import { logoImageUri } from 'shared/sys.helper';
+import { CookiesState } from 'state/HomeInfo';
+import { AcceptCookiesWarn } from 'components/home/CookiesBanner';
 
 export default function ButtonForm({
   onSubmit,
@@ -56,6 +58,10 @@ export default function ButtonForm({
 
   const buttonType = watch('type');
 
+  const cookieState = useGlobalStore(
+    (state: GlobalState) => state.homeInfo.cookiesState,
+  );
+  
   useEffect(() => {
     const subscription = watch((value, { name, type }) => {
       const values = getValues();
@@ -148,8 +154,6 @@ export default function ButtonForm({
                     setFocus={setFocus}
                     {...register('description')}
                   />
-
-                  {/* TODO: Warning: Cannot update a component (`ButtonNew`) while rendering a different component (`FieldTags`). To locate the bad setState() call inside `FieldTags`, follow the stack trace as described in https://reactjs.org */}
                   <FieldTags
                     label={t('button.tagsLabel')}
                     explain={t('button.tagsExplain')}
@@ -189,21 +193,22 @@ export default function ButtonForm({
                       validationError={errors.address}
                       isCustomAddress={watch('isCustomAddress')}
                       setIsCustomAddress={(value) => setValue('isCustomAddress', value)}
+                      //explain={ t('button.whereExplain')}
                     />
                   </div>
                   <FieldCustomFields customFields={customFields} watch={watch} setValue={setValue} setFocus={setFocus} register={register} errors={errors} currency={selectedNetwork.currency} />
                   <ButtonShare />
                 </div>
                 <div className="publish__submit">
-                  {isSubmitting ? <Loading /> : 
                     <Btn
                       btnType={BtnType.submit}
                       contentAlignment={ContentAlignment.center}
                       caption={t('common.publish')}
                       isSubmitting={isSubmitting}
                       submit={true}
+                      disabled={isSubmitting || cookieState != CookiesState.ACCEPTED}
                     />
-                  }
+                  <AcceptCookiesWarn cookieState={cookieState}/>
                 </div>
                 {/* </fieldset> */}
                 </>}

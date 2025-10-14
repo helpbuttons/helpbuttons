@@ -27,24 +27,8 @@ export default function CardButtonList({ buttonTypes, button, showMap, linkType 
   return (
     <>
       {buttonType && (
-        <div className="list__element" 
-          onMouseEnter={() => {store.emit(new HiglightHexagonFromButton(button.hexagon))}}
-          onMouseLeave={() => {store.emit(new HiglightHexagonFromButton(null))}}
-          onClick={() => {
-            if(linkType == ButtonLinkType.EXPLORE)
-            {
-              store.emit(new HiglightHexagonFromButton(button.hexagon))
-              store.emit(new updateCurrentButton(button))
-
-            }else if(linkType == ButtonLinkType.IFRAME){
-              window.open(`/ButtonFile/${button.id}`,'_blank')
-            }else if(linkType == ButtonLinkType.MAINPOPUP){
-              store.emit(new SetMainPopupCurrentButton(button));
-            }else{
-              router.push(`/ButtonFile/${button.id}`)
-            }
-          }}
-          >
+        <div className="list__element">
+          <CardButtonLink button={button} linkType={linkType}>
           <div style={buttonColorStyle(buttonType.cssColor)}>
               <div className={showMap ? "card-button-list" : "card-button-list"}>
                 {button.image && (
@@ -80,8 +64,57 @@ export default function CardButtonList({ buttonTypes, button, showMap, linkType 
                 </div>
               </div>
           </div>
+          </CardButtonLink>
         </div>
       )}
     </>
   );
+}
+
+export function CardButtonLink({ button, linkType, children }) {
+  // Touch device detection
+  const isTouchDevice = () => {
+    return (
+      typeof window !== 'undefined' &&
+      ('ontouchstart' in window ||
+        navigator.maxTouchPoints > 0 )
+    );
+  };
+
+  const touch = isTouchDevice();
+
+  if (linkType == ButtonLinkType.EXPLORE) {
+    return (
+      <a
+        href={`/Show/${button.id}`}
+        onMouseEnter={!touch ? () => store.emit(new HiglightHexagonFromButton(button.hexagon)) : undefined}
+        onMouseLeave={!touch ? () => store.emit(new HiglightHexagonFromButton(null)) : undefined}
+        onClick={(e) => {
+          e.preventDefault();
+          store.emit(new HiglightHexagonFromButton(button.hexagon));
+          store.emit(new updateCurrentButton(button));
+        }}
+        style={{ display: 'block', cursor: 'pointer' }}
+      >
+        {children}
+      </a>
+    );
+  } else if (linkType == ButtonLinkType.IFRAME) {
+    return <a href={`/ButtonFile/${button.id}`} target="_blank" style={{ display: 'block', cursor: 'pointer' }}>{children}</a>;
+  } else if (linkType == ButtonLinkType.MAINPOPUP) {
+    return (
+      <a
+        href={`/ButtonFile/${button.id}`}
+        onClick={(e) => {
+          e.preventDefault();
+          store.emit(new SetMainPopupCurrentButton(button));
+        }}
+        style={{ display: 'block', cursor: 'pointer' }}
+      >
+        {children}
+      </a>
+    );
+  } else {
+    return <a href={`/ButtonFile/${button.id}`} target="_blank" style={{ display: 'block', cursor: 'pointer' }}>{children}</a>;
+  }
 }

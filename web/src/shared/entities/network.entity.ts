@@ -78,4 +78,7 @@ export class Network extends BaseEntity {
 
   @Column({default: false})
   hideLocationDefault: boolean;
+
+  @Column({default: false})
+  allowGuestCreation: boolean;
 }

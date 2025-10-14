@@ -52,7 +52,7 @@ export function HbMap({
       onClick={({ event, latLng, pixel }) => {
         handleClick({ latLng });
       }}
-      zoomSnap={true}
+      zoomSnap={false}
       provider={tileProvider}
       maxZoom={maxZoom}
       minZoom={4}
@@ -88,7 +88,7 @@ export function HbMapUncontrolled({
           bounds,
         });
       },
-      zoomSnap: true,
+      zoomSnap: false,
       onClick: ({ event, latLng, pixel }) => {
         handleMapClick({ latLng });
       },

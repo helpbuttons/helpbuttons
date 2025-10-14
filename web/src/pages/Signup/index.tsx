@@ -4,36 +4,32 @@ import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 //imported internal classes, variables, files or functions
-import { GlobalState, store } from 'state';
-import { SignupUser } from 'state/Profile';
+import { GlobalState, store, useGlobalStore } from 'state';
+import { RequestGuestInvite, SignupUser } from 'state/Profile';
 
 //imported react components
-import { Link } from 'elements/Link';
-import Popup from 'components/popup/Popup';
+import QRCode from 'qrcode';
 import Btn, {
   ContentAlignment,
   BtnType,
-  IconType,
 } from 'elements/Btn';
 import Form from 'elements/Form';
-import { NavigateTo } from 'state/Routes';
 import { useRouter } from 'next/router';
-import NewUserFields, {
-  passwordsMatch,
-} from 'components/user/NewUserFields';
+import NewUserFields from 'components/user/NewUserFields';
 import { alertService } from 'services/Alert';
 import t from 'i18n';
 import { setValidationErrors } from 'state/helper';
-import { getLocale } from 'shared/sys.helper';
+import { getLocale, getShareLink } from 'shared/sys.helper';
 import { useStore } from 'state';
-import FieldText from 'elements/Fields/FieldText';
 import { Network } from 'shared/entities/network.entity';
 import { NextPageContext } from 'next';
 import { setMetadata } from 'services/ServerProps';
-import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
+import { CookiesState, MainPopupPage, SetInvitationPopup, SetMainPopup } from 'state/HomeInfo';
 import { useMetadataTitle } from 'state/Metadata';
 import dconsole from 'shared/debugger';
 import HomeInfo from 'pages/HomeInfo';
+import { getInvitationLink } from 'pages/Profile/Invites';
+import { AcceptCookiesWarn } from 'components/home/CookiesBanner';
 
 export default function Signup( {metadata})
 {
@@ -88,6 +84,7 @@ export function SignupForm() {
             locale: getLocale(),
             inviteCode: data.inviteCode,
             acceptPrivacyPolicy: data.acceptPrivacyPolicy,
+            qrcode: null
           },
           onSuccess,
           onError,
@@ -110,6 +107,11 @@ export function SignupForm() {
   };
 
   const inviteCode = watch('inviteCode')
+
+  const cookieState = useGlobalStore(
+    (state: GlobalState) => state.homeInfo.cookiesState,
+  );
+
 
   const params: URLSearchParams = new URLSearchParams(router.query);
   useEffect(() => {
@@ -142,19 +144,113 @@ export function SignupForm() {
                 btnType={BtnType.submit}
                 caption={t('user.register')}
                 contentAlignment={ContentAlignment.center}
-                disabled={isSubmitting}
+                disabled={isSubmitting || cookieState != CookiesState.ACCEPTED}
               />
+              <AcceptCookiesWarn cookieState={cookieState}/>
             </div>
             <div className="popup__link">
               <div onClick={() => store.emit(new SetMainPopup(MainPopupPage.LOGIN))} className={`nav-bottom__link`}>
                 {t('user.loginLink')}
               </div>
             </div>
+            {selectedNetwork?.allowGuestCreation && 
+              <div className="popup__link">
+                <div onClick={() => store.emit(new SetMainPopup(MainPopupPage.SIGNUP_AS_GUEST))} className={`nav-bottom__link`}>
+                  {t('user.signupAsGuest')}
+                </div>
+              </div>
+            }
           </div>
         </div>
       </Form>
   );
 }
+
+
+
+
+enum steps {
+  REQUEST_CODE,
+  SUCCESS
+}
+export function SignupAsGuestForm() {
+  const [code, setCode] = useState(null)
+  const [qrCodeData, setQrCodeData] = useState(null);
+  const [invitationLink, setInvitationLink] = useState(null);
+  const [step, setStep] = useState<steps>(steps.REQUEST_CODE)
+
+  const {
+    handleSubmit,
+  } = useForm();
+
+  const onSubmit = (data) => {
+    setStep(steps.SUCCESS)
+  };
+
+  const requestNewGuestCode = () => {
+    store.emit(new RequestGuestInvite((code) => {
+      setCode(code)
+      const link = getInvitationLink(code);
+      setInvitationLink(getShareLink(link))
+      QRCode.toDataURL(getShareLink(link), function (err, dataUrl) {
+        setQrCodeData(() => dataUrl);
+      });
+      setStep(steps.SUCCESS)
+    }))
+  }
+  return <>
+    <Form onSubmit={handleSubmit(onSubmit)} classNameExtra="login">
+      <div className="login__form">
+        <div className="form__inputs-wrapper">
+          {step == steps.REQUEST_CODE &&
+            <>
+              <div>{t('user.explainPublishAsGuest')}</div>
+              <Btn
+                submit={false}
+                btnType={BtnType.submit}
+                caption={t('user.generateCode')}
+                contentAlignment={ContentAlignment.center}
+                onClick={() => requestNewGuestCode()}
+              />
+            </>
+          }
+          {step == steps.SUCCESS &&
+            <>
+              <div>{t('user.explainUseGuestCode')}</div>
+              {qrCodeData && <><img src={qrCodeData} />{invitationLink}</>}
+              <Btn
+                submit={false}
+                btnType={BtnType.submit}
+                caption={t('user.signupGuestDetails')}
+                contentAlignment={ContentAlignment.center}
+                onClick={() => {
+                  store.emit(new SetInvitationPopup(code))
+                }}
+              />
+            </>
+          }
+
+
+        </div>
+        <div className="form__btn-wrapper">
+          {(step == steps.REQUEST_CODE) &&
+            <>
+              <div className="popup__link">
+                <div onClick={() => store.emit(new SetMainPopup(MainPopupPage.LOGIN))} className={`nav-bottom__link`}>
+                  {t('user.loginLink')}
+                </div>
+              </div>
+              <div className="popup__link">
+                <div onClick={() => store.emit(new SetMainPopup(MainPopupPage.SIGNUP))} className={`nav-bottom__link`}>
+                  {t('user.noAccount')}
+                </div>
+              </div>
+            </>}
+        </div></div>
+    </Form>
+  </>
+}
+
 
 export const getServerSideProps = async (ctx: NextPageContext) => {
   return setMetadata(t('user.register'), ctx)

@@ -48,7 +48,7 @@ export default function Embbed() {
   }, [take]);
 
   return (
-    <>
+    <div className="body__embbed">
       {!buttonTypes || !buttonTypes.length && <Loading/>}
       
       {buttonTypes?.length > 0 && (
@@ -63,7 +63,7 @@ export default function Embbed() {
             ))}
           </>
       )}
-    </>
+    </div>
   );
 }
 

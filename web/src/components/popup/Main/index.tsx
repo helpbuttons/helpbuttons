@@ -2,7 +2,7 @@ import { Picker } from "components/picker/Picker";
 import { GlobalState, store } from "state";
 import { MainPopupPage, SetMainPopup, SetMainPopupCurrentButton, SetMainPopupCurrentProfile } from "state/HomeInfo";
 import { useGlobalStore } from 'state';
-import { SignupForm } from "../../../pages/Signup";
+import { SignupAsGuestForm, SignupForm } from "../../../pages/Signup";
 import LoginClick from "../../../pages/LoginClick";
 import t from "i18n";
 import { ShareForm } from "components/share";
@@ -12,6 +12,7 @@ import { ShowProfile } from "pages/p/[username]";
 import { useEffect } from "react";
 import { replaceUrl, usePreviousUrl } from "components/uri/builder";
 import LoginForm from "components/user/LoginForm";
+import { InviteForm } from "pages/Signup/Invite";
 
 export default function MainPopup() {
   const pageName = useGlobalStore((state: GlobalState) => state.homeInfo.pageName)
@@ -68,6 +69,22 @@ export default function MainPopup() {
           <FaqSections />
         </Picker>
       )}
+      {(popupPage == MainPopupPage.SIGNUP_AS_GUEST) && (
+          <Picker
+            headerText={t('user.signup')}
+            closeAction={closePopup}
+          >
+            <SignupAsGuestForm />
+          </Picker>
+      )}
+      {popupPage == MainPopupPage.INVITE && (
+        <Picker
+          headerText={t('user.signup')}
+          closeAction={closePopup}
+        >
+          <InviteForm />
+        </Picker>
+      )}
       {(mainPopupUserProfile) && (
         <Picker
           headerText={t('user.otherProfileView')}
@@ -115,6 +132,9 @@ function useReplaceUrl(mainPopupUserProfile, mainPopupButton, popupPage) {
           break;
         case MainPopupPage.SIGNUP:
           replaceUrl(`/Signup`);
+          break;
+        case MainPopupPage.INVITE:
+          replaceUrl('/Signup/Invite')
           break;
         case MainPopupPage.PROFILE:
         case MainPopupPage.SHARE:

@@ -126,7 +126,7 @@ function List({
               isListOpen={isListOpen}
               isListFullScreen={isListFullScreen}
               setListOpen={setListOpen}
-              viewMode= {ExploreViewMode.LIST}
+              viewMode={viewMode}
             >
               <div
                 className={

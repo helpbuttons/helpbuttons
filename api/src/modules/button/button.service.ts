@@ -212,6 +212,7 @@ export class ButtonService {
   async findById(
     id: string,
     includeExpired: boolean = false,
+    currentUser = null,
   ): Promise<Button> {
     let button: Button = await this.buttonRepository.findOne({
       where: { id, ...this.expiredBlockedConditions(includeExpired) },
@@ -223,8 +224,7 @@ export class ButtonService {
         HttpStatus.NOT_FOUND,
       );
     }
-
-    return await this.checkAndSetExpired(button);
+    return await this.checkAndSetExpired(button).then((btn) => this.transformButton(btn, currentUser));
   }
 
   async update(
@@ -232,8 +232,6 @@ export class ButtonService {
     updateDto: UpdateButtonDto,
     currentUser: User,
   ) {
-    console.log('updating...')
-    console.log(updateDto)
     const currentButton = await this.findById(id, true);
     this.cacheManager.del(CacheKeys.FINDH3_CACHE_KEY)
     let location = {};
@@ -328,7 +326,7 @@ export class ButtonService {
   @UseInterceptors(CacheInterceptor)
   @CacheKey(CacheKeys.FINDH3_CACHE_KEY)
   @CacheTTL(30)
-  async findh3(resolution, hexagons): Promise<Button[]> {
+  async findh3(resolution, hexagons, currentUser: User = null): Promise<Button[]> {
     try {
       if (hexagons && hexagons.length > 1000) {
         throw new HttpException(
@@ -343,7 +341,6 @@ export class ButtonService {
           `h3_cell_to_parent(cast (button.hexagon as h3index),${resolution}) IN(:...hexagons) AND deleted = false AND expired = false AND "awaitingApproval" = false`,
           { hexagons: hexagons },
         )
-        .limit(1000)
         .execute();
       const buttonsIds = buttonsOnHexagons.map((button) => button.id);
 
@@ -355,10 +352,10 @@ export class ButtonService {
             ...this.expiredBlockedConditions(),
           },
           order: {
-            created_at: 'DESC',
+            updated_at: 'DESC',
           },
         })
-        .then((buttons) => {
+        .then((buttons) => { // filter buttons which button type is hidden
           return this.networkService
             .findButtonTypes()
             .then((buttonTypes) => {
@@ -380,12 +377,9 @@ export class ButtonService {
               return btns.filter((btn) => !btn.expired);
             })
             .then((btns) => {
-              return btns.map((btn) => {
-                return {
-                  ...btn,
-                  hasPhone: btn.owner.phone ? true : false,
-                };
-              });
+              return btns.map((btn) => 
+                this.transformButton(btn, currentUser)
+              );
             });
           // return Promise.all(btns)
         });
@@ -395,6 +389,16 @@ export class ButtonService {
     }
   }
 
+  transformButton(btn, currentUser = null) {
+    const isFollowing = currentUser ? btn.followedBy.includes(currentUser.id) : false
+    return {
+      ...btn,
+      postsCount: btn.feed ? btn.feed.length : 0,
+      followCount: btn.followedBy ? btn.followedBy.length : 0,
+      hasPhone: btn.owner.phone ? true : false,
+      isFollowing: isFollowing,
+    };
+  }
   async delete(buttonId: string) {
     this.cacheManager.del(CacheKeys.FINDH3_CACHE_KEY)
     return this.findById(buttonId).then((button) => {
@@ -651,6 +655,18 @@ export class ButtonService {
     });
   }
 
+  findAll(page: number) {
+    return this.buttonRepository.find({
+      take: 10,
+      skip: page * 10,
+      order: { created_at: 'DESC' },
+      where: {
+        awaitingApproval: false,
+      },
+      relations: ['owner']
+    });
+  }
+
   approve(buttonId: string) {
     return this.buttonRepository.save({
       id: buttonId,
@@ -679,10 +695,13 @@ export class ButtonService {
   embbed(page: number, take: number) {
     return this.buttonRepository
       .find({
+        where: {
+          ...this.expiredBlockedConditions(),
+        },
         take: take,
         skip: take * page,
         order: {
-          created_at: 'DESC',
+          updated_at: 'DESC',
         },
       })
       .then((buttons) => this.filterExpired(buttons));
@@ -706,7 +725,7 @@ export class ButtonService {
         },
         take: 10,
         order: {
-          created_at: 'DESC',
+          updated_at: 'DESC',
         },
       })
       .then((buttons) => this.filterExpired(buttons))

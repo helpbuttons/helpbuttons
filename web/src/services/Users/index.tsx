@@ -49,12 +49,6 @@ export class UserService {
     return httpService.get<IUser>("users/whoami");
   }
 
-  public static findUser(username: string)
-  {
-    return httpService.get<User>(`users/find/${username}`);
-  }
-
-
   public static logout() {
     httpService.clearAccessToken();
   }
@@ -78,6 +72,10 @@ export class UserService {
 
   public static createInvite(newInvitation: InviteCreateDto): Observable<Invite> {
     return httpService.post<Invite>(`users/createInvite`, newInvitation);
+  }
+
+  public static requestGuestInvite(): Observable<Invite> {
+    return httpService.post<Invite>(`users/requestGuestInvite`);
   }
 
   public static invite(code: string): Observable<any> {

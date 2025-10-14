@@ -155,10 +155,12 @@ export default function PickerEventTypeRecurrentForm({
         {startDate && endDate && (
         <div className="picker__row">
             <TimePick
+              preLabel={t('eventType.from')}
               time={startDate}
               setTime={(value) => setStartDate(value)}
             />
             <TimePick
+              preLabel={t('eventType.until')}
               time={endDate}
               setTime={(value) => setEndDate(value)}
             />

@@ -4,13 +4,29 @@ import { IoClose } from "react-icons/io5";
 
 import { useEffect, useRef } from "react";
 
+const getEffectiveZIndex = (element: HTMLElement | null): number => {
+  while (element) {
+    const zIndex = window.getComputedStyle(element).zIndex;
+    if (zIndex !== 'auto') {
+      const parsed = parseInt(zIndex, 10);
+      if (!isNaN(parsed)) {
+        return parsed;
+      }
+    }
+    element = element.parentElement;
+  }
+  return 0;
+};
 
 export function Picker({ closeAction, headerText, children, extraClass = '' }) {
   const modalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleClick = (event: MouseEvent) => {
-      if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+      const clickedElement = event.target as HTMLElement;
+      const pickerZIndex = getEffectiveZIndex(modalRef.current)
+      const clickedElementZIndex = getEffectiveZIndex(clickedElement)
+      if (modalRef.current && !modalRef.current.contains(event.target as Node) && pickerZIndex >= clickedElementZIndex) {
         closeAction();
       }
     };

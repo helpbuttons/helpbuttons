@@ -6,6 +6,7 @@ import {
   IoFolderOutline,
   IoHammerOutline,
   IoLogOutOutline,
+  IoQrCodeOutline,
 } from 'react-icons/io5';
 import Btn, { IconType } from 'elements/Btn';
 import { Role } from 'shared/types/roles';
@@ -45,13 +46,13 @@ export default function Profile() {
                       </Link>
                     }
                     {/* {selectedNetwork?.inviteOnly &&  */}
-                      {/* <Link href="/Profile/Invites">
+                      <Link href="/Profile/Invites">
                         <Btn
                           iconLeft={IconType.svg}
                           iconLink={<IoQrCodeOutline/>}
                           caption={t('invite.title')}
                         />
-                      </Link> */}
+                      </Link>
                     {/* } */}
                     {sessionUser?.role == Role.admin && 
                       <AdminOptions/>

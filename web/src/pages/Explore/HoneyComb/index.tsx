@@ -278,7 +278,10 @@ function useHexagonMap({
   boundsFilteredButtons,
   cachedHexagons,
   buttonTypes,
+  forceRefetch,
 }) {
+
+  
   const [hexagonsToFetch, setHexagonsToFetch] = useState({
     resolution: 1,
     hexagons: [],
@@ -295,6 +298,12 @@ function useHexagonMap({
       fetchBounds(exploreSettings.bounds, exploreSettings.zoom);
     }
   }, [cachedHexagons]);
+  useEffect(() => {
+    if(forceRefetch)
+    {
+      cachedH3Hexes.current = []
+    }
+  }, [forceRefetch])
   const calculateNonCachedHexagons = (
     debounceHexagonsToFetch,
     cachedH3Hexes,
@@ -456,14 +465,7 @@ const orderByClosestToCenter = (center, buttons) => {
 };
 
 export const orderByCreated = (buttons) => {
-  return [...buttons].sort((buttonA, buttonB) => {
-    if (buttonA.created_at < buttonB.created_at) {
-      return 1;
-    } else if (buttonA.created_at == buttonB.created_at) {
-      return 0;
-    }
-    return -1;
-  });
+  return buttons.sort((a,b) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime());
 };
 
 export const orderBy = (buttons, orderBy, center) => {
@@ -531,6 +533,7 @@ function ExploreHexagonMap({toggleShowLeftColumn, exploreSettings, selectedNetwo
     boundsFilteredButtons: boundsFilteredButtons,
     cachedHexagons: exploreMapState.cachedHexagons,
     buttonTypes: selectedNetwork?.buttonTemplates,
+    forceRefetch: exploreSettings.forceRefetch
   });
   const [countFilteredButtons, setCountFilteredButtons] = useState(0)
 

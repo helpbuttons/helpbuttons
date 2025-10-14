@@ -25,9 +25,6 @@ export default function HomeInfoPinnedButtons({ }) {
                     </h3>
                 </div>
                 <hr></hr>
-
-                <div className="homeinfo-card__section">
-
                     <div className="homeinfo__section--featured">
                         {pinnedButtons.map((btn, i) => (
                             <CardButtonList
@@ -41,7 +38,6 @@ export default function HomeInfoPinnedButtons({ }) {
 
                         ))}
                     </div>
-                </div>
             </div>
         }</>
     )

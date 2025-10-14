@@ -25,7 +25,7 @@ import router from 'next/router';
 import QRCode from 'qrcode';
 import dconsole from 'shared/debugger';
 
-const getInvitationLink = (code) => {
+export const getInvitationLink = (code) => {
   return '/Signup/Invite/' + code;
 };
 
@@ -177,7 +177,7 @@ function InvitationQrCode({ url }) {
 
   return (
     <>
-      {qrCodeData && <>{invitationLink}<img src={qrCodeData} /></>}
+      {qrCodeData && <><img src={qrCodeData} />{invitationLink}</>}
       {!qrCodeData && (
         <Btn
           btnType={BtnType.filter}

@@ -11,7 +11,7 @@ import { GlobalState, store } from 'state';
 import { CreateNetworkDto } from 'shared/dtos/network.dto';
 import { Network } from 'shared/entities/network.entity';
 import { HttpStatus } from 'shared/types/http-status.enum';
-import { UpdateExploreSettings } from './Explore';
+import { ExploreViewMode, UpdateExploreSettings } from './Explore';
 import { useGlobalStore } from 'state';
 import { useEffect, useRef, useState } from 'react';
 import { SetupSteps } from 'shared/setupSteps';
@@ -40,18 +40,20 @@ export const networksInitial = {
 };
 
 
-export const useSelectedNetwork = (_selectedNetwork = null, onError = () => { console.log('error fetching network') }): Network => {
+export const useSelectedNetwork = (_selectedNetwork = null, onError = (err) => { console.log(err) }): Network => {
   const selectedNetwork = useGlobalStore((state: GlobalState) => state.networks.selectedNetwork);
   const initialized = useGlobalStore((state: GlobalState) => state.networks.initialized);
+  const fetching = useRef(false)
   useEffect(() => {
-    if (!initialized) {
+    if (!initialized && !fetching.current) {
       if (_selectedNetwork?.id) {
         store.emit(new SelectedNetworkFetched(_selectedNetwork))
         return;
       } else if (!(selectedNetwork?.id)) {
+        fetching.current = true;
         store.emit(new FetchDefaultNetwork(() => {
-        }, () => {
-          onError()
+        }, (err) => {
+          onError(err)
         }))
 
       }
@@ -173,6 +175,7 @@ export class SelectedNetworkFetched implements UpdateEvent {
   public update(state: GlobalState) {
     return produce(state, (newState) => {
       newState.networks.selectedNetwork = this.network
+      newState.explore.settings.viewMode = this.network.exploreSettings?.viewMode ? this.network.exploreSettings.viewMode : ExploreViewMode.LIST
       newState.networks.initialized = true;
     });
   }

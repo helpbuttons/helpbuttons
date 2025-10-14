@@ -8,12 +8,19 @@ import { UpdateEvent, WatchEvent } from 'store/Event';
 
 export enum MainPopupPage {
   HIDE = 'hide',
-  SIGNUP = 'signup',
-  LOGIN = 'login',
+  SIGNUP = 'Signup',
+  LOGIN = 'Login',
   REQUEST_LINK = 'requestLink',
   SHARE = 'share',
   FAQS = 'faqs',
   PROFILE = 'profile',
+  INVITE = 'invite',
+  SIGNUP_AS_GUEST = 'signupAsGuest'
+}
+export enum CookiesState {
+  ACCEPTED = 'accepted',
+  REJECTED = 'rejected',
+  UNREAD = 'unread',
 }
 export interface HomeInfoState {
   mainPopupPage: MainPopupPage;
@@ -22,6 +29,8 @@ export interface HomeInfoState {
   version: string;
   isInstallable: boolean;
   pageName: string;
+  cookiesState: CookiesState,
+  invitationCode: string;
 }
 
 export const homeInfoStateInitial = {
@@ -30,7 +39,9 @@ export const homeInfoStateInitial = {
   mainPopupButton: null,
   version: '?',
   isInstallable: false,
-  pageName: ''
+  pageName: '',
+  cookiesState: CookiesState.UNREAD,
+  invitationCode: null
 };
 
 export class SetMainPopup implements UpdateEvent {
@@ -46,6 +57,19 @@ export class SetMainPopup implements UpdateEvent {
   }
 }
 
+export class SetInvitationPopup implements UpdateEvent {
+  public constructor(private invitationCode) {}
+
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      newState.homeInfo.mainPopupPage = MainPopupPage.INVITE;
+      newState.homeInfo.mainPopupButton = null;
+      newState.explore.currentButton = null;
+      newState.homeInfo.mainPopupUserProfile = null;
+      newState.homeInfo.invitationCode = this.invitationCode;
+    });
+  }
+}
 export class FindAndSetMainPopupCurrentProfile implements WatchEvent {
   public constructor(private username: string) {}
   public watch(state: GlobalState) {
@@ -98,6 +122,16 @@ export class SetPageName implements UpdateEvent{
   public update(state: GlobalState){
     return produce(state, (newState) => {
       newState.homeInfo.pageName = this.pageName;
+    })
+  }
+}
+
+
+export class SetCookieState implements UpdateEvent{
+  public constructor(private cookieState: CookiesState){}
+  public update(state: GlobalState){
+    return produce(state, (newState) => {
+      newState.homeInfo.cookiesState = this.cookieState;
     })
   }
 }

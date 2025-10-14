@@ -27,7 +27,7 @@ class Console {
     error(...args) {
         if (this.isDebugEnabled) {
             const { stack } = new Error();
-            console.error(`[DEBUG ERROR]`,stack, ...args);
+            console.error(`[DEBUG ERROR]`, ...args, stack);
         }
     }
 }

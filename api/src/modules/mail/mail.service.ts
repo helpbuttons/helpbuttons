@@ -6,6 +6,7 @@ import { Queue } from 'bull';
 import { InjectQueue } from '@nestjs/bull';
 import translate from '@src/shared/helpers/i18n.helper';
 import { getUrl } from '@src/shared/helpers/mail.helper';
+import { uuid } from '@src/shared/helpers/uuid.helper';
 
 @Injectable()
 export class MailService {
@@ -136,6 +137,7 @@ export class MailService {
             subject: subject,
             template,
             context: {...context, hostName: configs().hostName, to: to, logo},
+            headers: {'Message-ID': `<${uuid()}@${configs().hostName}>`}
           })
           .then((mail) => {
             console.log(

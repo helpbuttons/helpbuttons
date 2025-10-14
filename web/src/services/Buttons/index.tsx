@@ -75,6 +75,10 @@ export class ButtonService {
     return httpService.get<any>(`buttons/moderationList/${page}`);
   }
 
+  public static findAll(page): Observable<any> {
+    return httpService.get<any>(`buttons/findAll/${page}`);
+  }
+
   public static approve(buttonId): Observable<any> {
     return httpService.get<any>(`buttons/approve/${buttonId}`);
   }

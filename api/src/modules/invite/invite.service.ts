@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, UnauthorizedException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Invite } from "./invite.entity";
 import { Repository } from "typeorm";
@@ -29,7 +29,20 @@ export class InviteService {
     {
         // follow user... somehow.
     }
-    console.log(newInvitation)
+    return this.inviteRepository.insert([invitation]).then((data) => invitation)
+  }
+
+  async createGuest()
+  {
+    const invitation: Invite = {
+        id: uuid(),
+        usage: 0,
+        maximumUsage: 1,
+        expiration: this.getExpirationDate(60*30),
+        owner: null,
+        deleted: false,
+    }
+
     return this.inviteRepository.insert([invitation]).then((data) => invitation)
   }
 

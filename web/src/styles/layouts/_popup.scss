@@ -14,11 +14,6 @@ $popup-comments: 24px;
 $popup-paragraph-padding: 1rem 2rem;
 $popup-max-height-large: 720px;
 
-body {
-  overflow: hidden; // Revise: Adiós Scroll desde el Body
-}
-
-
 .popup {
   // Scroll popup content
   overflow-y: hidden;

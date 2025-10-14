@@ -73,7 +73,8 @@ export class NetworkService {
       nomeclature: createDto.nomeclature,
       nomeclaturePlural: createDto.nomeclaturePlural,
       requireApproval: createDto.requireApproval,
-      hideLocationDefault: createDto.hideLocationDefault
+      hideLocationDefault: createDto.hideLocationDefault,
+      allowGuestCreation: createDto.allowGuestCreation,
     };
     await getManager().transaction(
       async (transactionalEntityManager) => {
@@ -109,6 +110,7 @@ export class NetworkService {
           `network.logo ${network.logo} jumbo ${network.jumbo}`,
         );
         await this.networkRepository.insert([network]);
+        await this.userService.setAdminLocale(createDto.locale)
       },
     );
 
@@ -219,7 +221,8 @@ export class NetworkService {
       nomeclature: updateDto.nomeclature,
       nomeclaturePlural: updateDto.nomeclaturePlural,
       requireApproval: updateDto.requireApproval,
-      hideLocationDefault: updateDto.hideLocationDefault
+      hideLocationDefault: updateDto.hideLocationDefault,
+      allowGuestCreation: updateDto.allowGuestCreation,
     };
     const buttonTemplatesNew = network.buttonTemplates.filter((btnTemplate) => !btnTemplate.hide).map((btnTemplate) => btnTemplate.name)
 
@@ -277,6 +280,7 @@ export class NetworkService {
           defaultNetwork.id,
           removeUndefined(network),
         );
+        await this.userService.setAdminLocale(updateDto.locale)
       },
     );
 
@@ -379,6 +383,14 @@ export class NetworkService {
     return this.findDefaultNetwork()
       .then((network) => {
         return network.buttonTemplates
+      })
+  }
+
+  public allowedGuestCreation()
+  {
+    return this.findDefaultNetwork()
+      .then((network) => {
+        return network.allowGuestCreation
       })
   }
 }

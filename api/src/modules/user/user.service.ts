@@ -182,7 +182,7 @@ COALESCE(
   }
 
   moderationList(user: User, page: number) {
-    return this.userRepository.find({ take: 10, skip: page * 10, order: { name: 'ASC' }, where: { id: Not(user.id) } })
+    return this.userRepository.find({ take: 10, skip: page * 10, order: { name: 'ASC' }})
   }
 
   async unsubscribe(email) {
@@ -279,5 +279,10 @@ COALESCE(
     return this.userRepository.update(userId, {
       endorsed: false
     }).then((result) => this.findById(userId));
+  }
+
+  // admin locale should be the same as network
+  public setAdminLocale(locale) {
+    this.entityManager.query(`update public.user set locale = '${locale}' where role = '${Role.admin}'`)
   }
 }

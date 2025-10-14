@@ -64,7 +64,8 @@
     "unreadMessages": "Unread messages",
     "readMessages": "Read messages",
     "read": "No messages yet",
-    "activitiesHistory": "Historial de actividades"
+    "activitiesHistory": "Historial de actividades",
+    "messages": "Public board & comments"
   },
   "hostname": "nome do host",
   "common": {
@@ -76,7 +77,6 @@
     "search": "Buscar",
     "reset": "Limpar filtros",
     "invalidMimeType": "{0} tem um tipo MIME inválido ({1})",
-    "editTitle": "Editar {0}",
     "next": "Próximo",
     "notfound": "Não foram encontrados {0}, desculpe. 🤔",
     "add": "Adicionar",
@@ -148,7 +148,14 @@
     "sloganExplain": "This is a short slogan that welcomes people to your network",
     "hideLocationByDefaultExplain": "Protect exact location in _helpbuttons_ by showing a wide area, users can deactivate this individually.",
     "areaPicked": "Center: ({0},{1}) zoom: {2}",
-    "zoomLevel": "Zoom level"
+    "zoomLevel": "Zoom level",
+    "allowGuestCreationLabel": "Allow anonymous signups",
+    "allowGuestCreation": "Allow annoymous signup",
+    "hideLocationByDefaultLabel": "Exact location protection",
+    "hideLocationByDefaultText": "Hide exact location by default",
+    "hideAdvanced": "Hide advanced options...",
+    "locationKeys": "Key Spots",
+    "requiredLocation": "Please pickup a place in the map for your network"
   },
   "activities": {
     "allNotifications": "Todas as atualizações",
@@ -274,7 +281,10 @@
     "hidePassword": "Hide Password",
     "deletedAccount": "Your data was deleted sucessfuly!",
     "signupSuccess": "Your signup was sucessful! Welcome to {0} ",
-    "showWassapExplain": "Show a link to your whatsapp app if you want. You need to have public phone enabled."
+    "showWassapExplain": "Show a link to your whatsapp app if you want. You need to have public phone enabled.",
+    "endorse": "Endorse",
+    "explainPublishAsGuest": "Signup as anonymous, please generate a new code, that you can use it for logging in to check your _helpbuttons_",
+    "explainUseGuestCode": "Please store this code, it is your only way to keep track of your publications"
   },
   "configure": {
     "browsePins": "Mapa com pinos de localização",
@@ -392,7 +402,11 @@
     "following": "following!",
     "whenExplain": "Specify the date",
     "placeHodlerCustomAddress": "Write the new name and select place on the map",
-    "publishComment": "Publish comment"
+    "publishComment": "Publish comment",
+    "unpinSuccess": "Sucess unpin",
+    "unpin": "Unpin",
+    "sendPrivateMessage": "Send private message to {0}",
+    "proposeAddress": "Add a missing place in {0}"
   },
   "calendarOnce": {
     "label": "Uma vez",
@@ -584,7 +598,8 @@
     "adminCommunicationExplain": "Messages that you share here will be send to all admins or all users of the network",
     "description": "Here you can review the users of your network, and the buttons!",
     "adminCommunicationLabel": "Administrator communications",
-    "edit": "Edit"
+    "edit": "Edit",
+    "preview": "Preview"
   },
   "role": {
     "blocked": "desativado",
@@ -593,7 +608,7 @@
     "guest": "visitante"
   },
   "notificaction": {
-    "markedAsRead": ""
+    "markedAsRead": "Marked as read"
   },
   "bulletin": {
     "since": "Since {0}",
@@ -622,8 +637,7 @@
     "save": ""
   },
   "seo": {
-    "embbed": "",
-    "buttonEdit": ""
+    "embbed": ""
   },
   "roles": {
     "administrator": "administrator"

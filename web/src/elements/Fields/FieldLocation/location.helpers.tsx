@@ -5,6 +5,7 @@ import {
   GeoFindAddress,
   GeoReverseFindAddress,
 } from 'state/Geo';
+const { convert } = require('geo-coordinates-parser'); //CommonJS
 
 export const useGeoSearch = () => {
   const GeoFindByQuery = useCallback(
@@ -54,3 +55,30 @@ export const useGeoReverse = () => {
   };
   return _debounceFunc;
 };
+
+export const getCoordinatesDegrees = (value) => {
+  let converted;
+  try {
+    converted = convert(value);
+    return [converted.decimalLatitude, converted.decimalLongitude];
+  }
+  catch {
+  }
+  return null;
+}
+
+export const getCoordinatesDMS = (value) => {
+  let converted;
+  try {
+    converted = convert(value);
+    return converted.toCoordinateFormat(convert.to.DMS);
+  }
+  catch {
+  }
+  return null;
+}
+export const formatedCoords = (place) => {
+  const coordsString = getCoordinatesDMS(`${place.geometry.lat}, ${place.geometry.lng}`)
+  
+  return `${place.formatted} - ${coordsString}`
+}

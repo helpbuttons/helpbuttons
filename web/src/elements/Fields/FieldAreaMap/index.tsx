@@ -14,6 +14,8 @@ import Slider from 'rc-slider';
 import LocationSearchBar, { LocationSearchBarSimple } from 'elements/LocationSearchBar';
 import { useGeoReverse } from '../FieldLocation/location.helpers';
 import { circleGeoJSON } from 'shared/geo.utils';
+import { ExploreViewMode } from 'state/Explore';
+import { DropdownField } from 'elements/Dropdown/Dropdown';
 
 
 export default function FieldAreaMap({
@@ -84,11 +86,11 @@ export function FieldAreaMapSettings({
 
   
   const setZoom = (newZoom) => {
-    setMapSettings((prevSettings) => {return {...prevSettings, zoom: newZoom}})
+    setMapSettings((prevSettings) => {return {...prevSettings, zoom: Math.round(newZoom)}})
   }
   const setCenter = (newCenter) => {
     setMapSettings((prevSettings) => {
-      return {...prevSettings, center: newCenter}
+      return {...prevSettings, center: newCenter()}
     })
   };
 
@@ -100,6 +102,10 @@ export function FieldAreaMapSettings({
     setMapSettings((prevSettings) => {return {...prevSettings, tileType: mapTile}})
   }
 
+  const setViewMode = (viewMode) => {
+    setMapSettings((prevSettings) => {return {...prevSettings, viewMode: viewMode}})
+  }
+
   const setBrowseType = (browseType) => {
     setMapSettings((prevSettings) => {return {...prevSettings, browseType}})
   }
@@ -108,9 +114,9 @@ export function FieldAreaMapSettings({
     setMapSettings((prevSettings) => {
       if(prevSettings.browseType == BrowseType.HONEYCOMB)
       {
-        return {...prevSettings, center, zoom: zoom, slider: getSliderSettings(zoom, bounds), geometry: circleGeoJSON(center[1],center[0], prevSettings.radius), bounds: bounds, honeyCombFeatures: getBoundsHexFeatures(bounds,zoom)}
+        return {...prevSettings, center, zoom: Math.round(zoom), slider: getSliderSettings(zoom, bounds), geometry: circleGeoJSON(center[1],center[0], prevSettings.radius), bounds: bounds, honeyCombFeatures: getBoundsHexFeatures(bounds,zoom)}
       }
-      return {...prevSettings, center, zoom: zoom, slider: getSliderSettings(zoom, bounds), geometry: circleGeoJSON(center[1],center[0], prevSettings.radius), bounds: bounds}
+      return {...prevSettings, center, zoom: Math.round(zoom), slider: getSliderSettings(zoom, bounds), geometry: circleGeoJSON(center[1],center[0], prevSettings.radius), bounds: bounds}
     })
   }
 
@@ -144,7 +150,7 @@ export function FieldAreaMapSettings({
   }
   
   useEffect(() => {
-    onChange({zoom: mapSettings.zoom, center: mapSettings.center, radius: mapSettings.radius, tileType: mapSettings.tileType, browseType: mapSettings.browseType})
+    onChange({zoom: mapSettings.zoom, center: mapSettings.center, radius: mapSettings.radius, tileType: mapSettings.tileType, browseType: mapSettings.browseType, viewMode: mapSettings.viewMode})
   }, [mapSettings])
 return (
   <div className="form__field form__field--location-wrapper">
@@ -173,6 +179,7 @@ return (
                 tileType={mapSettings.tileType}
                 markerColor={markerColor}
               />
+               <FieldDefaultViewMode defaultValue={mapSettings.viewMode} onChange={setViewMode}/>
                <div className="form__field">
                 <div className="form__label">{t('configuration.zoomLevel')}</div>
                 <div className="form__input--slider">
@@ -196,4 +203,19 @@ return (
               />
               </div>
 )
+}
+
+
+function FieldDefaultViewMode({defaultValue, onChange}) {
+  return <DropdownField
+  options={[
+    { value: ExploreViewMode.LIST, name: t('explore.list') },
+    { value: ExploreViewMode.MAP, name: t('explore.map') },
+    { value: ExploreViewMode.BOTH, name: t('explore.both') },
+  ]}
+  explain={null}
+  defaultSelected={defaultValue}
+  onChange={onChange}
+  label={t('explore.viewMode')}
+/>
 }

@@ -69,7 +69,7 @@ export default function Feed({ button,showReplyFirstPost, toggleShowReplyFirstPo
 
   useEffect(() => {
     reloadPosts();
-  }, [button]);
+  }, []);
 
   const isButtonOwner = sessionUser?.id == button.owner.id;
   const buttonOwnerId = button.owner.id;

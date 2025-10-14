@@ -126,11 +126,11 @@ function NavBottom({ sessionUser }) {
               )}`}
             >
               <div className="nav-bottom__icon">
-                {countUnreadNotifications > 0 && (
+                {/* {countUnreadNotifications > 0 && (
                   <span className="notif-circle">
                     {countUnreadNotifications}
                   </span>
-                )}
+                )} */}
                 <IoHeartOutline />
               </div>
 

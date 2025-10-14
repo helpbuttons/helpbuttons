@@ -16,12 +16,14 @@ export default function LoginClick() {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm();
   const [errorMsg, setErrorMsg] = useState(undefined);
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const router = useRouter()
   const onSubmit = (data) => {
+    setIsSubmitting(() => true)
     store.emit(
       new RequestNewLoginToken(
         data.email,

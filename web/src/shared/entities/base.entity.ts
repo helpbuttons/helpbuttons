@@ -9,7 +9,8 @@ export class BaseEntity {
   })
   // tslint:disable-next-line: variable-name
   created_at?: Date;
-
+  
+  @Expose()
   @UpdateDateColumn({
     default: () => 'CURRENT_TIMESTAMP',
     type: 'timestamp',

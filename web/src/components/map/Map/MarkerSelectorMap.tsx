@@ -12,13 +12,7 @@ import {
   hexagonSizeZoom,
 } from './Map.consts';
 import dconsole from 'shared/debugger';
-export function MarkerEditorMap(props) {
-  return (
-    <MarkerViewMap {...props} />
-  );
-}
-
-export default function MarkerViewMap({
+export function MarkerEditorMap({
   pickedPosition,
   zoom,
   setZoom = (a) => { },
@@ -98,6 +92,71 @@ export default function MarkerViewMap({
             width={'100%'}
             height={'16rem'}
           >
+            {(hideAddress && pickedPosition) && (
+              <GeoJson
+                data={markerHexagonGeoJson}
+                styleCallback={(feature, hover) => {
+                  return { fill: markerColor, opacity: 0.4 };
+                }}
+              />
+            )}
+            {(!hideAddress && pickedPosition) && (
+              <MarkerButtonIcon
+                anchor={pickedPosition}
+                offset={[25, 50]}
+                cssColor={markerColor}
+                image={markerImage}
+                title={markerCaption}
+              />
+            )}
+            {(hideAddress  && pickedPosition)&& (
+              <MarkerButtonIcon
+                anchor={getHexagonCenter(pickedPosition, hexagonSizeZoom)}
+                offset={[25, 50]}
+                cssColor={markerColor}
+                image={markerImage}
+                title={markerCaption}
+              />
+            )}
+          </HbMapUncontrolled>
+        </LoadabledComponent>
+      </div>
+    </>
+  );
+}
+
+export default function MarkerViewMap({
+  defaultZoom,
+  markerColor,
+  markerImage,
+  markerCaption,
+  markerPosition,
+  hideAddress = false,
+  hexagon
+}) {
+  const [mapCenter, setMapCenter] = useState(markerPosition);
+  const [zoom, setZoom] = useState(defaultZoom)
+  const onBoundsChanged = ({ center, zoom, bounds, initial }) => {
+    setZoom(() => zoom);
+    setMapCenter(() => center);
+  };
+  const markerHexagonGeoJson = latLngToGeoJson(
+    markerPosition[0],
+    markerPosition[1],
+    getZoomResolution(hexagonSizeZoom),
+  );
+
+  return (
+    <>
+      <div className="picker__map">
+        <LoadabledComponent loading={!mapCenter}>
+          <HbMapUncontrolled
+            mapCenter={mapCenter}
+            mapZoom={zoom}
+            onBoundsChanged={onBoundsChanged}
+            width={'100%'}
+            height={'16rem'}
+          >
             {hideAddress && (
               <GeoJson
                 data={markerHexagonGeoJson}
@@ -108,16 +167,7 @@ export default function MarkerViewMap({
             )}
             {!hideAddress && (
               <MarkerButtonIcon
-                anchor={pickedPosition}
-                offset={[25, 50]}
-                cssColor={markerColor}
-                image={markerImage}
-                title={markerCaption}
-              />
-            )}
-            {hideAddress && (
-              <MarkerButtonIcon
-                anchor={getHexagonCenter(pickedPosition, hexagonSizeZoom)}
+                anchor={markerPosition}
                 offset={[25, 50]}
                 cssColor={markerColor}
                 image={markerImage}

@@ -66,6 +66,20 @@ export class ServerPropsService {
         },
       };
     }
+    if (
+      networkConfigData?.statusCode == HttpStatus.INTERNAL_SERVER_ERROR
+    ) {
+      const errorMsg = 'error getting network configuration internal server error, did you run migrations?';
+      dconsole.error(errorMsg, networkConfigData);
+
+      return {
+        ...catchMetadata,
+        error: {
+          message: errorMsg,
+          statusCode: networkConfigData?.statusCode,
+        },
+      };
+    }
     setLocale(networkConfigData.locale);
     const version = require('../../../public/version.json').version
     let serverProps = {
@@ -79,9 +93,9 @@ export class ServerPropsService {
       _config: configData,
     };
     
-    if (ctx.query?.btn) {
-      const btnId = ctx.query.btn;
-      const buttonUrl = `${process.env.API_URL}/buttons/findById/${btnId}`;
+    if (ctx.query?.buttonId) {
+      const buttonId = ctx.query.buttonId;
+      const buttonUrl = `${process.env.API_URL}/buttons/findById/${buttonId}`;
       const currentButtonFetch = await fetch(buttonUrl, {
         next: { revalidate: 10 },
       });

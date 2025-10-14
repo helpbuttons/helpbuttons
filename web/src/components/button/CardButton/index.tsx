@@ -44,7 +44,7 @@ import Btn, {
   IconType,
 } from 'elements/Btn';
 import { FixedAlert } from 'components/overlay/Alert';
-import { maxZoom } from 'components/map/Map/Map.consts';
+import { maxZoom, showHexagonsZoom, showMarkersZoom } from 'components/map/Map/Map.consts';
 import { Button } from 'shared/entities/button.entity';
 import MarkerViewMap from 'components/map/Map/MarkerSelectorMap';
 import { TagsNav } from 'elements/Fields/FieldTags';
@@ -166,6 +166,7 @@ export function CardButtonHeadMedium({ button, buttonType }) {
           )}
           
         <div className="card-button__city card-button__everywhere ">
+          {/* show post count and follow count {button.followCount} | {button.postsCount} */}
           <IoLocationOutline/>
           {button.address}{' '}
           {button?.distance && (
@@ -232,7 +233,7 @@ function CardButtonSubmenu({ button }) {
   useEffect(() => {
     if (config) {
       setLinkButton(() => {
-        return window ? window.location : getShareLink(`/?btn=${button.id}`);
+        return getShareLink(`/Show/${button.id}`);
       });
     }
   }, [config]);
@@ -241,25 +242,6 @@ function CardButtonSubmenu({ button }) {
     if (!canFollowButton(button, sessionUser)) {
       return;
     }
-
-    if (isFollowingButton(button, sessionUser)) {
-      return (
-        <CardSubmenuOption
-          onClick={() => {
-            followButton(button.id);
-          }}
-          label={t('button.follow')}
-        />
-      );
-    }
-    return (
-      <CardSubmenuOption
-        onClick={() => {
-          unFollowButton(button.id);
-        }}
-        label={t('button.unfollow')}
-      />
-    );
   };
   return (
     <CardSubmenu>
@@ -286,14 +268,16 @@ function CardButtonSubmenu({ button }) {
             }}
             label={t('button.delete')}
           />
+        </>
+      )}
+      {isAdmin(sessionUser) && 
           <CardSubmenuOption
             onClick={() => {
               button.pin ? store.emit(new ButtonUnpin(button.id, () => alertService.success(t('button.unpinSuccess')))) : store.emit(new ButtonPin(button.id,() => alertService.success(t('button.pinSuccess'))))
             }}
             label={button.pin ? t('button.unpin') : t('button.pin')}
           />
-        </>
-      )}
+      }
     </CardSubmenu>
   );
 }
@@ -321,8 +305,7 @@ export function CardButtonHeadBig({ button, buttonTypes, toggleShowReplyFirstPos
     (state: GlobalState) => state.sessionUser,
     false,
   );
-  const [showMap, setShowMap] = useState(false);
-
+  const [showMap, setShowMap] = useState(true);
   return (
     <>
       <div className='card-button__head-actions'>
@@ -394,13 +377,15 @@ export function CardButtonHeadBig({ button, buttonTypes, toggleShowReplyFirstPos
             {button.address}
           </div>
         </div>
-        {!button.hideAddress && showMap && (
+        {showMap && (
           <MarkerViewMap
-            pickedPosition={[button.latitude, button.longitude]}
-            zoom={maxZoom}
+            markerPosition={[button.latitude, button.longitude]}
+            defaultZoom={(button.hideAddress ? showHexagonsZoom : maxZoom )}
             markerColor={cssColor}
             markerImage={button.image}
             markerCaption={button.title}
+            hideAddress={button.hideAddress}
+            hexagon={button.hexagon}
           />
         )}
       </div>
@@ -460,7 +445,6 @@ export function ButtonOwnerPhone({ user, button }) {
     <>
       {user?.publishPhone && (
         <>
-        {JSON.stringify(showPhone)}
           {!phone && 
             <Btn
               btnType={BtnType.corporative}
@@ -582,10 +566,10 @@ function FollowButtonHeart({ button, sessionUser }) {
     return;
   }
 
-  if (isFollowingButton(button, sessionUser)) {
+  if (!button.isFollowing) {
     return (
       <div className='card-button__follow-wrap'>
-        {t('button.followme')}
+        {t('button.follow')}
         <Btn
           btnType={BtnType.iconActions}
           contentAlignment={ContentAlignment.center}
@@ -599,7 +583,7 @@ function FollowButtonHeart({ button, sessionUser }) {
 
   return (
     <div className='card-button__follow-wrap'>
-      {t('button.following')}
+      {t('button.unfollow')}
       <Btn
         btnType={BtnType.iconActions}
         contentAlignment={ContentAlignment.center}
@@ -620,10 +604,6 @@ const canFollowButton = (button, user) => {
     return false;
   }
   return true;
-};
-
-const isFollowingButton = (button, user) => {
-  return button.followedBy.indexOf(user.id) < 0;
 };
 
 const followButton = (buttonId) => {
