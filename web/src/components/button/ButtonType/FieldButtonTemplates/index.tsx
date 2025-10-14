@@ -258,7 +258,7 @@ function ButtonTemplateForm({ label, explain, append }) {
   const openPopup = () => setShowPopup(() => true);
   const customFields = watch('customFields')
   return (
-      <PickerField btnType={BtnType.corporative} iconLeft={<IoAdd/>} label={''} explain={''} btnLabel={label} showPopup={showPopup} openPopup={openPopup} closePopup={closePopup}>
+      <PickerField btnType={BtnType.corporative}  iconLeft={IconType.svg} iconLink={<IoAdd/>} label={''} explain={''} btnLabel={label} showPopup={showPopup} openPopup={openPopup} closePopup={closePopup}>
         {/* headerText={t('configuration.setType')} */}
         <>
         {/* <div className="form__input--button-type-field"></div> */}
@@ -302,6 +302,9 @@ function ButtonTemplateForm({ label, explain, append }) {
         }
         <Btn
           caption={t('configuration.addType')}
+          iconLeft={IconType.svg}
+          iconLink={<IoAdd/>}
+          contentAlignment={ContentAlignment.center}
           onClick={() => onAddNewButtonTemplate(getValues())}
           btnType={BtnType.submit}
         />
