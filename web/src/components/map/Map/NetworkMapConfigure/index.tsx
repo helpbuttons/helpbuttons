@@ -53,8 +53,7 @@ export function MapLocationKey({
           onBoundsChanged={onBoundsChanged}
           mapCenter={center}
           mapZoom={zoom}
-          width={'100%'}
-          height={'18rem'}
+          height={'18'}
           tileType={tileType}
           handleMapClick={handleMapClick}
         >
