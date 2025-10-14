@@ -6,7 +6,7 @@ import {
   getZoomResolution,
   latLngToGeoJson,
 } from 'shared/honeycomb.utils';
-import { MarkerButtonIcon } from './MarkerButton';
+import { LocationKeyIcon, MarkerButtonIcon } from './MarkerButton';
 import { LoadabledComponent } from 'components/loading';
 import {
   hexagonSizeZoom,
@@ -23,6 +23,7 @@ export function MarkerEditorMap({
   editPosition = false,
   onMapClick = (latLng) => { },
   networkMapCenter = null,
+  isLocationKeyMarker = false,
 }) {
   const [markerHexagonGeoJson, setMarkerHexagonGeoJson] =
     useState(null);
@@ -99,7 +100,12 @@ export function MarkerEditorMap({
                 }}
               />
             )}
-            {(!hideAddress && pickedPosition) && (
+            {isLocationKeyMarker && 
+              <LocationKeyIcon title={markerCaption} anchor={pickedPosition}
+              offset={[25, 50]}
+              cssColor={'red'}/>
+            }
+            {(!isLocationKeyMarker && !hideAddress && pickedPosition) && (
               <MarkerButtonIcon
                 anchor={pickedPosition}
                 offset={[25, 50]}
@@ -108,7 +114,7 @@ export function MarkerEditorMap({
                 title={markerCaption}
               />
             )}
-            {(hideAddress  && pickedPosition)&& (
+            {(!isLocationKeyMarker && hideAddress  && pickedPosition)&& (
               <MarkerButtonIcon
                 anchor={getHexagonCenter(pickedPosition, hexagonSizeZoom)}
                 offset={[25, 50]}

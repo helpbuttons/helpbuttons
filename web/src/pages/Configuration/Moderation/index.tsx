@@ -395,7 +395,7 @@ function AprovedButtonsList() {
             onChange={onQueryChange}
           />
       {buttons?.length > 0 ? (
-        <div className='user-list__wrapper'>
+        <div className='form-list__wrapper'>
           {/* <FieldText
             name="query"
             placeholder={t('common.search')}
@@ -403,28 +403,28 @@ function AprovedButtonsList() {
           /> */}
 
 
-          <table className='user-list__table'>
-            <thead className='user-list__table-header'>
-              <tr className='user-list__table-header-row'>
-                <th className='user-list__table-header-cell'>{t('button.titleLabel')}</th>
-                <th className='user-list__table-header-cell'>{t('button.typeLabel')}</th>
-                <th className='user-list__table-header-cell'>{t('button.tagsLabel')}</th>
-                <th className='user-list__table-header-cell'>{t('moderation.created_at')}</th>
-                <th className='user-list__table-header-cell'>{t('button.authorTitle')}</th>
-                <th className='user-list__table-header-cell'>{t('moderation.actions')}</th>
+          <table className='form-list__table'>
+            <thead className='form-list__table-header'>
+              <tr className='form-list__table-header-row'>
+                <th className='form-list__table-header-cell'>{t('button.titleLabel')}</th>
+                <th className='form-list__table-header-cell'>{t('button.typeLabel')}</th>
+                <th className='form-list__table-header-cell'>{t('button.tagsLabel')}</th>
+                <th className='form-list__table-header-cell'>{t('moderation.created_at')}</th>
+                <th className='form-list__table-header-cell'>{t('button.authorTitle')}</th>
+                <th className='form-list__table-header-cell'>{t('moderation.actions')}</th>
               </tr>
             </thead>
             <tbody>
               {buttons.map((button, idx) => (
-                <tr className='user-list__table-body-row'>
-                  <td className='user-list__table-body-cell'>{button.title}</td>
-                  <td className='user-list__table-body-cell'>
+                <tr className='form-list__table-body-row'>
+                  <td className='form-list__table-body-cell'>{button.title}</td>
+                  <td className='form-list__table-body-cell'>
                     <BtnButtonType type={buttonTypes.find((type) => type.name == button.type)} />
                   </td>
-                  <td className='user-list__table-body-cell'><TagsNav tags={button.tags} /></td>
-                  <td className='user-list__table-body-cell'>{readableTimeLeftToDate(button.updated_at)}</td>
-                  <td className='user-list__table-body-cell'><a onClick={() => store.emit(new SetMainPopupCurrentProfile(button.owner))}>{button.owner.name}</a></td>
-                  <td className='user-list__table-body-cell'>
+                  <td className='form-list__table-body-cell'><TagsNav tags={button.tags} /></td>
+                  <td className='form-list__table-body-cell'>{readableTimeLeftToDate(button.updated_at)}</td>
+                  <td className='form-list__table-body-cell'><a onClick={() => store.emit(new SetMainPopupCurrentProfile(button.owner))}>{button.owner.name}</a></td>
+                  <td className='form-list__table-body-cell'>
                     <Btn
                       btnType={BtnType.small}
                       borderColor={'green'}

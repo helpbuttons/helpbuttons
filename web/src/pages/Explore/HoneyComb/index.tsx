@@ -50,6 +50,7 @@ import { showMarkersZoom } from 'components/map/Map/Map.consts';
 import { applyFiltersHex } from 'components/search/AdvancedFilters/filters.type';
 import { Button } from 'shared/entities/button.entity';
 import { replaceUrl } from 'components/uri/builder';
+import { ListKeyLocation } from 'state/Geo';
 
 
 function HoneyComb({ selectedNetwork }) {
@@ -548,11 +549,21 @@ function ExploreHexagonMap({toggleShowLeftColumn, exploreSettings, selectedNetwo
     
   }, [boundsFilteredButtons, exploreSettings.zoom])
 
+  const [keyLocations, setKeyLocations] = useState([])
+  useEffect(() => {
+    store.emit(
+        new ListKeyLocation((list) => {
+          setKeyLocations(list)
+        }),
+    );
+}, []);
+
   return (<HexagonExploreMap
             exploreSettings={exploreSettings}
             h3TypeDensityHexes={h3TypeDensityHexes}
             handleBoundsChange={handleBoundsChange}
             selectedNetwork={selectedNetwork}
             countFilteredButtons={countFilteredButtons}
+            keyLocations={keyLocations}
           />)
   }
