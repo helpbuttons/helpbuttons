@@ -1,39 +1,49 @@
-.user-list__wrapper {
+.form-list__wrapper {
 
     width: 100%;
     overflow-x: auto;
+    padding-top: $margin-big;
 
 }
 
-.user-list__table-header-cell {
+.form-list__table-header-cell {
   padding: $padding-medium;
   min-width: 100px;
   font-weight: $font-weight-bolder;
 }
 
-.user-list__table-header-cell:first-letter,
-.user-list__table-body-cell:first-letter {
+.form-list__table-header-cell:first-letter,
+.form-list__table-body-cell:first-letter {
   text-transform: uppercase;
 }
 
-.user-list__table-body-cell {
+.form-list__table-body-cell {
 
   padding: $padding-small;
 }
 
-.user-list__table-body-cell--email {
+.form-list__table-body-cell--email {
 
   font-weight: $font-weight-bolder;
 
 }
 
-.user-list__table-container {
+.form-list__table-body-row {
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  
+  padding: $padding-small;
+
+}
+
+.form-list__table-container {
     min-width: 800px;
   }
   
-  .user-list__table {
+  .form-list__table {
     width: 100%;
-    min-width: 700px;
     border-collapse: collapse;
     font-size: $font-size-small;
     background-color: #fff; // Optional: adjust background color as needed
@@ -75,7 +85,7 @@
       }
     }
   }
-  
+
 
 
   

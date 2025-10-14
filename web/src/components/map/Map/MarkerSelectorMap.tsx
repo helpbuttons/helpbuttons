@@ -6,7 +6,7 @@ import {
   getZoomResolution,
   latLngToGeoJson,
 } from 'shared/honeycomb.utils';
-import { MarkerButtonIcon } from './MarkerButton';
+import { LocationKeyIcon, MarkerButtonIcon } from './MarkerButton';
 import { LoadabledComponent } from 'components/loading';
 import {
   hexagonSizeZoom,
@@ -23,6 +23,7 @@ export function MarkerEditorMap({
   editPosition = false,
   onMapClick = (latLng) => { },
   networkMapCenter = null,
+  isLocationKeyMarker = false,
 }) {
   const [markerHexagonGeoJson, setMarkerHexagonGeoJson] =
     useState(null);
@@ -89,8 +90,7 @@ export function MarkerEditorMap({
             mapZoom={zoom}
             onBoundsChanged={onBoundsChanged}
             handleMapClick={handleMapClicked}
-            width={'100%'}
-            height={'16rem'}
+            height={'18'}
           >
             {(hideAddress && pickedPosition) && (
               <GeoJson
@@ -100,7 +100,12 @@ export function MarkerEditorMap({
                 }}
               />
             )}
-            {(!hideAddress && pickedPosition) && (
+            {isLocationKeyMarker && 
+              <LocationKeyIcon title={markerCaption} anchor={pickedPosition}
+              offset={[25, 50]}
+              cssColor={'red'}/>
+            }
+            {(!isLocationKeyMarker && !hideAddress && pickedPosition) && (
               <MarkerButtonIcon
                 anchor={pickedPosition}
                 offset={[25, 50]}
@@ -109,7 +114,7 @@ export function MarkerEditorMap({
                 title={markerCaption}
               />
             )}
-            {(hideAddress  && pickedPosition)&& (
+            {(!isLocationKeyMarker && hideAddress  && pickedPosition)&& (
               <MarkerButtonIcon
                 anchor={getHexagonCenter(pickedPosition, hexagonSizeZoom)}
                 offset={[25, 50]}
@@ -154,8 +159,7 @@ export default function MarkerViewMap({
             mapCenter={mapCenter}
             mapZoom={zoom}
             onBoundsChanged={onBoundsChanged}
-            width={'100%'}
-            height={'16rem'}
+            height={'18'}
           >
             {hideAddress && (
               <GeoJson

@@ -1,13 +1,17 @@
-import {  Controller, Get, Param, UseInterceptors } from '@nestjs/common';
+import {  Body, Controller, Get, Param, Post, UseInterceptors } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { AllowGuest } from '@src/shared/decorator/roles.decorator';
+import { AllowGuest, OnlyAdmin } from '@src/shared/decorator/roles.decorator';
 import { GeoService } from './geo.service';
 import { CacheInterceptor, CacheTTL } from '@nestjs/cache-manager';
+import { CreateKeyLocationDto } from './keylocation.dto';
+import { CurrentUser } from '@src/shared/decorator/current-user';
+import { User } from '../user/user.entity';
+import { KeyLocationService } from './keylocation.service';
 @ApiTags('geo')
 @Controller('geo')
 @UseInterceptors(CacheInterceptor)
 export class GeoController {
-  constructor(private readonly geoService: GeoService) {}
+  constructor(private readonly geoService: GeoService, private readonly keyLocationService: KeyLocationService) {}
 
   @AllowGuest()
   @UseInterceptors(CacheInterceptor)
@@ -39,5 +43,23 @@ export class GeoController {
   @Get('reverse/limited/:lat/:lon')
   reverseLimited(@Param('lat') lat: string, @Param('lon') lon: string) {
     return this.geoService.findAddressLimited(lat,lon)
+  }
+
+  @OnlyAdmin()
+  @Post('keylocation/new')
+  newKeyLocationNew(@Body() createDto: CreateKeyLocationDto,@CurrentUser() user: User) {
+    return this.keyLocationService.new(createDto, user)
+  }
+
+  @AllowGuest()
+  @Get('keylocation/list')
+  keyLocationList() {
+    return this.keyLocationService.list()
+  }
+
+  @OnlyAdmin()
+  @Get('keylocation/delete/:id')
+  keyLocationDelete(@Param('id') id: string) {
+    return this.keyLocationService.delete(id)
   }
 }
