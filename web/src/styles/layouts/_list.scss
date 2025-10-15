@@ -148,6 +148,12 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
 
 }
 
+.list__empty-message--button {
+
+  max-width: 500px;
+
+}
+
 .list__order {
 
   background-color: $color-corporative;
