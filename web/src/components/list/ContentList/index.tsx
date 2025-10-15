@@ -53,13 +53,16 @@ export default function ContentList({
               </div>
             </>
           )}
-          <Btn
-            caption={t('explore.createEmpty')}
-           iconLeft={IconType.circle}
-            iconLink={<IoAdd/>}
-            onClick={() => router.push('/ButtonNew')}
-            contentAlignment={ContentAlignment.center}
-          />
+          <div className="list__empty-message--button">
+            <Btn
+              caption={t('explore.createEmpty')}
+            iconLeft={IconType.circle}
+              iconLink={<IoAdd/>}
+              onClick={() => router.push('/ButtonNew')}
+              contentAlignment={ContentAlignment.center}
+            />
+          </div>
+
         </div>
       </>
     );
@@ -89,24 +92,27 @@ export function NoMoreToLoad() {
       <div className="list__empty-message--comment">
         {t('explore.emptyList')}
       </div>
+      <div className="list__empty-message--button">
+
       {filtered && (
+          <Btn
+            btnType={BtnType.splitIcon}
+            caption={t('common.reset')}
+            contentAlignment={ContentAlignment.center}
+            onClick={(e) => {
+              store.emit(new ResetFilters());
+              store.emit(new ToggleAdvancedFilters(false));
+            }}
+          />
+        )}
         <Btn
-          btnType={BtnType.splitIcon}
-          caption={t('common.reset')}
+          caption={t('explore.createEmpty')}
+          onClick={() => router.push('/ButtonNew')}
+          iconLeft={IconType.circle}
+          iconLink={<IoAdd/>}
           contentAlignment={ContentAlignment.center}
-          onClick={(e) => {
-            store.emit(new ResetFilters());
-            store.emit(new ToggleAdvancedFilters(false));
-          }}
         />
-      )}
-      <Btn
-        caption={t('explore.createEmpty')}
-        onClick={() => router.push('/ButtonNew')}
-        iconLeft={IconType.circle}
-        iconLink={<IoAdd/>}
-        contentAlignment={ContentAlignment.center}
-      />
+      </div>
     </div>
   );
 }
@@ -120,13 +126,15 @@ export function EndListMessage() {
       <div className="list__empty-message--comment">
         {t('explore.emptyList')}
       </div>
-      <Btn
-        caption={t('explore.createEmpty')}
-        iconLeft={IconType.circle}
-        iconLink={<IoAdd/>}
-        onClick={() => router.push('/ButtonNew')}
-        contentAlignment={ContentAlignment.center}
-      />
+      <div className="list__empty-message--button">
+        <Btn
+          caption={t('explore.createEmpty')}
+          iconLeft={IconType.circle}
+          iconLink={<IoAdd/>}
+          onClick={() => router.push('/ButtonNew')}
+          contentAlignment={ContentAlignment.center}
+        />  
+       </div>
     </div>
   );
 }
