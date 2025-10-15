@@ -43,7 +43,7 @@ function NetworkForm({
 }) {
   const router = useRouter();
 
-  const [showAdvancedConfiguration, setShowAdvancedConfiguration] = useState(false)
+  const [showAdvancedConfiguration, setShowAdvancedConfiguration] = useState(true)
 
   const buttonTemplates = watch('buttonTemplates');
   const nomeclature = watch('nomeclature')
@@ -326,13 +326,13 @@ function NetworkForm({
           </div>
 
             */}
-          {/* <div
+          <div
               onClick={() => setShowAdvancedConfiguration((prev) => !prev)}
               className={`nav-bottom__link`}
             >
               {!showAdvancedConfiguration && t('configuration.showAdvanced')}
               {showAdvancedConfiguration && t('configuration.hideAdvanced')}
-          </div> */}
+          </div>
           <div className="publish__submit">
             <Btn
               btnType={BtnType.submit}
