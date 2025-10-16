@@ -182,7 +182,7 @@ export function AllSuggestedTags({ word, maxTags, tags, addTag }) {
 
   const [numberTags, setNumberTags] = useState(maxTags)
   const [suggestedTags, setSuggestedTags] = useState([]);
-  const allSuggestedTags = () => ['x','y','x','y','y','x','y','y','x','y','y','x','y','y','x','y','y','x','y','y','x','y','y','x','y','y','x','y','y','x','y','y','x','y','y','x','y','y','x','y','y','x','y'] /*(sort = false) => {
+  const allSuggestedTags = (sort = false) => {
     if (topTags && allTags && networkTags) {
       const all= _.uniq([
         ...networkTags,
@@ -196,7 +196,7 @@ export function AllSuggestedTags({ word, maxTags, tags, addTag }) {
       return all
     }
     return [];
-  };*/
+  };
   useEffect(() => {
     if (topTags && allTags) {
       setSuggestedTags(() => {
