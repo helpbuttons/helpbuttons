@@ -155,7 +155,8 @@
     "hideLocationByDefaultText": "Hide exact location by default",
     "hideAdvanced": "Hide advanced options...",
     "locationKeys": "Key Spots",
-    "requiredLocation": "Please pickup a place in the map for your network"
+    "requiredLocation": "Please pickup a place in the map for your network",
+    "keyLocationsExplain": "Key spots that will be highlighted in your network. They will appear in the main menus and map for easy access"
   },
   "activities": {
     "allNotifications": "Aldaketa guztiak",
@@ -284,7 +285,8 @@
     "showWassapExplain": "Show a link to your whatsapp app if you want. You need to have public phone enabled.",
     "endorse": "Endorse",
     "explainPublishAsGuest": "Signup as anonymous, please generate a new code, that you can use it for logging in to check your _helpbuttons_",
-    "explainUseGuestCode": "Please store this code, it is your only way to keep track of your publications"
+    "explainUseGuestCode": "Please store this code, it is your only way to keep track of your publications",
+    "editUsername": "Edit username"
   },
   "configure": {
     "browsePins": "Mapa kokapen pinen bidez",
@@ -306,7 +308,8 @@
     "list": "Zerrenda",
     "map": "Mapa",
     "showList": "Show List",
-    "hiddenButtons": "For privacy, there are {0} hidden _helpbuttons_."
+    "hiddenButtons": "For privacy, there are {0} hidden _helpbuttons_.",
+    "viewMode": "Select default View Mode"
   },
   "buttonFilters": {
     "filters": "Bilatu eta iragazi",
@@ -340,7 +343,8 @@
     "followTagSucess": "{0} zure interesen gaien artean gehitu da. Zure interesen gaiak ikusteko joan Nire Profilera.",
     "focusedArea": "eremuan",
     "locationLimited": "{0}, {1}-ra mugatuta",
-    "pickLocationLimits": "Aukeratu kokapen-mugak"
+    "pickLocationLimits": "Aukeratu kokapen-mugak",
+    "byCategory": "By category"
   },
   "button": {
     "title": "_helpbutton_ ikuspegia",
@@ -406,7 +410,8 @@
     "placeHodlerCustomAddress": "Write the new name and select place on the map",
     "publishComment": "Publish comment",
     "sendPrivateMessage": "Send private message to {0}",
-    "proposeAddress": "Add a missing place in {0}"
+    "proposeAddress": "Add a missing place in {0}",
+    "locationPlaceholder": "Write a place or address"
   },
   "calendarOnce": {
     "label": "Behin",
