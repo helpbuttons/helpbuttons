@@ -50,10 +50,8 @@ export default function Moderation() {
         linkBack={mode == null ? "/Profile" : () => setMode(null)}
       >
         <div className="form__inputs-wrapper">
-          <div className="form__field">
-            <p className="form__explain">
+          <div className="form__header">
               {t('moderation.description')}
-            </p>
           </div>
 
           {mode == null && <>
@@ -458,11 +456,11 @@ function AprovedButtonsList() {
 
 function NewAdminCommunication() {
   return <>
-    <div className="form__inputs-wrapper">
+    <div className="form__inputs-wrapper form__subsection">
       <div className="form__field">
         <div className="form__label">{t('moderation.adminCommunicationLabel')}</div>
         <div className="form__explain">{t('moderation.adminCommunicationExplain')}</div>
-        <MessageNew onCreate={undefined} />
+        <MessageNew onCreate={undefined} isComment={true} />
 
       </div>
     </div></>

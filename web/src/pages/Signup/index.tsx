@@ -204,7 +204,7 @@ export function SignupAsGuestForm() {
         <div className="form__inputs-wrapper">
           {step == steps.REQUEST_CODE &&
             <>
-              <div>{t('user.explainPublishAsGuest')}</div>
+              <div className='form__header'>{t('user.explainPublishAsGuest')}</div>
               <Btn
                 submit={false}
                 btnType={BtnType.submit}
@@ -216,17 +216,20 @@ export function SignupAsGuestForm() {
           }
           {step == steps.SUCCESS &&
             <>
-              <div>{t('user.explainUseGuestCode')}</div>
-              {qrCodeData && <><img src={qrCodeData} />{invitationLink}</>}
-              <Btn
-                submit={false}
-                btnType={BtnType.submit}
-                caption={t('user.signupGuestDetails')}
-                contentAlignment={ContentAlignment.center}
-                onClick={() => {
-                  store.emit(new SetInvitationPopup(code))
-                }}
-              />
+              <div className='form__header'>{t('user.explainUseGuestCode')}</div>
+              <div className='form__subsection'>
+                {qrCodeData && <><img src={qrCodeData} />{invitationLink}</>}
+              </div>
+
+                <Btn
+                  submit={false}
+                  btnType={BtnType.submit}
+                  caption={t('user.signupGuestDetails')}
+                  contentAlignment={ContentAlignment.center}
+                  onClick={() => {
+                    store.emit(new SetInvitationPopup(code))
+                  }}
+                />
             </>
           }
 

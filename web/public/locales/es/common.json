@@ -176,7 +176,8 @@
     "hideLocationByDefaultLabel": "Proteger ubicación exacta",
     "hideLocationByDefaultText": "Ocultar ubicación exacta por defecto",
     "hideAdvanced": "Ocultar opciones avanzadas",
-    "locationKeys": "Lugares destacados"
+    "locationKeys": "Lugares destacados",
+    "keyLocationsExplain": "Lugares de tu red que se mostrarán resaltados. Aparecerán en los menús principales y mapas para fácil acceso."
   },
   "activities": {
     "messages": "Mensajes",
@@ -299,13 +300,14 @@
     "pleaseAcceptCookies": "Es obligatorio que aceptar la política de cookies para continuar",
     "helpbuttonsPublishedAmount": "Publicado",
     "revokeEndorse": "Cancelar aceptación ",
+    "endorsed": "Perfil avalado",
     "usernameWillBe": "Tu nombre de usuario será ",
     "hidePassword": "Esconder contraseña",
     "deletedAccount": "¡Tus datos fueron borados con éxito!",
     "signupSuccess": "Tu registro fu exitoso, Bienvenido/a a {0} ",
     "showWassapExplain": "Muestra un link a Whatsapp si quieres. Necesitas publicar tu teléfono antes para ello.",
-    "editUsername":"Editar usuario",
-    "endorse": "Apoyar",
+    "editUsername": "Editar usuario",
+    "endorse": "Avalar",
     "explainPublishAsGuest": "Por favor genera un nuevo código, que entrar usar para y comprobar tus _helpbuttons_",
     "explainUseGuestCode": "Por favor guarda este código, es la única forma que tendrás de entrar para comprobar tus publicaciones"
   },
@@ -324,12 +326,13 @@
     "noFilter": "en la zona",
     "hideMap": "Ocultar Mapa",
     "showMap": "Mostrar Mapa",
-    "displayInstructions": "Pulsa un hexágono para obtener información sobre _helpbuttons_ en esa zona",
+    "displayInstructions": "Pulsa las zonas para obtener información sobre _helpbuttons_ en ella",
     "both": "Mapa & Lista",
     "list": "Lista",
     "map": "Mapa",
     "showList": "Mostrar Lista",
-    "hiddenButtons": "Por privacidad, hay _helpbuttons_que ocultan su ubicación exacta."
+    "hiddenButtons": "Por privacidad, hay _helpbuttons_que ocultan su ubicación exacta.",
+    "viewMode": "Selecciona modo de muestra por defecto"
   },
   "buttonFilters": {
     "filters": "Búsqueda y filtros",
@@ -432,7 +435,8 @@
     "placeHodlerCustomAddress": "Escribe un nuevo nombre y selecciona el lugar sobre el mapa",
     "publishComment": "Publicar comentario",
     "sendPrivateMessage": "Enviar mensaje privado a {0}",
-    "proposeAddress": "Añadir o editar nuevo lugar en {0}"
+    "proposeAddress": "Añadir o editar nuevo lugar en {0}",
+    "locationPlaceholder": "Escribe un lugar o dirección"
   },
   "calendarOnce": {
     "label": "Una vez",

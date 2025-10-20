@@ -14,7 +14,7 @@ import { ResetFilters, ToggleAdvancedFilters } from 'state/Explore';
 import { useGlobalStore } from 'state';
 import { isFiltering } from 'components/search/AdvancedFilters/filters.type';
 import dconsole from 'shared/debugger';
-import { IoAccessibility, IoAdd } from 'react-icons/io5';
+import { IoAccessibility, IoAdd, IoAlert, IoAnalyticsOutline, IoBugOutline, IoBugSharp, IoCloudyNightSharp, IoCloudyOutline, IoFemale } from 'react-icons/io5';
 
 export default function ContentList({
   buttons,
@@ -45,6 +45,7 @@ export default function ContentList({
           {isLoadingButtons && <LoadingWrapper />}
           {!isLoadingButtons && (
             <>
+              <div className='list__empty-message--img'><IoCloudyOutline/></div>
               <div className="list__empty-message--prev">
                 {t('explore.noResults')}
               </div>
@@ -53,13 +54,17 @@ export default function ContentList({
               </div>
             </>
           )}
-          <Btn
-            caption={t('explore.createEmpty')}
-           iconLeft={IconType.circle}
-            iconLink={<IoAdd/>}
-            onClick={() => router.push('/ButtonNew')}
-            contentAlignment={ContentAlignment.center}
-          />
+          <div className="list__empty-message--button">
+            <Btn
+              btnType={BtnType.corporative}
+              caption={t('explore.createEmpty')}
+              iconLeft={IconType.svg}
+              iconLink={<IoAdd/>}
+              onClick={() => router.push('/ButtonNew')}
+              contentAlignment={ContentAlignment.center}
+            />
+          </div>
+
         </div>
       </>
     );
@@ -89,24 +94,29 @@ export function NoMoreToLoad() {
       <div className="list__empty-message--comment">
         {t('explore.emptyList')}
       </div>
+      <div className="list__empty-message--button">
+
       {filtered && (
+          <Btn
+            btnType={BtnType.splitIcon}
+            caption={t('common.reset')}
+            contentAlignment={ContentAlignment.center}
+            onClick={(e) => {
+              store.emit(new ResetFilters());
+              store.emit(new ToggleAdvancedFilters(false));
+            }}
+          />
+        )}
         <Btn
-          btnType={BtnType.splitIcon}
-          caption={t('common.reset')}
+          caption={t('explore.createEmpty')}
+          btnType={BtnType.corporative}
+
+          onClick={() => router.push('/ButtonNew')}
+          iconLeft={IconType.svg}
+          iconLink={<IoAdd/>}
           contentAlignment={ContentAlignment.center}
-          onClick={(e) => {
-            store.emit(new ResetFilters());
-            store.emit(new ToggleAdvancedFilters(false));
-          }}
         />
-      )}
-      <Btn
-        caption={t('explore.createEmpty')}
-        onClick={() => router.push('/ButtonNew')}
-        iconLeft={IconType.circle}
-        iconLink={<IoAdd/>}
-        contentAlignment={ContentAlignment.center}
-      />
+      </div>
     </div>
   );
 }
@@ -120,13 +130,15 @@ export function EndListMessage() {
       <div className="list__empty-message--comment">
         {t('explore.emptyList')}
       </div>
-      <Btn
-        caption={t('explore.createEmpty')}
-        iconLeft={IconType.circle}
-        iconLink={<IoAdd/>}
-        onClick={() => router.push('/ButtonNew')}
-        contentAlignment={ContentAlignment.center}
-      />
+      <div className="list__empty-message--button">
+        <Btn
+          caption={t('explore.createEmpty')}
+          iconLeft={IconType.circle}
+          iconLink={<IoAdd/>}
+          onClick={() => router.push('/ButtonNew')}
+          contentAlignment={ContentAlignment.center}
+        />  
+       </div>
     </div>
   );
 }

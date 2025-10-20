@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 //imported internal classes, variables, files or functions
-import { GlobalState, store, useGlobalStore } from 'state';
+import { GlobalState, store, useGlobalStore, useStore } from 'state';
 import { Login } from 'state/Profile';
 import { NavigateTo } from 'state/Routes';
 import Form from 'elements/Form';
@@ -17,6 +17,7 @@ import t from 'i18n';
 import { alertService } from 'services/Alert';
 import { CookiesState, MainPopupPage, SetMainPopup } from 'state/HomeInfo';
 import { AcceptCookiesWarn } from 'components/home/CookiesBanner';
+import { Network } from 'shared/entities/network.entity';
 
 export default function LoginForm() {
   const {
@@ -49,6 +50,11 @@ export default function LoginForm() {
   };
   const params: URLSearchParams = new URLSearchParams(router.query);
 
+  const selectedNetwork: Network = useStore(
+    store,
+    (state: GlobalState) => state.networks.selectedNetwork,
+  );
+
   return (
     <Form onSubmit={handleSubmit(onSubmit)} classNameExtra="login">
       <div className="login__form">
@@ -65,6 +71,7 @@ export default function LoginForm() {
             name="password"
             label={t('user.password')}
             classNameInput="squared"
+            onForgotPass={() => store.emit(new SetMainPopup(MainPopupPage.REQUEST_LINK))}
             placeholder={t('user.passwordPlaceHolder')}
             validationError={errors.password}
             {...register('password', { required: true })}
@@ -85,19 +92,22 @@ export default function LoginForm() {
             isSubmitting={isSubmitting}
           />
           <AcceptCookiesWarn cookieState={cookieState}/>
-          <div className="popup__link">
-            <div
-              onClick={() => store.emit(new SetMainPopup(MainPopupPage.REQUEST_LINK))}
-              className={`nav-bottom__link`}
-            >
-              {t('user.loginClick')}
-            </div>
-          </div>
+
           <div className="popup__link">
             <div onClick={() => store.emit(new SetMainPopup(MainPopupPage.SIGNUP))} className={`nav-bottom__link`}>
               {t('user.noAccount')}
             </div>
           </div>
+           {selectedNetwork?.allowGuestCreation && 
+            <div className="popup__link">
+              <div
+                onClick={() => store.emit(new SetMainPopup(MainPopupPage.SIGNUP_AS_GUEST))}
+                className={`nav-bottom__link`}
+              >
+                {t('user.signupAsGuest')}
+              </div>
+            </div>
+            }
         </div>
       </div>
     </Form>
