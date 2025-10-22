@@ -45,15 +45,6 @@ export default function Profile() {
                         />
                       </Link>
                     }
-                    {/* {selectedNetwork?.inviteOnly &&  */}
-                      <Link href="/Profile/Invites">
-                        <Btn
-                          iconLeft={IconType.svg}
-                          iconLink={<IoQrCodeOutline/>}
-                          caption={t('invite.title')}
-                        />
-                      </Link>
-                    {/* } */}
                     {sessionUser?.role == Role.admin && 
                       <AdminOptions/>
                     }

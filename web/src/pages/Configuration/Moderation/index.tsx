@@ -21,6 +21,7 @@ import {
   IoBanOutline,
   IoCheckmarkCircleOutline,
   IoPersonOutline,
+  IoQrCodeOutline,
 } from 'react-icons/io5';
 import { alertService } from 'services/Alert';
 import { readableTimeLeftToDate } from 'shared/date.utils';
@@ -32,12 +33,14 @@ import { useButtonTypes } from 'shared/buttonTypes';
 import { SetMainPopupCurrentButton, SetMainPopupCurrentProfile } from 'state/HomeInfo';
 import { Pagination, Table, TableBody, TableHeader, TableHeaderCell, TableLine, TableLineCell, useFilterItems } from 'components/table';
 import FieldText from 'elements/Fields/FieldText';
+import Invites from 'pages/Profile/Invites';
 
 enum ModerationMode {
   USERS,
   APPROVAL,
   APPROVED,
-  COMMUNICATION
+  COMMUNICATION,
+  QRINVITE
 }
 export default function Moderation() {
 
@@ -69,6 +72,13 @@ export default function Moderation() {
                 caption={t('moderation.buttonsList')}
               />
             </Link>
+            <Link href="/Profile/Invites">
+                <Btn
+                  iconLeft={IconType.svg}
+                  iconLink={<IoQrCodeOutline/>}
+                  caption={t('invite.title')}
+                />
+            </Link>
             {/* <Link href="#" onClick={() => setMode(ModerationMode.APPROVED)}>
               <Btn
                 iconLeft={IconType.svg}
@@ -90,6 +100,7 @@ export default function Moderation() {
           {mode == ModerationMode.APPROVAL && <ModerationHelpButtonsList />}
           {/* {mode == ModerationMode.APPROVED && <AprovedButtonsList />} */}
           {mode == ModerationMode.COMMUNICATION && <NewAdminCommunication />}
+
         </div>
       </Popup>
     </>
