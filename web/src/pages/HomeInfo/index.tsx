@@ -22,6 +22,7 @@ import {
   IoLogInOutline,
   IoMapOutline,
   IoPersonAdd,
+  IoPersonAddOutline,
   IoShare,
   IoTimeOutline,
 } from 'react-icons/io5';
@@ -563,10 +564,10 @@ function HomeInfoInviteButton() {
   }
   return (
     <Btn
-      btnType={BtnType.filterCorp}
+      btnType={BtnType.corporative}
       contentAlignment={ContentAlignment.center}
       iconLeft={IconType.svg}
-      iconLink={<IoPersonAdd />}
+      iconLink={<IoPersonAddOutline />}
       extraClass="homeinfo__network-title-card--buttons"
       caption={t('homeinfo.inviteToNetwork')}
       onClick={onClick}

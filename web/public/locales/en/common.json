@@ -50,7 +50,8 @@
     "featured": "Featured",
     "powered": "Powered by",
     "keyLocations": "Key Spots",
-    "inviteToNetwork": "Invite to network"
+    "inviteToNetwork": "Invite people",
+    "inviteCopied": "Link copied to clipboard"
   },
   "share": {
     "header": "Share this app",
