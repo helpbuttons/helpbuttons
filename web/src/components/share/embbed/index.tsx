@@ -4,12 +4,19 @@ import { encode } from "html-entities";
 import t from "i18n";
 import { FilterByNumber } from "components/search/AdvancedFilters/filter-by-number";
 import { defaultButtonsForEmbbed } from "components/search/AdvancedFilters/filters.type";
+import { store } from "state";
+import { alertService } from "services/Alert";
 
 export const getIframe = (nrButtons) => {
   return `<iframe src="${getShareLink(
     '/Embbed/'+nrButtons
   )}" width="100%" height="800px" overflow="scroll" frameborder="0"></iframe>`;
 };
+
+const onClick = () => {
+    navigator.clipboard.writeText(getShareLink('/Signup'));
+    alertService.info(t('homeinfo.inviteCopied'))
+  }
 
 export function ShareEmbbedForm() {
   
@@ -23,7 +30,7 @@ export function ShareEmbbedForm() {
         <div className="form__label">Embbed</div>
         <div className="form__explain">{t('share.shareExplain')}</div>
         <FilterByNumber number={nrButtons} setNumber={setNrButtons} label={nrButtons} max={15}/>
-        <div className="_iframe__code">
+        <div onClick={onClick} className="form__fake-input _iframe__code">
           <div className="__iframe__code-box">
             <pre>
               <code

@@ -115,7 +115,9 @@ export function ShareForm({}) {
                 value={shareOptionSelected}
               />
             </div>
-            {renderShareForm()}
+            <div className='form__subsection'>
+                          {renderShareForm()}
+            </div>
 
         
     </>
