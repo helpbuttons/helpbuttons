@@ -559,8 +559,10 @@ function HomeInfoCreateButton() {
 
 function HomeInfoInviteButton() {
   const onClick = () => {
-    navigator.clipboard.writeText(getShareLink('/Signup'));
-    alertService.info(t('homeinfo.inviteCopied'))
+      store.emit(
+      new SetMainPopup(MainPopupPage.SHARE),
+    )
+   
   }
   return (
     <Btn

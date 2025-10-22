@@ -50,7 +50,7 @@
     "featured": "Featured",
     "powered": "Powered by",
     "keyLocations": "Key Spots",
-    "inviteToNetwork": "Invite people",
+    "inviteToNetwork": "Share",
     "inviteCopied": "Link copied to clipboard"
   },
   "share": {
@@ -64,7 +64,11 @@
     "optionIframe": "List Iframe to insert in other sites",
     "optionBulletin": "Printable bulletin",
     "optionInvitations": "Printable invitations",
-    "share": ""
+    "invitePeople": "Invite people",
+    "shareContent": "Share _helpbuttons_ content",
+    "invitePeopleExplain":"Copy and share this link to add others to the network",
+    "copyLink": "Copy Link"
+
   },
   "feed": {
     "write": "Write message",
@@ -399,7 +403,8 @@
     "generateCode": "Generate new anonymous code",
     "explainUseGuestCode": "Please store this code, it is your only way to keep track of your publications",
     "explainGuestDetails": "We need some details to complete your signup",
-    "editUsername": "Edit username"
+    "editUsername": "Edit username",
+    "optionalFields":"Optional fields"
   },
   "picker": {
     "headerText": "Choose a location"

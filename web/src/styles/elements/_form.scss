@@ -725,6 +725,15 @@ width: 100%;
 
 }
 
+.form__fake-input {
+
+  &:hover {
+
+    cursor: pointer;
+    border-style: $border-style-basic;
+  }
+
+}
 
 @media #{$breakpoints-medium} {
 

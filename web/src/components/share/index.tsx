@@ -3,12 +3,17 @@ import ShareBulletinForm from './bulletin';
 import t from 'i18n';
 import { DropdownField } from 'elements/Dropdown/Dropdown';
 import { ShareEmbbedForm } from './embbed';
-import { IoShare } from 'react-icons/io5';
-import { useGlobalStore } from 'state';
+import { IoPersonAddOutline, IoShare } from 'react-icons/io5';
+import { store, useGlobalStore } from 'state';
 import { GlobalState } from 'state';
 import ShareInvitationsForm from './invitations';
 import { ButtonForPopup } from 'components/popup/ButtonToPopup';
 import Popup from 'components/popup/Popup';
+import Accordion from 'elements/Accordion';
+import { alertService } from 'services/Alert';
+import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
+import { getShareLink } from 'shared/sys.helper';
+import Btn, { BtnType, ContentAlignment, IconType } from 'elements/Btn';
 export function ShareButton({onClick})
 {
   return <ButtonForPopup buttonIcon={<IoShare/>} buttonCaption={t('homeinfo.share')} onClick={onClick}/>
@@ -85,21 +90,60 @@ export function ShareForm({}) {
   return (
     <>
         <div className="form__field">
-            <div className="form__label">
-              {t('share.shareTypeLabel')}
+           <div className="form__label">
+              <div className="form__label">
+                {t('share.invitePeople')}
+              </div>
+              <div className="form__explain">
+                {t('share.invitePeopleExplain')}
+              </div>
+              <ShareInviteButton/>
+           </div>
+        </div>
+          <div className="form__field">
+              <div className="form__label">
+                {t('share.shareContent')}
+              </div>
+              <div className="form__explain">
+                {t('share.shareTypeExplain')}
+              </div>
+              <DropdownField
+                options={options}
+                onChange={(value) =>
+                  setShareOptionSelected(() => value)
+                }
+                value={shareOptionSelected}
+              />
             </div>
-            <div className="form__explain">
-              {t('share.shareTypeExplain')}
-            </div>
-            <DropdownField
-              options={options}
-              onChange={(value) =>
-                setShareOptionSelected(() => value)
-              }
-              value={shareOptionSelected}
-            />
-          </div>
-          {renderShareForm()}
+            {renderShareForm()}
+
+        
     </>
   );
+}
+
+function ShareInviteButton() {
+  const onClick = () => {
+      store.emit(
+      new SetMainPopup(MainPopupPage.SHARE),
+    )
+    navigator.clipboard.writeText(getShareLink('/Signup'));
+    alertService.info(t('homeinfo.inviteCopied'))
+  }
+  return (
+    <>
+      <div className='form__input form__fake-input' onClick={onClick} >{getShareLink('/Signup')}</div>
+      
+      <Btn
+        btnType={BtnType.corporative}
+        contentAlignment={ContentAlignment.center}
+        iconLeft={IconType.svg}
+        iconLink={<IoPersonAddOutline />}
+        extraClass=""
+        caption={t('share.copyLink')}
+        onClick={onClick}
+      />
+    </>
+    
+  )
 }
