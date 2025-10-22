@@ -21,6 +21,7 @@ import {
   IoLocationOutline,
   IoLogInOutline,
   IoMapOutline,
+  IoPersonAdd,
   IoShare,
   IoTimeOutline,
 } from 'react-icons/io5';
@@ -35,7 +36,7 @@ import { LinkAdmins } from 'components/user/LinkAdmins';
 import { ShowDesktopOnly, ShowMobileOnly } from 'elements/SizeOnly';
 import { BtnButtonType, ListButtonTypes } from 'components/nav/ButtonTypes';
 import getConfig from 'next/config';
-import { logoImageUri, makeImageUrl } from 'shared/sys.helper';
+import { getShareLink, logoImageUri, makeImageUrl } from 'shared/sys.helper';
 import { FindLatestNetworkActivity } from 'state/Networks';
 import { InstallButton } from 'components/install';
 import { TagsNav } from 'elements/Fields/FieldTags';
@@ -54,6 +55,7 @@ import CardButton, { CardButtonHeadMedium } from 'components/button/CardButton';
 import CardButtonList from 'components/list/CardButtonList';
 import HomeInfoPinnedButtons from 'components/home/Pinned';
 import { ListKeyLocation } from 'state/Geo';
+import { alertService } from 'services/Alert';
 
 export default function HomeInfo({ metadata }) {
 
@@ -487,6 +489,7 @@ function HomeSloganCard({ selectedNetwork, config }) {
       <HomeInfoActionButton>
         <HomeInfoExploreButton />
         <HomeInfoCreateButton />
+        <HomeInfoInviteButton />
       </HomeInfoActionButton>
     </div></>)
 }
@@ -549,6 +552,24 @@ function HomeInfoCreateButton() {
       extraClass="homeinfo__network-title-card--buttons"
       caption={t('homeinfo.goToCreate')}
       onClick={() => router.push('ButtonNew')}
+    />
+  )
+}
+
+function HomeInfoInviteButton() {
+  const onClick = () => {
+    navigator.clipboard.writeText(getShareLink('/Signup'));
+    alertService.info(t('homeinfo.inviteCopied'))
+  }
+  return (
+    <Btn
+      btnType={BtnType.filterCorp}
+      contentAlignment={ContentAlignment.center}
+      iconLeft={IconType.svg}
+      iconLink={<IoPersonAdd />}
+      extraClass="homeinfo__network-title-card--buttons"
+      caption={t('homeinfo.inviteToNetwork')}
+      onClick={onClick}
     />
   )
 }
