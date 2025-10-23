@@ -394,6 +394,10 @@ $btn-font-size-medium: $font-size-medium;
   color: $color-gray;
   border: $border-lines-width solid $color-gray-border;
 
+  & .btn-with-icon__icon {
+    opacity: 0.2;
+  }
+  
   & div {
       background: transparent;
   }
@@ -441,32 +445,6 @@ $btn-font-size-medium: $font-size-medium;
 
 }
 
-.btn-filter[disabled] {
-
-  &:hover {
-    cursor: pointer;
-    position: relative;
-    border-color: $color-dark-gray;
-    border-style: $border-style-thick;
-    
-    &::after {
-      content: "+";
-      position: absolute;
-     
-      left: 50%;
-      transform: translateX(-50%);
-      
-      width: $btn-with-icon-icon-width;
-      height: $btn-with-icon-icon-width;
-      padding: $padding-small;
-      background-color: $color-dark-gray;
-      color: $color-white;
-      border-radius: $btn-border-radius;
-    }
-  }
-
-
-}
 
 
 .btn,
