@@ -58,16 +58,18 @@
     "showSharePopup": "Share this app",
     "shareField": "Choose your share option",
     "shareTypeLabel": "Sharing types",
-    "shareTypeExplain": "Choose the type of share you want to do. If problems, try in desktop.",
+    "shareTypeExplain": "Embed in other sites, connect RSS or generate a pdf with _helpbuttons_",
     "shareExplain": "Select the amount of results you want to show and copy the code to your site",
-    "explainInvitations": "Generate individual invitation cards for your community",
+    "explainInvitations": "Generate individual printable invitation cards for your community",
     "optionIframe": "List Iframe to insert in other sites",
     "optionBulletin": "Printable bulletin",
     "optionInvitations": "Printable invitations",
     "invitePeople": "Invite people",
-    "shareContent": "Share _helpbuttons_ content",
+    "shareContent": "Share app's content",
     "invitePeopleExplain":"Copy and share this link to add others to the network",
-    "copyLink": "Copy link"
+    "copyLink": "Copy link",
+    "advancedInviteOptions": "Advanced invites",
+    "printInvites":"Printable pdf invitations"
 
   },
   "feed": {

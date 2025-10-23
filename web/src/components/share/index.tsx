@@ -25,7 +25,6 @@ export function ShareForm({}) {
     iframe = 'iframe',
     ap = 'ap',
     bulletin = 'bulletin',
-    invitations = 'invitations',
   }
   const [shareOptionSelected, setShareOptionSelected] =
     useState<shareOptions>(shareOptions.iframe);
@@ -36,8 +35,6 @@ export function ShareForm({}) {
         return <ShareBulletinForm />;
       case shareOptions.iframe:
         return <ShareEmbbedForm />;
-      case shareOptions.invitations:
-        return <ShareInvitationsForm />;
     }
   };
 
@@ -77,8 +74,8 @@ export function ShareForm({}) {
               name: t('share.optionBulletin'),
             },
             {
-              value: shareOptions.invitations,
-              name: t('share.optionInvitations'),
+              value: shareOptions.rss,
+              name: t('share.optionRSS'),
             },
           ];
         }
@@ -89,21 +86,26 @@ export function ShareForm({}) {
 
   return (
     <>
+
+        <div className="form__section-title">
+          {t('share.invitePeople')}
+        </div>
         <div className="form__field">
-           <div className="form__label">
-              <div className="form__label">
-                {t('share.invitePeople')}
-              </div>
+ 
               <div className="form__explain">
                 {t('share.invitePeopleExplain')}
               </div>
               <ShareInviteButton/>
-           </div>
         </div>
+        <Accordion title={t('share.advancedInviteOptions')} >
+            <ShareInvitationsForm />
+        </Accordion>
+
+        <div className="form__section-title">
+          {t('share.shareContent')}
+        </div>
+       
           <div className="form__field">
-              <div className="form__label">
-                {t('share.shareContent')}
-              </div>
               <div className="form__explain">
                 {t('share.shareTypeExplain')}
               </div>
@@ -114,10 +116,8 @@ export function ShareForm({}) {
                 }
                 value={shareOptionSelected}
               />
-            </div>
-            <div className='form__subsection'>
-                          {renderShareForm()}
-            </div>
+          </div>
+               {renderShareForm()}
 
         
     </>
