@@ -441,6 +441,34 @@ $btn-font-size-medium: $font-size-medium;
 
 }
 
+.btn-filter[disabled] {
+
+  &:hover {
+    cursor: pointer;
+    position: relative;
+    border-color: $color-dark-gray;
+    border-style: $border-style-thick;
+    
+    &::after {
+      content: "+";
+      position: absolute;
+     
+      left: 50%;
+      transform: translateX(-50%);
+      
+      width: $btn-with-icon-icon-width;
+      height: $btn-with-icon-icon-width;
+      padding: $padding-small;
+      background-color: $color-dark-gray;
+      color: $color-white;
+      border-radius: $btn-border-radius;
+    }
+  }
+
+
+}
+
+
 .btn,
 .btn-circle,
 .btn-with-icon,
@@ -671,7 +699,7 @@ $btn-font-size-medium: $font-size-medium;
 }
 
 
-.nav-header__filters .btn-filter-active button{
-  background-color: black;
-  color: white;
+.nav-header__filters .btn-filter--active button{
+  background-color: $color-dark-gray;
+  color: $color-white;
 }
