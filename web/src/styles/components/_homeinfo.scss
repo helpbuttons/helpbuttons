@@ -172,7 +172,7 @@ $info-content-head-margin-mobile: 71px;
   align-items: center;
   border-radius: $border-radius-basic;
   width: auto;
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: $color-gray-transparent;
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
   border-radius: 8px;
@@ -194,11 +194,10 @@ $info-content-head-margin-mobile: 71px;
   border-radius: $border-radius-basic;
   // background-color: $color-dark-gray;
   padding: $padding-big;
-  color: $color-dark-gray;
+  color: $color-white;
   max-width: 100%;
   align-self: center;
   justify-content: center;
-
   word-wrap: break-word;
   word-break: break-word;
   overflow-wrap: break-word;
@@ -388,12 +387,6 @@ hr {
 
   }
 
-  .homeinfo__network-title {
-
-    display: none;
-
-  }
-
   .homeinfo-card__controls {
     flex-flow: row nowrap
   }
@@ -435,7 +428,6 @@ hr {
     padding-top: $padding-huge;
     border-right: $border-style-basic;
     border-left: $border-style-basic;
-    background-color: $color-gray-transparent;
   }
 
   .homeinfo-card {

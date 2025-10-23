@@ -106,9 +106,11 @@ export default function HomeInfo({ metadata }) {
 
 
             <div className="homeinfo__sections">
+              
               <ShowMobileOnly>
                 <HomeInfoNetworkLogo selectedNetwork={selectedNetwork} />
               </ShowMobileOnly>
+
               <HomeSloganCard selectedNetwork={selectedNetwork} config={config} />
 
               <HomeInfoPinnedButtons />
@@ -562,7 +564,8 @@ function HomeInfoInviteButton() {
       store.emit(
       new SetMainPopup(MainPopupPage.SHARE),
     )
-   
+    navigator.clipboard.writeText(getShareLink('/Signup'));
+    alertService.info(t('homeinfo.inviteCopied'))
   }
   return (
     <Btn
