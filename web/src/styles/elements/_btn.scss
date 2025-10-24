@@ -3,6 +3,7 @@ $btn-with-icon-icon-width: $icon-width-medium;
 $btn-with-icon-small-icon-width: $icon-width-small;
 $btn-filter-with-icon-icon-width: 15px;
 $btn-filter-border: 2px;
+$btn-filter-border-bottom: 4px;
 $btn-background: $color-white;
 $btn-padding: $padding-medium;
 $btn-padding-y: $padding-medium;
@@ -83,6 +84,20 @@ $btn-font-size-medium: $font-size-medium;
   margin: 0 $margin-xxsmall ;
   min-height: $btn-filter-height;
 
+  &::after {
+    content: "";
+    position: absolute;
+    height: 8px;
+    background-color: var(--button-color);
+      
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    width: 30%;
+    top:  2px;
+    border-radius: 0 0 $btn-border-radius $btn-border-radius;
+
+  }
+
 
   a {
 
@@ -118,14 +133,17 @@ $btn-font-size-medium: $font-size-medium;
 
 .btn-filter-with-emoji {
 
-  border-width: $btn-filter-border;
-  border-color: var(--button-color);
+  border-width: $btn-filter-border ;
   display: flex;
   align-items: center;
   // padding: 10px 7px 8px 0;
   padding-right: $btn-padding;
   max-width: 100%;
   font-weight: $font-weight-bold;
+  position: relative;
+
+
+
 
   .btn-with-icon__icon{
 
@@ -134,6 +152,8 @@ $btn-font-size-medium: $font-size-medium;
 
 
   }
+
+
 
 }
 
@@ -394,10 +414,6 @@ $btn-font-size-medium: $font-size-medium;
   color: $color-gray;
   border: $border-lines-width solid $color-gray-border;
 
-  & .btn-with-icon__icon {
-    opacity: 0.2;
-  }
-  
   & div {
       background: transparent;
   }
@@ -442,9 +458,17 @@ $btn-font-size-medium: $font-size-medium;
     }
 
   }
-
+  
 }
 
+.btn-filter[disabled]{
+
+  &::after {
+    display: none;
+  }
+
+
+}
 
 
 .btn,
@@ -472,9 +496,9 @@ $btn-font-size-medium: $font-size-medium;
 
   &:focus {
 
-    background-color: $color-black;
+    background-color: $color-dark-gray;
     color: $color-white;
-    border-color: $color-gray;
+    border-color: $color-dark-gray;
 
     & svg {
       color: $color-white;
@@ -677,7 +701,7 @@ $btn-font-size-medium: $font-size-medium;
 }
 
 
-.nav-header__filters .btn-filter--active button{
-  background-color: $color-dark-gray;
-  color: $color-white;
+.nav-header__filters .btn-filter-active button{
+  background-color: black;
+  color: white;
 }
