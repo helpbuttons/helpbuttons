@@ -25,11 +25,7 @@ function NavHeader({ selectedNetwork }){
 
   return (
     <div className="nav-header">
-            <ShowDesktopOnly>
-        <div className="nav-header__filters">
-          <ListButtonTypes/>
-        </div>
-      </ShowDesktopOnly>
+
       <div className="nav-header__container">
         <ShowDesktopOnly>
           <BrandCard />
@@ -47,6 +43,11 @@ function NavHeader({ selectedNetwork }){
           <NavBottom sessionUser={sessionUser} />
         </ShowDesktopOnly>
       </div>
+      <ShowDesktopOnly>
+        <div className="nav-header__filters">
+          <ListButtonTypes/>
+        </div>
+      </ShowDesktopOnly>
 
     </div>
   );
