@@ -168,7 +168,7 @@ export default function ShareBulletinForm() {
 
   return (
     <>  
-        <div className='form__header'>
+        <div className='form__explain'>
           {t('bulletin.explainBulletin')}
         </div>
         <div>

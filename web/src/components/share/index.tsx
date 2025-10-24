@@ -3,7 +3,7 @@ import ShareBulletinForm from './bulletin';
 import t from 'i18n';
 import { DropdownField } from 'elements/Dropdown/Dropdown';
 import { ShareEmbbedForm } from './embbed';
-import { IoPersonAddOutline, IoShare } from 'react-icons/io5';
+import { IoCodeOutline, IoLocateOutline, IoLogoRss, IoLogoWebComponent, IoPersonAddOutline, IoPrintOutline, IoShare } from 'react-icons/io5';
 import { store, useGlobalStore } from 'state';
 import { GlobalState } from 'state';
 import ShareInvitationsForm from './invitations';
@@ -14,6 +14,7 @@ import { alertService } from 'services/Alert';
 import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
 import { getShareLink } from 'shared/sys.helper';
 import Btn, { BtnType, ContentAlignment, IconType } from 'elements/Btn';
+import { isAdmin } from 'state/Users';
 export function ShareButton({onClick})
 {
   return <ButtonForPopup buttonIcon={<IoShare/>} buttonCaption={t('homeinfo.share')} onClick={onClick}/>
@@ -86,7 +87,7 @@ export function ShareForm({}) {
 
   return (
     <>
-
+      <div className="form__section">
         <div className="form__section-title">
           {t('share.invitePeople')}
         </div>
@@ -97,9 +98,18 @@ export function ShareForm({}) {
               </div>
               <ShareInviteButton/>
         </div>
-        <Accordion title={t('share.advancedInviteOptions')} >
+        
+       {isAdmin &&
+               <div className="form__field">
+
+          <Accordion icon={<IoPrintOutline/>} title={t('share.advancedInviteOptions')} >
             <ShareInvitationsForm />
-        </Accordion>
+          </Accordion>
+                  </div>
+
+       }
+      </div>
+      <div className="form__section">
 
         <div className="form__section-title">
           {t('share.shareContent')}
@@ -109,15 +119,17 @@ export function ShareForm({}) {
               <div className="form__explain">
                 {t('share.shareTypeExplain')}
               </div>
-              <DropdownField
-                options={options}
-                onChange={(value) =>
-                  setShareOptionSelected(() => value)
-                }
-                value={shareOptionSelected}
-              />
+            <Accordion icon={<IoPrintOutline/>} title={t('share.optionBulletin')} >
+              <ShareBulletinForm />
+            </Accordion>
+            <Accordion icon={<IoCodeOutline/>}  title={t('share.optionIframe')} >
+              <ShareEmbbedForm />
+            </Accordion>
+            <Accordion icon={<IoLogoRss/>} title={t('share.optionRss')} >
+              Rss
+            </Accordion>
           </div>
-               {renderShareForm()}
+        </div>
 
         
     </>

@@ -81,10 +81,6 @@ export default function ShareInvitationsForm() {
   return (
         <>
           <div className="form__field">
-            <div className="form__label">
-              {t('share.printInvites')}
-              
-            </div>
             <div className="form__explain">
               {t('share.explainInvitations')}
             </div>
@@ -95,7 +91,7 @@ export default function ShareInvitationsForm() {
               caption={invitations.length}
               iconLeft={IconType.svg}
               iconLink={<IoAdd />}
-              btnType={BtnType.submit}
+              btnType={BtnType.searchPickerField}
             />
         </div>
 

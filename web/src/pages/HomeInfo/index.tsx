@@ -110,7 +110,6 @@ export default function HomeInfo({ metadata }) {
               <ShowMobileOnly>
                 <HomeInfoNetworkLogo selectedNetwork={selectedNetwork} />
               </ShowMobileOnly>
-
               <HomeSloganCard selectedNetwork={selectedNetwork} config={config} />
 
               <HomeInfoPinnedButtons />
@@ -492,11 +491,11 @@ function HomeSloganCard({ selectedNetwork, config }) {
       <HomeInfoActionButton>
         <HomeInfoExploreButton />
         <HomeInfoCreateButton />
-        <HomeInfoInviteButton />
+        <HomeInfoInviteButton/>
       </HomeInfoActionButton>
     </div></>)
 }
-
+        
 
 function HomeInfoInstallCard({ selectedNetwork }) {
   const hasNotificationPermissions = useGlobalStore(
@@ -569,11 +568,12 @@ function HomeInfoInviteButton() {
   }
   return (
     <Btn
-      btnType={BtnType.corporative}
+      btnType={BtnType.filterCorp}
       contentAlignment={ContentAlignment.center}
       iconLeft={IconType.svg}
       iconLink={<IoPersonAddOutline />}
-      extraClass="homeinfo__network-title-card--buttons"
+       extraClass="homeinfo__network-title-card--buttons"
+
       caption={t('homeinfo.inviteToNetwork')}
       onClick={onClick}
     />

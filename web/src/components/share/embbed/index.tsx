@@ -27,12 +27,12 @@ export function ShareEmbbedForm() {
     }, [nrButtons]);
     return (
       <>
-      <div className="form__header">{t('share.shareExplain')}</div>
+      <div className="form__explain">{t('share.shareExplain')}</div>
 
       <div className="form__field">
         <FilterByNumber number={nrButtons} setNumber={setNrButtons} label={nrButtons} max={15}/>
         <div onClick={onClick} className="form__fake-input _iframe__code">
-          <div className="__iframe__code-box">
+          <div className="__iframe__code-box btn">
             <pre>
               <code
                 dangerouslySetInnerHTML={{ __html: encode(iframeCode) }}
