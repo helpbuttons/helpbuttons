@@ -59,9 +59,6 @@ export function ListButtonTypes() {
     }
   }, [filters.helpButtonTypes])
   const handleClick = (type) => {
-    if(type.disabled)
-     router.push('/ButtonNew');
-
     const newFilters = { ...filters, helpButtonTypes: [type] }
     store.emit(new UpdateFilters(newFilters));
     if (pageName != 'Explore') {
