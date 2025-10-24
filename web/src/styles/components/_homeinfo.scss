@@ -84,6 +84,9 @@ $info-content-head-margin-mobile: 71px;
   overflow-x: auto;
   overflow-y: hidden;
   width: inherit;
+  background-color: $color-ligth-gray;
+  border-radius: $border-radius-semicircle ;
+  padding-left: $padding-xsmall;
   
 
   & .list__element {
