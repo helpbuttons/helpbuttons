@@ -25,6 +25,7 @@ function NavHeader({ selectedNetwork }){
 
   return (
     <div className="nav-header">
+
       <div className="nav-header__container">
         <ShowDesktopOnly>
           <BrandCard />
@@ -47,6 +48,7 @@ function NavHeader({ selectedNetwork }){
           <ListButtonTypes/>
         </div>
       </ShowDesktopOnly>
+
     </div>
   );
 }
