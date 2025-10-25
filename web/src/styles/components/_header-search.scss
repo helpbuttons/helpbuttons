@@ -85,7 +85,7 @@ $info-line-height: 1.3;
     height: 40px;
     /* width: 100%; */
     align-items: center;
-    border-radius:  34px 0 0 34px ;
+    border-radius:  $border-radius-circle $border-radius-basic $border-radius-basic $border-radius-circle ;
     border-left:  2px solid $color-dark-gray;
 
 }
