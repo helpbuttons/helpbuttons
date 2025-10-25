@@ -49,7 +49,9 @@
     "share": "Compartir esta app",
     "featured": "Destacados",
     "powered": "Powered by",
-    "install": "Instala {0} y recibe notificaciones:"
+    "install": "Instala {0} y recibe notificaciones:",
+    "inviteToNetwork": "Invitar",
+    "inviteCopied": "Link copied to clipboard"
   },
   "share": {
     "showSharePopup": "Comparte esta aplicación",
@@ -58,11 +60,19 @@
     "shareTypeLabel": "Tipo",
     "shareTypeExplain": "Elige la manera en la que quieres compartir los resultados de tu red",
     "shareExplain": "Elige el número de resultados que quieras mostrar y copia el código en tu web.",
-    "explainInvitations": "Generate individual invitation cards for your community",
+    "explainInvitations": "Genera invitaciones individuales para tu comunidad",
     "optionIframe": "Iframe para insertar en otras webs",
     "optionBulletin": "Imprimir lista de _helpbuttons_",
     "optionInvitations": "Invitaciones personales para imprimir",
-    "share": "Compartir"
+    "share": "Compartir",
+    "invitePeople": "Invitar personas",
+    "advancedInviteOptions": "Invitaciones para imprimir",
+    "shareContent":"Compartir el contenido de la app",
+    "invitePeopleExplain": "Copia y comparte este link para añadir a otros a tu red",
+    "optionRss": "Suscríbete a RSS",
+    "copyLink": "Copiar enlace",
+    "printInvites": "Invitaciones en PDF"
+
   },
   "feed": {
     "write": "Escribir mensaje",
@@ -177,7 +187,8 @@
     "hideLocationByDefaultText": "Ocultar ubicación exacta por defecto",
     "hideAdvanced": "Ocultar opciones avanzadas",
     "locationKeys": "Lugares destacados",
-    "keyLocationsExplain": "Lugares de tu red que se mostrarán resaltados. Aparecerán en los menús principales y mapas para fácil acceso."
+    "keyLocationsExplain": "Lugares de tu red que se mostrarán resaltados. Aparecerán en los menús principales y mapas para fácil acceso.",
+    "addLocationKey": "Add Location"
   },
   "activities": {
     "messages": "Mensajes",
@@ -653,7 +664,10 @@
   "bulletin": {
     "since": "Desde {0}",
     "filter": "Filtrar",
-    "noButtons": "No hay botones"
+    "noButtons": "No hay botones",
+    "found": "{0} _helpbuttons_ encontrados. Desde hoy hasta {1}",
+    "explainBulletin": "Aquí puedes encontrar una lista de _helpbuttons_ en formato PDF, con códigos QR. Así puedes extender la actividad en tu comunidad.",
+    "pdfDate": "desde {0}"
   },
   "places": {
     "addNew": "Añade un nuevo lugar",
