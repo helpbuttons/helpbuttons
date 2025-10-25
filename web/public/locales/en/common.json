@@ -49,20 +49,28 @@
     "notificationsPermission": "Allow notifications",
     "featured": "Featured",
     "powered": "Powered by",
-    "keyLocations": "Key Spots"
+    "keyLocations": "Key Spots",
+    "inviteToNetwork": "Share",
+    "inviteCopied": "Link copied to clipboard"
   },
   "share": {
     "header": "Share this app",
     "showSharePopup": "Share this app",
     "shareField": "Choose your share option",
     "shareTypeLabel": "Sharing types",
-    "shareTypeExplain": "Choose the type of share you want to do. If problems, try in desktop.",
+    "shareTypeExplain": "Embed in other sites, connect RSS or generate a pdf with _helpbuttons_",
     "shareExplain": "Select the amount of results you want to show and copy the code to your site",
-    "explainInvitations": "Generate individual invitation cards for your community",
-    "optionIframe": "List Iframe to insert in other sites",
+    "explainInvitations": "Generate individual printable invitation cards for your community",
+    "optionIframe": "Iframe to insert in your site",
+    "optionRss": "Suscribe to Rss feed",
     "optionBulletin": "Printable bulletin",
     "optionInvitations": "Printable invitations",
-    "share": ""
+    "invitePeople": "Invite people",
+    "shareContent": "Share app's content",
+    "invitePeopleExplain": "Copy and share this link to add others to the network",
+    "copyLink": "Copy link",
+    "advancedInviteOptions": "Printable PDF invitations",
+    "printInvites": "Printable pdf invitations"
   },
   "feed": {
     "write": "Write message",
@@ -397,7 +405,8 @@
     "generateCode": "Generate new anonymous code",
     "explainUseGuestCode": "Please store this code, it is your only way to keep track of your publications",
     "explainGuestDetails": "We need some details to complete your signup",
-    "editUsername": "Edit username"
+    "editUsername": "Edit username",
+    "optionalFields": "Optional fields"
   },
   "picker": {
     "headerText": "Choose a location"

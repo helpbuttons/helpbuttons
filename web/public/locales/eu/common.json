@@ -46,7 +46,10 @@
     "powered": "Powered by",
     "featured": "Featured",
     "share": "Share options",
-    "install": "Install {0} and receive notifications:"
+    "install": "Install {0} and receive notifications:",
+    "inviteCopied": "Link copied to clipboard",
+    "seeMore": "See more",
+    "inviteToNetwork": "Share"
   },
   "feed": {
     "write": "Idatzi mezu bat",
@@ -156,7 +159,8 @@
     "hideAdvanced": "Hide advanced options...",
     "locationKeys": "Key Spots",
     "requiredLocation": "Please pickup a place in the map for your network",
-    "keyLocationsExplain": "Key spots that will be highlighted in your network. They will appear in the main menus and map for easy access"
+    "keyLocationsExplain": "Key spots that will be highlighted in your network. They will appear in the main menus and map for easy access",
+    "addLocationKey": "Add Location"
   },
   "activities": {
     "allNotifications": "Aldaketa guztiak",
@@ -618,7 +622,10 @@
   "bulletin": {
     "since": "Since {0}",
     "filter": "",
-    "noButtons": ""
+    "noButtons": "",
+    "found": "{0} _helpbuttons_ found. From today until {1}",
+    "explainBulletin": "Here you can get a list of _helpbuttons_ in a pdf format, with QR codes. So you can spread the word in your own community.",
+    "pdfDate": "since {0}"
   },
   "invitation": {
     "card": "Anonimous login individual card",
@@ -630,11 +637,12 @@
     "optionIframe": "List Iframe to insert in other sites",
     "optionInvitations": "Printable invitations",
     "shareTypeExplain": "Choose the type of share you want to do",
-    "share": "",
     "header": "Share this app",
     "optionBulletin": "Printable bulletin",
     "shareTypeLabel": "Sharing types",
-    "explainInvitations": "Generate individual invitation cards for your community"
+    "explainInvitations": "Generate individual invitation cards for your community",
+    "invitePeople": "Invite people",
+    "advancedInviteOptions": "Printable PDF invitations"
   },
   "places": {
     "addNew": "",
