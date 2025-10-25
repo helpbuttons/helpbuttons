@@ -139,7 +139,7 @@ function InnerNotificationCard({
         <div className="card-notification__text">
           <div className="card-notification__header">
             <div className="card-notification__info">
-              <h2 className="card-notification__name">{title}</h2>
+              <div className="card-notification__name">{title}</div>
             </div>
 
           </div>

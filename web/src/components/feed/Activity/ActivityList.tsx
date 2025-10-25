@@ -8,7 +8,7 @@ export function ActivityList({ activities }) {
     // const buttonTypes = useButtonTypes();
   
     return (
-      <>
+      <div className="feed-section--activity-content">
         {activities &&
           activities.map((activity, key) => {
             return (
@@ -31,6 +31,6 @@ export function ActivityList({ activities }) {
             />
           </div>
         )}
-      </>
+      </div>
     );
   }
