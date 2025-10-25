@@ -1,5 +1,5 @@
 $card-notification-background: $color-white;
-$card-notification-border: 1px solid $color-ligth-gray;
+$card-notification-border: $border-style-light;
 $card-notification-box-shadow: $box-shadow-card;
 $card-notification-busca-background: $color-red;
 $card-notification-ofrece-background: $color-green;
@@ -24,6 +24,8 @@ $card-notification-delete-size: 100px;
   position: relative;
   color: $color-gray;
 
+
+
   a {
     font-weight: $font-weight-bold;
     color: $color-black;
@@ -31,14 +33,13 @@ $card-notification-delete-size: 100px;
 
   &:hover {
 
-    border: 1px solid var(--network-text-color);
-
+    box-shadow: $box-shadow-card;
   }
 }
 
 .card-notification:hover {
  
-  box-shadow: $card-notification-box-shadow;
+  box-shadow: $box-shadow-divs;
   
 }
 
@@ -131,6 +132,7 @@ $card-notification-delete-size: 100px;
 
 .card-notification__text {
   flex: 0 1 100%;
+  
 }
 
 .card-notification__header {
@@ -156,6 +158,8 @@ $card-notification-delete-size: 100px;
   // flex: 0 1 50%;
   font-weight: $font-weight-light;
   color: $color-med-gray;
+
+
 }
 
 .card-notification__date {
@@ -315,29 +319,39 @@ $card-notification-delete-size: 100px;
   font-weight: $font-weight-bolder;
   hyphens: auto;
   word-break: keep-all;
+  &:first-letter {
+    text-transform: uppercase;
+  }
 }
 
 .card-notification__name {
+  display: inline-block;
   color: $color-dark-gray;
-  font-weight: $font-weight-bold;
-  font-size: $font-size-small;
-  color: $color-med-gray;
-  font-weight: $font-weight-light;
-
+  font-weight: $font-weight-bolder;
+  font-size: $font-size-general;
   display: flex;
-  color: #8da0a0;
-  line-height: 15px;
-  padding-bottom: 5px;
+  line-height: $line-height-regular;
+  padding-bottom: $padding-medium;
+
+ 
+  
+}
+
+.card-notification__name::first-letter {
+  text-transform: uppercase;
 }
 
 .card-notification__paragraph {
 
-  color: $color-gray;
   text-overflow: ellipsis;
   word-wrap: break-word;
   line-height: $text-line-height-xsmall;
   font-size: $font-size-small;
-  color: $color-gray;
+  font-weight: $font-weight-light;
+  color: $color-dark-gray;
+    &:first-letter {
+    text-transform: uppercase;
+  }
 }
 
 
