@@ -85,7 +85,7 @@ $info-content-head-margin-mobile: 71px;
   overflow-y: hidden;
   width: inherit;
   background-color: $color-ligth-gray;
-  border-radius: $border-radius-semicircle ;
+  border-radius: $border-radius-basic ;
   padding-left: $padding-xsmall;
   
 
@@ -257,7 +257,8 @@ $info-content-head-margin-mobile: 71px;
   padding-top: $padding-big;
   justify-content:space-around;
   align-items: flex-start;
-  background: linear-gradient(0deg, transparent, $color-gray-transparent 80%) no-repeat;
+
+  background: linear-gradient(0deg, transparent, $color-gray-transparent 10%) no-repeat;
 
 
 }

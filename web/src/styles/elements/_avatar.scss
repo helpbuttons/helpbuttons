@@ -45,8 +45,7 @@ $avatar-medium-max-width: 50px;
 .avatar-medium--home {
 
   @extend .avatar-medium;
-  color: $color-dark-gray;
-  border-style: solid;
+  border-style: $border-style-basic;
   object-fit: cover;
   overflow: hidden;
 
@@ -80,8 +79,8 @@ $avatar-medium-max-width: 50px;
   width: $avatar-small-max-width;
   min-height: $avatar-small-max-width;
   min-width: $avatar-small-max-width;
-
-  display: flex;
+  object-fit: cover;
+  overflow: hidden;
 
 }
 

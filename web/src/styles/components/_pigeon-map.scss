@@ -222,6 +222,12 @@ $map-btns-size-mobile: 30px;
     padding-left: $padding-medium;
     border-radius: $border-radius-basic;
     min-width: 30px;
+
+    &:hover {
+
+        box-shadow: $box-shadow-divs;
+
+    }
     
 }
 
