@@ -122,3 +122,14 @@ $hashtag-color-l-gray: $color-med-gray;
   text-decoration: none;
   background: $hashtag-color-gray;
 }
+
+
+.hashtag--suggestion {
+  
+    position: relative;
+    margin-top: 10px;
+    background-color: $color-dark-gray;
+    color: $color-ligth-gray;
+    border-color: $color-dark-gray;
+
+}

@@ -93,12 +93,12 @@ export default function FieldTags({
       />
       {input && 
        <div
-        className="hashtag"
+        className="hashtag hashtag--suggestion"
         onClick={() => addTag(input)}
         >
-       {input}
-        <IoAdd/>
-     </div>
+           <IoAdd/>
+          {input}
+        </div>
       }
       <TagList tags={tags} remove={remove} />
       <AllSuggestedTags word={input.substring(input.lastIndexOf(" ")+1)} maxTags={maxTags} tags={tags} addTag={addTag}/>
