@@ -24,10 +24,13 @@ $card-alert-icon-size: 30px;
   border-radius: $card-alert-radius;
   color: $color-dark-gray;
   display: flex;
+
 }
 
 .card-alert__container {
   top: auto;
+  display: flex;
+  flex-direction: column;
   bottom: 0;
   z-index: $z-index-06;
   min-width: 150px;
@@ -36,6 +39,7 @@ $card-alert-icon-size: 30px;
   float: left;
   left: 0;
   padding: 0 $card-alert-padding;
+  gap: $padding-small;
   margin-bottom: calc($footer-height-mobile + $padding-big);
 }
 
@@ -183,6 +187,7 @@ $card-alert-icon-size: 30px;
     margin-bottom: $footer-height-mobile;
     margin-bottom: 0;
     margin-left: $margin-big;
+
   }
 
 }

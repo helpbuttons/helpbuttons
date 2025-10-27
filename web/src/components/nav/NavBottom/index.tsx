@@ -5,6 +5,7 @@ import {
   IoAddCircleOutline,
   IoAddCircleSharp,
   IoAddOutline,
+  IoMailOutline,
   IoPersonAddOutline,
 } from 'react-icons/io5';
 import { IoPersonOutline } from 'react-icons/io5';
@@ -131,7 +132,7 @@ function NavBottom({ sessionUser }) {
                     {countUnreadNotifications}
                   </span>
                 )} */}
-                <IoHeartOutline />
+                <IoMailOutline />
               </div>
 
               <div className="nav-bottom__text">

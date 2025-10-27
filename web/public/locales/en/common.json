@@ -48,7 +48,7 @@
     "share": "Share options",
     "notificationsPermission": "Allow notifications",
     "featured": "Featured",
-    "powered": "Powered by",
+    "powered": "2025 - Powered by",
     "keyLocations": "Key Spots",
     "inviteToNetwork": "Share",
     "inviteCopied": "Link copied to clipboard"
@@ -143,7 +143,7 @@
     "byEventDate": "By start of event",
     "orderBy": "Order",
     "orderByExplain": "Choose the order in which _helpbuttons_ will appear in the list",
-    "followTagSucess": "{0} has been added to your interests",
+    "followTagsSuccess": "{0} has been added to your interests",
     "filteredSearch": "in filtered search by:",
     "focusedArea": "in framed area",
     "locationLimited": "Limited to {0}, {1}",
