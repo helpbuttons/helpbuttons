@@ -442,7 +442,7 @@ $card-button-border-height: $border-general-height;
 
 .card-button__hashtags {
 
-  display: flex;
+  display: none;
   -webkit-line-clamp: 3;
   -webkit-box-orient:horizontal;
   overflow: scroll;

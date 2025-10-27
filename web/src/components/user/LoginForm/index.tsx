@@ -70,6 +70,8 @@ export default function LoginForm() {
           <FieldPassword
             name="password"
             label={t('user.password')}
+                        explain={t('user.password')}
+
             classNameInput="squared"
             onForgotPass={() => store.emit(new SetMainPopup(MainPopupPage.REQUEST_LINK))}
             placeholder={t('user.passwordPlaceHolder')}

@@ -406,7 +406,9 @@
     "explainUseGuestCode": "Please store this code, it is your only way to keep track of your publications",
     "explainGuestDetails": "We need some details to complete your signup",
     "editUsername": "Edit username",
-    "optionalFields": "Optional fields"
+    "optionalFields": "Optional fields",
+    "emailRecovery":"Recovery email address",
+     "emailRecoveryExplain":"If you already have an account, login clicking a link we'll send to your email address."
   },
   "picker": {
     "headerText": "Choose a location"

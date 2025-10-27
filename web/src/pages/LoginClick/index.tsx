@@ -58,7 +58,8 @@ export default function LoginClick() {
             <div className="form__inputs-wrapper">
               <FieldText
                 name="email"
-                label={t('user.email')}
+                label={t('user.emailRecovery')}
+                explain={t('user.emailRecoveryExplain')}
                 classNameInput="squared"
                 placeholder={t('user.emailPlaceHolder')}
                 validationError={errors.email}

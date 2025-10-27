@@ -321,7 +321,9 @@
     "editUsername": "Editar usuario",
     "endorse": "Avalar",
     "explainPublishAsGuest": "Por favor genera un nuevo código, que entrar usar para y comprobar tus _helpbuttons_",
-    "explainUseGuestCode": "Por favor guarda este código, es la única forma que tendrás de entrar para comprobar tus publicaciones"
+    "explainUseGuestCode": "Por favor guarda este código, es la única forma que tendrás de entrar para comprobar tus publicaciones",
+    "emailRecovery":"Email de recuperación",
+    "emailRecoveryExplain":"Si ya tienes cuenta, entra pulsando un enlace que mandaremos a tu correo."
   },
   "configure": {
     "browsePins": "Mapa con pins de ubicación",

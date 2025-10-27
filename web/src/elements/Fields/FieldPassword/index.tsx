@@ -39,11 +39,17 @@ const FieldPassword = React.forwardRef(({
                 className={`form__input ${classNameInput} ${validationError ? 'validation-error' : ''}`} 
                 placeholder={placeholder ? placeholder : label}
             />
-            {/* <FieldError validationError={validationError}/> */}
             {showPassword &&
-            <div className="form__input__pass-toggle form__input--location-loading" onClick={() => setShowPassword(!showPassword)}><IoEyeOffOutline/></div>}
+            <div className="form__input__pass-toggle__wrapper">
+                <div className="form__input__pass-toggle" onClick={() => setShowPassword(!showPassword)}><IoEyeOffOutline/></div>
+            </div>
+            }            
             {!showPassword &&
-            <div className="form__input__pass-toggle form__input--location-loading" onClick={() => setShowPassword(!showPassword)}><IoEyeOutline/></div>}
+            <div className="form__input__pass-toggle__wrapper">
+                <div className="form__input__pass-toggle" onClick={() => setShowPassword(!showPassword)}><IoEyeOutline/></div>
+            </div>
+            }
+            {/* <FieldError validationError={validationError}/> */}
 
             <div className="form__input-subtitle">
 

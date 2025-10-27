@@ -11,12 +11,17 @@ $form-input-border-radius: $border-general-height;
   }
 }
 
-.form__input__pass-toggle {
+.form__input__pass-toggle__wrapper {
+    height: 100%;
+    width: 100%;
+    position: relative;
+}
 
-  position: absolute;
-  right: 20px;
-  bottom: 45px;
-  cursor: pointer;
+.form__input__pass-toggle {
+    position: absolute;
+    top: -35px;
+    right: 20px;
+    cursor: pointer;
 
 }
 
@@ -363,15 +368,6 @@ margin: $margin-medium 0;
 
 }
 
-
-.form__input__pass-toggle {
-
-  position: absolute;
-  right: 20px;
-  bottom: 45px;
-  cursor: pointer;
-
-}
 
 .form__tags-list {
         
