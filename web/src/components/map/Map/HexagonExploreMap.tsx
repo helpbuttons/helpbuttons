@@ -264,6 +264,21 @@ export default function HexagonExploreMap({
                   );
                 }
               })}
+              
+             {keyLocations?.length > 0 && 
+              keyLocations.map((place, idx) => {
+                return (
+                  <LocationKeyIcon
+                    key={idx}
+                    anchor={[place.latitude, place.longitude]}
+                    offset={[35, 65]}
+                    color={'white'}
+                    title={place.address}
+                    onClick={() => store.emit(new UpdateExploreSettings({zoom: place.zoom, center: [place.latitude, place.longitude]}))}
+                  />
+                );
+              })
+            }
 
             {/* draw clicked hexagon */}
             {!exploreSettings.loading &&
@@ -352,20 +367,7 @@ export default function HexagonExploreMap({
                 <Loading />
               </Overlay>
             )}
-            {keyLocations?.length > 0 && 
-              keyLocations.map((place, idx) => {
-                return (
-                  <LocationKeyIcon
-                    key={idx}
-                    anchor={[place.latitude, place.longitude]}
-                    offset={[35, 65]}
-                    color={'white'}
-                    title={place.address}
-                    onClick={() => store.emit(new UpdateExploreSettings({zoom: place.zoom, center: [place.latitude, place.longitude]}))}
-                  />
-                );
-              })
-            }
+           
           </HbMap>
         </>
       )}
