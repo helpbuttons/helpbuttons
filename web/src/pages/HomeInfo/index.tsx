@@ -54,6 +54,7 @@ import CardButton, { CardButtonHeadMedium } from 'components/button/CardButton';
 import CardButtonList from 'components/list/CardButtonList';
 import HomeInfoPinnedButtons from 'components/home/Pinned';
 import { ListKeyLocation } from 'state/Geo';
+import Footer from 'components/footer';
 
 export default function HomeInfo({ metadata }) {
 
@@ -97,6 +98,7 @@ export default function HomeInfo({ metadata }) {
         <SupportBanner scrollToContact={scrollToContact} />
       )} */}
       {selectedNetwork && (
+        <>
         <div className="homeinfo__container">
           <div className="homeinfo__content">
             <NavigatorCoordsButton />
@@ -118,16 +120,15 @@ export default function HomeInfo({ metadata }) {
 
               <HomeInfoKeyLocations selectedNetwork={selectedNetwork} />
               <HomeInfoInstallCard selectedNetwork={selectedNetwork} />
+
+              <HomeInfoRecentActivity selectedNetwork={selectedNetwork} />
+              
               <HomeInfoTopHashTags selectedNetwork={selectedNetwork} />
 
               <HomeInfoPinnedHashTags selectedNetwork={selectedNetwork} />
-              <HomeInfoRecentActivity selectedNetwork={selectedNetwork} />
 
               <HomeInfoAdministeredBy scrollToContact={scrollToContact} />
-              <HomeInfoActionCards currentUser={currentUser} />
-
-              <HomeInfoFooter />
-
+              {/* <HomeInfoActionCards currentUser={currentUser} /> */}
 
             </div>
             <div
@@ -141,7 +142,11 @@ export default function HomeInfo({ metadata }) {
               <div className="homeinfo-card__section--actions"></div>
             </div>
           </div>
+                              <Footer/>
+
         </div>
+                  </>
+
       )}
     </>
   );
@@ -246,9 +251,11 @@ function HomeInfoNetworkLogo({ selectedNetwork }) {
 
 
 function HomeInfoInfoCard({ selectedNetwork }) {
+  const [showInfo, toggleShowInfo] =
+    useToggle(false);
   return (<>{/*  INFO CARD */}
     <div className="homeinfo-card">
-      <div className="homeinfo-card__header">
+      <div className="homeinfo-card__header homeinfo-card__header--openable" onClick={toggleShowInfo}>
         <h3 className="homeinfo-card__header-title">
           {t('homeinfo.info')}
         </h3>
@@ -257,13 +264,18 @@ function HomeInfoInfoCard({ selectedNetwork }) {
 
         </div>
       </div>
-      <hr></hr>
+      {showInfo &&
+        <>
+          <hr></hr>
+          <div className="homeinfo__description">
+            <TextFormatted maxChars={600} text={selectedNetwork.description} />
+          </div>
+        </>  
+      }
+      
 
-      <div className="homeinfo__description">
-        <TextFormatted maxChars={600} text={selectedNetwork.description} />
-      </div>
-
-    </div></>)
+    </div></>
+    )
 }
 
 function HomeInfoStatsCard({ selectedNetwork, config }) {
@@ -314,21 +326,30 @@ function HomeInfoTopHashTags({ selectedNetwork }) {
 }
 
 function HomeInfoPinnedHashTags({ selectedNetwork }) {
+    const [showInfo, toggleShowInfo] =
+    useToggle(false);
   return (<>
     {/* HASHTAGS CARD OF NETWORK CONFIGURATION  */}
+
     {selectedNetwork?.tags &&
       selectedNetwork?.tags.length > 0 && (
         <div className="homeinfo-card">
-          <div className="homeinfo-card__header">
+          <div className="homeinfo-card__header homeinfo-card__header--openable" onClick={toggleShowInfo}>
             <h3 className="homeinfo-card__header-title">
               {t('homeinfo.recommendedHashtags')}
             </h3>
           </div>
-          <hr></hr>
-          <div className="homeinfo__description"></div>
-          <div className="homeinfo__hashtags">
-            <TagsNav tags={selectedNetwork.tags} />
-          </div>
+          {showInfo &&
+          <>
+            <hr></hr>
+
+            <div className="homeinfo__description"></div>
+            <div className="homeinfo__hashtags homeinfo__hashtags--admins">
+              <TagsNav tags={selectedNetwork.tags} />
+            </div>
+          </>
+          }
+          
         </div>
       )}
   </>)
@@ -364,6 +385,7 @@ function HomeInfoRecentActivity({ selectedNetwork }) {
 }
 
 function HomeInfoAdministeredBy({ scrollToContact }) {
+
   return (<>
     <div className="homeinfo-card" ref={scrollToContact}>
       <div className="homeinfo-card__header">

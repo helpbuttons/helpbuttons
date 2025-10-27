@@ -41,12 +41,28 @@ export function FaqSections() {
         .
       </Accordion>
 
+      <Accordion
+        title={t('faqs.networkEthics', [selectedNetwork?.name])}
+      >
+        {t('faqs.networksEthicsDescription', [selectedNetwork?.name])}
+      </Accordion>
+
+
       <Accordion title={t('faqs.helpbuttonsQuestion')}>
         <span className="highlight">
           {t('faqs.helpbuttonsHighlight')}
         </span>{' '}
         {t('faqs.helpbuttonsDescription')}
       </Accordion>
+
+      <Accordion title={t('faqs.forQuestion')}>
+        {t('faqs.forDescription')}
+      </Accordion>
+
+      <Accordion title={t('faqs.communityQuestion')}>
+        {t('faqs.communityDescription')}
+      </Accordion>
+
 
       <Accordion
         title={t('faqs.privacyQuestion')}
@@ -55,23 +71,8 @@ export function FaqSections() {
         {t('faqs.privacyDescription')}
       </Accordion>
 
-      <Accordion title={t('faqs.forQuestion')}>
-        {t('faqs.forDescription')}
-      </Accordion>
 
-      <Accordion title={t('faqs.helpbuttonQuestion')}>
-        {t('faqs.helpbuttonDescription')}
-      </Accordion>
 
-      <Accordion title={t('faqs.communityQuestion')}>
-        {t('faqs.communityDescription')}
-      </Accordion>
-
-      <Accordion
-        title={t('faqs.networkEthics', [selectedNetwork?.name])}
-      >
-        {t('faqs.networksEthicsDescription', [selectedNetwork?.name])}
-      </Accordion>
 
       <Accordion title={t('faqs.ethicsQuestion')}>
         {t('faqs.ethicsDescription')}

@@ -53,7 +53,7 @@ $info-content-head-margin-mobile: 71px;
   background-color: transparent;
   width: 100%;
   height: auto;
-  overflow: scroll;
+  overflow: auto;
   box-sizing: border-box;
   // margin-top: $margin-small;
   // margin-bottom: $info-content-mobile-bottom-padding;
@@ -285,6 +285,13 @@ $info-content-head-margin-mobile: 71px;
 
 }
 
+.homeinfo-card__header--openable:hover {
+ 
+  cursor: pointer;
+  text-decoration: underline;
+
+}
+
 .homeinfo-card__header-title {
   font-weight: bold;
   font-size: $font-size-title;
@@ -329,6 +336,12 @@ hr {
     margin-top: $padding-medium;
     margin-left: unset;
   }
+}
+
+.homeinfo__hashtags--admins {
+
+  pointer-events: none;
+
 }
 
 .homeinfo-card__section {

@@ -26,7 +26,7 @@
     "createSubtitle": "Publish your _helpbuttons_ and collaborate",
     "faqsSubtitle": "Read more about this app",
     "popularHashtags": "Which topics are covered?",
-    "popularHashtagsExplain": "These are the topics created till now. Make your _helpbutton_ to add new topics.",
+    "popularHashtagsExplain": "These are the most popular topics created till now. Make your _helpbutton_ to add new topics and follow them to receive alerts.",
     "recommendedHashtags": "Which topics are recomended by the admins?",
     "profileSubtitle": "Check your profile",
     "loginSubtitle": "Enter or create your account!",
@@ -552,7 +552,7 @@
   "faqs": {
     "title": "Faqs",
     "networkQuestion": "What's {0}",
-    "helpbuttonsQuestion": "What's _helpbuttons_",
+    "helpbuttonsQuestion": "What's Helpbuttons",
     "forQuestion": "What's for",
     "helpbuttonQuestion": "What's a _helpbutton_",
     "networkDescription": "A Network refers to your individual instance of _helpbuttons_. You can create your own network, designate a purpose (such as sharing food, helping animals, caring for elders, etc.) and begin collaborating with any group you want (be it your neighborhood, sports club, village, course mates, etc.).",
@@ -689,5 +689,21 @@
   },
   "seo": {
     "embbed": ""
+  },
+  "footer": {
+    "whatIsNetwork": "Know more",
+    "create": "Create your _helpbutton_",
+    "explore": "Explore _helpbuttons_",
+    "privacyPolicy": "Privacy policy",
+    "assistance": "Assistance",
+    "adminSupport": "Admin Support",
+    "securitySupport": "Alert of a safety problem",
+    "sendAProblem": "Send a technical issue",
+    "whatsHelpbuttons": "What's Helpbuttons",
+    "investDonations": "Donate to project",
+    "otherNetworks": "See other networks",
+    "developers": "Developers",
+    "ethicCode": "Ethical principles"
+
   }
 }

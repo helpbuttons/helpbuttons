@@ -1,5 +1,7 @@
 .footer__wrapper {
 
+      border-radius: $border-radius-circle $border-radius-circle 0 0 ;
+
   padding: $padding-huge ;
   background-color: $color-white;
   border-top: $border-style-basic;
@@ -77,7 +79,16 @@
 }
 
 @media #{$breakpoints-medium} {
+
+  .footer__wrapper{
+      padding: $margin-xbig ;
+      padding-left: 10% ;
+
+  }
   .footer__main {
+    
     padding-bottom: $margin-xbig;
+    margin-right: auto;
+    gap: 4em;
   }
 }
