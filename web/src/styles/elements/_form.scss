@@ -11,9 +11,16 @@ $form-input-border-radius: $border-general-height;
   }
 }
 
+.form__input__pass-toggle {
+
+  position: absolute;
+  right: 20px;
+  bottom: 45px;
+  cursor: pointer;
+
+}
 
 .form__section-title {
-
 
 font-weight: $font-weight-bold;
 font-size: $font-size-title;
@@ -93,6 +100,7 @@ margin: $margin-medium 0;
   max-width:$form-field-max-width;
   font-size: $font-size-medium;
   margin-bottom: 24px;
+  position: relative;
 }
 
 .form__field--noMargin {

@@ -57,7 +57,7 @@ function NavBottom({ sessionUser }) {
       <nav id="bottom-nav" className="nav-bottom">
         <NavLink
           href="/HomeInfo"
-          className={`nav-bottom__link nav-bottom__link--active ${isCurrent(
+          className={`nav-bottom__link ${isCurrent(
             'HomeInfo',
           )}`}
         >
@@ -80,7 +80,7 @@ function NavBottom({ sessionUser }) {
               : '';
           }}
           href={'/Explore'}
-          className={`nav-bottom__link nav-bottom__link--active ${isCurrent(
+          className={`nav-bottom__link ${isCurrent(
             'Explore',
           )}`}
         >
@@ -98,7 +98,7 @@ function NavBottom({ sessionUser }) {
           <ShowMobileOnly>
             <NavLink
               href="/ButtonNew"
-              className={`nav-bottom__link nav-bottom__link--create nav-bottom__link--active ${isCurrent(
+              className={`nav-bottom__link nav-bottom__link--create ${isCurrent(
                 'ButtonNew',
               )}`}
             >
@@ -119,7 +119,7 @@ function NavBottom({ sessionUser }) {
             onClick={() =>
               store.emit(new SetMainPopup(MainPopupPage.SIGNUP))
             }
-            className={`nav-bottom__link nav-bottom__link--active ${isCurrent(
+            className={`nav-bottom__link ${isCurrent(
               'Signup',
             )}`}
           >
@@ -140,7 +140,7 @@ function NavBottom({ sessionUser }) {
           <>
             <NavLink
               href="/Profile"
-              className={`nav-bottom__link nav-bottom__link--active ${isCurrent(
+              className={`nav-bottom__link ${isCurrent(
                 'Profile',
               )}`}
             >
@@ -160,7 +160,7 @@ function NavBottom({ sessionUser }) {
 
             <NavLink
               href="/Activity"
-              className={`nav-bottom__link nav-bottom__link--active ${isCurrent(
+              className={`nav-bottom__link ${isCurrent(
                 'Activity',
               )}`}
             >
@@ -191,7 +191,7 @@ function NavBottom({ sessionUser }) {
             onClick={() =>
               store.emit(new SetMainPopup(MainPopupPage.LOGIN))
             }
-            className={`nav-bottom__link nav-bottom__link--active ${isCurrent(
+            className={`nav-bottom__link ${isCurrent(
               'Login',
             )}`}
           >
@@ -210,7 +210,7 @@ function NavBottom({ sessionUser }) {
         <ShowDesktopOnly>
             <NavLink
               href="/ButtonNew"
-              className={`nav-bottom__link nav-bottom__link--create nav-bottom__link--active ${isCurrent(
+              className={`nav-bottom__link nav-bottom__link--create ${isCurrent(
                 'ButtonNew',
               )}`}
             >

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import FieldError from "../FieldError";
 import t from "i18n";
+import { IoEye, IoEyeOff, IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 
 interface IFieldPassword {
     label: string,
@@ -39,20 +40,15 @@ const FieldPassword = React.forwardRef(({
                 placeholder={placeholder ? placeholder : label}
             />
             {/* <FieldError validationError={validationError}/> */}
+            {showPassword &&
+            <div className="form__input__pass-toggle form__input--location-loading" onClick={() => setShowPassword(!showPassword)}><IoEyeOffOutline/></div>}
+            {!showPassword &&
+            <div className="form__input__pass-toggle form__input--location-loading" onClick={() => setShowPassword(!showPassword)}><IoEyeOutline/></div>}
+
             <div className="form__input-subtitle">
 
                 <div className="form__input-subtitle-side">
                     <FieldError validationError={validationError}/> 
-                    {showPassword &&
-                        <div onClick={() => setShowPassword(!showPassword)} className="form__input-subtitle--text link">
-                            {t('user.hidePassword')}
-                        </div>
-                    }
-                    {!showPassword &&
-                        <div onClick={() => setShowPassword(!showPassword)} className="form__input-subtitle--text link">
-                            {t('user.showPassword')}
-                        </div>
-                    }
                 </div>
                 <div className="form__input-subtitle-side">
                    {onForgotPass &&

@@ -87,11 +87,7 @@ $nav-bottom-border: 32px;
 }
 
 .nav-bottom__link--create {  
-  .nav-bottom__icon {
-    svg {
-      color: $color-black;
-    }
-  }
+
 }
 
 .nav-bottom__create-message{
@@ -170,18 +166,6 @@ $nav-bottom-border: 32px;
   }
 
 
-  .nav-bottom__link--create {
-
-
-    &:hover, :active {
-      color: $color-blue !important;
-      cursor: pointer;
-
-
-    }
-  }
-
-
   .nav-bottom__icon {
 
     position: relative;
@@ -216,15 +200,7 @@ $nav-bottom-border: 32px;
   }
 
   .nav-bottom__link--create {
-    max-width: $nav-bottom-link-create-size-desktop;
-    height: $nav-bottom-link-create-size-desktop;
 
-    .nav-bottom__icon {
-      .icon {
-        height: 20px;
-        width: 20px;
-      }
-    }
   }
 
 
