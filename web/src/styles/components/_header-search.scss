@@ -81,7 +81,7 @@ $info-line-height: 1.3;
     display: flex;
     padding: $padding-small;
     padding-right: $padding-medium;
-    height: 50px;
+    height: 40px;
     /* width: 100%; */
     align-items: center;
     border-radius:  $border-radius-circle $border-radius-basic $border-radius-basic $border-radius-circle ;
@@ -323,6 +323,13 @@ $info-line-height: 1.3;
 }
 
 @media #{$breakpoints-large} {
+
+  .header-search__icon--close {
+
+    height: 50px;
+
+  }
+
   .header-search {
     top: $header-search-position-large;
     left: $header-search-position-large;
