@@ -258,6 +258,11 @@ $avatar-margin: $padding-big;
 
 }
 
+.card-profile__role {
+  padding-top: $padding-medium;
+
+ }
+
 @media #{$breakpoints-medium} {
 
   .card-profile__avatar-container-name {
@@ -303,7 +308,10 @@ $avatar-margin: $padding-big;
     }
   }
 
+ .card-profile__role {
+  padding-top: $padding-huge;
 
+ }
 
   .card-profile__location {
     color: $color-gray;
