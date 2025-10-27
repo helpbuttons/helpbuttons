@@ -269,9 +269,8 @@ $info-content-head-margin-mobile: 71px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-
-  padding-bottom: $padding-medium;
   width: 100%;
+  padding-bottom: $padding-big;
 
   
   .homeinfo-card__header-image {
@@ -282,6 +281,11 @@ $info-content-head-margin-mobile: 71px;
   }
 
 
+}
+
+.homeinfo-card__header--openable {
+
+  border-bottom: $border-style-basic;
 
 }
 
@@ -289,12 +293,14 @@ $info-content-head-margin-mobile: 71px;
  
   cursor: pointer;
   text-decoration: underline;
+  padding-bottom: $padding-big;
 
 }
 
 .homeinfo-card__header-title {
-  font-weight: bold;
+  font-weight: $font-weight-bold;
   font-size: $font-size-title;
+  color: $color-dark-gray;
 }
 
 
