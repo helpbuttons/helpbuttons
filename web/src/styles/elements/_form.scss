@@ -363,6 +363,16 @@ margin: $margin-medium 0;
 
 }
 
+
+.form__input__pass-toggle {
+
+  position: absolute;
+  right: 20px;
+  bottom: 45px;
+  cursor: pointer;
+
+}
+
 .form__tags-list {
         
   display: flex;
