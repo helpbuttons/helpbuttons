@@ -415,7 +415,7 @@
     "hideAddress": "Esconder ubicación exacta",
     "created": "creado",
     "follow": "Suscribirme",
-    "unfollow": "!Siguiendo!",
+    "unfollow": "Siguiendo",
     "followAlert": "Te has suscrito, recibirás sus novedades.",
     "unfollowAlert": "Te has desuscrito, dejarás de recibir sus novedades",
     "unfollowAlertError": "Error al desuscribir",

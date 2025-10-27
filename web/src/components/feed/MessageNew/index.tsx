@@ -81,10 +81,10 @@ export default function MessageNew({
               watch={watch}
               setFocus={setFocus}
             />
-            {isComment && privateMessage && (
+            {isComment && !privateMessage && (
               <div className="form__input-subtitle-side">
                 <label className="form__input-subtitle--error">
-                  {t('comment.private')}
+                  {t('comment.public')}
                 </label>
               </div>
             )}

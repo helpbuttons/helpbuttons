@@ -1,11 +1,20 @@
 //Mobile bottom navigation component with just creation , profile and home buttons if logged in. It not logged it shows home, Button creation , login and faqs too.
 import NavLink from 'elements/Navlink';
 import {
+  IoAdd,
   IoAddCircle,
   IoAddCircleOutline,
   IoAddCircleSharp,
   IoAddOutline,
+  IoEnter,
+  IoEnterOutline,
+  IoGlobe,
+  IoGlobeSharp,
+  IoHome,
+  IoMail,
   IoMailOutline,
+  IoPerson,
+  IoPersonAdd,
   IoPersonAddOutline,
 } from 'react-icons/io5';
 import { IoPersonOutline } from 'react-icons/io5';
@@ -19,6 +28,7 @@ import { RecenterExplore } from 'state/Explore';
 import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
 import { useActivities } from 'state/Activity';
 import { useEffect, useState } from 'react';
+import { ShowDesktopOnly, ShowMobileOnly } from 'elements/SizeOnly';
 
 export default NavBottom;
 
@@ -52,7 +62,13 @@ function NavBottom({ sessionUser }) {
           )}`}
         >
           <div className="nav-bottom__icon">
-            <IoHomeOutline />
+                {isCurrent(
+                    'HomeInfo',
+                  ) ?  
+                    <IoHome/>
+                  :
+                    <IoHomeOutline/>
+                }
           </div>
           <div className="nav-bottom__text">{t('menu.home')}</div>
         </NavLink>
@@ -69,25 +85,35 @@ function NavBottom({ sessionUser }) {
           )}`}
         >
           <div className="nav-bottom__icon">
-            <IoGlobeOutline />
+                {isCurrent(
+                    'Explore',
+                  ) ?  
+                    <IoGlobeSharp/>
+                  :
+                    <IoGlobeOutline/>
+                }
           </div>
           <div className="nav-bottom__text">{t('menu.explore')}</div>
         </NavLink>
-
-        <NavLink
-          href="/ButtonNew"
-          className={`nav-bottom__link nav-bottom__link--create nav-bottom__link--active ${isCurrent(
-            'ButtonNew',
-          )}`}
-        >
-          <div className="nav-bottom__icon">
-            <svg width="20" height="20" className="icon icon-plus" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path fillRule="evenodd" clipRule="evenodd" d="M10 18C14.4183 18 18 14.4183 18 10C18 5.58172 14.4183 2 10 2C5.58172 2 2 5.58172 2 10C2 14.4183 5.58172 18 10 18ZM10.75 6.75C10.75 6.33579 10.4142 6 10 6C9.58579 6 9.25 6.33579 9.25 6.75V9.25H6.75C6.33579 9.25 6 9.58579 6 10C6 10.4142 6.33579 10.75 6.75 10.75H9.25V13.25C9.25 13.6642 9.58579 14 10 14C10.4142 14 10.75 13.6642 10.75 13.25V10.75H13.25C13.6642 10.75 14 10.4142 14 10C14 9.58579 13.6642 9.25 13.25 9.25H10.75V6.75Z" />
-            </svg>
-          </div>
-          <div className="nav-bottom__text">{t('menu.create')}</div>
-        </NavLink>
-
+          <ShowMobileOnly>
+            <NavLink
+              href="/ButtonNew"
+              className={`nav-bottom__link nav-bottom__link--create nav-bottom__link--active ${isCurrent(
+                'ButtonNew',
+              )}`}
+            >
+              <div className="nav-bottom__icon">
+                {isCurrent(
+                    'ButtonNew',
+                  ) ?  
+                    <IoAddCircle/>
+                  :
+                    <IoAddCircleOutline/>
+                }
+              </div>
+              <div className="nav-bottom__text">{t('menu.create')}</div>
+            </NavLink>
+          </ShowMobileOnly>
         {!sessionUser && (
           <div
             onClick={() =>
@@ -98,7 +124,13 @@ function NavBottom({ sessionUser }) {
             )}`}
           >
             <div className="nav-bottom__icon">
-              <IoPersonAddOutline />
+                {isCurrent(
+                    'Signup',
+                  ) ?  
+                    <IoPersonAdd/>
+                  :
+                    <IoPersonAddOutline/>
+                }
             </div>
             <div className="nav-bottom__text">{t('menu.signup')}</div>
           </div>
@@ -113,7 +145,13 @@ function NavBottom({ sessionUser }) {
               )}`}
             >
               <div className="nav-bottom__icon">
-                <IoPersonOutline />
+                 {isCurrent(
+                    'Profile',
+                  ) ? 
+                      <IoPerson/>
+                    :
+                      <IoPersonOutline/>
+                  }
               </div>
               <div className="nav-bottom__text">
                 {t('menu.profile')}
@@ -132,7 +170,13 @@ function NavBottom({ sessionUser }) {
                     {countUnreadNotifications}
                   </span>
                 )} */}
-                <IoMailOutline />
+                {isCurrent(
+                    'Activity',
+                  ) ?  
+                    <IoMail/>
+                  :
+                    <IoMailOutline/>
+                  }
               </div>
 
               <div className="nav-bottom__text">
@@ -151,12 +195,37 @@ function NavBottom({ sessionUser }) {
               'Login',
             )}`}
           >
-            <div className="nav-bottom__icon">
-              <IoLogInOutline />
-            </div>
+              <div className="nav-bottom__icon">
+                  {isCurrent(
+                    'Login',
+                  ) ? 
+                    <IoEnter/>
+                  :
+                    <IoEnterOutline/>
+                  }
+              </div>
             <div className="nav-bottom__text">{t('menu.login')}</div>
           </div>
         )}
+        <ShowDesktopOnly>
+            <NavLink
+              href="/ButtonNew"
+              className={`nav-bottom__link nav-bottom__link--create nav-bottom__link--active ${isCurrent(
+                'ButtonNew',
+              )}`}
+            >
+              <div className="nav-bottom__icon">
+                {isCurrent(
+                    'ButtonNew',
+                  ) ?  
+                  <IoAddCircle/>
+                 :
+                  <IoAddCircleOutline/>
+                }
+              </div>
+              <div className="nav-bottom__text">{t('menu.create')}</div>
+            </NavLink>
+          </ShowDesktopOnly>
       </nav>
     </>
   );

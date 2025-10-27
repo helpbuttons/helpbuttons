@@ -46,11 +46,11 @@ $nav-bottom-border: 32px;
   &:hover, :active {
 
     svg {
-      fill: $color-blue;
+      fill: $color-black;
     }
 
-    color: $color-blue !important; // Revise
     cursor: pointer;
+    font-weight: $font-weight-bolder;
 
     .nav-bottom__icon {
       transition: 0.2s;
@@ -67,7 +67,8 @@ $nav-bottom-border: 32px;
 }
 
 .nav-bottom__link--current{
-  color: var(--network-text-color) !important;
+  color: $color-black;
+  font-weight: $font-weight-bolder;
 
   .nav-bottom__text::after {
     content: "";
@@ -170,27 +171,13 @@ $nav-bottom-border: 32px;
 
 
   .nav-bottom__link--create {
-    order: 4;
 
-      .nav-bottom__icon {
-        svg {
-          left: -18px;
-          color: $color-black;
-        }
-        
-    }
 
     &:hover, :active {
       color: $color-blue !important;
       cursor: pointer;
 
-      .nav-bottom__icon {
-        // Fix SVG
-        svg {
-          fill: $color-blue !important;
-          color: $color-blue !important;
-          }
-      }
+
     }
   }
 
