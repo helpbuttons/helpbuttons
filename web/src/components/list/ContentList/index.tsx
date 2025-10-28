@@ -14,7 +14,7 @@ import { ResetFilters, ToggleAdvancedFilters } from 'state/Explore';
 import { useGlobalStore } from 'state';
 import { isFiltering } from 'components/search/AdvancedFilters/filters.type';
 import dconsole from 'shared/debugger';
-import { IoAccessibility, IoAdd, IoAlert, IoAnalyticsOutline, IoBugOutline, IoBugSharp, IoCloudyNightSharp, IoCloudyOutline, IoFemale } from 'react-icons/io5';
+import { IoAccessibility, IoAdd, IoAlert, IoAnalyticsOutline, IoBugOutline, IoBugSharp, IoCloudyNightSharp, IoCloudyOutline, IoFemale, IoFilterOutline, IoRemoveOutline } from 'react-icons/io5';
 
 export default function ContentList({
   buttons,
@@ -23,6 +23,7 @@ export default function ContentList({
   linkType = null,
   ...props
 }) {
+  const filtered = isFiltering();
   const [buttonsSlice, setButtonsSlice] = useState(2);
   const isLoadingButtons = useGlobalStore(
     (state: GlobalState) => state.explore.map.loading,
@@ -55,6 +56,18 @@ export default function ContentList({
             </>
           )}
           <div className="list__empty-message--button">
+            {filtered && (
+              <Btn
+                btnType={BtnType.submit}
+                caption={t('common.reset')}
+                iconLeft={IconType.svg}
+                iconLink={<IoFilterOutline/>}
+                onClick={(e) => {
+                  store.emit(new ResetFilters());
+                  store.emit(new ToggleAdvancedFilters(false));
+                }}
+              />
+            )}
             <Btn
               btnType={BtnType.corporative}
               caption={t('explore.createEmpty')}
@@ -98,9 +111,10 @@ export function NoMoreToLoad() {
 
       {filtered && (
           <Btn
-            btnType={BtnType.splitIcon}
+            btnType={BtnType.submit}
             caption={t('common.reset')}
-            contentAlignment={ContentAlignment.center}
+            iconLink={<IoFilterOutline/>}
+            iconLeft={IconType.svg}
             onClick={(e) => {
               store.emit(new ResetFilters());
               store.emit(new ToggleAdvancedFilters(false));
@@ -110,10 +124,9 @@ export function NoMoreToLoad() {
         <Btn
           caption={t('explore.createEmpty')}
           btnType={BtnType.corporative}
-
+          iconLink={<IoAdd/>}
           onClick={() => router.push('/ButtonNew')}
           iconLeft={IconType.svg}
-          iconLink={<IoAdd/>}
           contentAlignment={ContentAlignment.center}
         />
       </div>
@@ -122,6 +135,7 @@ export function NoMoreToLoad() {
 }
 
 export function EndListMessage() {
+    const filtered = isFiltering();
   return (
     <div className="list__empty-message">
       <div className="list__empty-message--prev">
@@ -131,6 +145,18 @@ export function EndListMessage() {
         {t('explore.emptyList')}
       </div>
       <div className="list__empty-message--button">
+        {filtered && (
+          <Btn
+            btnType={BtnType.submit}
+            caption={t('common.reset')}
+            iconLink={<IoFilterOutline/>}
+            iconLeft={IconType.svg}
+            onClick={(e) => {
+              store.emit(new ResetFilters());
+              store.emit(new ToggleAdvancedFilters(false));
+            }}
+          />
+        )}
         <Btn
           caption={t('explore.createEmpty')}
           iconLeft={IconType.circle}

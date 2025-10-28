@@ -59,7 +59,6 @@ export function ListButtonTypes() {
     }
   }, [filters.helpButtonTypes])
   const handleClick = (type) => {
-
     const newFilters = { ...filters, helpButtonTypes: [type] }
     store.emit(new UpdateFilters(newFilters));
     if (pageName != 'Explore') {
@@ -70,6 +69,7 @@ export function ListButtonTypes() {
   return (
     <>
       {types.map((buttonType, idx) => {
+        // if (!buttonType.disabled)
         return <div key={idx} className="hashtags__list-item"><BtnButtonType type={buttonType} onClick={handleClick} /></div>
 
       })}
@@ -80,9 +80,10 @@ export function ListButtonTypes() {
 export function BtnButtonType({ type, onClick = (type) => { } }) {
   return (
     <BtnCaption
-      caption={`${type.caption}`}
+      caption={`${type.caption} `}
       selected={type.selected}
       icon={type?.icon}
+      disabled={type.disabled}
       color={type.cssColor}
       onClick={() =>
         onClick(type.name)
