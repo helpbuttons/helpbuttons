@@ -13,11 +13,6 @@ export const getIframe = (nrButtons) => {
   )}" width="100%" height="800px" overflow="scroll" frameborder="0"></iframe>`;
 };
 
-const onClick = () => {
-    navigator.clipboard.writeText(getShareLink('/Signup'));
-    alertService.info(t('homeinfo.inviteCopied'))
-  }
-
 export function ShareEmbbedForm() {
   
     const [nrButtons, setNrButtons] = useState(defaultButtonsForEmbbed);
@@ -31,8 +26,8 @@ export function ShareEmbbedForm() {
 
       <div className="form__field">
         <FilterByNumber number={nrButtons} setNumber={setNrButtons} label={nrButtons} max={15}/>
-        <div onClick={onClick} className="form__fake-input _iframe__code">
-          <div className="__iframe__code-box btn">
+        <div className="_iframe__code">
+        <div className="__iframe__code-box">
             <pre>
               <code
                 dangerouslySetInnerHTML={{ __html: encode(iframeCode) }}
