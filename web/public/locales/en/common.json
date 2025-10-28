@@ -67,10 +67,12 @@
     "optionInvitations": "Printable invitations",
     "invitePeople": "Invite people",
     "shareContent": "Share app's content",
-    "invitePeopleExplain": "Copy and share this link to add others to the network",
+    "invitePeopleExplain":"Copy and share this link to add others to the network",
     "copyLink": "Copy link",
     "advancedInviteOptions": "Printable PDF invitations",
-    "printInvites": "Printable pdf invitations"
+    "printInvites":"Printable pdf invitations",
+    "linkCopied": "{0} copied to clipboard"
+
   },
   "feed": {
     "write": "Write message",
@@ -679,7 +681,7 @@
     "pdfDate": "since {0}",
     "since": "Since {0}",
     "filter": "",
-    "noButtons": ""
+    "noButtons": "No _helpbuttons_ found"
   },
   "notificaction": {
     "markedAsRead": "Marked as read"

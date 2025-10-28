@@ -17,6 +17,13 @@ $form-input-border-radius: $border-general-height;
     position: relative;
 }
 
+.form__section {
+
+  padding: $margin-big 0;
+  padding-bottom: $margin-big;
+
+}
+
 .form__input__pass-toggle {
     position: absolute;
     top: -35px;
@@ -29,11 +36,11 @@ $form-input-border-radius: $border-general-height;
 
 font-weight: $font-weight-bold;
 font-size: $font-size-title;
-margin: $margin-medium 0;
+padding-bottom: $margin-medium;
 
 }
 
-.form__label, .form__section-title {
+.form__label {
   z-index: $z-index-base;
   top: 7px;
   left: 24px;
@@ -46,11 +53,6 @@ margin: $margin-medium 0;
 
 }
 
-.form__section-title {
-
-  font-size: $font-size-title;
-
-}
 
 .form__explain {
   z-index: $z-index-base;
@@ -739,6 +741,15 @@ width: 100%;
 
 }
 
+.form__fake-input {
+
+  &:hover {
+
+    cursor: pointer;
+    border-style: $border-style-basic;
+  }
+
+}
 
 @media #{$breakpoints-medium} {
 
