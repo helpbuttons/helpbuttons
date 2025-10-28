@@ -167,8 +167,10 @@ export default function ShareBulletinForm() {
   
 
   return (
-    <>
-        {t('bulletin.explainBulletin')}
+    <>  
+        <div className='form__explain'>
+          {t('bulletin.explainBulletin')}
+        </div>
         <div>
           <FilterByDays days={days} setDays={(days) => {setDays(days);  updateDays(days);}} />
           <PdfIframe

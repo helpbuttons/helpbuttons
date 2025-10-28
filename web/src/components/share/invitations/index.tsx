@@ -8,7 +8,7 @@ import {
   StyleSheet,
   Image,
 } from '@react-pdf/renderer';
-import Btn, { IconType } from 'elements/Btn';
+import Btn, { BtnType, IconType } from 'elements/Btn';
 import { IoAdd } from 'react-icons/io5';
 import { PdfIframe, usePdfGenerateBlob } from '../pdf';
 import { getShareLink, makeImageUrl } from 'shared/sys.helper';
@@ -81,18 +81,18 @@ export default function ShareInvitationsForm() {
   return (
         <>
           <div className="form__field">
-            <div className="form__label">
+            <div className="form__explain">
               {t('share.explainInvitations')}
-              
             </div>
-          <Btn
-            onClick={() => {
-              getNewQrCode();
-            }}
-            caption={invitations.length}
-            iconLeft={IconType.svg}
-            iconLink={<IoAdd />}
-          />
+            <Btn
+              onClick={() => {
+                getNewQrCode();
+              }}
+              caption={invitations.length}
+              iconLeft={IconType.svg}
+              iconLink={<IoAdd />}
+              btnType={BtnType.searchPickerField}
+            />
         </div>
 
           {loading && <Loading />}

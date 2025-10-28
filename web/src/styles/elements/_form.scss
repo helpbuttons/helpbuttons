@@ -12,16 +12,22 @@ $form-input-border-radius: $border-general-height;
 }
 
 
-.form__section-title {
+.form__section {
 
-
-font-weight: $font-weight-bold;
-font-size: $font-size-title;
-margin: $margin-medium 0;
+  padding: $margin-big 0;
+  padding-bottom: $margin-big;
 
 }
 
-.form__label, .form__section-title {
+.form__section-title {
+
+font-weight: $font-weight-bold;
+font-size: $font-size-title;
+padding-bottom: $margin-medium;
+
+}
+
+.form__label {
   z-index: $z-index-base;
   top: 7px;
   left: 24px;
@@ -34,11 +40,6 @@ margin: $margin-medium 0;
 
 }
 
-.form__section-title {
-
-  font-size: $font-size-title;
-
-}
 
 .form__explain {
   z-index: $z-index-base;
@@ -725,6 +726,15 @@ width: 100%;
 
 }
 
+.form__fake-input {
+
+  &:hover {
+
+    cursor: pointer;
+    border-style: $border-style-basic;
+  }
+
+}
 
 @media #{$breakpoints-medium} {
 

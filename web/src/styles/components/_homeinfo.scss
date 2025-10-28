@@ -65,7 +65,7 @@ $info-content-head-margin-mobile: 71px;
 .homeinfo-card {
   max-width: -webkit-fill-available;
   max-width: -moz-available;
-  border-radius: $border-radius-basic;
+  border-radius: $border-radius-semicircle;
   background-color: $color-white;
   padding: $padding-big;
   position: relative;
@@ -173,12 +173,11 @@ $info-content-head-margin-mobile: 71px;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  border-radius: $border-radius-basic;
+  border-radius: $border-radius-semicircle;
   width: auto;
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: $color-gray-transparent;
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
-  border-radius: 8px;
   padding: 15px;
   position: relative;
   margin: $margin-small $margin-xsmall;
@@ -197,11 +196,10 @@ $info-content-head-margin-mobile: 71px;
   border-radius: $border-radius-basic;
   // background-color: $color-dark-gray;
   padding: $padding-big;
-  color: $color-dark-gray;
+  color: $color-white;
   max-width: 100%;
   align-self: center;
   justify-content: center;
-
   word-wrap: break-word;
   word-break: break-word;
   overflow-wrap: break-word;
@@ -225,7 +223,24 @@ $info-content-head-margin-mobile: 71px;
 .homeinfo__network-title-card--buttons {
 
   margin-top: $margin-small;
-  width: fit-content;
+  // width: fit-content;
+
+}
+
+.homeinfo__share {
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  border-radius: $border-radius-circle;
+  width: auto;
+  background-color: $color-dark-gray;
+  backdrop-filter: blur(5px);
+  height: 3em;
+  -webkit-backdrop-filter: blur(5px);
+  position: relative;
+  margin: $margin-xsmall $margin-xsmall;
 
 }
 
@@ -253,14 +268,14 @@ $info-content-head-margin-mobile: 71px;
   justify-content: space-between;
   align-items: center;
 
-  padding-bottom: $padding-small;
+  padding-bottom: $padding-medium;
   width: 100%;
 
   
   .homeinfo-card__header-image {
     height: 25px;
     width: 25px;
-    border-radius: 50%;
+    border-radius: $border-radius-circle;
     background-color: $color-gray;
   }
 
@@ -391,12 +406,6 @@ hr {
 
   }
 
-  .homeinfo__network-title {
-
-    display: none;
-
-  }
-
   .homeinfo-card__controls {
     flex-flow: row nowrap
   }
@@ -409,6 +418,9 @@ hr {
       flex: 0 1 50%;
     }
   }
+
+
+
 }
 
 
@@ -438,7 +450,6 @@ hr {
     padding-top: $padding-huge;
     border-right: $border-style-basic;
     border-left: $border-style-basic;
-    background-color: $color-gray-transparent;
   }
 
   .homeinfo-card {

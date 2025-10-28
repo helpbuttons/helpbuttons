@@ -21,6 +21,8 @@ import {
   IoLocationOutline,
   IoLogInOutline,
   IoMapOutline,
+  IoPersonAdd,
+  IoPersonAddOutline,
   IoShare,
   IoTimeOutline,
 } from 'react-icons/io5';
@@ -35,7 +37,7 @@ import { LinkAdmins } from 'components/user/LinkAdmins';
 import { ShowDesktopOnly, ShowMobileOnly } from 'elements/SizeOnly';
 import { BtnButtonType, ListButtonTypes } from 'components/nav/ButtonTypes';
 import getConfig from 'next/config';
-import { logoImageUri, makeImageUrl } from 'shared/sys.helper';
+import { getShareLink, logoImageUri, makeImageUrl } from 'shared/sys.helper';
 import { FindLatestNetworkActivity } from 'state/Networks';
 import { InstallButton } from 'components/install';
 import { TagsNav } from 'elements/Fields/FieldTags';
@@ -54,6 +56,7 @@ import CardButton, { CardButtonHeadMedium } from 'components/button/CardButton';
 import CardButtonList from 'components/list/CardButtonList';
 import HomeInfoPinnedButtons from 'components/home/Pinned';
 import { ListKeyLocation } from 'state/Geo';
+import { alertService } from 'services/Alert';
 
 export default function HomeInfo({ metadata }) {
 
@@ -103,6 +106,7 @@ export default function HomeInfo({ metadata }) {
 
 
             <div className="homeinfo__sections">
+              
               <ShowMobileOnly>
                 <HomeInfoNetworkLogo selectedNetwork={selectedNetwork} />
               </ShowMobileOnly>
@@ -487,10 +491,11 @@ function HomeSloganCard({ selectedNetwork, config }) {
       <HomeInfoActionButton>
         <HomeInfoExploreButton />
         <HomeInfoCreateButton />
+        <HomeInfoInviteButton/>
       </HomeInfoActionButton>
     </div></>)
 }
-
+        
 
 function HomeInfoInstallCard({ selectedNetwork }) {
   const hasNotificationPermissions = useGlobalStore(
@@ -549,6 +554,26 @@ function HomeInfoCreateButton() {
       extraClass="homeinfo__network-title-card--buttons"
       caption={t('homeinfo.goToCreate')}
       onClick={() => router.push('ButtonNew')}
+    />
+  )
+}
+
+function HomeInfoInviteButton() {
+  const onClick = () => {
+      store.emit(
+      new SetMainPopup(MainPopupPage.SHARE),
+    )
+  }
+  return (
+    <Btn
+      btnType={BtnType.filterCorp}
+      contentAlignment={ContentAlignment.center}
+      iconLeft={IconType.svg}
+      iconLink={<IoPersonAddOutline />}
+       extraClass="homeinfo__network-title-card--buttons"
+
+      caption={t('homeinfo.inviteToNetwork')}
+      onClick={onClick}
     />
   )
 }

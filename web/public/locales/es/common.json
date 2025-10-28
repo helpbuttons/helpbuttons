@@ -49,7 +49,8 @@
     "share": "Compartir esta app",
     "featured": "Destacados",
     "powered": "Powered by",
-    "install": "Instala {0} y recibe notificaciones:"
+    "install": "Instala {0} y recibe notificaciones:",
+    "inviteToNetwork": "Invitar"
   },
   "share": {
     "showSharePopup": "Comparte esta aplicación",

@@ -46,7 +46,7 @@ $avatar-medium-max-width: 50px;
 
   @extend .avatar-medium;
   color: $color-dark-gray;
-  border-style: solid;
+  border-style: $border-style-basic;
   object-fit: cover;
   overflow: hidden;
 
