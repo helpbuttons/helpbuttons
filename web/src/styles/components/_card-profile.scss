@@ -260,6 +260,8 @@ $avatar-margin: $padding-big;
 
 .card-profile__role {
   padding-top: $padding-medium;
+  display: flex;
+  flex-direction: row;
 
  }
 
@@ -267,6 +269,8 @@ $avatar-margin: $padding-big;
 
   .card-profile__avatar-container-name {
     flex-direction: row;
+    max-width: 300px;
+
   }
 
   .card-profile__description {

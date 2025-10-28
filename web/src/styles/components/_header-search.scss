@@ -333,17 +333,8 @@ $info-line-height: 1.3;
   .header-search {
     top: $header-search-position-large;
     left: $header-search-position-large;
-  }
+  }  
 
-  .header-search__column {
-  
-
-  &:hover {
-
-    height: 3em;
-
-  }
-}
 
 .header-search__column--big {
 

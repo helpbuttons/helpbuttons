@@ -14,6 +14,8 @@ import NavLink from 'elements/Navlink';
 import {
   IoAddCircle,
   IoAddOutline,
+  IoArrowDownCircleOutline,
+  IoArrowDownCircleSharp,
   IoCall,
   IoClose,
   IoGlobeOutline,
@@ -21,6 +23,9 @@ import {
   IoLocationOutline,
   IoLogInOutline,
   IoMapOutline,
+  IoMenuOutline,
+  IoOpen,
+  IoOptions,
   IoShare,
   IoTimeOutline,
 } from 'react-icons/io5';
@@ -124,7 +129,6 @@ export default function HomeInfo({ metadata }) {
               <HomeInfoRecentActivity selectedNetwork={selectedNetwork} />
               
               <HomeInfoTopHashTags selectedNetwork={selectedNetwork} />
-
               <HomeInfoPinnedHashTags selectedNetwork={selectedNetwork} />
 
               <HomeInfoAdministeredBy scrollToContact={scrollToContact} />
@@ -254,14 +258,18 @@ function HomeInfoInfoCard({ selectedNetwork }) {
   const [showInfo, toggleShowInfo] =
     useToggle(false);
   return (<>{/*  INFO CARD */}
-    <div className="homeinfo-card">
-      <div className="homeinfo-card__header homeinfo-card__header--openable" onClick={toggleShowInfo}>
+    <div className="homeinfo-card" onClick={toggleShowInfo}>
+      <div className="homeinfo-card__header homeinfo-card__header--openable" >
         <h3 className="homeinfo-card__header-title">
           {t('homeinfo.info')}
         </h3>
-
         <div className="homeinfo-card__controls">
-
+            <Btn
+              btnType={BtnType.corporative}
+              iconLink={<IoArrowDownCircleOutline/>}
+              iconLeft={IconType.circle}
+              contentAlignment={ContentAlignment.center}
+            />
         </div>
       </div>
       {showInfo &&
@@ -338,6 +346,14 @@ function HomeInfoPinnedHashTags({ selectedNetwork }) {
             <h3 className="homeinfo-card__header-title">
               {t('homeinfo.recommendedHashtags')}
             </h3>
+            <div className="homeinfo-card__controls">
+              <Btn
+                btnType={BtnType.corporative}
+                iconLink={<IoArrowDownCircleOutline/>}
+                iconLeft={IconType.circle}
+                contentAlignment={ContentAlignment.center}
+              />
+            </div>
           </div>
           {showInfo &&
           <>
