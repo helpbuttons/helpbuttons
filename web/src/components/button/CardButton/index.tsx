@@ -116,15 +116,14 @@ export function CardButtonHeadMedium({ button, buttonType }) {
         </div> */}
 
         <div className="card-button__info">
-          <div className="card-button__status">
+          <div className="card-button-list__status">
             {buttonType.icon && (
               <div className="card-button__emoji">
                 {buttonType.icon}
               </div>
             )}
             <span
-              className="card-button"
-              style={buttonColorStyle(buttonType.cssColor)}
+              className=""
             >
               {buttonType.caption}
             </span>
@@ -335,8 +334,7 @@ export function CardButtonHeadBig({ button, buttonTypes, toggleShowReplyFirstPos
                 <div className="card-button__emoji">{icon}</div>
               )}
               <span
-                className="card-button__status"
-                style={buttonColorStyle(cssColor)}
+                className=""
               >
                 {caption}
               </span>
@@ -357,12 +355,12 @@ export function CardButtonHeadBig({ button, buttonTypes, toggleShowReplyFirstPos
 
         <div className="card-button__bottom-properties">
           {customFields && customFields.length > 0 && (
-            <>
+            <div className='card-button__price--button-page'>
               <CardButtonCustomFields
                 customFields={customFields}
                 button={button}
               />
-            </>
+            </div>
           )}
           <div
             className={
