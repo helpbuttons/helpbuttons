@@ -50,8 +50,7 @@
     "featured": "Featured",
     "powered": "Powered by",
     "keyLocations": "Key Spots",
-    "inviteToNetwork": "Share",
-    "inviteCopied": "Link copied to clipboard"
+    "inviteToNetwork": "Share"
   },
   "share": {
     "header": "Share this app",
@@ -70,7 +69,8 @@
     "invitePeopleExplain":"Copy and share this link to add others to the network",
     "copyLink": "Copy link",
     "advancedInviteOptions": "Printable PDF invitations",
-    "printInvites":"Printable pdf invitations"
+    "printInvites":"Printable pdf invitations",
+    "linkCopied": "{0} copied to clipboard"
 
   },
   "feed": {
@@ -678,7 +678,7 @@
     "pdfDate": "since {0}",
     "since": "Since {0}",
     "filter": "",
-    "noButtons": ""
+    "noButtons": "No _helpbuttons_ found"
   },
   "notificaction": {
     "markedAsRead": "Marked as read"

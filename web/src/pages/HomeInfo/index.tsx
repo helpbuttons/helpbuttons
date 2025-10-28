@@ -563,8 +563,6 @@ function HomeInfoInviteButton() {
       store.emit(
       new SetMainPopup(MainPopupPage.SHARE),
     )
-    navigator.clipboard.writeText(getShareLink('/Signup'));
-    alertService.info(t('homeinfo.inviteCopied'))
   }
   return (
     <Btn
