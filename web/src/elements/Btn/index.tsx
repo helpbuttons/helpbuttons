@@ -1,6 +1,7 @@
 ///Btn is the project convention for tradittional buttons, in order to avoidd confussion with app's buttons
 import React from "react";
 import Spinner from "elements/Spinner";
+import router from "next/router";
 
 export enum BtnType {
     corporative,
@@ -216,7 +217,8 @@ export function BtnCaption({ caption, icon, onClick, color, selected = false, di
   };
 
   return (
-    <span style={cssColor(color)} className={selected ? 'btn-filter-active' : ''}>
+    <span style={cssColor(color)} className={selected ? 'btn-filter--active' : ''}>
+        
       <Btn
         btnType={BtnType.filterEmoji}
         iconLeft={IconType.svg}

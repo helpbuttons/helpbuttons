@@ -191,7 +191,7 @@ export default function HexagonExploreMap({
                       strokeWidth: '2',
                       stroke: '#18AAD2',
                       r: '20',
-                      opacity: '0.4',
+                      opacity: '0.2',
                     };
                   }}
                 />

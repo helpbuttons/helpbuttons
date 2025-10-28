@@ -14,7 +14,7 @@ import { ResetFilters, ToggleAdvancedFilters } from 'state/Explore';
 import { useGlobalStore } from 'state';
 import { isFiltering } from 'components/search/AdvancedFilters/filters.type';
 import dconsole from 'shared/debugger';
-import { IoAccessibility, IoAdd } from 'react-icons/io5';
+import { IoAccessibility, IoAdd, IoAlert, IoAnalyticsOutline, IoBugOutline, IoBugSharp, IoCloudyNightSharp, IoCloudyOutline, IoFemale } from 'react-icons/io5';
 
 export default function ContentList({
   buttons,
@@ -45,6 +45,7 @@ export default function ContentList({
           {isLoadingButtons && <LoadingWrapper />}
           {!isLoadingButtons && (
             <>
+              <div className='list__empty-message--img'><IoCloudyOutline/></div>
               <div className="list__empty-message--prev">
                 {t('explore.noResults')}
               </div>
@@ -55,8 +56,9 @@ export default function ContentList({
           )}
           <div className="list__empty-message--button">
             <Btn
+              btnType={BtnType.corporative}
               caption={t('explore.createEmpty')}
-            iconLeft={IconType.circle}
+              iconLeft={IconType.svg}
               iconLink={<IoAdd/>}
               onClick={() => router.push('/ButtonNew')}
               contentAlignment={ContentAlignment.center}
@@ -107,8 +109,10 @@ export function NoMoreToLoad() {
         )}
         <Btn
           caption={t('explore.createEmpty')}
+          btnType={BtnType.corporative}
+
           onClick={() => router.push('/ButtonNew')}
-          iconLeft={IconType.circle}
+          iconLeft={IconType.svg}
           iconLink={<IoAdd/>}
           contentAlignment={ContentAlignment.center}
         />

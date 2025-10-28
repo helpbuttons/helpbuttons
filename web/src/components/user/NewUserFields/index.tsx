@@ -72,6 +72,17 @@ export default function NewUserFields({
           {...register('email', { required: true })}
         ></FieldText>
       }
+      {short &&  // not required
+        <FieldText
+          name="email"
+          label={t('user.email')}
+          explain={t('user.emailExplain')}
+          classNameInput="squared"
+          placeholder={t('user.emailPlaceHolder')}
+          validationError={errors.email}
+          {...register('email')}
+        ></FieldText>
+      }
       <FieldText
         name="name"
         label={t('user.name')}

@@ -14,7 +14,8 @@ $avatar-margin: $padding-big;
 
   display: flex;
   flex-direction: row;
-  gap: $padding-small;
+  flex-wrap: wrap;
+  margin-right: $margin-xsmall;
 
 }
 
@@ -48,6 +49,7 @@ $avatar-margin: $padding-big;
   border-top: $border-style-basic;
   border-bottom: $border-style-basic;
   gap: $padding-big;
+  overflow: auto;
 
   & svg {
     width: 1rem;
@@ -190,20 +192,24 @@ $avatar-margin: $padding-big;
   font-weight: $font-weight-bold;
   color: $color-black;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   flex-wrap: wrap;
   text-overflow: ellipsis;
-  
-  gap: $margin-xxxsmall;
   max-width: 200px;
-}
+  }
 
 .card-profile__username {
-  font-size: $font-size-general;
+  font-size: $font-size-small;
   font-weight: $font-weight-light;
   color: $color-gray;
   position: relative;
-  top: -15px;
+
+  &::before {
+
+    content: "@";
+
+  }
+
 }
 
 .grid-one__column-mid-element {
@@ -255,13 +261,9 @@ $avatar-margin: $padding-big;
 @media #{$breakpoints-medium} {
 
   .card-profile__avatar-container-name {
-    max-width: 300px;
     flex-direction: row;
   }
 
-  .card-profile__username {
-    top: 0;
-  }
   .card-profile__description {
 
     margin-top: $margin-small;

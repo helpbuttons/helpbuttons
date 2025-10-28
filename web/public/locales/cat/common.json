@@ -155,7 +155,8 @@
     "hideLocationByDefaultText": "Hide exact location by default",
     "hideAdvanced": "Hide advanced options...",
     "locationKeys": "Key Spots",
-    "requiredLocation": "Please pickup a place in the map for your network"
+    "requiredLocation": "Please pickup a place in the map for your network",
+    "keyLocationsExplain": "Key spots that will be highlighted in your network. They will appear in the main menus and map for easy access"
   },
   "activities": {
     "allNotifications": "Totes les actualitzacions",
@@ -284,7 +285,8 @@
     "showWassapExplain": "Show a link to your whatsapp app if you want. You need to have public phone enabled.",
     "endorse": "Endorse",
     "explainPublishAsGuest": "Signup as anonymous, please generate a new code, that you can use it for logging in to check your _helpbuttons_",
-    "explainUseGuestCode": "Please store this code, it is your only way to keep track of your publications"
+    "explainUseGuestCode": "Please store this code, it is your only way to keep track of your publications",
+    "editUsername": "Edit username"
   },
   "configure": {
     "browsePins": "Mapa amb pins de ubicació",
@@ -306,7 +308,8 @@
     "list": "Llista",
     "map": "Mapa",
     "showList": "Show List",
-    "hiddenButtons": "For privacy, there are {0} hidden _helpbuttons_."
+    "hiddenButtons": "For privacy, there are {0} hidden _helpbuttons_.",
+    "viewMode": "Select default View Mode"
   },
   "buttonFilters": {
     "filters": "Cerca i filtres",
@@ -340,7 +343,8 @@
     "followTagSucess": "{0} ha estat afegit als teus temes d'interès. Per veure els teus temes d'interès ves al Meu Perfil.",
     "focusedArea": "a la zona",
     "locationLimited": "Limitat a {0}, {1}",
-    "pickLocationLimits": "Tria una localització"
+    "pickLocationLimits": "Tria una localització",
+    "byCategory": "By category"
   },
   "button": {
     "title": "Vista de _helpbutton_",
@@ -406,7 +410,8 @@
     "placeHodlerCustomAddress": "Write the new name and select place on the map",
     "publishComment": "Publish comment",
     "sendPrivateMessage": "Send private message to {0}",
-    "proposeAddress": "Add a missing place in {0}"
+    "proposeAddress": "Add a missing place in {0}",
+    "locationPlaceholder": "Write a place or address"
   },
   "calendarOnce": {
     "label": "Una vegada",

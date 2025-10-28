@@ -121,12 +121,23 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
   display: flex;
   justify-content: center;
   flex-direction: column;
-  // height: 100%;
+  height: 300px;
   width: 100%;
   margin: auto;
   align-items: center;
   padding: $padding-big;
   font-size: $font-size-small;
+
+}
+
+.list__empty-message--img{
+
+
+  & svg {
+    height: 80px;
+    width: 80px;
+
+  }
 
 }
 

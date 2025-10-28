@@ -88,7 +88,7 @@
   },
   "explore": {
     "noResults": "Sorry, there are no results here",
-    "emptyList": "Please browse the map to find more _helpbuttons_",
+    "emptyList": "Please browse the map to find more _helpbuttons_ or:",
     "createEmpty": "Publish",
     "selectedHexagon": "in the selected area",
     "filteredRadius": "in {0} · {1}km",
@@ -97,7 +97,7 @@
     "showMap": "Show Map",
     "showList": "Show List",
     "hideList": "Hide List",
-    "displayInstructions": "Press an hexagon to display _helpbuttons_ info in that area",
+    "displayInstructions": "Press an area to display _helpbuttons_ info in it",
     "both": "Map & List",
     "list": "List",
     "map": "Map",
@@ -349,6 +349,7 @@
     "receiveNotificationsExplain": "Specify if you want to receive emails with the messages sent to you or relevant activity of the topics and publications that you follow",
     "textReceiveNotifications": "Receive mail notifications",
     "loginSucess": "Login successfuly",
+    "loginSucessLink": "Login successfuly, please <a href='/ProfileEdit'>change your password</a>",
     "unsubscribed": "You will no longer receive this kind of emails",
     "showButtonsProfileLabel": "_helpbuttons_ on my profile page",
     "showButtonsProfileExplain": "Mark if you want to show a list of what you publish in your public profile",
@@ -392,11 +393,11 @@
     "endorsed": "Trusted",
     "signupAsGuest": "Signup anonymous",
     "signupGuestDetails": "Proceed with signup details",
-    "explainPublishAsGuest": "Signup as anonymous, please generate a new code, that you can use it for logging in to check your _helpbuttons_",
+    "explainPublishAsGuest": "To signup as anonymous, please generate a new login code. You can use it for logging in to check your _helpbuttons_ in the future.",
     "generateCode": "Generate new anonymous code",
     "explainUseGuestCode": "Please store this code, it is your only way to keep track of your publications",
     "explainGuestDetails": "We need some details to complete your signup",
-    "editUsername":"Edit username"
+    "editUsername": "Edit username"
   },
   "picker": {
     "headerText": "Choose a location"
