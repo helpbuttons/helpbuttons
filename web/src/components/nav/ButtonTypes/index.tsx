@@ -4,6 +4,7 @@ import { GlobalState, store, useGlobalStore } from 'state';
 import { useEffect, useState } from 'react';
 import { useButtonTypes } from 'shared/buttonTypes';
 import {
+  updateCurrentButton,
   UpdateFilters,
   UpdateFiltersToFilterButtonType,
 } from 'state/Explore';
@@ -61,6 +62,7 @@ export function ListButtonTypes() {
   const handleClick = (type) => {
     const newFilters = { ...filters, helpButtonTypes: [type] }
     store.emit(new UpdateFilters(newFilters));
+    store.emit(new updateCurrentButton(null))
     if (pageName != 'Explore') {
       router.push('/Explore');
     }
