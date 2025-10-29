@@ -129,17 +129,18 @@ export interface ButtonFilters {
   {
     const filters = useGlobalStore((state: GlobalState) => state.explore.map.filters)
     const hexagonClicked = useGlobalStore((state: GlobalState) => state.explore.settings.hexagonClicked)
-    
+    const currentButton = useGlobalStore((state: GlobalState) => state.explore.currentButton)
+
     const [isFiltering, setIsFiltering] = useState(false)
     useEffect(() => {
       const isDefaultFilters = JSON.stringify(defaultFilters) ==
       JSON.stringify(filters);
-      if(isDefaultFilters && hexagonClicked == null)
+      if((isDefaultFilters && hexagonClicked == null) || currentButton != null)
       {
         setIsFiltering(() => false)
       }else{
         setIsFiltering(() => true)
       }
-    }, [filters, hexagonClicked])
+    }, [filters, hexagonClicked, currentButton])
     return isFiltering
   }
