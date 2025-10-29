@@ -84,18 +84,18 @@ export default function Footer() {
             {t('footer.whatsHelpbuttons')}
           </a>
         </li>
-        {/* <li className="footer__link">
-          <a href="www.helpbuttons.org/donate" className="footer__link--item">
+        <li className="footer__link">
+          <a href="https://buy.stripe.com/8x23cv73DfFhb7r3Yb7g40K" target="_blank" className="footer__link--item">
             {t('footer.investDonations')}
           </a>
         </li>
         <li className="footer__link">
-          <a href="www.helpbuttons.org/networks" className="footer__link--item">
+          <a href="https://helpbuttons.org/#section3" target="_blank" className="footer__link--item">
             {t('footer.otherNetworks')}
           </a>
-        </li> */}
+        </li>
         <li className="footer__link">
-          <a href="github.com/helpbuttons/helpbuttons" className="footer__link--item">
+          <a href="https://github.com/helpbuttons/helpbuttons" target="_blank" className="footer__link--item">
             {t('footer.developers')}
           </a>
         </li>
