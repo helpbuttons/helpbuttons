@@ -48,7 +48,7 @@ export function FaqSections() {
       </Accordion>
 
 
-      <Accordion title={t('faqs.helpbuttonsQuestion')}>
+      <Accordion title={t('faqs.helpbuttonsQuestion')} collapsed={chapter == 'whats'}>
         <span className="highlight">
           {t('faqs.helpbuttonsHighlight')}
         </span>{' '}

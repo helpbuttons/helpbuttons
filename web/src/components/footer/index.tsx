@@ -24,34 +24,34 @@ export default function Footer() {
       <ul className="footer__links">
         {selectedNetwork && 
           <li className="footer__link-header">
-            <a href="/" className="footer__link--item">
+            <span className="footer__link--item">
               {selectedNetwork.name}
-            </a>
+            </span>
           </li>
         }
         <li className="footer__link">
-          <a href="/Faqs" className="footer__link--item">
+          <a href="/Faqs"  className="footer__link--item">
             {t('footer.whatIsNetwork')}
           </a>
         </li>
         <li className="footer__link">
-          <a href="/buttonnew" className="footer__link--item">
+          <a href="/ButtonNew" className="footer__link--item">
            {t('footer.create')}
           </a>
         </li>
         <li className="footer__link">
-          <a href="/explore" className="footer__link--item">
+          <a href="/Explore" className="footer__link--item">
             {t('footer.explore')}
           </a>
         </li>
         <li className="footer__link">
-          <a href="/privacy-policy" className="footer__link--item">
+          <a href="/Faqs?chapter=privacyPolicy" className="footer__link--item">
             {t('footer.privacyPolicy')}
           </a>
         </li>
       </ul>
       <ul className="footer__actions">
-        <li className="footer__link-header">
+        {/* <li className="footer__link-header">
           <a href="/" className="footer__link--item">
             {t('footer.assistance')}
           </a>
@@ -71,21 +71,20 @@ export default function Footer() {
           <a href="/admins" className="footer__link--item">
             {t('footer.sendAProblem')}
           </a>
-        </li>
-
+        </li> */}
       </ul>
       <ul className="footer__contact">
         <li className="footer__link-header">
-          <a href="/" className="footer__link--item">
+          <span className="footer__link--item">
             Helpbuttons
-          </a>
+          </span>
         </li>
         <li className="footer__link">
-          <a href="www.helpbuttons.org" className="footer__link--item">
+          <a href="/Faqs?chapter=whats" className="footer__link--item">
             {t('footer.whatsHelpbuttons')}
           </a>
         </li>
-        <li className="footer__link">
+        {/* <li className="footer__link">
           <a href="www.helpbuttons.org/donate" className="footer__link--item">
             {t('footer.investDonations')}
           </a>
@@ -94,7 +93,7 @@ export default function Footer() {
           <a href="www.helpbuttons.org/networks" className="footer__link--item">
             {t('footer.otherNetworks')}
           </a>
-        </li>
+        </li> */}
         <li className="footer__link">
           <a href="github.com/helpbuttons/helpbuttons" className="footer__link--item">
             {t('footer.developers')}
