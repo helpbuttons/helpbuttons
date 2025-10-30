@@ -285,7 +285,9 @@ $info-content-head-margin-mobile: 71px;
 
 .homeinfo-card__header--openable {
 
-  border-bottom: $border-style-basic;
+  padding-bottom: 0;
+
+  // border-bottom: $border-style-basic;
 
 }
 
