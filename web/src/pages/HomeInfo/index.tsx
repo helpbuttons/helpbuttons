@@ -146,69 +146,9 @@ export default function HomeInfo({ metadata }) {
   );
 }
 
-function SupportBanner({ scrollToContact }) {
-  const [showContactDialog, toggleshowContactDialog] =
-    useToggle(true);
-  return (
-    <>
-      {showContactDialog && (
-        <div className="card-alert__container card-alert__container--bottom">
-          <div className="card-alert card-alert--error">
-            <>
-              <div className="card-alert__content">
-                {t('homeinfo.callToAdmin')}
-                <Btn
-                  btnType={BtnType.circle}
-                  iconLink={<IoCall />}
-                  iconLeft={IconType.circle}
-                  contentAlignment={ContentAlignment.center}
-                  onClick={() =>
-                    scrollToContact.current.scrollIntoView()
-                  }
-                />
-              </div>
-
-              <Btn
-                btnType={BtnType.smallCircle}
-                iconLink={<IoClose />}
-                iconLeft={IconType.circle}
-                contentAlignment={ContentAlignment.center}
-                onClick={() => toggleshowContactDialog(false)}
-              />
-            </>
-          </div>
-        </div>
-      )}
-    </>
-  );
-}
-
 export const getServerSideProps = async (ctx: NextPageContext) => {
   return setMetadata(t('menu.home'), ctx);
 };
-
-function HomeinfoShareOptions({ user }) {
-  const getOptions = () => {
-    return (
-      <>
-        <CardSubmenuOption
-          onClick={() => {
-            updateRole(user.id, Role.registered);
-          }}
-          label={t('share.share')}
-        />
-        <CardSubmenuOption
-          onClick={() => {
-            updateRole(user.id, Role.registered);
-          }}
-          label={t('share.embed')}
-        />
-      </>
-    );
-  };
-
-  return <CardSubmenu extraClass="">{getOptions()}</CardSubmenu>;
-}
 
 function NavigatorCoordsButton() {
   const [navigatorCoordinates, setNavigatorCoordinates] =
@@ -247,26 +187,41 @@ function HomeInfoNetworkLogo({ selectedNetwork }) {
 function HomeInfoInfoCard({ selectedNetwork }) {
   const [showInfo, toggleShowInfo] =
     useToggle(false);
+  const [description, setDescription] = useState('...')
+
+  const trimCharactersRemoveLastIncompleteWord = (description, maxLength) => {
+    var trimmedString = description.substr(0, maxLength);
+    return trimmedString.substr(0, Math.min(trimmedString.length, trimmedString.lastIndexOf(" ")))
+  }
+  
+  useEffect(() =>{
+    if (selectedNetwork)
+    {
+      setDescription(() => {
+        return trimCharactersRemoveLastIncompleteWord(selectedNetwork.description, 100)
+      })
+    }
+  },[])
   return (<>{/*  INFO CARD */}
-    <div className="homeinfo-card" onClick={toggleShowInfo}>
-      <div className="homeinfo-card__header homeinfo-card__header--openable" >
-        <h3 className="homeinfo-card__header-title">
-          {t('homeinfo.info')}
-        </h3>
-        <div className="homeinfo-card__controls">
-            <Btn
-              btnType={BtnType.corporative}
-              iconLink={<IoArrowDownCircleOutline/>}
-              iconLeft={IconType.circle}
-              contentAlignment={ContentAlignment.center}
-            />
-        </div>
+    <div className="homeinfo-card">
+      <div className="homeinfo-card__header" >
+        {!showInfo && 
+          <>
+          <h3 className="homeinfo-card__header-title">
+            {description}
+          </h3>
+          <div className="homeinfo-card__controls homeinfo-card__header--openable" onClick={toggleShowInfo}>
+              {t('homeinfo.seeMore')}
+          </div>
+          </>
+        }
       </div>
       {showInfo &&
         <>
           <hr></hr>
           <div className="homeinfo__description">
-            <TextFormatted maxChars={600} text={selectedNetwork.description} />
+            <TextFormatted text={selectedNetwork.description} />
+            <HomeFAQButton/>
           </div>
         </>  
       }
@@ -274,6 +229,21 @@ function HomeInfoInfoCard({ selectedNetwork }) {
 
     </div></>
     )
+}
+
+function HomeFAQButton() {
+  return (
+
+    <Btn
+      btnType={BtnType.filterCorp}
+      contentAlignment={ContentAlignment.center}
+      iconLink={<IoHelpOutline />}
+      iconLeft={IconType.svg}
+      extraClass="homeinfo__network-title-card--buttons"
+      caption={t('faqs.title')}
+      onClick={() => router.push('Faqs')}
+    />
+  )
 }
 
 function HomeInfoStatsCard({ selectedNetwork, config }) {
@@ -406,86 +376,6 @@ function HomeInfoAdministeredBy({ scrollToContact }) {
           <LinkAdmins />
         </div>
       </div>
-    </div>
-  </>)
-}
-
-function HomeInfoActionCards({ currentUser }) {
-  return (<>
-    {/* ACTIONS CARD */}
-    <div className="homeinfo-card">
-      <div className="homeinfo-card__header">
-        <h3 className="homeinfo-card__header-title">
-          {t('homeinfo.actions')}
-        </h3>
-        <div className="homeinfo-card__controls">
-          <ShareButton
-            onClick={() =>
-              store.emit(
-                new SetMainPopup(MainPopupPage.SHARE),
-              )
-            }
-          />
-        </div>
-      </div>
-      <div className="homeinfo-card__section">
-        <p>{t('homeinfo.exploreSubtitle')}</p>
-        <NavLink href="/Explore">
-          <IoGlobeOutline />
-          <span>{t('menu.explore')}</span>
-        </NavLink>
-      </div>
-      <div className="homeinfo-card__wrap">
-        <div className="homeinfo-card__section">
-          <p>{t('homeinfo.createSubtitle')}</p>
-          <NavLink href="/ButtonNew">
-            <IoAddOutline />
-            <span>{t('menu.create')}</span>
-          </NavLink>
-        </div>
-        <div className="homeinfo-card__section">
-          <p>{t('homeinfo.faqsSubtitle')}</p>
-          <NavLink href="/Faqs">
-            <IoHelpOutline />
-            <span>{t('menu.faqs')}</span>
-          </NavLink>
-        </div>
-      </div>
-
-      {currentUser && (
-        <>
-          <div className="homeinfo-card__section">
-            <p>{t('homeinfo.profileSubtitle')}</p>
-            <NavLink href="/Profile">
-              <IoLogInOutline />
-              <span>{t('menu.profile')}</span>
-            </NavLink>
-          </div>
-        </>
-      )}
-      {!currentUser && (
-        <div className="homeinfo-card__section">
-          <p>{t('homeinfo.loginSubtitle')}</p>
-          <NavLink href="/Login">
-            <IoLogInOutline />
-            <span>{t('menu.login')}</span>
-          </NavLink>
-        </div>
-      )}
-      <div className="homeinfo-card__section">
-        <p>{t('homeinfo.createNetwork')}</p>
-        <NavLink href="https://helpbuttons.org">
-          <IoAddOutline />
-          <span>{t('homeinfo.createNetworkButton')}</span>
-        </NavLink>
-      </div>
-      {/* <div className="homeinfo-card__section">
-                        <p>{t('homeinfo.donateSubtitle')}</p>
-                          <NavLink href="https://buy.stripe.com/dR68wx3CY17VdFKfZc">
-                          <IoCashOutline />
-                          <span>{t('menu.donate')}</span>
-                        </NavLink>
-                      </div> */}
     </div>
   </>)
 }
