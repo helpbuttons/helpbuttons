@@ -568,30 +568,24 @@ function FollowButtonHeart({ button, sessionUser }) {
 
   if (!button.isFollowing) {
     return (
-      <div className='card-button__follow-wrap'>
-        {t('button.follow')}
         <Btn
-          btnType={BtnType.iconActions}
+          btnType={BtnType.smallCircle}
           contentAlignment={ContentAlignment.center}
           iconLink={<IoNotificationsOutline />}
           iconLeft={IconType.circle}
           onClick={() => followButton(button.id)}
         />
-      </div>  
     );
   }
 
   return (
-    <div className='card-button__follow-wrap'>
-      {t('button.unfollow')}
       <Btn
-        btnType={BtnType.iconActions}
+        btnType={BtnType.smallCircle}
         contentAlignment={ContentAlignment.center}
         iconLink={<IoNotifications />}
         iconLeft={IconType.circle}
         onClick={() => unFollowButton(button.id)}
       />
-    </div>  
   );
 }
 
