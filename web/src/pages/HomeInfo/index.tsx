@@ -15,34 +15,25 @@ import {
   IoAddCircle,
   IoAddOutline,
   IoArrowDownCircleOutline,
-  IoArrowDownCircleSharp,
   IoCall,
   IoClose,
   IoGlobeOutline,
   IoHelpOutline,
-  IoLocationOutline,
   IoLogInOutline,
   IoMapOutline,
-  IoMenuOutline,
-  IoOpen,
-  IoOptions,
-  IoPersonAdd,
   IoPersonAddOutline,
-  IoShare,
-  IoTimeOutline,
 } from 'react-icons/io5';
 import { setMetadata } from 'services/ServerProps';
 import { NextPageContext } from 'next';
-import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import AdvancedFilters from 'components/search/AdvancedFilters';
 import { useToggle } from 'shared/custom.hooks';
 import { TextFormatted } from 'elements/Message';
 import { LinkAdmins } from 'components/user/LinkAdmins';
-import { ShowDesktopOnly, ShowMobileOnly } from 'elements/SizeOnly';
-import { BtnButtonType, ListButtonTypes } from 'components/nav/ButtonTypes';
+import { ShowMobileOnly } from 'elements/SizeOnly';
+import {  ListButtonTypes } from 'components/nav/ButtonTypes';
 import getConfig from 'next/config';
-import { getShareLink, logoImageUri, makeImageUrl } from 'shared/sys.helper';
+import { logoImageUri } from 'shared/sys.helper';
 import { FindLatestNetworkActivity } from 'state/Networks';
 import { InstallButton } from 'components/install';
 import { TagsNav } from 'elements/Fields/FieldTags';
@@ -55,13 +46,8 @@ import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
 import { DesktopNotificationsButton } from 'components/notifications';
 import { useMetadataTitle } from 'state/Metadata';
 import { ActivityList } from 'components/feed/Activity/ActivityList';
-import { PoweredExtra } from 'components/brand/powered';
-import { useButtonTypes } from 'shared/buttonTypes';
-import CardButton, { CardButtonHeadMedium } from 'components/button/CardButton';
-import CardButtonList from 'components/list/CardButtonList';
 import HomeInfoPinnedButtons from 'components/home/Pinned';
 import { ListKeyLocation } from 'state/Geo';
-import { alertService } from 'services/Alert';
 import Footer from 'components/footer';
 
 export default function HomeInfo({ metadata }) {
@@ -504,19 +490,6 @@ function HomeInfoActionCards({ currentUser }) {
   </>)
 }
 
-function HomeInfoFooter() {
-  return (<>
-    <div className="homeinfo-card">
-      <div className="homeinfo-card__header">
-        <h3 className="homeinfo-card__header-title"></h3>
-
-      </div>
-      <span className="homeinfo-card__section--attr">
-        <PoweredExtra />
-      </span>
-    </div>
-  </>)
-}
 function HomeSloganCard({ selectedNetwork, config }) {
   return (<>
     {/* SLOGAN CARD */}
