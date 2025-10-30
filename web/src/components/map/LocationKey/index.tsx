@@ -36,17 +36,6 @@ export function FieldKeySpots() {
 
 }
 
-
-export function LocationKeyAdd({ addAction }) {
-    const selectedNetwork = useSelectedNetwork()
-
-    const onSave = (place) => {
-        addAction(place)
-    }
-
-    return
-}
-
 export function LocationKeyItem({ place, deleteAction }) {
 
     return <div className="form-list__table-body-row">
