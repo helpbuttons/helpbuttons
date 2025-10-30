@@ -5,7 +5,10 @@ module.exports = {
   reactStrictMode: true,
   publicRuntimeConfig: {
     apiUrl: '/api',
-    debug: `${process.env.DEBUG}`
+    debug: `${process.env.DEBUG}`,
+    description: `${process.env?.description ? process.env.description : ''}`,
+    title: `${process.env?.title ? process.env.title : ''}`,
+    adminemail: `${process.env?.adminemail ? process.env.adminemail : ''}`
   },
   typescript: {
     ignoreBuildErrors: true,

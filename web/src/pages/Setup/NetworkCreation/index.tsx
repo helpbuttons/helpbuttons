@@ -12,11 +12,16 @@ import { Role } from 'shared/types/roles';
 import { CreateNetwork, FetchDefaultNetwork } from 'state/Networks';
 import { useRef } from 'store/Store';
 import dconsole from 'shared/debugger';
+import getConfig from 'next/config';
+import { IllustrationHead } from '../helper';
 
 // name, description, logo, background image, button template, color pallete, colors
 export default NetworkCreation;
 
 function NetworkCreation() {
+  const { publicRuntimeConfig } = getConfig();
+  const title = publicRuntimeConfig.title;
+  const description = publicRuntimeConfig.description;
   const {
     handleSubmit,
     formState: { errors, isSubmitting },
@@ -28,8 +33,8 @@ function NetworkCreation() {
     setError,
   } = useForm({
     defaultValues: {
-      name: '',
-      description: '',
+      name: title,
+      description: description,
       logo: '',
       jumbo: '',
       tags: [],
@@ -157,6 +162,7 @@ function NetworkCreation() {
     <>
       {sessionUser?.role == Role.admin && (
         <Popup title={t('setup.configureInstanceTitle')}>
+          <IllustrationHead title={t('setup.configureNetwork')} />
           <NetworkForm
             captionAction={t('setup.finish')}
             handleSubmit={handleSubmit}

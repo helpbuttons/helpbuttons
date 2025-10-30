@@ -48,7 +48,11 @@ export function getLocale() {
   return locale;
 }
 
-export function makeImageUrl(image) {
+export function makeImageUrl(image, localUrl = false) {
+  if(localUrl)
+  {
+    return image
+  }
   const { publicRuntimeConfig } = getConfig()
 
   if (!image) {

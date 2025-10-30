@@ -162,6 +162,8 @@
     "smtpUrl": "Smtp url",
     "createAdminTitle": "Create administrator account",
     "welcomeMessage": "Welcome to your _helpbuttons_ instance",
+    "createAdmin": "First step, is create an admin",
+    "configureNetwork": "Customize your site's appearance, topics, post types, and alerts. Add prices, dates, and other modular features to your posts.",
     "welcomeMessageLong": "Next you´ll see your collaborative network description. Create your first network with the options in the next step.",
     "finish": "Finish setup",
     "configureInstanceDescription": "Wizard to help on configuring your network",
@@ -205,7 +207,8 @@
     "expiredEventTitle": "'{0}' has passed its end date, it won't show no more on the public list.",
     "endorsed": "You have been endorsed by the administration, now you have a 'trusted' badge on your profile",
     "revokeEndorse": "Unfortunately you're 'trusted' badge has been removed",
-    "roleupdate": "Your role has been updated to '{0}'"
+    "roleupdate": "Your role has been updated to '{0}'",
+    "newSignup": "New user '{0}' signed up"
   },
   "activitiesWithSubject": {
     "newbutton": "{0} published a new _helpbutton_ in {1}",
