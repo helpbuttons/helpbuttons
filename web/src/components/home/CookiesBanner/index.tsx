@@ -70,8 +70,7 @@ export default function CookiesBanner() {
 export function AcceptCookiesWarn({cookieState})
 {
   return <>
-          <div>{ cookieState != CookiesState.ACCEPTED && t('user.pleaseAcceptCookies')}</div>
-          <div>{ cookieState == CookiesState.REJECTED && <Link href="#" onClick={() => {store.emit(new SetCookieState(CookiesState.UNREAD))}}>{t('user.showCookiesBanner')}</Link>}</div>
+          <div>{ cookieState != CookiesState.ACCEPTED && <Link href="#" onClick={() => {store.emit(new SetCookieState(CookiesState.UNREAD))}}>{t('user.showCookiesBanner')}</Link>}</div>
         </>
 }
 
