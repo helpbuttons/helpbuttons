@@ -8,6 +8,8 @@ import {
   IoHeart,
   IoLogoWhatsapp,
   IoLocationOutline,
+  IoNotificationsOutline,
+  IoNotifications,
 } from 'react-icons/io5';
 import t from 'i18n';
 
@@ -502,7 +504,7 @@ export function CardButtonHeadActions({
       )}
       {button.hearts && !isButtonOwner && (
         <span className="btn-circle__icon">
-          <IoHeartOutline />
+          <IoNotificationsOutline />
           {button.hearts}
         </span>
       )}
@@ -566,30 +568,24 @@ function FollowButtonHeart({ button, sessionUser }) {
 
   if (!button.isFollowing) {
     return (
-      <div className='card-button__follow-wrap'>
-        {t('button.follow')}
         <Btn
-          btnType={BtnType.iconActions}
+          btnType={BtnType.smallCircle}
           contentAlignment={ContentAlignment.center}
-          iconLink={<IoHeartOutline />}
+          iconLink={<IoNotificationsOutline />}
           iconLeft={IconType.circle}
           onClick={() => followButton(button.id)}
         />
-      </div>  
     );
   }
 
   return (
-    <div className='card-button__follow-wrap'>
-      {t('button.unfollow')}
       <Btn
-        btnType={BtnType.iconActions}
+        btnType={BtnType.smallCircle}
         contentAlignment={ContentAlignment.center}
-        iconLink={<IoHeart />}
+        iconLink={<IoNotifications />}
         iconLeft={IconType.circle}
         onClick={() => unFollowButton(button.id)}
       />
-    </div>  
   );
 }
 

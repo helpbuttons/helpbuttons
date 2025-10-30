@@ -46,7 +46,6 @@ $info-content-head-margin-mobile: 71px;
 
 .homeinfo__content {
 
-  @extend .form__field;
   margin: auto;
   font-family: inherit;
   padding: 0 0 ;
@@ -54,7 +53,7 @@ $info-content-head-margin-mobile: 71px;
   background-color: transparent;
   width: 100%;
   height: auto;
-  overflow: scroll;
+  overflow: auto;
   box-sizing: border-box;
   // margin-top: $margin-small;
   // margin-bottom: $info-content-mobile-bottom-padding;
@@ -85,7 +84,7 @@ $info-content-head-margin-mobile: 71px;
   overflow-y: hidden;
   width: inherit;
   background-color: $color-ligth-gray;
-  border-radius: $border-radius-semicircle ;
+  border-radius: $border-radius-basic ;
   padding-left: $padding-xsmall;
   
 
@@ -153,7 +152,7 @@ $info-content-head-margin-mobile: 71px;
 
 .homeinfo__card--slogan-card {
 
-  background-color: $color-gray-transparent;
+  background-color: transparent;
 }
 
 
@@ -175,7 +174,7 @@ $info-content-head-margin-mobile: 71px;
   align-items: center;
   border-radius: $border-radius-semicircle;
   width: auto;
-  background-color: $color-gray-transparent;
+  background-color: transparent;
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
   padding: 15px;
@@ -258,6 +257,9 @@ $info-content-head-margin-mobile: 71px;
   justify-content:space-around;
   align-items: flex-start;
 
+  background: linear-gradient(0deg, transparent, $color-gray-transparent 10%) no-repeat;
+
+
 }
 
 
@@ -267,9 +269,8 @@ $info-content-head-margin-mobile: 71px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-
-  padding-bottom: $padding-medium;
   width: 100%;
+  padding-bottom: $padding-big;
 
   
   .homeinfo-card__header-image {
@@ -280,12 +281,28 @@ $info-content-head-margin-mobile: 71px;
   }
 
 
+}
+
+.homeinfo-card__header--openable {
+
+  padding-bottom: 0;
+
+  // border-bottom: $border-style-basic;
+
+}
+
+.homeinfo-card__header--openable:hover {
+ 
+  cursor: pointer;
+  text-decoration: underline;
+  padding-bottom: $padding-big;
 
 }
 
 .homeinfo-card__header-title {
-  font-weight: bold;
+  font-weight: $font-weight-bold;
   font-size: $font-size-title;
+  color: $color-dark-gray;
 }
 
 
@@ -327,6 +344,12 @@ hr {
     margin-top: $padding-medium;
     margin-left: unset;
   }
+}
+
+.homeinfo__hashtags--admins {
+
+  pointer-events: none;
+
 }
 
 .homeinfo-card__section {

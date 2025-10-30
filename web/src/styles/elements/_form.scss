@@ -11,11 +11,24 @@ $form-input-border-radius: $border-general-height;
   }
 }
 
+.form__input__pass-toggle__wrapper {
+    height: 100%;
+    width: 100%;
+    position: relative;
+}
 
 .form__section {
 
   padding: $margin-big 0;
   padding-bottom: $margin-big;
+
+}
+
+.form__input__pass-toggle {
+    position: absolute;
+    top: -35px;
+    right: 20px;
+    cursor: pointer;
 
 }
 
@@ -94,6 +107,7 @@ padding-bottom: $margin-medium;
   max-width:$form-field-max-width;
   font-size: $font-size-medium;
   margin-bottom: 24px;
+  position: relative;
 }
 
 .form__field--noMargin {
@@ -355,6 +369,7 @@ padding-bottom: $margin-medium;
   }
 
 }
+
 
 .form__tags-list {
         

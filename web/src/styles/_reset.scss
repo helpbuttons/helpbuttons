@@ -192,7 +192,8 @@ q {
 }
 
 a {
-  color: $color-secondary;  
+  color: $color-dark-gray; 
+  font-weight: $font-weight-regular; 
   word-break: break-all;
 
   &:hover {

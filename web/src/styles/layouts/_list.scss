@@ -79,6 +79,8 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
   padding-right: $padding-xsmall;
   padding-bottom: $padding-xxsmall;
   padding-top: $padding-xsmall;
+  transition: $transition-default-slow;
+
 
 }
 

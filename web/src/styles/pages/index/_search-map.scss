@@ -4,10 +4,7 @@ $search-map-height: 0; // Altura del header
 
   font-size: $font-size-medium;
   font-weight: $font-weight-bold;
-  color: $color-white;
-  position: relative;
   text-overflow: ellipsis;
-  text-shadow: 0 0 10px var(--network-text-color);
   max-width: 80vw;
   left: 10px;
   top: 10px;
@@ -73,6 +70,10 @@ $search-map-height: 0; // Altura del header
   -webkit-backdrop-filter: blur(5px);
 }
 
+.search-map__name{
+  font-weight: $font-weight-regular;
+}
+
 @media #{$breakpoints-xlarge} {
 
   .search-map__network-title{
@@ -112,7 +113,7 @@ $search-map-height: 0; // Altura del header
     max-height: 2.4rem;
     overflow-y: hidden;
     text-overflow: ellipsis;
-    max-width: 300px;
+    max-width: 400px;
     margin-bottom: $padding-big;
 
     a {
@@ -128,6 +129,9 @@ $search-map-height: 0; // Altura del header
       max-height: 2.4em;
       line-height: 1.2em;
       margin-left: 0;
+      color: $color-dark-gray;
+      font-weight: $font-weight-bolder;
+
     }
     
 

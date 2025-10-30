@@ -36,7 +36,7 @@ export default function CardProfile({ user, showAdminOptions = false}) {
             
               <div className="card-profile__avatar-container-name">
 
-                <div className="card-profile__name">{user.name} </div> <div className="card-profile__role">{user?.role == Role.admin && <div className="hashtag hashtag--blue"> {t('roles.administrator')}</div>}{user?.endorsed && <div className="hashtag hashtag--badge">{t('user.endorsed')}</div>}</div>
+                <div className="card-profile__name">{user.name} </div> 
                 <span className="card-profile__username">{ user.username }</span>
                 
               </div>
@@ -46,7 +46,8 @@ export default function CardProfile({ user, showAdminOptions = false}) {
             </div>
 
         </div>
-          <figure className="card-profile__rating">
+        <div className="card-profile__role">{user?.role == Role.admin && <div className="hashtag hashtag--blue"> {t('roles.administrator')}</div>}{user?.endorsed && <div className="hashtag hashtag--badge">{t('user.endorsed')}</div>}</div>
+          <div className="card-profile__rating">
 
                 <div className="card-profile__rate">
                   <div className="card-profile__rate-label">
@@ -67,7 +68,7 @@ export default function CardProfile({ user, showAdminOptions = false}) {
                     {user?.commentCount ?? 0}
                 </div>
 
-            </figure>
+            </div>
 
         <div className="card-profile__data">
 

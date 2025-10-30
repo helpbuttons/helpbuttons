@@ -21,6 +21,7 @@ $card-button-list-size-icon-before: 18px;
 // convivences
 $card-button-list-whitespace: .5rem;
 $card-button-list-border-height: $border-general-height;
+$card-button-list-status-height: 10px;
 
 .card-button-list {
 
@@ -62,13 +63,15 @@ $card-button-list-border-height: $border-general-height;
 .card-button-list__status::before {
     content: '';
     display: inline-block;
-    height: $card-button-list-border-height;
+    height: $card-button-list-status-height;
     border-radius:  0 0 $border-radius-semicircle  $border-radius-semicircle;
     position: absolute;
     width: 4%;
     margin-left: $padding-xsmall;
     background:  var(--button-color);
     top: 0;
+    transition: $transition-default-slow;
+
 
 }
 

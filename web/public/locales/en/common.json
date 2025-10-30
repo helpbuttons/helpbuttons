@@ -26,7 +26,7 @@
     "createSubtitle": "Publish your _helpbuttons_ and collaborate",
     "faqsSubtitle": "Read more about this app",
     "popularHashtags": "Which topics are covered?",
-    "popularHashtagsExplain": "These are the topics created till now. Make your _helpbutton_ to add new topics.",
+    "popularHashtagsExplain": "These are the most popular topics created till now. Make your _helpbutton_ to add new topics and follow them to receive alerts.",
     "recommendedHashtags": "Which topics are recomended by the admins?",
     "profileSubtitle": "Check your profile",
     "loginSubtitle": "Enter or create your account!",
@@ -48,9 +48,10 @@
     "share": "Share options",
     "notificationsPermission": "Allow notifications",
     "featured": "Featured",
-    "powered": "Powered by",
+    "powered": "2025 - Powered by",
     "keyLocations": "Key Spots",
-    "inviteToNetwork": "Share"
+    "inviteToNetwork": "Share",
+    "inviteCopied": "Link copied to clipboard"
   },
   "share": {
     "header": "Share this app",
@@ -144,7 +145,7 @@
     "byEventDate": "By start of event",
     "orderBy": "Order",
     "orderByExplain": "Choose the order in which _helpbuttons_ will appear in the list",
-    "followTagSucess": "{0} has been added to your interests",
+    "followTagsSuccess": "{0} has been added to your interests",
     "filteredSearch": "in filtered search by:",
     "focusedArea": "in framed area",
     "locationLimited": "Limited to {0}, {1}",
@@ -332,7 +333,6 @@
     "editProfile": "Edit profile",
     "myHelpbuttons": "Your _helpbuttons_",
     "name": "Name",
-    "showWassap": "Enable Whatsapp link",
     "showWassapExplain": "Show a link to your whatsapp app if you want. You need to have public phone enabled.",
     "nameExplain": "This is the name that other users will see",
     "namePlaceHolder": "Type your name",
@@ -377,7 +377,7 @@
     "phonePlaceHolder": "i.e. 34699000000",
     "signupOptions": "Extra options",
     "adminPhonePublish": "Publish my phone in the home page",
-    "showWhatsapp": "Show Whatsapp",
+    "showWhatsapp": "Enable Whatsapp link",
     "adminPhonePublishExplain": "You are a network administrator, do you want your phone to be available on the main page?",
     "addSupport": "You're admin, add a phone of contact so people can reach you",
     "deleteProfile": "Delete my account",
@@ -407,7 +407,9 @@
     "explainUseGuestCode": "Please store this code, it is your only way to keep track of your publications",
     "explainGuestDetails": "We need some details to complete your signup",
     "editUsername": "Edit username",
-    "optionalFields":"Optional fields"
+    "optionalFields": "Optional fields",
+    "emailRecovery":"Recovery email address",
+     "emailRecoveryExplain":"If you already have an account, login clicking a link we'll send to your email address."
   },
   "picker": {
     "headerText": "Choose a location"
@@ -553,7 +555,7 @@
   "faqs": {
     "title": "Faqs",
     "networkQuestion": "What's {0}",
-    "helpbuttonsQuestion": "What's _helpbuttons_",
+    "helpbuttonsQuestion": "What's Helpbuttons",
     "forQuestion": "What's for",
     "helpbuttonQuestion": "What's a _helpbutton_",
     "networkDescription": "A Network refers to your individual instance of _helpbuttons_. You can create your own network, designate a purpose (such as sharing food, helping animals, caring for elders, etc.) and begin collaborating with any group you want (be it your neighborhood, sports club, village, course mates, etc.).",
@@ -690,5 +692,21 @@
   },
   "seo": {
     "embbed": ""
+  },
+  "footer": {
+    "whatIsNetwork": "Know more",
+    "create": "Create your _helpbutton_",
+    "explore": "Explore _helpbuttons_",
+    "privacyPolicy": "Privacy policy",
+    "assistance": "Assistance",
+    "adminSupport": "Admin Support",
+    "securitySupport": "Alert of a safety problem",
+    "sendAProblem": "Send a technical issue",
+    "whatsHelpbuttons": "What's Helpbuttons",
+    "investDonations": "Donate to project",
+    "otherNetworks": "See other networks",
+    "developers": "Developers",
+    "ethicCode": "Ethical principles"
+
   }
 }

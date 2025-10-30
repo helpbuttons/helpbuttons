@@ -75,7 +75,7 @@ export default function Feed({ button,showReplyFirstPost, toggleShowReplyFirstPo
   const buttonOwnerId = button.owner.id;
 
   return (
-    <div className="feed-container">
+    <div className="feed__board-container">
       <div className="card-button__actions">
         <ButtonOwnerPhone user={button.owner} button={button}/>
 
