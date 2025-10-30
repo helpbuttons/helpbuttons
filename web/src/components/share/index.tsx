@@ -42,6 +42,13 @@ export function ShareForm({}) {
               </div>
               <ShareInviteButton/>
         </div>
+        {isAdmin(userLoggedIn) &&
+          <div className="form__field">
+            <Accordion icon={<IoPrintOutline/>} title={t('share.advancedInviteOptions')} >
+              <ShareInvitationsForm />
+            </Accordion>
+          </div>
+       }  
       </div>
       <div className="form__section">
 
@@ -67,13 +74,7 @@ export function ShareForm({}) {
           </div>
         </div>
       
-        {isAdmin(userLoggedIn) &&
-          <div className="form__field">
-            <Accordion icon={<IoPrintOutline/>} title={t('share.advancedInviteOptions')} >
-              <ShareInvitationsForm />
-            </Accordion>
-          </div>
-       }        
+      
     </>
   );
 }
