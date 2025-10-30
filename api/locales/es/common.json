@@ -13,7 +13,7 @@
   "homeinfo": {
     "selectedArea": "en el area seleccionada",
     "start": "¿Dónde quieres empezar?",
-    "info": "¿De qué se trata?",
+    "info": "Saber más sobre esta red",
     "seeMore": "Ver más",
     "seeLess": "Ver menos",
     "searchlocation": "Buscar ubicacion",
@@ -26,7 +26,7 @@
     "users": "{0} usuarios en esta Red",
     "actions": "En resumen ¿Qué puedes hacer?",
     "popularHashtags": "¿Qué palabras se usan?",
-    "popularHashtagsExplain": "Estos son los temas creados hasta la fecha. Puedes añadir temas nuevos creando tu _helpbutton_. Si te unes, también puedes recibir alertas sobre ellos añadiéndolos en la sección 'Mis Intereses' de tu Perfil.",
+    "popularHashtagsExplain": "Estos son los temas más populares creados hasta la fecha. Recibe alertas sobre ellos añadiéndolos en la sección 'Mis Intereses' de tu Perfil.",
     "recommendedHashtags": "Temas recomendados por los administradores",
     "profileSubtitle": "Comprueba tu perfil",
     "createSubtitle": "Crea tu _helpbutton_ y colabora",
@@ -50,8 +50,8 @@
     "featured": "Destacados",
     "powered": "Powered by",
     "install": "Instala {0} y recibe notificaciones:",
-    "inviteCopied": "Enlace copiado",
-    "inviteToNetwork": "Compartir"
+    "inviteToNetwork": "Compartir",
+    "inviteCopied": "Link copied to clipboard"
   },
   "share": {
     "showSharePopup": "Comparte esta aplicación",
@@ -60,11 +60,19 @@
     "shareTypeLabel": "Tipo",
     "shareTypeExplain": "Elige la manera en la que quieres compartir los resultados de tu red",
     "shareExplain": "Elige el número de resultados que quieras mostrar y copia el código en tu web.",
-    "explainInvitations": "Generate individual invitation cards for your community",
+    "explainInvitations": "Genera invitaciones individuales para tu comunidad",
     "optionIframe": "Iframe para insertar en otras webs",
     "optionBulletin": "Imprimir lista de _helpbuttons_",
     "optionInvitations": "Invitaciones personales para imprimir",
-    "share": "Compartir"
+    "share": "Compartir",
+    "invitePeople": "Invitar personas",
+    "advancedInviteOptions": "Invitaciones para imprimir",
+    "shareContent":"Compartir el contenido de la app",
+    "invitePeopleExplain": "Copia y comparte este link para añadir a otros a tu red",
+    "optionRss": "Suscríbete a RSS",
+    "copyLink": "Copiar enlace",
+    "printInvites": "Invitaciones en PDF"
+
   },
   "feed": {
     "write": "Escribir mensaje",
@@ -85,7 +93,8 @@
     "privateBadge": "privado",
     "noMoreNotifications": "No hay más notificaciones",
     "noMoreMessages": "No hay más mensajes",
-    "activitiesHistory": "Historial de actividades"
+    "activitiesHistory": "Historial de actividades",
+    "messages": "Tablón público y comentarios"
   },
   "hostname": "nombre de host",
   "common": {
@@ -97,7 +106,6 @@
     "search": "Buscar",
     "reset": "Limpiar filtros",
     "invalidMimeType": "{0} tiene un myme type inválido ({1})",
-    "editTitle": "Editar {0}",
     "next": "Siguiente",
     "notfound": "No se encontraron {0}, lo siento. 🤔",
     "add": "Añadir",
@@ -148,7 +156,7 @@
     "buttonTemplateColor": "Color de tipo",
     "buttonTemplateEmoji": "Icono de tipo",
     "buttonTemplateFormTitle": "Completa los campos para crear un nuevo tipo de _helpbutton_",
-    "buttonTemplateLabel": "Elige tus tipos de _helpbutton_",
+    "buttonTemplateLabel": "Crea nuevos tipos de _helpbutton_",
     "createButtonTypePlaceholder": "Escribe el nombre de tu nuevo tipo de _helpbutton_",
     "nomeclaturePluralPlaceHolder": "Escribe aquí el nuevo nombre en plural. Por ejemplo, 'publicaciones'",
     "templateMissingFields": "Escoge un nombre y un color para crear tu tipo de _helpbutton_",
@@ -167,9 +175,20 @@
     "setType": "Configuración de propiedades de _helpbutton_ ",
     "buttonTemplatePlaceHolder": "Escribe aquí el nombre de tu tipo de _helpbutton_",
     "sloganExplain": "Esta es una frase breve que da la bienvenida a tu red.",
+    "sloganLabel": "Frase bienvenida a tua red",
+    "sloganPlaceHolder": "ie. La red que apoya los otros",
     "hideLocationByDefaultExplain": "Protege por defecto la ubicación exacta de tus _helpbuttons_ mostrando un área amplia, los usuarios podrán desactivar esto si lo desean.",
     "areaPicked": "Centro: ({0},{1}) zoom: {2}",
-    "zoomLevel": "Nivel de Zoom"
+    "zoomLevel": "Nivel de Zoom",
+    "requiredLocation": "Por favor recoge un lugar en el mapa para su red",
+    "allowGuestCreationLabel": "Permitir registros anónimos",
+    "allowGuestCreation": "Permitir registro anónimo",
+    "hideLocationByDefaultLabel": "Proteger ubicación exacta",
+    "hideLocationByDefaultText": "Ocultar ubicación exacta por defecto",
+    "hideAdvanced": "Ocultar opciones avanzadas",
+    "locationKeys": "Lugares destacados",
+    "keyLocationsExplain": "Lugares de tu red que se mostrarán resaltados. Aparecerán en los menús principales y mapas para fácil acceso.",
+    "addLocationKey": "Add Location"
   },
   "activities": {
     "messages": "Mensajes",
@@ -218,7 +237,7 @@
     "passwordExplain": "Crea tu contraseña, mínimo 8 letras",
     "passwordConfirmation": "Confirmar contraseña",
     "created": "Creado",
-    "loginButton": "ENTRAR",
+    "loginButton": "Entrar",
     "loginClick": "No recuerdo mi contraseña",
     "showPassword": "Mostrar contraseña",
     "passwordMismatch": "Las contraseñas no coinciden",
@@ -252,6 +271,7 @@
     "dontChangePassword": "No cambies la contraseña",
     "created_date": "Usuario desde",
     "loginSucess": "Entraste sin problemas!",
+    "loginSucessLink": "Entraste sin problemas, <a href='/ProfileEdit'>cambia tu contraseña</a>",
     "emailPlaceHolder": "Por ejemplo luis@email.org",
     "pickLanguageLabel": "Elige idioma",
     "pickLanguageExplain": "Los menús de la herramienta serán traducidos a la lengua que elijas",
@@ -288,17 +308,22 @@
     "iAccept": "Acepto",
     "pleaseAcceptPrivacy": "Por favor acepte nuestra política de privacidad",
     "loginError": "Error al entrar, por favor inténtelo de nuevo o contacte al administrador",
-    "errorRequestNewLoginToken": "",
+    "errorRequestNewLoginToken": "Error al solicitar nuevo token para entrar",
     "pleaseAcceptCookies": "Es obligatorio que aceptar la política de cookies para continuar",
     "helpbuttonsPublishedAmount": "Publicado",
     "revokeEndorse": "Cancelar aceptación ",
+    "endorsed": "Perfil avalado",
     "usernameWillBe": "Tu nombre de usuario será ",
     "hidePassword": "Esconder contraseña",
     "deletedAccount": "¡Tus datos fueron borados con éxito!",
     "signupSuccess": "Tu registro fu exitoso, Bienvenido/a a {0} ",
     "showWassapExplain": "Muestra un link a Whatsapp si quieres. Necesitas publicar tu teléfono antes para ello.",
-    "optionalFields":"Campos opcionales"
-
+    "editUsername": "Editar usuario",
+    "endorse": "Avalar",
+    "explainPublishAsGuest": "Por favor genera un nuevo código, que entrar usar para y comprobar tus _helpbuttons_",
+    "explainUseGuestCode": "Por favor guarda este código, es la única forma que tendrás de entrar para comprobar tus publicaciones",
+    "emailRecovery":"Email de recuperación",
+    "emailRecoveryExplain":"Si ya tienes cuenta, entra pulsando un enlace que mandaremos a tu correo."
   },
   "configure": {
     "browsePins": "Mapa con pins de ubicación",
@@ -315,12 +340,13 @@
     "noFilter": "en la zona",
     "hideMap": "Ocultar Mapa",
     "showMap": "Mostrar Mapa",
-    "displayInstructions": "Pulsa un hexágono para obtener información sobre _helpbuttons_ en esa zona",
+    "displayInstructions": "Pulsa las zonas para obtener información sobre _helpbuttons_ en ella",
     "both": "Mapa & Lista",
     "list": "Lista",
     "map": "Mapa",
     "showList": "Mostrar Lista",
-    "hiddenButtons": "Por privacidad, hay _helpbuttons_que ocultan su ubicación exacta."
+    "hiddenButtons": "Por privacidad, hay _helpbuttons_que ocultan su ubicación exacta.",
+    "viewMode": "Selecciona modo de muestra por defecto"
   },
   "buttonFilters": {
     "filters": "Búsqueda y filtros",
@@ -391,7 +417,7 @@
     "hideAddress": "Esconder ubicación exacta",
     "created": "creado",
     "follow": "Suscribirme",
-    "unfollow": "Dejar de seguir",
+    "unfollow": "Siguiendo",
     "followAlert": "Te has suscrito, recibirás sus novedades.",
     "unfollowAlert": "Te has desuscrito, dejarás de recibir sus novedades",
     "unfollowAlertError": "Error al desuscribir",
@@ -418,11 +444,13 @@
     "unpin": "Desfijar",
     "pinSuccess": "Fijado con éxito",
     "unpinSuccess": "Desfijado con éxito",
-    "whatsapp": "Conectar s Whatsapp",
-    "following": "Siguiendo",
+    "whatsapp": "Conectar Whatsapp",
     "whenExplain": "Especifica la fecha",
     "placeHodlerCustomAddress": "Escribe un nuevo nombre y selecciona el lugar sobre el mapa",
-    "publishComment": "Publicar comentario"
+    "publishComment": "Publicar comentario",
+    "sendPrivateMessage": "Enviar mensaje privado a {0}",
+    "proposeAddress": "Añadir o editar nuevo lugar en {0}",
+    "locationPlaceholder": "Escribe un lugar o dirección"
   },
   "calendarOnce": {
     "label": "Una vez",
@@ -473,10 +501,10 @@
     "postgresUser": "Usuario de Postgresql",
     "configureInstanceDescription": "Asistente para configurar tu Red",
     "configureInstanceTitle": "Configura los últimos detalles de tu Red",
-    "smtpHost": "",
-    "smtpUser": "",
-    "from": "",
-    "connect": ""
+    "smtpHost": "Host Smtp",
+    "smtpUser": "Usuario smtp",
+    "from": "desde",
+    "connect": "conectar"
   },
   "post": {
     "placeholderWrite": "Escribe una nueva actualización en tu _helpbutton_",
@@ -520,7 +548,7 @@
   "faqs": {
     "title": "Preguntas frecuentes",
     "networkQuestion": "¿Qué es {0}?",
-    "helpbuttonsQuestion": "¿Qué son Botones de ayuda?",
+    "helpbuttonsQuestion": "¿Qué es Helpbuttons?",
     "forQuestion": "¿Para qué sirve?",
     "helpbuttonQuestion": "¿Qué es un Helpbutton o Botón?",
     "networkDescription": "Una Red se refiere a tu instancia individual de Helpbuttons. Puedes crear tu propia red, designar un propósito (como compartir comida, ayudar a los animales, cuidar a los ancianos, etc.) y comenzar a colaborar con cualquier grupo que desees (ya sea tu vecindario, club deportivo, pueblo, compañeros de curso, etc.).",
@@ -532,15 +560,15 @@
     "contactQuestion": "Contacto",
     "helpbuttonsHighlight": "Helpbuttons",
     "helpbuttonsDescription": "ó Botones de ayuda es el software de código abierto que impulsa esta aplicación. Con Helpbuttons, puedes crear tus propias redes para compartir comida, vivienda, transporte o cualquier otra cosa que tengas en mente, y luego federarte con otras redes para compartir usuarios y recursos. Helpbuttons se especializa en conectar a personas que aún no se conocen, para diversos propósitos, en el mundo real.",
-    "forDescription": "Nuestro objetivo es fomentar una sociedad cohesionada, promover la cooperación y optimizar el diseño de herramientas colaborativas para aprovechar al máximo las ventajas de internet aplicadas a la vida real. Conocemos las cantidades de dinero y tiempo requeridos cada vez que se lanza una nueva aplicación colaborativa. La mayoría de estas herramientas comparten una parte significativa de sus funcionalidades básicas y creemos que estas similitudes podrían aprovecharse para crear un sistema modular, que valga para muchos casos y ahorre recursos.",
-    "helpbuttonDescription": "Un Helpbutton ó Botón se refiere a una publicación. Cada publicación realizada por un usuario en Helpbuttons se llama Helpbutton. Los Helpbuttons pueden representar ofertas, necesidades, intercambios, propuestas de transporte, negocios, etc. También se pueden renombrar para adaptarse a las necesidades específicas de tu aplicación.",
+    "forDescription": "Nuestro objetivo es optimizar el diseño de herramientas colaborativas para aprovechar al máximo las ventajas de internet aplicadas a la vida real. Fomentando la autonomía digital, la cooperación y la cohesión social. <hr> Creamos un sistema de código abierto modular, que valga para muchos casos, comparta recursos y ponga en manos del público una herramienta de cooperación digital sin necesidad de conocer programación.",
+    "helpbuttonDescription": "Un Helpbutton ó Botón de ayuda se refiere a una publicación. Cada publicación realizada por un usuario en Helpbuttons se llama Helpbutton. Los Helpbuttons pueden representar ofertas, necesidades, intercambios, propuestas de transporte, negocios, etc. También se pueden renombrar para adaptarse a las necesidades específicas de tu aplicación.",
     "communityDescription": "Helpbuttons o Botonesdeayuda está diseñado por programadores independientes de España y Portugal. Principalmente con aportaciones desinteresadas en su tiempo libre. Actualmente el proyecto se encuentra en fase de búsqueda de financiación para poder sostener el mantenimiento de su uso para el público general. Estos programadores, junto con la comunidad de usuarios que empieza a usar la herramienta, forman la comunidad que el proyecto necesita para sostenerse frente a otros modelos de aplicaciones tradicionales. Más adelante, al federarnos con otras aplicaciones de Helpbuttons/Botonesdeayuda, podremos compartir usuarios y recursos. Este método de colaboración nos permite unir a más personas y mejorar en última instancia la herramienta que proporcionamos. El representante legal que actúa como interlocutor con la administración es la asociación sin ánimo de lucro 'Watch Out, Freedom!' G67992032, avda Mexico 10, Jerez, Cádiz (Spain). tl:+34680936011",
     "networksEthicsDescription": "{0} es una Red creada con la tecnología Helpbuttons, los administradores de la Red son los responsables de la moderación del contenido que se publica y el cumplimiento de las normas éticas y legales de la zona en la que se desarrolla su Red. Dirígete a ellos a través de las opciones de contacto que aparecen en la sección Moderadores de la página de Inicio. Los programadores de esta plataforma no pueden hacerse responsables del contenido o propósitos con los que se pueda usar esta herramienta fuera de nuestros servidores.",
     "ethicsDescription": "Este proyecto busca mejorar la autonomía de las personas y comunidades para cooperar. Nuestros tres principios son: Libertad, inclusión y descentralización. 1. Libertad para usar la herramienta y compartirla en múltiples propósitos. 2. Inclusión para acoger mediante un diseño responsable a aquellos menos familiarizados con las tecnologías, y para atender las necesidades de la vida real. 3. Descentralización para permitir múltiples grados de responsabilidad compartida en el uso de los datos: Desde la colectiva (servidores) a la más individual (claves anónimas). En caso de hacer uso de nuestros servidores, todo lo que se alinee con dichos valores, es bienvenido y tendrá total libertad. Creemos en la transparencia, la honestidad y el respeto por todas las personas. Si bien no podemos controlar el uso que se hace de nuestro software en otros servidores, en la medida de lo posible no permitiremos conductas que vayan contra la integridad y dignidad humanas, o que fomenten el maltrato animal. Nuestro software está diseñado para conectar a las personas y facilitar el intercambio, lo cual es una responsabilidad que tomamos en serio. Alentamos a nuestros usuarios a usar la plataforma y aquellas réplicas que hagan con los mismos valores en mente, priorizando la comunicación respetuosa y el intercambio consciente. Cualquier mal uso del software dentro de nuestros servidores, incluida la explotación, el daño a otros o la manipulación de las funcionalidades de la plataforma con fines personales, no será tolerado.",
     "privacyDescription": "Trabajamos cada día por encontrar mejores soluciones para la privacidad de los datos en las Redes creadas con Helpbuttons. Valoramos el derecho al anonimato y ofrecemos la posibilidad de participar tanto a personas que quieran ser totalmente anónimas como a aquellas que cedan sus datos personales. Helpbuttons está diseñado para NO hacer uso en ningún caso de los datos personales de los usuarios con fines comerciales o de interés personal de un grupo de usuarios. Así como ofrecemos la posibilidad de borrar totalmente tus datos de una manera fácil y transparente. Somos transparentes en cuanto a nuestros procesos de recopilación de datos, y tienes el derecho de acceder, actualizar o eliminar tus datos personales en cualquier momento. Recuerda que compartir información personal en las publicaciones de Helpbuttons está a tu discreción, sé consciente y comparte solo lo que te sientas cómodo compartiendo con los demás. Ten en cuenta que el responsable del manejo de tus datos es el administrador de tu Red, no compartas datos sensibles si no confías en dicho administrador. Por favor, dirige tus preguntas al siguiente correo electrónico: help@helpbuttons.org",
     "securityDescription": "Cada día incorporamos nuevas mejoras a la seguridad de las Redes, mediante el trabajo conjunto con la comunidad open source estamos analizando y preparando herramientas de seguridad para que usuarios sin conocimiento de informática puedan usarlas. Si crees que puede haber un probelma de seguridad relacionado con el uso de la Red ponte en contacto con el adminsitrador a través de la página de Inicio. Si crees que puede haber una brecha de seguridad informática que pone en riesgo la integridad de nuestro software y la seguridad de nuestros usuarios escríbenos a help@helpbuttons.org. Actualizamos y revisamos continuamente nuestros sistemas para garantizar que cumplan con los más altos estándares de ciberseguridad. Sin embargo, también creemos que la seguridad es una responsabilidad compartida. Si has instalado esta herramienta en tu servidor, te alentamos a practicar comportamientos seguros en línea, como usar contraseñas fuertes y proteger la información personal. Por favor, dirige tus preguntas al siguiente correo electrónico: help@helpbuttons.org",
     "contactDescription": "Si quieres comunicar con los gestores de la página, acude a la sección de Inicio. Si quieres ponerte en contacto con los programadores que hacen posible la app, por favor, dirige tus preguntas al siguiente correo electrónico: help@helpbuttons.org",
-    "cookiesQuestion": "Cookies policy",
+    "cookiesQuestion": "Política de coookies",
     "cookiesDescription": "Este sitio utiliza cookies para ofrecer una experiencia segura y personalizada. A continuación, se describe el uso específico de cada cookie: 1. ACCESS_TOKEN (access_token): Esta cookie almacena de forma segura tu token de acceso, permitiéndote permanecer conectado durante la sesión sin necesidad de reautenticación. Tipo: Esencial Duración: Basada en la sesión 2. TOKEN_TYPE (token_type): Se usa para identificar el tipo de token de acceso que estás utilizando, garantizando una autenticación y seguridad adecuadas. Tipo: Esencial Duración: Basada en la sesión 3. NETWORK_SELECTED (network_id): Almacena información sobre la red seleccionada que estás utilizando en nuestra plataforma, ofreciendo una experiencia personalizada según tu elección. Tipo: Funcionalidad Duración: Basada en la sesión 4. EXPLORE_SETTINGS (explore_settings): Guarda tus preferencias y configuraciones en la función de exploración, haciendo que tu experiencia de navegación sea más consistente y personalizada. Tipo: Funcionalidad Duración: Persistente 5. HAS_PERMISSION_NOTIFICATIONS (has_permission_notifications): Registra si has dado permiso para recibir notificaciones, permitiéndonos mostrar u ocultar notificaciones según tu preferencia. Tipo: Preferencia Duración: Persistente Puedes gestionar la configuración de cookies a través de las preferencias de tu navegador. ",
     "cookiesExplanation": "Este sitio utiliza cookies. Para más detalles, consulta nuestra ",
     "cookieAccept": "Aceptar",
@@ -552,7 +580,8 @@
     "1hr": "1 hora",
     "1day": "1 dia",
     "1week": "1 semana",
-    "expiresIn": "Expira",
+    "setExpiration": "Especifica fecha de expiración",
+    "expiresIn": "Expira:",
     "clickToCopy": "Copiar link de invitación",
     "maximumUsageTimes": "Numero de utilizaciones",
     "nolimit": "Sin limite",
@@ -560,11 +589,11 @@
     "generate": "Crear nuevo link de invitación",
     "copied": "Link de invitación copiado {0}",
     "title": "Invitaciones QR",
-    "description": "Invita a personas, administra y comparte enlaces con otras personas para permitirles acceder a tu red",
+    "description": "Crear tus invitaciones aquí. Comparte enlaces con otras personas para permitirles acceder a tu red.",
     "inviteOnlyLabel": "Privacidad de la red",
     "inviteOnlyExplain": "Si habilitas esto, los usuarios solo podrán registrarse y publicar con un código QR.",
     "inviteOnly": "Sólo permitir el registro con un código QR",
-    "generateQr": "QR",
+    "generateQr": "Obtener QR",
     "registered": "QR usado"
   },
   "customFields": {
@@ -622,7 +651,8 @@
     "adminCommunication": "Comunicaciones de administrador",
     "adminCommunicationLabel": "Comunicaciones de administradores",
     "adminCommunicationExplain": "Mensajes que envíes a través de este formulario serán notificados a todos los usuarios de la Red.",
-    "edit": "Editar"
+    "edit": "Editar",
+    "preview": "Previsualización"
   },
   "roles": {
     "blocked": "bloqueado",
@@ -635,16 +665,18 @@
   },
   "bulletin": {
     "since": "Desde {0}",
-    "filter": "",
-    "noButtons": ""
+    "filter": "Filtrar",
+    "noButtons": "No hay botones",
+    "found": "{0} _helpbuttons_ encontrados. Desde hoy hasta {1}",
+    "explainBulletin": "Aquí puedes encontrar una lista de _helpbuttons_ en formato PDF, con códigos QR. Así puedes extender la actividad en tu comunidad.",
+    "pdfDate": "desde {0}"
   },
   "places": {
-    "addNew": "",
-    "add": "",
-    "save": ""
+    "addNew": "Añade un nuevo lugar",
+    "add": "Añadir",
+    "save": "Guardar"
   },
   "seo": {
-    "embbed": "",
-    "buttonEdit": ""
+    "embbed": ""
   }
 }

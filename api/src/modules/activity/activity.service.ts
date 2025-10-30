@@ -498,7 +498,8 @@ export class ActivityService {
       },
     )
     //@ts-ignore
-    .then((activities) => activities.filter((activity) => activity))
+    .then((activities) => 
+      activities.filter((activity) => activity))
   }
 
   public markAllMessagesAsRead(userId) {
@@ -538,5 +539,16 @@ export class ActivityService {
           .then((activities) => activities.filter((activity) => activity))
       });
   }
-}
 
+  @OnEvent(ActivityEventName.NotifyAdmins)
+  public notifyAdmins(payload: any) {
+    this.userService.findAdministrators()
+    .then((admins) => {
+      console.log(admins)
+      admins.map((admin) => {
+        this.createActivity(admin, payload, false);
+      })
+    })
+    
+  }
+}

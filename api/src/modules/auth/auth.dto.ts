@@ -10,6 +10,7 @@ import {
   IsArray,
   IsIn
 } from 'class-validator';
+import { User } from '../user/user.entity';
 
 const specialCharRegex = /(?=.*[!@#$%^&*()_\-+=].*[!@#$%^&*()_\-+=])/;
 
@@ -192,4 +193,8 @@ export class LoginRequestDto {
     message: `Password should contains at least two number.`,
   })
   password: string;
+}
+
+export class UserOutDto extends User{
+  token: string
 }

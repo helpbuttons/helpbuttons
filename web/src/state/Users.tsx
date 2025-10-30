@@ -203,3 +203,19 @@ export class UserRevokeEndorse implements WatchEvent, UpdateEvent {
   }
 }
 
+
+export class FindUser implements WatchEvent {
+  public constructor(
+    private username: string,
+    private onResult,
+  ) {}
+
+  public watch(state: GlobalState) {
+    return UserService.find(this.username).pipe(
+      map((user) => {
+        this.onResult(user);
+      }),
+      catchError((error) => {this.onResult(null); dconsole.log(error); return  of(undefined)})
+    )
+  }
+}

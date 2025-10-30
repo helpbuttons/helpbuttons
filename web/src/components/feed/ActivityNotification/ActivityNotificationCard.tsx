@@ -4,7 +4,8 @@ import { ActivityEventName } from 'shared/types/activity.list';
 import { formatMessage } from 'elements/Message';
 import { FindButton, } from 'state/Explore';
 import { GlobalState, store, useGlobalStore } from 'state';
-import { SetMainPopupCurrentButton } from 'state/HomeInfo';
+import { SetMainPopupCurrentButton, SetMainPopupCurrentProfile } from 'state/HomeInfo';
+import { FindUser } from 'state/Users';
 
 export default function ActivityNotificationCard({ activity }) {
   return (
@@ -31,13 +32,19 @@ export default function ActivityNotificationCard({ activity }) {
               />
             );
           }
+          case ActivityEventName.NotifyAdmins:
+            return (
+              <NotificationCardCustomIcon
+                activity={{...activity, userId: activity.referenceId}}
+              />
+            );
           default: {
             return (
               <NotificationCard
-                title={'activities.notification'}
-                image={'no'}
+                title={activity.eventName}
+                image={activity.image}
                 date={activity.created_at}
-                message={activity.eventName}
+                message={activity.title}
                 buttonId={0}
                 read={activity.read}
               />
@@ -52,34 +59,55 @@ export default function ActivityNotificationCard({ activity }) {
 export function NotificationCardCustomIcon({
   activity
 }) {
+  if(activity?.buttonId)
+  {
+    return (
+      <NotificationCard
+        image={activity.image}
+        date={activity.createdAt}
+        onClick={() =>
+          store.emit(new FindButton(activity.buttonId, (_button) => {
+            store.emit(new SetMainPopupCurrentButton(_button));
+          }))}
+        title={activity.title}
+        message={activity.message}
+        read={activity.read}
+      />
+    );
+  }else if(activity?.userId)
+    {
+      return (
+        <NotificationCard
+          image={activity.image}
+          date={activity.createdAt}
+          onClick={() => {store.emit(new FindUser(activity.referenceId, (user) => store.emit(new SetMainPopupCurrentProfile(user))));}}
+          title={activity.title}
+          message={activity.message}
+          read={activity.read}
+        />
+      );
+    }else{
+      return (
+        <NotificationCard
+          image={activity.image}
+          date={activity.createdAt}
+          title={activity.title}
+          message={activity.message}
+          read={activity.read}
+        />
+      );
+    }
   
-  return (
-    // <>{JSON.stringify(activity)}
-    <NotificationCard
-      image={activity.image}
-      date={activity.createdAt}
-      buttonId={activity.referenceId}
-      title={activity.title}
-      message={activity.message}
-      read={activity.read}
-    />
-    // </>
-  );
 }
 
 export function NotificationCard(props) {
 
-    if(props.buttonId)
-    {
+  if (props.onClick) {
 
     return (
       <span
         href="#"
-        onClick={() =>
-          store.emit(new FindButton(props.buttonId, (_button) => {
-            store.emit(new SetMainPopupCurrentButton(_button));
-          }))
-        }
+        onClick={props.onClick}
         className="card-notification card-notification"
       >
         <InnerNotificationCard
@@ -90,7 +118,7 @@ export function NotificationCard(props) {
     );
   }
 
-  return <InnerNotificationCard {...props}/>;
+  return <InnerNotificationCard {...props} />;
 }
 
 function InnerNotificationCard({

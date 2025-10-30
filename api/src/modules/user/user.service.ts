@@ -30,7 +30,8 @@ export class UserService {
   ) { }
 
   createUser(user: User) {
-    return this.userRepository.insert([user]);
+    const _user = this.userRepository.create(user);
+    return this.userRepository.save(_user)
   }
 
   isEmailExists(email: string) {
@@ -285,4 +286,5 @@ COALESCE(
   public setAdminLocale(locale) {
     this.entityManager.query(`update public.user set locale = '${locale}' where role = '${Role.admin}'`)
   }
+
 }

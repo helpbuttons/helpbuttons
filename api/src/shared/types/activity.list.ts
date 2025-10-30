@@ -10,5 +10,6 @@ export enum ActivityEventName {
   Endorsed = 'user.endorsed',
   RevokeEndorsed = 'user.revokeEndorsed',
   RoleUpdate = 'user.roleChange',
+  NotifyAdmins = 'admin.notify'
 }
 

@@ -11,6 +11,7 @@ import { SetupSteps } from '../../../shared/setupSteps';
 import t from 'i18n';
 import Link from 'next/link';
 import ImageWrapper, { ImageType } from 'elements/ImageWrapper';
+import { IllustrationHead } from '../helper';
 
 export default FirstOpen;
 
@@ -42,14 +43,7 @@ function FirstOpen() {
         <Popup title={t('setup.welcomeMessage')}>
           <Form classNameExtra="create-admin">
             <div className='form__field'>
-              <div className='form__illustration'>
-                 <ImageWrapper
-                  imageType={ImageType.formIllustration}
-                  alt="Network wizzard" src={''}                />
-              </div>
-              <div className='form__header'>
-                {t('setup.welcomeMessageLong')}
-              </div>
+              <IllustrationHead imageSrc={'/assets/images/create_network.jpg'} title={t('setup.welcomeMessageLong')} />
             </div>
             <div className="form__btn-wrapper">
               <Btn

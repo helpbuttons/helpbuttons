@@ -165,12 +165,31 @@ export const transformToMessage = (
     case ActivityEventName.Endorsed:
     case ActivityEventName.RevokeEndorsed:
       return getAction(activity.eventName).transform(locale, activityOut, activity)
+    case ActivityEventName.NotifyAdmins: 
+      const user = getUserActivity(activity.data)
+      return {
+        ...activityOut,
+        message: user.name,
+        title: translate(locale,
+            'activities.newSignup',
+            [
+              user.name
+            ],
+          ),
+        image: user.image,
+        referenceId: user.username,
+      };
     default: {
       console.log(
         activity.eventName +
           ' not found on activity.transform, maybe u need to add this notification type?',
       );
-      return null;
+      return {
+        ...activityOut,
+        message: '',
+        title: activity.eventName
+      }
+      // return null;
     }
   }
 

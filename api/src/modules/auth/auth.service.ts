@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { SignupQRRequestDto, SignupRequestDto } from './auth.dto';
+import { SignupQRRequestDto, SignupRequestDto, UserOutDto } from './auth.dto';
 import { UserService } from '../user/user.service';
 import {
   uuid,token
@@ -36,45 +36,44 @@ export class AuthService {
     private readonly inviteService: InviteService,
   ) {}
 
-  async signupQR(signupQRUserDto: SignupQRRequestDto) {
-    
+  async signupQR(signupQRUserDto: SignupQRRequestDto): Promise<UserOutDto> {
+
     return this.inviteService.isInviteCodeValid(signupQRUserDto.qrCode)
-    .then((validInviteCode) => {
-      if(!validInviteCode)
-      {
-        throw new CustomHttpException(ErrorName.InvalidQrCode)
-      }
-      return {
-        username: signupQRUserDto.username,
-        qrcode: signupQRUserDto.qrCode,
-        email: signupQRUserDto.qrCode + nomailString,
-        name: signupQRUserDto.name,
-        password: token(),
-        locale: signupQRUserDto.locale,
-        acceptPrivacyPolicy: signupQRUserDto.acceptPrivacyPolicy
-      }
-    })
-    .then((signupUserDto: SignupRequestDto) => {
-    const newUserDto = {
-      username: signupUserDto.username,
-      email: signupUserDto.email,
-      role: Role.registered,
-      name: signupUserDto.name,
-      verificationToken: token(),
-      emailVerified: false,
-      id: uuid(),
-      avatar: null,
-      description: '',
-      locale: signupUserDto.locale,
-      receiveNotifications: true,
-      showButtons: false,
-      tags: signupUserDto.tags,
-      radius: 0,
-      qrcode: signupUserDto.qrcode,
-      showWassap: false
-    };
-    
-      return this.createUser(newUserDto, signupUserDto).then(
+      .then((validInviteCode) => {
+        if (!validInviteCode) {
+          throw new CustomHttpException(ErrorName.InvalidQrCode)
+        }
+        return {
+          username: signupQRUserDto.username,
+          qrcode: signupQRUserDto.qrCode,
+          email: signupQRUserDto.qrCode + nomailString,
+          name: signupQRUserDto.name,
+          password: token(),
+          locale: signupQRUserDto.locale,
+          acceptPrivacyPolicy: signupQRUserDto.acceptPrivacyPolicy
+        }
+      })
+      .then((signupUserDto: SignupRequestDto) => {
+        const newUserDto = {
+          username: signupUserDto.username,
+          email: signupUserDto.email,
+          role: Role.registered,
+          name: signupUserDto.name,
+          verificationToken: token(),
+          emailVerified: false,
+          id: uuid(),
+          avatar: null,
+          description: '',
+          locale: signupUserDto.locale,
+          receiveNotifications: true,
+          showButtons: false,
+          tags: signupUserDto.tags,
+          radius: 0,
+          qrcode: signupUserDto.qrcode,
+          showWassap: false
+        };
+
+        return this.createUser(newUserDto, signupUserDto).then(
           (user) => {
             if (!newUserDto.emailVerified) {
               this.sendLoginToken(newUserDto, true);
@@ -84,7 +83,7 @@ export class AuthService {
         );
       });
   }
-  async signup(signupUserDto: SignupRequestDto) {
+  async signup(signupUserDto: SignupRequestDto): Promise<UserOutDto> {
     const verificationToken = token();
     let emailVerified = false;
     let accessToken = {};
@@ -93,20 +92,18 @@ export class AuthService {
     const userCount = await this.userService.userCount();
     if (userCount < 1) {
       userRole = Role.admin;
-    }else{
-      try{
+    } else {
+      try {
         const selectedNetwork = await this.networkService.findDefaultNetwork();
-  
-        if(selectedNetwork.inviteOnly)
-        {
+
+        if (selectedNetwork.inviteOnly) {
           const validInviteCode = await this.inviteService.isInviteCodeValid(signupUserDto.inviteCode)
-          if(!validInviteCode)
-          {
+          if (!validInviteCode) {
             throw new CustomHttpException(ErrorName.inviteOnly)
           }
         }
-      }catch(error){
-          console.error('network not found?')
+      } catch (error) {
+        console.error('network not found?')
       }
     }
 
@@ -129,8 +126,7 @@ export class AuthService {
     };
 
     const regex = /^[a-zA-Z0-9\_\-\.]+$/gm;
-    if(!signupUserDto.username.match(regex))
-    {
+    if (!signupUserDto.username.match(regex)) {
       throw new CustomHttpException(ErrorName.InvalidUsername);
     }
 
@@ -149,8 +145,7 @@ export class AuthService {
         ErrorName.UsernameAlreadyRegistered,
       );
     }
-    if(signupUserDto.avatar)
-    {
+    if (signupUserDto.avatar) {
       try {
         newUserDto.avatar = await this.storageService.newImage64(
           signupUserDto.avatar,
@@ -160,24 +155,25 @@ export class AuthService {
       }
     }
     return this.createUser(newUserDto, signupUserDto).
-    then((user) => {
-      if (!newUserDto.emailVerified && userCount > 1) {
-        this.sendLoginToken(newUserDto, true);
-      }
-      return user;
-    });
+      then((newUser) => {
+        if (!newUser.emailVerified && userCount > 1) {
+          this.sendLoginToken(newUser, true);
+        }
+        return newUser;
+      });
   }
 
-  private createUser (newUserDto, signupUserDto) {
+  private createUser(newUserDto, signupUserDto) {
     return this.userService.createUser(newUserDto)
-      .then((user) => {
+      .then((user: User) => {
         return this.createUserCredential(
           newUserDto.id,
           signupUserDto.password,
-        );
+        ).then(() => user);
       })
-      .then((userCredentials) => {
-        return this.getAccessToken(newUserDto);
+      .then((user: User) => {
+        return this.getAccessToken(newUserDto).then((loginToken) => { return { ...user, ...loginToken } })
+
       })
       .catch((error) => {
         console.error(error);
