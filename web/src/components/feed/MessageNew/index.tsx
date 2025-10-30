@@ -81,13 +81,21 @@ export default function MessageNew({
               watch={watch}
               setFocus={setFocus}
             />
+            {isComment && privateMessage && (
+              <div className="form__input-subtitle-side">
+                <label className="form__input-subtitle--error">
+                  {t('comment.private')}
+                </label>
+              </div>
+            )}
+            {/* ISSUE: https://github.com/helpbuttons/helpbuttons/issues/983
             {isComment && !privateMessage && (
               <div className="form__input-subtitle-side">
                 <label className="form__input-subtitle--error">
                   {t('comment.public')}
                 </label>
               </div>
-            )}
+            )} */}
             <FieldImageUploads 
               defaultImages={watch('images')}
               name='images'
