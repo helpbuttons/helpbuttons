@@ -24,41 +24,25 @@ export function ListButtonTypes() {
   const selectedNetwork = useGlobalStore((state: GlobalState) => state.networks.selectedNetwork)
 
   const [types, setTypes] = useState([]);
-  useEffect(() => {
-    if (buttonTypes) {
 
-      setTypes(() => {
-      return buttonTypes.map((buttonType) => {
+  useEffect(() => {
+    const selectedTypes = filters.helpButtonTypes;
+    if (selectedTypes) {
+      const bttypes = buttonTypes.map((buttonType) => {
         const typeCount = selectedNetwork.buttonTypesCount.find(
           (buttonTypeCount) =>
             buttonTypeCount.type == buttonType.name,
         )?.count;
 
         const disabled = !typeCount;
-
-        return {
-          ...buttonType,
-          caption: `${buttonType.caption}`,
-          selected: false,
-          disabled,
+        if (selectedTypes.indexOf(buttonType.name) > -1) {
+          return { ...buttonType, selected: true, disabled }
         }
-      });
-    });
-
+        return { ...buttonType, selected: false, disabled };
+      })
+      setTypes(() => bttypes)
     }
-  }, [buttonTypes]);
-
-  useEffect(() => {
-    const selectedTypes = filters.helpButtonTypes;
-    if (selectedTypes) {
-      setTypes(() => types.map((type) => {
-        if (selectedTypes.indexOf(type.name) > -1) {
-          return { ...type, selected: true, }
-        }
-        return { ...type, selected: false };
-      }))
-    }
-  }, [filters.helpButtonTypes])
+  }, [filters.helpButtonTypes, buttonTypes])
   const handleClick = (type) => {
     const newFilters = { ...filters, helpButtonTypes: [type] }
     store.emit(new UpdateFilters(newFilters));
