@@ -32,7 +32,7 @@ const DraggableList: React.FC<DraggableProps> = ({
   const [rel, setRel] = useState<{ x: number; y: number } | null>(null);
 
   const getClosedListHeight = () => window.innerHeight - 110;
-  const getOpenListHeight = () => window.innerHeight - 300;
+  const getOpenListHeight = () => window.innerHeight - 345;
 
   const functionHandler = (data: number) => {
     if (data < getOpenListHeight()) {

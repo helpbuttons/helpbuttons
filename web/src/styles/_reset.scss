@@ -147,14 +147,14 @@ body,
 .list__container--full-screen,
 .list__content--full-screen{
 
-  height: calc(var(--vh) - 160px ) !important; //header + filters bar
+  height: calc(var(--vh) - 220px ) !important; //header + filters bar
 
 }
 
 .list__container--mid-screen,
 .list__content--mid-screen{
 
-  height: calc(var(--vh) - 190px ) !important; //header + filters bar
+  height: calc(var(--vh) - 150px ) !important; //header + filters bar
 
 }
 
