@@ -43,11 +43,9 @@ function NavHeader({ selectedNetwork }){
           <NavBottom sessionUser={sessionUser} />
         </ShowDesktopOnly>
       </div>
-      {pageName != 'HomeInfo' && 
-        <div className="nav-header__filters">
-          <ListButtonTypes/>
-        </div>
-      }
+      <div className="nav-header__filters">
+        <ListButtonTypes/>
+      </div>
     </div>
   );
 }
