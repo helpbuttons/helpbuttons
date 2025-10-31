@@ -523,6 +523,19 @@ $btn-font-size-medium: $font-size-medium;
 
 }
 
+.btn-filter--active {
+
+    background-color: $color-dark-gray;
+    color: $color-white;
+    border-color: $color-dark-gray;
+
+    & svg {
+      color: $color-white;
+      fill: $color-white;
+    } 
+}
+
+
 @media (hover: none) {
   .btn,
   .btn-circle,
@@ -543,19 +556,6 @@ $btn-font-size-medium: $font-size-medium;
   
     }
   
-    &:focus {
-  
-      background-color: $color-white;
-      color: $color-black;
-      border-color: $color-gray;
-  
-      & svg {
-        color: $color-black;
-        fill: $color-black;
-      }
-  
-    }
-
   }
 
 }

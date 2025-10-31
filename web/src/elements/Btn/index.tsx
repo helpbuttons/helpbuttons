@@ -217,12 +217,13 @@ export function BtnCaption({ caption, icon, onClick, color, selected = false, di
   };
 
   return (
-    <span style={cssColor(color)} className={selected ? 'btn-filter--active' : ''}>
+    <span style={cssColor(color)}>
         
       <Btn
         btnType={BtnType.filterEmoji}
         iconLeft={IconType.svg}
         iconLink={icon}
+        extraClass={selected? 'btn-filter--active' : ''}
         disabled={disabled}
         caption={caption}
         onClick={onClick}
