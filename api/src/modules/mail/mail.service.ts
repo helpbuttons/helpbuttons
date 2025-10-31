@@ -193,4 +193,29 @@ export class MailService {
       },
     });
   }
+
+  sendWelcomeMail({
+    to,
+    locale,
+  }: {
+    to: string;
+    locale: string;
+  }) {
+    return this.networkService.findDefaultNetwork().then((network) => {
+      return this.sendWithLink({
+        to,
+        content: translate(
+          locale,
+          'email.welcome',
+          [network.name]
+        ),
+        subject: translate(
+          locale,
+          'email.welcomeSubject'
+        ),
+        link: getUrl(locale, '/'),
+        linkCaption: 'nameofnetwork',
+      });
+    });
+  }
 }

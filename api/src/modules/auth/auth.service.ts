@@ -84,9 +84,7 @@ export class AuthService {
       });
   }
   async signup(signupUserDto: SignupRequestDto): Promise<UserOutDto> {
-    const verificationToken = token();
     let emailVerified = false;
-    let accessToken = {};
 
     let userRole = Role.registered;
     const userCount = await this.userService.userCount();
@@ -156,9 +154,12 @@ export class AuthService {
     }
     return this.createUser(newUserDto, signupUserDto).
       then((newUser) => {
-        if (!newUser.emailVerified && userCount > 1) {
-          this.sendLoginToken(newUser, true);
-        }
+        this.sendWelcomeMail(newUser)
+
+        // verify email address
+        // if (!newUser.emailVerified && userCount > 1) {
+        //   this.sendLoginToken(newUser, true);
+        // }
         return newUser;
       });
   }
@@ -203,6 +204,12 @@ export class AuthService {
     });
   }
 
+  private sendWelcomeMail(user: User){
+    this.mailService.sendWelcomeMail({
+      to: user.email,
+      locale: user.locale
+    })
+  }
   private sendLoginToken(user: User, sendActivation = false) {
     const activationUrl: string = `/LoginClick/${user.verificationToken}`;
 
