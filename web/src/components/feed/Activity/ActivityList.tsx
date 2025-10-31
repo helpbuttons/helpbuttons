@@ -9,7 +9,6 @@ export function ActivityList({ activities }) {
   
     return (
       <div className="feed-section--activity-content">
-        {JSON.stringify(activities)}
         {activities &&
           activities.map((activity, key) => {
             return (

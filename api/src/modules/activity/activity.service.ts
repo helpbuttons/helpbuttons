@@ -497,9 +497,6 @@ export class ActivityService {
         );
       },
     )
-    //@ts-ignore
-    .then((activities) => 
-      activities.filter((activity) => activity))
   }
 
   public markAllMessagesAsRead(userId) {
