@@ -30,7 +30,7 @@ import { ButtonApprove, ButtonFindAll, ButtonModerationList } from 'state/Button
 import { ModerationList, UpdateRole } from 'state/Users';
 import { getEmailPrefix, stringContains } from 'shared/sys.helper';
 import { useButtonTypes } from 'shared/buttonTypes';
-import { SetMainPopupCurrentButton, SetMainPopupCurrentProfile } from 'state/HomeInfo';
+import { FindAndSetMainPopupCurrentProfile, SetMainPopupCurrentButton, SetMainPopupCurrentProfile } from 'state/HomeInfo';
 import { Pagination, Table, TableBody, TableHeader, TableHeaderCell, TableLine, TableLineCell, useFilterItems } from 'components/table';
 import FieldText from 'elements/Fields/FieldText';
 import Invites from 'pages/Profile/Invites';
@@ -154,6 +154,9 @@ function ModerationUsersList() {
   const onQueryChange = (query) => {
     setSearchString(() => query.target.value)
   }
+  const openProfile = (username) =>  {
+    store.emit(new FindAndSetMainPopupCurrentProfile(username))
+  }
   return (
     <>
     <FieldText
@@ -176,10 +179,10 @@ function ModerationUsersList() {
               {users.map((user, idx) => (
                 <TableLine idx={idx}>
                   <TableLineCell>
-                    <Link href={`/p/${user.username}`}>{getEmailPrefix(user.email)}</Link>
+                    <Link href="#" onClick={() => openProfile(user.username)}>{getEmailPrefix(user.email)}</Link>
                   </TableLineCell>
                   <TableLineCell>
-                    <Link href={`/p/${user.username}`}>{user.username}</Link>
+                    <Link href="#" onClick={() => openProfile(user.username)}>{user.username}</Link>
                   </TableLineCell>
                   <TableLineCell>
                     {t(`roles.${user.role}`)}
@@ -472,7 +475,6 @@ function NewAdminCommunication() {
         <div className="form__label">{t('moderation.adminCommunicationLabel')}</div>
         <div className="form__explain">{t('moderation.adminCommunicationExplain')}</div>
         <MessageNew onCreate={undefined} isComment={true} />
-
       </div>
     </div></>
 }
