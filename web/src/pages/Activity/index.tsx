@@ -4,6 +4,7 @@
 import { GlobalState, store } from 'state';
 import {  useRef } from 'store/Store';
 import ActivityLayout from 'layouts/Activity';
+import { ListMessage } from 'components/feed/ListMessage/ListMessage';
 
 export default function Activity() {
   const sessionUser = useRef(
@@ -13,9 +14,7 @@ export default function Activity() {
   );
   return (
     <>
-       <ActivityLayout
-          sessionUser={sessionUser}
-        />
+       <ListMessage/>
     </>
   );
 }

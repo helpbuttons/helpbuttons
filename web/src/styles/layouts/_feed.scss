@@ -49,6 +49,39 @@ $feed-new-message-radius: $border-radius-circle;
 
 }
 
+
+.feed-section--messages {
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  height: 100%;
+
+}
+
+.feed-section__left{
+
+  display: flex;
+  flex-direction: column;
+  width: 33vw;
+
+}
+
+.feed-section__center {
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 33vw;
+
+}
+
+.feed-section__right {
+
+  display: flex;
+  width: 33vw;
+
+}
 .feed-section__title {
 
   padding-top: $padding-small;
@@ -61,6 +94,13 @@ $feed-new-message-radius: $border-radius-circle;
 
 }
 
+.feed-section__filters {
+
+width: 100%;
+display: flex;
+flex-direction: row;
+
+}
 
 .feed-section--activity-content{
 
@@ -153,6 +193,8 @@ $feed-new-message-radius: $border-radius-circle;
   // background-color: $color-white;
   padding: $feed-padding;
   padding-top: 0;
+  display: flex;
+  flex-direction: row;
 
   .dropdown-select__trigger {
 
