@@ -15,14 +15,8 @@ export class ActivityService {
   public static messagesMarkAllAsRead(): Observable<Activity[]> {
     return httpService.post<any>("activity/messages/markAllAsRead");
   }
-  public static messagesUnread(): Observable<ActivityMessageDto[]> {
-    return httpService.get<any>("activity/messages/unread");
-  }
-  public static messagesRead(page): Observable<ActivityMessageDto[]> {
-    return httpService.get<any>(`activity/messages/read/${page ? page : 0}`);
-  }
 
-  public static notificationsRead(page): Observable<ActivityDtoOut[]> {
-    return httpService.get<any>(`activity/notifications/${page}`);
+  public static activities(page): Observable<ActivityDtoOut[]> {
+    return httpService.get<any>(`activity/activities/${page}`);
   }
 }

@@ -191,16 +191,16 @@
     "newprivatecommentType": "Private message",
     "newfollowType": "New Suscription",
     "creatorUpdate": "_helpbutton_ updated",
-    "deletedType": "_helpbutton_ deleted",
+    "deleted": "_helpbutton_ deleted",
     "noactivity": "You have no activity yet! Start creating your _helpbutton_ or interact with others!",
     "markedAllAsRead": "Notifications marked as read",
     "markedAsRead": "Marked as read",
-    "newpost": "You posted in '{0}'",
+    "newpost": "New posted created '{0}'",
     "newcomment": "@{0} replied with a message '{1}'",
     "newcommentSubject": "Someone commented on your _helpbutton_ '{0}'",
     "newfollow": "{0} is now following your _helpbutton_ {1}",
-    "newfollowing": "your are now following the '{0}'",
-    "newfollowed": "{0} now follows your '{1}'",
+    "newfollowing": "You started following",
+    "newfollowed": "Followed your _helpbutton_",
     "myhelpbuttons": "My _helpbuttons_",
     "deletebutton": "{0} was deleted",
     "expiredEventType": "_helpbutton_ ended",
@@ -208,11 +208,8 @@
     "endorsed": "You have been endorsed by the administration, now you have a 'trusted' badge on your profile",
     "revokeEndorse": "Unfortunately you're 'trusted' badge has been removed",
     "roleupdate": "Your role has been updated to '{0}'",
-    "newSignup": "New user '{0}' signed up"
-  },
-  "activitiesWithSubject": {
-    "newbutton": "{0} published a new _helpbutton_ in {1}",
-    "newpost": "{0} published a new post in {1}"
+    "newSignup": "New user '{0}' signed up",
+    "notice": "Notice"
   },
   "common": {
     "notfound": "No {0} found. Sorry. 🤔",

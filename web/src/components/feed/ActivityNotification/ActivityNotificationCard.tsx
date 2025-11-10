@@ -19,7 +19,6 @@ export default function ActivityNotificationCard({ activity }) {
           case ActivityEventName.NewButton: 
           case ActivityEventName.NewPost: 
           case ActivityEventName.NewFollowingButton: 
-          case ActivityEventName.NewFollowedButton: 
           case ActivityEventName.ExpiredButton: 
           case ActivityEventName.DeleteButton: 
           case ActivityEventName.RevokeEndorsed:
