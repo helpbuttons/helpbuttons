@@ -67,12 +67,21 @@ $feed-new-message-radius: $border-radius-circle;
 
 }
 
+.feed-section__left__header {
+
+  padding: $padding-huge $padding-big  $padding-small $padding-big;
+
+
+}
+
 .feed-section__center {
 
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   width: 33vw;
+  border-left: $border-style-basic;
+  border-right: $border-style-basic;
 
 }
 
@@ -84,13 +93,13 @@ $feed-new-message-radius: $border-radius-circle;
 }
 .feed-section__title {
 
-  padding-top: $padding-small;
+  padding-bottom: $padding-big;
   display: flex;
   justify-content: flex-start;
   gap: $padding-small;
   align-items: center;
-  padding-left: $padding-small;
-  color: $color-gray;
+  color: $color-dark-gray;
+  font-size: $font-size-huge;
 
 }
 

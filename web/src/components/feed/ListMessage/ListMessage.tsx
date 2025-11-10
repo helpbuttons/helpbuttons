@@ -1,6 +1,6 @@
 import t from "i18n";
-import { IoClose, IoSend } from "react-icons/io5";
-import { DropdownField } from "elements/Dropdown/Dropdown";
+import { IoArrowBack, IoClose, IoSend } from "react-icons/io5";
+import { Dropdown, DropdownField } from "elements/Dropdown/Dropdown";
 import ImageWrapper, { ImageType } from "elements/ImageWrapper";
 import { readableTimeLeftToDate } from "shared/date.utils";
 import { useButtonTypes } from "shared/buttonTypes";
@@ -12,6 +12,7 @@ import { store } from "state";
 import { FindButton } from "state/Explore";
 import { SetMainPopupCurrentButton } from "state/HomeInfo";
 import FieldText from "elements/Fields/FieldText";
+import Btn, { BtnType, ContentAlignment, IconType } from "elements/Btn";
 
 
 const updateFilters = (buttonTypes, activities) => {
@@ -219,11 +220,14 @@ export function ListMessage({activities}) {
     <div className="feed__container">
       <div className="feed-section--messages">
         <div className="feed-section__left">
-          <div className="feed-section__title">
-            Messages & Alerts
-          </div>
-          <div className="feed-section__filters">
-            <DropdownField options={filterButtons} />
+          <div className="feed-section__left__header">
+
+            <div className="feed-section__title">
+              Messages & Alerts
+            </div>
+            <div className="feed-section__filters">
+              <Dropdown options={filterButtons} />
+            </div>
           </div>
           <div className="feed-section--activity-content">
             {[...allActivities].map((activity, idx) => <MessageCard activity={activity} fetchButtonFromId={fetchButtonFromId} key={idx} />)}
@@ -266,33 +270,46 @@ export function NotificationsUserButton({buttonActivities, button, closeConversa
     return (<></>)
   }
   return (
-    <div>
-          <div className="popup__header">
-            <header className="popup__header-content">
-              <div className="popup__header-left">
+    <>
+          <div className="chat__header">
+            <header className="chat__header-content">
+              <div className="chat__header-left">
                 {/* <button className="popup__header-button"> */}
                   <div className="btn-circle__icon">
                     <a href="#" onClick={() => {closeConversation()}}>
-                      <IoClose />
+                      <IoArrowBack />
                     </a>
                   </div>
                 {/* </button> */}
               </div>
-              <div className="popup__header-center">
-                <h1 className="popup__header-title">
+              <div className="chat__header-center">
+                <h1 className="chat__header-title">
                   Username
                 </h1>
+                <h2 className="chat__header-subtitle">
+                  Button title
+                </h2>
               </div>
-
-              <div className="popup__header-right">
+             <div className="chat__header-right">
+              <div className="avatar-medium">
+                <ImageWrapper
+                  imageType={ImageType.avatar}
+                  alt="image"
+                />
+              </div>
+              </div>
+              <div className="chat__header-right">
                 <a href="#" onClick={() => store.emit(new SetMainPopupCurrentButton(button))}>{button.title}</a>
               </div>
             </header>
           </div>
-          {buttonActivities.map((activity, idx) => <NoticeInnerCard activity={activity} key={idx} />)}
+          <div className="chat__messages">
+            {buttonActivities.map((activity, idx) => <NoticeInnerCard activity={activity} key={idx} />)}
+
+          </div>
 
 
-          <form className="feeds__new-message" >
+          <form className="chat__new-message" >
 
             {/* <button className="btn-circle">
               <div className="btn-circle__content">
@@ -301,7 +318,7 @@ export function NotificationsUserButton({buttonActivities, button, closeConversa
                 </div>
               </div>
             </button> */}
-            <div className="feeds__new-message-message">
+            <div className="chat__new-message__message">
               <FieldText
                 name="message"
                 ref={messageContent}
@@ -313,7 +330,18 @@ export function NotificationsUserButton({buttonActivities, button, closeConversa
               />
               {/* <input className="form__input feeds__new-message-input"></input> */}
             </div>
-            <div className="btn-circle" onClick={() => {
+            <div className="chat__new-message__send">
+              <Btn
+                  btnType={BtnType.circle}
+                  iconLink={<IoSend />}
+                  iconLeft={IconType.circle}
+                  contentAlignment={ContentAlignment.center}
+                  onClick={() => {
+                    sendNewMessage(messageContent.current.value)
+                }}
+              />
+            </div>
+            {/* <div className="btn-circle" onClick={() => {
               sendNewMessage(messageContent.current.value)
               }
             }>
@@ -322,10 +350,10 @@ export function NotificationsUserButton({buttonActivities, button, closeConversa
                   <IoSend />
                 </div>
               </div>
-            </div>
+            </div> */}
 
           </form>
-          </div>
+          </>
   )
 }
 
@@ -373,48 +401,69 @@ export function MessageCard({ activity, fetchButtonFromId }) {
 function NoticeInnerCard({ activity }) {
   if (activity.eventName == ActivityEventName.Message) {
     if (activity.from) {
-      return (<div className="message message--you">
-        <div className="message__header">
-          <div className="message__avatar">
-            <img src="https://dummyimage.com/30/#ccc/fff" alt="Avatar" className="avatar picture__img"></img>
-          </div>
+      return (
+        <>
 
-          <div className="message__user-name-container">
-            <p className="message__user-name">{activity.from}</p>
+          <div className="message message--you">
+          <div className="message__header">
+            <div className="message__avatar">
+              <img src="https://dummyimage.com/30/#ccc/fff" alt="Avatar" className="avatar picture__img"></img>
+            </div>
+
+            <div className="message__user-name-container">
+              <p className="message__user-name">{activity.from}</p>
+            </div>
           </div>
-        </div>
-        <div className="message__content">
-          {activity.message}
-        </div>
-      </div>)
+          <div className="message__content">
+            {activity.message}
+          </div>
+          </div>
+         <div className="message__hour">
+           00:00
+          </div>
+        </>
+
+
+      )
+
     } else {
-      return (<div className="feed-section__center__messages">
-        <div className="message__hour">
-          {readableTimeLeftToDate(activity.createdAt)}
-        </div>
+      return (<>
+
+
         <div className="message message--me">
+
           <div className="message__content">
             {activity.message}
           </div>
         </div>
+        <div className="message__hour message__hour--me">
+           00:00
+        </div>
 
-      </div>)
+      </>)
     }
 
   }
   if (activity.link) {
     return (
-      <div>
-        <a href={activity.link}>
-          <b>{activity.message}</b>
-        </a>
-      </div>
+      <>
+        <div className="chat__time-passed">
+            {readableTimeLeftToDate(activity.createdAt)}
+          </div>
+        <div className="chat__notice">
+          {activity.message}
+          <a href={activity.link}>
+          Show</a> 
+        </div>
+      </>
+
     )
   }
   return (
-    <div>
-      <b>{activity.message}</b>
-    </div>
+
+    <div className="chat__notice">
+      {activity.message}
+    </div >
   )
   // return <>{JSON.stringify(activity)}</>
 }
