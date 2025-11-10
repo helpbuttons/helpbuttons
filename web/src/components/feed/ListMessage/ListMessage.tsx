@@ -1,5 +1,5 @@
 import t from "i18n";
-import { IoArrowBack, IoClose, IoSend } from "react-icons/io5";
+import { IoAdd, IoArrowBack, IoClose, IoSend } from "react-icons/io5";
 import { Dropdown, DropdownField } from "elements/Dropdown/Dropdown";
 import ImageWrapper, { ImageType } from "elements/ImageWrapper";
 import { readableTimeLeftToDate } from "shared/date.utils";
@@ -323,8 +323,29 @@ export function NotificationsUserButton({buttonActivities, button, closeConversa
                 </div>
               </div>
             </button> */}
+              <Btn
+                  btnType={BtnType.circle}
+                  iconLink={<IoAdd />}
+                  iconLeft={IconType.circle}
+                  contentAlignment={ContentAlignment.center}
+                  onClick={() => {
+                    sendNewMessage(messageContent.current.value)
+                }}
+              />
             <div className="chat__new-message__message">
-              <FieldText
+              <input
+                // name={name}
+                // ref={ref}
+                // type="text"
+                // placeholder={placeholder ? placeholder : label}
+                // onChange={onChange}
+                // onBlur={onBlur}
+                className={"form__input"}
+                // defaultValue={defaultValue}
+                // onInput={onInput}
+                // onFocus={onFocus}
+              />
+              {/* <FieldText
                 name="message"
                 ref={messageContent}
                 // label={t('buttonFilters.price')}
@@ -332,7 +353,7 @@ export function NotificationsUserButton({buttonActivities, button, closeConversa
                 // multiInput={true}
                 // placeholder={t('buttonFilters.minPricePlaceholder')}
                 // {...register('minPrice')}
-              />
+              /> */}
               {/* <input className="form__input feeds__new-message-input"></input> */}
             </div>
             <div className="chat__new-message__send">

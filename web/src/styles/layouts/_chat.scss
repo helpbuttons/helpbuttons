@@ -15,6 +15,9 @@
 
     width: 100%;
     padding: $padding-small $padding-medium ;
+    display: flex;
+    flex-direction: row;
+    margin-left: auto;
 
 }
 
