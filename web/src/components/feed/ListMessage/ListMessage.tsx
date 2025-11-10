@@ -227,6 +227,11 @@ export function ListMessage({activities}) {
             </div>
             <div className="feed-section__filters">
               <Dropdown options={filterButtons} />
+              <Btn
+                btnType={BtnType.filter}
+                contentAlignment={ContentAlignment.left}
+                caption={'test'}
+              />
             </div>
           </div>
           <div className="feed-section--activity-content">
