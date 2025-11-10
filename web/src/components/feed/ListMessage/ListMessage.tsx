@@ -22,7 +22,7 @@ const updateFilters = (buttonTypes, activities) => {
       const allTypes = _.uniq(activities.map((activity) => activity.buttonType)).filter((t) => t ? true : false)
       console.log(allTypes)
       const fullTypes = allTypes.map((_btnType) => buttonTypes.find((btnType) => { return btnType.name == _btnType }))
-      const newTypes = fullTypes.map((btnType) => { return { name: btnType.caption, value: btnType.name } });
+      const newTypes = fullTypes.map((btnType) => { return { name: btnType?.caption ? btnType.caption : 'unknown', value: btnType.name } });
       setFilterButtons(() => [{ value: "all", name: "all" }, ...newTypes])
     }
   }, [buttonTypes])
@@ -345,7 +345,6 @@ export function MessageCard({ activity, fetchButtonFromId }) {
           </div>
           <div className="card-notification__text">
             <div className="card-notification__header">
-              {JSON.stringify(activity)}
               <div className="card-notification__info">
                 <div className="">{readableTimeLeftToDate(activity.createdAt)}</div>&nbsp;-&nbsp;<div className=""> {activity.type}</div>
               </div>
