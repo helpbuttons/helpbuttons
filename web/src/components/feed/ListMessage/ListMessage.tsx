@@ -22,7 +22,7 @@ const updateFilters = (buttonTypes, activities) => {
       const allTypes = _.uniq(activities.map((activity) => activity.buttonType)).filter((t) => t ? true : false)
       console.log(allTypes)
       const fullTypes = allTypes.map((_btnType) => buttonTypes.find((btnType) => { return btnType.name == _btnType }))
-      const newTypes = fullTypes.map((btnType) => { return { name: btnType?.caption ? btnType.caption : 'unknown', value: btnType.name } });
+      const newTypes = fullTypes.map((btnType) => { return { name: btnType?.caption ? btnType.caption : 'unknown', value: btnType?.name ? btnType.name : 'unknown' } });
       setFilterButtons(() => [{ value: "all", name: "all" }, ...newTypes])
     }
   }, [buttonTypes])
