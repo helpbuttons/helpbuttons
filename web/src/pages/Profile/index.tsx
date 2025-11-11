@@ -24,7 +24,9 @@ export default function Profile() {
           <Popup linkFwd="/Explore" title={t('user.profileView')}>
             <LoadabledComponent loading={!sessionUser}>
               <CardProfile user={sessionUser} />
-              {(sessionUser && !sessionUser.phone && sessionUser?.role == Role.admin) && 
+              content list
+            
+              {/* {(sessionUser && !sessionUser.phone && sessionUser?.role == Role.admin) && 
                <span style={{"color": "red"}}>{t('user.addSupport')}</span>
               }
                 {sessionUser?.username == sessionUser?.username && (
@@ -59,7 +61,7 @@ export default function Profile() {
                       </div>
                     </Link>
                   </div>
-                )}
+                )} */}
               
             </LoadabledComponent>
           </Popup>
@@ -67,7 +69,7 @@ export default function Profile() {
   );
 }
 
-function AdminOptions() {
+export function AdminOptions() {
   return (
     <>
       <div>
