@@ -83,7 +83,6 @@ export default function LoginForm() {
             {errorMsg}
           </div>
         )}
-        <div className="form__btn-wrapper">
           <Btn
             submit={true}
             disabled={isSubmitting}
@@ -92,7 +91,7 @@ export default function LoginForm() {
             contentAlignment={ContentAlignment.center}
             isSubmitting={isSubmitting}
           />
-
+        <div className="form__btn-wrapper">
           <div className="popup__link">
             <div onClick={() => store.emit(new SetMainPopup(MainPopupPage.SIGNUP))} className={`nav-bottom__link`}>
               {t('user.noAccount')}
@@ -102,7 +101,6 @@ export default function LoginForm() {
             <div className="popup__link">
               <div
                 onClick={() => store.emit(new SetMainPopup(MainPopupPage.SIGNUP_AS_GUEST))}
-                className={`nav-bottom__link`}
               >
                 {t('user.signupAsGuest')}
               </div>
