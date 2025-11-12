@@ -33,8 +33,9 @@ import MetadataSEOFromStore, { MetadataSEO } from 'components/seo';
 import dconsole from 'shared/debugger';
 import Head from 'next/head';
 import CookiesBanner from 'components/home/CookiesBanner';
-import { SetPageName } from 'state/HomeInfo';
+import { MainPopupPage, SetMainPopup, SetPageName } from 'state/HomeInfo';
 import { localStorageService, LocalStorageVars } from 'services/LocalStorage';
+import { ResetFilters } from 'state/Explore';
 
 export default appWithTranslation(MyApp);
 
@@ -106,6 +107,7 @@ function MyApp({ Component, pageProps }) {
 
   const config = useConfig(pageProps._config, onFetchingConfigError);
   const selectedNetwork = useSelectedNetwork(pageProps._selectedNetwork, onFetchingNetworkError);
+
   const setupPaths: string[] = [
     SetupSteps.CREATE_ADMIN_FORM,
     SetupSteps.FIRST_OPEN,
@@ -133,6 +135,7 @@ function MyApp({ Component, pageProps }) {
   }, [fetchingNetworkError, sessionUser, config])
 
   useEffect(() => {
+    setAuthorized(() => false)
     if (setupPaths.includes(path)) {
       setIsSetup(() => true);
     } else {
@@ -163,13 +166,13 @@ function MyApp({ Component, pageProps }) {
     if (config.userCount < 1 &&
       (path == SetupSteps.CREATE_ADMIN_FORM)
     ) {
-      setAuthorized(true);
+      setAuthorized(() => true);
       return;
     }
 
     if (config && config.userCount > 0 && (path == SetupSteps.SETUP_LOGIN)
     ) {
-      setAuthorized(true);
+      setAuthorized(() => true);
       return;
     }
 
@@ -200,13 +203,14 @@ function MyApp({ Component, pageProps }) {
     const isAllowed = isRoleAllowed(Role.guest, path)
 
     if (!isAllowed) {
-      alertService.error(
-        `You are not allowed in here!`
-      );
-      router.push('/')
+      console.log('not allowd')
+      alertService.error(t('common.registeredRequired'));
+      store.emit(new ResetFilters()) // TODO: bug when using router.back
+      store.emit(new SetMainPopup(MainPopupPage.LOGIN))
+      router.back()
       return;
     }
-    setAuthorized(isAllowed);
+    setAuthorized(() => isAllowed);
 
   }, [path, config, sessionUser, pageName]);
 

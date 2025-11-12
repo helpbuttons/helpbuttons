@@ -9,7 +9,6 @@ export const allowedPathsPerRole =
             '/Signup',
             '/Faqs',
             '/',
-            '/ButtonNew',
             '/Show/:btn',
             '/Explore',
             '/Explore/:zoom/:lat/:lng',
@@ -31,6 +30,7 @@ export const allowedPathsPerRole =
     {
         role: Role.registered,
         paths: [
+            '/ButtonNew',
             '/Profile',
             '/Activity',
             '/ProfileEdit',
