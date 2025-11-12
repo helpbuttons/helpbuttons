@@ -409,7 +409,7 @@
     "signupGuestDetails": "Proceed with signup details",
     "explainPublishAsGuest": "To signup as anonymous, please generate a new login code. You can use it for logging in to check your _helpbuttons_ in the future.",
     "generateCode": "Generate new anonymous code",
-    "explainUseGuestCode": "Please store this code, it is your only way to keep track of your publications",
+    "explainUseGuestCode": "This is your invite code. Store this code if you want to see your _helpbuttons_ in the future.",
     "explainGuestDetails": "We need some details to complete your signup",
     "editUsername": "Edit username",
     "optionalFields": "Optional fields",

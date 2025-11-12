@@ -323,7 +323,7 @@
     "editUsername": "Editar usuario",
     "endorse": "Avalar",
     "explainPublishAsGuest": "Por favor, pulsa para generar tu código, que podrás usar para entrar y comprobar tus _helpbuttons_",
-    "explainUseGuestCode": "Por favor guarda este código, es la única forma que tendrás de entrar para comprobar tus publicaciones en el futuro.",
+    "explainUseGuestCode": "Este es tu código de invitación. Guárdalo si quieres entrar para ver tus publicaciones en el futuro.",
     "emailRecovery":"Email de recuperación",
     "emailRecoveryExplain":"Si ya tienes cuenta, entra pulsando un enlace que mandaremos a tu correo.",
     "generateCode": "Generar nuevo código anónimo",
