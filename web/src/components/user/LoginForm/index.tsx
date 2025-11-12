@@ -86,13 +86,12 @@ export default function LoginForm() {
         <div className="form__btn-wrapper">
           <Btn
             submit={true}
-            disabled={isSubmitting || cookieState != CookiesState.ACCEPTED}
+            disabled={isSubmitting}
             btnType={BtnType.submit}
             caption={t('user.loginButton')}
             contentAlignment={ContentAlignment.center}
             isSubmitting={isSubmitting}
           />
-          <AcceptCookiesWarn cookieState={cookieState}/>
 
           <div className="popup__link">
             <div onClick={() => store.emit(new SetMainPopup(MainPopupPage.SIGNUP))} className={`nav-bottom__link`}>
