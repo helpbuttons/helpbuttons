@@ -47,7 +47,7 @@ export default function CardProfile({ user, showAdminOptions = false}) {
 
         </div>
         <div className="card-profile__role">{user?.role == Role.admin && <div className="hashtag hashtag--blue"> {t('roles.administrator')}</div>}{user?.endorsed && <div className="hashtag hashtag--badge">{t('user.endorsed')}</div>}</div>
-        <div className="card-profile__rating">
+          <div className="card-profile__rating">
 
                 <div className="card-profile__rate">
                   <div className="card-profile__rate-label">

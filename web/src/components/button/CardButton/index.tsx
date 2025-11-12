@@ -426,8 +426,7 @@ function ExpiringAlert({
 
 export function ButtonOwnerPhone({ user, button }) {
   const [phone, setPhone] = useState(null);
-  const sessionUser = useGlobalStore((state: GlobalState) => state.sessionUser);
-
+  
   const showPhone = () => {
     store.emit(
         new GetPhone(
@@ -444,8 +443,7 @@ export function ButtonOwnerPhone({ user, button }) {
   }
   return (
     <>
-      {(user?.publishPhone || 
-        isAdmin(sessionUser)) && (
+      {user?.publishPhone && (
         <>
           {!phone && 
             <Btn
