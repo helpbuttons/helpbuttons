@@ -149,13 +149,13 @@ export function SignupForm() {
               <AcceptCookiesWarn cookieState={cookieState}/>
             </div>
             <div className="popup__link">
-              <div onClick={() => store.emit(new SetMainPopup(MainPopupPage.LOGIN))} className={`nav-bottom__link`}>
+              <div onClick={() => store.emit(new SetMainPopup(MainPopupPage.LOGIN))} >
                 {t('user.loginLink')}
               </div>
             </div>
             {selectedNetwork?.allowGuestCreation && 
               <div className="popup__link">
-                <div onClick={() => store.emit(new SetMainPopup(MainPopupPage.SIGNUP_AS_GUEST))} className={`nav-bottom__link`}>
+                <div onClick={() => store.emit(new SetMainPopup(MainPopupPage.SIGNUP_AS_GUEST))} >
                   {t('user.signupAsGuest')}
                 </div>
               </div>
@@ -239,12 +239,12 @@ export function SignupAsGuestForm() {
           {(step == steps.REQUEST_CODE) &&
             <>
               <div className="popup__link">
-                <div onClick={() => store.emit(new SetMainPopup(MainPopupPage.LOGIN))} className={`nav-bottom__link`}>
+                <div onClick={() => store.emit(new SetMainPopup(MainPopupPage.LOGIN))} >
                   {t('user.loginLink')}
                 </div>
               </div>
               <div className="popup__link">
-                <div onClick={() => store.emit(new SetMainPopup(MainPopupPage.SIGNUP))} className={`nav-bottom__link`}>
+                <div onClick={() => store.emit(new SetMainPopup(MainPopupPage.SIGNUP))} >
                   {t('user.noAccount')}
                 </div>
               </div>

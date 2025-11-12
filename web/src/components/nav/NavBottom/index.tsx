@@ -29,6 +29,7 @@ import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
 import { useActivities } from 'state/Activity';
 import { useEffect, useState } from 'react';
 import { ShowDesktopOnly, ShowMobileOnly } from 'elements/SizeOnly';
+import router from 'next/router';
 
 export default NavBottom;
 
@@ -96,8 +97,17 @@ function NavBottom({ sessionUser }) {
           <div className="nav-bottom__text">{t('menu.explore')}</div>
         </NavLink>
           <ShowMobileOnly>
+            {/* {!sessionUser ?
+            
+            
+            : 
+            
+            } */}
             <NavLink
-              href="/ButtonNew"
+              href="/" 
+              onClick={sessionUser? ()=> router.push(`/ButtonNew`) : () =>
+              store.emit(new SetMainPopup(MainPopupPage.LOGIN))
+            }
               className={`nav-bottom__link nav-bottom__link--create ${isCurrent(
                 'ButtonNew',
               )}`}
@@ -209,7 +219,10 @@ function NavBottom({ sessionUser }) {
         )}
         <ShowDesktopOnly>
             <NavLink
-              href="/ButtonNew"
+              href="/" 
+              onClick={sessionUser? ()=> router.push(`/ButtonNew`) : () =>
+              store.emit(new SetMainPopup(MainPopupPage.LOGIN))
+            }
               className={`nav-bottom__link nav-bottom__link--create ${isCurrent(
                 'ButtonNew',
               )}`}
@@ -218,9 +231,9 @@ function NavBottom({ sessionUser }) {
                 {isCurrent(
                     'ButtonNew',
                   ) ?  
-                  <IoAddCircle/>
-                 :
-                  <IoAddCircleOutline/>
+                    <IoAddCircle/>
+                  :
+                    <IoAddCircleOutline/>
                 }
               </div>
               <div className="nav-bottom__text">{t('menu.create')}</div>

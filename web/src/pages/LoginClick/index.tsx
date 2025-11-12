@@ -80,12 +80,12 @@ export default function LoginClick() {
                 isSubmitting={isSubmitting}
               />
               <div className="popup__link">
-                <div onClick={() => store.emit(new SetMainPopup(MainPopupPage.LOGIN))} className={`nav-bottom__link`}>
+                <div onClick={() => store.emit(new SetMainPopup(MainPopupPage.LOGIN))}>
                   {t('user.loginWEmail')}
                 </div>
               </div>
               <div className="popup__link">
-                <div onClick={() => store.emit(new SetMainPopup(MainPopupPage.SIGNUP))} className={`nav-bottom__link`}>
+                <div onClick={() => store.emit(new SetMainPopup(MainPopupPage.SIGNUP))} >
                   {t('user.noAccount')}
                 </div>
               </div>
