@@ -234,7 +234,8 @@
     "error": "Something went wrong",
     "notFoundMessage": "Page not found or deleted",
     "options": "Options",
-    "edit": "Edit"
+    "edit": "Edit",
+    "registeredRequired": "Please login or signup"
   },
   "button": {
     "title": "_helpbutton_ view",

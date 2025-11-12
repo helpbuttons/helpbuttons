@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { useRouter } from 'next/router';
+import router, { useRouter } from 'next/router';
 
 export function replaceUrl(url) {
-  window.history.replaceState(null, '', url);
+  window.history.replaceState(window.history.state, '', url);
 }
 
 export function updateUrl(router, queryParams = null) {

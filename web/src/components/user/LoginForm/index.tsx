@@ -83,17 +83,15 @@ export default function LoginForm() {
             {errorMsg}
           </div>
         )}
-        <div className="form__btn-wrapper">
           <Btn
             submit={true}
-            disabled={isSubmitting || cookieState != CookiesState.ACCEPTED}
+            disabled={isSubmitting}
             btnType={BtnType.submit}
             caption={t('user.loginButton')}
             contentAlignment={ContentAlignment.center}
             isSubmitting={isSubmitting}
           />
-          <AcceptCookiesWarn cookieState={cookieState}/>
-
+        <div className="form__btn-wrapper">
           <div className="popup__link">
             <div onClick={() => store.emit(new SetMainPopup(MainPopupPage.SIGNUP))} className={`nav-bottom__link`}>
               {t('user.noAccount')}
@@ -103,7 +101,6 @@ export default function LoginForm() {
             <div className="popup__link">
               <div
                 onClick={() => store.emit(new SetMainPopup(MainPopupPage.SIGNUP_AS_GUEST))}
-                className={`nav-bottom__link`}
               >
                 {t('user.signupAsGuest')}
               </div>
