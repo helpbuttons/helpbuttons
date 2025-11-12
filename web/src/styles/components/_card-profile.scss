@@ -29,6 +29,10 @@ $avatar-margin: $padding-big;
 
 }
 
+.card-profile__description:empty{
+  margin:0;
+}
+
 
 .card-profile__tags {
 
