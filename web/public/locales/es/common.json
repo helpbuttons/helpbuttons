@@ -51,7 +51,9 @@
     "powered": "Powered by",
     "install": "Instala {0} y recibe notificaciones:",
     "inviteToNetwork": "Compartir",
-    "inviteCopied": "Link copied to clipboard"
+    "inviteCopied": "Link copied to clipboard",
+    "keyLocations": "Lugares Clave"
+
   },
   "share": {
     "showSharePopup": "Comparte esta aplicación",
