@@ -265,13 +265,13 @@ $popup-max-height-large: 720px;
 .popup__link {
   @extend .btn;
   text-decoration: none;
-  border: $border-style-basic;
+  border: $border-style-thick;
   margin-top: $padding-big;
-  border-radius: $border-radius-basic;
+  border-radius: $border-radius-circle;
   text-align: center;
   width: 100%;
+  color: $color-gray;
   padding: $padding-big;
-  color: $color-black;
   justify-content: center;
 
   a, a:visited, a:active {

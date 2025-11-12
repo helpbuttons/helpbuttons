@@ -93,7 +93,7 @@ export default function LoginForm() {
           />
         <div className="form__btn-wrapper">
           <div className="popup__link">
-            <div onClick={() => store.emit(new SetMainPopup(MainPopupPage.SIGNUP))} className={`nav-bottom__link`}>
+            <div onClick={() => store.emit(new SetMainPopup(MainPopupPage.SIGNUP))} >
               {t('user.noAccount')}
             </div>
           </div>
