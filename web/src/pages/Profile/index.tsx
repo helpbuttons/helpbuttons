@@ -8,7 +8,7 @@ import {
   IoLogOutOutline,
   IoQrCodeOutline,
 } from 'react-icons/io5';
-import Btn, { IconType } from 'elements/Btn';
+import Btn, { BtnType, IconType } from 'elements/Btn';
 import { Role } from 'shared/types/roles';
 import t from 'i18n';
 import { LoadabledComponent } from 'components/loading';
@@ -72,24 +72,22 @@ export default function Profile() {
 export function AdminOptions() {
   return (
     <>
-      <div>
         <Link href="/Configuration">
           <Btn
+            btnType={BtnType.filter}
             iconLeft={IconType.svg}
             iconLink={<IoBuildOutline />}
             caption={t('configuration.title')}
           />
         </Link>
-      </div>
-      <div>
         <Link href="/Configuration/Moderation">
           <Btn
+            btnType={BtnType.filter}
             iconLeft={IconType.svg}
             iconLink={<IoCreateOutline />}
             caption={t('configuration.moderation')}
           />
         </Link>
-      </div>
     </>
   );
 }
