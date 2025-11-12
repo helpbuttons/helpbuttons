@@ -160,8 +160,10 @@ $avatar-margin: $padding-big;
   display: flex;
   flex-direction: row;
   position: relative;
+  flex-wrap: wrap;
   flex: auto;
   overflow: auto;
+  gap: $padding-small;
 
   & a {
     width: max-content;
