@@ -42,7 +42,8 @@ export default function Login() {
     };
 
     return <Popup>
-        <Form onSubmit={handleSubmit(onSubmit)} classNameExtra="login__form">
+        <Form onSubmit={handleSubmit(onSubmit)} classNameExtra="login">
+            <div className="login__form">
                 <div className="form__inputs-wrapper">
                     <FieldText
                         name="email"
@@ -75,6 +76,7 @@ export default function Login() {
                         isSubmitting={isSubmitting}
                     />
                 </div>
+            </div>
         </Form>
     </Popup>
 }

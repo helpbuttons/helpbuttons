@@ -52,8 +52,9 @@ export default function LoginClick() {
     <>
         <Form
           onSubmit={handleSubmit(onSubmit)}
-          classNameExtra="login__form"
+          classNameExtra="login"
         > 
+          <div className="login__form">
             <div className="form__inputs-wrapper">
               <FieldText
                 name="email"
@@ -85,6 +86,7 @@ export default function LoginClick() {
                   {t('user.noAccount')}
               </div>
             </div>
+          </div>
         </Form>
     </>
   );
