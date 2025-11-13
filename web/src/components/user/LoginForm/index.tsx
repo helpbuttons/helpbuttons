@@ -92,18 +92,13 @@ export default function LoginForm() {
             isSubmitting={isSubmitting}
           />
         <div className="form__btn-wrapper">
-          <div className="popup__link">
-            <div onClick={() => store.emit(new SetMainPopup(MainPopupPage.SIGNUP))} >
+          <div className="popup__link" onClick={() => store.emit(new SetMainPopup(MainPopupPage.SIGNUP))} >
               {t('user.noAccount')}
-            </div>
           </div>
            {selectedNetwork?.allowGuestCreation && 
-            <div className="popup__link">
-              <div
-                onClick={() => store.emit(new SetMainPopup(MainPopupPage.SIGNUP_AS_GUEST))}
-              >
+            <div className="popup__link" onClick={() => store.emit(new SetMainPopup(MainPopupPage.SIGNUP_AS_GUEST))}>
+
                 {t('user.signupAsGuest')}
-              </div>
             </div>
             }
         </div>
