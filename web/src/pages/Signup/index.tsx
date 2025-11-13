@@ -126,8 +126,7 @@ export function SignupForm() {
     )
   }
   return (
-      <Form onSubmit={handleSubmit(onSubmit)} classNameExtra="login">
-        <div className="login__form">
+      <Form onSubmit={handleSubmit(onSubmit)} classNameExtra="login__form">
           <div className="form__inputs-wrapper">
             <NewUserFields
               control={control}
@@ -157,7 +156,6 @@ export function SignupForm() {
               </div>
             }
           </div>
-        </div>
       </Form>
   );
 }
@@ -195,8 +193,7 @@ export function SignupAsGuestForm() {
     }))
   }
   return <>
-    <Form onSubmit={handleSubmit(onSubmit)} classNameExtra="login">
-      <div className="login__form">
+    <Form onSubmit={handleSubmit(onSubmit)} classNameExtra="login__form">
         <div className="form__inputs-wrapper">
           {step == steps.REQUEST_CODE &&
             <>
@@ -241,7 +238,7 @@ export function SignupAsGuestForm() {
                   {t('user.noAccount')}
               </div>
             </>}
-        </div></div>
+        </div>
     </Form>
   </>
 }
