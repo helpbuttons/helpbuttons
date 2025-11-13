@@ -6,7 +6,7 @@ import { useGlobalStore } from 'state';
 import { GlobalState, store } from 'state';
 import NavBottom from '../NavBottom';
 import BrandCard from 'components/map/Map/BrandCard';
-import { ShowDesktopOnly } from 'elements/SizeOnly';
+import { ShowDesktopOnly, ShowMobileOnly } from 'elements/SizeOnly';
 import router from 'next/router';
 import { ListButtonTypes } from '../ButtonTypes';
 import { ExploreMapState, ToggleAdvancedFilters } from 'state/Explore';
@@ -43,12 +43,14 @@ function NavHeader({ selectedNetwork }){
           <NavBottom sessionUser={sessionUser} />
         </ShowDesktopOnly>
       </div>
-      <ShowDesktopOnly>
-        <div className="nav-header__filters">
+      <div className="nav-header__filters">
+        <ShowMobileOnly>
+          <>{(pageName != 'HomeInfo' && <ListButtonTypes/>)}</>
+        </ShowMobileOnly>
+        <ShowDesktopOnly>
           <ListButtonTypes/>
-        </div>
-      </ShowDesktopOnly>
-
+        </ShowDesktopOnly>
+      </div>
     </div>
   );
 }
