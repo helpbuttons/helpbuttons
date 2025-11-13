@@ -444,8 +444,8 @@ export function ButtonOwnerPhone({ user, button }) {
   }
   return (
     <>
-      {(user?.publishPhone || 
-        isAdmin(sessionUser)) && (
+      {user?.publishPhone || 
+        isAdmin(sessionUser) && (
         <>
           {!phone && 
             <Btn
