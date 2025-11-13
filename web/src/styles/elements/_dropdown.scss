@@ -102,12 +102,12 @@ $dropdown-bck: $color-ligth-gray;
   overflow-x: hidden;
   height: auto;
   padding: $padding-small $padding-medium;
-  padding-right: 1.5rem;
-  width: inherit;
+  width: auto;
   text-decoration: none;
   border: none;
   border-radius: 2rem;
   color: $color-black;
+  font-weight: $font-weight-bold;
 
   transition: all 0.2s ease-in-out;
   font-size: $font-size-general;
