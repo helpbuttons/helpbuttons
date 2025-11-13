@@ -751,6 +751,26 @@ width: 100%;
 
 }
 
+.form__qr-code {
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: $padding-big;
+  text-align: center;
+  font-weight: $font-weight-bolder;
+  word-break: break-all;
+  
+
+}
+
+.form__qr-code__qr-image {
+
+  max-width: 200px;
+
+}
+
 @media #{$breakpoints-medium} {
 
   .form__input--button-type-field {

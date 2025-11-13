@@ -136,7 +136,7 @@ function List({
                     : '')
                 }
               >
-                <div className="drag-tab__line"></div>
+                {!isListFullScreen && <span className="drag-tab__line"></span>}
                 {isListOpen && (
                   <AdvancedFiltersSortDropDown
                     className={'dropdown__dropdown-trigger--list'}
@@ -213,7 +213,7 @@ function List({
                     (showMap ? '' : 'drag-tab--hide')
                   }
                 >
-                  <span className="drag-tab__line"></span>
+                  {!isListFullScreen && <span className="drag-tab__line"></span>}
                   <div className="drag-tab__icon">
                     <IoList />
                   </div>
@@ -232,7 +232,7 @@ function List({
                     (showMap ? '' : 'drag-tab--hide')
                   }
                 >
-                  <span className="drag-tab__line"></span>
+                  {!isListFullScreen && <span className="drag-tab__line"></span>}
                   <div className="drag-tab__icon">
                     <IoClose />
                   </div>

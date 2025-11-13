@@ -51,7 +51,9 @@
     "powered": "Powered by",
     "install": "Instala {0} y recibe notificaciones:",
     "inviteToNetwork": "Compartir",
-    "inviteCopied": "Link copied to clipboard"
+    "inviteCopied": "Link copied to clipboard",
+    "keyLocations": "Lugares Clave"
+
   },
   "share": {
     "showSharePopup": "Comparte esta aplicación",
@@ -71,7 +73,9 @@
     "invitePeopleExplain": "Copia y comparte este link para añadir a otros a tu red",
     "optionRss": "Suscríbete a RSS",
     "copyLink": "Copiar enlace",
-    "printInvites": "Invitaciones en PDF"
+    "printInvites": "Invitaciones en PDF",
+    "codeCopied": "Código copiado",
+    "copyCode": "Copiar código"
 
   },
   "feed": {
@@ -256,7 +260,7 @@
     "register": "Registrarse",
     "newLoginTokenSent": "Si tienes una cuenta, recibirás un correo con una dirección en la que pulsar para entrar.",
     "sendLoginToken": "Mandar enlace de Inicio de Sesión",
-    "loginLink": "Tienes cuenta",
+    "loginLink": "Tengo cuenta",
     "loginWEmail": "Entrar con contraseña",
     "avatar": "Elige avatar",
     "avatarLabel": "Imagen de perfil",
@@ -264,7 +268,7 @@
     "newPasswordPlaceHolder": "Tu nueva contraseña",
     "usernamePlaceHolder": "Escribe un nombre de usuario",
     "editProfile": "Edita tu perfil de usuario",
-    "noAccount": "No tengo cuenta",
+    "noAccount": "Hacerme una cuenta",
     "tags": "Tus intereses",
     "passwordConfirmationPlaceHolder": "Escribe tu contraseña otra vez por favor",
     "deactivate": "Desactivar cuenta",
@@ -320,10 +324,16 @@
     "showWassapExplain": "Muestra un link a Whatsapp si quieres. Necesitas publicar tu teléfono antes para ello.",
     "editUsername": "Editar usuario",
     "endorse": "Avalar",
-    "explainPublishAsGuest": "Por favor genera un nuevo código, que entrar usar para y comprobar tus _helpbuttons_",
-    "explainUseGuestCode": "Por favor guarda este código, es la única forma que tendrás de entrar para comprobar tus publicaciones",
+    "explainPublishAsGuest": "Por favor, pulsa para generar tu código, que podrás usar para entrar y comprobar tus _helpbuttons_",
+    "explainUseGuestCode": "Por favor guarda este código, es la única forma que tendrás de entrar para comprobar tus publicaciones en el futuro.",
     "emailRecovery":"Email de recuperación",
-    "emailRecoveryExplain":"Si ya tienes cuenta, entra pulsando un enlace que mandaremos a tu correo."
+    "emailRecoveryExplain":"Si ya tienes cuenta, entra pulsando un enlace que mandaremos a tu correo.",
+    "generateCode": "Generar nuevo código anónimo",
+    "signupAsGuest": "Participar como invitado",
+    "signupGuestDetails": "Continuar con ingreso",
+    "optionalFields": "Campos opcionales",
+     "explainGuestDetails": "Necesitamos algunos detalles para completar tu ingreso"
+
   },
   "configure": {
     "browsePins": "Mapa con pins de ubicación",

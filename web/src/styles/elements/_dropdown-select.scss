@@ -15,8 +15,7 @@ $dropdown-max-width: 10rem;
   
   overflow-x: hidden;
   height: $form-input-height;
-  padding: $padding-big $padding-big;
-  width: 100%;
+  width: auto;
   margin: $margin-xsmall 0;
   border: $border-lines-width solid $color-gray-border;
   border-radius: 2rem;
@@ -47,6 +46,27 @@ $dropdown-max-width: 10rem;
     background: $color-ligth-gray;
   }
 
+}
+
+.dropdown-select__container {
+  position: relative;
+  display: inline-block;
+  width: auto;
+}
+
+.dropdown-select__icon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
+  color: #666;
+  font-size: 18px;
+}
+
+.dropdown-select-with-icon {
+  padding-left: 35px;
+  width: 100%;
 }
 
 .dropdown-select__trigger--filter {

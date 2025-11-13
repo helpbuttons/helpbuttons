@@ -19,7 +19,7 @@
     "loading": "...",
     "goToExplore": "Explore _helpbuttons_",
     "install": "Install {0} and receive notifications:",
-    "knowMore": "Know more",
+    "knowMore": "Know more about {0}",
     "goToCreate": "Create _helpbutton_",
     "activity": "Recent Activity",
     "exploreSubtitle": "See & Search the _helpbuttons_ on this map",
@@ -71,7 +71,9 @@
     "copyLink": "Copy link",
     "advancedInviteOptions": "Printable PDF invitations",
     "printInvites":"Printable pdf invitations",
-    "linkCopied": "{0} copied to clipboard"
+    "linkCopied": "{0} copied to clipboard",
+    "codeCopied": "Code copied",
+    "copyCode": "Copy code"
 
   },
   "feed": {
@@ -231,7 +233,8 @@
     "error": "Something went wrong",
     "notFoundMessage": "Page not found or deleted",
     "options": "Options",
-    "edit": "Edit"
+    "edit": "Edit",
+    "registeredRequired": "Please login or signup"
   },
   "button": {
     "title": "_helpbutton_ view",

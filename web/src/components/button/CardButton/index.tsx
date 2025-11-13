@@ -351,9 +351,10 @@ export function CardButtonHeadBig({ button, buttonTypes, toggleShowReplyFirstPos
         <div className="card-button__paragraph">
           <TextFormatted text={button.description} />
         </div>
+        {/* REMOVING TAGS FOR NOW TO TEST BEHAVIOUR FOR CLEANER CARD LOOK - REVISE IN THE FUTURE
         <div className="card-button__hashtags">
           <TagsNav tags={button.tags} />
-        </div>
+        </div> */}
 
         <div className="card-button__bottom-properties">
           {customFields && customFields.length > 0 && (
@@ -426,7 +427,8 @@ function ExpiringAlert({
 
 export function ButtonOwnerPhone({ user, button }) {
   const [phone, setPhone] = useState(null);
-  
+  const sessionUser = useGlobalStore((state: GlobalState) => state.sessionUser);
+
   const showPhone = () => {
     store.emit(
         new GetPhone(
@@ -443,7 +445,8 @@ export function ButtonOwnerPhone({ user, button }) {
   }
   return (
     <>
-      {user?.publishPhone && (
+      {user?.publishPhone || 
+        isAdmin(sessionUser) && (
         <>
           {!phone && 
             <Btn

@@ -11,6 +11,7 @@ import { Network } from 'shared/entities/network.entity';
 import { getHostname } from 'shared/sys.helper';
 import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
 import { useStore } from 'state';
+import { handleAcceptCookies, handleResetCookies } from 'components/home/CookiesBanner';
 
 export default function NewUserFields({
   register,
@@ -178,8 +179,10 @@ export default function NewUserFields({
         onChanged={(value) => {
           if(value)
           {
+            handleAcceptCookies()
             setValue('acceptPrivacyPolicy', 'yes')
           }else{
+            handleResetCookies()
             setValue('acceptPrivacyPolicy', 'no')
           }
         }

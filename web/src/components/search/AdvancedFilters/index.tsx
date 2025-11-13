@@ -144,6 +144,7 @@ export default function AdvancedFilters({
                     {showFilterByDays && 
                       <FilterByDays days={days} setDays={(value) => setValue('days', value)}/>
                     }
+                    
                     <FieldText
                       name="query"
                       label={t('buttonFilters.queryLabel')}
@@ -155,11 +156,7 @@ export default function AdvancedFilters({
                       <AllSuggestedTags word={query.substring(query.lastIndexOf(" ")+1)} maxTags={10} tags={tags} addTag={(tag) => {addTag(tag); setValue('query',updateQueryWhenTagAdded(query, tag))}}/>
                       <TagFollow tags={tags}/>
                     </FieldText>
-                    <Accordion icon={<IoList/>} title={t('buttonFilters.byCategory')}>
-                      <FieldMultiSelectButtonTypes selectedTypes={selectedButtonTypes} types={buttonTypes} handleChange={(name, newValue) => {
-                                  setButtonTypeValue(name, newValue);
-                                }}/>
-                    </Accordion>
+         
 
                     <AdvancedFiltersSortDropDown
                       className={'dropdown__dropdown-trigger'}
