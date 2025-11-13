@@ -34,7 +34,7 @@ export class HttpService {
     return localStorageService.read(LocalStorageVars.ACCESS_TOKEN);
   }
   public setAccessToken(accessToken?: string) {
-    dconsole.log('setting up new token ' + accessToken)
+    // dconsole.log('setting up new token ' + accessToken)
     localStorageService.save(
       LocalStorageVars.ACCESS_TOKEN,
       accessToken.toString(),
