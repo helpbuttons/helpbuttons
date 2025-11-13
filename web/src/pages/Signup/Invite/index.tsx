@@ -98,7 +98,9 @@ export function InviteForm() {
     <>
       <Form onSubmit={handleSubmit(onSubmit)} classNameExtra="login">
         <div className="login__form">
-          {t('user.explainGuestDetails')}          
+          <div className="form__header">
+            {t('user.explainGuestDetails')}   
+          </div>       
           <div className="form__inputs-wrapper">
             <NewUserFields
               control={control}

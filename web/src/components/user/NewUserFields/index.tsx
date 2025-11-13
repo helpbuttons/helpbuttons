@@ -11,7 +11,12 @@ import { Network } from 'shared/entities/network.entity';
 import { getHostname } from 'shared/sys.helper';
 import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
 import { useStore } from 'state';
+<<<<<<< HEAD
 import { handleAcceptCookies, handleResetCookies } from 'components/home/CookiesBanner';
+=======
+import Accordion from 'elements/Accordion';
+import { IoAccessibility, IoOptions } from 'react-icons/io5';
+>>>>>>> c2e222d9d7 (invite fix home description)
 
 export default function NewUserFields({
   register,
@@ -73,17 +78,7 @@ export default function NewUserFields({
           {...register('email', { required: true })}
         ></FieldText>
       }
-      {short &&  // not required
-        <FieldText
-          name="email"
-          label={t('user.email')}
-          explain={t('user.emailExplain')}
-          classNameInput="squared"
-          placeholder={t('user.emailPlaceHolder')}
-          validationError={errors.email}
-          {...register('email')}
-        ></FieldText>
-      }
+
       <FieldText
         name="name"
         label={t('user.name')}
@@ -145,8 +140,38 @@ export default function NewUserFields({
         {...register('password', { minLength: 8 })}
       ></FieldPassword>
       } */}
+      {short &&  // not required
+        <Accordion icon={<IoOptions/>} title={t("user.optionalFields")} >
+
+            <FieldText
+            name="email"
+            label={t('user.email')}
+            explain={t('user.emailExplain')}
+            classNameInput="squared"
+            placeholder={t('user.emailPlaceHolder')}
+            validationError={errors.email}
+            {...register('email')}
+          ></FieldText>
+
+          {selectedNetwork && !isInitAdminForm && short && (
+            <FieldTags
+              label={t('user.tags')}
+              explain={t('user.tagsExplain')}
+              placeholder={t('common.add')}
+              validationError={errors.tags}
+              setTags={(tags) => {
+                setValue('tags', tags);
+              }}
+              tags={watch('tags')}
+              maxTags={30}
+            />
+           )}
+
+        </Accordion>
+        
+      }
       
-      {selectedNetwork && !isInitAdminForm && (
+      {selectedNetwork && !isInitAdminForm && !short && (
           <FieldTags
             label={t('user.tags')}
             explain={t('user.tagsExplain')}
