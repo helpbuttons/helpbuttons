@@ -9,7 +9,7 @@ import { CardSubmenu, CardSubmenuOption } from "components/card/CardSubmenu";
 import { Role } from "shared/types/roles";
 import Link from 'next/link';
 import Btn, { BtnType, IconType } from 'elements/Btn';
-import { IoFolderOutline, IoHammerOutline, IoLogOutOutline } from 'react-icons/io5';
+import { IoHammerOutline, IoLogOutOutline } from 'react-icons/io5';
 import { AdminOptions } from 'pages/Profile';
 
 
@@ -66,56 +66,58 @@ export default function CardProfile({ user, showAdminOptions = false, showProfil
 
         </div>
         
-                {showProfileEdit && (
-                  <>{(sessionUser.id == user.id && sessionUser?.role == Role.admin) && 
-                    <span style={{"color": "red"}}>{t('user.addSupport')}</span>
-                   }
-                  <div className="card-profile__actions">
-                    <Link href="/ProfileEdit">
-                      <Btn
-                        btnType={BtnType.filter}
-                        iconLeft={IconType.svg}
-                        iconLink={<IoHammerOutline />}
-                        caption={t('user.editProfile')}
-                      />
-                    </Link>
-                    {sessionUser?.role == Role.admin && 
-                      <AdminOptions/>
-                    }
-                    <Link href="/">
-                        <Btn
-                          btnType={BtnType.filter}
-                          iconLeft={IconType.svg}
-                          iconLink={<IoLogOutOutline />}
-                          caption={t('user.logout')}
-                          onClick={() => router.push('/Logout')}
-                        />
-                    </Link>
-                  </div>
-                  </>
-                )}
-        <div className="card-profile__rating">
+      {showProfileEdit && (
+        <>{(sessionUser.id == user.id && sessionUser?.role == Role.admin) &&
+          <span style={{ "color": "red" }}>{t('user.addSupport')}</span>
+        }
+          <div className="card-profile__actions">
+            <Link href="/ProfileEdit">
+              <Btn
+                btnType={BtnType.filter}
+                iconLeft={IconType.svg}
+                iconLink={<IoHammerOutline />}
+                caption={t('user.editProfile')}
+              />
+            </Link>
+            {sessionUser?.role == Role.admin &&
+              <AdminOptions />
+            }
+            <Link href="/">
+              <Btn
+                btnType={BtnType.filter}
+                iconLeft={IconType.svg}
+                iconLink={<IoLogOutOutline />}
+                caption={t('user.logout')}
+                onClick={() => router.push('/Logout')}
+              />
+            </Link>
+          </div>
 
-                <div className="card-profile__rate card-profile__rate--published">
-                  <div className="card-profile__rate-label">
-                  {t('user.helpbuttonsPublishedAmount')} 
-                  </div>
-                  {user?.buttonCount?? 0}
-                </div>
-                <div className="card-profile__rate">
-                  <div className="card-profile__rate-label">
-                  {t('user.timesFollowed')} 
-                  </div>
-                  {user?.followsCount ?? 0}
-                </div>
-                <div className="card-profile__rate">
-                  <div className="card-profile__rate-label">
-                    {t('user.commentsAmount')} 
-                  </div>
-                    {user?.commentCount ?? 0}
-                </div>
 
+
+          <div className="card-profile__rating">
+            <div className="card-profile__rate card-profile__rate--published">
+              <div className="card-profile__rate-label">
+                {t('user.helpbuttonsPublishedAmount')}
+              </div>
+              {user?.buttonCount ?? 0}
             </div>
+            <div className="card-profile__rate">
+              <div className="card-profile__rate-label">
+                {t('user.timesFollowed')}
+              </div>
+              {user?.followsCount ?? 0}
+            </div>
+            <div className="card-profile__rate">
+              <div className="card-profile__rate-label">
+                {t('user.commentsAmount')}
+              </div>
+              {user?.commentCount ?? 0}
+            </div>
+
+          </div>
+        </>
+      )}
     </>
   );
 }
