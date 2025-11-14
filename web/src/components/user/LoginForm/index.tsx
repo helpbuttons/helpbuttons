@@ -16,7 +16,7 @@ import { useRouter } from 'next/router';
 import t from 'i18n';
 import { alertService } from 'services/Alert';
 import { CookiesState, MainPopupPage, SetMainPopup } from 'state/HomeInfo';
-import { AcceptCookiesWarn } from 'components/home/CookiesBanner';
+import { handleAcceptCookies } from 'components/home/CookiesBanner';
 import { Network } from 'shared/entities/network.entity';
 
 export default function LoginForm() {
@@ -33,6 +33,7 @@ export default function LoginForm() {
   );
   
   const onSubmit = (data) => {
+    handleAcceptCookies()
     store.emit(
       new Login(data.email.toLowerCase(), data.password, onSuccess, onError),
     );
@@ -56,8 +57,7 @@ export default function LoginForm() {
   );
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit)} classNameExtra="login">
-      <div className="login__form">
+    <Form onSubmit={handleSubmit(onSubmit)} classNameExtra="login__form">
         <div className="form__inputs-wrapper">
           <FieldText
             name="email"
@@ -102,7 +102,6 @@ export default function LoginForm() {
             </div>
             }
         </div>
-      </div>
     </Form>
   );
 }
