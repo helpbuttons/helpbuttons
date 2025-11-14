@@ -16,9 +16,7 @@ $nav-header-new-message-radius: $border-radius-circle;
   width: 100%;
   height: auto;
   position: relative;
-  box-shadow: $box-shadow-divs;
   border-bottom: $border-style-basic;
-  box-shadow: $box-shadow-divs;
 
 }
 
@@ -76,10 +74,15 @@ $nav-header-new-message-radius: $border-radius-circle;
     background-color: $color-corporative;
     padding: $padding-xsmall $padding-xsmall ;
     overflow-x:auto;
+    overflow-y: hidden;
     height: $filters-bar-height-mobile;
+    border-bottom: $border-style-basic;
     
-    border-bottom: 1px solid $color-gray-border;
-    
+}
+
+.nav-header__filters:empty {
+
+  display: none;
 }
 
 
@@ -112,7 +115,6 @@ $nav-header-new-message-radius: $border-radius-circle;
     overflow-x:auto;
 
     height: $nav-header-height-desktop;
-    border-bottom: 1px solid $color-gray-border;
     
 }
   

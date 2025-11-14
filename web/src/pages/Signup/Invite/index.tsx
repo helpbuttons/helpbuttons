@@ -122,7 +122,7 @@ export function InviteForm() {
               />
             </div>
           </div>
-        </div>
+          </div>
       </Form>
     </>
     
