@@ -7,7 +7,6 @@ import {
   IoMap,
   IoMapOutline,
 } from 'react-icons/io5';
-import ContentList from 'components/list/ContentList';
 import t from 'i18n';
 import { AdvancedFiltersSortDropDown } from 'components/search/AdvancedFilters';
 import { GlobalState, store } from 'state';
@@ -25,6 +24,7 @@ import { ShowDesktopOnly, ShowMobileOnly } from 'elements/SizeOnly';
 import { useButtonTypes } from 'shared/buttonTypes';
 import DraggableList from '../DraggableList';
 import { ButtonLinkType } from '../CardButtonList';
+import { ButtonList } from '../ContentList';
 
 function List({
   onLeftColumnToggle,
@@ -164,7 +164,7 @@ function List({
                 }
               >
                 {buttonTypes?.length > 0 && (
-                  <ContentList
+                  <ButtonList
                     buttons={buttons}
                     buttonTypes={buttonTypes}
                     showMap={showMap}
@@ -248,7 +248,7 @@ function List({
               }
             >
               {buttonTypes?.length > 0 && (
-                <ContentList
+                <ButtonList
                   buttons={buttons}
                   buttonTypes={buttonTypes}
                   showMap={showMap}

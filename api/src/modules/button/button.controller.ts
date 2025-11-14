@@ -182,6 +182,12 @@ export class ButtonController {
   }
 
   @OnlyRegistered()
+  @Get('mine')
+  findMyButtons(@CurrentUser() user: User) {
+    return this.buttonService.findByOwner(user.id);
+  }
+
+  @OnlyRegistered()
   @Get('/renew/:buttonId')
   async renew(@Param('buttonId') buttonId: string, @CurrentUser() user: User)
   {

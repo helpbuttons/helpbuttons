@@ -13,7 +13,7 @@ import { IoFolderOutline, IoHammerOutline, IoLogOutOutline } from 'react-icons/i
 import { AdminOptions } from 'pages/Profile';
 
 
-export default function CardProfile({ user, showAdminOptions = false}) {
+export default function CardProfile({ user, showAdminOptions = false, showProfileEdit = false}) {
 
     const sessionUser = useGlobalStore((state) => state.sessionUser)
   
@@ -65,10 +65,11 @@ export default function CardProfile({ user, showAdminOptions = false}) {
             </div>
 
         </div>
-        {(sessionUser && !sessionUser.phone && sessionUser?.role == Role.admin) && 
-               <span style={{"color": "red"}}>{t('user.addSupport')}</span>
-              }
-                {sessionUser?.username == sessionUser?.username && (
+        
+                {showProfileEdit && (
+                  <>{(sessionUser.id == user.id && sessionUser?.role == Role.admin) && 
+                    <span style={{"color": "red"}}>{t('user.addSupport')}</span>
+                   }
                   <div className="card-profile__actions">
                     <Link href="/ProfileEdit">
                       <Btn
@@ -78,16 +79,6 @@ export default function CardProfile({ user, showAdminOptions = false}) {
                         caption={t('user.editProfile')}
                       />
                     </Link>
-                    {false && 
-                      <Link href="/">
-                        <Btn
-                          btnType={BtnType.filter}
-                          iconLeft={IconType.svg}
-                          iconLink={<IoFolderOutline />}
-                          caption={t('user.myHelpbuttons')}
-                        />
-                      </Link>
-                    }
                     {sessionUser?.role == Role.admin && 
                       <AdminOptions/>
                     }
@@ -101,6 +92,7 @@ export default function CardProfile({ user, showAdminOptions = false}) {
                         />
                     </Link>
                   </div>
+                  </>
                 )}
         <div className="card-profile__rating">
 
