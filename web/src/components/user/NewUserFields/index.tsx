@@ -11,12 +11,9 @@ import { Network } from 'shared/entities/network.entity';
 import { getHostname } from 'shared/sys.helper';
 import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
 import { useStore } from 'state';
-<<<<<<< HEAD
-import { handleAcceptCookies, handleResetCookies } from 'components/home/CookiesBanner';
-=======
+import { handleAcceptCookies, handleRejectCookies } from 'components/home/CookiesBanner';
 import Accordion from 'elements/Accordion';
-import { IoAccessibility, IoOptions } from 'react-icons/io5';
->>>>>>> c2e222d9d7 (invite fix home description)
+import { IoOptions } from 'react-icons/io5';
 
 export default function NewUserFields({
   register,
@@ -207,7 +204,7 @@ export default function NewUserFields({
             handleAcceptCookies()
             setValue('acceptPrivacyPolicy', 'yes')
           }else{
-            handleResetCookies()
+            handleRejectCookies()
             setValue('acceptPrivacyPolicy', 'no')
           }
         }
