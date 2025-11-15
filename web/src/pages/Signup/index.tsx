@@ -12,6 +12,7 @@ import QRCode from 'qrcode';
 import Btn, {
   ContentAlignment,
   BtnType,
+  IconType,
 } from 'elements/Btn';
 import Form from 'elements/Form';
 import { useRouter } from 'next/router';
@@ -30,6 +31,7 @@ import dconsole from 'shared/debugger';
 import HomeInfo from 'pages/HomeInfo';
 import { getInvitationLink } from 'pages/Profile/Invites';
 import { AcceptCookiesWarn } from 'components/home/CookiesBanner';
+import { IoQrCode } from 'react-icons/io5';
 
 export default function Signup( {metadata})
 {
@@ -192,6 +194,12 @@ export function SignupAsGuestForm() {
       setStep(steps.SUCCESS)
     }))
   }
+
+  const onClick = () => {
+    navigator.clipboard.writeText(invitationLink);
+    alertService.info(t('share.codeCopied', invitationLink))
+  }
+
   return <>
     <Form onSubmit={handleSubmit(onSubmit)} classNameExtra="login__form">
         <div className="form__inputs-wrapper">
@@ -210,8 +218,23 @@ export function SignupAsGuestForm() {
           {step == steps.SUCCESS &&
             <>
               <div className='form__header'>{t('user.explainUseGuestCode')}</div>
-              <div className='form__subsection'>
-                {qrCodeData && <><img src={qrCodeData} />{invitationLink}</>}
+              <div className='form__subsection'> 
+                <div className='form__qr-code'>
+                 {qrCodeData && 
+                 
+                 <><img className='form__qr-code__qr-image' src={qrCodeData} />
+                      {invitationLink}
+                      <Btn
+                         btnType={BtnType.corporative}
+                         contentAlignment={ContentAlignment.center}
+                         iconLeft={IconType.svg}
+                         iconLink={<IoQrCode />}
+                         caption={t('share.copyCode')}
+                         onClick={onClick}
+                       />
+                 </>
+                 }
+                </div>
               </div>
 
                 <Btn
