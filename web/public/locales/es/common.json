@@ -185,7 +185,7 @@
     "areaPicked": "Centro: ({0},{1}) zoom: {2}",
     "zoomLevel": "Nivel de Zoom",
     "requiredLocation": "Por favor recoge un lugar en el mapa para su red",
-    "allowGuestCreationLabel": "Permitir registros anónimos",
+    "allowGuestCreationLabel": "Permitir registros como invitado",
     "allowGuestCreation": "Permitir registro anónimo",
     "hideLocationByDefaultLabel": "Proteger ubicación exacta",
     "hideLocationByDefaultText": "Ocultar ubicación exacta por defecto",
@@ -328,12 +328,12 @@
     "explainUseGuestCode": "Por favor guarda este código, es la única forma que tendrás de entrar para comprobar tus publicaciones en el futuro.",
     "emailRecovery":"Email de recuperación",
     "emailRecoveryExplain":"Si ya tienes cuenta, entra pulsando un enlace que mandaremos a tu correo.",
-    "generateCode": "Generar nuevo código anónimo",
+    "generateCode": "Generar nuevo código de invitado",
     "signupAsGuest": "Participar como invitado",
     "signupGuestDetails": "Continuar con ingreso",
     "optionalFields": "Campos opcionales",
-     "explainGuestDetails": "Necesitamos algunos detalles para completar tu ingreso"
-
+    "explainGuestDetails": "Necesitamos algunos detalles para completar tu ingreso",
+    "loginNotFound": "Usuario o contraseña erróneos"
   },
   "configure": {
     "browsePins": "Mapa con pins de ubicación",
