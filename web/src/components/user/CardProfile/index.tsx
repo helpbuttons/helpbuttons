@@ -67,9 +67,7 @@ export default function CardProfile({ user, showAdminOptions = false, showProfil
         </div>
         
       {showProfileEdit && (
-        <>{(sessionUser.id == user.id && sessionUser?.role == Role.admin) &&
-          <span style={{ "color": "red" }}>{t('user.addSupport')}</span>
-        }
+        <>
           <div className="card-profile__actions">
             <Link href="/ProfileEdit">
               <Btn
