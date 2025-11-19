@@ -92,9 +92,9 @@ export default function CardProfile({ user, showAdminOptions = false, showProfil
               />
             </Link>
           </div>
+        </>
 
-
-
+      )}
           <div className="card-profile__rating">
             <div className="card-profile__rate card-profile__rate--published">
               <div className="card-profile__rate-label">
@@ -116,8 +116,7 @@ export default function CardProfile({ user, showAdminOptions = false, showProfil
             </div>
 
           </div>
-        </>
-      )}
+      
     </>
   );
 }

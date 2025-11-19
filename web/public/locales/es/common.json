@@ -332,7 +332,8 @@
     "signupAsGuest": "Participar como invitado",
     "signupGuestDetails": "Continuar con ingreso",
     "optionalFields": "Campos opcionales",
-     "explainGuestDetails": "Necesitamos algunos detalles para completar tu ingreso"
+    "explainGuestDetails": "Necesitamos algunos detalles para completar tu ingreso",
+    "emptyList": "Cuando publiques, podrás ver tus _helpbuttons_ en esta sección."
 
   },
   "configure": {

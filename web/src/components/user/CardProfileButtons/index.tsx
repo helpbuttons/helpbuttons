@@ -8,7 +8,7 @@ export function CardProfileButtonList({buttons})
 
   if(!buttons ||
     buttons?.length < 1){
-        return (<ButtonsListEmpty isLoadingButtons={false} buttons={buttons} filtered={false} />)
+        return (<ButtonsListEmpty isLoadingButtons={false} buttons={buttons} filtered={false} isProfileList={true}/>)
     }
   
   return (
