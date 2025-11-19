@@ -8,6 +8,7 @@ $avatar-margin: $padding-big;
   height: auto;
   display: flex;
   flex-direction: column;
+
 }
 
 .card-profile__name {
@@ -49,11 +50,13 @@ $avatar-margin: $padding-big;
   margin: $margin-small auto;
   margin-bottom: 0;
   padding: 0;
+    position: relative; 
   font-weight: $font-weight-bold;
-  border-top: $border-style-basic;
+  border-top: transparent;
   border-bottom: $border-style-basic;
   gap: $padding-small;
-  overflow: auto;
+  overflow-x: auto;
+  overflow-y: hidden;
 
   & svg {
     width: 1rem;
@@ -67,14 +70,24 @@ $avatar-margin: $padding-big;
   justify-content: center;
   align-items: center;
   padding: $padding-medium;
+  color: $color-gray;
 
 }
 
 .card-profile__rate--published {
+    background-color: $color-dark-gray;
+    color: $color-ligth-gray;  
+    padding-right: $padding-big;  
+    padding-left: $padding-big;  
+    border-radius: $border-radius-basic $border-radius-basic 0 0 ;
 
-  background-color: $color-ligth-gray;
+  .card-profile__rate-label {
+
+    color: $color-white;
   
+  }
 }
+
 
 .card-profile__rate-label {
 

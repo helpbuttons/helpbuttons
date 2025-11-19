@@ -96,7 +96,7 @@ export default function CardProfile({ user, showAdminOptions = false, showProfil
 
       )}
           <div className="card-profile__rating">
-            <div className="card-profile__rate card-profile__rate--published">
+            <div className={'card-profile__rate ' + (sessionUser.id == user.id || sessionUser?.role == Role.admin ? ' card-profile__rate--published' : 'card-profile__rate--')}>
               <div className="card-profile__rate-label">
                 {t('user.helpbuttonsPublishedAmount')}
               </div>
