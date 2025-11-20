@@ -51,7 +51,7 @@ export function Picker({ closeAction, headerText, children, extraClass = '' }) {
               </div>
               <div className="picker__header-right">
                 <a onClick={() => closeAction()} className="picker__header-button">
-                  <div className="btn-circle__icon">
+                  <div className="picker__header__icon">
                     <IoClose />
                   </div>
                 </a>

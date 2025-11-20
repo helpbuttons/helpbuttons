@@ -169,13 +169,15 @@ $picker-comments-item-padding: 25px;
     outline: none;
   }
 
-  .icon {
-    width: $picker-header-icon-width;
-    height: auto;
-    max-height: 25px;
-  }
 }
 
+
+.picker__header__icon {
+  color: $color-dark-gray;
+  width: $picker-header-icon-width;
+  height: auto;
+  max-height: 25px;
+}
 // contents
 .picker__paragraph {
 

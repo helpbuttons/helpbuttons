@@ -52,6 +52,7 @@ $dropdown-max-width: 10rem;
   position: relative;
   display: inline-block;
   width: auto;
+  max-width: 200px;
 }
 
 .dropdown-select__icon {
@@ -75,14 +76,11 @@ $dropdown-max-width: 10rem;
 
 }
 
-@media #{$breakpoints-xxlarge} {
+@media #{$breakpoints-medium} {
 
-  .dropdown-select__trigger {
-
-    // display: flex;
-    // min-width: $dropdown-width;
-    // margin-left: $margin-small;
-
+  .dropdown-select__container {
+    max-width: unset;
   }
+
 
 }
