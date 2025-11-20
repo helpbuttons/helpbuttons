@@ -24,7 +24,8 @@ export const allowedPathsPerRole =
             '/Error',
             '/Logout',
             '/HomeInfo',
-            '/Embbed/:number'
+            '/Embbed/:number',
+            '/Show/:buttonId/:messageId'
         ]
     },
     {

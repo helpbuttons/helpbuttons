@@ -5,6 +5,8 @@ import { UserService } from 'services/Users';
 import { Button } from 'shared/entities/button.entity';
 import { User } from 'shared/entities/user.entity';
 import { UpdateEvent, WatchEvent } from 'store/Event';
+import { ButtonService } from 'services/Buttons';
+import { ButtonEntry } from 'shared/dtos/button.dto';
 
 export enum MainPopupPage {
   HIDE = 'hide',
@@ -25,7 +27,7 @@ export enum CookiesState {
 export interface HomeInfoState {
   mainPopupPage: MainPopupPage;
   mainPopupUserProfile: User;
-  mainPopupButton: Button;
+  mainPopupButton: ButtonEntry;
   version: string;
   isInstallable: boolean;
   pageName: string;
@@ -88,6 +90,16 @@ export class SetMainPopupCurrentProfile implements UpdateEvent {
       newState.homeInfo.mainPopupButton = null;
     });
   }
+}
+
+export class FindAndSetMainPopupCurrentButton implements WatchEvent {
+  public constructor(private buttonId) {}
+  public watch(state: GlobalState) {
+    return ButtonService.findById(this.buttonId).pipe(
+      map((data) => store.emit(new SetMainPopupCurrentButton(data)))
+    );
+  }
+
 }
 
 export class SetMainPopupCurrentButton implements UpdateEvent {

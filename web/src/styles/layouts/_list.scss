@@ -148,6 +148,7 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
 .list__empty-message--prev{
 
  font-weight: $font-weight-bold;
+ text-align: center;
 
 }
 
@@ -300,6 +301,7 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
     left: auto;
     border-radius: 0;
     padding: 0 0 ;
+    padding-left: $margin-small;
     
   }
 

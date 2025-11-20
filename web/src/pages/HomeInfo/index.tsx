@@ -354,7 +354,8 @@ function HomeInfoRecentActivity({ selectedNetwork }) {
 
       <hr></hr>
       <div className="homeinfo__description">
-        <ActivityList activities={activities} />
+        TODO
+        {/* <ActivityList activities={activities} /> */}
       </div>
     </div>
   </>)

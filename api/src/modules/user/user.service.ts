@@ -80,7 +80,8 @@ export class UserService {
     });
   }
   async findCounts(user) {
-
+    console.log('im here')
+    console.trace()
     const q = `SELECT COALESCE(
         (select sum(cardinality("followedBy")) as "followsCount" from button where "ownerId"= $1), 
       0) as "followersCount",
@@ -287,4 +288,23 @@ COALESCE(
     this.entityManager.query(`update public.user set locale = '${locale}' where role = '${Role.admin}'`)
   }
 
+  async follow(buttonId: string, userId: string) {
+    const user = await this.findById(userId);
+    const index = user.follows.indexOf(buttonId);
+    if (index < 0) {
+      user.follows.push(buttonId);
+      return await this.userRepository.save(user);
+    }
+    return user;
+  }
+
+  async unfollow(buttonId: string, userId: string) {
+    const user = await this.findById(userId);
+    const index = user.follows.indexOf(buttonId);
+    if (index > -1) {
+      user.follows.splice(index, 1);
+      return await this.userRepository.save(user);
+    }
+    return true;
+  }
 }

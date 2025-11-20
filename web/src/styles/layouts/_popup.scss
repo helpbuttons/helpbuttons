@@ -119,16 +119,23 @@ $popup-max-height-large: 720px;
 .popup__header-button {
   background-color: transparent;
   border-style: none;
+  color: $color-dark-gray;
+
   cursor: pointer;
   &:active,
   &:focus {
     outline: none;
   }
 
-  .icon {
-    width: $popup-header-icon-width;
-    height: auto;
-    max-height: 25px;
+  .popup__header-button__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    // max-height: 30px;
+    & svg {
+        height: 25px;
+        width: 25px;
+    }
   }
 }
 
@@ -152,7 +159,7 @@ $popup-max-height-large: 720px;
 
 .popup__section {
 
-  padding: $padding-huge;
+  padding: $padding-big;
   height: auto;
   position: relative;
   
@@ -417,7 +424,6 @@ $popup-max-height-large: 720px;
     flex-flow: row nowrap;
     align-items: flex-end;
 
-
   }
 
   .popup__options-v {
@@ -437,7 +443,6 @@ $popup-max-height-large: 720px;
   .popup__header {
 
     border-radius: $border-radius-semicircle $border-radius-semicircle 0 0;
-    margin-top: $margin-xsmall;
   }
 
   .popup__content {

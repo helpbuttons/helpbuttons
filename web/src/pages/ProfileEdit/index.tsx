@@ -150,7 +150,7 @@ export default function ProfileEdit() {
           <Popup title={t('user.updateProfile')} linkBack={() => router.back()}>
             <Form
               onSubmit={handleSubmit(onSubmit)}
-              classNameExtra="login"
+              classNameExtra="login__form"
             >              
                 <div className="form__inputs-wrapper">
                 <Accordion collapsed={true} title={t('user.personalData')}>

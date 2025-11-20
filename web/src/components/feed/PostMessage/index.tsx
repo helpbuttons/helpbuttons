@@ -3,8 +3,8 @@ import ImageWrapper, { ImageType } from 'elements/ImageWrapper';
 import { formatMessage } from 'elements/Message';
 import Link from 'next/link';
 import { readableTimeLeftToDate } from 'shared/date.utils';
-import { PrivacyType } from 'shared/types/privacy.enum';
-import { store } from 'state';
+import { useFocusOn } from 'shared/helpers/scroll.helper';
+import { GlobalState, store, useGlobalStore } from 'state';
 import { FindAndSetMainPopupCurrentProfile } from 'state/HomeInfo';
 
 export default function PostMessage({ post }) {
@@ -12,9 +12,14 @@ export default function PostMessage({ post }) {
       e.preventDefault()
       store.emit(new FindAndSetMainPopupCurrentProfile(post.author.username))
     }
+    const focusPostId = useGlobalStore(
+      (state: GlobalState) => state.activities.focusPostId,
+    );
+    const {ref, focus} = useFocusOn(focusPostId, post.id)
   return (
     <>
-      <div className="card-notification__content">
+      <div className={"card-notification__content"+( focus ? ' card-notification-comment-focus' : '')}>
+      <div ref={focus ? ref : null}></div>
         <div className="card-notification__avatar">
           <div className="avatar-small">
           <Link href="#" onClick={onClick}>
@@ -41,7 +46,7 @@ export default function PostMessage({ post }) {
           </div>
           <h2 className="card-notification__title"></h2>
           <div className="card-notification__paragraph">
-            {formatMessage(post.message)}
+           {formatMessage(post.message)}
           </div>
           <ImageGallery images={post?.images.map((image) => {return {src: image, alt: post.message} })} />
         </div>

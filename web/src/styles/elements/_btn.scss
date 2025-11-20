@@ -128,6 +128,7 @@ $btn-font-size-medium: $font-size-medium;
 
   @extend .btn-filter;
   padding: $padding-small;
+  padding-right: $padding-medium;
 
 }
 
@@ -141,7 +142,6 @@ $btn-font-size-medium: $font-size-medium;
   max-width: 100%;
   font-weight: $font-weight-bold;
   position: relative;
-
 
 
 
@@ -253,7 +253,7 @@ $btn-font-size-medium: $font-size-medium;
 
 .btn-with-icon {
 
-  gap: $margin-medium;
+  gap: $padding-medium;
 
 }
 
@@ -338,7 +338,7 @@ $btn-font-size-medium: $font-size-medium;
     height: $btn-circle-height;
     background-color: $color-corporative;
     border: none;
-    color: $color-black;
+    color: $color-text-over-corporative;
     margin-top: 0;
 
 }
@@ -368,10 +368,18 @@ $btn-font-size-medium: $font-size-medium;
 
   & svg {
 
-    fill: $color-black;
-    color:  $color-black;
     height: $btn-circle-icon-height;
     width: $btn-circle-icon-height;
+
+  }
+}
+
+.btn-circle__icon--corporative {
+
+  & svg {
+
+    fill: $color-text-over-corporative;
+    color:  $color-text-over-corporative;
 
   }
 }
@@ -576,6 +584,7 @@ $btn-font-size-medium: $font-size-medium;
 
   background: $color-corporative;
   border-color: $color-corporative;
+  color: $color-text-over-corporative;
 
 }
 
@@ -671,6 +680,7 @@ $btn-font-size-medium: $font-size-medium;
 
   font-size: $font-size-small;
   margin-top: 0;
+  color: $color-text-over-corporative;
 
 
 } 
@@ -691,6 +701,12 @@ $btn-font-size-medium: $font-size-medium;
 
 
 @media #{$breakpoints-large} {
+
+  .btn-with-icon {
+
+  gap: $margin-medium;
+
+  }
 
   .btn-filter {
 

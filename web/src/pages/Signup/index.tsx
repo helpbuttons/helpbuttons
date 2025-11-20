@@ -12,6 +12,7 @@ import QRCode from 'qrcode';
 import Btn, {
   ContentAlignment,
   BtnType,
+  IconType,
 } from 'elements/Btn';
 import Form from 'elements/Form';
 import { useRouter } from 'next/router';
@@ -30,6 +31,7 @@ import dconsole from 'shared/debugger';
 import HomeInfo from 'pages/HomeInfo';
 import { getInvitationLink } from 'pages/Profile/Invites';
 import { AcceptCookiesWarn } from 'components/home/CookiesBanner';
+import { IoQrCode } from 'react-icons/io5';
 
 export default function Signup( {metadata})
 {
@@ -126,8 +128,7 @@ export function SignupForm() {
     )
   }
   return (
-      <Form onSubmit={handleSubmit(onSubmit)} classNameExtra="login">
-        <div className="login__form">
+      <Form onSubmit={handleSubmit(onSubmit)} classNameExtra="login__form">
           <div className="form__inputs-wrapper">
             <NewUserFields
               control={control}
@@ -138,7 +139,7 @@ export function SignupForm() {
             />
           </div>
           <div className="form__btn-wrapper">
-            <div className="from__btn-register">
+            <div className="form__btn-register">
               <Btn
                 submit={true}
                 btnType={BtnType.submit}
@@ -157,7 +158,6 @@ export function SignupForm() {
               </div>
             }
           </div>
-        </div>
       </Form>
   );
 }
@@ -194,9 +194,14 @@ export function SignupAsGuestForm() {
       setStep(steps.SUCCESS)
     }))
   }
+
+  const onClick = () => {
+    navigator.clipboard.writeText(invitationLink);
+    alertService.info(t('share.codeCopied', invitationLink))
+  }
+
   return <>
-    <Form onSubmit={handleSubmit(onSubmit)} classNameExtra="login">
-      <div className="login__form">
+    <Form onSubmit={handleSubmit(onSubmit)} classNameExtra="login__form">
         <div className="form__inputs-wrapper">
           {step == steps.REQUEST_CODE &&
             <>
@@ -213,8 +218,23 @@ export function SignupAsGuestForm() {
           {step == steps.SUCCESS &&
             <>
               <div className='form__header'>{t('user.explainUseGuestCode')}</div>
-              <div className='form__subsection'>
-                {qrCodeData && <><img src={qrCodeData} />{invitationLink}</>}
+              <div className='form__subsection'> 
+                <div className='form__qr-code'>
+                 {qrCodeData && 
+                 
+                 <><img className='form__qr-code__qr-image' src={qrCodeData} />
+                      {invitationLink}
+                      <Btn
+                         btnType={BtnType.corporative}
+                         contentAlignment={ContentAlignment.center}
+                         iconLeft={IconType.svg}
+                         iconLink={<IoQrCode />}
+                         caption={t('share.copyCode')}
+                         onClick={onClick}
+                       />
+                 </>
+                 }
+                </div>
               </div>
 
                 <Btn
@@ -241,7 +261,7 @@ export function SignupAsGuestForm() {
                   {t('user.noAccount')}
               </div>
             </>}
-        </div></div>
+        </div>
     </Form>
   </>
 }

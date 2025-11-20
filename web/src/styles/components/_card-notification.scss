@@ -159,6 +159,8 @@ $card-notification-delete-size: 100px;
   // flex: 0 1 50%;
   font-weight: $font-weight-light;
   color: $color-med-gray;
+  display: flex;
+  flex-direction: row;
 
 
 }
@@ -317,7 +319,6 @@ $card-notification-delete-size: 100px;
   font-size: $font-size-general;
   padding: 0;
   text-align: left;
-  font-weight: $font-weight-bolder;
   hyphens: auto;
   word-break: keep-all;
   &:first-letter {
@@ -381,4 +382,8 @@ $card-notification-delete-size: 100px;
 
 .card-notification-comment-focus {
   border: 2px solid $color-blue;
+}
+
+.card-notification--unread{
+  font-weight: $font-weight-bolder;
 }

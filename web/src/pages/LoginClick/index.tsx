@@ -52,9 +52,8 @@ export default function LoginClick() {
     <>
         <Form
           onSubmit={handleSubmit(onSubmit)}
-          classNameExtra="login"
+          classNameExtra="login__form"
         > 
-          <div className="login__form">
             <div className="form__inputs-wrapper">
               <FieldText
                 name="email"
@@ -81,12 +80,11 @@ export default function LoginClick() {
               />
               <div className="popup__link" onClick={() => store.emit(new SetMainPopup(MainPopupPage.LOGIN))}>
                   {t('user.loginWEmail')}
-¡              </div>
+              </div>
               <div className="popup__link" onClick={() => store.emit(new SetMainPopup(MainPopupPage.SIGNUP))}>
                   {t('user.noAccount')}
               </div>
             </div>
-          </div>
         </Form>
     </>
   );
