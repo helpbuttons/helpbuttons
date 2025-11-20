@@ -9,6 +9,7 @@ import { FindButton } from "state/Explore";
 import { ActivityDetail } from "components/feed/Activities/ActivityDetail";
 import ActivityList from "components/feed/Activities/ActivityList";
 import { alertService } from "services/Alert";
+import { usePoolFunc } from "shared/custom.hooks";
 
 
 
@@ -43,6 +44,10 @@ export default function ActivitiesUser() {
   const filterButtons = updateFilters(buttonTypes, buttonActivities)
 
   const findActivityDetails = () => {
+    if(!selectedActivity)
+    {
+      return;
+    }
     store.emit(new FindActivityDetails(selectedActivity.buttonId, selectedActivity.consumerId, 0,
       (_activites) => {
         setButtonActivities(() => _activites)
@@ -61,6 +66,8 @@ export default function ActivitiesUser() {
     }))
   }, [selectedActivity])
 
+  usePoolFunc({paused: buttonActivities?.length < 1, timeMs: 10*1000, func:() => findActivityDetails()})
+  
   const sendNewMessage = (message, buttonId, consumerId) => {
     store.emit(new SendNewMessage(message, buttonId, consumerId, () => { findActivityDetails(); alertService.success(t('activities.sent')) }))
   }
