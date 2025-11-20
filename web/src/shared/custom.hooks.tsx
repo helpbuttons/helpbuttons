@@ -118,3 +118,9 @@ export const useShowPopup = () => {
   return [popupShowState,openPopup, closePopup]
 }
 
+export const usePoolFunc = ({paused, timeMs, func }) => {
+  const increment = useCallback(() => {
+    func()
+  }, []);
+  useInterval(increment, timeMs, { paused: paused });
+};
