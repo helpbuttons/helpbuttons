@@ -60,6 +60,7 @@ function MessageForm({ sendNewMessage, button, selectedActivity }) {
           label={""}
           classNameInput={"form__input"}
           onInputKeyDown={inputKeyDown}
+          multiInput={true}
         />
       </div>
       <div className="chat__new-message__send">

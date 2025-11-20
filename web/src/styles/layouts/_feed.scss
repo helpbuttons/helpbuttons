@@ -54,7 +54,7 @@ $feed-new-message-radius: $border-radius-circle;
 
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: stretch;
   height: 100%;
 
 }
@@ -70,7 +70,7 @@ $feed-new-message-radius: $border-radius-circle;
 .feed-section__left__header {
 
   padding: $padding-huge $padding-big  $padding-small $padding-big;
-
+  border-bottom: $border-style-basic;
 
 }
 
@@ -206,7 +206,7 @@ $feed-new-message-radius: $border-radius-circle;
   padding: $feed-padding;
   padding-top: 0;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
 
   .dropdown-select__trigger {
 
@@ -307,8 +307,7 @@ $feed-new-message-radius: $border-radius-circle;
 
     .card-notification__content {
 
-      padding:  $padding-huge;
-      padding-top: $padding-small;
+      padding:  $padding-big;
 
     }
   }

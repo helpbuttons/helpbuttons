@@ -14,7 +14,12 @@ import NavLink from 'elements/Navlink';
 import {
   IoAddCircle,
   IoAddOutline,
+  IoArrowBackCircle,
+  IoArrowBackSharp,
+  IoArrowDownCircle,
   IoArrowDownCircleOutline,
+  IoArrowDownSharp,
+  IoArrowUpSharp,
   IoCall,
   IoClose,
   IoGlobeOutline,
@@ -211,7 +216,7 @@ function HomeInfoInfoCard({ selectedNetwork }) {
               <div className="homeinfo-card__controls">
                 <Btn
                   btnType={BtnType.corporative}
-                  iconLink={<IoArrowDownCircleOutline/>}
+                  iconLink={showInfo ? <IoArrowUpSharp/> : <IoArrowDownSharp/>}
                   iconLeft={IconType.circle}
                   contentAlignment={ContentAlignment.center}
                 />
@@ -309,7 +314,7 @@ function HomeInfoPinnedHashTags({ selectedNetwork }) {
             <div className="homeinfo-card__controls">
               <Btn
                 btnType={BtnType.corporative}
-                iconLink={<IoArrowDownCircleOutline/>}
+                iconLink={showInfo ? <IoArrowUpSharp/> : <IoArrowDownSharp/>}
                 iconLeft={IconType.circle}
                 contentAlignment={ContentAlignment.center}
               />
