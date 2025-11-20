@@ -20,8 +20,8 @@ import { Role } from 'shared/types/roles';
 import { setValidationErrors } from 'state/helper';
 import dconsole from 'shared/debugger';
 import { localStorageService, LocalStorageVars } from 'services/LocalStorage';
-import { IllustrationHead } from '../helper';
 import getEnvConfig from 'next/config';
+import ImageWrapper, { ImageType } from 'elements/ImageWrapper';
 
 
 export default function CreateAdminForm() {
@@ -186,4 +186,21 @@ export default function CreateAdminForm() {
       </Popup>
     </>
   );
+}
+
+export function IllustrationHead({imageSrc = null, title}) {
+  return (
+      <div className='form__field'>
+          {imageSrc && 
+              <div className='form__illustration'>
+                  <ImageWrapper
+                      imageType={ImageType.formIllustration}
+                      alt={title} src={imageSrc} localUrl={true} />
+              </div>
+          }
+          <div className='form__header'>
+              {title}
+          </div>
+      </div>
+  )
 }
