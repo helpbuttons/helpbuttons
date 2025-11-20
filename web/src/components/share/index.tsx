@@ -96,7 +96,6 @@ function ShareInviteButton() {
         contentAlignment={ContentAlignment.center}
         iconLeft={IconType.svg}
         iconLink={<IoPersonAddOutline />}
-        extraClass=""
         caption={t('share.copyLink')}
         onClick={onClick}
       />
@@ -122,7 +121,6 @@ function ShareRssButton() {
         contentAlignment={ContentAlignment.center}
         iconLeft={IconType.svg}
         iconLink={<IoLogoRss />}
-        extraClass=""
         caption={t('share.copyLink')}
         onClick={onClick}
       />

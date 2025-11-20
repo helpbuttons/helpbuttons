@@ -204,21 +204,21 @@ function HomeInfoInfoCard({ selectedNetwork }) {
   },[])
   return (<>{/*  INFO CARD */}
     <div className="homeinfo-card">
-      <div className="homeinfo-card__header" >
-        {!showInfo && 
-          <>
-          <h3 className="homeinfo-card__header-title">
-            {description}
-          </h3>
-          <div className="homeinfo-card__controls homeinfo-card__header--openable" onClick={toggleShowInfo}>
-              {t('homeinfo.seeMore')}
-          </div>
-          </>
-        }
+      <div className="homeinfo-card__header homeinfo-card__header--openable" onClick={toggleShowInfo}>
+            <h3 className="homeinfo-card__header-title" >
+                {t('homeinfo.knowMore',[selectedNetwork.name])}
+            </h3>
+              <div className="homeinfo-card__controls">
+                <Btn
+                  btnType={BtnType.corporative}
+                  iconLink={<IoArrowDownCircleOutline/>}
+                  iconLeft={IconType.circle}
+                  contentAlignment={ContentAlignment.center}
+                />
+              </div>
       </div>
       {showInfo &&
         <>
-          <hr></hr>
           <div className="homeinfo__description">
             <TextFormatted text={selectedNetwork.description} />
             <HomeFAQButton/>
