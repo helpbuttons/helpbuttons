@@ -7,6 +7,7 @@ import { appWithTranslation } from 'next-i18next';
 import { GlobalState, store } from 'state/';
 import { useSelectedNetwork } from 'state/Networks';
 import { FetchUserData, LoginToken } from 'state/Profile';
+import { getReadableTextColor } from 'shared/helpers/color.helper'; 
 
 import { useGlobalStore } from 'state';
 import { alertService } from 'services/Alert';
@@ -299,11 +300,13 @@ function MyApp({ Component, pageProps }) {
                   ? ({
                     '--network-background-color':
                       selectedNetwork.backgroundColor,
-                    '--network-text-color': selectedNetwork.textColor,
+                    '--network-accent-color': selectedNetwork.textColor,
+                    '--network-text-over-color': getReadableTextColor(selectedNetwork.backgroundColor),
                   } as React.CSSProperties)
                   : ({
                     '--network-background-color': 'grey',
-                    '--network-text-color': 'pink',
+                    '--network-accent-color': 'pink',
+                    '--network-text-over-color': 'black',
                   } as React.CSSProperties)
               }
             >

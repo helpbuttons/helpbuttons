@@ -31,7 +31,7 @@ $hashtag-color-l-gray: $color-med-gray;
   margin: 0 $hashtag-margin-x $hashtag-margin-x 0;
   text-transform: capitalize;
   font-size: 0.9rem;
-  color: $hashtag-color-gray;
+  color: $color-dark-gray;
   background-color: transparent;
   word-break: keep-all;
   hyphens: none;
@@ -76,7 +76,7 @@ $hashtag-color-l-gray: $color-med-gray;
 }
 
 .hashtag--blue {
-  background-color: var(--network-text-color);
+  background-color: var(--network-accent-color);
   color: $color-white;
   border: none;
 
@@ -84,7 +84,7 @@ $hashtag-color-l-gray: $color-med-gray;
 
 .hashtag--badge {
   background-color: $color-corporative;
-  color: $color-dark-gray;
+  color: $color-text-over-corporative;
   border: none;
 }
 

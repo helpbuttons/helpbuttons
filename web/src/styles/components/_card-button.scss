@@ -487,7 +487,7 @@ $card-button-border-height: $border-general-height;
   }
 
   & a {
-    color: var(--network-text-color);
+    color: var(--network-accent-color);
     cursor: pointer;
   }
 }
@@ -524,7 +524,7 @@ $card-button-border-height: $border-general-height;
   top: $padding-medium;
 
   padding: $padding-small $padding-big;
-  background-color: var(--network-text-color);
+  background-color: var(--network-accent-color);
   border-radius: $border-radius-circle;
   width: fit-content;
   display: flex;

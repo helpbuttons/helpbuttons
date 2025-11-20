@@ -41,7 +41,7 @@ $nav-bottom-border: 32px;
   align-items: center;
   text-decoration: none;
   flex-flow: column;
-  color: $color-black;
+  color: $color-text-over-corporative;
   padding: 8px 0 0 0;
 
   &:hover, :active {
@@ -69,7 +69,7 @@ $nav-bottom-border: 32px;
 }
 
 .nav-bottom__link--current{
-  color: $color-black;
+  color: $color-text-over-corporative;
   font-weight: $font-weight-bolder;
 
   .nav-bottom__text::after {
@@ -79,7 +79,7 @@ $nav-bottom-border: 32px;
     width: 20px;
     height: 2px;
     left: 50%;
-    background-color: var(--network-text-color);
+    background-color: var(--network-accent-color);
     transform: translateX(-50%);
     border-radius: $nav-bottom-border;
     opacity: 1;
@@ -110,7 +110,7 @@ $nav-bottom-border: 32px;
 
 .nav-bottom__icon {
   & svg {
-    fill: $color-black;
+    fill: $color-text-over-corporative;
     height: $nav-bottom-icon-size;
     width: $nav-bottom-icon-size;
     padding: 3px;
@@ -135,7 +135,7 @@ $nav-bottom-border: 32px;
    cursor: pointer;
    text-decoration: none;
    z-index: $z-index-01;
-   background: var(--network-text-color);
+   background: var(--network-accent-color);
    pointer-events:none;
 }
 

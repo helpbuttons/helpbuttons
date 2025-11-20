@@ -72,6 +72,7 @@ $search-map-height: 0; // Altura del header
 
 .search-map__name{
   font-weight: $font-weight-regular;
+  color: $color-text-over-corporative;
 }
 
 @media #{$breakpoints-xlarge} {
@@ -129,7 +130,7 @@ $search-map-height: 0; // Altura del header
       max-height: 2.4em;
       line-height: 1.2em;
       margin-left: 0;
-      color: $color-dark-gray;
+      color: $color-text-over-corporative;
       font-weight: $font-weight-bolder;
 
     }

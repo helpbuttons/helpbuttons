@@ -144,7 +144,6 @@ $btn-font-size-medium: $font-size-medium;
 
 
 
-
   .btn-with-icon__icon{
 
     font-size: $font-size-title;
@@ -338,7 +337,7 @@ $btn-font-size-medium: $font-size-medium;
     height: $btn-circle-height;
     background-color: $color-corporative;
     border: none;
-    color: $color-black;
+    color: $color-text-over-corporative;
     margin-top: 0;
 
 }
@@ -368,8 +367,8 @@ $btn-font-size-medium: $font-size-medium;
 
   & svg {
 
-    fill: $color-black;
-    color:  $color-black;
+    fill: $color-text-over-corporative;
+    color:  $color-text-over-corporative;
     height: $btn-circle-icon-height;
     width: $btn-circle-icon-height;
 
@@ -576,6 +575,7 @@ $btn-font-size-medium: $font-size-medium;
 
   background: $color-corporative;
   border-color: $color-corporative;
+  color: $color-text-over-corporative;
 
 }
 
