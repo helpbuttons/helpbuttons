@@ -155,9 +155,10 @@ const InvitationCard = ({ selectedNetwork, qrCode, qrCodeImage }) => {
       position: 'relative',
       alignContent:'center',
       textAlign: 'center',
+            color:  selectedNetwork.textColor,
+
       paddingBottom:'40px',
       paddingTop:'0',
-
 
     },
     networkLogo: {
@@ -170,6 +171,7 @@ const InvitationCard = ({ selectedNetwork, qrCode, qrCodeImage }) => {
     networkHeader: {
       backgroundColor: selectedNetwork.backgroundColor,
       display: 'flex',
+      
       flexDirection: 'row',
       flexWrap: 'nowrap',
       alignItems: 'center',
@@ -217,6 +219,8 @@ const InvitationCard = ({ selectedNetwork, qrCode, qrCodeImage }) => {
       flexDirection: 'column',
       width: '160px',
       fontSize: '11px',
+      color:  selectedNetwork.textColor,
+
       flexWrap: 'wrap',
       height: 'auto',
       gap: '5px',
@@ -233,6 +237,8 @@ const InvitationCard = ({ selectedNetwork, qrCode, qrCodeImage }) => {
       wordBreak: 'break-all',
       paddingTop: '10px',
       maxWidth: '100%',
+      color:  selectedNetwork.textColor,
+
           // Allow text to wrap to the next line
       // hyphens: 'auto',             // Add hyphenation to break long words
       flexWrap: 'wrap',

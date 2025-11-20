@@ -108,6 +108,8 @@ padding-bottom: $margin-medium;
   font-size: $font-size-medium;
   margin-bottom: 24px;
   position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
 .form__field--noMargin {
