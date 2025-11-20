@@ -205,8 +205,6 @@ function HomeInfoInfoCard({ selectedNetwork }) {
   return (<>{/*  INFO CARD */}
     <div className="homeinfo-card">
       <div className="homeinfo-card__header homeinfo-card__header--openable" onClick={toggleShowInfo}>
-        {!showInfo && 
-          <>
             <h3 className="homeinfo-card__header-title" >
                 {t('homeinfo.knowMore',[selectedNetwork.name])}
             </h3>
@@ -218,10 +216,6 @@ function HomeInfoInfoCard({ selectedNetwork }) {
                   contentAlignment={ContentAlignment.center}
                 />
               </div>
-          </>
-
-        }
-
       </div>
       {showInfo &&
         <>
