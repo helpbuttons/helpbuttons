@@ -150,7 +150,7 @@ function NavBottom({ sessionUser }) {
                   }
               </div>
               <div className="nav-bottom__text">
-                {t('menu.profile')} - {sessionUser.username}
+                {t('menu.profile')}
               </div>
             </NavLink>
 
