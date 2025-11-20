@@ -47,7 +47,7 @@ $nav-bottom-border: 32px;
   &:hover, :active {
 
     svg {
-      fill: $color-black;
+      fill: $color-gray;
     }
 
     cursor: pointer;
@@ -55,8 +55,6 @@ $nav-bottom-border: 32px;
 
     .nav-bottom__icon {
       transition: 0.2s;
-      // transform: translateY(-0.4rem);
-
     }
 
   }
