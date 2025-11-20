@@ -10,15 +10,8 @@ import { GlobalState, store, useGlobalStore } from "state"
 import { ActivityMarkAsRead, FindMoreActivities } from "state/Activity"
 
 
-export default function ActivityList({ setSelectedActivity, demoActivities }) {
+export default function ActivityList({ setSelectedActivity }) {
     const activities = useGlobalStore((state: GlobalState) => state.activities.activities)
-    useEffect(() => {
-        findMore()
-    }, [])
-
-    const findMore = () => {
-        store.emit(new FindMoreActivities())
-    }
 
     const { endDivLoadMoreTrigger, noMoreToLoad } = useScroll(
         ({ setNoMoreToLoad, setScrollIsLoading }) => {
