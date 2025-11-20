@@ -144,12 +144,12 @@ $picker-comments-item-padding: 25px;
 
 .picker__header-content {
 
-  @extend .popup__header-content;
   height: 100%;
   display: flex;
   align-items: center;
   width: 100%;
   justify-content: center;
+
 }
 
 .picker__header-title  {
@@ -160,17 +160,29 @@ $picker-comments-item-padding: 25px;
   letter-spacing: 2px;
 }
 
+
 .picker__header-button {
   background-color: transparent;
   border-style: none;
+  color: $color-dark-gray;
+
   cursor: pointer;
   &:active,
   &:focus {
     outline: none;
   }
 
+  .picker__header-button__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    // max-height: 30px;
+    & svg {
+        height: 25px;
+        width: 25px;
+    }
+  }
 }
-
 
 .picker__header__icon {
   color: $color-dark-gray;
