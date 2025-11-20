@@ -210,7 +210,7 @@ function NavBottom({ sessionUser }) {
         <ShowDesktopOnly>
             <NavLink
               href="/ButtonNew"
-              className={`nav-bottom__link nav-bottom__link--create ${isCurrent(
+              className={`nav-bottom__link ${isCurrent(
                 'ButtonNew',
               )}`}
             >
