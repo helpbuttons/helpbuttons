@@ -400,10 +400,11 @@ export class ActivityService {
     const isOwner = activity.to.id == userId;
     const isButtonOwner = activity?.button?.owner?.id == userId
     const disableChat = (activity?.button && (activity.to.id == activity.button.owner.id || activity.from.id == activity.button.owner.id)) ? false : true;
+    const read = (activity.eventName == ActivityEventName.NewFollowingButton && activity.from.id == userId) ? true : activity.read;
     let activityOut = {
       id: activity.id,
       eventName: activity.eventName,
-      read: activity.read,
+      read: read,
       createdAt: activity.created_at,
       buttonId: activity?.button?.id,
       fromId: activity?.from?.id,
