@@ -335,7 +335,6 @@ export class ActivityService {
     if (setAsLastButtonOwner) {
       await this.hideActivitiesButtonOwner(button.id, consumer.id)
     }
-    console.log(activity)
     return this.activityRepository.insert([activity]);
   }
 
