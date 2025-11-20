@@ -46,7 +46,7 @@ export default function LoginForm() {
 
   const onError = (err) => {
     if (err === 'login-incorrect') {
-      setErrorMsg('User or password not found');
+      setErrorMsg(t('user.loginNotFound'));
     }
   };
   const params: URLSearchParams = new URLSearchParams(router.query);
