@@ -19,7 +19,7 @@
     "loading": "...",
     "goToExplore": "Explore _helpbuttons_",
     "install": "Install {0} and receive notifications:",
-    "knowMore": "Know more about {0}",
+    "knowMore": "Know more",
     "goToCreate": "Create _helpbutton_",
     "activity": "Recent Activity",
     "exploreSubtitle": "See & Search the _helpbuttons_ on this map",
@@ -71,9 +71,7 @@
     "copyLink": "Copy link",
     "advancedInviteOptions": "Printable PDF invitations",
     "printInvites":"Printable pdf invitations",
-    "linkCopied": "{0} copied to clipboard",
-    "codeCopied": "Code copied",
-    "copyCode": "Copy code"
+    "linkCopied": "{0} copied to clipboard"
 
   },
   "feed": {
@@ -198,8 +196,10 @@
     "markedAllAsRead": "Notifications marked as read",
     "markedAsRead": "Marked as read",
     "newpost": "New posted created '{0}'",
-    "newcomment": "@{0} replied with a message '{1}'",
-    "newcommentSubject": "Someone commented on your _helpbutton_ '{0}'",
+    "newcomment": "New comment wrote by {0}: '{1}'",
+    "newcommentOwn": "You wrote a comment '{0}'",
+    "newmention": "You were mentioned in a public conversation. {0}: '{1}'",
+    "newmentionOwn": "You post a new coment in a conversation. '{0}'",
     "newfollow": "{0} is now following your _helpbutton_ {1}",
     "newfollowing": "You started following",
     "newfollowed": "Followed your _helpbutton_",
@@ -211,7 +211,8 @@
     "revokeEndorse": "Unfortunately you're 'trusted' badge has been removed",
     "roleupdate": "Your role has been updated to '{0}'",
     "newSignup": "New user '{0}' signed up",
-    "notice": "Notice"
+    "notice": "Notice",
+    "sent": "Message sent!"
   },
   "common": {
     "notfound": "No {0} found. Sorry. 🤔",
@@ -234,7 +235,7 @@
     "notFoundMessage": "Page not found or deleted",
     "options": "Options",
     "edit": "Edit",
-    "registeredRequired": "Please login or signup"
+    "show": "Show"
   },
   "button": {
     "title": "_helpbutton_ view",

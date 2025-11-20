@@ -7,7 +7,7 @@ import { useEffect } from "react"
 import { readableTimeLeftToDate } from "shared/date.utils"
 import { useScroll } from "shared/helpers/scroll.helper"
 import { GlobalState, store, useGlobalStore } from "state"
-import { FindMoreActivities } from "state/Activity"
+import { ActivityMarkAsRead, FindMoreActivities } from "state/Activity"
 
 
 export default function ActivityList({ setSelectedActivity, demoActivities }) {
@@ -32,13 +32,14 @@ export default function ActivityList({ setSelectedActivity, demoActivities }) {
         },
     );
 
+
     return (<>
 
         {!activities && <Loading />}
         {activities && (
             <div>
                 {activities && <>
-                    {[...activities].map((activity, idx) => <MessageCard activity={activity} setSelectedActivity={setSelectedActivity} key={idx} />)}
+                    {[...activities].map((activity, idx) => <ActivityListCard activity={activity} setSelectedActivity={setSelectedActivity} key={idx} />)}
                 </>
                 }
                 {(!activities || activities.length < 1) && (
@@ -68,10 +69,13 @@ export default function ActivityList({ setSelectedActivity, demoActivities }) {
     </>)
 
 }
-export function MessageCard({ activity, setSelectedActivity }) {
+export function ActivityListCard({ activity, setSelectedActivity }) {
+    const markAsRead = (activityId) => {
+        store.emit(new ActivityMarkAsRead(activityId))
+    }
     return (
         <div className="feed-element">
-            <div onClick={() => setSelectedActivity(() => activity)} className="card-notification">
+            <div onClick={() => {setSelectedActivity(() => activity); markAsRead(activity.id)}} className="card-notification">
                 <div className="card-notification__content">
                     <div className="card-notification__avatar">
                         <div className="avatar-medium">
@@ -89,11 +93,11 @@ export function MessageCard({ activity, setSelectedActivity }) {
                             </div>
 
                         </div>
-                        <h2 className={`card-notification__title ` + (!activity.read && 'card-notification--unread')}>
+                        <h2 className={`card-notification__title ` + (!activity?.read && 'card-notification--unread')}>
                             {activity.title}
                         </h2>
                         <div className="card-notification__paragraph">
-                            <div className={(!activity.read && 'card-notification--unread')}>
+                            <div className={(!activity?.read ? 'card-notification--unread' : '')}>
                                 {activity?.premessage}{activity.message}
                             </div>
                         </div>

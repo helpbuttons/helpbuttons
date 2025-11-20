@@ -8,6 +8,7 @@ import {  store} from "state";
 import { FindButton } from "state/Explore";
 import { ActivityDetail } from "components/feed/Activities/ActivityDetail";
 import ActivityList from "components/feed/Activities/ActivityList";
+import { alertService } from "services/Alert";
 
 
 
@@ -205,7 +206,7 @@ export default function ActivitiesUser() {
   }, [selectedActivity])
 
   const sendNewMessage = (message, buttonId, consumerId) => {
-    store.emit(new SendNewMessage(message, buttonId, consumerId, () => { findActivityDetails(); console.log('message sent!') }))
+    store.emit(new SendNewMessage(message, buttonId, consumerId, () => { findActivityDetails(); alertService.success(t('activities.sent')) }))
   }
 
   const closeConversation = () => {
@@ -233,15 +234,10 @@ export default function ActivitiesUser() {
           </div>
           <div className="feed-section--activity-content">
             <ActivityList setSelectedActivity={setSelectedActivity} demoActivities={demoActivities} />
-            {/* <div className="feed__empty-message">
-              <div className="feed__empty-message--prev">
-                {t('feed.noMoreNotifications')}
-              </div>
-            </div> */}
           </div>
         </div>
         <div className="feed-section__center">
-          <ActivityDetail buttonActivities={buttonActivities} button={selectedButton} sendNewMessage={sendNewMessage} closeConversation={closeConversation} activity={selectedActivity} />
+          <ActivityDetail buttonActivities={buttonActivities} button={selectedButton} sendNewMessage={sendNewMessage} closeConversation={closeConversation} selectedActivity={selectedActivity} />
         </div>
         <div className="feed-section__right">
         </div>

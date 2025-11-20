@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { setMetadata } from "services/ServerProps";
 
-export default function Explore({
+export default function Show({
   metadata
 }) {
 

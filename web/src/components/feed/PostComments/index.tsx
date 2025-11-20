@@ -30,6 +30,7 @@ import { mentionsOfMessage } from 'shared/types/message.helper';
 import { ImageGallery } from 'elements/ImageGallery';
 import Link from 'next/link';
 import { FindAndSetMainPopupCurrentProfile } from 'state/HomeInfo';
+import { useFocusOn } from 'shared/helpers/scroll.helper';
 
 export default function PostComments({
   comments,
@@ -101,25 +102,11 @@ export function PostComment({
       setShowComposeComment(() => ComposeCommentState.HIDE);
     }
   };
-
-  const [focus, setFocus] = useState(false)
   const focusMessageId = useGlobalStore(
-    (state: GlobalState) => state.activities.focusMessageId,
-  );
-  useEffect(() => {
-    if(focusMessageId == comment.id){
-      setFocus(() => true)
-    }else{
-      setFocus(() => false)
-    }
-  }, [focusMessageId])
-
-  const alertRef = useRef(null);
-  useEffect(() => {
-    if (alertRef.current) {
-      alertRef.current.scrollIntoView({ behavior: 'smooth' });
-    }
-  }, [focus]); 
+      (state: GlobalState) => state.activities.focusMessageId,
+    );
+    const {ref, focus} = useFocusOn(focusMessageId, comment.id)
+  
   return (
     <>
     <div
@@ -132,7 +119,7 @@ export function PostComment({
         +( focus ? ' card-notification-comment-focus' : '')
       }
     >
-      {focus && <div ref={alertRef}></div>}
+      <div ref={focus ? ref : null}></div>
       
       <Comment comment={comment} sessionUser={sessionUser}/>
       <div className={'message__actions ' + (sessionUser && (sessionUser.id == comment.author.id) ? ' ' : 'message__actions--you') }>

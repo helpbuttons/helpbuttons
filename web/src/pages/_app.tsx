@@ -341,8 +341,7 @@ export const ClienteSideRendering = ({ children }) => {
 
 
 function ActivityPool({ sessionUser }) {
-  usePoolFindNewActivities({ timeMs: 10000, sessionUser })
-
+  usePoolFindNewActivities({ timeMs: 30*1000, sessionUser })
   return (<></>);
 }
 

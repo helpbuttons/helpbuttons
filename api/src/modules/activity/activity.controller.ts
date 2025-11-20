@@ -20,13 +20,6 @@ export class ActivityController {
   constructor(private readonly activityService: ActivityService,
     private readonly activityCron: ActivityCron
     ) {}
-
-
-  @OnlyRegistered()
-  @Get('messages/markAllAsRead')
-  async messagesMarkAllAsRead(@CurrentUser() user: User) : Promise<any> {
-    return this.activityService.markAllMessagesAsRead(user.id);
-  }
   
   @OnlyRegistered()
   @Get('activities/:page')

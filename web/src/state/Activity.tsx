@@ -17,7 +17,8 @@ export interface Activities{
   activities: ActivityDtoOut[];
   activitiesPage: number;
   notificationsPermissionGranted: boolean;
-  focusMessageId: number;
+  focusMessageId: string;
+  focusPostId: string;
 }
 
 export const activitiesInitialState: Activities = {
@@ -26,6 +27,7 @@ export const activitiesInitialState: Activities = {
   activitiesPage: 0,
   notificationsPermissionGranted: false,
   focusMessageId: null,
+  focusPostId: null
 };
 
 export class PermissionGranted implements UpdateEvent {
@@ -53,17 +55,38 @@ export class PermissionRevoke implements UpdateEvent {
 
 export const usePoolFindNewActivities = ({sessionUser, timeMs }) => {
   const increment = useCallback(() => {
-    // store.emit(new FindNewMessages()); // TODO
-    console.log('TODO request new messages unread...')
+    store.emit(new FindNewActivities()); // TODO
   }, []);
   useInterval(increment, timeMs, { paused: !sessionUser });
 };
 
-export const useActivities = () => {
-  console.log('TODO remove me')
+export class FindNewActivities implements WatchEvent {
+  public constructor(private onSuccess = (loadedActivities) => {}) {}
 
-  return { messages: [], notifications: [] };
-};
+  public watch(state: GlobalState) {
+    if (!state.sessionUser) {
+      return of(undefined);
+    }
+    return ActivityService.activities(0).pipe(
+      map((activities: ActivityDtoOut[]) => {
+        this.onSuccess(activities);
+        store.emit(new FoundNewActivities(activities));
+      }),
+    );
+  }
+}
+
+
+export class FoundNewActivities implements UpdateEvent {
+  public constructor(private activities: ActivityDtoOut[]) {}
+
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      
+        newState.activities.activities = this.activities;        
+    });
+  }
+}
 
 
 export class FindMoreActivities implements WatchEvent {
@@ -126,5 +149,45 @@ export class SendNewMessage implements WatchEvent{
       return of(undefined);
     }
     return ActivityService.sendMessage(this.message, this.buttonId, this.consumerId).pipe(map(() => this.onSuccess() ))
+  }
+}
+
+export class SetFocusOnMessage
+  implements UpdateEvent
+{
+  public constructor(private messageId) {}
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      newState.activities.focusMessageId = this.messageId
+      newState.activities.focusPostId = null
+    });
+  }
+}
+
+export class SetFocusOnPost implements UpdateEvent
+{
+  public constructor(private postId) {}
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      newState.activities.focusPostId = this.postId
+      newState.activities.focusMessageId = null
+    });
+  }
+}
+
+export class ActivityMarkAsRead implements WatchEvent, UpdateEvent {
+  public constructor(private activityId: string) {}
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      newState.activities.activities = state.activities.activities.map((activity) => {
+        if(activity.id == this.activityId){
+          return {...activity,read: true}
+        }
+        return activity
+      })
+    });
+  }
+  public watch(state: GlobalState) {
+    return ActivityService.markAsRead(this.activityId)
   }
 }
