@@ -117,7 +117,7 @@ export class UserController {
   @Get('revokeEndorse/:userId')
   untrust(@CurrentUser() sessionUser: User, @Param('userId') userId: string) {
     return this.userService.revokeEndorse(userId).then((user) => {
-      notifyUser(this.eventEmitter,ActivityEventName.RevokeEndorsed, {user, sessionUser})
+      notifyUser(this.eventEmitter,ActivityEventName.EndorseRevoked, {user, sessionUser})
     });
   }
 

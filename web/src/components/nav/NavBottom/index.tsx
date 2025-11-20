@@ -1,14 +1,10 @@
 //Mobile bottom navigation component with just creation , profile and home buttons if logged in. It not logged it shows home, Button creation , login and faqs too.
 import NavLink from 'elements/Navlink';
 import {
-  IoAdd,
   IoAddCircle,
   IoAddCircleOutline,
-  IoAddCircleSharp,
-  IoAddOutline,
   IoEnter,
   IoEnterOutline,
-  IoGlobe,
   IoGlobeSharp,
   IoHome,
   IoMail,
@@ -18,25 +14,21 @@ import {
   IoPersonAddOutline,
 } from 'react-icons/io5';
 import { IoPersonOutline } from 'react-icons/io5';
-import { IoHeartOutline } from 'react-icons/io5';
-import { IoLogInOutline } from 'react-icons/io5';
 import { IoGlobeOutline } from 'react-icons/io5';
 import { IoHomeOutline } from 'react-icons/io5';
 import t from 'i18n';
 import { GlobalState, store, useGlobalStore } from 'state';
 import { RecenterExplore } from 'state/Explore';
 import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
-import { useActivities } from 'state/Activity';
 import { useEffect, useState } from 'react';
 import { ShowDesktopOnly, ShowMobileOnly } from 'elements/SizeOnly';
 
 export default NavBottom;
 
 function NavBottom({ sessionUser }) {
-  // const {unreadActivities, activities} = useActivities()
+  const activities = useGlobalStore((state: GlobalState) => state.activities.activities)
   const pageName = useGlobalStore((state: GlobalState) => state.homeInfo.pageName)
 
-  const { notifications, messages } = useActivities();
   const [countUnreadNotifications, setCountUnreadNotifications] =
     useState(0);
   const isCurrent = (menuName) => {
@@ -46,12 +38,16 @@ function NavBottom({ sessionUser }) {
     return '';
   };
   useEffect(() => {
-    const countMessages = messages?.unread?.length > 0 ?  messages.unread.length : 0;
-    const countNotifications = notifications?.unread?.length > 0 ?  notifications.unread.length : 0;
+    const countUnread = activities.reduce((countUnread, activity) => { 
+      if (activity.read == false) { 
+        return countUnread + 1 
+      } 
+      return countUnread 
+    }, 0)
     setCountUnreadNotifications(
-      () => countNotifications + countMessages
+      () => countUnread
     );
-  }, [notifications, messages]);
+  }, [activities]);
   return (
     <>
       <nav id="bottom-nav" className="nav-bottom">
@@ -154,7 +150,7 @@ function NavBottom({ sessionUser }) {
                   }
               </div>
               <div className="nav-bottom__text">
-                {t('menu.profile')}
+                {t('menu.profile')} - {sessionUser.username}
               </div>
             </NavLink>
 
@@ -165,11 +161,11 @@ function NavBottom({ sessionUser }) {
               )}`}
             >
               <div className="nav-bottom__icon">
-                {/* {countUnreadNotifications > 0 && (
+                { countUnreadNotifications > 0 && (
                   <span className="notif-circle">
-                    {countUnreadNotifications}
+                    {countUnreadNotifications} 
                   </span>
-                )} */}
+                )}
                 {isCurrent(
                     'Activity',
                   ) ?  

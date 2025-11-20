@@ -49,18 +49,70 @@ $feed-new-message-radius: $border-radius-circle;
 
 }
 
+
+.feed-section--messages {
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  height: 100%;
+
+}
+
+.feed-section__left{
+
+  display: flex;
+  flex-direction: column;
+  width: 33vw;
+
+}
+
+.feed-section__left__header {
+
+  padding: $padding-huge $padding-big  $padding-small $padding-big;
+
+
+}
+
+.feed-section__center {
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 33vw;
+  border-left: $border-style-basic;
+  border-right: $border-style-basic;
+
+}
+
+.feed-section__right {
+
+  display: flex;
+  width: 33vw;
+
+}
 .feed-section__title {
 
-  padding-top: $padding-small;
+  padding-bottom: $padding-big;
   display: flex;
   justify-content: flex-start;
   gap: $padding-small;
   align-items: center;
-  padding-left: $padding-small;
-  color: $color-gray;
+  color: $color-dark-gray;
+  font-size: $font-size-huge;
 
 }
 
+.feed-section__filters {
+
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  padding: 10px 0;
+  overflow-x: auto;
+  height: 69px;
+
+}
 
 .feed-section--activity-content{
 
@@ -153,6 +205,8 @@ $feed-new-message-radius: $border-radius-circle;
   // background-color: $color-white;
   padding: $feed-padding;
   padding-top: 0;
+  display: flex;
+  flex-direction: row;
 
   .dropdown-select__trigger {
 
