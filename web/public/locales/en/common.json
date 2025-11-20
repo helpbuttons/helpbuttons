@@ -19,7 +19,7 @@
     "loading": "...",
     "goToExplore": "Explore _helpbuttons_",
     "install": "Install {0} and receive notifications:",
-    "knowMore": "Know more about {0}",
+    "knowMore": "Know more",
     "goToCreate": "Create _helpbutton_",
     "activity": "Recent Activity",
     "exploreSubtitle": "See & Search the _helpbuttons_ on this map",
@@ -71,9 +71,7 @@
     "copyLink": "Copy link",
     "advancedInviteOptions": "Printable PDF invitations",
     "printInvites":"Printable pdf invitations",
-    "linkCopied": "{0} copied to clipboard",
-    "codeCopied": "Code copied",
-    "copyCode": "Copy code"
+    "linkCopied": "{0} copied to clipboard"
 
   },
   "feed": {
@@ -193,16 +191,18 @@
     "newprivatecommentType": "Private message",
     "newfollowType": "New Suscription",
     "creatorUpdate": "_helpbutton_ updated",
-    "deletedType": "_helpbutton_ deleted",
+    "deleted": "_helpbutton_ deleted",
     "noactivity": "You have no activity yet! Start creating your _helpbutton_ or interact with others!",
     "markedAllAsRead": "Notifications marked as read",
     "markedAsRead": "Marked as read",
-    "newpost": "You posted in '{0}'",
-    "newcomment": "@{0} replied with a message '{1}'",
-    "newcommentSubject": "Someone commented on your _helpbutton_ '{0}'",
+    "newpost": "New posted created '{0}'",
+    "newcomment": "New comment wrote by {0}: '{1}'",
+    "newcommentOwn": "You wrote a comment '{0}'",
+    "newmention": "You were mentioned in a public conversation. {0}: '{1}'",
+    "newmentionOwn": "You post a new coment in a conversation. '{0}'",
     "newfollow": "{0} is now following your _helpbutton_ {1}",
-    "newfollowing": "your are now following the '{0}'",
-    "newfollowed": "{0} now follows your '{1}'",
+    "newfollowing": "You started following",
+    "newfollowed": "Followed your _helpbutton_",
     "myhelpbuttons": "My _helpbuttons_",
     "deletebutton": "{0} was deleted",
     "expiredEventType": "_helpbutton_ ended",
@@ -210,11 +210,9 @@
     "endorsed": "You have been endorsed by the administration, now you have a 'trusted' badge on your profile",
     "revokeEndorse": "Unfortunately you're 'trusted' badge has been removed",
     "roleupdate": "Your role has been updated to '{0}'",
-    "newSignup": "New user '{0}' signed up"
-  },
-  "activitiesWithSubject": {
-    "newbutton": "{0} published a new _helpbutton_ in {1}",
-    "newpost": "{0} published a new post in {1}"
+    "newSignup": "New user '{0}' signed up",
+    "notice": "Notice",
+    "sent": "Message sent!"
   },
   "common": {
     "notfound": "No {0} found. Sorry. 🤔",
@@ -237,7 +235,7 @@
     "notFoundMessage": "Page not found or deleted",
     "options": "Options",
     "edit": "Edit",
-    "registeredRequired": "Please login or signup"
+    "show": "Show"
   },
   "button": {
     "title": "_helpbutton_ view",
@@ -416,6 +414,7 @@
     "optionalFields": "Optional fields",
     "emailRecovery":"Recovery email address",
      "emailRecoveryExplain":"If you already have an account, login clicking a link we'll send to your email address.",
+     "emptyList": "Your own _helpbuttons_ could be seen in this spot.",
      "loginNotFound": "User or password not found"
   },
   "picker": {

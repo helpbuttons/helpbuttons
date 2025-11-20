@@ -40,7 +40,7 @@ export function readableTimeLeftToDate(date: Date) {
   if(!date)
   {
     console.trace()
-    dconsole.error('could not compute date')
+    dconsole.error(`could not compute date: ${JSON.stringify(date)}`)
     return '';
   }
   return getRelativeTime(new Date(date));

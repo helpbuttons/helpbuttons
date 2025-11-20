@@ -56,3 +56,23 @@ export function useScroll(onLoadMore) {
   </>
   return { noMoreToLoad, endDivLoadMoreTrigger };
 }
+
+export function useFocusOn(focusId, id) {
+  const ref = useRef( null );
+  const [focus, setFocus] = useState(false)
+  useEffect(() => {
+    if(focusId == id){
+      setFocus(() => true)
+    }else{
+      setFocus(() => false)
+    }
+  }, [focusId])
+
+  useEffect(() => {
+    if (ref.current) {
+      ref.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [focus]); 
+
+  return {ref, focus}
+}

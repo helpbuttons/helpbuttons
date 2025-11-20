@@ -70,7 +70,8 @@ export class AuthService {
           tags: signupUserDto.tags,
           radius: 0,
           qrcode: signupUserDto.qrcode,
-          showWassap: false
+          showWassap: false,
+          follows: []
         };
 
         return this.createUser(newUserDto, signupUserDto).then(
@@ -261,7 +262,7 @@ export class AuthService {
     return accesstoken;
   }
   getCurrentUser(userId) {
-    return this.userService.findById(userId, true);
+    return this.userService.findById(userId);
   }
 
   async update(data: UserUpdateDto, currentUser) {

@@ -139,7 +139,7 @@ export function SignupForm() {
             />
           </div>
           <div className="form__btn-wrapper">
-            <div className="from__btn-register">
+            <div className="form__btn-register">
               <Btn
                 submit={true}
                 btnType={BtnType.submit}

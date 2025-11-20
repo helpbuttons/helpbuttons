@@ -28,7 +28,6 @@ import Loading from 'components/loading';
 import MainPopup from 'components/popup/Main/';
 import { useConfig } from 'state/Setup';
 import { UpdateMetadata } from 'state/Metadata';
-import { usePoolFindNewActivities } from 'state/Activity';
 import { randomBytes } from 'crypto'
 import MetadataSEOFromStore, { MetadataSEO } from 'components/seo';
 import dconsole from 'shared/debugger';
@@ -36,6 +35,7 @@ import Head from 'next/head';
 import CookiesBanner from 'components/home/CookiesBanner';
 import { MainPopupPage, SetMainPopup, SetPageName } from 'state/HomeInfo';
 import { localStorageService, LocalStorageVars } from 'services/LocalStorage';
+import { usePoolFindNewActivities } from 'state/Activity';
 import { ResetFilters } from 'state/Explore';
 
 export default appWithTranslation(MyApp);
@@ -49,10 +49,6 @@ function MyApp({ Component, pageProps }) {
   const [fetchingNetworkError, setFetchingNetworkError] = useState(false)
   const path = router.asPath.split('?')[0];
   const nonce = randomBytes(128).toString('base64')
-  
-  const messagesUnread = useGlobalStore(
-    (state: GlobalState) => state.activities.messages.unread
-  );
 
   const sessionUser = useGlobalStore((state: GlobalState) => state.sessionUser)
   const pageName = useGlobalStore((state: GlobalState) => state.homeInfo.pageName)
@@ -292,7 +288,7 @@ function MyApp({ Component, pageProps }) {
         return (
           <>
             <MetadataSEOFromStore nonce={nonce} />
-            <ActivityPool sessionUser={sessionUser} messagesUnread={messagesUnread} />
+            <ActivityPool sessionUser={sessionUser} />
             <div
               className="index__container"
               style={
@@ -347,9 +343,8 @@ export const ClienteSideRendering = ({ children }) => {
 };
 
 
-function ActivityPool({ sessionUser, messagesUnread }) {
-  usePoolFindNewActivities({ timeMs: 10000, sessionUser, messagesUnread })
-
+function ActivityPool({ sessionUser }) {
+  usePoolFindNewActivities({ timeMs: 30*1000, sessionUser })
   return (<></>);
 }
 

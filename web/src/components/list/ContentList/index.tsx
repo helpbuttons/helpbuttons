@@ -16,18 +16,30 @@ import { isFiltering } from 'components/search/AdvancedFilters/filters.type';
 import dconsole from 'shared/debugger';
 import { IoAccessibility, IoAdd, IoAlert, IoAnalyticsOutline, IoBugOutline, IoBugSharp, IoCloudyNightSharp, IoCloudyOutline, IoFemale, IoFilterOutline, IoRemoveOutline } from 'react-icons/io5';
 
+export function ButtonList({ buttons,
+  buttonTypes,
+  showMap = false,
+  linkType = null }) {
+  const isLoadingButtons = useGlobalStore(
+    (state: GlobalState) => state.explore.map.loading,
+  );
+  const filtered = isFiltering();
+
+  if (!buttons ||
+    buttons?.length < 1) {
+    return (<ButtonsListEmpty isLoadingButtons={isLoadingButtons} buttons={buttons} filtered={filtered}/>)
+  }
+
+  return (<ContentList buttons={buttons} buttonTypes={buttonTypes} showMap={showMap} linkType={linkType}/>)
+}
 export default function ContentList({
   buttons,
   buttonTypes,
   showMap = false,
   linkType = null,
-  ...props
 }) {
-  const filtered = isFiltering();
   const [buttonsSlice, setButtonsSlice] = useState(2);
-  const isLoadingButtons = useGlobalStore(
-    (state: GlobalState) => state.explore.map.loading,
-  );
+
   const { endDivLoadMoreTrigger, noMoreToLoad } =
     useScroll(({ setNoMoreToLoad, setScrollIsLoading }) => {
       setScrollIsLoading(() => true);
@@ -39,7 +51,26 @@ export default function ContentList({
       setScrollIsLoading(() => false);
     });
 
-  if (buttons.length < 1) {
+  return (
+    <>
+      {buttons?.slice(0, buttonsSlice).map((btn, i) => (
+        <CardButtonList
+          button={btn}
+          key={i}
+          buttonTypes={buttonTypes}
+          showMap={showMap}
+          linkType={linkType}
+        />
+      ))}
+      <NoMoreToLoad />
+      {endDivLoadMoreTrigger}
+    </>
+  );
+}
+
+export function ButtonsListEmpty({isLoadingButtons, buttons, filtered, isProfileList=false}){
+
+  if (buttons?.length < 1) {
     return (
       <>
         <div className="list__empty-message">
@@ -51,7 +82,7 @@ export default function ContentList({
                 {t('explore.noResults')}
               </div>
               <div className="list__empty-message--comment">
-                {t('explore.emptyList')}
+                {isProfileList ? (t('user.emptyList')) : (t('explore.emptyList'))}
               </div>
             </>
           )}
@@ -82,24 +113,7 @@ export default function ContentList({
       </>
     );
   }
-
-  return (
-    <>
-      {buttons.slice(0, buttonsSlice).map((btn, i) => (
-        <CardButtonList
-          button={btn}
-          key={i}
-          buttonTypes={buttonTypes}
-          showMap={showMap}
-          linkType={linkType}
-        />
-      ))}
-      <NoMoreToLoad />
-      {endDivLoadMoreTrigger}
-    </>
-  );
 }
-
 export function NoMoreToLoad() {
   const filtered = isFiltering();
   return (

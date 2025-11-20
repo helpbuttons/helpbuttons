@@ -225,6 +225,7 @@ export class ButtonService {
       );
     }
     return await this.checkAndSetExpired(button).then((btn) => this.transformButton(btn, currentUser));
+    // return this.transformButton(button, currentUser)
   }
 
   async update(
@@ -472,7 +473,7 @@ export class ButtonService {
       button.followedBy.splice(index, 1);
       return await this.buttonRepository.save(button);
     }
-    return true;
+    return button;
   }
 
   findDeletedAndRemoveMedia() {

@@ -334,7 +334,7 @@
   "explore": {
     "emptyList": "Por favor, cambia tu búsqueda, mueve el mapa o toca para encontrar más botones",
     "createEmpty": "Crear _helpbutton_",
-    "noResults": "Lo siento, no hay resultados aquí",
+    "noResults": "Lo sentimos, no hay resultados aquí",
     "selectedHexagon": "en el área seleccionada",
     "filteredRadius": "en {0} · {1}km",
     "noFilter": "en la zona",

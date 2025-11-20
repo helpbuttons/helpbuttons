@@ -128,6 +128,7 @@ $btn-font-size-medium: $font-size-medium;
 
   @extend .btn-filter;
   padding: $padding-small;
+  padding-right: $padding-medium;
 
 }
 
@@ -252,7 +253,7 @@ $btn-font-size-medium: $font-size-medium;
 
 .btn-with-icon {
 
-  gap: $margin-medium;
+  gap: $padding-medium;
 
 }
 
@@ -700,6 +701,12 @@ $btn-font-size-medium: $font-size-medium;
 
 
 @media #{$breakpoints-large} {
+
+  .btn-with-icon {
+
+  gap: $margin-medium;
+
+  }
 
   .btn-filter {
 

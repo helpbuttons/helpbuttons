@@ -85,6 +85,7 @@ $hashtag-color-l-gray: $color-med-gray;
 .hashtag--badge {
   background-color: $color-corporative;
   color: $color-text-over-corporative;
+  pointer-events: none;
   border: none;
 }
 
@@ -121,6 +122,10 @@ $hashtag-color-l-gray: $color-med-gray;
   cursor: pointer;
   text-decoration: none;
   background: $hashtag-color-gray;
+}
+
+.hashtag--not-interactive {
+  pointer-events: none;
 }
 
 
