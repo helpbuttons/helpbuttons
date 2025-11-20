@@ -179,7 +179,7 @@ function ModerationUsersList() {
               {users.map((user, idx) => (
                 <TableLine idx={idx}>
                   <TableLineCell>
-                    <Link href="#" onClick={() => openProfile(user.username)}>{getEmailPrefix(user.email)}</Link>
+                    <Link href="#" onClick={() => openProfile(user.username)}>{user.email}</Link>
                   </TableLineCell>
                   <TableLineCell>
                     <Link href="#" onClick={() => openProfile(user.username)}>{user.username}</Link>

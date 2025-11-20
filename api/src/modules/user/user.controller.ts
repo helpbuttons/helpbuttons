@@ -35,14 +35,7 @@ export class UserController {
     }
     return {...userClean, t: 'k'}
   }
-
-  @OnlyAdmin()
-  @Get('findExtra/:userId')
-  async findExtra(@Param('userId') userId: string){
-    return await this.userService
-    .findById(userId);
-  }
-
+  
   @OnlyRegistered()
   @Get('invites')
   async invites(@CurrentUser() user: User) {

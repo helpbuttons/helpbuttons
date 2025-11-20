@@ -102,17 +102,16 @@ export class UserService {
     return httpService.get<any>(`buttons/findByOwner/${userId}`);
   }
 
+  public static findMyButtons(): Observable<any> {
+    return httpService.get<any>(`buttons/mine`);
+  }
+
   public static followTag(tag : string): Observable<any> {
     return httpService.post<any>(`users/followTag/${tag}`);
   }
 
   public static followTags(tags : string): Observable<any> {
     return httpService.post<any>(`users/followTags/${tags}`);
-  }
-
-  public static findExtra(userId: string)
-  {
-    return httpService.get<User>(`users/findExtra/${userId}`);
   }
   
   public static getPhone(userId : string): Observable<any> {
