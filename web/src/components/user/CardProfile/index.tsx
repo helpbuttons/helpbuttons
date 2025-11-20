@@ -52,7 +52,7 @@ export default function CardProfile({ user, showAdminOptions = false, showProfil
             </div>
 
         </div>
-        <div className="card-profile__role">{user?.role == Role.admin && <div className="hashtag hashtag--blue"> {t('roles.administrator')}</div>}{user?.endorsed && <div className="hashtag hashtag--badge">{t('user.endorsed')}</div>}</div>
+        <div className="card-profile__role">{user?.role == Role.admin && <div className="hashtag hashtag--not-interactive hashtag--blue"> {t('roles.administrator')}</div>}{user?.endorsed && <div className="hashtag hashtag--not-interactive hashtag--badge">{t('user.endorsed')}</div>}</div>
         <div className="card-profile__data">
 
             {/* TODO: 
