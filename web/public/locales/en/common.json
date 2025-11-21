@@ -414,9 +414,14 @@
     "editUsername": "Edit username",
     "optionalFields": "Optional fields",
     "emailRecovery":"Recovery email address",
-     "emailRecoveryExplain":"If you already have an account, login clicking a link we'll send to your email address.",
-     "emptyList": "Your own _helpbuttons_ could be seen in this spot.",
-     "loginNotFound": "User or password not found"
+    "emailRecoveryExplain":"If you already have an account, login clicking a link we'll send to your email address.",
+    "emptyList": "Your own _helpbuttons_ could be seen in this spot.",
+    "loginNotFound": "User or password not found",
+    "iHaveCode":"I have a guest code",
+    "guestCode":"Guest code",
+    "guestCodePlaceHolder":"Write the code here",
+    "askForNewCode":"I don't have my guest info"
+
   },
   "picker": {
     "headerText": "Choose a location"

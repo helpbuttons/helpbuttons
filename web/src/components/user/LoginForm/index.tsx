@@ -19,7 +19,10 @@ import { CookiesState, MainPopupPage, SetMainPopup } from 'state/HomeInfo';
 import { handleAcceptCookies } from 'components/home/CookiesBanner';
 import { Network } from 'shared/entities/network.entity';
 
-export default function LoginForm() {
+export default function LoginForm({
+    guest = false,
+
+}) {
   const {
     register,
     handleSubmit,
@@ -59,30 +62,58 @@ export default function LoginForm() {
   return (
     <Form onSubmit={handleSubmit(onSubmit)} classNameExtra="login__form">
         <div className="form__inputs-wrapper">
-          <FieldText
-            name="email"
-            label={t('user.email')}
-            classNameInput="squared"
-            placeholder={t('user.emailPlaceHolder')}
-            validationError={errors.email}
-            {...register('email', { required: true })}
-          ></FieldText>
-          <FieldPassword
-            name="password"
-            label={t('user.password')}
+          {!guest &&
+            <>
+              <FieldText
+                name="email"
+                label={t('user.email')}
+                classNameInput="squared"
+                placeholder={t('user.emailPlaceHolder')}
+                validationError={errors.email}
+                {...register('email', { required: true })}
+              ></FieldText>
+              <FieldPassword
+                name="password"
+                label={t('user.password')}
 
-            classNameInput="squared"
-            onForgotPass={() => store.emit(new SetMainPopup(MainPopupPage.REQUEST_LINK))}
-            placeholder={t('user.passwordPlaceHolder')}
-            validationError={errors.password}
-            {...register('password', { required: true })}
-          ></FieldPassword>
+                classNameInput="squared"
+                onForgotPass={() => store.emit(new SetMainPopup(MainPopupPage.REQUEST_LINK))}
+                placeholder={t('user.passwordPlaceHolder')}
+                validationError={errors.password}
+                {...register('password', { required: true })}
+              ></FieldPassword>
+            </>
+          }
+          
+          
+          {guest &&
+            <>
+            <FieldText
+              name="code"
+              label={t('user.guestCode')}
+              classNameInput="squared"
+              placeholder={t('user.guestCodePlaceHolder')}
+              validationError={errors.email}
+              {...register('guestCode', { required: true })}
+            ></FieldText>
+            <FieldText
+              name="name"
+              label={t('user.name')}
+              classNameInput="squared"
+              placeholder={t('user.namePlaceHolder')}
+              validationError={errors.email}
+              {...register('name', { required: true })}
+            ></FieldText>
+             </>
+
+          }
         </div>
         {errorMsg && (
           <div className="form__input-subtitle--error">
             {errorMsg}
           </div>
         )}
+      
           <Btn
             submit={true}
             disabled={isSubmitting}
@@ -92,15 +123,24 @@ export default function LoginForm() {
             isSubmitting={isSubmitting}
           />
         <div className="form__btn-wrapper">
+         {!guest &&
           <div className="popup__link" onClick={() => store.emit(new SetMainPopup(MainPopupPage.SIGNUP))} >
               {t('user.noAccount')}
-          </div>
-           {selectedNetwork?.allowGuestCreation && 
+          </div>         
+         } 
+
+          {selectedNetwork?.allowGuestCreation && !guest && 
             <div className="popup__link" onClick={() => store.emit(new SetMainPopup(MainPopupPage.SIGNUP_AS_GUEST))}>
 
                 {t('user.signupAsGuest')}
             </div>
-            }
+          }
+          {selectedNetwork?.allowGuestCreation && guest && 
+            <div className="popup__link" onClick={() => store.emit(new SetMainPopup(MainPopupPage.SIGNUP_AS_GUEST))}>
+
+                {t('user.askForNewCode')}
+            </div>
+          }
         </div>
     </Form>
   );

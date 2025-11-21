@@ -71,11 +71,16 @@ export default function MainPopup() {
       )}
       {(popupPage == MainPopupPage.SIGNUP_AS_GUEST) && (
           <Picker
-            headerText={t('user.signup')}
+            headerText={t('user.signupAsGuest')}
             closeAction={closePopup}
           >
             <SignupAsGuestForm />
           </Picker>
+      )}
+      {(popupPage == MainPopupPage.LOGIN_AS_GUEST) && (
+        <Picker closeAction={closePopup} headerText={t('user.login')}>
+          <LoginForm guest={true} />
+        </Picker>
       )}
       {popupPage == MainPopupPage.INVITE && (
         <Picker
