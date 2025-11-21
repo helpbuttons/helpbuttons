@@ -3,7 +3,7 @@ import Btn, { BtnType, ContentAlignment, IconType } from "elements/Btn";
 import { formatedCoords, getCoordinatesDegrees, getCoordinatesDMS, useGeoReverse, useGeoSearch } from "elements/Fields/FieldLocation/location.helpers";
 import t from "i18n";
 import { useEffect, useRef, useState } from "react";
-import { IoCloseOutline, IoLocationOutline } from "react-icons/io5";
+import { IoAdd, IoCloseOutline, IoLocationOutline } from "react-icons/io5";
 import { alertService } from "services/Alert";
 import dconsole from "shared/debugger";
 import { roundCoord } from "shared/honeycomb.utils";
@@ -110,18 +110,23 @@ export default function LocationSearchBar({
                     <FieldCustomAddress isCustomAddress={isCustomAddress} input={input} setInput={setInput} setPickedAddress={setPickedAddress} setIsCustomAddress={setIsCustomAddress} />
                     <LoadUserLocationButton handleBrowserLocation={handleAddressPicked} hideAddress={hideAddress} />
                 </div>
+         
+                
                 {(results && results.length > 0) &&
                     <SearchResultsList handleAddressPicked={handleAddressPicked} results={results} hideAddress={hideAddress} />
                 }
-                {(showAddCustomButton && (results && results.length < 1) && isCustomAddress !== null) &&
+                {(showAddCustomButton && (results && results.length < 10) && isCustomAddress !== null) &&
                     <SearchCustomAddress handleClick={() => { setIsCustomAddress(() => true); toggleShowAddCustomButton(() => false) }} />
                 }
 
-                {(pickedPosition && pickedPosition[0] !== null && pickedPosition[1] !== null) && (
+                
                     <div className='form__input-subtitle-option form__input-subtitle--grayed'>
-                        {getCoordinatesDMS(pickedPosition.toString())}
+                            {isCustomAddress && (pickedPosition && pickedPosition[0] == null && pickedPosition[1] == null) && t('button.selectPlace') } 
+                            {(pickedPosition && pickedPosition[0] !== null && pickedPosition[1] !== null) && (
+                            <> {getCoordinatesDMS(pickedPosition.toString())}</>
+                             )}
                     </div>
-                )}
+               
 
             </div>
         </div>
@@ -214,7 +219,9 @@ function FieldLocationSearch({ isCustomAddress = false, placeholder, setResults,
             />
             {isLoading && <div className="form__input--location-loading"><Loading /></div>}
         </div>
-    }</>
+    }
+
+    </>
 
 }
 function FieldCustomAddress({ isCustomAddress, setIsCustomAddress, setPickedAddress, input, setInput }) {
@@ -228,7 +235,9 @@ function FieldCustomAddress({ isCustomAddress, setIsCustomAddress, setPickedAddr
         setInput(value)
     }
 
-    return (<>{isCustomAddress &&
+    return (<>
+    
+        {isCustomAddress &&
         <div className="form__input--dropdown-search">
             <input
                 className="form__input--dropdown-search__input"
@@ -237,6 +246,7 @@ function FieldCustomAddress({ isCustomAddress, setIsCustomAddress, setPickedAddr
                 onFocus={handleFocus}
                 onChange={handleChange}
             />
+
             <div className="form__input--location-loading">
                 <Btn
                     btnType={BtnType.smallCircle}
@@ -246,21 +256,28 @@ function FieldCustomAddress({ isCustomAddress, setIsCustomAddress, setPickedAddr
                     onClick={() => { setIsCustomAddress(false); setInput(() => '') }}
                 />
             </div>
+            
+            
         </div>
-    }
-    </>)
+        
+        }
+
+    </>
+    
+)
 }
 export function SearchCustomAddress({ handleClick }) {
     const selectedNetworkName = useSelectedNetwork().name
-    return (<>
+    return (<div className="dropdown__dropdown-option-wrapper--add-location">
         <hr />
         <div
-            className="dropdown__dropdown-option"
+            className="dropdown__dropdown-option dropdown__dropdown-option--add-location"
             onClick={handleClick}
-        >
+        >   
+        <IoAdd/>
             {t('button.proposeAddress', [selectedNetworkName])}
         </div>
-    </>)
+    </div>)
 }
 export function SearchResultsList({ results, hideAddress = false, handleAddressPicked }) {
     return (

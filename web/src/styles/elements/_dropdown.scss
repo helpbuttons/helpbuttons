@@ -79,13 +79,13 @@ $dropdown-bck: $color-white;
   border-radius: $border-radius-basic;
   background-position-x: 10%;
 
-  outline: $border-style-basic;
   height: $form-input-height;
   border-right:  $padding-big solid transparent;
 
   width: 100%;
   background: $dropdown-bck;
   padding-right: 1rem;
+  outline: $border-style-basic;
 
 
   &:hover {
@@ -209,6 +209,23 @@ $dropdown-bck: $color-white;
 
 }
 
+.dropdown__dropdown-option-wrapper--add-location {
+  background-color: $color-white;
+  border-radius: $border-radius-basic $border-radius-basic 0 0;
+  overflow: hidden;
+
+}
+
+.dropdown__dropdown-option--add-location {
+
+  background-color: $color-ligth-gray;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: $padding-medium;
+  font-weight: $font-weight-bold;
+
+}
 
 @media #{$breakpoints-xxlarge} {
 
