@@ -141,13 +141,20 @@ $info-content-head-margin-mobile: 70px;
   flex-direction: column;
   flex-wrap: nowrap;
   align-items: center;
-  // justify-content: center;
   margin: 0 ;
   min-height: 20rem;
   flex-basis: 100%;
   padding: $padding-big;
   border-radius: 0;
 
+}
+
+.homeinfo-card.homeinfo__card--title-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;                     
+  pointer-events: none;          
+  background: linear-gradient(0deg, transparent, $color-gray-transparent 10%) no-repeat;
 }
 
 .homeinfo__card--slogan-card {
@@ -243,15 +250,6 @@ $info-content-head-margin-mobile: 70px;
 
 }
 
-.homeinfo__scroll-background {
-  max-width: 840px;
-  margin: auto;
-  background: linear-gradient(0deg, transparent, $color-gray-transparent 10%) no-repeat;
-  min-height: 100px;
-  overflow: visible; 
-
-}
-
 .homeinfo__sections {
   position: relative;
   z-index: $z-index-base;
@@ -265,6 +263,12 @@ $info-content-head-margin-mobile: 70px;
   padding-top: $padding-big;
   justify-content:space-around;
   align-items: flex-start;
+
+  -webkit-overflow-scrolling: touch; // Smooth momentum on iOS
+  overscroll-behavior: contain; // Prevent scroll propagation to parents (keeps background stable)
+  
+  // For drag-and-drop: Restrict touch to taps/drags, no panning
+  touch-action: manipulation;
 
 }
 
