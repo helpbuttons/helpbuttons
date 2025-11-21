@@ -157,7 +157,7 @@ $info-content-head-margin-mobile: 70px;
   background: linear-gradient(0deg, transparent, $color-gray-transparent 10%) no-repeat;
   max-width: $grid-column-max-width ;
   margin: auto;
-  transform: translateX(-$scrollbar-width/2);
+
 
 }
 
@@ -457,7 +457,13 @@ hr {
     }
   }
 
+  .homeinfo-card.homeinfo__card--title-card::before {
+              
+    max-width: $grid-column-max-width ;
+    margin: auto;
+    transform: translateX(-$scrollbar-width/2);
 
+  }
 
 }
 
