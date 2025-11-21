@@ -64,7 +64,7 @@ $dropdown-max-width: 30rem;
 
 
 
-$dropdown-bck: $color-ligth-gray;
+$dropdown-bck: $color-white;
 
 .dropdown__dropdown-trigger {
   text-align: left;
@@ -75,9 +75,18 @@ $dropdown-bck: $color-ligth-gray;
   font-size: $font-size-general;
   width: auto;
   border: transparent;
-  border-radius: $border-radius-circle;
-  background-position-x: 70%;
+
+  border-radius: $border-radius-basic;
+  background-position-x: 10%;
+
+  outline: $border-style-basic;
+  height: $form-input-height;
   border-right:  $padding-big solid transparent;
+
+  width: 100%;
+  background: $dropdown-bck;
+  padding-right: 1rem;
+
 
   &:hover {
     cursor: pointer;
@@ -105,7 +114,7 @@ $dropdown-bck: $color-ligth-gray;
   border-radius: 2rem;
   color: $color-black;
   font-weight: $font-weight-bold;
-
+  background-color: $color-white;
   transition: all 0.2s ease-in-out;
   font-size: $font-size-general;
   background-repeat: no-repeat;
@@ -206,7 +215,7 @@ $dropdown-bck: $color-ligth-gray;
   .dropdown__dropdown-trigger {
 
     display: flex;
-    max-width: auto;
+    width: 100%;
     min-width: $dropdown-width;
     // margin-left: $margin-small;
 

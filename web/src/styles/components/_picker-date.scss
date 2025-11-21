@@ -116,17 +116,34 @@ $picker-date-height: 40px;
 
 .react-calendar__tile {
 
-  height: 50px;
+  height: auto;
   border-radius: $border-radius-circle;
   margin: $margin-medium;
   padding: $padding-big;
+  text-wrap: no-wrap;
 
+  & abbr {
+    text-wrap: nowrap;
+    flex-wrap: nowrap;
+  }
 }
 
 .react-calendar__tile--active {
 
-  background-color: $color-secondary !important;
+  background-color: $color-corporative !important;
+  color: $color-text-over-corporative !important;
+  font-weight: $font-weight-bolder;
 
+}
+
+.react-calendar__month-view__weekdays__weekday {
+
+  font-size: 0;
+
+}
+
+.react-calendar__month-view__weekdays__weekday:first-letter {
+  font-size: $font-size-general;
 }
 
 
@@ -234,6 +251,16 @@ $picker-date-height: 40px;
         }
 
     }
+
+  }
+
+}
+
+@media #{$breakpoints-medium} {
+
+  .react-calendar__month-view__weekdays__weekday {
+
+    font-size: $font-size-general;
 
   }
 
