@@ -155,6 +155,10 @@ $info-content-head-margin-mobile: 70px;
   inset: 0;                     
   pointer-events: none;          
   background: linear-gradient(0deg, transparent, $color-gray-transparent 10%) no-repeat;
+  max-width: $grid-column-max-width ;
+  margin: auto;
+  transform: translateX(-$scrollbar-width/2);
+
 }
 
 .homeinfo__card--slogan-card {
@@ -253,7 +257,7 @@ $info-content-head-margin-mobile: 70px;
 .homeinfo__sections {
   position: relative;
   z-index: $z-index-base;
-  max-width: 840px;
+  max-width: $grid-column-max-width;
   margin: auto;
   flex-grow: 1;
   color: $color-dark-gray;
