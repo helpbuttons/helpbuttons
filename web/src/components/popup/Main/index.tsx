@@ -79,7 +79,7 @@ export default function MainPopup() {
       )}
       {popupPage == MainPopupPage.INVITE && (
         <Picker
-          headerText={t('user.signup')}
+          headerText={t('user.signupAsGuest')}
           closeAction={closePopup}
         >
           <InviteForm />

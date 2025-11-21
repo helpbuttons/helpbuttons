@@ -251,7 +251,7 @@ export function SignupAsGuestForm() {
 
 
         </div>
-        <div className="form__btn-wrapper">
+        {/* <div className="form__btn-wrapper">
           {(step == steps.REQUEST_CODE) &&
             <>
               <div className="popup__link" onClick={() => store.emit(new SetMainPopup(MainPopupPage.LOGIN))}>
@@ -261,7 +261,7 @@ export function SignupAsGuestForm() {
                   {t('user.noAccount')}
               </div>
             </>}
-        </div>
+        </div> */}
     </Form>
   </>
 }
