@@ -103,8 +103,10 @@ export default function HomeInfo({ metadata }) {
             <NavigatorCoordsButton />
 
 
+
+
             <div className="homeinfo__sections">
-              
+
               <ShowMobileOnly>
                 <HomeInfoNetworkLogo selectedNetwork={selectedNetwork} />
               </ShowMobileOnly>
@@ -127,9 +129,8 @@ export default function HomeInfo({ metadata }) {
               <HomeInfoPinnedHashTags selectedNetwork={selectedNetwork} />
 
               <HomeInfoAdministeredBy scrollToContact={scrollToContact} />
-              {/* <HomeInfoActionCards currentUser={currentUser} /> */}
-
             </div>
+
             <div
               className="homeinfo-card homeinfo__card--title-card"
               style={
@@ -141,7 +142,7 @@ export default function HomeInfo({ metadata }) {
               <div className="homeinfo-card__section--actions"></div>
             </div>
           </div>
-                              <Footer/>
+            <Footer/>
 
         </div>
                   </>
