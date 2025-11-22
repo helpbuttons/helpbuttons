@@ -94,7 +94,7 @@ export function ActivityListCard({ activity, setSelectedActivity }) {
                                 {activity?.premessage}{activity.message}
                             </div>
                         </div>
-                        <div>
+                        <div className="card-notification__footer">
                             {activity?.footer}
                         </div>
                     </div>

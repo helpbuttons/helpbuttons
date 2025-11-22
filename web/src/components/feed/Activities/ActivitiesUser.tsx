@@ -10,6 +10,9 @@ import { ActivityDetail } from "components/feed/Activities/ActivityDetail";
 import ActivityList from "components/feed/Activities/ActivityList";
 import { alertService } from "services/Alert";
 import { usePoolFunc } from "shared/custom.hooks";
+import { ShowDesktopOnly, ShowMobileOnly } from "elements/SizeOnly";
+import Btn, { BtnType, ContentAlignment } from "elements/Btn";
+import { Dropdown } from "elements/Dropdown/Dropdown";
 
 
 
@@ -87,21 +90,40 @@ export default function ActivitiesUser() {
               Messages & Alerts
             </div>
             <div className="feed-section__filters">
-              {/* <Dropdown options={filterButtons} />
+              <Dropdown options={filterButtons} />
               <Btn
-                btnType={BtnType.filter}
+                btnType={BtnType.splitIcon}
                 contentAlignment={ContentAlignment.left}
-                caption={'test'}
-              /> */}
+                caption={'testtestest2'}
+              />
+              <Btn
+                btnType={BtnType.splitIcon}
+                contentAlignment={ContentAlignment.left}
+                caption={'testesetst3'}
+              />
+              <Btn
+                btnType={BtnType.splitIcon}
+                contentAlignment={ContentAlignment.left}
+                caption={'testesetst3'}
+              />              
             </div>
           </div>
           <div className="feed-section--activity-content">
             <ActivityList setSelectedActivity={setSelectedActivity} />
           </div>
         </div>
-        <div className="feed-section__center">
-          <ActivityDetail buttonActivities={buttonActivities} button={selectedButton} sendNewMessage={sendNewMessage} closeConversation={closeConversation} selectedActivity={selectedActivity} />
-        </div>
+        <ShowDesktopOnly>
+          <div className="feed-section__center">
+            <ActivityDetail buttonActivities={buttonActivities} button={selectedButton} sendNewMessage={sendNewMessage} closeConversation={closeConversation} selectedActivity={selectedActivity} />
+          </div>
+        </ShowDesktopOnly>
+        <ShowMobileOnly>  
+          {selectedActivity &&
+            <div className="feed-section__center--mobile">
+              <ActivityDetail buttonActivities={buttonActivities} button={selectedButton} sendNewMessage={sendNewMessage} closeConversation={closeConversation} selectedActivity={selectedActivity} />
+            </div>
+          }
+        </ShowMobileOnly>
         <div className="feed-section__right">
         </div>
       </div>

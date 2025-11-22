@@ -9,6 +9,7 @@
     flex-direction: row;
     padding: $padding-small;
     align-items: center;
+    background-color: $color-white;
 }
 
 .chat__new-message__message {
@@ -26,6 +27,19 @@
 
 }
 
+.chat__header-title {
+
+    a { font-weight: $font-weight-bolder; }
+}
+
+.chat__header-title,
+.chat__header-subtitle {
+  white-space: nowrap;      /* 1. Forces text onto one line */
+  overflow: hidden;         /* 2. Hides the overflow */
+  text-overflow: ellipsis;  /* 3. Adds the '...' */
+}
+
+
 .chat__header-content {
 
     display: flex;
@@ -40,7 +54,8 @@
 }
 
 .chat__header-center {
-    flex: 1;
+    min-width: 0; /* Essential for ellipsis to work inside a Flex container */
+    flex: 1;  
 }
 
 .chat__header-right {
@@ -50,11 +65,12 @@
 
 .chat__messages {
 
-    height: 100%;
     overflow: auto;
     display: flex;
     padding: $padding-medium;
-    flex-direction: column-reverse    
+    flex-direction: column-reverse ;   
+    background-color: $color-ligth-gray;
+    flex: 1;
 }
 
 .chat__time-passed {
