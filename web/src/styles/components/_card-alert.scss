@@ -22,7 +22,7 @@ $card-alert-icon-size: 30px;
   height: auto;
   justify-content: space-between;
   border-radius: $card-alert-radius;
-  color: $color-text-over-corporative;
+  color: $color-dark-gray;
   display: flex;
   align-items: center;
 
@@ -45,7 +45,7 @@ $card-alert-icon-size: 30px;
 }
 
 .card-alert--success {
-  background-color: $color-corporative;
+  background-color: $color-green;
 }
 
 .card-alert--error {
@@ -57,7 +57,7 @@ $card-alert-icon-size: 30px;
 }
 
 .card-alert--info {
-  background-color: $color-corporative;
+  background-color: var(--network-accent-color);
 }
 
 .card-alert__content {
@@ -68,7 +68,7 @@ $card-alert-icon-size: 30px;
   margin: auto 0;
   padding-right: $padding-big;
   font-weight: $font-weight-bold;
-  color: $color-text-over-corporative;
+  color: $color-white;
   gap: $padding-small;
 
 
@@ -81,12 +81,10 @@ $card-alert-icon-size: 30px;
 .card-alert__icon {
 
   margin-right: $margin-small;
-  align-self: center;
 
   svg {
     width: $card-alert-icon-size;
     height: auto;
-    margin: auto;
   }
 
 }
