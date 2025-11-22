@@ -29,7 +29,7 @@ export default function Profile() {
     }, [sessionUser]);
   return (
     <>
-          <Popup linkFwd="/Explore" title={t('user.profileView')}>
+          <Popup title={t('user.profileView')}>
             <LoadabledComponent loading={!sessionUser}>
               <CardProfile user={sessionUser} showProfileEdit={true} />
               <CardProfileButtonList buttons={buttons}/>

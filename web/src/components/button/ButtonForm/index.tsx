@@ -115,7 +115,7 @@ export default function ButtonForm({
   return (
     <LoadabledComponent loading={!selectedNetwork}>
       {selectedNetwork &&
-        <Popup title={title} linkFwd={'/Explore'}>
+        <Popup title={title}>
           <Form
             onSubmit={handleSubmit(onSubmit, onError)}
             classNameExtra="publish_btn"
