@@ -112,9 +112,7 @@ export default function HomeInfo({ metadata }) {
 
               <HomeInfoPinnedButtons />
               
-              <ShowMobileOnly>
                <HomeInfoStatsCard selectedNetwork={selectedNetwork} config={config} />
-              </ShowMobileOnly>
 
               <HomeInfoInfoCard selectedNetwork={selectedNetwork} />
 
