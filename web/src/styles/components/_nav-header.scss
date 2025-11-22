@@ -12,11 +12,21 @@ $nav-header-button-width: 47px;
 $nav-header-padding: $padding-medium;
 $nav-header-new-message-radius: $border-radius-circle;
 
+
+
 .nav-header__container {
   width: 100%;
   height: auto;
   position: relative;
   border-bottom: $border-style-basic;
+
+}
+
+.nav-header__container--homeinfo {
+ 
+  border-radius: 0 0 $border-radius-circle $border-radius-circle ;
+  padding-right: 0;
+
 
 }
 
@@ -88,14 +98,27 @@ $nav-header-new-message-radius: $border-radius-circle;
 
 @media #{$breakpoints-xlarge} {
 
+    .nav-header--homeinfo {
+      position: absolute;
+      background: transparent;
+      right: $padding-medium;
+
+    }
 
   .nav-header__container {
+        z-index: $z-index-02;
     background-color: $color-corporative;
     padding: 0 $padding-medium;
     display: flex;
     justify-content: flex-start;
     box-shadow: none;
     min-height: 71px;
+  }
+  
+  .nav-header__container--homeinfo {
+
+        padding-right: calc($padding-medium + $padding-big );
+
   }
 
 

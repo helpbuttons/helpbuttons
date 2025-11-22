@@ -140,7 +140,6 @@ $nav-bottom-border: 32px;
 @media #{$breakpoints-xlarge} {
   .nav-bottom {
     border-radius: 0 0 $nav-bottom-border  $nav-bottom-border;
-    z-index: 0;
     justify-content: flex-end;
     gap: 24px;
     position: relative;
@@ -148,6 +147,7 @@ $nav-bottom-border: 32px;
     align-items: center;
     background: none;
     border-top: transparent;
+    min-width: 400px;
 
   }
 

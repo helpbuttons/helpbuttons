@@ -105,9 +105,7 @@ export default function HomeInfo({ metadata }) {
 
             <div className="homeinfo__sections">
               
-              <ShowMobileOnly>
-                <HomeInfoNetworkLogo selectedNetwork={selectedNetwork} />
-              </ShowMobileOnly>
+              <HomeInfoNetworkLogo selectedNetwork={selectedNetwork} />
               <HomeSloganCard selectedNetwork={selectedNetwork} config={config} />
 
               <HomeInfoPinnedButtons />

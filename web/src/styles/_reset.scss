@@ -235,7 +235,11 @@ p {
     height: calc(var(--vh) - $header-height-desktop - $nav-header-height-desktop) !important;
   }
 
-  .homeinfo__container,
+  .homeinfo__container {
+
+    height: var(--vh) !important;
+  }
+
   .feed__container {
 
     height: calc(var(--vh) - $nav-header-height-desktop) !important;
