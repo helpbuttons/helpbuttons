@@ -212,6 +212,8 @@ $btn-font-size-medium: $font-size-medium;
   border-radius: $btn-border-radius-semicircle;
   margin-right: $btn-filter-icon-margin;
   display: flex;
+  min-width: 0;
+
 
 }
 
@@ -501,7 +503,7 @@ $btn-font-size-medium: $font-size-medium;
   }
 
 
-
+  &:active,
   &:focus {
 
     background-color: $color-dark-gray;
@@ -544,29 +546,6 @@ $btn-font-size-medium: $font-size-medium;
 }
 
 
-@media (hover: none) {
-  .btn,
-  .btn-circle,
-  .btn-with-icon,
-  .btn-filter {
-
-    &:hover {
-
-      border-color:  $color-gray;
-      color: $color-black;
-      cursor: pointer;
-      background-color: $color-white;
-  
-      & svg {
-        color: $color-black;
-        fill: $color-black;
-      }
-  
-    }
-  
-  }
-
-}
 
 
 //BLACK btn VARIATION

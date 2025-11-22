@@ -30,25 +30,29 @@ function NavHeader({ selectedNetwork }){
         <ShowDesktopOnly>
           <BrandCard />
         </ShowDesktopOnly>
-        <form className="nav-header__content">
-          <div className="nav-header__content-message">
-            <HeaderSearch
-              toggleAdvancedFilters={toggleAdvancedFilters}
-              selectedNetwork={selectedNetwork}
-              exploreMapState={exploreMapState}
-            />
-          </div>
-        </form>
+        <>{(pageName == 'Explore' &&    
+          <form className="nav-header__content">
+            <div className="nav-header__content-message">
+              <HeaderSearch
+                toggleAdvancedFilters={toggleAdvancedFilters}
+                selectedNetwork={selectedNetwork}
+                exploreMapState={exploreMapState}
+              />
+            </div>
+          </form>
+      )}</>
+
+        
         <ShowDesktopOnly>
           <NavBottom sessionUser={sessionUser} />
         </ShowDesktopOnly>
       </div>
       <div className="nav-header__filters">
         <ShowMobileOnly>
-          <>{(pageName != 'HomeInfo' && <ListButtonTypes/>)}</>
+          <>{(pageName == 'Explore' && <ListButtonTypes/>)}</>
         </ShowMobileOnly>
         <ShowDesktopOnly>
-          <ListButtonTypes/>
+         <>{(pageName == 'Explore') &&  <ListButtonTypes/>}</> 
         </ShowDesktopOnly>
       </div>
     </div>
