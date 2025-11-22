@@ -10,6 +10,7 @@ import { ActivityDetail } from "components/feed/Activities/ActivityDetail";
 import ActivityList from "components/feed/Activities/ActivityList";
 import { alertService } from "services/Alert";
 import { usePoolFunc } from "shared/custom.hooks";
+import { ShowDesktopOnly, ShowMobileOnly } from "elements/SizeOnly";
 
 
 
@@ -99,9 +100,16 @@ export default function ActivitiesUser() {
             <ActivityList setSelectedActivity={setSelectedActivity} />
           </div>
         </div>
-        <div className="feed-section__center">
-          <ActivityDetail buttonActivities={buttonActivities} button={selectedButton} sendNewMessage={sendNewMessage} closeConversation={closeConversation} selectedActivity={selectedActivity} />
-        </div>
+        <ShowDesktopOnly>
+          <div className="feed-section__center">
+            <ActivityDetail buttonActivities={buttonActivities} button={selectedButton} sendNewMessage={sendNewMessage} closeConversation={closeConversation} selectedActivity={selectedActivity} />
+          </div>
+        </ShowDesktopOnly>
+        <ShowMobileOnly>
+          <div className="feed-section__center">
+            <ActivityDetail buttonActivities={buttonActivities} button={selectedButton} sendNewMessage={sendNewMessage} closeConversation={closeConversation} selectedActivity={selectedActivity} />
+          </div>
+        </ShowMobileOnly>
         <div className="feed-section__right">
         </div>
       </div>

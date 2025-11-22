@@ -54,7 +54,8 @@
     overflow: auto;
     display: flex;
     padding: $padding-medium;
-    flex-direction: column-reverse    
+    flex-direction: column-reverse;
+    background-color: white;    
 }
 
 .chat__time-passed {
