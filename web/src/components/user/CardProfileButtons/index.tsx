@@ -16,7 +16,9 @@ export function CardProfileButtonList({user, buttons})
     }
   
   return (<div className="card-profile__button-list-wrapper">
-        <div className="card-profile__rating">
+    
+        <div className="card-profile__button-list-content">
+          <div className="card-profile__rating">
                   <div className={'card-profile__rate ' + (sessionUser.id == user.id || sessionUser?.role == Role.admin ? ' card-profile__rate--published' : 'card-profile__rate--')}>
                     <div className="card-profile__rate-label">
                       {t('user.helpbuttonsPublishedAmount')}
@@ -45,6 +47,9 @@ export function CardProfileButtonList({user, buttons})
             />
             
           </div>
-          </div>
-        )
+        </div>
+
+      </div>
+
+    )
 }

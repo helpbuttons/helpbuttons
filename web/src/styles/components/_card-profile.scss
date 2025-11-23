@@ -327,6 +327,8 @@ $avatar-margin: $padding-big;
     justify-content: center;
     gap: $margin-big;
     padding: $margin-big;
+    max-width: $grid-max-width;
+    margin: auto;
 
   }
 
@@ -344,7 +346,8 @@ $avatar-margin: $padding-big;
       background: white;
       padding: 30px;
       border-radius: 30px;
-      max-height: auto;
+      overflow: hidden;
+      height: $grid-desktop-double-column-height;
 
   }
 
@@ -352,7 +355,8 @@ $avatar-margin: $padding-big;
 
   .card-profile__rating {
     
-    margin-bottom: 10px;
+    margin-top: 0;
+
     & svg {
       width: 20px;
 
@@ -433,14 +437,23 @@ $avatar-margin: $padding-big;
     margin: $margin-small;
   }
 
+  .card-profile__button-list-content {
+    overflow: hidden;
+    height: 100%;
+  }
+
   .card-profile__button-list {
 
-    height: calc(var(--vh) - ($header-height-desktop + 300px));
+    flex:1;
     display: grid; 
+    margin-top: 0;
+    padding: $padding-xsmall;
+    padding-top: $padding-big;
     grid-template-columns: 1fr 1fr;
     overflow: auto;
     align-content: start; 
     
   }
+
 
 }

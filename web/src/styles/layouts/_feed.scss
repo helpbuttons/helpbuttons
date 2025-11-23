@@ -312,6 +312,11 @@ $feed-new-message-radius: $border-radius-circle;
     }
   }
 
+  .feed-section--messages {
+    max-width: $grid-max-width;
+    margin: auto;
+  }
+
   .feed__board-container {
 
    padding-bottom: $feed-padding-bottom;
