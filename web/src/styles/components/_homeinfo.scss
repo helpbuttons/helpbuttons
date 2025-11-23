@@ -315,8 +315,14 @@ $info-content-head-margin-mobile: 70px;
 
 .homeinfo-card__header-title {
   font-weight: $font-weight-bold;
-  font-size: $font-size-title;
-  color: $color-dark-gray;
+  font-size: $font-size-medium;
+  color: $color-gray;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: $padding-medium;
+
+
 
 }
 

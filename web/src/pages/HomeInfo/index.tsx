@@ -22,14 +22,22 @@ import {
   IoArrowUpSharp,
   IoCall,
   IoClose,
+  IoDownload,
+  IoDownloadOutline,
+  IoEaselSharp,
   IoGlobeOutline,
   IoHelpOutline,
   IoInformation,
   IoInformationCircle,
+  IoLocateOutline,
   IoLogInOutline,
+  IoLogoWebComponent,
   IoMapOutline,
   IoPersonAddOutline,
+  IoPulseOutline,
   IoStatsChart,
+  IoTrophySharp,
+  IoVideocamOutline,
 } from 'react-icons/io5';
 import { setMetadata } from 'services/ServerProps';
 import { NextPageContext } from 'next';
@@ -251,6 +259,7 @@ function HomeInfoStatsCard({ selectedNetwork, config }) {
     <div className="homeinfo-card">
       <div className="homeinfo-card__header">
         <h3 className="homeinfo-card__header-title">
+          <IoEaselSharp/>
           {t('homeinfo.stats', [selectedNetwork.name])}
         </h3>
         <div className="homeinfo-card__controls">
@@ -275,6 +284,7 @@ function HomeInfoTopHashTags({ selectedNetwork }) {
     <div className="homeinfo-card">
       <div className="homeinfo-card__header">
         <h3 className="homeinfo-card__header-title">
+          <IoTrophySharp/>
           {t('homeinfo.popularHashtags')}
         </h3>
       </div>
@@ -303,6 +313,7 @@ function HomeInfoPinnedHashTags({ selectedNetwork }) {
         <div className="homeinfo-card">
           <div className="homeinfo-card__header homeinfo-card__header--openable" onClick={toggleShowInfo}>
               <h3 className="homeinfo-card__header-title">
+                <IoPulseOutline/>
                 {t('homeinfo.recommendedHashtags')}
               </h3>           
             <div className="homeinfo-card__controls">
@@ -348,20 +359,30 @@ function HomeInfoRecentActivity({ selectedNetwork }) {
     {/*  RECENT ACTIVITY IN THE APP */}
       <div className={(showInfo ? "homeinfo-card--opened-right ":" ") + " homeinfo-card homeinfo-card--activity"}>
       <div className="homeinfo-card__header homeinfo-card__header--openable" onClick={toggleShowInfo}>
-        <div className="homeinfo-card__controls--openable-right">
-              <Btn
-                btnType={BtnType.corporative}
-                iconLink={showInfo ? <IoStatsChart/> : <IoStatsChart/>}
-                iconLeft={IconType.circle}
-                contentAlignment={ContentAlignment.center}
-              />
-        </div>
-
+          <ShowDesktopOnly>
+            <div className="homeinfo-card__controls--openable-right">
+                  <Btn
+                    btnType={BtnType.corporative}
+                    iconLink={showInfo ? <IoStatsChart/> : <IoStatsChart/>}
+                    iconLeft={IconType.circle}
+                    contentAlignment={ContentAlignment.center}
+                  />
+            </div>
+          </ShowDesktopOnly>
           <h3 className="homeinfo-card__header-title" >
+            {showInfo ? <IoStatsChart/> : <IoStatsChart/>}  
               {t('homeinfo.activity')}
           </h3>
-
-        
+          <ShowMobileOnly>
+              <div className="homeinfo-card__controls--openable-right">
+                    <Btn
+                      btnType={BtnType.corporative}
+                      iconLink={showInfo ? <IoStatsChart/> : <IoStatsChart/>}
+                      iconLeft={IconType.circle}
+                      contentAlignment={ContentAlignment.center}
+                    />
+              </div>
+            </ShowMobileOnly>
       </div>
             <hr></hr>
             <div className="homeinfo__description homeinfo__description--openable">
@@ -378,6 +399,7 @@ function HomeInfoAdministeredBy({ scrollToContact }) {
     <div className="homeinfo-card" ref={scrollToContact}>
       <div className="homeinfo-card__header">
         <h3 className="homeinfo-card__header-title">
+          <IoHelpOutline/>
           {t('homeinfo.administeredby')}
         </h3>
       </div>
@@ -425,6 +447,7 @@ function HomeInfoInstallCard({ selectedNetwork }) {
         <div className="homeinfo-card">
           <div className="homeinfo-card__header">
             <h3 className="homeinfo-card__header-title">
+              <IoDownloadOutline/>
               {t('homeinfo.install', [
                 selectedNetwork?.name,
               ])}
@@ -516,6 +539,7 @@ function HomeInfoKeyLocations({selectedNetwork}) {
     <div className="homeinfo-card">
       <div className="homeinfo-card__header">
         <h3 className="homeinfo-card__header-title">
+          <IoLocateOutline/>
           {t('homeinfo.keyLocations')}
         </h3>
 
