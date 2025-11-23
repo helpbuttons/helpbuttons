@@ -24,9 +24,12 @@ import {
   IoClose,
   IoGlobeOutline,
   IoHelpOutline,
+  IoInformation,
+  IoInformationCircle,
   IoLogInOutline,
   IoMapOutline,
   IoPersonAddOutline,
+  IoStatsChart,
 } from 'react-icons/io5';
 import { setMetadata } from 'services/ServerProps';
 import { NextPageContext } from 'next';
@@ -35,7 +38,7 @@ import AdvancedFilters from 'components/search/AdvancedFilters';
 import { useToggle } from 'shared/custom.hooks';
 import { TextFormatted } from 'elements/Message';
 import { LinkAdmins } from 'components/user/LinkAdmins';
-import { ShowMobileOnly } from 'elements/SizeOnly';
+import { ShowDesktopOnly, ShowMobileOnly } from 'elements/SizeOnly';
 import {  ListButtonTypes } from 'components/nav/ButtonTypes';
 import getConfig from 'next/config';
 import { logoImageUri } from 'shared/sys.helper';
@@ -110,7 +113,7 @@ export default function HomeInfo({ metadata }) {
 
               <HomeInfoPinnedButtons />
               
-               <HomeInfoStatsCard selectedNetwork={selectedNetwork} config={config} />
+              <HomeInfoStatsCard selectedNetwork={selectedNetwork} config={config} />
 
               <HomeInfoInfoCard selectedNetwork={selectedNetwork} />
 
@@ -203,31 +206,26 @@ function HomeInfoInfoCard({ selectedNetwork }) {
       })
     }
   },[])
-  return (<>{/*  INFO CARD */}
-    <div className="homeinfo-card">
-      <div className="homeinfo-card__header homeinfo-card__header--openable" onClick={toggleShowInfo}>
-            <h3 className="homeinfo-card__header-title" >
-                {t('homeinfo.knowMore',[selectedNetwork.name])}
-            </h3>
-              <div className="homeinfo-card__controls">
-                <Btn
-                  btnType={BtnType.corporative}
-                  iconLink={showInfo ? <IoArrowUpSharp/> : <IoArrowDownSharp/>}
-                  iconLeft={IconType.circle}
-                  contentAlignment={ContentAlignment.center}
-                />
-              </div>
-      </div>
-      {showInfo &&
-        <>
-          <div className="homeinfo__description">
-            <TextFormatted text={selectedNetwork.description} />
-            <HomeFAQButton/>
-          </div>
-        </>  
-      }
-      
-
+  return (<>
+  {/*  INFO CARD */}
+    <div className={(showInfo ? "homeinfo-card--opened ":" ") + " homeinfo-card homeinfo-card--network-description"}>
+        <div className="homeinfo-card__header homeinfo-card__header--openable" onClick={toggleShowInfo}>
+                <h3 className="homeinfo-card__header-title" >
+                    {t('homeinfo.knowMore',[selectedNetwork.name])}
+                </h3>
+                <div className="homeinfo-card__controls homeinfo-card__controls--openable">
+                  <Btn
+                    btnType={BtnType.corporative}
+                    iconLink={showInfo ? <IoArrowBackSharp/> : <IoInformation/>}
+                    iconLeft={IconType.circle}
+                    contentAlignment={ContentAlignment.center}
+                  />
+                </div>
+        </div>
+        <div className="homeinfo__description homeinfo__description--openable">
+          <TextFormatted text={selectedNetwork.description} />
+          <HomeFAQButton/>
+        </div>
     </div></>
     )
 }
@@ -304,9 +302,9 @@ function HomeInfoPinnedHashTags({ selectedNetwork }) {
       selectedNetwork?.tags.length > 0 && (
         <div className="homeinfo-card">
           <div className="homeinfo-card__header homeinfo-card__header--openable" onClick={toggleShowInfo}>
-            <h3 className="homeinfo-card__header-title">
-              {t('homeinfo.recommendedHashtags')}
-            </h3>
+              <h3 className="homeinfo-card__header-title">
+                {t('homeinfo.recommendedHashtags')}
+              </h3>           
             <div className="homeinfo-card__controls">
               <Btn
                 btnType={BtnType.corporative}
@@ -335,6 +333,8 @@ function HomeInfoPinnedHashTags({ selectedNetwork }) {
 
 function HomeInfoRecentActivity({ selectedNetwork }) {
   const [activities, setActivities] = useState([]);
+  const [showInfo, toggleShowInfo] =
+    useToggle(false);
   useEffect(() => {
     if (selectedNetwork) {
       store.emit(
@@ -346,18 +346,28 @@ function HomeInfoRecentActivity({ selectedNetwork }) {
   }, [selectedNetwork]);
   return (<>
     {/*  RECENT ACTIVITY IN THE APP */}
-    <div className="homeinfo-card">
-      <div className="homeinfo-card__header">
-        <h3 className="homeinfo-card__header-title">
-          {t('homeinfo.activity')}
-        </h3>
-      </div>
+      <div className={(showInfo ? "homeinfo-card--opened-right ":" ") + " homeinfo-card homeinfo-card--activity"}>
+      <div className="homeinfo-card__header homeinfo-card__header--openable" onClick={toggleShowInfo}>
+        <div className="homeinfo-card__controls--openable-right">
+              <Btn
+                btnType={BtnType.corporative}
+                iconLink={showInfo ? <IoStatsChart/> : <IoStatsChart/>}
+                iconLeft={IconType.circle}
+                contentAlignment={ContentAlignment.center}
+              />
+        </div>
 
-      <hr></hr>
-      <div className="homeinfo__description">
-        TODO
-        {/* <ActivityList activities={activities} /> */}
+          <h3 className="homeinfo-card__header-title" >
+              {t('homeinfo.activity')}
+          </h3>
+
+        
       </div>
+            <hr></hr>
+            <div className="homeinfo__description homeinfo__description--openable">
+              TODO
+              {/* <ActivityList activities={activities} /> */}
+            </div>
     </div>
   </>)
 }
