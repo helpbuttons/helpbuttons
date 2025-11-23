@@ -30,8 +30,8 @@ function NavHeader({ selectedNetwork }){
         <ShowDesktopOnly>
           <BrandCard />
         </ShowDesktopOnly>
-        <>{(pageName == 'Explore' &&    
-          <form className="nav-header__content">
+        <>{((pageName == 'Explore' || pageName == 'HomeInfo' )  &&    
+            <form  className={(pageName == 'HomeInfo' ? "nav-header__content--homeinfo " : "" )+ " nav-header__content"} >
             <div className="nav-header__content-message">
               <HeaderSearch
                 toggleAdvancedFilters={toggleAdvancedFilters}
@@ -40,7 +40,7 @@ function NavHeader({ selectedNetwork }){
               />
             </div>
           </form>
-      )}</>
+       )}</> 
 
         
         <ShowDesktopOnly>

@@ -34,8 +34,20 @@ $nav-header-new-message-radius: $border-radius-circle;
   border-radius: 0 0 0 0;
   padding: $padding-medium $nav-header-padding;
   z-index: $z-index-base;
+          max-width: 450px;
+
 
 }
+
+  .nav-header__content--homeinfo {
+    
+    background-color: transparent;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    margin: auto;
+
+
+  }
 
 .nav-header--hide {
 
@@ -43,8 +55,6 @@ $nav-header-new-message-radius: $border-radius-circle;
   position: absolute;
 
 }
-
-
 
 .nav-header__content-message {
   flex-grow:1;
@@ -121,6 +131,17 @@ $nav-header-new-message-radius: $border-radius-circle;
     flex: 0.9;
     width: 100%;
     z-index: 0;
+
+  }
+
+  .nav-header__content--homeinfo {
+    
+    position: fixed;
+    left: calc(50% - 225px);
+    width: 450px;
+    border-radius: 0 0 $border-radius-circle  $border-radius-circle ;
+
+
   }
 
 .nav-header__filters {

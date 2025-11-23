@@ -109,7 +109,7 @@ $info-content-head-margin-mobile: 70px;
 
 .homeinfo__search-section {
 
-  background-color: $color-corporative;
+  background-color: transparent;
   padding: 0;
   border-radius: 25px 25px 25px 25px;
   width: 100%;
@@ -276,7 +276,6 @@ $info-content-head-margin-mobile: 70px;
   touch-action: manipulation;
 
 }
-
 
 
 .homeinfo-card__header {
