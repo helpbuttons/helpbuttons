@@ -182,9 +182,10 @@ $info-content-head-margin-mobile: 70px;
 
   padding: $padding-big;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  text-align: center;
   border-radius: $border-radius-semicircle;
   width: auto;
   background-color: transparent;
@@ -192,8 +193,10 @@ $info-content-head-margin-mobile: 70px;
   -webkit-backdrop-filter: blur(5px);
   padding: 15px;
   position: relative;
-  margin: $margin-small $margin-xsmall;
+  margin: auto;
   margin-top: 0;
+  max-width: 600px;
+
 
 
 
@@ -201,8 +204,8 @@ $info-content-head-margin-mobile: 70px;
 
 .homeinfo__network-title-text {
 
-  font-size: $font-size-huge;
-  line-height: $font-size-huge;
+  font-size: $font-size-xhuge;
+  line-height: $text-line-height-medium;
   font-weight: $font-weight-bolder;
   display: flex;
   border-radius: $border-radius-basic;
@@ -212,9 +215,9 @@ $info-content-head-margin-mobile: 70px;
   max-width: 100%;
   align-self: center;
   justify-content: center;
-  word-wrap: break-word;
-  word-break: break-word;
-  overflow-wrap: break-word;
+  // word-wrap:normal;
+  word-break:keep-all;
+  // overflow-wrap:normal;
   max-width: 100%; /* Adjust as needed */
 
   &:first-letter {
@@ -479,8 +482,11 @@ hr {
 
 @media #{$breakpoints-xlarge} {
 
+
   .homeinfo__network-title-text {
     font-size: $font-size-xhuge;
+    line-height: $text-line-height-big;
+
   }
   .homeinfo__bottom {
     bottom: 2%;
