@@ -163,10 +163,10 @@ $nav-header-new-message-radius: $border-radius-circle;
 
 
   .nav-header__content {
-    max-width: $grid-max-width;
+    // max-width: $grid-max-width;
     justify-content: flex-start;
     flex: 0.9;
-    width: 100%;
+    width: 450px;
     z-index: 0;
 
   }
