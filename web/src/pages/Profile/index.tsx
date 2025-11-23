@@ -12,6 +12,7 @@ import { store, useGlobalStore } from 'state';
 import { FindMyButtons } from 'state/Users';
 import { useEffect, useState } from 'react';
 import { CardProfileButtonList } from 'components/user/CardProfileButtons';
+import { ShowDesktopOnly, ShowMobileOnly } from 'elements/SizeOnly';
 
 export default function Profile() {
 
@@ -29,12 +30,23 @@ export default function Profile() {
     }, [sessionUser]);
   return (
     <>
-          <Popup linkFwd="/Explore" title={t('user.profileView')}>
-            <LoadabledComponent loading={!sessionUser}>
-              <CardProfile user={sessionUser} showProfileEdit={true} />
-              <CardProfileButtonList buttons={buttons}/>
-            </LoadabledComponent>
-          </Popup>
+          <ShowMobileOnly>
+            <Popup linkFwd="/Explore" title={t('user.profileView')}>
+              <LoadabledComponent loading={!sessionUser}>
+                <CardProfile user={sessionUser} showProfileEdit={true} />
+                <CardProfileButtonList user={sessionUser} buttons={buttons}/>
+              </LoadabledComponent>
+            </Popup>
+          </ShowMobileOnly>
+          <ShowDesktopOnly>
+            <div className='card-profile__container'>
+              <LoadabledComponent loading={!sessionUser}>
+                <CardProfile user={sessionUser} showProfileEdit={true} />
+                <CardProfileButtonList user={sessionUser} buttons={buttons}/>
+              </LoadabledComponent>
+            </div>
+          </ShowDesktopOnly>
+          
     </>
   );
 }

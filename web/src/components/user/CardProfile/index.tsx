@@ -19,7 +19,7 @@ export default function CardProfile({ user, showAdminOptions = false, showProfil
   
   return (
     <>
-
+    <div className='card-profile__wrapper'>
         <div className="card-profile__container-avatar-content">
 
               {showAdminOptions && 
@@ -93,29 +93,11 @@ export default function CardProfile({ user, showAdminOptions = false, showProfil
         </>
 
       )}
-          <div className="card-profile__rating">
-            <div className={'card-profile__rate ' + (sessionUser.id == user.id || sessionUser?.role == Role.admin ? ' card-profile__rate--published' : 'card-profile__rate--')}>
-              <div className="card-profile__rate-label">
-                {t('user.helpbuttonsPublishedAmount')}
-              </div>
-              {user?.buttonCount ?? 0}
-            </div>
-            <div className="card-profile__rate">
-              <div className="card-profile__rate-label">
-                {t('user.timesFollowed')}
-              </div>
-              {user?.followsCount ?? 0}
-            </div>
-            <div className="card-profile__rate">
-              <div className="card-profile__rate-label">
-                {t('user.commentsAmount')}
-              </div>
-              {user?.commentCount ?? 0}
-            </div>
-
-          </div>
+     
       
-    </>
+    </div>
+         
+      </>
   );
 }
 
