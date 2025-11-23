@@ -148,11 +148,14 @@ $nav-bottom-border: 32px;
     background: none;
     border-top: transparent;
     min-width: 400px;
+    
 
   }
 
   .nav-bottom__link {
-    flex: 0 1 58px;
+    flex: 0 58px;
+    min-width: 0;
+    padding-top: 0;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -170,7 +173,16 @@ $nav-bottom-border: 32px;
 
   }
 
+  .nav-bottom__icon {
+    & svg {
+      
+      height: 20px;
+
+    }
+  }
+
   .nav-bottom__text {
+    line-height: 15px;
     font-size: $font-size-small;
   }
 

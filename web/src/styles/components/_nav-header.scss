@@ -19,8 +19,18 @@ $nav-header-new-message-radius: $border-radius-circle;
   height: auto;
   position: relative;
   border-bottom: $border-style-basic;
+  background-color: $color-corporative;
 
 }
+
+.nav-header__container--homeinfo {
+  
+  background-color: transparent;
+  border-bottom: none;
+ 
+
+}
+
 
 
 .nav-header__content {
@@ -34,20 +44,25 @@ $nav-header-new-message-radius: $border-radius-circle;
   border-radius: 0 0 0 0;
   padding: $padding-medium $nav-header-padding;
   z-index: $z-index-base;
-          max-width: 450px;
+  max-width: 450px;
+  margin: auto;
+
+  
 
 
 }
 
-  .nav-header__content--homeinfo {
-    
-    background-color: transparent;
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-    margin: auto;
-
-
-  }
+.nav-header__content--homeinfo {
+  
+  background-color: transparent;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  margin: auto;
+  border: $border-style-basic;
+ border-radius: 0 0 $border-radius-circle  $border-radius-circle ;
+  border: $border-style-basic;
+  border-top:  none;
+}
 
 .nav-header--hide {
 
@@ -103,8 +118,8 @@ $nav-header-new-message-radius: $border-radius-circle;
 
   .nav-header--homeinfo {
     position: absolute;
-    
     right: 0;
+ 
 
   }
 
@@ -116,11 +131,33 @@ $nav-header-new-message-radius: $border-radius-circle;
     justify-content: flex-start;
     box-shadow: none;
     min-height: 71px;
+    align-items: center;
+
   }
 
   .nav-header__container--homeinfo {
 
     border-radius: 0 0 0 $border-radius-circle ;
+    // border: $border-style-basic;
+    background-color: transparent;
+
+    
+
+  }
+
+
+  .nav-header__container--homeinfo::before {
+
+     content: "";
+    position: absolute;
+    border-radius: 0 0 0 $border-radius-circle ;
+    border: $border-style-basic;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(0deg, transparent, $color-corporative-transparent 0%) no-repeat;
+    backdrop-filter: blur(5px);
+   -webkit-backdrop-filter: blur(5px);
+    
 
   }
 
@@ -140,6 +177,8 @@ $nav-header-new-message-radius: $border-radius-circle;
     left: calc(50% - 225px);
     width: 450px;
     border-radius: 0 0 $border-radius-circle  $border-radius-circle ;
+    border: $border-style-basic;
+    border-top:  none;
 
 
   }
