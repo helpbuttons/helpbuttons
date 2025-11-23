@@ -262,3 +262,24 @@ p {
 body {
   overflow: hidden; // Revise: Adiós Scroll desde el Body
 }
+
+@media (hover: none) {
+  
+  /* Apply to your specific class, or use '*' for everything */
+  button, 
+  a {
+    /* 1. Remove the standard hover/active/focus states */
+    &:hover,
+    &:active
+    &:focus 
+    {
+      
+    }
+  }
+
+  /* 2. Remove the specific mobile "Tap Highlight" (Gray/Blue flash) */
+  * {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none; /* Disables long-touch menu on iOS */
+  }
+}

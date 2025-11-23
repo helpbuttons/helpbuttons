@@ -43,10 +43,22 @@ export function ListButtonTypes() {
       setTypes(() => bttypes)
     }
   }, [filters.helpButtonTypes, buttonTypes])
-  const handleClick = (type) => {
-    const newFilters = { ...filters, helpButtonTypes: [type] }
+    const handleClick = (type) => {
+    // 1. FIX THE CHECK: Check the array, not index [0]
+    // We use optional chaining (?.) to avoid crashing if helpButtonTypes is null
+    const isAlreadySelected = filters.helpButtonTypes?.includes(type);
+
+    // 2. FIX THE LOGIC: Swap the result
+    // If isAlreadySelected is TRUE -> We want to empty it (Deselect)
+    // If isAlreadySelected is FALSE -> We want to set it (Select)
+    const newFilters = { 
+      ...filters, 
+      helpButtonTypes: isAlreadySelected ? [] : [type] 
+    };
+
     store.emit(new UpdateFilters(newFilters));
-    store.emit(new updateCurrentButton(null))
+    store.emit(new updateCurrentButton(null));
+    
     if (pageName != 'Explore') {
       router.push('/Explore');
     }
