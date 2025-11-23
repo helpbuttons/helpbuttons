@@ -97,6 +97,7 @@ $info-content-head-margin-mobile: 70px;
 }
 
 
+
 .homeinfo-card__action-bottom {
 
   display: flex;
@@ -299,9 +300,8 @@ $info-content-head-margin-mobile: 70px;
 
 .homeinfo-card__header--openable {
 
-  padding-bottom: 0;
+  padding-bottom: $padding-big;
 
-  // border-bottom: $border-style-basic;
 
 }
 
@@ -317,6 +317,7 @@ $info-content-head-margin-mobile: 70px;
   font-weight: $font-weight-bold;
   font-size: $font-size-title;
   color: $color-dark-gray;
+
 }
 
 
@@ -331,9 +332,11 @@ hr {
   padding: $padding-medium 0;
   word-wrap: break-word;
   display: inline-block;
-  font-size: $font-size-medium;
+  font-size: $font-size-general;
   width: 98%;
   max-width: 98%;
+
+
 
 }
 
@@ -473,6 +476,20 @@ hr {
     bottom: 2%;
   }
 
+  .homeinfo-card__controls--openable {
+
+    position: absolute;
+    right: -60px;
+    
+  }
+
+  .homeinfo-card__controls--openable-right {
+
+    position: absolute;
+    left: -60px;
+    
+  }
+
   .homeinfo__container {
     margin-bottom: 0;
     padding-top: 0;
@@ -498,8 +515,71 @@ hr {
 
   .homeinfo-card {
     margin: 0;
-    padding: $margin-medium;
     margin-bottom: $margin-xsmall;
+        padding: $padding-huge;
+
+  }
+
+  .homeinfo-card--network-description {
+
+    position: fixed;
+    left: -290px;
+    border-radius:  $border-radius-basic $border-radius-semicircle $border-radius-semicircle $border-radius-basic;
+    width: 300px;
+    height: 60%;
+    border: $border-style-basic;
+    padding: $padding-huge;
+    max-height: 60%;
+    min-height: 0;
+    text-overflow: ellipsis;
+    transition: $transition-default-slow;
+
+
+    & span {
+      max-height: 40px;
+      min-height: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+  }
+
+  .homeinfo__description--openable {
+
+    overflow: auto;
+    height: 85%;
+
+  }
+
+  .homeinfo-card--opened {
+
+    max-width: 20%;
+    left: 0px;
+    z-index: $z-index-02;
+
+  }
+
+  .homeinfo-card--activity {
+
+    position: fixed;
+    right: -290px;
+
+    border-radius:   $border-radius-semicircle 0 0 $border-radius-semicircle;
+    width: 300px;
+    height: 60%;
+    border: $border-style-basic;
+    transition: $transition-default-slow;
+    overflow: visible;
+
+
+  }
+
+   .homeinfo-card--opened-right {
+
+    max-width: 20%;
+    right: 0;
+    z-index: $z-index-02;
+
   }
 
 

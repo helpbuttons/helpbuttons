@@ -28,7 +28,7 @@ export function TextFormatted({
   return (
     <>
       {!isLongText || isExpanded ? (
-        <div>{formatMessage(text)}</div>
+        <>{formatMessage(text)}</>
       ) : (
         <div>
           {formatMessage(text.slice(0, maxChars))}

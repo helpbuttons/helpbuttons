@@ -45,13 +45,10 @@ $avatar-medium-max-width: 50px;
 .avatar-medium--home {
 
   @extend .avatar-medium;
-  border-style: $border-style-basic;
+  border: $border-style-basic;
   object-fit: cover;
   overflow: hidden;
-
-
   top: 0;
-  border-width: 2px;
 
   img {
     height: 100%;
@@ -89,7 +86,7 @@ $avatar-medium-max-width: 50px;
 
   .avatar-medium--home {
 
-    margin-top: auto;
+    // margin-top: auto;
 
 
   }
