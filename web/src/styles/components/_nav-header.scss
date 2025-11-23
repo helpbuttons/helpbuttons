@@ -98,6 +98,31 @@ $nav-header-new-message-radius: $border-radius-circle;
   }
 
 
+    border-radius: 0 0 0 $border-radius-circle ;
+    // border: $border-style-basic;
+    background-color: transparent;
+
+    
+
+  }
+
+
+  .nav-header__container--homeinfo::before {
+
+     content: "";
+    position: absolute;
+    border-radius: 0 0 0 $border-radius-circle ;
+    border: $border-style-basic;
+    width: 100%;
+    height: 71px;
+    background: linear-gradient(0deg, transparent, $color-corporative-transparent 0%) no-repeat;
+    backdrop-filter: blur(5px);
+   -webkit-backdrop-filter: blur(5px);
+    
+
+  }
+
+
   .nav-header__content {
     max-width: $grid-max-width;
     justify-content: flex-start;
