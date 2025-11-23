@@ -22,13 +22,6 @@ $nav-header-new-message-radius: $border-radius-circle;
 
 }
 
-.nav-header__container--homeinfo {
- 
-  border-radius: 0 0 $border-radius-circle $border-radius-circle ;
-  padding-right: 0;
-
-
-}
 
 .nav-header__content {
 
@@ -98,15 +91,15 @@ $nav-header-new-message-radius: $border-radius-circle;
 
 @media #{$breakpoints-xlarge} {
 
-    .nav-header--homeinfo {
-      position: absolute;
-      background: transparent;
-      right: $padding-medium;
+  .nav-header--homeinfo {
+    position: absolute;
+    
+    right: 0;
 
-    }
+  }
 
   .nav-header__container {
-        z-index: $z-index-02;
+    z-index: $z-index-03;
     background-color: $color-corporative;
     padding: 0 $padding-medium;
     display: flex;
@@ -114,10 +107,10 @@ $nav-header-new-message-radius: $border-radius-circle;
     box-shadow: none;
     min-height: 71px;
   }
-  
+
   .nav-header__container--homeinfo {
 
-        padding-right: calc($padding-medium + $padding-big );
+    border-radius: 0 0 0 $border-radius-circle ;
 
   }
 

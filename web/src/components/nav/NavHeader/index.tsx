@@ -24,9 +24,9 @@ function NavHeader({ selectedNetwork }){
   }
 
   return (
-    <div className={pageName == 'HomeInfo' ? "nav-header--homeinfo " : "" + " nav-header"}>
+    <div className={(pageName == 'HomeInfo' ? "nav-header--homeinfo " : "" )+ " nav-header"}>
 
-      <div className="nav-header__container nav-header__container--homeinfo">
+      <div  className={(pageName == 'HomeInfo' ? "nav-header__container--homeinfo " : "" )+ " nav-header__container"} >
         <ShowDesktopOnly>
           <BrandCard />
         </ShowDesktopOnly>

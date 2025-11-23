@@ -83,8 +83,9 @@ $info-content-head-margin-mobile: 70px;
   overflow-x: auto;
   overflow-y: hidden;
   width: inherit;
-  background-color: $color-ligth-gray;
-  border-radius: $border-radius-basic ;
+  background-color: $color-white;
+  border-top: $border-style-basic;
+    border-bottom: $border-style-basic;
   padding-left: $padding-xsmall;
   
 
@@ -469,9 +470,14 @@ hr {
 
 
 @media #{$breakpoints-xlarge} {
+
+  .homeinfo__network-title-text {
+    font-size: $font-size-xhuge;
+  }
   .homeinfo__bottom {
     bottom: 2%;
   }
+
 
   .homeinfo__container {
     margin-bottom: 0;
@@ -491,7 +497,7 @@ hr {
     // margin-top: -150px;
     padding: $padding-small;
     padding-bottom: 48px;
-    padding-top: $padding-huge;
+    padding-top: $margin-xxbig;
     border-right: $border-style-basic;
     border-left: $border-style-basic;
   }
