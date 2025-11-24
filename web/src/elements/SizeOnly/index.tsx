@@ -1,3 +1,5 @@
+import Popup from "components/popup/Popup";
+import t from "i18n";
 import React, {useEffect, useState} from "react";
 
 export const ShowMobileOnly = ({children}) => {
@@ -44,15 +46,17 @@ export const ShowDesktopOnly = ({children}) => {
 }
 
 
-/* Example */
-
-/*
-<ShowMobileOnly>
-im am mobile only
-
-</ShowMobileOnly>
-<ShowDesktopOnly>
-im am desktop only
-
-</ShowDesktopOnly>
-*/
+export const MobileOnlyPopup = (props) => {
+    const {children} = props;
+    return (<>    
+    <ShowMobileOnly>
+        <Popup {...props} linkFwd={'/Explore'}>
+            {children}
+        </Popup>
+    </ShowMobileOnly>
+        <ShowDesktopOnly>
+            {children}
+        </ShowDesktopOnly>
+    </>
+    )
+}

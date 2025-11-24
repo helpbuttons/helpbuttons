@@ -18,7 +18,7 @@ import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
 import { useMetadataTitle } from 'state/Metadata';
 import { useSelectedNetwork } from 'state/Networks';
 import { markerFocusZoom } from 'components/map/Map/Map.consts';
-import { ShowDesktopOnly, ShowMobileOnly } from 'elements/SizeOnly';
+import { MobileOnlyPopup, ShowDesktopOnly, ShowMobileOnly } from 'elements/SizeOnly';
 import Popup from 'components/popup/Popup';
 
 export default function ButtonNew({ metadata }) {
@@ -139,36 +139,26 @@ function ButtonNewForm({ selectedNetwork }) {
 
   const { loadedDraft } = useButtonDraft({ watch, getValues, reset, defaultValues })
 
-  const buttonForm = () => {
-    if (!loadedDraft) {
-      return <Loading />
-    }
-    return (<ButtonForm
-      watch={watch}
-      reset={reset}
-      getValues={getValues}
-      handleSubmit={handleSubmit}
-      register={register}
-      errors={errors}
-      control={control}
-      setValue={setValue}
-      setFocus={setFocus}
-      isSubmitting={isSubmitting}
-      onSubmit={onSubmit}
-      title={t('common.publishTitle', ['_helpbutton_'])}
-      clearErrors={clearErrors}
-    ></ButtonForm>)
-  }
   return (
     <>
-      <ShowMobileOnly>
-        <Popup title={t('common.publishTitle', ['_helpbutton_'])} linkFwd={'/Explore'}>
-          <>{buttonForm()}</>
-        </Popup>
-      </ShowMobileOnly>
-      <ShowDesktopOnly>
-        <>{buttonForm()}</>
-      </ShowDesktopOnly>
+      <MobileOnlyPopup title={t('common.publishTitle', ['_helpbutton_'])} linkFwd={'/Explore'}>
+        {!loadedDraft && <Loading />}
+        {loadedDraft && <ButtonForm
+          watch={watch}
+          reset={reset}
+          getValues={getValues}
+          handleSubmit={handleSubmit}
+          register={register}
+          errors={errors}
+          control={control}
+          setValue={setValue}
+          setFocus={setFocus}
+          isSubmitting={isSubmitting}
+          onSubmit={onSubmit}
+          title={t('common.publishTitle', ['_helpbutton_'])}
+          clearErrors={clearErrors}
+        ></ButtonForm>})
+      </MobileOnlyPopup>
     </>
   );
 }
