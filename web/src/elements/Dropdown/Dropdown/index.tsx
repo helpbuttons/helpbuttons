@@ -1,4 +1,5 @@
 ///dropdown selector component
+import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
 import React, { useState } from 'react';
 import { IoList } from 'react-icons/io5';
 export function DropdownField({
@@ -64,4 +65,22 @@ export function Dropdown({
       </select>
     </div>
   );
+}
+
+
+export function DropdownLine(props){
+  const {options, onChange} = props
+
+  return (<>
+  {options.map((option, index) => (
+          <Btn 
+          key={index}
+          btnType={BtnType.splitIcon}
+          contentAlignment={ContentAlignment.left}
+          caption={option.name}
+          onClick={() => onChange(option.value)}
+        />
+        ))}
+  
+  </>)
 }

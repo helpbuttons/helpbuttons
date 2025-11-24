@@ -12,7 +12,7 @@ import { alertService } from "services/Alert";
 import { usePoolFunc } from "shared/custom.hooks";
 import { ShowDesktopOnly, ShowMobileOnly } from "elements/SizeOnly";
 import Btn, { BtnType, ContentAlignment } from "elements/Btn";
-import { Dropdown } from "elements/Dropdown/Dropdown";
+import { Dropdown, DropdownLine } from "elements/Dropdown/Dropdown";
 
 
 
@@ -20,7 +20,6 @@ const updateFilters = (buttonTypes, activities) => {
   const [filterButtons, setFilterButtons] = useState([{ value: "all", name: "all" }])
 
   useEffect(() => {
-    console.log('oi')
     if (buttonTypes?.length > 0 && activities.length > 0) {
       const allTypes = _.uniq(activities.map((activity) => activity.buttonType)).filter((t) => t ? true : false)
       console.log(allTypes)
@@ -28,9 +27,6 @@ const updateFilters = (buttonTypes, activities) => {
       const newTypes = fullTypes.map((btnType) => { return { name: btnType?.caption ? btnType.caption : 'unknown', value: btnType?.name ? btnType.name : 'unknown' } });
       setFilterButtons(() => [{ value: "all", name: "all" }, ...newTypes])
     }
-    console.log(buttonTypes)
-    console.log(activities)
-    console.log('damn')
   }, [buttonTypes, activities])
   return filterButtons;
 }
@@ -116,7 +112,10 @@ export default function ActivitiesUser() {
               Messages & Alerts
             </div>
             <div className="feed-section__filters">
-              <Dropdown options={filterButtons} onChange={setButtonType} />
+              <ShowMobileOnly><DropdownLine options={filterButtons} onChange={setButtonType}/></ShowMobileOnly>
+              <ShowDesktopOnly><Dropdown options={filterButtons} onChange={setButtonType}/></ShowDesktopOnly>
+              
+              {/* <Dropdown options={filterButtons} onChange={setButtonType} />
               <Btn
                 btnType={BtnType.splitIcon}
                 contentAlignment={ContentAlignment.left}
@@ -131,7 +130,7 @@ export default function ActivitiesUser() {
                 btnType={BtnType.splitIcon}
                 contentAlignment={ContentAlignment.left}
                 caption={'testesetst3'}
-              />              
+              />               */}
             </div>
           </div>
           <div className="feed-section--activity-content">
