@@ -16,6 +16,7 @@ $color-black: #0E0E0E;
 
 $color-gray-transparent: rgba(0,0,0,0.2);
 $color-white-transparent: rgba(255, 255, 255, 0.7);
+$color-corporative-transparent: color-mix(in srgb, var(--network-background-color), transparent 50%);
 $color-transparent: #3f3b33ad;
 
 $color-ligth-gray: #f0f0f0;

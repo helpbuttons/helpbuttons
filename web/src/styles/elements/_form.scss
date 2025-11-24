@@ -791,3 +791,36 @@ width: 100%;
   }
 
 }
+
+
+
+@media #{$breakpoints-xlarge} {
+
+  .form__types-wrapper {
+
+    // flex-direction: row;
+    background-color: $color-white;
+    padding: $padding-huge;
+    flex: 0 40%;
+    border-radius: $border-radius-circle;
+    height: auto;
+    margin-bottom: auto;
+
+  }
+
+  .form__inputs-types-wrapper {
+    background-color: $color-white;
+    padding: $padding-huge;
+    flex: 0 60%;
+     border-radius: $border-radius-circle;
+     overflow: hidden;
+     position: relative;
+
+  }
+
+  .form__inputs-content {
+    overflow: auto;
+    height: 100%;
+  }
+
+}
