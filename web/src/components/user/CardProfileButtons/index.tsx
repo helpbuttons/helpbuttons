@@ -18,26 +18,7 @@ export function CardProfileButtonList({user, buttons})
   return (<div className="card-profile__button-list-wrapper">
     
         <div className="card-profile__button-list-content">
-          <div className="card-profile__rating">
-                  <div className={'card-profile__rate ' + (sessionUser.id == user.id || sessionUser?.role == Role.admin ? ' card-profile__rate--published' : 'card-profile__rate--')}>
-                    <div className="card-profile__rate-label">
-                      {t('user.helpbuttonsPublishedAmount')}
-                    </div>
-                    {user?.buttonCount ?? 0}
-                  </div>
-                  <div className="card-profile__rate">
-                    <div className="card-profile__rate-label">
-                      {t('user.timesFollowed')}
-                    </div>
-                    {user?.followsCount ?? 0}
-                  </div>
-                  <div className="card-profile__rate">
-                    <div className="card-profile__rate-label">
-                      {t('user.commentsAmount')}
-                    </div>
-                    {user?.commentCount ?? 0}
-                  </div>
-            </div>
+          <ButtonListHead user={user}/>
           <div className="card-profile__button-list">
           
             <ContentList
@@ -52,4 +33,29 @@ export function CardProfileButtonList({user, buttons})
       </div>
 
     )
+}
+
+function ButtonListHead({ user }) {
+  return (
+    <div className="card-profile__rating">
+      <div className={'card-profile__rate ' + (sessionUser.id == user.id || sessionUser?.role == Role.admin ? ' card-profile__rate--published' : 'card-profile__rate--')}>
+        <div className="card-profile__rate-label">
+          {t('user.helpbuttonsPublishedAmount')}
+        </div>
+        {user?.buttonCount ?? 0}
+      </div>
+      <div className="card-profile__rate">
+        <div className="card-profile__rate-label">
+          {t('user.timesFollowed')}
+        </div>
+        {user?.followsCount ?? 0}
+      </div>
+      <div className="card-profile__rate">
+        <div className="card-profile__rate-label">
+          {t('user.commentsAmount')}
+        </div>
+        {user?.commentCount ?? 0}
+      </div>
+    </div>
+  )
 }
