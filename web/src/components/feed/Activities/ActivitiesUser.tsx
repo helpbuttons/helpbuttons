@@ -114,23 +114,6 @@ export default function ActivitiesUser() {
             <div className="feed-section__filters">
               <ShowMobileOnly><DropdownLine options={filterButtons} onChange={setButtonType}/></ShowMobileOnly>
               <ShowDesktopOnly><Dropdown options={filterButtons} onChange={setButtonType}/></ShowDesktopOnly>
-              
-              {/* <Dropdown options={filterButtons} onChange={setButtonType} />
-              <Btn
-                btnType={BtnType.splitIcon}
-                contentAlignment={ContentAlignment.left}
-                caption={'testtestest2'}
-              />
-              <Btn
-                btnType={BtnType.splitIcon}
-                contentAlignment={ContentAlignment.left}
-                caption={'testesetst3'}
-              />
-              <Btn
-                btnType={BtnType.splitIcon}
-                contentAlignment={ContentAlignment.left}
-                caption={'testesetst3'}
-              />               */}
             </div>
           </div>
           <div className="feed-section--activity-content">

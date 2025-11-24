@@ -11,7 +11,6 @@ import { ActivityMarkAsRead, FindMoreActivities } from "state/Activity"
 
 
 export default function ActivityList({ setSelectedActivity, userActivities }) {
-    // const activities = useGlobalStore((state: GlobalState) => state.activities.activities)
     useEffect(() => {
         store.emit(new FindMoreActivities((loadedActivities) => {}))
     }, [])
