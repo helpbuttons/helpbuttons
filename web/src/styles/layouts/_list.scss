@@ -166,7 +166,11 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
 
 .list__empty-message--button {
 
+  display: flex;
+  flex-direction: column;
   max-width: 500px;
+  padding-top: $padding-medium;
+  gap: $margin-xsmall;
 
 }
 

@@ -61,13 +61,6 @@ $feed-new-message-radius: $border-radius-circle;
 
 }
 
-.feed-section__left{
-
-  display: flex;
-  flex-direction: column;
-  width: 33vw;
-
-}
 
 .feed-section__left__header {
 
@@ -78,21 +71,40 @@ $feed-new-message-radius: $border-radius-circle;
 
 .feed-section__center {
 
+  display: none;
+
+}
+
+.feed-section__left {
+
+  width: 100%;
+
+}
+
+.feed-section__center--mobile{
+
+  position: absolute;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  width: 33vw;
-  border-left: $border-style-basic;
-  border-right: $border-style-basic;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: $z-index-04;
+
+} 
+
+.feed-section__left--mobile {
+
+  flex: 1;
 
 }
 
 .feed-section__right {
 
-  display: flex;
-  width: 33vw;
+  display: none;
 
 }
+
 .feed-section__title {
 
   padding-bottom: $padding-big;
@@ -110,8 +122,10 @@ $feed-new-message-radius: $border-radius-circle;
   width: 100%;
   display: flex;
   flex-direction: row;
+  align-items: center;
   padding: 10px 0;
   overflow-x: auto;
+  overflow-y: hidden;
   height: 69px;
   gap: $padding-small;
 
@@ -274,11 +288,6 @@ $feed-new-message-radius: $border-radius-circle;
   color: $feed-post-color;
   border-radius: $feed-border-radius;
 
-  .card-notification__content {
-    padding-top: 0;
-    
-  }
-
   &:hover {
 
     cursor: pointer;
@@ -288,6 +297,42 @@ $feed-new-message-radius: $border-radius-circle;
 }
 
 @media #{$breakpoints-medium} {
+
+  .feed-section__right {
+
+  display: flex;
+  width: 33vw;
+
+  }
+
+
+.feed-section--messages {
+
+  display: flex;
+  flex-direction: row;
+  justify-content: stretch;
+  height: 100%;
+
+}
+
+.feed-section__left{
+
+  display: flex;
+  flex-direction: column;
+  width: 33vw;
+
+}
+
+  .feed-section__center {
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 33vw;
+  border-left: $border-style-basic;
+  border-right: $border-style-basic;
+
+  }
 
   .feed__board-container {
 
@@ -313,6 +358,11 @@ $feed-new-message-radius: $border-radius-circle;
       padding:  $padding-big;
 
     }
+  }
+
+  .feed-section--messages {
+    max-width: $grid-max-width;
+    margin: auto;
   }
 
   .feed__board-container {

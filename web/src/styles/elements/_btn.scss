@@ -50,6 +50,7 @@ $btn-font-size-medium: $font-size-medium;
   border-right: 1px solid $color-gray-border;
   text-overflow: ellipsis;
   overflow: hidden;
+  min-width: fit-content;
 
 
 }
@@ -245,7 +246,7 @@ $btn-font-size-medium: $font-size-medium;
   border-radius: $border-radius-circle;
   height: $btn-height;
   font-weight: $font-weight-bold;
-  margin-top: $margin-xsmall;
+  // margin-top: $margin-xsmall;
   width: 100%;
   color: $color-black;
 }

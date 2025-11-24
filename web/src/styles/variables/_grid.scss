@@ -1,15 +1,16 @@
 $grid-padding-mobile: 20px;
 $grid-height-svg-forms: 30%;
 $gutter: 12px;
-$grid-max-width: 784px;
+$grid-max-width: 1604px;
 $grid-max-width--mobile: 600px;
 $grid-column-max-width: 840px;
-
 
 $grid-width: 90%;
 $header-height-mobile: 70px;
 $header-height-desktop: 69px;
 $list-width-desktop: 60vw;
+
+$grid-desktop-double-column-height: calc(var(--vh) - ($header-height-desktop + 100px));
 $footer-height-mobile: calc(60px + $padding-small*2);
 
 //standard heights
