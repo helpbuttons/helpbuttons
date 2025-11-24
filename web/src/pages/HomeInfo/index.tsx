@@ -10,34 +10,21 @@ import Btn, {
 } from 'elements/Btn';
 import NetworkLogo from 'components/network/Components';
 import NavHeader from 'components/nav/NavHeader'; //just for mobile
-import NavLink from 'elements/Navlink';
 import {
   IoAddCircle,
-  IoAddOutline,
-  IoArrowBackCircle,
   IoArrowBackSharp,
-  IoArrowDownCircle,
-  IoArrowDownCircleOutline,
   IoArrowDownSharp,
   IoArrowUpSharp,
-  IoCall,
-  IoClose,
-  IoDownload,
   IoDownloadOutline,
   IoEaselSharp,
-  IoGlobeOutline,
   IoHelpOutline,
   IoInformation,
-  IoInformationCircle,
   IoLocateOutline,
-  IoLogInOutline,
-  IoLogoWebComponent,
   IoMapOutline,
   IoPersonAddOutline,
   IoPulseOutline,
   IoStatsChart,
   IoTrophySharp,
-  IoVideocamOutline,
 } from 'react-icons/io5';
 import { setMetadata } from 'services/ServerProps';
 import { NextPageContext } from 'next';
@@ -53,15 +40,9 @@ import { logoImageUri } from 'shared/sys.helper';
 import { FindLatestNetworkActivity } from 'state/Networks';
 import { InstallButton } from 'components/install';
 import { TagsNav } from 'elements/Fields/FieldTags';
-import { ShareButton } from 'components/share';
-import {
-  CardSubmenu,
-  CardSubmenuOption,
-} from 'components/card/CardSubmenu';
 import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
 import { DesktopNotificationsButton } from 'components/notifications';
 import { useMetadataTitle } from 'state/Metadata';
-import { ActivityList } from 'components/feed/Activity/ActivityList';
 import HomeInfoPinnedButtons from 'components/home/Pinned';
 import { ListKeyLocation } from 'state/Geo';
 import Footer from 'components/footer';
