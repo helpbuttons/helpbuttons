@@ -91,21 +91,40 @@ export default function ActivitiesUser() {
 
 
             <div className="feed-section__filters">
-              {/* <Dropdown options={filterButtons} />
+              <Dropdown options={filterButtons} />
               <Btn
-                btnType={BtnType.filter}
+                btnType={BtnType.splitIcon}
                 contentAlignment={ContentAlignment.left}
-                caption={'test'}
-              /> */}
+                caption={'testtestest2'}
+              />
+              <Btn
+                btnType={BtnType.splitIcon}
+                contentAlignment={ContentAlignment.left}
+                caption={'testesetst3'}
+              />
+              <Btn
+                btnType={BtnType.splitIcon}
+                contentAlignment={ContentAlignment.left}
+                caption={'testesetst3'}
+              />              
             </div>
           </div>
           <div className="feed-section--activity-content">
             <ActivityList setSelectedActivity={setSelectedActivity} />
           </div>
         </div>
-        <div className="feed-section__center">
-          <ActivityDetail buttonActivities={buttonActivities} button={selectedButton} sendNewMessage={sendNewMessage} closeConversation={closeConversation} selectedActivity={selectedActivity} />
-        </div>
+        <ShowDesktopOnly>
+          <div className="feed-section__center">
+            <ActivityDetail buttonActivities={buttonActivities} button={selectedButton} sendNewMessage={sendNewMessage} closeConversation={closeConversation} selectedActivity={selectedActivity} />
+          </div>
+        </ShowDesktopOnly>
+        <ShowMobileOnly>  
+          {selectedActivity &&
+            <div className="feed-section__center--mobile">
+              <ActivityDetail buttonActivities={buttonActivities} button={selectedButton} sendNewMessage={sendNewMessage} closeConversation={closeConversation} selectedActivity={selectedActivity} />
+            </div>
+          }
+        </ShowMobileOnly>
         <div className="feed-section__right">
         </div>
       </div>

@@ -20,7 +20,7 @@ $card-notification-delete-size: 100px;
   border-radius: $border-radius-basic;
   // box-shadow: $card-notification-box-shadow;
   display: block;
-  text-decoration: none; /* remove underline */
+  text-decoration: none; 
   position: relative;
   color: $color-gray;
 
@@ -95,7 +95,7 @@ $card-notification-delete-size: 100px;
 
 .card-notification__content {
   display: flex;
-  padding: 1rem;
+  padding: $padding-big;
   position: relative;
 }
 
@@ -133,6 +133,10 @@ $card-notification-delete-size: 100px;
 
 .card-notification__text {
   flex: 0 1 100%;
+  display: flex;
+  flex-direction: column;
+  flex: 1;       
+  min-width: 0;
   
 }
 
@@ -324,6 +328,14 @@ $card-notification-delete-size: 100px;
   &:first-letter {
     text-transform: uppercase;
   }
+}
+
+.card-notification__title,
+.card-notification__paragraph,
+.card-notification__footer {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .card-notification__name {
