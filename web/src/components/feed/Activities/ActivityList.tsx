@@ -10,9 +10,11 @@ import { GlobalState, store, useGlobalStore } from "state"
 import { ActivityMarkAsRead, FindMoreActivities } from "state/Activity"
 
 
-export default function ActivityList({ setSelectedActivity }) {
-    const activities = useGlobalStore((state: GlobalState) => state.activities.activities)
-
+export default function ActivityList({ setSelectedActivity, userActivities }) {
+    // const activities = useGlobalStore((state: GlobalState) => state.activities.activities)
+    useEffect(() => {
+        store.emit(new FindMoreActivities((loadedActivities) => {}))
+    }, [])
     const { endDivLoadMoreTrigger, noMoreToLoad } = useScroll(
         ({ setNoMoreToLoad, setScrollIsLoading }) => {
             setScrollIsLoading(() => true)
@@ -28,14 +30,14 @@ export default function ActivityList({ setSelectedActivity }) {
 
     return (<>
 
-        {!activities && <Loading />}
-        {activities && (
+        {!userActivities && <Loading />}
+        {userActivities && (
             <div>
-                {activities && <>
-                    {[...activities].map((activity, idx) => <ActivityListCard activity={activity} setSelectedActivity={setSelectedActivity} key={idx} />)}
+                {userActivities && <>
+                    {[...userActivities].map((activity, idx) => <ActivityListCard activity={activity} setSelectedActivity={setSelectedActivity} key={idx} />)}
                 </>
                 }
-                {(!activities || activities.length < 1) && (
+                {(!userActivities || userActivities.length < 1) && (
                     <div className="feed__empty-message">
                         <div className="feed__empty-message--prev">
                             {t('activities.noactivity', ['activities'])}

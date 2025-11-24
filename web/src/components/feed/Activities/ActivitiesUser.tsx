@@ -4,7 +4,7 @@ import { ActivityEventName } from "shared/types/activity.list";
 import { useEffect, useState } from "react";
 import _ from 'lodash';
 import { FindActivityDetails, SendNewMessage } from "state/Activity";
-import {  store} from "state";
+import {  GlobalState, store, useGlobalStore} from "state";
 import { FindButton } from "state/Explore";
 import { ActivityDetail } from "components/feed/Activities/ActivityDetail";
 import ActivityList from "components/feed/Activities/ActivityList";
@@ -20,14 +20,18 @@ const updateFilters = (buttonTypes, activities) => {
   const [filterButtons, setFilterButtons] = useState([{ value: "all", name: "all" }])
 
   useEffect(() => {
-    if (buttonTypes?.length > 0) {
+    console.log('oi')
+    if (buttonTypes?.length > 0 && activities.length > 0) {
       const allTypes = _.uniq(activities.map((activity) => activity.buttonType)).filter((t) => t ? true : false)
       console.log(allTypes)
       const fullTypes = allTypes.map((_btnType) => buttonTypes.find((btnType) => { return btnType.name == _btnType }))
       const newTypes = fullTypes.map((btnType) => { return { name: btnType?.caption ? btnType.caption : 'unknown', value: btnType?.name ? btnType.name : 'unknown' } });
       setFilterButtons(() => [{ value: "all", name: "all" }, ...newTypes])
     }
-  }, [buttonTypes])
+    console.log(buttonTypes)
+    console.log(activities)
+    console.log('damn')
+  }, [buttonTypes, activities])
   return filterButtons;
 }
 
@@ -41,16 +45,15 @@ export default function ActivitiesUser() {
 
   // const [buttonPage, setButtonPage] = useState(0)
   const [buttonActivities, setButtonActivities] = useState([])
+  const [localFilters, setLocalFilters] = useState(null)
+
   const [selectedActivity, setSelectedActivity] = useState(null)
+  const [filteredUserActivities, setFilteredUserActivities] = useState([])
   const [selectedButton, setSelectedButton] = useState(null)
 
-  const filterButtons = updateFilters(buttonTypes, buttonActivities)
 
+  useEffect(() =>{ console.log('oia'); console.log(buttonActivities)}, [buttonActivities])
   const findActivityDetails = () => {
-    if(!selectedActivity)
-    {
-      return;
-    }
     store.emit(new FindActivityDetails(selectedActivity.buttonId, selectedActivity.consumerId, 0,
       (_activites) => {
         setButtonActivities(() => _activites)
@@ -69,7 +72,30 @@ export default function ActivitiesUser() {
     }))
   }, [selectedActivity])
 
-  usePoolFunc({paused: buttonActivities?.length < 1, timeMs: 10*1000, func:() => findActivityDetails()})
+  const userActivities = useGlobalStore((state: GlobalState) => state.activities.activities)
+  const filterButtons = updateFilters(buttonTypes, userActivities)
+
+  useEffect(() => {
+    setFilteredUserActivities(() => {
+      if(localFilters)
+      {
+        return userActivities.filter((_activity) => {
+          if(localFilters.buttonType == 'all') 
+          {
+            return true;
+          }
+          return _activity.buttonType == localFilters.buttonType
+        })
+      }
+      return userActivities
+    })
+  }, [userActivities, localFilters])
+
+  const setButtonType = (type) => {
+    setLocalFilters(() => {return {buttonType: type}})
+  }
+  
+  usePoolFunc({paused: !selectedActivity, timeMs: 10*1000, func:() => findActivityDetails()})
   
   const sendNewMessage = (message, buttonId, consumerId) => {
     store.emit(new SendNewMessage(message, buttonId, consumerId, () => { findActivityDetails(); alertService.success(t('activities.sent')) }))
@@ -90,7 +116,7 @@ export default function ActivitiesUser() {
               Messages & Alerts
             </div>
             <div className="feed-section__filters">
-              <Dropdown options={filterButtons} />
+              <Dropdown options={filterButtons} onChange={setButtonType} />
               <Btn
                 btnType={BtnType.splitIcon}
                 contentAlignment={ContentAlignment.left}
@@ -109,21 +135,14 @@ export default function ActivitiesUser() {
             </div>
           </div>
           <div className="feed-section--activity-content">
-            <ActivityList setSelectedActivity={setSelectedActivity} />
+            <ActivityList userActivities={filteredUserActivities} setSelectedActivity={setSelectedActivity} />
           </div>
         </div>
-        <ShowDesktopOnly>
+        <ActivityDetailMobile>
           <div className="feed-section__center">
             <ActivityDetail buttonActivities={buttonActivities} button={selectedButton} sendNewMessage={sendNewMessage} closeConversation={closeConversation} selectedActivity={selectedActivity} />
           </div>
-        </ShowDesktopOnly>
-        <ShowMobileOnly>  
-          {selectedActivity &&
-            <div className="feed-section__center--mobile">
-              <ActivityDetail buttonActivities={buttonActivities} button={selectedButton} sendNewMessage={sendNewMessage} closeConversation={closeConversation} selectedActivity={selectedActivity} />
-            </div>
-          }
-        </ShowMobileOnly>
+        </ActivityDetailMobile>
         <div className="feed-section__right">
         </div>
       </div>
@@ -131,3 +150,19 @@ export default function ActivitiesUser() {
     </div>
   );
 }
+
+function ActivityDetailMobile({ children }) {
+  
+  return (<><ShowMobileOnly>
+    <div className='card-profile__container'>
+      {children}
+    </div>
+  </ShowMobileOnly>
+    <ShowDesktopOnly>
+    <div className="feed-section__center">
+      {children}
+    </div>
+    </ShowDesktopOnly>
+  </>
+  )
+  }
