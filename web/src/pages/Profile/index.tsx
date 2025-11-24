@@ -12,7 +12,7 @@ import { store, useGlobalStore } from 'state';
 import { FindMyButtons } from 'state/Users';
 import { useEffect, useState } from 'react';
 import { CardProfileButtonList } from 'components/user/CardProfileButtons';
-import { MobileOnlyPopup, ShowDesktopOnly } from 'elements/SizeOnly';
+import { MobileOnlyPopup, ShowDesktopOnly, ShowMobileOnly } from 'elements/SizeOnly';
 
 export default function Profile() {
 
@@ -41,11 +41,12 @@ export default function Profile() {
 }
 
 function DesktopOnlyProfileContainer({ children }) {
-  return (<ShowDesktopOnly>
+  return (<><ShowDesktopOnly>
     <div className='card-profile__container'>
       {children}
     </div>
-  </ShowDesktopOnly>)
+  </ShowDesktopOnly>
+  <ShowMobileOnly>{children}</ShowMobileOnly></>)
 }
 
 
