@@ -12,7 +12,7 @@ import { store, useGlobalStore } from 'state';
 import { FindMyButtons } from 'state/Users';
 import { useEffect, useState } from 'react';
 import { CardProfileButtonList } from 'components/user/CardProfileButtons';
-import { ShowDesktopOnly, ShowMobileOnly } from 'elements/SizeOnly';
+import { MobileOnlyPopup, ShowDesktopOnly } from 'elements/SizeOnly';
 
 export default function Profile() {
 
@@ -29,27 +29,25 @@ export default function Profile() {
       }
     }, [sessionUser]);
   return (
-    <>
-          <ShowMobileOnly>
-            <Popup linkFwd="/Explore" title={t('user.profileView')}>
-              <LoadabledComponent loading={!sessionUser}>
-                <CardProfile user={sessionUser} showProfileEdit={true} />
-                <CardProfileButtonList user={sessionUser} buttons={buttons}/>
-              </LoadabledComponent>
-            </Popup>
-          </ShowMobileOnly>
-          <ShowDesktopOnly>
-            <div className='card-profile__container'>
-              <LoadabledComponent loading={!sessionUser}>
-                <CardProfile user={sessionUser} showProfileEdit={true} />
-                <CardProfileButtonList user={sessionUser} buttons={buttons}/>
-              </LoadabledComponent>
-            </div>
-          </ShowDesktopOnly>
-          
-    </>
+    <MobileOnlyPopup linkFwd="/Explore" title={t('user.profileView')}>
+      <DesktopOnlyProfileContainer>
+        <LoadabledComponent loading={!sessionUser}>
+          <CardProfile user={sessionUser} showProfileEdit={true} />
+          <CardProfileButtonList user={sessionUser} buttons={buttons} />
+        </LoadabledComponent>
+      </DesktopOnlyProfileContainer>
+    </MobileOnlyPopup>
   );
 }
+
+function DesktopOnlyProfileContainer({ children }) {
+  return (<ShowDesktopOnly>
+    <div className='card-profile__container'>
+      {children}
+    </div>
+  </ShowDesktopOnly>)
+}
+
 
 export function AdminOptions() {
   return (
