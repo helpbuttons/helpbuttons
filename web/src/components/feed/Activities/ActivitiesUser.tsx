@@ -1,6 +1,5 @@
 import t from "i18n";
 import { useButtonTypes } from "shared/buttonTypes";
-import { ActivityEventName } from "shared/types/activity.list";
 import { useEffect, useState } from "react";
 import _ from 'lodash';
 import { FindActivityDetails, SendNewMessage } from "state/Activity";
@@ -13,6 +12,7 @@ import { usePoolFunc } from "shared/custom.hooks";
 import { ShowDesktopOnly, ShowMobileOnly } from "elements/SizeOnly";
 import Btn, { BtnType, ContentAlignment } from "elements/Btn";
 import { Dropdown, DropdownLine } from "elements/Dropdown/Dropdown";
+import PopupHeader from "components/popup/PopupHeader";
 
 
 
@@ -106,11 +106,11 @@ export default function ActivitiesUser() {
     <div className="feed__container">
       <div className="feed-section--messages">
         <div className="feed-section__left">
+                        <PopupHeader >Messages & Alerts</PopupHeader>
+
           <div className="feed-section__left__header">
 
-            <div className="feed-section__title">
-              Messages & Alerts
-            </div>
+
             <div className="feed-section__filters">
               <ShowMobileOnly><DropdownLine options={filterButtons} onChange={setButtonType}/></ShowMobileOnly>
               <ShowDesktopOnly><Dropdown options={filterButtons} onChange={setButtonType}/></ShowDesktopOnly>
