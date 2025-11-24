@@ -1,6 +1,5 @@
 import t from "i18n";
 import { useButtonTypes } from "shared/buttonTypes";
-import { ActivityEventName } from "shared/types/activity.list";
 import { useEffect, useState } from "react";
 import _ from 'lodash';
 import { FindActivityDetails, SendNewMessage } from "state/Activity";
@@ -10,9 +9,6 @@ import { ActivityDetail } from "components/feed/Activities/ActivityDetail";
 import ActivityList from "components/feed/Activities/ActivityList";
 import { alertService } from "services/Alert";
 import { usePoolFunc } from "shared/custom.hooks";
-import { ShowDesktopOnly, ShowMobileOnly } from "elements/SizeOnly";
-import Btn, { BtnType, ContentAlignment } from "elements/Btn";
-import { Dropdown } from "elements/Dropdown/Dropdown";
 import PopupHeader from "components/popup/PopupHeader";
 
 
