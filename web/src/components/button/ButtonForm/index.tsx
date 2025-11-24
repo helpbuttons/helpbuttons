@@ -25,6 +25,7 @@ import { alertService } from 'services/Alert';
 import { logoImageUri } from 'shared/sys.helper';
 import { CookiesState } from 'state/HomeInfo';
 import { AcceptCookiesWarn } from 'components/home/CookiesBanner';
+import { ShowDesktopOnly, ShowMobileOnly } from 'elements/SizeOnly';
 
 export default function ButtonForm({
   onSubmit,
@@ -61,7 +62,7 @@ export default function ButtonForm({
   const cookieState = useGlobalStore(
     (state: GlobalState) => state.homeInfo.cookiesState,
   );
-  
+
   useEffect(() => {
     const subscription = watch((value, { name, type }) => {
       const values = getValues();
@@ -101,9 +102,11 @@ export default function ButtonForm({
 
   const images = watch('images')
   const [image, setImage] = useState(null)
-  useEffect(() => { if (images.length > 0) { setImage(images[0]) }else{
-    setImage(null)
-  } }, [images])
+  useEffect(() => {
+    if (images.length > 0) { setImage(images[0]) } else {
+      setImage(null)
+    }
+  }, [images])
 
   useEffect(() => {
     clearErrors('eventStart')
@@ -114,16 +117,17 @@ export default function ButtonForm({
   const onError = (errors, e) => alertService.error(t('validation.error'))
   return (
     <LoadabledComponent loading={!selectedNetwork}>
+
       {selectedNetwork &&
-        <Popup title={title} linkFwd={'/Explore'}>
+        <>
           <Form
             onSubmit={handleSubmit(onSubmit, onError)}
-            classNameExtra="publish_btn"
+            classNameExtra="publish-button"
           >
-              {/* <fieldset disabled={isSubmitting}> */}
-              {isSubmitting ? <Loading /> :
+            {/* <fieldset disabled={isSubmitting}> */}
+            {isSubmitting ? <Loading /> :
               <>
-                <div className="form__inputs-wrapper">
+                <div className="form__types-wrapper">
                   <FieldButtonType
                     name="type"
                     label={t('button.typeLabel')}
@@ -132,88 +136,92 @@ export default function ButtonForm({
                     explain={t('button.typeExplain')}
                     buttonTypes={buttonTypes}
                   />
-                  <FieldText
-                    name="title"
-                    label={t('button.titleLabel')}
-                    placeholder={t('button.placeHolderTitle')}
-                    validationError={errors.title}
-                    watch={watch}
-                    setValue={setValue}
-                    explain={t('button.titleExplain')}
-                    setFocus={setFocus}
-                    {...register('title', { required: true, minLength: 10 })}
-                  />
-                  <FieldTextArea
-                    label={t('button.descriptionLabel')}
-                    name="description"
-                    placeholder={t('button.placeHolderDescription')}
-                    validationError={errors.description}
-                    classNameExtra="squared"
-                    watch={watch}
-                    setValue={setValue}
-                    setFocus={setFocus}
-                    {...register('description')}
-                  />
-                  <FieldTags
-                    label={t('button.tagsLabel')}
-                    explain={t('button.tagsExplain')}
-                    placeholder={t('common.add')}
-                    validationError={errors.tags}
-                    setTags={(tags) => {
-                      setValue('tags', tags);
-                    }}
-                    tags={watch('tags')}
-                    maxTags={5}
-                  />
-                  <FieldImageUploads
-                    defaultImages={watch('images')}
-                    name='images'
-                    text={t('button.imagesText')}
-                    label={t('button.imagesLabel')}
-                    explain={t('button.imagesExplain')}
-                    maxNumber={5}
-                    setValue={(images) => setValue('images', images)}
-                    validationError={errors.images} />
-                  <div className="form__btn-search">
-                    <FieldLocation
-                      label={t('button.whereLabel')}
-                      setLatitude={(lat) => setValue('latitude', lat)}
-                      setLongitude={(lng) => setValue('longitude', lng)}
-                      markerPosition={[watch('latitude'), watch('longitude')]}
-                      setMarkerAddress={(address) => {
-                        setValue('address', address);
+                </div>
+                <div className="form__inputs-wrapper">
+                  <div className="form__inputs-content">
+
+                    <FieldText
+                      name="title"
+                      label={t('button.titleLabel')}
+                      placeholder={t('button.placeHolderTitle')}
+                      validationError={errors.title}
+                      watch={watch}
+                      setValue={setValue}
+                      explain={t('button.titleExplain')}
+                      setFocus={setFocus}
+                      {...register('title', { required: true, minLength: 10 })}
+                    />
+                    <FieldTextArea
+                      label={t('button.descriptionLabel')}
+                      name="description"
+                      placeholder={t('button.placeHolderDescription')}
+                      validationError={errors.description}
+                      classNameExtra="squared"
+                      watch={watch}
+                      setValue={setValue}
+                      setFocus={setFocus}
+                      {...register('description')}
+                    />
+                    <FieldTags
+                      label={t('button.tagsLabel')}
+                      explain={t('button.tagsExplain')}
+                      placeholder={t('common.add')}
+                      validationError={errors.tags}
+                      setTags={(tags) => {
+                        setValue('tags', tags);
                       }}
-                      setHideAddress={(value) => setValue('hideAddress', value)}
-                      hideAddress={watch('hideAddress')}
-                      markerAddress={watch('address')}
-                      markerImage={image}
-                      markerCaption={watch('title')}
-                      markerColor={markerColor}
-                      selectedNetwork={selectedNetwork}
-                      validationError={errors.address}
-                      isCustomAddress={watch('isCustomAddress')}
-                      setIsCustomAddress={(value) => setValue('isCustomAddress', value)}
+                      tags={watch('tags')}
+                      maxTags={5}
+                    />
+                    <FieldImageUploads
+                      defaultImages={watch('images')}
+                      name='images'
+                      text={t('button.imagesText')}
+                      label={t('button.imagesLabel')}
+                      explain={t('button.imagesExplain')}
+                      maxNumber={5}
+                      setValue={(images) => setValue('images', images)}
+                      validationError={errors.images} />
+                    <div className="form__btn-search">
+                      <FieldLocation
+                        label={t('button.whereLabel')}
+                        setLatitude={(lat) => setValue('latitude', lat)}
+                        setLongitude={(lng) => setValue('longitude', lng)}
+                        markerPosition={[watch('latitude'), watch('longitude')]}
+                        setMarkerAddress={(address) => {
+                          setValue('address', address);
+                        }}
+                        setHideAddress={(value) => setValue('hideAddress', value)}
+                        hideAddress={watch('hideAddress')}
+                        markerAddress={watch('address')}
+                        markerImage={image}
+                        markerCaption={watch('title')}
+                        markerColor={markerColor}
+                        selectedNetwork={selectedNetwork}
+                        validationError={errors.address}
+                        isCustomAddress={watch('isCustomAddress')}
+                        setIsCustomAddress={(value) => setValue('isCustomAddress', value)}
                       //explain={ t('button.whereExplain')}
-                    />
+                      />
+                    </div>
+                    <FieldCustomFields customFields={customFields} watch={watch} setValue={setValue} setFocus={setFocus} register={register} errors={errors} currency={selectedNetwork.currency} />
+                    <ButtonShare />
+                    <div className="publish__submit">
+                      <Btn
+                        btnType={BtnType.submit}
+                        contentAlignment={ContentAlignment.center}
+                        caption={t('common.publish')}
+                        isSubmitting={isSubmitting}
+                        submit={true}
+                        disabled={isSubmitting || cookieState != CookiesState.ACCEPTED}
+                      />
+                      <AcceptCookiesWarn cookieState={cookieState} />
+                    </div>
                   </div>
-                  <FieldCustomFields customFields={customFields} watch={watch} setValue={setValue} setFocus={setFocus} register={register} errors={errors} currency={selectedNetwork.currency} />
-                  <ButtonShare />
                 </div>
-                <div className="publish__submit">
-                    <Btn
-                      btnType={BtnType.submit}
-                      contentAlignment={ContentAlignment.center}
-                      caption={t('common.publish')}
-                      isSubmitting={isSubmitting}
-                      submit={true}
-                      disabled={isSubmitting || cookieState != CookiesState.ACCEPTED}
-                    />
-                  <AcceptCookiesWarn cookieState={cookieState}/>
-                </div>
-                {/* </fieldset> */}
-                </>}
+              </>}
           </Form>
-        </Popup>
+        </>
       }
     </LoadabledComponent>
   );
