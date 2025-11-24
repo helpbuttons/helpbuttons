@@ -1,7 +1,7 @@
 import CardButtonList, { ButtonLinkType } from "components/list/CardButtonList";
 import t from "i18n";
 import { useEffect } from "react";
-import { IoPinSharp, IoTrendingUp } from "react-icons/io5";
+import { IoTrendingUp } from "react-icons/io5";
 import { useButtonTypes } from "shared/buttonTypes";
 import { GlobalState, store, useGlobalStore } from "state";
 import { FindPinnedButtons } from "state/Button";
