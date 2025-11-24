@@ -24,31 +24,37 @@ function NavHeader({ selectedNetwork }){
   }
 
   return (
-    <div className="nav-header">
+    <div className={(pageName == 'HomeInfo' ? "nav-header--homeinfo " : "" )+ " nav-header"}>
 
-      <div className="nav-header__container">
+      <div  className={(pageName == 'HomeInfo' ? "nav-header__container--homeinfo " : "" )+ " nav-header__container"} >
         <ShowDesktopOnly>
           <BrandCard />
         </ShowDesktopOnly>
-        <form className="nav-header__content">
-          <div className="nav-header__content-message">
-            <HeaderSearch
-              toggleAdvancedFilters={toggleAdvancedFilters}
-              selectedNetwork={selectedNetwork}
-              exploreMapState={exploreMapState}
-            />
-          </div>
-        </form>
+        <>
+        {/* {((pageName == 'Explore' || pageName == 'HomeInfo' )  &&     */}
+            <form  className={(pageName == 'HomeInfo' ? "nav-header__content--homeinfo " : "" )+ " nav-header__content"} >
+            <div className="nav-header__content-message">
+              <HeaderSearch
+                toggleAdvancedFilters={toggleAdvancedFilters}
+                selectedNetwork={selectedNetwork}
+                exploreMapState={exploreMapState}
+              />
+            </div>
+          </form>
+       {/* )} */}
+       </> 
+
+        
         <ShowDesktopOnly>
           <NavBottom sessionUser={sessionUser} />
         </ShowDesktopOnly>
       </div>
       <div className="nav-header__filters">
         <ShowMobileOnly>
-          <>{(pageName != 'HomeInfo' && <ListButtonTypes/>)}</>
+          <>{(pageName == 'Explore' && <ListButtonTypes/>)}</>
         </ShowMobileOnly>
         <ShowDesktopOnly>
-          <ListButtonTypes/>
+         <>{(pageName == 'Explore') &&  <ListButtonTypes/>}</> 
         </ShowDesktopOnly>
       </div>
     </div>
