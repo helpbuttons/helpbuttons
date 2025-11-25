@@ -325,10 +325,12 @@ $avatar-margin: $padding-big;
     
     display: flex;
     justify-content: center;
+    overflow: auto;
     gap: $margin-big;
     padding: $margin-big;
     max-width: $grid-max-width;
     margin: auto;
+    height: calc(100% - $nav-header-height);
 
   }
 
@@ -348,6 +350,7 @@ $avatar-margin: $padding-big;
       border-radius: 30px;
       overflow: hidden;
       height: $grid-desktop-double-column-height;
+      min-height: 500px;
 
   }
 
