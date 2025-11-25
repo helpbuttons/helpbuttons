@@ -141,9 +141,7 @@ function ActivityDetailMobile({ children }) {
     </div>
   </ShowMobileOnly>
     <ShowDesktopOnly>
-    <div className="feed-section__center">
       {children}
-    </div>
     </ShowDesktopOnly>
   </>
   )
