@@ -8,7 +8,6 @@ import { useGlobalStore } from "state";
 export function CardProfileButtonList({user, buttons})
 {
   const buttonTypes = useButtonTypes();
-  const sessionUser = useGlobalStore((state) => state.sessionUser)
 
   if(!buttons ||
     buttons?.length < 1){
@@ -36,6 +35,8 @@ export function CardProfileButtonList({user, buttons})
 }
 
 function ButtonListHead({ user }) {
+  const sessionUser = useGlobalStore((state) => state.sessionUser)
+
   return (
     <div className="card-profile__rating">
       <div className={'card-profile__rate ' + (sessionUser.id == user.id || sessionUser?.role == Role.admin ? ' card-profile__rate--published' : 'card-profile__rate--')}>

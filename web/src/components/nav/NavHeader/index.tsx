@@ -23,16 +23,18 @@ function NavHeader({ selectedNetwork }){
     }
   }
 
-  return (
-    <div className={(pageName == 'HomeInfo' ? "nav-header--homeinfo " : "" )+ " nav-header"}>
+    const IsHomeInfo = pageName == 'HomeInfo';
+    const IsExplorePage = pageName == 'Explore';
 
-      <div  className={(pageName == 'HomeInfo' ? "nav-header__container--homeinfo " : "" )+ " nav-header__container"} >
+  return (
+    <div className={(IsHomeInfo ? "nav-header--homeinfo " : "" )+ " nav-header"}>
+
+      <div  className={(IsHomeInfo ? "nav-header__container--homeinfo " : "" )+ " nav-header__container"} >
         <ShowDesktopOnly>
           <BrandCard />
         </ShowDesktopOnly>
-        <>
-        {/* {((pageName == 'Explore' || pageName == 'HomeInfo' )  &&     */}
-            <form  className={(pageName == 'HomeInfo' ? "nav-header__content--homeinfo " : "" )+ " nav-header__content"} >
+        <>{((IsExplorePage || IsHomeInfo )  &&    
+            <form  className={(IsHomeInfo ? "nav-header__content--homeinfo " : "" )+ " nav-header__content"} >
             <div className="nav-header__content-message">
               <HeaderSearch
                 toggleAdvancedFilters={toggleAdvancedFilters}
@@ -41,8 +43,7 @@ function NavHeader({ selectedNetwork }){
               />
             </div>
           </form>
-       {/* )} */}
-       </> 
+       )}</> 
 
         
         <ShowDesktopOnly>
@@ -50,12 +51,7 @@ function NavHeader({ selectedNetwork }){
         </ShowDesktopOnly>
       </div>
       <div className="nav-header__filters">
-        <ShowMobileOnly>
-          <>{(pageName == 'Explore' && <ListButtonTypes/>)}</>
-        </ShowMobileOnly>
-        <ShowDesktopOnly>
-         <>{(pageName == 'Explore') &&  <ListButtonTypes/>}</> 
-        </ShowDesktopOnly>
+        {(IsExplorePage && <ListButtonTypes/>)}
       </div>
     </div>
   );
