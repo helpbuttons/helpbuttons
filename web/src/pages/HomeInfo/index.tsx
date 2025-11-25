@@ -17,12 +17,6 @@ import {
   IoArrowUpSharp,
   IoDownloadOutline,
   IoEaselSharp,
-  IoCall,
-  IoClose,
-  IoDownload,
-  IoDownloadOutline,
-  IoEaselSharp,
-  IoGlobeOutline,
   IoHelpOutline,
   IoInformation,
   IoLocateOutline,
@@ -357,7 +351,6 @@ function HomeInfoRecentActivity({ selectedNetwork }) {
             </div>
           </ShowDesktopOnly>
           <h3 className="homeinfo-card__header-title" >
-            {showInfo ? <IoStatsChart/> : <IoStatsChart/>}  
               {t('homeinfo.activity')}
           </h3>
           <ShowMobileOnly>
