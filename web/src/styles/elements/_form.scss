@@ -816,7 +816,7 @@ width: 100%;
      overflow: hidden;
      position: relative;
      height: $grid-desktop-double-column-height;
-
+    min-height: 400px;
   }
 
   .form__inputs-content {
