@@ -79,7 +79,7 @@ export default function MainPopup() {
       )}
       {(popupPage == MainPopupPage.LOGIN_AS_GUEST) && (
         <Picker closeAction={closePopup} headerText={t('user.login')}>
-          <LoginQrForm>
+          <LoginQrForm/>
         </Picker>
       )}
       {popupPage == MainPopupPage.INVITE && (
