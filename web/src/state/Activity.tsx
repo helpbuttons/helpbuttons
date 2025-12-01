@@ -12,6 +12,8 @@ import {
 } from 'services/LocalStorage';
 import { ActivityDtoOut } from 'shared/dtos/activity.dto';
 import _ from 'lodash';
+import { ActivityEventName } from 'shared/types/activity.list';
+import { ButtonEntry } from 'shared/dtos/button.dto';
 
 export interface Activities{
   activities: ActivityDtoOut[];
@@ -19,6 +21,7 @@ export interface Activities{
   notificationsPermissionGranted: boolean;
   focusMessageId: string;
   focusPostId: string;
+  draftButton: ButtonEntry;
 }
 
 export const activitiesInitialState: Activities = {
@@ -27,7 +30,8 @@ export const activitiesInitialState: Activities = {
   activitiesPage: 0,
   notificationsPermissionGranted: false,
   focusMessageId: null,
-  focusPostId: null
+  focusPostId: null,
+  draftButton: null
 };
 
 export class PermissionGranted implements UpdateEvent {
@@ -189,5 +193,18 @@ export class ActivityMarkAsRead implements WatchEvent, UpdateEvent {
   }
   public watch(state: GlobalState) {
     return ActivityService.markAsRead(this.activityId)
+  }
+}
+
+export class SetDraftButton implements UpdateEvent{
+  public constructor() {}
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      if(state?.homeInfo?.mainPopupButton){
+        newState.activities.draftButton = state.homeInfo.mainPopupButton
+      }else{
+        newState.activities.draftButton = state.explore.currentButton
+      }
+    })
   }
 }

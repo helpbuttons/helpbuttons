@@ -212,7 +212,10 @@
     "roleupdate": "Your role has been updated to '{0}'",
     "newSignup": "New user '{0}' signed up",
     "notice": "Notice",
-    "sent": "Message sent!"
+    "sent": "Message sent!",
+    "writingDraft": "Writing private message to....",
+    "draft": "Draft",
+    "pickOne": "..."
   },
   "common": {
     "notfound": "No {0} found. Sorry. 🤔",

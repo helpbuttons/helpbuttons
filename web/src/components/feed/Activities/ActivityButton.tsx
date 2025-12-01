@@ -2,25 +2,36 @@ import Loading from "components/loading"
 import Btn, { BtnType, ContentAlignment, IconType } from "elements/Btn"
 import FieldText from "elements/Fields/FieldText"
 import ImageWrapper, { ImageType } from "elements/ImageWrapper"
+import { ShowMobileOnly } from "elements/SizeOnly"
 import t from "i18n"
+import router, { useRouter } from "next/router"
 import { useEffect, useRef, useState } from "react"
 import { IoAdd, IoArrowBack, IoSend } from "react-icons/io5"
 import { alertService } from "services/Alert"
 import { usePoolFunc } from "shared/custom.hooks"
 import { readableTimeLeftToDate } from "shared/date.utils"
 import { ActivityEventName } from "shared/types/activity.list"
-import { store } from "state"
+import { GlobalState, store, useGlobalStore } from "state"
 import { FindActivityDetails, SendNewMessage, SetFocusOnMessage, SetFocusOnPost } from "state/Activity"
 import { FindButton } from "state/Explore"
 import { FindAndSetMainPopupCurrentButton, FindAndSetMainPopupCurrentProfile } from "state/HomeInfo"
 
-export function ActivityDetail({ selectedActivity, closeConversation }) {
+export function ActivityButton({selectedActivity, closeConversation, isDrafting}) {
+
+  if(isDrafting)
+  {
+    return <ActivityDetailDraft/>
+  }
+  return <ActivityDetailConversation selectedActivity={selectedActivity} closeConversation={closeConversation}/>
+}
+export function ActivityDetailConversation({ selectedActivity, closeConversation }) {
   const [buttonActivities, setButtonActivities] = useState([])
   const [selectedButton, setSelectedButton] = useState(null)
 
   const findActivityDetails = () => {
-    if(selectedActivity && !selectedActivity.buttonId){
+    if(!selectedActivity?.buttonId ){
       console.log('error button not found ', JSON.stringify(selectedActivity))
+      return;
     }
     store.emit(new FindActivityDetails(selectedActivity.buttonId, selectedActivity.consumerId, 0,
       (_activites) => {
@@ -47,7 +58,7 @@ export function ActivityDetail({ selectedActivity, closeConversation }) {
   }
   
   if (!selectedButton || !selectedActivity) {
-    return (<Loading/>)
+    return (<ShowMobileOnly><Loading/></ShowMobileOnly>)
   }
 
   if (!selectedActivity.activityFrom) {
@@ -58,12 +69,49 @@ export function ActivityDetail({ selectedActivity, closeConversation }) {
     <>
       <ActivityDetailHeader button={selectedButton} selectedActivity={selectedActivity} closeConversation={closeConversation} />
       <ActivityDetailList buttonActivities={buttonActivities} />
-      {!selectedActivity?.disableChat && <MessageForm sendNewMessage={sendNewMessage} button={selectedButton} selectedActivity={selectedActivity} />}
+      {!selectedActivity?.disableChat && <MessageForm sendNewMessage={sendNewMessage} buttonId={selectedButton.id} consumerId={selectedActivity.consumerId} />}
     </>
   )
 }
 
-function MessageForm({ sendNewMessage, button, selectedActivity }) {
+export function ActivityDetailDraft(){
+  const sendNewMessage = (message, buttonId, consumerId) => {
+    store.emit(new SendNewMessage(message, buttonId, consumerId, () => { 
+      // findActivityDetails(); 
+
+      alertService.success(t('activities.sentReload!')) }))
+  }
+  const draftButton = useGlobalStore(
+    (state: GlobalState) => state.activities.draftButton,
+  );
+  const sessionUser = useGlobalStore(
+    (state: GlobalState) => state.sessionUser,
+  );
+  if(!draftButton){
+    return <></>
+  }
+  const draftActivity = {
+    activityFrom: {
+      name: draftButton.owner.name,
+      username: draftButton.owner.username
+    },
+    image: draftButton.image,
+    buttonId: draftButton.id
+  }
+
+  const closeDraft = () => {
+    router.push(`/Activity`)
+  }
+  return (
+    <>
+    <ActivityDetailHeader button={draftButton} selectedActivity={draftActivity} closeConversation={closeDraft} />
+    <MessageForm sendNewMessage={sendNewMessage} buttonId={draftButton.id} consumerId={sessionUser.id} />
+    </>
+  )
+}
+
+
+function MessageForm({ sendNewMessage, buttonId, consumerId }) {
   const messageContent = useRef(null)
   const inputKeyDown = (e) => {
     const val = e.target.value;
@@ -74,7 +122,7 @@ function MessageForm({ sendNewMessage, button, selectedActivity }) {
   }
 
   const sendMessage = ( ) => {
-    sendNewMessage(messageContent.current.value, button.id, selectedActivity.consumerId)
+    sendNewMessage(messageContent.current.value, buttonId, consumerId)
     messageContent.current.value = ''
   }
   return (
@@ -201,7 +249,8 @@ function ActivityDetailMessage({activity})
         <div className="message message--you">
           <div className="message__header">
             <div className="message__avatar">
-              <img src="https://dummyimage.com/30/#ccc/fff" alt="Avatar" className="avatar picture__img"></img>
+              {/* <ImageWrapper imageType={ImageType.avatar} src={activity.activityFrom.avatar} alt={"ups"}  /> */}
+              <img src={activity.activityFrom.avatar} alt="avd1rada" className="avatar picture__img"></img>
             </div>
 
             <div className="message__user-name-container">
@@ -261,9 +310,11 @@ function ActivityDetailHeader({ closeConversation, button, selectedActivity }) {
       <header className="chat__header-content">
         <div className="chat__header-left">
           <div className="btn-circle__icon">
-            <a href="#" onClick={() => { closeConversation() }}>
-              <IoArrowBack />
-            </a>
+            {closeConversation && 
+              <a href="#" onClick={() => { closeConversation() }}>
+                <IoArrowBack />
+              </a>
+            }
           </div>
         </div>
         <div className="chat__header-center">
