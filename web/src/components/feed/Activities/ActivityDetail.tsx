@@ -1,18 +1,53 @@
+import Loading from "components/loading"
 import Btn, { BtnType, ContentAlignment, IconType } from "elements/Btn"
 import FieldText from "elements/Fields/FieldText"
 import ImageWrapper, { ImageType } from "elements/ImageWrapper"
 import t from "i18n"
-import { useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import { IoAdd, IoArrowBack, IoSend } from "react-icons/io5"
+import { alertService } from "services/Alert"
+import { usePoolFunc } from "shared/custom.hooks"
 import { readableTimeLeftToDate } from "shared/date.utils"
 import { ActivityEventName } from "shared/types/activity.list"
 import { store } from "state"
-import { SetFocusOnMessage, SetFocusOnPost } from "state/Activity"
+import { FindActivityDetails, SendNewMessage, SetFocusOnMessage, SetFocusOnPost } from "state/Activity"
+import { FindButton } from "state/Explore"
 import { FindAndSetMainPopupCurrentButton, FindAndSetMainPopupCurrentProfile } from "state/HomeInfo"
 
-export function ActivityDetail({ buttonActivities, button, selectedActivity, closeConversation, sendNewMessage }) {
-  if (!button) {
-    return (<></>)
+export function ActivityDetail({ selectedActivity, closeConversation }) {
+  const [buttonActivities, setButtonActivities] = useState([])
+  const [selectedButton, setSelectedButton] = useState(null)
+
+  const findActivityDetails = () => {
+    if(selectedActivity && !selectedActivity.buttonId){
+      console.log('error button not found ', JSON.stringify(selectedActivity))
+    }
+    store.emit(new FindActivityDetails(selectedActivity.buttonId, selectedActivity.consumerId, 0,
+      (_activites) => {
+        store.emit(new FindButton(selectedActivity.buttonId, (button) => {
+          setSelectedButton(() => button)
+        }))
+        setButtonActivities(() => _activites)
+      }
+    ))
+  }
+  
+  useEffect(() => {
+    if(!selectedActivity)
+    {
+      return;
+    }
+    findActivityDetails()
+    
+  }, [selectedActivity])
+  usePoolFunc({paused: !selectedActivity, timeMs: 10*1000, func:() => findActivityDetails()})
+  
+  const sendNewMessage = (message, buttonId, consumerId) => {
+    store.emit(new SendNewMessage(message, buttonId, consumerId, () => { findActivityDetails(); alertService.success(t('activities.sent')) }))
+  }
+  
+  if (!selectedButton || !selectedActivity) {
+    return (<Loading/>)
   }
 
   if (!selectedActivity.activityFrom) {
@@ -21,9 +56,9 @@ export function ActivityDetail({ buttonActivities, button, selectedActivity, clo
 
   return (
     <>
-      <ActivityDetailHeader button={button} selectedActivity={selectedActivity} closeConversation={closeConversation} />
+      <ActivityDetailHeader button={selectedButton} selectedActivity={selectedActivity} closeConversation={closeConversation} />
       <ActivityDetailList buttonActivities={buttonActivities} />
-      {!selectedActivity?.disableChat && <MessageForm sendNewMessage={sendNewMessage} button={button} selectedActivity={selectedActivity} />}
+      {!selectedActivity?.disableChat && <MessageForm sendNewMessage={sendNewMessage} button={selectedButton} selectedActivity={selectedActivity} />}
     </>
   )
 }
