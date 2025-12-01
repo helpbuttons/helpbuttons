@@ -85,8 +85,9 @@ export default function Feed({ button,showReplyFirstPost, toggleShowReplyFirstPo
               button={button}
               isButtonOwner={isButtonOwner}
               action={() => {
-                setPrivateMessage(true);
-                toggleShowReplyFirstPost(true);
+                // setPrivateMessage(true);
+                // toggleShowReplyFirstPost(true);
+                console.log('baaam')
               } }
             />
           )}
