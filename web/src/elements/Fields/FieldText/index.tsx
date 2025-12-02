@@ -52,13 +52,9 @@ const FieldText = React.forwardRef<HTMLInputElement, IFieldText>(
           setTextLength(obj.target.value.length);
         }
       };
-   
+  
       return (
-          <div
-          className={
-            "form__field " + (multiInput ? "form__field--noMargin" : "")
-          }
-           >
+        <div className="form__field ">
           {label && <label className="form__label">{label}</label>}
           {explain && <p className="form__explain">{explain}</p> }
           <input

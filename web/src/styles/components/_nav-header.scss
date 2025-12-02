@@ -54,7 +54,7 @@ $nav-header-new-message-radius: $border-radius-circle;
 
 .nav-header__content--homeinfo {
   
-  background-color: $color-corporative;
+  background-color: transparent;
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
   margin: auto;
@@ -126,7 +126,7 @@ $nav-header-new-message-radius: $border-radius-circle;
   .nav-header__container {
     z-index: $z-index-03;
     background-color: $color-corporative;
-    padding: 0 $padding-huge;
+    padding: 0 $padding-medium;
     display: flex;
     justify-content: flex-start;
     box-shadow: none;
@@ -148,17 +148,13 @@ $nav-header-new-message-radius: $border-radius-circle;
 
   .nav-header__container--homeinfo::before {
 
-    content: "";
+     content: "";
     position: absolute;
-    border-radius: 0 0 $border-radius-circle $border-radius-circle;
+    border-radius: 0 0 0 $border-radius-circle ;
     border: $border-style-basic;
-    border-top: none;
-    width: 90%;
-    padding-right: 0;
-    height: 70px;
-
-    background: $color-corporative;
-    //JUST TO REMEMBER linear-gradient(0deg, transparent, $color-corporative-transparent 0%) no-repeat;
+    width: 100%;
+    height: 71px;
+    background: linear-gradient(0deg, transparent, $color-corporative-transparent 0%) no-repeat;
     backdrop-filter: blur(5px);
    -webkit-backdrop-filter: blur(5px);
     

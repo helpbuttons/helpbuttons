@@ -129,7 +129,7 @@ export default function ButtonForm({
                     buttonTypes={buttonTypes}
                   />
                 </div>
-                <div className="form__inputs-types-wrapper">
+                <div className="form__inputs-wrapper">
                   <div className="form__inputs-content">
 
                     <FieldText

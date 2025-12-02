@@ -33,8 +33,7 @@ function NavHeader({ selectedNetwork }){
         <ShowDesktopOnly>
           <BrandCard />
         </ShowDesktopOnly>
-        <>
-        {((IsExplorePage || IsHomeInfo )  &&    
+        <>{((IsExplorePage || IsHomeInfo )  &&    
             <form  className={(IsHomeInfo ? "nav-header__content--homeinfo " : "" )+ " nav-header__content"} >
             <div className="nav-header__content-message">
               <HeaderSearch
@@ -44,8 +43,7 @@ function NavHeader({ selectedNetwork }){
               />
             </div>
           </form>
-          )}  
-       </> 
+       )}</> 
 
         
         <ShowDesktopOnly>

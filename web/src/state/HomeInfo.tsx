@@ -17,8 +17,7 @@ export enum MainPopupPage {
   FAQS = 'faqs',
   PROFILE = 'profile',
   INVITE = 'invite',
-  SIGNUP_AS_GUEST = 'signupAsGuest',
-  LOGIN_AS_GUEST = "loginAsGuest"
+  SIGNUP_AS_GUEST = 'signupAsGuest'
 }
 export enum CookiesState {
   ACCEPTED = 'accepted',

@@ -207,7 +207,7 @@ function HomeInfoInfoCard({ selectedNetwork }) {
                 </h3>
                 <div className="homeinfo-card__controls homeinfo-card__controls--openable">
                   <Btn
-                    btnType={BtnType.circle}
+                    btnType={BtnType.corporative}
                     iconLink={showInfo ? <IoArrowBackSharp/> : <IoInformation/>}
                     iconLeft={IconType.circle}
                     contentAlignment={ContentAlignment.center}
@@ -346,7 +346,7 @@ function HomeInfoRecentActivity({ selectedNetwork }) {
           <ShowDesktopOnly>
             <div className="homeinfo-card__controls--openable-right">
                   <Btn
-                    btnType={BtnType.circle}
+                    btnType={BtnType.corporative}
                     iconLink={showInfo ? <IoStatsChart/> : <IoStatsChart/>}
                     iconLeft={IconType.circle}
                     contentAlignment={ContentAlignment.center}
@@ -354,6 +354,7 @@ function HomeInfoRecentActivity({ selectedNetwork }) {
             </div>
           </ShowDesktopOnly>
           <h3 className="homeinfo-card__header-title" >
+            {showInfo ? <IoStatsChart/> : <IoStatsChart/>}  
               {t('homeinfo.activity')}
           </h3>
           <ShowMobileOnly>

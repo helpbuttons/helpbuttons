@@ -116,7 +116,7 @@ export function InviteForm() {
               <Btn
                 submit={true}
                 btnType={BtnType.submit}
-                caption={t('user.loginButton')}
+                caption={t('user.register')}
                 contentAlignment={ContentAlignment.center}
                 isSubmitting={isSubmitting}
               />

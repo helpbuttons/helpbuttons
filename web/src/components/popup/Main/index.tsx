@@ -11,7 +11,7 @@ import { ButtonShow } from "components/button/ButtonShow";
 import { ShowProfile } from "pages/p/[username]";
 import { useEffect } from "react";
 import { replaceUrl, usePreviousUrl } from "components/uri/builder";
-import LoginForm, { LoginQrForm } from "components/user/LoginForm";
+import LoginForm from "components/user/LoginForm";
 import { InviteForm } from "pages/Signup/Invite";
 
 export default function MainPopup() {
@@ -71,20 +71,15 @@ export default function MainPopup() {
       )}
       {(popupPage == MainPopupPage.SIGNUP_AS_GUEST) && (
           <Picker
-            headerText={t('user.signupAsGuest')}
+            headerText={t('user.signup')}
             closeAction={closePopup}
           >
             <SignupAsGuestForm />
           </Picker>
       )}
-      {(popupPage == MainPopupPage.LOGIN_AS_GUEST) && (
-        <Picker closeAction={closePopup} headerText={t('user.login')}>
-          <LoginQrForm/>
-        </Picker>
-      )}
       {popupPage == MainPopupPage.INVITE && (
         <Picker
-          headerText={t('user.signupAsGuest')}
+          headerText={t('user.signup')}
           closeAction={closePopup}
         >
           <InviteForm />
