@@ -52,8 +52,7 @@ export class ActivityController {
   @AllowGuest()
   @Get('network')
   async findNetworkActivity(@Query('lang') locale: string = 'en'){
-    return []
-    // return await this.activityService.findNetworkActivity(locale)
+    return await this.activityService.findNetworkActivity(locale)
   }
 
   // @Get('triggerNotifications')

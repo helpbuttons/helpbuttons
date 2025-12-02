@@ -52,7 +52,7 @@ export class ActivityService {
             })
           })
           .then(() => {
-            return this.newNetworkActivity(payload);
+            return this.newNetworkActivity(button, author, payload);
           });
       })
 
@@ -134,8 +134,9 @@ export class ActivityService {
 
   @OnEvent(ActivityEventName.NewButton)
   async onNewButton(payload: any) {
-    // const button_ = getButtonActivity(payload.data);
-    console.log('TODO not working, needs refator')
+    const {button} = payload.data
+    
+    return this.newNetworkActivity(button, button.owner, payload)
     return ;
     const _button = payload.data.button
     // check users following the button of this post, and add a new actitivy to the daily outbox
@@ -192,9 +193,6 @@ export class ActivityService {
         }
         // return this.createActivity(button.owner, payload, false);
       })
-      .then(() => {
-        return this.newNetworkActivity(payload);
-      });
   }
 
   @OnEvent(ActivityEventName.RenewButton)
@@ -339,15 +337,19 @@ export class ActivityService {
   }
 
 
-  private newNetworkActivity(payload) {
+  private newNetworkActivity(button, from, payload) {
     const activity = {
       id: uuid(),
+      button,
+      from,
       eventName: payload.activityEventName,
       data: JSON.stringify(payload.data),
+      outbox: false,
+      lastActivityButtonConsumer: false,
+      lastActivityButtonOwner: false,
       homeinfo: true,
     };
-    console.log('TODO HOME INFO ACTIVITY')
-    // return this.activityRepository.insert([activity]);
+    return this.activityRepository.insert([activity]);
   }
 
   public deleteme(authorId: string) {
@@ -395,8 +397,52 @@ export class ActivityService {
       })
   }
 
+  transformActivityHomeInfo(activity, locale,userId) {
+    let activityOut = {
+      id: activity.id,
+      eventName: activity.eventName,
+      read: true,
+      createdAt: activity.created_at,
+      buttonId: activity?.button?.id,
+      fromId: activity?.from?.id,
+      consumerId: activity?.consumer?.id,
+      activityFrom: activity?.button?.owner,
+      disableChat: true 
+    }
+    
+    switch (activity.eventName) {
+    case ActivityEventName.NewButton:
+        {
+          const {button} = activity.data
+          return {
+          ...activityOut,
+          title: button.title,
+          from: button.owner.name,
+          image: button.image,
+          buttonType: button.type,
+          type: translate(locale, 'activities.notice'),
+          footer: button.address,
+          message: translate(locale, 'activities.newbuttonHomeinfo'),
+        }}
+        case ActivityEventName.NewPost:
+        {
+          const {post} = activity.data
+          return {
+          ...activityOut,
+          title: activity.from.name,
+          from: "",
+          image: activity.button.image,
+          buttonType: activity.button.type,
+          type: translate(locale, 'activities.notice'),
+          footer: `${activity.button.title} - ${activity.button.address}`,
+          message: translate(locale, 'activities.newpost', [post.message]),
+          postId: post.id,
+        }}
+      }
+  }
 
   transformActivity(activity, locale,userId) {
+    try{
     const isOwner = activity.to.id == userId;
     const isButtonOwner = activity?.button?.owner?.id == userId
     const disableChat = (activity?.button && (activity.to.id == activity.button.owner.id || activity.from.id == activity.button.owner.id)) ? false : true;
@@ -500,6 +546,19 @@ export class ActivityService {
             messageId: comment.id
           }
         }
+      case ActivityEventName.NewButton:
+        {
+          const {button} = activity.data
+          return {
+          ...activityOut,
+          title: button.title,
+          from: button.owner.name,
+          image: button.image,
+          buttonType: button.type,
+          type: translate(locale, 'activities.notice'),
+          footer: button.address,
+          message: translate(locale, 'activities.endorsed'),
+        }}
       case ActivityEventName.Endorsed: 
       {return {
           ...activityOut,
@@ -523,7 +582,9 @@ export class ActivityService {
           message: activity.eventName
         }
     }
-
+  }catch(err) {
+    console.log(err)
+  }
   }
 
   public findNetworkActivity(locale) {
@@ -535,13 +596,18 @@ export class ActivityService {
             take: 5,
             order: { created_at: 'DESC' },
             where: { homeinfo: true },
+            relations: ['button.owner', 'to', 'from', 'consumer'],
           })
           .then((activities) => {
             return activities.map((activity): ActivityDtoOut => {
-              return this.transformActivity(activity, locale, false)
+              try{
+              return this.transformActivityHomeInfo(activity, locale, false)
+              }catch(err){
+                console.log(activity)
+                console.log(err)
+              }
             });
           })
-          .then((activities) => activities.filter((activity) => activity))
       });
   }
 

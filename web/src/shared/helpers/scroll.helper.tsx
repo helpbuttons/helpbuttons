@@ -54,7 +54,7 @@ export function useScroll(onLoadMore) {
     <br />
     <br />
   </>
-  return { noMoreToLoad, endDivLoadMoreTrigger };
+  return { noMoreToLoad, endDivLoadMoreTrigger, scrollIsLoading };
 }
 
 export function useFocusOn(focusId, id) {

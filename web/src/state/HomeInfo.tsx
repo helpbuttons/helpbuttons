@@ -54,7 +54,7 @@ export class SetMainPopup implements UpdateEvent {
     return produce(state, (newState) => {
       newState.homeInfo.mainPopupPage = this.newPage;
       newState.homeInfo.mainPopupButton = null;
-      newState.explore.currentButton = null;
+      // newState.explore.currentButton = null;
       newState.homeInfo.mainPopupUserProfile = null;
     });
   }
@@ -67,7 +67,7 @@ export class SetInvitationPopup implements UpdateEvent {
     return produce(state, (newState) => {
       newState.homeInfo.mainPopupPage = MainPopupPage.INVITE;
       newState.homeInfo.mainPopupButton = null;
-      newState.explore.currentButton = null;
+      // newState.explore.currentButton = null;
       newState.homeInfo.mainPopupUserProfile = null;
       newState.homeInfo.invitationCode = this.invitationCode;
     });
@@ -104,13 +104,13 @@ export class FindAndSetMainPopupCurrentButton implements WatchEvent {
 }
 
 export class SetMainPopupCurrentButton implements UpdateEvent {
-  public constructor(private button: Button) {}
+  public constructor(private button: ButtonEntry) {}
   public update(state: GlobalState) {
     return produce(state, (newState) => {
       newState.homeInfo.mainPopupPage = MainPopupPage.HIDE;
       
       newState.homeInfo.mainPopupUserProfile = null;
-      newState.explore.currentButton = this.button;
+      // newState.explore.currentButton = this.button;
       newState.homeInfo.mainPopupButton = this.button;
       if(state.homeInfo.pageName == 'Explore' && this.button)
         {

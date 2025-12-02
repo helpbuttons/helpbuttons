@@ -34,7 +34,7 @@ import { useStore } from 'state';
 import MessageNew from 'components/feed/MessageNew';
 import { PrivacyType } from 'shared/types/privacy.enum';
 import { useToggle } from 'shared/custom.hooks';
-import { ButtonOwnerPhone, CardButtonHeadActions } from 'components/button/CardButton';
+import { ButtonOwnerPhone, CardButtonHeadActions, sendCurrentButtonMessage } from 'components/button/CardButton';
 import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
 import router from 'next/router';
 
@@ -85,9 +85,7 @@ export default function Feed({ button,showReplyFirstPost, toggleShowReplyFirstPo
               button={button}
               isButtonOwner={isButtonOwner}
               action={() => {
-                // setPrivateMessage(true);
-                // toggleShowReplyFirstPost(true);
-                console.log('baaam')
+                sendCurrentButtonMessage()
               } }
             />
           )}

@@ -1,18 +1,14 @@
-import t from "i18n";
 import { useButtonTypes } from "shared/buttonTypes";
 import { useEffect, useState } from "react";
 import _ from 'lodash';
-import { FindActivityDetails, SendNewMessage } from "state/Activity";
 import {  GlobalState, store, useGlobalStore} from "state";
-import { FindButton } from "state/Explore";
-import { ActivityDetail } from "components/feed/Activities/ActivityDetail";
+import { ActivityButton } from "components/feed/Activities/ActivityButton";
 import ActivityList from "components/feed/Activities/ActivityList";
-import { alertService } from "services/Alert";
-import { usePoolFunc } from "shared/custom.hooks";
 import { ShowDesktopOnly, ShowMobileOnly } from "elements/SizeOnly";
-import Btn, { BtnType, ContentAlignment } from "elements/Btn";
 import { Dropdown, DropdownLine } from "elements/Dropdown/Dropdown";
 import PopupHeader from "components/popup/PopupHeader";
+import { useRouter } from "next/router";
+import t from "i18n";
 
 
 
@@ -34,42 +30,53 @@ const updateFilters = (buttonTypes, activities) => {
 export default function ActivitiesUser() {
 
   const buttonTypes = useButtonTypes()
-  // K pasa se es creado un nuevo post... ? Como se va a mirar? no es un mensaje...
-  
-
-  
-
-  // const [buttonPage, setButtonPage] = useState(0)
-  const [buttonActivities, setButtonActivities] = useState([])
   const [localFilters, setLocalFilters] = useState(null)
 
   const [selectedActivity, setSelectedActivity] = useState(null)
   const [filteredUserActivities, setFilteredUserActivities] = useState([])
-  const [selectedButton, setSelectedButton] = useState(null)
 
-
-  useEffect(() =>{ console.log('oia'); console.log(buttonActivities)}, [buttonActivities])
-  const findActivityDetails = () => {
-    store.emit(new FindActivityDetails(selectedActivity.buttonId, selectedActivity.consumerId, 0,
-      (_activites) => {
-        setButtonActivities(() => _activites)
-      }
-    ))
-  }
-
-  useEffect(() => {
-    if(!selectedActivity)
-    {
-      return;
-    }
-    findActivityDetails()
-    store.emit(new FindButton(selectedActivity.buttonId, (button) => {
-      setSelectedButton(() => button)
-    }))
-  }, [selectedActivity])
-
+  
   const userActivities = useGlobalStore((state: GlobalState) => state.activities.activities)
   const filterButtons = updateFilters(buttonTypes, userActivities)
+
+  const router = useRouter()
+  const {draft} = router.query;
+  
+  const draftButton = useGlobalStore(
+    (state: GlobalState) => state.activities.draftButton,
+  );
+  useEffect(() => {
+    if(!draftButton){
+      const { draft, ...routerQuery } = router.query;
+      router.replace({
+        query: { ...routerQuery },
+      });
+    }
+    if(draftButton)
+      {
+        const _draftActivity = userActivities.find((_activity) => _activity.buttonId == draftButton.id)
+        
+        if(_draftActivity){
+          setSelectedActivity(() => _draftActivity) 
+          const { draft, ...routerQuery } = router.query;
+              router.replace({
+                query: { ...routerQuery },
+              });
+        }else{
+          console.log('not found.. new draft')
+        }
+      }
+  }, [draftButton])
+
+  useEffect(() => {
+    if(selectedActivity && draft)
+    {
+      const { draft, ...routerQuery } = router.query;
+      router.replace({
+        query: { ...routerQuery },
+      });
+    }
+  }, [selectedActivity])
 
   useEffect(() => {
     setFilteredUserActivities(() => {
@@ -91,17 +98,10 @@ export default function ActivitiesUser() {
     setLocalFilters(() => {return {buttonType: type}})
   }
   
-  usePoolFunc({paused: !selectedActivity, timeMs: 10*1000, func:() => findActivityDetails()})
-  
-  const sendNewMessage = (message, buttonId, consumerId) => {
-    store.emit(new SendNewMessage(message, buttonId, consumerId, () => { findActivityDetails(); alertService.success(t('activities.sent')) }))
-  }
-
   const closeConversation = () => {
-    setButtonActivities(() => [])
-    setSelectedButton(() => null)
     setSelectedActivity(() => null)
   }
+
   return (
     <div className="feed__container">
       <div className="feed-section--messages">
@@ -117,14 +117,26 @@ export default function ActivitiesUser() {
             </div>
           </div>
           <div className="feed-section--activity-content">
-            <ActivityList userActivities={filteredUserActivities} setSelectedActivity={setSelectedActivity} />
+            <ShowDesktopOnly>
+              <ActivityList activities={filteredUserActivities} setSelectedActivity={setSelectedActivity} isDrafting={draft} />
+            </ShowDesktopOnly>
+            <ShowMobileOnly>
+              {!selectedActivity && !draft && 
+                <ActivityList activities={filteredUserActivities} setSelectedActivity={setSelectedActivity} isDrafting={draft} />
+              }
+              {(selectedActivity || draft) && 
+                <div className='card-profile__container'><ActivityButton setSelectedActivity={setSelectedActivity} closeConversation={closeConversation} selectedActivity={selectedActivity} isDrafting={draft} /></div>
+              }
+            </ShowMobileOnly>
+            
           </div>
         </div>
-        <ActivityDetailMobile>
           <div className="feed-section__center">
-            <ActivityDetail buttonActivities={buttonActivities} button={selectedButton} sendNewMessage={sendNewMessage} closeConversation={closeConversation} selectedActivity={selectedActivity} />
+          <ShowDesktopOnly>
+            {(selectedActivity || draft) && <ActivityButton setSelectedActivity={setSelectedActivity} closeConversation={closeConversation} selectedActivity={selectedActivity} isDrafting={draft}/>}
+            {(!selectedActivity && !draft) && t('activity.pickOne')}
+          </ShowDesktopOnly>
           </div>
-        </ActivityDetailMobile>
         <div className="feed-section__right">
         </div>
       </div>
