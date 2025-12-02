@@ -46,7 +46,7 @@ export function HeaderSearch({ toggleAdvancedFilters, exploreMapState, selectedN
           }
         }}
       >
-        <div className={filtered?" header-search__column":"header-search__column"}>
+        <div className={" header-search__column"}>
           <SearchText
             count={buttonCount}
             where={exploreMapState.filters.where}
