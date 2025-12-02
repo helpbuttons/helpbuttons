@@ -25,7 +25,7 @@ import { useSearchParams } from 'next/navigation';
 import NavHeader from 'components/nav/NavHeader';
 import { ShowDesktopOnly, ShowMobileOnly } from 'elements/SizeOnly';
 import Loading from 'components/loading';
-import MainPopup from 'components/popup/Main/';
+import MainPopup, { SetupMainPopup } from 'components/popup/Main/';
 import { useConfig } from 'state/Setup';
 import { UpdateMetadata } from 'state/Metadata';
 import { randomBytes } from 'crypto'
@@ -126,14 +126,18 @@ function MyApp({ Component, pageProps }) {
       config &&
       config.userCount > 0 &&
       path != SetupSteps.FIRST_OPEN &&
-      path != SetupSteps.NETWORK_CREATION){
+      path != SetupSteps.NETWORK_CREATION &&
+      !path.startsWith('/LoginClick')
+    ){
+        console.log(path)
+        console.log('permission denied... you in setup')
         router.push(SetupSteps.SETUP_LOGIN);
       }
   }, [fetchingNetworkError, sessionUser, config])
 
   useEffect(() => {
     setAuthorized(() => false)
-    if (setupPaths.includes(path)) {
+    if (setupPaths.includes(path) || path.startsWith('/LoginClick')) {
       setIsSetup(() => true);
     } else {
       setIsSetup(() => false);
@@ -279,7 +283,7 @@ function MyApp({ Component, pageProps }) {
 
       if (isSetup) {
         return <> <Head>
-          <title>Creating new helpbuttons network...</title></Head><Component {...pageProps} /></>;
+          <title>Creating new helpbuttons network...</title></Head><Component {...pageProps} /><SetupMainPopup/></>;
       } else if (pageName == 'Embbed') {
         return (
           <Component {...pageProps} />
