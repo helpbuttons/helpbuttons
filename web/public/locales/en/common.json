@@ -175,7 +175,8 @@
     "smtpHost": "",
     "smtpUser": "",
     "from": "",
-    "connect": ""
+    "connect": "",
+    "needsLogin": "Login to proceed with the configuration of your network"
   },
   "activities": {
     "messages": "Messages",
