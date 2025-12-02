@@ -5,11 +5,11 @@ import router from "next/router"
 import { useEffect } from "react"
 import { useScroll } from "shared/helpers/scroll.helper"
 import { store } from "state"
-import { FindMoreActivities } from "state/Activity"
+import { ActivityMarkAsRead, FindMoreActivities } from "state/Activity"
 import { ActivityListEntryCard, DraftActivityListEntryCard } from "./ActivityListEntry"
 
 
-export default function ActivityList({ setSelectedActivity, userActivities, isDrafting }) {
+export default function ActivityList({ setSelectedActivity, activities, isDrafting }) {
     useEffect(() => {
         store.emit(new FindMoreActivities((loadedActivities) => {}))
     }, [])
@@ -25,17 +25,23 @@ export default function ActivityList({ setSelectedActivity, userActivities, isDr
         },
     );
 
+    const onActivityClicked = (activity) => {
+        setSelectedActivity(() => activity) 
+        store.emit(new ActivityMarkAsRead(activity.id))
+    }
+    
+
     return (<>
         {scrollIsLoading && <Loading />}
         {isDrafting && <DraftActivityListEntryCard/>}
-        {userActivities && (
+        {activities && (
             <div>
                 
-                {userActivities && <>
-                    {[...userActivities].map((activity, idx) => <ActivityListEntryCard activity={activity} setSelectedActivity={setSelectedActivity} key={idx} />)}
+                {activities && <>
+                    {[...activities].map((activity, idx) => <ActivityListEntryCard activity={activity} onClick={() => onActivityClicked(activity) } key={idx} />)}
                 </>
                 }
-                {(!userActivities || userActivities.length < 1) && (
+                {(!activities || activities.length < 1) && (
                     <div className="feed__empty-message">
                         <div className="feed__empty-message--prev">
                             {t('activities.noactivity', ['activities'])}

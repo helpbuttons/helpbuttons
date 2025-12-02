@@ -1,17 +1,14 @@
 import ImageWrapper, { ImageType } from "elements/ImageWrapper";
 import t from "i18n";
 import { readableTimeLeftToDate } from "shared/date.utils";
-import { GlobalState, store, useGlobalStore } from "state";
-import { ActivityMarkAsRead } from "state/Activity";
+import { GlobalState, useGlobalStore } from "state";
 
-export function ActivityListEntryCard({ activity, setSelectedActivity }) {
-    const markAsRead = (activityId) => {
-        store.emit(new ActivityMarkAsRead(activityId))
-    }
+export function ActivityListEntryCard({ activity, onClick }) {
+
     return (
         <div className="feed-element">
-            <div onClick={() => { setSelectedActivity(() => activity); markAsRead(activity.id) }} className="card-notification">
-                <ActivityListEntryCardInner image={activity.image} createdAt={activity.createdAt} type={activity.type} read={activity.read} premessage={activity.premessage} message={activity.message} footer={activity.footer} title={activity.title} />
+            <div onClick={onClick} className="card-notification">
+                <ActivityListEntryCardInner image={activity?.image} createdAt={activity.createdAt} type={activity.type} read={activity.read} premessage={activity.premessage} message={activity.message} footer={activity.footer} title={activity.title} />
             </div>
         </div>
     )

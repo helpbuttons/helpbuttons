@@ -118,11 +118,11 @@ export default function ActivitiesUser() {
           </div>
           <div className="feed-section--activity-content">
             <ShowDesktopOnly>
-              <ActivityList userActivities={filteredUserActivities} setSelectedActivity={setSelectedActivity} isDrafting={draft} />
+              <ActivityList activities={filteredUserActivities} setSelectedActivity={setSelectedActivity} isDrafting={draft} />
             </ShowDesktopOnly>
             <ShowMobileOnly>
               {!selectedActivity && !draft && 
-                <ActivityList userActivities={filteredUserActivities} setSelectedActivity={setSelectedActivity} isDrafting={draft} />
+                <ActivityList activities={filteredUserActivities} setSelectedActivity={setSelectedActivity} isDrafting={draft} />
               }
               {(selectedActivity || draft) && 
                 <div className='card-profile__container'><ActivityButton setSelectedActivity={setSelectedActivity} closeConversation={closeConversation} selectedActivity={selectedActivity} isDrafting={draft} /></div>

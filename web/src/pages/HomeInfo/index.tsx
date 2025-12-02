@@ -40,12 +40,15 @@ import { logoImageUri } from 'shared/sys.helper';
 import { FindLatestNetworkActivity } from 'state/Networks';
 import { InstallButton } from 'components/install';
 import { TagsNav } from 'elements/Fields/FieldTags';
-import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
+import { FindAndSetMainPopupCurrentButton, MainPopupPage, SetMainPopup } from 'state/HomeInfo';
 import { DesktopNotificationsButton } from 'components/notifications';
 import { useMetadataTitle } from 'state/Metadata';
 import HomeInfoPinnedButtons from 'components/home/Pinned';
 import { ListKeyLocation } from 'state/Geo';
 import Footer from 'components/footer';
+import { ActivityListEntryCard } from 'components/feed/Activities/ActivityListEntry';
+import { ActivityEventName } from 'shared/types/activity.list';
+import { SetFocusOnPost } from 'state/Activity';
 
 export default function HomeInfo({ metadata }) {
 
@@ -110,7 +113,7 @@ export default function HomeInfo({ metadata }) {
               <HomeInfoInstallCard selectedNetwork={selectedNetwork} />
 
               <HomeInfoRecentActivity selectedNetwork={selectedNetwork} />
-              
+
               <HomeInfoTopHashTags selectedNetwork={selectedNetwork} />
               <HomeInfoPinnedHashTags selectedNetwork={selectedNetwork} />
 
@@ -367,13 +370,31 @@ function HomeInfoRecentActivity({ selectedNetwork }) {
       </div>
             <hr></hr>
             <div className="homeinfo__description homeinfo__description--openable">
-              TODO
-              {/* <ActivityList activities={activities} /> */}
+              <ActivityListHomeInfo activities={activities} />
             </div>
     </div>
   </>)
 }
 
+
+
+function ActivityListHomeInfo ({activities}) {
+  const onActivityClicked = (activity) => {
+    switch(activity.eventName){
+      case ActivityEventName.NewButton:
+        store.emit(new FindAndSetMainPopupCurrentButton(activity.buttonId))
+        // router.push(`/Show/${activity.buttonId}`)
+        break;
+      case ActivityEventName.NewPost:
+          store.emit(new SetFocusOnPost(activity.postId))
+          store.emit(new FindAndSetMainPopupCurrentButton(activity.buttonId))
+          break;
+    }
+    
+  }
+
+  return  <>{activities.map((activity, idx) => <ActivityListEntryCard activity={activity} onClick={() => onActivityClicked(activity)} key={idx} />)}</>
+}
 function HomeInfoAdministeredBy({ scrollToContact }) {
 
   return (<>
