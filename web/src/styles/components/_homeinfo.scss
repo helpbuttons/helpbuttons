@@ -188,14 +188,20 @@ $info-content-head-margin-mobile: 70px;
   text-align: center;
   border-radius: $border-radius-semicircle;
   width: auto;
+  // border: $border-style-basic;
   background-color: transparent;
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
+  // backdrop-filter: blur(5px);
+  // -webkit-backdrop-filter: blur(5px);
   padding: 15px;
   position: relative;
   margin: auto;
+  top: 0;
   margin-top: 0;
   max-width: 600px;
+
+    text-shadow: 
+      -15px 0 30px $color-corporative, /* Cyan float left */
+      15px 0 30px $color-secondary;  /* Magenta float right */
 
 
 
@@ -499,6 +505,20 @@ hr {
     
   }
 
+  .homeinfo-card__controls--openable::before {
+
+    content: "";
+    width: 6px;
+    position: absolute;
+    height: 10px;
+    top: 30%;
+    left: -5px;
+    border-bottom: $border-style-basic;
+    background: transparent;
+    z-index: 100000;
+
+  }
+
   .homeinfo-card__controls--openable-right {
 
     position: absolute;
@@ -540,7 +560,7 @@ hr {
 
     position: fixed;
     left: -290px;
-    border-radius:  $border-radius-basic $border-radius-semicircle $border-radius-semicircle $border-radius-basic;
+    border-radius:  0 $border-radius-semicircle $border-radius-semicircle 0;
     width: 300px;
     height: 60%;
     border: $border-style-basic;
