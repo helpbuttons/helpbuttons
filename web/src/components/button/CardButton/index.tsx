@@ -296,7 +296,6 @@ function SendMessageButton({toggleShowReplyFirstPost, sessionUser})
           iconLeft={IconType.circle}
           iconLink={<IoMailOutline />}
           onClick={()=> {
-            // toggleShowReplyFirstPost(true)
             sendCurrentButtonMessage()
         }}
         />

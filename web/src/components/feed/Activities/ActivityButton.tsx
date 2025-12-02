@@ -77,12 +77,6 @@ export function ActivityDetailConversation({ selectedActivity, closeConversation
 }
 
 export function ActivityDetailDraft({ setSelectedActivity }) {
-  // const findButtonActivityDetails = (buttonId, from) => {
-  //   // setSelectActivity(() => null)
-
-  // }
-
-
   const sendNewMessage = (message, buttonId, consumerId) => {
     store.emit(new SendNewMessage(message, buttonId, consumerId, (res) => {
       store.emit(new FindNewActivities((_activities) => {
@@ -97,7 +91,7 @@ export function ActivityDetailDraft({ setSelectedActivity }) {
         }
       }))
 
-      alertService.success(t('activities.sentReload!'))
+      alertService.success(t('activities.sent'))
     }))
   }
   const draftButton = useGlobalStore(

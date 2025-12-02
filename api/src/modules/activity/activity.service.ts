@@ -134,8 +134,6 @@ export class ActivityService {
 
   @OnEvent(ActivityEventName.NewButton)
   async onNewButton(payload: any) {
-    // const button_ = getButtonActivity(payload.data);
-    console.log('TODO not working, needs refator')
     const {button} = payload.data
     
     return this.newNetworkActivity(button, button.owner, payload)
@@ -195,9 +193,6 @@ export class ActivityService {
         }
         // return this.createActivity(button.owner, payload, false);
       })
-      .then(() => {
-        // return this.newNetworkActivity(payload);
-      });
   }
 
   @OnEvent(ActivityEventName.RenewButton)
@@ -342,7 +337,7 @@ export class ActivityService {
   }
 
 
-  async newNetworkActivity(button, from, payload) {
+  private newNetworkActivity(button, from, payload) {
     const activity = {
       id: uuid(),
       button,
@@ -354,7 +349,7 @@ export class ActivityService {
       lastActivityButtonOwner: false,
       homeinfo: true,
     };
-    return (await this.activityRepository.insert([activity]));
+    return this.activityRepository.insert([activity]);
   }
 
   public deleteme(authorId: string) {
@@ -505,7 +500,6 @@ export class ActivityService {
       case ActivityEventName.Message:
         {
           const { message } = activity.data
-          console.log(activity)
           return {
             ...activityOut,
             title: isOwner ? activity.from.name : activity.to.name,
@@ -614,7 +608,6 @@ export class ActivityService {
               }
             });
           })
-          // .then((activities) => activities.filter((activity) => activity))
       });
   }
 
