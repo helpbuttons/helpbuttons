@@ -71,7 +71,8 @@
     "copyLink": "Copy link",
     "advancedInviteOptions": "Printable PDF invitations",
     "printInvites":"Printable pdf invitations",
-    "linkCopied": "{0} copied to clipboard"
+    "linkCopied": "{0} copied to clipboard",
+    "copyCode": "Copy code"
 
   },
   "feed": {
@@ -335,7 +336,7 @@
     "newPassword": "Type your new password",
     "newPasswordPlaceHolder": "Your new password",
     "passwordMismatch": "passwords won't match",
-    "loginButton": "ENTER",
+    "loginButton": "Enter",
     "noAccount": "Register as new user",
     "tags": "Your interests",
     "editProfile": "Edit profile",
@@ -385,7 +386,7 @@
     "phonePlaceHolder": "i.e. 34699000000",
     "signupOptions": "Extra options",
     "adminPhonePublish": "Publish my phone in the home page",
-    "showWhatsapp": "Enable Whatsapp link",
+    "showWassap": "Enable Whatsapp link",
     "adminPhonePublishExplain": "You are a network administrator, do you want your phone to be available on the main page?",
     "addSupport": "You're admin, add a phone of contact so people can reach you",
     "deleteProfile": "Delete my account",
@@ -408,18 +409,23 @@
     "endorse": "Endorse",
     "revokeEndorse": "Withdraw endorsement",
     "endorsed": "Trusted",
-    "signupAsGuest": "Signup anonymous",
-    "signupGuestDetails": "Proceed with signup details",
-    "explainPublishAsGuest": "To signup as anonymous, please generate a new login code. You can use it for logging in to check your _helpbuttons_ in the future.",
-    "generateCode": "Generate new anonymous code",
+    "signupAsGuest": "Participate as guest",
+    "signupGuestDetails": "Proceed with guest details",
+    "explainPublishAsGuest": "To signup as guest, please generate a new login code. You can use it for logging in to check your _helpbuttons_ in the future.",
+    "generateCode": "Generate new guest code",
     "explainUseGuestCode": "Please store this code, it is your only way to keep track of your publications",
     "explainGuestDetails": "We need some details to complete your signup",
     "editUsername": "Edit username",
     "optionalFields": "Optional fields",
     "emailRecovery":"Recovery email address",
-     "emailRecoveryExplain":"If you already have an account, login clicking a link we'll send to your email address.",
-     "emptyList": "Your own _helpbuttons_ could be seen in this spot.",
-     "loginNotFound": "User or password not found"
+    "emailRecoveryExplain":"If you already have an account, login clicking a link we'll send to your email address.",
+    "emptyList": "Your own _helpbuttons_ could be seen in this spot.",
+    "loginNotFound": "User or password not found",
+    "iHaveCode":"I have a guest code",
+    "guestCode":"Guest code",
+    "guestCodePlaceHolder":"Write the code here",
+    "askForNewCode":"I don't have my guest info"
+
   },
   "picker": {
     "headerText": "Choose a location"

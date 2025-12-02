@@ -144,3 +144,17 @@ export default function ActivitiesUser() {
     </div>
   );
 }
+
+function ActivityDetailMobile({ children }) {
+  
+  return (<><ShowMobileOnly>
+    <div className='card-profile__container'>
+      {children}
+    </div>
+  </ShowMobileOnly>
+    <ShowDesktopOnly>
+      {children}
+    </ShowDesktopOnly>
+  </>
+  )
+  }
