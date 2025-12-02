@@ -806,7 +806,7 @@ width: 100%;
 
   }
 
-  .form__inputs-wrapper {
+  .form__inputs-types-wrapper {
     background-color: $color-white;
     padding: $padding-huge;
     flex: 0 60%;
@@ -814,7 +814,7 @@ width: 100%;
      overflow: hidden;
      position: relative;
      height: $grid-desktop-double-column-height;
-
+    min-height: 400px;
   }
 
   .form__inputs-content {
