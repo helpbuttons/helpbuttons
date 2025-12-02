@@ -1,19 +1,13 @@
-//Create new button and edit button URL, with three steps with different layouts in the following order: NewType --> NewData --> NewPublish --> Share
 import React, { useEffect, useState } from 'react';
 import Form from 'elements/Form';
-
-import Popup from 'components/popup/Popup';
 import FieldButtonType from 'components/button/ButtonType';
 import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
-
 import FieldLocation from 'elements/Fields/FieldLocation';
 import { FieldTextArea } from 'elements/Fields/FieldTextArea';
 import FieldText from 'elements/Fields/FieldText';
 import ButtonShare from 'components/button/ButtonShare';
-// import ButtonNewDate from 'components/button/ButtonNewDate';
 import FieldTags from 'elements/Fields/FieldTags';
 import { useRef } from 'store/Store';
-// import FieldImageUpload from "elements/Fields/FieldImageUpload";
 import { GlobalState, store, useGlobalStore } from 'state';
 import { Network } from 'shared/entities/network.entity';
 import t from 'i18n';
@@ -22,10 +16,8 @@ import { useButtonTypes } from 'shared/buttonTypes';
 import FieldCustomFields from '../ButtonType/CustomFields/FieldCustomFields';
 import FieldImageUploads from 'elements/Fields/FieldImagesUpload';
 import { alertService } from 'services/Alert';
-import { logoImageUri } from 'shared/sys.helper';
 import { CookiesState } from 'state/HomeInfo';
 import { AcceptCookiesWarn } from 'components/home/CookiesBanner';
-import { ShowDesktopOnly, ShowMobileOnly } from 'elements/SizeOnly';
 
 export default function ButtonForm({
   onSubmit,

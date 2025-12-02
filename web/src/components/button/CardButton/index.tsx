@@ -52,10 +52,11 @@ import MarkerViewMap from 'components/map/Map/MarkerSelectorMap';
 import { TagsNav } from 'elements/Fields/FieldTags';
 import { ImageGallery } from 'elements/ImageGallery';
 import Loading from 'components/loading';
-import { SetMainPopupCurrentProfile } from 'state/HomeInfo';
+import { MainPopupPage, SetMainPopup, SetMainPopupCurrentProfile } from 'state/HomeInfo';
 import React from 'react';
 import dconsole from 'shared/debugger';
 import { ButtonPin, ButtonUnpin } from 'state/Button';
+import { SetDraftButton } from 'state/Activity';
 
 export default function CardButton({ button, buttonTypes, toggleShowReplyFirstPost }) {
   const buttonType = useButtonType(button, buttonTypes);
@@ -295,7 +296,7 @@ function SendMessageButton({toggleShowReplyFirstPost, sessionUser})
           iconLeft={IconType.circle}
           iconLink={<IoMailOutline />}
           onClick={()=> {
-            toggleShowReplyFirstPost(true)
+            sendCurrentButtonMessage()
         }}
         />
 }
@@ -630,4 +631,11 @@ function isButtonOwner(sessionUser, button) {
   return (
     sessionUser && sessionUser.username == button.owner.username
   );
+}
+
+
+export const sendCurrentButtonMessage = () => {
+  store.emit(new SetDraftButton())
+  store.emit(new SetMainPopup(MainPopupPage.HIDE))
+  router.push(`/Activity?draft=true`)
 }

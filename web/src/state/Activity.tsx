@@ -12,6 +12,8 @@ import {
 } from 'services/LocalStorage';
 import { ActivityDtoOut } from 'shared/dtos/activity.dto';
 import _ from 'lodash';
+import { ActivityEventName } from 'shared/types/activity.list';
+import { ButtonEntry } from 'shared/dtos/button.dto';
 
 export interface Activities{
   activities: ActivityDtoOut[];
@@ -19,6 +21,7 @@ export interface Activities{
   notificationsPermissionGranted: boolean;
   focusMessageId: string;
   focusPostId: string;
+  draftButton: ButtonEntry;
 }
 
 export const activitiesInitialState: Activities = {
@@ -27,7 +30,8 @@ export const activitiesInitialState: Activities = {
   activitiesPage: 0,
   notificationsPermissionGranted: false,
   focusMessageId: null,
-  focusPostId: null
+  focusPostId: null,
+  draftButton: null
 };
 
 export class PermissionGranted implements UpdateEvent {
@@ -135,6 +139,7 @@ export class FindActivityDetails implements WatchEvent {
     }
     return ActivityService.activitiesButton(this.buttonId, this.consumerId, this.page).pipe(
       map((activities: ActivityDtoOut[]) => {
+        store.emit(new FindNewActivities())
         this.onSuccess(activities)
       }),
     );
@@ -148,7 +153,7 @@ export class SendNewMessage implements WatchEvent{
     if (!state.sessionUser) {
       return of(undefined);
     }
-    return ActivityService.sendMessage(this.message, this.buttonId, this.consumerId).pipe(map(() => this.onSuccess() ))
+    return ActivityService.sendMessage(this.message, this.buttonId, this.consumerId).pipe(map((activityId) => {this.onSuccess(activityId)} ))
   }
 }
 
@@ -189,5 +194,18 @@ export class ActivityMarkAsRead implements WatchEvent, UpdateEvent {
   }
   public watch(state: GlobalState) {
     return ActivityService.markAsRead(this.activityId)
+  }
+}
+
+export class SetDraftButton implements UpdateEvent{
+  public constructor() {}
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      if(state?.homeInfo?.mainPopupButton){
+        newState.activities.draftButton = state.homeInfo.mainPopupButton
+      }else{
+        newState.activities.draftButton = state.explore.currentButton
+      }
+    })
   }
 }
