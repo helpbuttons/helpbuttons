@@ -139,6 +139,7 @@ export class FindActivityDetails implements WatchEvent {
     }
     return ActivityService.activitiesButton(this.buttonId, this.consumerId, this.page).pipe(
       map((activities: ActivityDtoOut[]) => {
+        store.emit(new FindNewActivities())
         this.onSuccess(activities)
       }),
     );
@@ -152,7 +153,7 @@ export class SendNewMessage implements WatchEvent{
     if (!state.sessionUser) {
       return of(undefined);
     }
-    return ActivityService.sendMessage(this.message, this.buttonId, this.consumerId).pipe(map(() => this.onSuccess() ))
+    return ActivityService.sendMessage(this.message, this.buttonId, this.consumerId).pipe(map((activityId) => {this.onSuccess(activityId)} ))
   }
 }
 

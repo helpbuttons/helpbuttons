@@ -12,53 +12,55 @@ import { usePoolFunc } from "shared/custom.hooks"
 import { readableTimeLeftToDate } from "shared/date.utils"
 import { ActivityEventName } from "shared/types/activity.list"
 import { GlobalState, store, useGlobalStore } from "state"
-import { FindActivityDetails, SendNewMessage, SetFocusOnMessage, SetFocusOnPost } from "state/Activity"
+import { FindActivityDetails, FindMoreActivities, FindNewActivities, SendNewMessage, SetFocusOnMessage, SetFocusOnPost } from "state/Activity"
 import { FindButton } from "state/Explore"
 import { FindAndSetMainPopupCurrentButton, FindAndSetMainPopupCurrentProfile } from "state/HomeInfo"
 
-export function ActivityButton({selectedActivity, closeConversation, isDrafting}) {
+export function ActivityButton({ selectedActivity, setSelectedActivity, closeConversation, isDrafting }) {
 
-  if(isDrafting)
-  {
-    return <ActivityDetailDraft/>
+  if (isDrafting) {
+    return <ActivityDetailDraft setSelectedActivity={setSelectedActivity} />
   }
-  return <ActivityDetailConversation selectedActivity={selectedActivity} closeConversation={closeConversation}/>
+  return <ActivityDetailConversation selectedActivity={selectedActivity} closeConversation={closeConversation} />
 }
+
+const findActivityDetails = (buttonId, consumerId, setSelectedButton, setButtonActivities) => {
+  if (!buttonId) {
+    return;
+  }
+  store.emit(new FindActivityDetails(buttonId, consumerId, 0,
+    (_activites) => {
+      store.emit(new FindButton(buttonId, (button) => {
+        setSelectedButton(() => button)
+      }))
+      setButtonActivities(() => _activites)
+    }
+  ))
+}
+
 export function ActivityDetailConversation({ selectedActivity, closeConversation }) {
   const [buttonActivities, setButtonActivities] = useState([])
   const [selectedButton, setSelectedButton] = useState(null)
 
-  const findActivityDetails = () => {
-    if(!selectedActivity?.buttonId ){
-      console.log('error button not found ', JSON.stringify(selectedActivity))
-      return;
-    }
-    store.emit(new FindActivityDetails(selectedActivity.buttonId, selectedActivity.consumerId, 0,
-      (_activites) => {
-        store.emit(new FindButton(selectedActivity.buttonId, (button) => {
-          setSelectedButton(() => button)
-        }))
-        setButtonActivities(() => _activites)
-      }
-    ))
+  const loadActivities = () => {
+    findActivityDetails(selectedActivity.buttonId, selectedActivity.consumerId, setSelectedButton, setButtonActivities)
   }
-  
+
   useEffect(() => {
-    if(!selectedActivity)
-    {
+    if (!selectedActivity) {
       return;
     }
-    findActivityDetails()
-    
+    loadActivities()
   }, [selectedActivity])
-  usePoolFunc({paused: !selectedActivity, timeMs: 10*1000, func:() => findActivityDetails()})
-  
+
+  usePoolFunc({ paused: !selectedActivity, timeMs: 10 * 1000, func: () => loadActivities() })
+
   const sendNewMessage = (message, buttonId, consumerId) => {
-    store.emit(new SendNewMessage(message, buttonId, consumerId, () => { findActivityDetails(); alertService.success(t('activities.sent')) }))
+    store.emit(new SendNewMessage(message, buttonId, consumerId, () => { loadActivities(); alertService.success(t('activities.sent')) }))
   }
-  
+
   if (!selectedButton || !selectedActivity) {
-    return (<ShowMobileOnly><Loading/></ShowMobileOnly>)
+    return (<ShowMobileOnly><Loading /></ShowMobileOnly>)
   }
 
   if (!selectedActivity.activityFrom) {
@@ -74,12 +76,29 @@ export function ActivityDetailConversation({ selectedActivity, closeConversation
   )
 }
 
-export function ActivityDetailDraft(){
-  const sendNewMessage = (message, buttonId, consumerId) => {
-    store.emit(new SendNewMessage(message, buttonId, consumerId, () => { 
-      // findActivityDetails(); 
+export function ActivityDetailDraft({ setSelectedActivity }) {
+  // const findButtonActivityDetails = (buttonId, from) => {
+  //   // setSelectActivity(() => null)
 
-      alertService.success(t('activities.sentReload!')) }))
+  // }
+
+
+  const sendNewMessage = (message, buttonId, consumerId) => {
+    store.emit(new SendNewMessage(message, buttonId, consumerId, (res) => {
+      store.emit(new FindNewActivities((_activities) => {
+        const _draftActivity = _activities.find((_activity) => _activity.buttonId == buttonId)
+
+        if (_draftActivity) {
+          setSelectedActivity(() => _draftActivity)
+          const { draft, ...routerQuery } = router.query;
+          router.replace({
+            query: { ...routerQuery },
+          });
+        }
+      }))
+
+      alertService.success(t('activities.sentReload!'))
+    }))
   }
   const draftButton = useGlobalStore(
     (state: GlobalState) => state.activities.draftButton,
@@ -87,7 +106,7 @@ export function ActivityDetailDraft(){
   const sessionUser = useGlobalStore(
     (state: GlobalState) => state.sessionUser,
   );
-  if(!draftButton){
+  if (!draftButton) {
     return <></>
   }
   const draftActivity = {
@@ -104,8 +123,8 @@ export function ActivityDetailDraft(){
   }
   return (
     <>
-    <ActivityDetailHeader button={draftButton} selectedActivity={draftActivity} closeConversation={closeDraft} />
-    <MessageForm sendNewMessage={sendNewMessage} buttonId={draftButton.id} consumerId={sessionUser.id} />
+      <ActivityDetailHeader button={draftButton} selectedActivity={draftActivity} closeConversation={closeDraft} />
+      <MessageForm sendNewMessage={sendNewMessage} buttonId={draftButton.id} consumerId={sessionUser.id} />
     </>
   )
 }
@@ -121,7 +140,7 @@ function MessageForm({ sendNewMessage, buttonId, consumerId }) {
     }
   }
 
-  const sendMessage = ( ) => {
+  const sendMessage = () => {
     sendNewMessage(messageContent.current.value, buttonId, consumerId)
     messageContent.current.value = ''
   }
@@ -163,18 +182,17 @@ function MessageForm({ sendNewMessage, buttonId, consumerId }) {
 }
 function ActivityDetailCard({ activity }) {
   if (activity.eventName == ActivityEventName.Message) {
-    return <ActivityDetailMessage activity={activity}/>
+    return <ActivityDetailMessage activity={activity} />
   }
 
-  if (activity.messageId){ //eventName == ActivityEventName.NewPostComment){
+  if (activity.messageId) { //eventName == ActivityEventName.NewPostComment){
     const jumpToMessage = (buttonId, messageId) => {
-        if (messageId) {
-            store.emit(new SetFocusOnMessage(messageId))
-        }
-        if(buttonId)
-        {
-            store.emit(new FindAndSetMainPopupCurrentButton(buttonId))
-        }
+      if (messageId) {
+        store.emit(new SetFocusOnMessage(messageId))
+      }
+      if (buttonId) {
+        store.emit(new FindAndSetMainPopupCurrentButton(buttonId))
+      }
     }
     return (
       <>
@@ -189,16 +207,15 @@ function ActivityDetailCard({ activity }) {
       </>)
   }
 
-  if (activity.postId){ //eventName == ActivityEventName.NewPostComment){
+  if (activity.postId) { //eventName == ActivityEventName.NewPostComment){
     const jumpToPost = (buttonId, postId) => {
       console.log('jump to post')
-        if (postId) {
-            store.emit(new SetFocusOnPost(postId))
-        }
-        if(buttonId)
-        {
-            store.emit(new FindAndSetMainPopupCurrentButton(buttonId))
-        }
+      if (postId) {
+        store.emit(new SetFocusOnPost(postId))
+      }
+      if (buttonId) {
+        store.emit(new FindAndSetMainPopupCurrentButton(buttonId))
+      }
     }
     return (
       <>
@@ -240,8 +257,7 @@ function ActivityDetailCard({ activity }) {
   )
 }
 
-function ActivityDetailMessage({activity})
-{
+function ActivityDetailMessage({ activity }) {
   if (activity.from) {
     return (
       <>
@@ -310,7 +326,7 @@ function ActivityDetailHeader({ closeConversation, button, selectedActivity }) {
       <header className="chat__header-content">
         <div className="chat__header-left">
           <div className="btn-circle__icon">
-            {closeConversation && 
+            {closeConversation &&
               <a href="#" onClick={() => { closeConversation() }}>
                 <IoArrowBack />
               </a>
@@ -319,7 +335,7 @@ function ActivityDetailHeader({ closeConversation, button, selectedActivity }) {
         </div>
         <div className="chat__header-center">
           <h1 className="chat__header-title">
-            <a href="#" onClick={() => showUser(selectedActivity.activityFrom.username)}>{selectedActivity.activityFrom.name}</a> 
+            <a href="#" onClick={() => showUser(selectedActivity.activityFrom.username)}>{selectedActivity.activityFrom.name}</a>
           </h1>
           <h2 className="chat__header-subtitle">
             <a href="#" onClick={() => showButton(selectedActivity.buttonId)}>{button.title}</a>

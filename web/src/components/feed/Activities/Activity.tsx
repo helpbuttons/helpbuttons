@@ -121,16 +121,19 @@ export default function ActivitiesUser() {
               <ActivityList userActivities={filteredUserActivities} setSelectedActivity={setSelectedActivity} isDrafting={draft} />
             </ShowDesktopOnly>
             <ShowMobileOnly>
-              {!selectedActivity && <ActivityList userActivities={filteredUserActivities} setSelectedActivity={setSelectedActivity} isDrafting={draft} />}
-              {(selectedActivity) && 
-              <div className='card-profile__container'><ActivityButton closeConversation={closeConversation} selectedActivity={selectedActivity} isDrafting={draft} /></div>}
+              {!selectedActivity && !draft && 
+                <ActivityList userActivities={filteredUserActivities} setSelectedActivity={setSelectedActivity} isDrafting={draft} />
+              }
+              {(selectedActivity || draft) && 
+                <div className='card-profile__container'><ActivityButton setSelectedActivity={setSelectedActivity} closeConversation={closeConversation} selectedActivity={selectedActivity} isDrafting={draft} /></div>
+              }
             </ShowMobileOnly>
             
           </div>
         </div>
           <div className="feed-section__center">
           <ShowDesktopOnly>
-            {(selectedActivity || draft) && <ActivityButton closeConversation={closeConversation} selectedActivity={selectedActivity} isDrafting={draft}/>}
+            {(selectedActivity || draft) && <ActivityButton setSelectedActivity={setSelectedActivity} closeConversation={closeConversation} selectedActivity={selectedActivity} isDrafting={draft}/>}
             {(!selectedActivity && !draft) && t('activity.pickOne')}
           </ShowDesktopOnly>
           </div>
