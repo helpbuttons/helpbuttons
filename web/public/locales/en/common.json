@@ -215,7 +215,8 @@
     "sent": "Message sent!",
     "writingDraft": "Writing private message to....",
     "draft": "Draft",
-    "pickOne": "..."
+    "pickOne": "...",
+    "newbuttonHomeinfo": "New _helpbutton_ "
   },
   "common": {
     "notfound": "No {0} found. Sorry. 🤔",
