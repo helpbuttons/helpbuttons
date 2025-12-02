@@ -55,13 +55,21 @@ export class MailService {
     activationUrl: string;
     locale: string
   }) {
+
     return this.networkService.findDefaultNetwork().then((network) => {
+      return network.name;
+    })
+    .catch((err) => {
+      console.log(err)
+      return 'network in configuration'
+    })
+    .then((networkName) => {
       return this.sendWithLink({
         to,
         content: translate(
           locale,
           'email.loginTokenContent',
-          [network.name]
+          [networkName]
         ),
         subject: translate(
           locale,
@@ -73,7 +81,7 @@ export class MailService {
           'email.loginTokenLinkCaption'
         ),
       });
-    });
+    })
   }
   
   private async sendMail({
@@ -108,25 +116,22 @@ export class MailService {
     this.networkService
       .findDefaultNetwork()
       .then((network) => {
+        return {name: network, logo: configs().WEB_URL + '/api' + network.logo}
+      })
+      .catch((err) => {
+        console.log(err)
+        console.log('catched, is it in setup?')
+        return {name: 'continue the setup of your network...', logo: 'no'}
+      })
+      .then(({name, logo}) => {
         let from  = configs().from
-        try {
-          from = network.name + configs().from.slice(configs().from.indexOf('<'))
-        }catch(err)
-        {
-          console.log('could not add network name to from')
-        }
+          from = name + configs().from.slice(configs().from.indexOf('<'))
+        
 
         if(!configs().smtpHost)
         {
           console.log('smtp host not set. not sending')
           return;
-        }
-        let logo = 'no logo'
-        try{
-          logo = configs().WEB_URL + '/api' + network.logo
-        }catch(err)
-        {
-          console.log(err)
         }
         return this.mailerService
           .sendMail({
@@ -149,7 +154,6 @@ export class MailService {
             console.trace();
           });
       })
-      .catch((error) => console.log('getting network error?'));
   }
 
   sendWithLink({
