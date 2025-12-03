@@ -2,22 +2,19 @@ import Loading from "components/loading"
 import Btn, { ContentAlignment } from "elements/Btn"
 import t from "i18n"
 import router from "next/router"
-import { useEffect } from "react"
 import { useScroll } from "shared/helpers/scroll.helper"
 import { store } from "state"
 import { ActivityMarkAsRead, FindMoreActivities } from "state/Activity"
 import { ActivityListEntryCard, DraftActivityListEntryCard } from "./ActivityListEntry"
+import { ActivitiesPageSize } from "shared/dtos/activity.dto"
 
 
 export default function ActivityList({ setSelectedActivity, activities, isDrafting }) {
-    useEffect(() => {
-        store.emit(new FindMoreActivities((loadedActivities) => {}))
-    }, [])
     const { endDivLoadMoreTrigger, noMoreToLoad, scrollIsLoading } = useScroll(
         ({ setNoMoreToLoad, setScrollIsLoading }) => {
             setScrollIsLoading(() => true)
             store.emit(new FindMoreActivities((loadedActivities) => {
-                if (loadedActivities.length < 1) {
+                if (loadedActivities.length < ActivitiesPageSize - 1 ) {
                     setNoMoreToLoad(() => true)
                 }
                 setScrollIsLoading(() => false)
@@ -29,8 +26,6 @@ export default function ActivityList({ setSelectedActivity, activities, isDrafti
         setSelectedActivity(() => activity) 
         store.emit(new ActivityMarkAsRead(activity.id))
     }
-    
-
     return (<>
         {scrollIsLoading && <Loading />}
         {isDrafting && <DraftActivityListEntryCard/>}

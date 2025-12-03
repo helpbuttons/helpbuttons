@@ -16,7 +16,7 @@ export class ActivityDtoOut {
 }
 
 export const ExcerptMaxChars = 60;
-export const ActivitiesPageSize = 20;
+export const ActivitiesPageSize = 10;
 
 export class MessageDto {
   message: string;
