@@ -103,42 +103,35 @@ export default function ActivitiesUser() {
 
   return (
     <div className="feed__container">
-      <div className="feed-section--messages">
-        <div className="feed-section__left">
-                        <PopupHeader >Messages & Alerts</PopupHeader>
-
-          <div className="feed-section__left__header">
-
-
-            <div className="feed-section__filters">
-              <ShowMobileOnly><DropdownLine options={filterButtons} onChange={setButtonType}/></ShowMobileOnly>
-              <ShowDesktopOnly><Dropdown options={filterButtons} onChange={setButtonType}/></ShowDesktopOnly>
+        <div className="feed-section--messages">
+          <div className="feed-section__left">
+            <PopupHeader >Messages & Alerts</PopupHeader>
+            <div className="feed-section__left__header">
+              <div className="feed-section__filters">
+                <ShowMobileOnly><DropdownLine options={filterButtons} onChange={setButtonType}/></ShowMobileOnly>
+                <ShowDesktopOnly><Dropdown options={filterButtons} onChange={setButtonType}/></ShowDesktopOnly>
+              </div>
+            </div>
+            <div className="feed-section--activity-content">
+              <ShowDesktopOnly>
+                <ActivityList activities={filteredUserActivities} setSelectedActivity={setSelectedActivity} isDrafting={draft} />
+              </ShowDesktopOnly>
+              <ShowMobileOnly>
+                {!selectedActivity && !draft && 
+                  <ActivityList activities={filteredUserActivities} setSelectedActivity={setSelectedActivity} isDrafting={draft} />
+                }
+              </ShowMobileOnly>
             </div>
           </div>
-          <div className="feed-section--activity-content">
-            <ShowDesktopOnly>
-              <ActivityList activities={filteredUserActivities} setSelectedActivity={setSelectedActivity} isDrafting={draft} />
-            </ShowDesktopOnly>
-            <ShowMobileOnly>
-              {!selectedActivity && !draft && 
-                <ActivityList activities={filteredUserActivities} setSelectedActivity={setSelectedActivity} isDrafting={draft} />
-              }
-              {(selectedActivity || draft) && 
-                <div className='card-profile__container'><ActivityButton setSelectedActivity={setSelectedActivity} closeConversation={closeConversation} selectedActivity={selectedActivity} isDrafting={draft} /></div>
-              }
-            </ShowMobileOnly>
-            
+          {(selectedActivity || draft) &&
+            <div className="feed-section__center">
+              <ActivityButton setSelectedActivity={setSelectedActivity} closeConversation={closeConversation} selectedActivity={selectedActivity} isDrafting={draft}/>
+              <div className="feed-section__center__chat">{(!selectedActivity && !draft) && <div className="">{t('activities.pickOne')}</div> }</div>
+              </div>
+            }
+          <div className="feed-section__right">
           </div>
         </div>
-          <div className="feed-section__center">
-          <ShowDesktopOnly>
-            {(selectedActivity || draft) && <ActivityButton setSelectedActivity={setSelectedActivity} closeConversation={closeConversation} selectedActivity={selectedActivity} isDrafting={draft}/>}
-            {(!selectedActivity && !draft) && t('activity.pickOne')}
-          </ShowDesktopOnly>
-          </div>
-        <div className="feed-section__right">
-        </div>
-      </div>
 
     </div>
   );

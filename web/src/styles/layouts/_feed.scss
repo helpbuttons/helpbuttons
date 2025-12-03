@@ -69,11 +69,11 @@ $feed-new-message-radius: $border-radius-circle;
 
 }
 
-.feed-section__center {
+// .feed-section__center {
 
-  display: none;
+//   display: none;
 
-}
+// }
 
 .feed-section__left {
 
@@ -81,7 +81,7 @@ $feed-new-message-radius: $border-radius-circle;
 
 }
 
-.feed-section__center--mobile{
+.feed-section__center{
 
   position: absolute;
   display: flex;
@@ -325,12 +325,14 @@ $feed-new-message-radius: $border-radius-circle;
 
   .feed-section__center {
 
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   width: 33vw;
   border-left: $border-style-basic;
   border-right: $border-style-basic;
+
 
   }
 

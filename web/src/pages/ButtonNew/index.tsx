@@ -157,7 +157,7 @@ function ButtonNewForm({ selectedNetwork }) {
           onSubmit={onSubmit}
           title={t('common.publishTitle', ['_helpbutton_'])}
           clearErrors={clearErrors}
-        ></ButtonForm>})
+        ></ButtonForm>}
       </MobileOnlyPopup>
     </>
   );
