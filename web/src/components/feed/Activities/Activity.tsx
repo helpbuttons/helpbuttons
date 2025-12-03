@@ -18,7 +18,6 @@ const updateFilters = (buttonTypes, activities) => {
   useEffect(() => {
     if (buttonTypes?.length > 0 && activities.length > 0) {
       const allTypes = _.uniq(activities.map((activity) => activity.buttonType)).filter((t) => t ? true : false)
-      console.log(allTypes)
       const fullTypes = allTypes.map((_btnType) => buttonTypes.find((btnType) => { return btnType.name == _btnType }))
       const newTypes = fullTypes.map((btnType) => { return { name: btnType?.caption ? btnType.caption : 'unknown', value: btnType?.name ? btnType.name : 'unknown' } });
       setFilterButtons(() => [{ value: "all", name: "all" }, ...newTypes])
@@ -46,7 +45,7 @@ export default function ActivitiesUser() {
     (state: GlobalState) => state.activities.draftButton,
   );
   useEffect(() => {
-    if(!draftButton){
+    if(!draftButton && draft){
       const { draft, ...routerQuery } = router.query;
       router.replace({
         query: { ...routerQuery },

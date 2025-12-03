@@ -1,6 +1,6 @@
 import produce from 'immer';
 import { GlobalState, store } from 'state';
-import {  map } from 'rxjs';
+import { map } from 'rxjs';
 import { ActivityService } from 'services/Activity';
 import { UpdateEvent, WatchEvent } from 'store/Event';
 import { of } from 'rxjs';
@@ -12,10 +12,9 @@ import {
 } from 'services/LocalStorage';
 import { ActivityDtoOut } from 'shared/dtos/activity.dto';
 import _ from 'lodash';
-import { ActivityEventName } from 'shared/types/activity.list';
 import { ButtonEntry } from 'shared/dtos/button.dto';
 
-export interface Activities{
+export interface Activities {
   activities: ActivityDtoOut[];
   activitiesPage: number;
   notificationsPermissionGranted: boolean;
@@ -59,13 +58,13 @@ export class PermissionRevoke implements UpdateEvent {
 
 export const usePoolFindNewActivities = ({sessionUser, timeMs }) => {
   const increment = useCallback(() => {
-    store.emit(new FindNewActivities()); // TODO
+    store.emit(new FindLatestActivities())
   }, []);
   useInterval(increment, timeMs, { paused: !sessionUser });
 };
 
-export class FindNewActivities implements WatchEvent {
-  public constructor(private onSuccess = (loadedActivities) => {}) {}
+export class FindLatestActivities implements WatchEvent {
+  public constructor(private onSuccess = (loadedActivities) => { }) { }
 
   public watch(state: GlobalState) {
     if (!state.sessionUser) {
@@ -74,27 +73,35 @@ export class FindNewActivities implements WatchEvent {
     return ActivityService.activities(0).pipe(
       map((activities: ActivityDtoOut[]) => {
         this.onSuccess(activities);
-        store.emit(new FoundNewActivities(activities));
+        store.emit(new FoundLatestActivities(activities));
       }),
     );
   }
 }
 
-
-export class FoundNewActivities implements UpdateEvent {
-  public constructor(private activities: ActivityDtoOut[]) {}
+export class FoundLatestActivities implements UpdateEvent {
+  public constructor(private activities: ActivityDtoOut[]) { }
 
   public update(state: GlobalState) {
     return produce(state, (newState) => {
-      
-        newState.activities.activities = this.activities;        
+
+      // in here we merge the current activities on the state, with the new activity on ddbb
+      newState.activities.activities = uniqActivities(this.activities, state.activities.activities)
+      newState.activities.activitiesPage = 1
     });
   }
 }
 
+function uniqActivities(arr1, arr2)
+{
+  return _.uniqWith([
+    ...arr1,
+    ...arr2,
+  ],  (a,b) => {return a.buttonId == b.buttonId && a.consumerId == b.consumerId})
+}
 
 export class FindMoreActivities implements WatchEvent {
-  public constructor(private onSuccess = (loadedActivities) => {}) {}
+  public constructor(private onSuccess = (loadedActivities) => { }) { }
 
   public watch(state: GlobalState) {
     if (!state.sessionUser) {
@@ -111,21 +118,16 @@ export class FindMoreActivities implements WatchEvent {
 }
 
 export class FoundActivities implements UpdateEvent {
-  public constructor(private activities: ActivityDtoOut[]) {}
+  public constructor(private activities: ActivityDtoOut[]) { }
 
   public update(state: GlobalState) {
     return produce(state, (newState) => {
+      newState.activities.activities = uniqActivities(state.activities.activities, this.activities)
       
-        newState.activities.activities = _.uniqBy([
-          ...state.activities.activities,
-          ...this.activities,
-        ], 'id');
-        if(this.activities.length > 0)
-        {
-          newState.activities.activitiesPage =
+      if (this.activities.length > 0) {
+        newState.activities.activitiesPage =
           state.activities.activitiesPage + 1;
-        }
-        
+      }
     });
   }
 }
@@ -139,7 +141,7 @@ export class FindActivityDetails implements WatchEvent {
     }
     return ActivityService.activitiesButton(this.buttonId, this.consumerId, this.page).pipe(
       map((activities: ActivityDtoOut[]) => {
-        store.emit(new FindNewActivities())
+        store.emit(new FindLatestActivities())
         this.onSuccess(activities)
       }),
     );

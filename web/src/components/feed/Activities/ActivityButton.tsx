@@ -10,9 +10,11 @@ import { IoAdd, IoArrowBack, IoSend } from "react-icons/io5"
 import { alertService } from "services/Alert"
 import { usePoolFunc } from "shared/custom.hooks"
 import { readableTimeLeftToDate } from "shared/date.utils"
+import { ActivitiesPageSize } from "shared/dtos/activity.dto"
+import { useScroll } from "shared/helpers/scroll.helper"
 import { ActivityEventName } from "shared/types/activity.list"
 import { GlobalState, store, useGlobalStore } from "state"
-import { FindActivityDetails, FindMoreActivities, FindNewActivities, SendNewMessage, SetFocusOnMessage, SetFocusOnPost } from "state/Activity"
+import { FindActivityDetails, FindLatestActivities, SendNewMessage, SetFocusOnMessage, SetFocusOnPost } from "state/Activity"
 import { FindButton } from "state/Explore"
 import { FindAndSetMainPopupCurrentButton, FindAndSetMainPopupCurrentProfile } from "state/HomeInfo"
 
@@ -24,7 +26,7 @@ export function ActivityButton({ selectedActivity, setSelectedActivity, closeCon
   return <ActivityDetailConversation selectedActivity={selectedActivity} closeConversation={closeConversation} />
 }
 
-const findActivityDetails = (buttonId, consumerId, setSelectedButton, setButtonActivities) => {
+const findActivityButtonDetails = (buttonId, consumerId, setSelectedButton, setButtonActivities) => {
   if (!buttonId) {
     return;
   }
@@ -42,21 +44,21 @@ export function ActivityDetailConversation({ selectedActivity, closeConversation
   const [buttonActivities, setButtonActivities] = useState([])
   const [selectedButton, setSelectedButton] = useState(null)
 
-  const loadActivities = () => {
-    findActivityDetails(selectedActivity.buttonId, selectedActivity.consumerId, setSelectedButton, setButtonActivities)
+  const loadButtonActivities = () => {
+    findActivityButtonDetails(selectedActivity.buttonId, selectedActivity.consumerId, setSelectedButton, setButtonActivities)
   }
 
   useEffect(() => {
     if (!selectedActivity) {
       return;
     }
-    loadActivities()
+    loadButtonActivities()
   }, [selectedActivity])
 
-  usePoolFunc({ paused: !selectedActivity, timeMs: 10 * 1000, func: () => loadActivities() })
+  usePoolFunc({ paused: !selectedActivity, timeMs: 10 * 1000, func: () => loadButtonActivities() })
 
   const sendNewMessage = (message, buttonId, consumerId) => {
-    store.emit(new SendNewMessage(message, buttonId, consumerId, () => { loadActivities(); alertService.success(t('activities.sent')) }))
+    store.emit(new SendNewMessage(message, buttonId, consumerId, () => { loadButtonActivities(); alertService.success(t('activities.sent')) }))
   }
 
   if (!selectedButton || !selectedActivity) {
@@ -70,7 +72,7 @@ export function ActivityDetailConversation({ selectedActivity, closeConversation
   return (
     <>
       <ActivityDetailHeader button={selectedButton} selectedActivity={selectedActivity} closeConversation={closeConversation} />
-      <ActivityDetailList buttonActivities={buttonActivities} />
+      <ActivityDetailList buttonActivities={buttonActivities} setButtonActivities={setButtonActivities} buttonId={selectedButton.id} consumerId={selectedActivity.consumerId} selectedActivity={selectedActivity}/>
       {!selectedActivity?.disableChat && <MessageForm sendNewMessage={sendNewMessage} buttonId={selectedButton.id} consumerId={selectedActivity.consumerId} />}
     </>
   )
@@ -79,7 +81,7 @@ export function ActivityDetailConversation({ selectedActivity, closeConversation
 export function ActivityDetailDraft({ setSelectedActivity }) {
   const sendNewMessage = (message, buttonId, consumerId) => {
     store.emit(new SendNewMessage(message, buttonId, consumerId, (res) => {
-      store.emit(new FindNewActivities((_activities) => {
+      store.emit(new FindLatestActivities((_activities) => {
         const _draftActivity = _activities.find((_activity) => _activity.buttonId == buttonId)
 
         if (_draftActivity) {
@@ -297,11 +299,39 @@ function ActivityDetailMessage({ activity }) {
   }
 
 }
-function ActivityDetailList({ buttonActivities }) {
+function ActivityDetailList({ buttonActivities, setButtonActivities, buttonId, consumerId, selectedActivity }) {
+  const [page, setPage] = useState(1)
+  const { endDivLoadMoreTrigger, noMoreToLoad, scrollIsLoading } = useScroll(
+    ({ setNoMoreToLoad, setScrollIsLoading }) => {
+      setScrollIsLoading(() => true)
+      store.emit(new FindActivityDetails(buttonId, consumerId, page, (newActivities) => {
+        if (newActivities.length < ActivitiesPageSize  - 1) {
+          setNoMoreToLoad(() => true)
+        }else{
+          setNoMoreToLoad(() => false)
+        }
+        setPage(() => page+1)
+        setButtonActivities((prev) => [...prev, ...newActivities])
+        setScrollIsLoading(() => false)
+      }))
+    },selectedActivity
+  );
+
   return (
     <div className="chat__messages">
-      {buttonActivities.map((activity, idx) => <ActivityDetailCard activity={activity} key={idx} />)}
+      {buttonActivities && <>
+        {buttonActivities.map((activity, idx) => <ActivityDetailCard activity={activity} key={idx} />)}
+      </>
+      }
+      {noMoreToLoad &&
+        <div className="feed__empty-message">
+          <div className="feed__empty-message--prev">
+            {t('feed.noMoreNotifications')}
+          </div>
+        </div>
+      }
 
+      {endDivLoadMoreTrigger}
     </div>
   )
 }

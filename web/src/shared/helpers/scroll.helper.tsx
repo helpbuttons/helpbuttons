@@ -1,9 +1,16 @@
 import Loading from "components/loading";
 import { useEffect, useRef, useState } from "react";
 
-export function useScroll(onLoadMore) {
+export function useScroll(onLoadMore, watchThis = null) {
   const [noMoreToLoad, setNoMoreToLoad] = useState(false)
   const [scrollIsLoading, setScrollIsLoading] = useState(false)
+
+  useEffect(() => {
+    if(watchThis)
+    {
+      setNoMoreToLoad(() => false)
+    }
+  }, [watchThis])
 
   const callbackFunction = (entries) => {
     if (scrollIsLoading) {
