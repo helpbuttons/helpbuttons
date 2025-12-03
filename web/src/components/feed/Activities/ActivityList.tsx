@@ -24,7 +24,10 @@ export default function ActivityList({ setSelectedActivity, activities, isDrafti
 
     const onActivityClicked = (activity) => {
         setSelectedActivity(() => activity) 
-        store.emit(new ActivityMarkAsRead(activity.id))
+        if(!activity.read)
+        {
+            store.emit(new ActivityMarkAsRead(activity.id))
+        }
     }
     return (<>
         {scrollIsLoading && <Loading />}
