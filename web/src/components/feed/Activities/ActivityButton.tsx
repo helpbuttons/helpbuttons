@@ -26,26 +26,25 @@ export function ActivityButton({ selectedActivity, setSelectedActivity, closeCon
   return <ActivityDetailConversation selectedActivity={selectedActivity} closeConversation={closeConversation} />
 }
 
-const findActivityButtonDetails = (buttonId, consumerId, setSelectedButton, setButtonActivities) => {
-  if (!buttonId) {
-    return;
-  }
-  store.emit(new FindActivityDetails(buttonId, consumerId, 0,
-    (_activites) => {
-      store.emit(new FindButton(buttonId, (button) => {
-        setSelectedButton(() => button)
-      }))
-      setButtonActivities(() => _activites)
-    }
-  ))
-}
-
 export function ActivityDetailConversation({ selectedActivity, closeConversation }) {
   const [buttonActivities, setButtonActivities] = useState([])
   const [selectedButton, setSelectedButton] = useState(null)
 
   const loadButtonActivities = () => {
-    findActivityButtonDetails(selectedActivity.buttonId, selectedActivity.consumerId, setSelectedButton, setButtonActivities)
+    if (!selectedActivity.buttonId) {
+      return;
+    }
+    store.emit(new FindActivityDetails(selectedActivity.buttonId, selectedActivity.consumerId, 0,
+      (_activites) => {
+        setButtonActivities(() => _activites)
+        if(!selectedButton || selectedButton.id != selectedActivity.buttonId)
+          {
+            store.emit(new FindButton(selectedActivity.buttonId, (button) => {
+              setSelectedButton(() => button)
+            }))
+          }
+      }
+    ))
   }
 
   useEffect(() => {
@@ -55,7 +54,18 @@ export function ActivityDetailConversation({ selectedActivity, closeConversation
     loadButtonActivities()
   }, [selectedActivity])
 
-  usePoolFunc({ paused: !selectedActivity, timeMs: 10 * 1000, func: () => loadButtonActivities() })
+  const activities = useGlobalStore((state: GlobalState) => state.activities.activities)
+  useEffect(() => {
+    if(activities)
+    {
+      const foundSelectedActivity = activities.find((_activity) => _activity.consumerId == selectedActivity.consumerId && _activity.buttonId == selectedActivity.buttonId)
+      if(foundSelectedActivity && buttonActivities.length > 0 && foundSelectedActivity.createdAt > buttonActivities[0].createdAt)
+      {
+        // a new activity on the selected activity has been received, refetch!!
+        loadButtonActivities()
+      }
+    }
+  }, [activities])
 
   const sendNewMessage = (message, buttonId, consumerId) => {
     store.emit(new SendNewMessage(message, buttonId, consumerId, () => { loadButtonActivities(); alertService.success(t('activities.sent')) }))
