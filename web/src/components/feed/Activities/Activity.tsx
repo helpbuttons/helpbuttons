@@ -94,7 +94,7 @@ export default function ActivitiesUser() {
             <PopupHeader >Messages & Alerts</PopupHeader>
             <div className="feed-section__left__header">
               <div className="feed-section__filters">
-                <ShowMobileOnly><DropdownLine options={filterButtons} onChange={setButtonType}/></ShowMobileOnly>
+                <ShowMobileOnly><DropdownLine options={filterButtons} onChange={setButtonType} name="activityType"/></ShowMobileOnly>
                 <ShowDesktopOnly><Dropdown options={filterButtons} onChange={setButtonType}/></ShowDesktopOnly>
               </div>
             </div>

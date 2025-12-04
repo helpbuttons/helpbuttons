@@ -1,6 +1,7 @@
 ///dropdown selector component
-import Btn, { BtnType, ContentAlignment, IconType } from 'elements/Btn';
-import React, { useState } from 'react';
+import FieldRadio from 'elements/Fields/FieldRadio';
+import FieldRadioOption from 'elements/Fields/FieldRadio/option';
+import React, { useRef, useState } from 'react';
 import { IoList } from 'react-icons/io5';
 export function DropdownField({
   label = null,
@@ -67,22 +68,25 @@ export function Dropdown({
   );
 }
 
+export const DropdownLine = React.forwardRef(
+  ({ name, onChange, onBlur, validationError, label, explain, options }, ref) => {
 
-export function DropdownLine(props){
-  const {options, onChange} = props
+  return (
+    <FieldRadio label={label} explain={explain} validationError={null}>
+          {options.map((option, idx) => {
+            return (
+              <FieldRadioOption
+                onChange={(e) => onChange(e.target.value)}
+                name={name}
+                value={option.value}
+                key={idx}
+                ref={ref}
+              >
+                {option.name}
+              </FieldRadioOption>
 
-  return (<>
-  {options.map((option, index) => (
-          <Btn 
-          key={index}
-          btnType={BtnType.splitIcon}
-          contentAlignment={ContentAlignment.left}
-          caption={option.name}
-          iconLeft={IconType.svg}
-          iconLink={option.icon}
-          onClick={() => onChange(option.value)}
-        />
-        ))}
-  
-  </>)
-}
+            );
+          })}
+        </FieldRadio>
+  )
+})
