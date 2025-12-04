@@ -59,7 +59,7 @@ export function ShowProfile({
           showAdminOptions={sessionUser?.role == Role.admin}
         />
       )}
-      {userProfile?.showButtons && <CardProfileButtonList buttons={userButtons}/>}
+      {userProfile?.showButtons && <CardProfileButtonList user={userProfile} buttons={userButtons}/>}
     </>
   );
 }

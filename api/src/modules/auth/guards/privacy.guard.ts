@@ -25,7 +25,6 @@ export class PrivacyGuard implements CanActivate {
   ): boolean | Promise<boolean> | Observable<boolean> {
     const { user, route } = context.switchToHttp().getRequest();
     // console.log('FORBIDDEN')
-    return true;
     return this.getDefaultNetwork().then((defaultNetwork) => {
       // console.log(`network privacy: ${defaultNetwork.privacy}`)
       if (defaultNetwork.privacy == PrivacyType.PRIVATE) {

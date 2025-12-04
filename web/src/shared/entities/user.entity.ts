@@ -129,6 +129,10 @@ export class User extends BaseEntity {
   @Expose()
   @Column({default: false})
   endorsed?: boolean;
+
+  @Expose()
+  @Column('text', { array: true, default: [] })
+  follows: string[];
 }
 
 export interface UserRelations {

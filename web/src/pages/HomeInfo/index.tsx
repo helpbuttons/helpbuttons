@@ -10,23 +10,21 @@ import Btn, {
 } from 'elements/Btn';
 import NetworkLogo from 'components/network/Components';
 import NavHeader from 'components/nav/NavHeader'; //just for mobile
-import NavLink from 'elements/Navlink';
 import {
   IoAddCircle,
-  IoAddOutline,
-  IoArrowBackCircle,
   IoArrowBackSharp,
-  IoArrowDownCircle,
-  IoArrowDownCircleOutline,
   IoArrowDownSharp,
   IoArrowUpSharp,
-  IoCall,
-  IoClose,
-  IoGlobeOutline,
+  IoDownloadOutline,
+  IoEaselSharp,
   IoHelpOutline,
-  IoLogInOutline,
+  IoInformation,
+  IoLocateOutline,
   IoMapOutline,
   IoPersonAddOutline,
+  IoPulseOutline,
+  IoStatsChart,
+  IoTrophySharp,
 } from 'react-icons/io5';
 import { setMetadata } from 'services/ServerProps';
 import { NextPageContext } from 'next';
@@ -35,25 +33,22 @@ import AdvancedFilters from 'components/search/AdvancedFilters';
 import { useToggle } from 'shared/custom.hooks';
 import { TextFormatted } from 'elements/Message';
 import { LinkAdmins } from 'components/user/LinkAdmins';
-import { ShowMobileOnly } from 'elements/SizeOnly';
+import { ShowDesktopOnly, ShowMobileOnly } from 'elements/SizeOnly';
 import {  ListButtonTypes } from 'components/nav/ButtonTypes';
 import getConfig from 'next/config';
 import { logoImageUri } from 'shared/sys.helper';
 import { FindLatestNetworkActivity } from 'state/Networks';
 import { InstallButton } from 'components/install';
 import { TagsNav } from 'elements/Fields/FieldTags';
-import { ShareButton } from 'components/share';
-import {
-  CardSubmenu,
-  CardSubmenuOption,
-} from 'components/card/CardSubmenu';
-import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
+import { FindAndSetMainPopupCurrentButton, MainPopupPage, SetMainPopup } from 'state/HomeInfo';
 import { DesktopNotificationsButton } from 'components/notifications';
 import { useMetadataTitle } from 'state/Metadata';
-import { ActivityList } from 'components/feed/Activity/ActivityList';
 import HomeInfoPinnedButtons from 'components/home/Pinned';
 import { ListKeyLocation } from 'state/Geo';
 import Footer from 'components/footer';
+import { ActivityListEntryCard } from 'components/feed/Activities/ActivityListEntry';
+import { ActivityEventName } from 'shared/types/activity.list';
+import { SetFocusOnPost } from 'state/Activity';
 
 export default function HomeInfo({ metadata }) {
 
@@ -106,17 +101,13 @@ export default function HomeInfo({ metadata }) {
 
 
             <div className="homeinfo__sections">
-
-              <ShowMobileOnly>
-                <HomeInfoNetworkLogo selectedNetwork={selectedNetwork} />
-              </ShowMobileOnly>
+              
+              <HomeInfoNetworkLogo selectedNetwork={selectedNetwork} />
               <HomeSloganCard selectedNetwork={selectedNetwork} config={config} />
 
               <HomeInfoPinnedButtons />
               
-              <ShowMobileOnly>
-               <HomeInfoStatsCard selectedNetwork={selectedNetwork} config={config} />
-              </ShowMobileOnly>
+              <HomeInfoStatsCard selectedNetwork={selectedNetwork} config={config} />
 
               <HomeInfoInfoCard selectedNetwork={selectedNetwork} />
 
@@ -124,7 +115,7 @@ export default function HomeInfo({ metadata }) {
               <HomeInfoInstallCard selectedNetwork={selectedNetwork} />
 
               <HomeInfoRecentActivity selectedNetwork={selectedNetwork} />
-              
+
               <HomeInfoTopHashTags selectedNetwork={selectedNetwork} />
               <HomeInfoPinnedHashTags selectedNetwork={selectedNetwork} />
 
@@ -208,31 +199,26 @@ function HomeInfoInfoCard({ selectedNetwork }) {
       })
     }
   },[])
-  return (<>{/*  INFO CARD */}
-    <div className="homeinfo-card">
-      <div className="homeinfo-card__header homeinfo-card__header--openable" onClick={toggleShowInfo}>
-            <h3 className="homeinfo-card__header-title" >
-                {t('homeinfo.knowMore',[selectedNetwork.name])}
-            </h3>
-              <div className="homeinfo-card__controls">
-                <Btn
-                  btnType={BtnType.corporative}
-                  iconLink={showInfo ? <IoArrowUpSharp/> : <IoArrowDownSharp/>}
-                  iconLeft={IconType.circle}
-                  contentAlignment={ContentAlignment.center}
-                />
-              </div>
-      </div>
-      {showInfo &&
-        <>
-          <div className="homeinfo__description">
-            <TextFormatted text={selectedNetwork.description} />
-            <HomeFAQButton/>
-          </div>
-        </>  
-      }
-      
-
+  return (<>
+  {/*  INFO CARD */}
+    <div className={(showInfo ? "homeinfo-card--opened ":" ") + " homeinfo-card homeinfo-card--network-description"}>
+        <div className="homeinfo-card__header homeinfo-card__header--openable" onClick={toggleShowInfo}>
+                <h3 className="homeinfo-card__header-title" >
+                    {t('homeinfo.knowMore',[selectedNetwork.name])}
+                </h3>
+                <div className="homeinfo-card__controls homeinfo-card__controls--openable">
+                  <Btn
+                    btnType={BtnType.circle}
+                    iconLink={showInfo ? <IoArrowBackSharp/> : <IoInformation/>}
+                    iconLeft={IconType.circle}
+                    contentAlignment={ContentAlignment.center}
+                  />
+                </div>
+        </div>
+        <div className="homeinfo__description homeinfo__description--openable">
+          <TextFormatted text={selectedNetwork.description} />
+          <HomeFAQButton/>
+        </div>
     </div></>
     )
 }
@@ -258,6 +244,7 @@ function HomeInfoStatsCard({ selectedNetwork, config }) {
     <div className="homeinfo-card">
       <div className="homeinfo-card__header">
         <h3 className="homeinfo-card__header-title">
+          <IoEaselSharp/>
           {t('homeinfo.stats', [selectedNetwork.name])}
         </h3>
         <div className="homeinfo-card__controls">
@@ -282,6 +269,7 @@ function HomeInfoTopHashTags({ selectedNetwork }) {
     <div className="homeinfo-card">
       <div className="homeinfo-card__header">
         <h3 className="homeinfo-card__header-title">
+          <IoTrophySharp/>
           {t('homeinfo.popularHashtags')}
         </h3>
       </div>
@@ -309,9 +297,10 @@ function HomeInfoPinnedHashTags({ selectedNetwork }) {
       selectedNetwork?.tags.length > 0 && (
         <div className="homeinfo-card">
           <div className="homeinfo-card__header homeinfo-card__header--openable" onClick={toggleShowInfo}>
-            <h3 className="homeinfo-card__header-title">
-              {t('homeinfo.recommendedHashtags')}
-            </h3>
+              <h3 className="homeinfo-card__header-title">
+                <IoPulseOutline/>
+                {t('homeinfo.recommendedHashtags')}
+              </h3>           
             <div className="homeinfo-card__controls">
               <Btn
                 btnType={BtnType.corporative}
@@ -340,6 +329,8 @@ function HomeInfoPinnedHashTags({ selectedNetwork }) {
 
 function HomeInfoRecentActivity({ selectedNetwork }) {
   const [activities, setActivities] = useState([]);
+  const [showInfo, toggleShowInfo] =
+    useToggle(false);
   useEffect(() => {
     if (selectedNetwork) {
       store.emit(
@@ -351,28 +342,66 @@ function HomeInfoRecentActivity({ selectedNetwork }) {
   }, [selectedNetwork]);
   return (<>
     {/*  RECENT ACTIVITY IN THE APP */}
-    <div className="homeinfo-card">
-      <div className="homeinfo-card__header">
-        <h3 className="homeinfo-card__header-title">
-          {t('homeinfo.activity')}
-        </h3>
+      <div className={(showInfo ? "homeinfo-card--opened-right ":" ") + " homeinfo-card homeinfo-card--activity"}>
+      <div className="homeinfo-card__header homeinfo-card__header--openable" onClick={toggleShowInfo}>
+          <ShowDesktopOnly>
+            <div className="homeinfo-card__controls--openable-right">
+                  <Btn
+                    btnType={BtnType.circle}
+                    iconLink={showInfo ? <IoStatsChart/> : <IoStatsChart/>}
+                    iconLeft={IconType.circle}
+                    contentAlignment={ContentAlignment.center}
+                  />
+            </div>
+          </ShowDesktopOnly>
+          <h3 className="homeinfo-card__header-title" >
+              {t('homeinfo.activity')}
+          </h3>
+          <ShowMobileOnly>
+              <div className="homeinfo-card__controls--openable-right">
+                    <Btn
+                      btnType={BtnType.corporative}
+                      iconLink={showInfo ? <IoStatsChart/> : <IoStatsChart/>}
+                      iconLeft={IconType.circle}
+                      contentAlignment={ContentAlignment.center}
+                    />
+              </div>
+            </ShowMobileOnly>
       </div>
-
-      <hr></hr>
-      <div className="homeinfo__description">
-        TODO
-        {/* <ActivityList activities={activities} /> */}
-      </div>
+            <hr></hr>
+            <div className="homeinfo__description homeinfo__description--openable">
+              <ActivityListHomeInfo activities={activities} />
+            </div>
     </div>
   </>)
 }
 
+
+
+function ActivityListHomeInfo ({activities}) {
+  const onActivityClicked = (activity) => {
+    switch(activity.eventName){
+      case ActivityEventName.NewButton:
+        store.emit(new FindAndSetMainPopupCurrentButton(activity.buttonId))
+        // router.push(`/Show/${activity.buttonId}`)
+        break;
+      case ActivityEventName.NewPost:
+          store.emit(new SetFocusOnPost(activity.postId))
+          store.emit(new FindAndSetMainPopupCurrentButton(activity.buttonId))
+          break;
+    }
+    
+  }
+
+  return  <>{activities.map((activity, idx) => <ActivityListEntryCard activity={activity} onClick={() => onActivityClicked(activity)} key={idx} />)}</>
+}
 function HomeInfoAdministeredBy({ scrollToContact }) {
 
   return (<>
     <div className="homeinfo-card" ref={scrollToContact}>
       <div className="homeinfo-card__header">
         <h3 className="homeinfo-card__header-title">
+          <IoHelpOutline/>
           {t('homeinfo.administeredby')}
         </h3>
       </div>
@@ -420,6 +449,7 @@ function HomeInfoInstallCard({ selectedNetwork }) {
         <div className="homeinfo-card">
           <div className="homeinfo-card__header">
             <h3 className="homeinfo-card__header-title">
+              <IoDownloadOutline/>
               {t('homeinfo.install', [
                 selectedNetwork?.name,
               ])}
@@ -511,6 +541,7 @@ function HomeInfoKeyLocations({selectedNetwork}) {
     <div className="homeinfo-card">
       <div className="homeinfo-card__header">
         <h3 className="homeinfo-card__header-title">
+          <IoLocateOutline/>
           {t('homeinfo.keyLocations')}
         </h3>
 

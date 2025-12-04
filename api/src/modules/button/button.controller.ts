@@ -238,8 +238,11 @@ export class ButtonController {
   @Get('approve/:buttonId')
   approve(@Param('buttonId') buttonId: string)
   {
-    return this.buttonService.approve(buttonId).then((button) => {
-      notifyUser(this.eventEmitter,ActivityEventName.NewButton,{button})  
+    return this.buttonService.approve(buttonId).then(() => {
+      this.buttonService.findById(buttonId)
+      .then((button) => 
+      notifyUser(this.eventEmitter,ActivityEventName.NewButton,{button})
+      )
     })
   }
 

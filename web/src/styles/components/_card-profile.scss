@@ -3,6 +3,10 @@ $avatar-container-max-width: 150px;
 $avatar-width: 68px;
 $avatar-margin: $padding-big;
 
+
+
+
+
 .card-profile__data {
   font-size: $font-size-general;
   height: auto;
@@ -148,15 +152,15 @@ $avatar-margin: $padding-big;
 
 .card-profile__container {
 
-  display: flex;
-  height: auto;
-  width: 100%;
-  flex-direction: column;
-  flex: 1;
-  background-color: $color-white;
-  border-radius: 0;
-  padding: $padding-big;
-  margin-bottom: $footer-height-mobile;
+  // display: flex;
+  // height: auto;
+  // width: 100%;
+  // flex-direction: column;
+  // flex: 1;
+  // background-color: $color-white;
+  // border-radius: 0;
+  // padding: $padding-big;
+  // margin-bottom: $footer-height-mobile;
 
 }
 
@@ -255,6 +259,8 @@ $avatar-margin: $padding-big;
   flex-direction: column;
   margin-top: $margin-small;
   gap: $margin-xsmall;
+  height: 100%;
+  overflow: auto;
 
 
 }
@@ -315,28 +321,46 @@ $avatar-margin: $padding-big;
 
 @media #{$breakpoints-xlarge} {
 
-
   .card-profile__container {
-    // display: flex;
-    // height: auto;
-    // flex-direction: column;
-    // flex: 1;
-    // background-color: $color-white;
-    // border-radius: $border-radius-circle;
-    // padding: $padding-big;
-    padding: $padding-medium;
+    
     display: flex;
-    flex-flow: column nowrap;
-    height: 100%;
-    width: 100%;
-    min-width: $grid-max-width;
-    margin-bottom: 0;
-    padding-bottom: $padding-medium;
+    justify-content: center;
+    overflow: auto;
+    gap: $margin-big;
+    padding: $margin-big;
+    max-width: $grid-max-width;
+    margin: auto;
+    height: calc(100% - $nav-header-height);
+
   }
+
+  .card-profile__wrapper {
+      background: white;
+      padding: 30px;
+      flex: 0; 
+      height: min-content;
+      border-radius: $border-radius-circle  ;
+      min-width: $grid-desktop-double-column-height;
+
+  }
+
+   .card-profile__button-list-wrapper {
+      flex: 1;
+      background: white;
+      padding: 30px;
+      border-radius: 30px;
+      overflow: hidden;
+      height: $grid-desktop-double-column-height;
+      min-height: 500px;
+
+  }
+
+  
 
   .card-profile__rating {
     
-    margin-bottom: 10px;
+    margin-top: 0;
+
     & svg {
       width: 20px;
 
@@ -416,4 +440,24 @@ $avatar-margin: $padding-big;
     font-weight: $font-weight-bold;
     margin: $margin-small;
   }
+
+  .card-profile__button-list-content {
+    overflow: hidden;
+    height: 100%;
+  }
+
+  .card-profile__button-list {
+
+    flex:1;
+    display: grid; 
+    margin-top: 0;
+    padding: $padding-xsmall;
+    padding-top: $padding-big;
+    grid-template-columns: 1fr 1fr;
+    overflow: auto;
+    align-content: start; 
+    
+  }
+
+
 }

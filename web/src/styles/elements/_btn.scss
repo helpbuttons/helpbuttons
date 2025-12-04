@@ -50,6 +50,7 @@ $btn-font-size-medium: $font-size-medium;
   border-right: 1px solid $color-gray-border;
   text-overflow: ellipsis;
   overflow: hidden;
+  min-width: fit-content;
 
 
 }
@@ -212,6 +213,8 @@ $btn-font-size-medium: $font-size-medium;
   border-radius: $btn-border-radius-semicircle;
   margin-right: $btn-filter-icon-margin;
   display: flex;
+  min-width: 0;
+
 
 }
 
@@ -243,7 +246,7 @@ $btn-font-size-medium: $font-size-medium;
   border-radius: $border-radius-circle;
   height: $btn-height;
   font-weight: $font-weight-bold;
-  margin-top: $margin-xsmall;
+  // margin-top: $margin-xsmall;
   width: 100%;
   color: $color-black;
 }
@@ -478,58 +481,62 @@ $btn-font-size-medium: $font-size-medium;
 
 }
 
+@media (hover: hover) {
 
-.btn,
-.btn-circle,
-.btn-with-icon,
-.btn-filter
-{
-  
-  &:hover {
+  .btn,
+  .btn-circle,
+  .btn-with-icon,
+  .btn-filter
+  {
+    
+    &:hover {
 
-    border-color:  $color-gray;
-    color: $color-white;
-    cursor: pointer;
-    background-color: $color-gray;
-
-
-    & svg {
+      border-color:  $color-gray;
       color: $color-white;
-      fill: $color-white;
+      cursor: pointer;
+      background-color: $color-gray;
+
+
+      & svg {
+        color: $color-white;
+        fill: $color-white;
+      }
+
     }
 
-  }
+
+    // &:active,
+    // &:focus {
+
+    //   // background-color: $color-dark-gray;
+    //   // color: $color-white;
+    //   // border-color: $color-dark-gray;
+
+    //   // & svg {
+    //   //   color: $color-white;
+    //   //   fill: $color-white;
+    //   // }
+
+    // }
 
 
+    // &:active {
 
-  &:focus {
+    //   background-color: $color-black;
+    //   color: $color-white;
+    //   border-color: $color-black;
 
-    background-color: $color-dark-gray;
-    color: $color-white;
-    border-color: $color-dark-gray;
+    //   & svg {
+    //     color: $color-white;
+    //     fill: $color-white;
+    //   }
 
-    & svg {
-      color: $color-white;
-      fill: $color-white;
-    }
-
-  }
-
-
-  &:active {
-
-    background-color: $color-black;
-    color: $color-white;
-    border-color: $color-black;
-
-    & svg {
-      color: $color-white;
-      fill: $color-white;
-    }
+    // }
 
   }
 
 }
+
 
 .btn-filter--active {
 
@@ -544,29 +551,6 @@ $btn-font-size-medium: $font-size-medium;
 }
 
 
-@media (hover: none) {
-  .btn,
-  .btn-circle,
-  .btn-with-icon,
-  .btn-filter {
-
-    &:hover {
-
-      border-color:  $color-gray;
-      color: $color-black;
-      cursor: pointer;
-      background-color: $color-white;
-  
-      & svg {
-        color: $color-black;
-        fill: $color-black;
-      }
-  
-    }
-  
-  }
-
-}
 
 
 //BLACK btn VARIATION

@@ -11,7 +11,9 @@ import { alertService } from "services/Alert";
 import { localStorageService, LocalStorageVars } from "services/LocalStorage";
 import { SetupSteps } from "shared/setupSteps";
 import { store } from "state";
+import { MainPopupPage, SetMainPopup } from "state/HomeInfo";
 import { Login as LoginRequest } from 'state/Profile';
+import { IllustrationHead } from "../CreateAdminForm";
 
 export default function Login() {
     const {
@@ -42,6 +44,7 @@ export default function Login() {
     };
 
     return <Popup>
+        <IllustrationHead title={t('setup.needsLogin')} />
         <Form onSubmit={handleSubmit(onSubmit)} classNameExtra="login__form">
                 <div className="form__inputs-wrapper">
                     <FieldText
@@ -59,6 +62,7 @@ export default function Login() {
                         placeholder={t('user.passwordPlaceHolder')}
                         validationError={errors.password}
                         {...register('password', { required: true })}
+                        onForgotPass={() => {store.emit(new SetMainPopup(MainPopupPage.REQUEST_LINK))}}
                     ></FieldPassword>
                 </div>
                 {errorMsg && (

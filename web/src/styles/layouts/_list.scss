@@ -131,6 +131,7 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
   align-items: center;
   padding: $padding-big;
   font-size: $font-size-small;
+  grid-column: 1 / -1; 
 
 }
 
@@ -166,7 +167,11 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
 
 .list__empty-message--button {
 
+  display: flex;
+  flex-direction: column;
   max-width: 500px;
+  padding-top: $padding-medium;
+  gap: $margin-xsmall;
 
 }
 

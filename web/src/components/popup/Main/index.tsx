@@ -151,3 +151,22 @@ function OnlyGuest({ sessionUser, children }) {
   }
   return children
 }
+
+export function SetupMainPopup() {
+  const sessionUser = useGlobalStore((state: GlobalState) => state.sessionUser);
+
+  const previousUrl = usePreviousUrl();
+
+  const popupPage: MainPopupPage = useGlobalStore((state: GlobalState) => state.homeInfo.mainPopupPage)
+
+  const closePopup = () => {
+    replaceUrl(previousUrl)
+    store.emit(new SetMainPopup(MainPopupPage.HIDE));
+  }
+
+  return <OnlyGuest sessionUser={sessionUser}>{popupPage == MainPopupPage.REQUEST_LINK && (
+    <Picker closeAction={closePopup} headerText={null}>
+      <LoginClick />
+    </Picker>
+  )}</OnlyGuest>
+}
