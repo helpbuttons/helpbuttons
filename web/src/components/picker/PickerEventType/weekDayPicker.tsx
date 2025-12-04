@@ -16,14 +16,14 @@ export default function WeekDayPicker({
     }
 };
   return (
-    <div>
+    <>
       <ElementsList
         elements={elements}
         selectedElements={selectedWeekDays}
         add={add}
         remove={remove}
       />
-    </div>
+    </>
   );
 }
 
