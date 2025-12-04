@@ -100,6 +100,8 @@ export default function LocationSearchBar({
         toggleShowAddCustomButton(() => true)
     }
 
+    const isEmptyPosition = pickedPosition && pickedPosition[0] == null && pickedPosition[1] == null
+    const hasPosition = pickedPosition && pickedPosition[0] !== null && pickedPosition[1] !== null
     return <>
         <div className="form__field form__field--location-wrapper">
             {label && <div className="form__label">{label}</div>}
@@ -121,8 +123,9 @@ export default function LocationSearchBar({
 
                 
                     <div className='form__input-subtitle-option form__input-subtitle--grayed'>
-                            {isCustomAddress && (pickedPosition && pickedPosition[0] == null && pickedPosition[1] == null) && t('button.selectPlace') } 
-                            {(pickedPosition && pickedPosition[0] !== null && pickedPosition[1] !== null) && (
+                            {isCustomAddress && t('button.selectPlace') } 
+
+                            {(hasPosition) && (
                             <> {getCoordinatesDMS(pickedPosition.toString())}</>
                              )}
                     </div>
