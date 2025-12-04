@@ -119,7 +119,7 @@ export default function ActivitiesUser() {
           {(selectedActivity || draft) &&
             <div className="feed-section__center">
               <ActivityButton setSelectedActivity={setSelectedActivity} closeConversation={closeConversation} selectedActivity={selectedActivity} isDrafting={draft}/>
-              <div className="feed-section__center__chat">{(!selectedActivity && !draft) && <div className="">{t('activities.pickOne')}</div> }</div>
+              <div className="feed-section__center__chat">{(!selectedActivity && !draft) && <div className="feed-section__center__chat-no-select">{t('activities.pickOne')}</div> }</div>
               </div>
             }
           <div className="feed-section__right">

@@ -252,14 +252,14 @@ function ActivityDetailCard({ activity }) {
     )
   }
   return (
-    <div>
+    <>
       <div className="chat__notice">
         {activity.message}
       </div >
       <div className="message__hour message__hour--me">
         {readableTimeLeftToDate(activity.createdAt)}
       </div>
-    </div>
+    </>
   )
 }
 
@@ -267,7 +267,9 @@ function ActivityDetailMessage({ activity }) {
   if (activity.from) {
     return (
       <>
-
+        <div className="message__hour">
+          {readableTimeLeftToDate(activity.createdAt)}
+        </div>
         <div className="message message--you">
           <div className="message__header">
             <div className="message__avatar">
@@ -283,9 +285,7 @@ function ActivityDetailMessage({ activity }) {
             {activity.message}
           </div>
         </div>
-        <div className="message__hour">
-          {readableTimeLeftToDate(activity.createdAt)}
-        </div>
+
       </>
 
 
@@ -294,16 +294,16 @@ function ActivityDetailMessage({ activity }) {
   } else {
     return (<>
 
-
+      <div className="message__hour message__hour--me">
+        {readableTimeLeftToDate(activity.createdAt)}
+      </div>
       <div className="message message--me">
 
         <div className="message__content">
           {activity.message}
         </div>
       </div>
-      <div className="message__hour message__hour--me">
-        {readableTimeLeftToDate(activity.createdAt)}
-      </div>
+
 
     </>)
   }
