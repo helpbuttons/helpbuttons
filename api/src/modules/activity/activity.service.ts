@@ -424,7 +424,6 @@ export class ActivityService {
     case ActivityEventName.NewButton:
         {
           const {button} = activity.data
-          console.log(activity)
           return {
           ...activityOut,
           title: button.title,
