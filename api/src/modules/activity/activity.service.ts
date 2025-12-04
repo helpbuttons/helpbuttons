@@ -367,6 +367,16 @@ export class ActivityService {
       take: ActivitiesPageSize, skip: page * ActivitiesPageSize,
       order: { created_at: 'DESC' },
     })
+    .then((activities) => {
+        return activities.filter((activity) => {
+          const isButtonOwner = activity?.button?.owner?.id == userId
+          const isConsumer = userId == consumerId
+          if(!isConsumer && !isButtonOwner ){
+            return false;
+          }
+          return true;
+        })
+    })
       .then((activities) => {
         return activities.map((activity) => {
           return this.transformActivity(activity, locale, userId);

@@ -37,6 +37,7 @@ export default function ContentList({
   buttonTypes,
   showMap = false,
   linkType = null,
+  isProfileList=false,
 }) {
   const [buttonsSlice, setButtonsSlice] = useState(2);
 
@@ -62,7 +63,10 @@ export default function ContentList({
           linkType={linkType}
         />
       ))}
-      <NoMoreToLoad />
+      {!isProfileList  &&
+        <NoMoreToLoad />
+      }
+      
       {endDivLoadMoreTrigger}
     </>
   );
@@ -114,7 +118,7 @@ export function ButtonsListEmpty({isLoadingButtons, buttons, filtered, isProfile
     );
   }
 }
-export function NoMoreToLoad() {
+export function NoMoreToLoad({isProfileList=false}) {
   const filtered = isFiltering();
   return (
     <div className="list__empty-message">

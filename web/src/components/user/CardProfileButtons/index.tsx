@@ -24,6 +24,7 @@ export function CardProfileButtonList({user, buttons})
               buttons={buttons}
               buttonTypes={buttonTypes}
               linkType={ButtonLinkType.MAINPOPUP}
+              isProfileList={true}
             />
             
           </div>
