@@ -155,6 +155,8 @@ $dropdown-bck: $color-white;
     border-top: none;
     padding: 0;
 
+    
+
 }
 
 .dropdown__dropdown-option {
@@ -215,11 +217,16 @@ $dropdown-bck: $color-white;
   border-radius: $border-radius-basic $border-radius-basic 0 0;
   overflow: hidden;
 
+  & hr {
+    margin: 0;
+  }
+
 }
 
 .dropdown__dropdown-option--add-location {
 
-  background-color: $color-ligth-gray;
+  background-color: $color-corporative;
+  color: $color-text-over-corporative;
   display: flex;
   flex-direction: row;
   align-items: center;
