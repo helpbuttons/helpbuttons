@@ -260,7 +260,14 @@ $avatar-margin: $padding-big;
   margin-top: $margin-small;
   gap: $margin-xsmall;
   height: 100%;
-  overflow: auto;
+  flex-wrap: wrap;
+  overflow-y: auto;
+
+  .list__element {
+
+    min-width: unset;
+
+  }
 
 
 }
@@ -315,6 +322,14 @@ $avatar-margin: $padding-big;
     margin-top: $margin-small;
 
   }
+
+   .card-profile__button-list {
+
+    grid-template-columns: 1fr 1fr;
+
+    
+  }
+
 
 }
 
@@ -454,7 +469,7 @@ $avatar-margin: $padding-big;
     padding: $padding-xsmall;
     padding-top: $padding-big;
     grid-template-columns: 1fr 1fr;
-    overflow: auto;
+    overflow-y: auto;
     align-content: start; 
     
   }

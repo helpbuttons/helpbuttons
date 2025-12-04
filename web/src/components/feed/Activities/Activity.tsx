@@ -113,14 +113,7 @@ export default function ActivitiesUser() {
               </div>
             </div>
             <div className="feed-section--activity-content">
-              <ShowDesktopOnly>
-                <ActivityList activities={filteredUserActivities} setSelectedActivity={setSelectedActivity} isDrafting={draft} />
-              </ShowDesktopOnly>
-              <ShowMobileOnly>
-                {!selectedActivity && !draft && 
-                  <ActivityList activities={filteredUserActivities} setSelectedActivity={setSelectedActivity} isDrafting={draft} />
-                }
-              </ShowMobileOnly>
+                  <ActivityList activities={filteredUserActivities} setSelectedActivity={setSelectedActivity} isDrafting={draft} />       
             </div>
           </div>
           {(selectedActivity || draft) &&

@@ -296,6 +296,12 @@ $feed-new-message-radius: $border-radius-circle;
   
 }
 
+.feed-element--selected {
+
+  background-color: red;
+
+}
+
 @media #{$breakpoints-medium} {
 
   .feed-section__right {
@@ -322,7 +328,6 @@ $feed-new-message-radius: $border-radius-circle;
   width: 33vw;
 
 }
-
   .feed-section__center {
 
   position: relative;
@@ -332,9 +337,11 @@ $feed-new-message-radius: $border-radius-circle;
   width: 33vw;
   border-left: $border-style-basic;
   border-right: $border-style-basic;
+  height: calc(100% - $nav-bottom-height);
 
 
   }
+
 
   .feed__board-container {
 
@@ -370,6 +377,15 @@ $feed-new-message-radius: $border-radius-circle;
   .feed__board-container {
 
    padding-bottom: $feed-padding-bottom;
+
+  }
+
+
+  .feed-section__center {
+
+   height: 100%;
+
+
 
   }
 

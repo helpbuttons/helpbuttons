@@ -333,13 +333,13 @@ function ActivityDetailList({ buttonActivities, setButtonActivities, buttonId, c
         {buttonActivities.map((activity, idx) => <ActivityDetailCard activity={activity} key={idx} />)}
       </>
       }
-      {noMoreToLoad &&
+      {/* {noMoreToLoad &&
         <div className="feed__empty-message">
           <div className="feed__empty-message--prev">
-            {t('feed.noMoreNotifications')}
+            {t('feed.noMoreMessages')}
           </div>
         </div>
-      }
+      } */}
 
       {endDivLoadMoreTrigger}
     </div>
