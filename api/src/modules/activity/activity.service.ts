@@ -427,7 +427,7 @@ export class ActivityService {
           return {
           ...activityOut,
           title: button.title,
-          from:" button.owner.name",
+          from:button.owner.name,
           image: button.image,
           buttonType: button.type,
           type: translate(locale, 'activities.notice'),
