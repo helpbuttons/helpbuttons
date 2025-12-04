@@ -115,7 +115,7 @@ export default function LocationSearchBar({
                 {(results && results.length > 0) &&
                     <SearchResultsList handleAddressPicked={handleAddressPicked} results={results} hideAddress={hideAddress} />
                 }
-                {(showAddCustomButton && (results && results.length < 10) && isCustomAddress !== null) &&
+                {(showAddCustomButton && (results && results.length < 1) && isCustomAddress !== null) &&
                     <SearchCustomAddress handleClick={() => { setIsCustomAddress(() => true); toggleShowAddCustomButton(() => false) }} />
                 }
 
