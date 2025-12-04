@@ -139,9 +139,17 @@ export class FindActivityDetails implements WatchEvent {
     if (!state.sessionUser) {
       return of(undefined);
     }
+    
     return ActivityService.activitiesButton(this.buttonId, this.consumerId, this.page).pipe(
-      map((activities: ActivityDtoOut[]) => {
+      map((_activities: ActivityDtoOut[]) => {
         store.emit(new FindLatestActivities())
+        const activities = _activities.map((_activity, idx) => {
+          if(idx == 0)
+          {
+            return {last:true, ..._activity}
+          }
+          return _activity
+        })
         this.onSuccess(activities)
       }),
     );
