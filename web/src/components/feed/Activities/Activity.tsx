@@ -9,6 +9,7 @@ import { Dropdown, DropdownLine } from "elements/Dropdown/Dropdown";
 import PopupHeader from "components/popup/PopupHeader";
 import { useRouter } from "next/router";
 import t from "i18n";
+import { IoChatboxOutline } from "react-icons/io5";
 
 
 
@@ -119,9 +120,20 @@ export default function ActivitiesUser() {
           {(selectedActivity || draft) &&
             <div className="feed-section__center">
               <ActivityButton setSelectedActivity={setSelectedActivity} closeConversation={closeConversation} selectedActivity={selectedActivity} isDrafting={draft}/>
-              <div className="feed-section__center__chat">{(!selectedActivity && !draft) && <div className="feed-section__center__chat-no-select">{t('activities.pickOne')}</div> }</div>
+              <div className="feed-section__center__chat"></div>
               </div>
             }
+            {(!selectedActivity && !draft) && 
+              <>
+                <div className="feed-section__center feed-section__center--no-select">
+                    <div className="feed-section__center__chat feed-section__center__chat-no-select">
+                      <IoChatboxOutline/>
+                      {t('activities.pickOne')}
+                    </div> 
+                </div>
+              </>
+            }
+           
           <div className="feed-section__right">
           </div>
         </div>
