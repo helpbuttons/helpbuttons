@@ -582,14 +582,14 @@ hr {
 
   .homeinfo__description--openable {
 
-    overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
     height: 85%;
 
   }
 
   .homeinfo-card--opened {
 
-    max-width: 20%;
     left: 0px;
     z-index: $z-index-02;
 

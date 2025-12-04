@@ -131,6 +131,7 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
   align-items: center;
   padding: $padding-big;
   font-size: $font-size-small;
+  grid-column: 1 / -1; 
 
 }
 
