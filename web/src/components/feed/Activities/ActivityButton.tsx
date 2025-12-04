@@ -380,16 +380,16 @@ function ActivityDetailHeader({ closeConversation, button, selectedActivity }) {
         </div>
         <div className="chat__header-right">
           <div className="avatar-medium">
-            <ImageWrapper
-              src={selectedActivity.image}
-              imageType={ImageType.avatar}
-              alt="image"
-            />
+            <a href="#" onClick={() => showUser(selectedActivity.activityFrom.username)}>
+              <ImageWrapper
+                src={selectedActivity.image}
+                imageType={ImageType.avatar}
+                alt="image"
+              />
+            </a>
           </div>
         </div>
-        <div className="chat__header-right">
-          {/* <a href="#" onClick={() => store.emit(new SetMainPopupCurrentButton(button))}>{button.title}</a> */}
-        </div>
+
       </header>
     </div>)
 }
