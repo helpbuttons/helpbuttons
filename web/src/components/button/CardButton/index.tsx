@@ -284,12 +284,8 @@ function CardButtonSubmenu({ button }) {
   );
 }
 
-function SendMessageButton({toggleShowReplyFirstPost, sessionUser})
+function SendMessageButton({toggleShowReplyFirstPost})
 {
-  if(!sessionUser)
-  {
-    return ;
-  }
   return <Btn
           btnType={BtnType.smallCircle}
           contentAlignment={ContentAlignment.center}
@@ -315,7 +311,7 @@ export function CardButtonHeadBig({ button, buttonTypes, toggleShowReplyFirstPos
           button={button}
           sessionUser={sessionUser}
         />
-        <SendMessageButton toggleShowReplyFirstPost={toggleShowReplyFirstPost} sessionUser={sessionUser}/>
+        {sessionUser && !isButtonOwner(sessionUser, button) && <SendMessageButton toggleShowReplyFirstPost={toggleShowReplyFirstPost} sessionUser={sessionUser}/>}
         
         <CardButtonSubmenu button={button} />
       </div>
