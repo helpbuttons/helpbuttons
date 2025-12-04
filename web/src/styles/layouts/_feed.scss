@@ -93,6 +93,15 @@ $feed-new-message-radius: $border-radius-circle;
 
 } 
 
+.feed-section__center--no-select {
+
+  display: none;
+}
+
+.feed-section__center__chat-no-select {
+  display: none;
+}
+
 .feed-section__left--mobile {
 
   flex: 1;
@@ -296,6 +305,12 @@ $feed-new-message-radius: $border-radius-circle;
   
 }
 
+.feed-element--selected {
+
+  background-color: red;
+
+}
+
 @media #{$breakpoints-medium} {
 
   .feed-section__right {
@@ -322,7 +337,6 @@ $feed-new-message-radius: $border-radius-circle;
   width: 33vw;
 
 }
-
   .feed-section__center {
 
   position: relative;
@@ -332,9 +346,11 @@ $feed-new-message-radius: $border-radius-circle;
   width: 33vw;
   border-left: $border-style-basic;
   border-right: $border-style-basic;
+  height: calc(100% - $nav-bottom-height);
 
 
   }
+
 
   .feed__board-container {
 
@@ -346,6 +362,31 @@ $feed-new-message-radius: $border-radius-circle;
     padding-bottom: $padding-small;
     max-width: $grid-max-width;
     margin: auto;
+
+  }
+
+  .feed-section__center--no-select {
+
+    display: block;
+  }
+
+
+  .feed-section__center__chat-no-select {
+
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    flex: 1;
+    font-weight: $font-weight-bolder;
+    color: $color-gray;
+    height: 100%;
+
+    & svg {
+
+      width: 50px;
+      height: 50px;
+    }
 
   }
 
@@ -372,5 +413,14 @@ $feed-new-message-radius: $border-radius-circle;
    padding-bottom: $feed-padding-bottom;
 
   }
+
+
+  .feed-section__center {
+
+   height: 100%;
+
+  }
+
+
 
 }

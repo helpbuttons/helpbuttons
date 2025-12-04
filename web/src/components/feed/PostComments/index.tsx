@@ -116,7 +116,7 @@ export function PostComment({
           ? ' card-notification--comment-private'
           : '') +
         (isReply ? ' card-notification--reply' : '')
-        +( focus ? ' card-notification-comment-focus' : '')
+        +( focus ? ' card-notification-comment--focus' : '')
       }
     >
       <div ref={focus ? ref : null}></div>

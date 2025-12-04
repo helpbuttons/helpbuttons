@@ -130,6 +130,9 @@ export function ActivityDetailDraft({ setSelectedActivity }) {
   return (
     <>
       <ActivityDetailHeader button={draftButton} selectedActivity={draftActivity} closeConversation={closeDraft} />
+      <div className="chat__messages">
+      
+    </div>
       <MessageForm sendNewMessage={sendNewMessage} buttonId={draftButton.id} consumerId={sessionUser.id} />
     </>
   )
@@ -252,14 +255,14 @@ function ActivityDetailCard({ activity }) {
     )
   }
   return (
-    <div>
+    <>
       <div className="chat__notice">
         {activity.message}
       </div >
       <div className="message__hour message__hour--me">
         {readableTimeLeftToDate(activity.createdAt)}
       </div>
-    </div>
+    </>
   )
 }
 
@@ -267,7 +270,9 @@ function ActivityDetailMessage({ activity }) {
   if (activity.from) {
     return (
       <>
-
+        <div className="message__hour">
+          {readableTimeLeftToDate(activity.createdAt)}
+        </div>
         <div className="message message--you">
           <div className="message__header">
             <div className="message__avatar">
@@ -283,9 +288,7 @@ function ActivityDetailMessage({ activity }) {
             {activity.message}
           </div>
         </div>
-        <div className="message__hour">
-          {readableTimeLeftToDate(activity.createdAt)}
-        </div>
+
       </>
 
 
@@ -294,16 +297,16 @@ function ActivityDetailMessage({ activity }) {
   } else {
     return (<>
 
-
+      <div className="message__hour message__hour--me">
+        {readableTimeLeftToDate(activity.createdAt)}
+      </div>
       <div className="message message--me">
 
         <div className="message__content">
           {activity.message}
         </div>
       </div>
-      <div className="message__hour message__hour--me">
-        {readableTimeLeftToDate(activity.createdAt)}
-      </div>
+
 
     </>)
   }
@@ -333,13 +336,13 @@ function ActivityDetailList({ buttonActivities, setButtonActivities, buttonId, c
         {buttonActivities.map((activity, idx) => <ActivityDetailCard activity={activity} key={idx} />)}
       </>
       }
-      {noMoreToLoad &&
+      {/* {noMoreToLoad &&
         <div className="feed__empty-message">
           <div className="feed__empty-message--prev">
-            {t('feed.noMoreNotifications')}
+            {t('feed.noMoreMessages')}
           </div>
         </div>
-      }
+      } */}
 
       {endDivLoadMoreTrigger}
     </div>
@@ -377,16 +380,16 @@ function ActivityDetailHeader({ closeConversation, button, selectedActivity }) {
         </div>
         <div className="chat__header-right">
           <div className="avatar-medium">
-            <ImageWrapper
-              src={selectedActivity.image}
-              imageType={ImageType.avatar}
-              alt="image"
-            />
+            <a href="#" onClick={() => showUser(selectedActivity.activityFrom.username)}>
+              <ImageWrapper
+                src={selectedActivity.image}
+                imageType={ImageType.avatar}
+                alt="image"
+              />
+            </a>
           </div>
         </div>
-        <div className="chat__header-right">
-          {/* <a href="#" onClick={() => store.emit(new SetMainPopupCurrentButton(button))}>{button.title}</a> */}
-        </div>
+
       </header>
     </div>)
 }
