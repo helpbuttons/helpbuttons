@@ -4,11 +4,10 @@ import FieldText from "elements/Fields/FieldText"
 import ImageWrapper, { ImageType } from "elements/ImageWrapper"
 import { ShowMobileOnly } from "elements/SizeOnly"
 import t from "i18n"
-import router, { useRouter } from "next/router"
+import router from "next/router"
 import { useEffect, useRef, useState } from "react"
 import { IoAdd, IoArrowBack, IoSend } from "react-icons/io5"
 import { alertService } from "services/Alert"
-import { usePoolFunc } from "shared/custom.hooks"
 import { readableTimeLeftToDate } from "shared/date.utils"
 import { ActivitiesPageSize } from "shared/dtos/activity.dto"
 import { useScroll } from "shared/helpers/scroll.helper"
@@ -102,8 +101,6 @@ export function ActivityDetailDraft({ setSelectedActivity }) {
           });
         }
       }))
-
-      alertService.success(t('activities.sent'))
     }))
   }
   const draftButton = useGlobalStore(
@@ -218,7 +215,6 @@ function ActivityDetailCard({ activity }) {
 
   if (activity.postId) { //eventName == ActivityEventName.NewPostComment){
     const jumpToPost = (buttonId, postId) => {
-      console.log('jump to post')
       if (postId) {
         store.emit(new SetFocusOnPost(postId))
       }
@@ -298,7 +294,7 @@ function ActivityDetailMessage({ activity }) {
     return (<>
 
       <div className="message__hour message__hour--me">
-        {readableTimeLeftToDate(activity.createdAt)}
+        {activity?.last && t('activity.sent') } - {readableTimeLeftToDate(activity.createdAt)}
       </div>
       <div className="message message--me">
 
