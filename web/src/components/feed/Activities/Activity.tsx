@@ -10,25 +10,10 @@ import PopupHeader from "components/popup/PopupHeader";
 import { useRouter } from "next/router";
 import t from "i18n";
 import { IoChatboxOutline } from "react-icons/io5";
-
-
-
-const updateFilters = (buttonTypes, activities) => {
-  const [filterButtons, setFilterButtons] = useState([{ value: "all", name: "all" }])
-
-  useEffect(() => {
-    if (buttonTypes?.length > 0 && activities.length > 0) {
-      const allTypes = _.uniq(activities.map((activity) => activity.buttonType)).filter((t) => t ? true : false)
-      const fullTypes = allTypes.map((_btnType) => buttonTypes.find((btnType) => { return btnType.name == _btnType }))
-      const newTypes = fullTypes.map((btnType) => { return { name: btnType?.caption ? btnType.caption : 'unknown', value: btnType?.name ? btnType.name : 'unknown' } });
-      setFilterButtons(() => [{ value: "all", name: "all" }, ...newTypes])
-    }
-  }, [buttonTypes, activities])
-  return filterButtons;
-}
+import { ButtonShow } from "components/button/ButtonShow";
+import { SetMainPopupCurrentButton } from "state/HomeInfo";
 
 export default function ActivitiesUser() {
-
   const buttonTypes = useButtonTypes()
   const [localFilters, setLocalFilters] = useState(null)
 
@@ -38,7 +23,7 @@ export default function ActivitiesUser() {
   
   const userActivities = useGlobalStore((state: GlobalState) => state.activities.activities)
   const filterButtons = updateFilters(buttonTypes, userActivities)
-
+  const sideBarButton = useSideBarButton()
   const router = useRouter()
   const {draft} = router.query;
   
@@ -135,9 +120,42 @@ export default function ActivitiesUser() {
             }
            
           <div className="feed-section__right">
+            {sideBarButton && <ButtonShow button={sideBarButton} />}
           </div>
         </div>
 
     </div>
   );
+}
+
+
+const updateFilters = (buttonTypes, activities) => {
+  const [filterButtons, setFilterButtons] = useState([{ value: "all", name: "all" }])
+
+  useEffect(() => {
+    if (buttonTypes?.length > 0 && activities.length > 0) {
+      const allTypes = _.uniq(activities.map((activity) => activity.buttonType)).filter((t) => t ? true : false)
+      const fullTypes = allTypes.map((_btnType) => buttonTypes.find((btnType) => { return btnType.name == _btnType }))
+      const newTypes = fullTypes.map((btnType) => { return { name: btnType?.caption ? btnType.caption : 'unknown', value: btnType?.name ? btnType.name : 'unknown' } });
+      setFilterButtons(() => [{ value: "all", name: "all" }, ...newTypes])
+    }
+  }, [buttonTypes, activities])
+  return filterButtons;
+}
+
+const useSideBarButton = () => {
+  const mainPopupButton = useGlobalStore((state: GlobalState) => state.homeInfo.mainPopupButton)
+
+  const [sideBarButton, setSideBarButton] = useState(null);
+  useEffect(() => {
+    if(!mainPopupButton)
+    {
+      return;
+    }
+    setSideBarButton(() => mainPopupButton)
+    store.emit(new SetMainPopupCurrentButton(null))
+
+  }, [mainPopupButton])
+  
+  return sideBarButton
 }
