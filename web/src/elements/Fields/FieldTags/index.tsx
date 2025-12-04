@@ -238,7 +238,7 @@ export function AllSuggestedTags({ word, maxTags, tags, addTag }) {
         {(suggestedTags.length > maxTags && numberTags != 1000)  && 
 
           <Btn
-            btnType={BtnType.iconActions}
+            btnType={BtnType.smallCircle}
             contentAlignment={ContentAlignment.center}
             iconLink={<IoAdd />}
             iconLeft={IconType.circle}

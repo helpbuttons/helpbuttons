@@ -157,8 +157,8 @@ export default function AdvancedFilters({
                       <TagFollow tags={tags}/>
                     </FieldText>
          
-{/* 
-                    <AdvancedFiltersSortDropDown
+
+                    {/* <AdvancedFiltersSortDropDown
                       className={'dropdown__dropdown-trigger'}
                       label={t('buttonFilters.orderBy')}
                       explain={t('buttonFilters.orderByExplain')}
