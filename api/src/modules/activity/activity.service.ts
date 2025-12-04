@@ -424,10 +424,11 @@ export class ActivityService {
     case ActivityEventName.NewButton:
         {
           const {button} = activity.data
+          console.log(activity)
           return {
           ...activityOut,
           title: button.title,
-          from: button.owner.name,
+          from:" button.owner.name",
           image: button.image,
           buttonType: button.type,
           type: translate(locale, 'activities.notice'),

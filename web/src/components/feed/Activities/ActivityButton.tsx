@@ -130,6 +130,9 @@ export function ActivityDetailDraft({ setSelectedActivity }) {
   return (
     <>
       <ActivityDetailHeader button={draftButton} selectedActivity={draftActivity} closeConversation={closeDraft} />
+      <div className="chat__messages">
+      
+    </div>
       <MessageForm sendNewMessage={sendNewMessage} buttonId={draftButton.id} consumerId={sessionUser.id} />
     </>
   )
