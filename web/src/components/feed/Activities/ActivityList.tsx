@@ -33,7 +33,7 @@ export default function ActivityList({ setSelectedActivity, activities, isDrafti
         {scrollIsLoading && <Loading />}
         {isDrafting && <DraftActivityListEntryCard/>}
         {activities && (
-            <div>
+            <>
                 
                 {activities && <>
                     {[...activities].map((activity, idx) => <ActivityListEntryCard activity={activity} onClick={() => onActivityClicked(activity) } key={idx} />)}
@@ -51,16 +51,16 @@ export default function ActivityList({ setSelectedActivity, activities, isDrafti
                         />
                     </div>
                 )}
-                {noMoreToLoad &&
+                {/* {noMoreToLoad &&
                     <div className="feed__empty-message">
                         <div className="feed__empty-message--prev">
                             {t('feed.noMoreNotifications')}
                         </div>
                     </div>
-                }
+                } */}
 
                 {endDivLoadMoreTrigger}
-            </div>
+            </>
         )}
 
     </>)

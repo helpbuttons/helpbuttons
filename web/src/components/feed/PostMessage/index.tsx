@@ -18,7 +18,7 @@ export default function PostMessage({ post }) {
     const {ref, focus} = useFocusOn(focusPostId, post.id)
   return (
     <>
-      <div className={"card-notification__content"+( focus ? ' card-notification-comment-focus' : '')}>
+      <div className={"card-notification__content"+( focus ? ' card-notification-comment--focus' : '')}>
       <div ref={focus ? ref : null}></div>
         <div className="card-notification__avatar">
           <div className="avatar-small">

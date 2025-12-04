@@ -27,6 +27,7 @@ $nav-bottom-border: 32px;
   align-items: flex-start;
   justify-content: space-around;
   border-top: $border-style-basic;
+  height: $nav-bottom-height;
 }
 
 .nav-bottom--repo {
@@ -148,7 +149,6 @@ $nav-bottom-border: 32px;
     background: none;
     border-top: transparent;
     min-width: 400px;
-    
 
   }
 
