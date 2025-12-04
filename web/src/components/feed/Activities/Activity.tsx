@@ -114,7 +114,7 @@ export default function ActivitiesUser() {
               </div>
             </div>
             <div className="feed-section--activity-content">
-                  <ActivityList activities={filteredUserActivities} setSelectedActivity={setSelectedActivity} isDrafting={draft} />       
+                  <ActivityList selectedActivity={selectedActivity} activities={filteredUserActivities} setSelectedActivity={setSelectedActivity} isDrafting={draft} />       
             </div>
           </div>
           {(selectedActivity || draft) &&

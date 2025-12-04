@@ -9,7 +9,7 @@ import { ActivityListEntryCard, DraftActivityListEntryCard } from "./ActivityLis
 import { ActivitiesPageSize } from "shared/dtos/activity.dto"
 
 
-export default function ActivityList({ setSelectedActivity, activities, isDrafting }) {
+export default function ActivityList({ setSelectedActivity, selectedActivity, activities, isDrafting }) {
     const { endDivLoadMoreTrigger, noMoreToLoad, scrollIsLoading } = useScroll(
         ({ setNoMoreToLoad, setScrollIsLoading }) => {
             setScrollIsLoading(() => true)
@@ -36,7 +36,7 @@ export default function ActivityList({ setSelectedActivity, activities, isDrafti
             <>
                 
                 {activities && <>
-                    {[...activities].map((activity, idx) => <ActivityListEntryCard activity={activity} onClick={() => onActivityClicked(activity) } key={idx} />)}
+                    {[...activities].map((activity, idx) => <ActivityListEntryCard selected={selectedActivity?.id == activity.id} activity={activity} onClick={() => onActivityClicked(activity) } key={idx} />)}
                 </>
                 }
                 {(!activities || activities.length < 1) && (
