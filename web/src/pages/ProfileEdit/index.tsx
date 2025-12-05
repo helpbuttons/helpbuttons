@@ -186,7 +186,7 @@ export default function ProfileEdit() {
                     setValue={setValue}
                     setFocus={setFocus}
                     validationError={errors.description}
-                    {...register('description', { required: true })}
+                    {...register('description')}
                   />
                                   
                   <FieldLanguagePick onChange={(value) => set_Locale(value)} explain={t('user.pickLanguageExplain')} defaultValue={sessionUser.locale}/>
