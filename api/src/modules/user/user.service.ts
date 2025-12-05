@@ -126,6 +126,9 @@ COALESCE(
     }
 
     delete newUser.center;
+    
+    newUser.hasPhone = newUser.phone ? true : false
+    
     return this.userRepository.update(userId, {
       ...newUser,
       tags: this.tagService.formatTags(newUser.tags),
@@ -251,10 +254,7 @@ COALESCE(
 
   getPhone(userId) {
     return this.findById(userId).then((user) => {
-      if (user.publishPhone) {
-        return user.phone
-      }
-      return ''
+      return user.phone
     });
   }
 
