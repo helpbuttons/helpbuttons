@@ -80,8 +80,6 @@ export class UserService {
     });
   }
   async findCounts(user) {
-    console.log('im here')
-    console.trace()
     const q = `SELECT COALESCE(
         (select sum(cardinality("followedBy")) as "followsCount" from button where "ownerId"= $1), 
       0) as "followersCount",
