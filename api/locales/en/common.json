@@ -3,7 +3,7 @@
     "explore": "Explore",
     "create": "Publish",
     "profile": "Profile",
-    "activity": "Activity",
+    "activity": "Messages",
     "faqs": "Faqs",
     "signup": "SignUp",
     "login": "Login",
@@ -19,7 +19,7 @@
     "loading": "...",
     "goToExplore": "Explore _helpbuttons_",
     "install": "Install {0} and receive notifications:",
-    "knowMore": "Know more",
+    "knowMore": "About {0}",
     "goToCreate": "Create _helpbutton_",
     "activity": "Recent Activity",
     "exploreSubtitle": "See & Search the _helpbuttons_ on this map",
@@ -27,7 +27,7 @@
     "faqsSubtitle": "Read more about this app",
     "popularHashtags": "Which topics are covered?",
     "popularHashtagsExplain": "These are the most popular topics created till now. Make your _helpbutton_ to add new topics and follow them to receive alerts.",
-    "recommendedHashtags": "Which topics are recomended by the admins?",
+    "recommendedHashtags": "Recommended topics",
     "profileSubtitle": "Check your profile",
     "loginSubtitle": "Enter or create your account!",
     "locationDetected": "Do you want to navigate to check _helpbuttons_ in your region?",
@@ -191,16 +191,18 @@
     "newprivatecommentType": "Private message",
     "newfollowType": "New Suscription",
     "creatorUpdate": "_helpbutton_ updated",
-    "deletedType": "_helpbutton_ deleted",
+    "deleted": "_helpbutton_ deleted",
     "noactivity": "You have no activity yet! Start creating your _helpbutton_ or interact with others!",
     "markedAllAsRead": "Notifications marked as read",
     "markedAsRead": "Marked as read",
-    "newpost": "You posted in '{0}'",
-    "newcomment": "@{0} replied with a message '{1}'",
-    "newcommentSubject": "Someone commented on your _helpbutton_ '{0}'",
+    "newpost": "New posted created '{0}'",
+    "newcomment": "New comment wrote by {0}: '{1}'",
+    "newcommentOwn": "You wrote a comment '{0}'",
+    "newmention": "You were mentioned in a public conversation. {0}: '{1}'",
+    "newmentionOwn": "You post a new coment in a conversation. '{0}'",
     "newfollow": "{0} is now following your _helpbutton_ {1}",
-    "newfollowing": "your are now following the '{0}'",
-    "newfollowed": "{0} now follows your '{1}'",
+    "newfollowing": "You started following",
+    "newfollowed": "Followed your _helpbutton_",
     "myhelpbuttons": "My _helpbuttons_",
     "deletebutton": "{0} was deleted",
     "expiredEventType": "_helpbutton_ ended",
@@ -208,11 +210,13 @@
     "endorsed": "You have been endorsed by the administration, now you have a 'trusted' badge on your profile",
     "revokeEndorse": "Unfortunately you're 'trusted' badge has been removed",
     "roleupdate": "Your role has been updated to '{0}'",
-    "newSignup": "New user '{0}' signed up"
-  },
-  "activitiesWithSubject": {
-    "newbutton": "{0} published a new _helpbutton_ in {1}",
-    "newpost": "{0} published a new post in {1}"
+    "newSignup": "New user '{0}' signed up",
+    "notice": "Notice",
+    "sent": "Message sent!",
+    "writingDraft": "Writing private message to....",
+    "draft": "Draft",
+    "pickOne": "Select one chat",
+    "newbuttonHomeinfo": "New _helpbutton_ "
   },
   "common": {
     "notfound": "No {0} found. Sorry. 🤔",
@@ -234,7 +238,8 @@
     "error": "Something went wrong",
     "notFoundMessage": "Page not found or deleted",
     "options": "Options",
-    "edit": "Edit"
+    "edit": "Edit",
+    "show": "Show"
   },
   "button": {
     "title": "_helpbutton_ view",
@@ -347,7 +352,7 @@
     "logout": "Logout",
     "description": "Description",
     "descriptExplain": "Short description of waht you do or what you are",
-    "loginLink": "You have an account",
+    "loginLink": "I have an account",
     "showPassword": "Show Password",
     "hidePassword": "Hide Password",
     "loginWEmail": "Login with password",
@@ -412,7 +417,9 @@
     "editUsername": "Edit username",
     "optionalFields": "Optional fields",
     "emailRecovery":"Recovery email address",
-     "emailRecoveryExplain":"If you already have an account, login clicking a link we'll send to your email address."
+     "emailRecoveryExplain":"If you already have an account, login clicking a link we'll send to your email address.",
+     "emptyList": "Your own _helpbuttons_ could be seen in this spot.",
+     "loginNotFound": "User or password not found"
   },
   "picker": {
     "headerText": "Choose a location"

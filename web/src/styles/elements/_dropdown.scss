@@ -64,23 +64,30 @@ $dropdown-max-width: 30rem;
 
 
 
-$dropdown-bck: $color-ligth-gray;
+$dropdown-bck: $color-white;
 
 .dropdown__dropdown-trigger {
   text-align: left;
   overflow-x: hidden;
-  height: $form-input-height;
   padding: 0 $padding-big;
-  margin: $margin-xsmall 0;
   color: $color-black;
   transition: all 0.2s ease-in-out;
   font-size: $font-size-general;
+  width: auto;
+  border: transparent;
+
+  border-radius: $border-radius-basic;
+  background-position-x: 10%;
+
+  outline: $border-style-basic;
+  height: $form-input-height;
+  border-right:  $padding-big solid transparent;
+
   width: 100%;
-  border-radius: 8px;
   background: $dropdown-bck;
   padding-right: 1rem;
-  background-position-x: 70%;
-  border-right: $padding-big solid transparent;
+  outline: $border-style-basic;
+
 
   &:hover {
     cursor: pointer;
@@ -102,27 +109,24 @@ $dropdown-bck: $color-ligth-gray;
   overflow-x: hidden;
   height: auto;
   padding: $padding-small $padding-medium;
-  padding-right: 1.5rem;
-  width: inherit;
+  width: auto;
   text-decoration: none;
   border: none;
   border-radius: 2rem;
-  background: transparent;
   color: $color-black;
-
+  font-weight: $font-weight-bold;
+  background-color: $color-white;
   transition: all 0.2s ease-in-out;
   font-size: $font-size-general;
-
-  // -webkit-appearance: none;
-  // -moz-appearance: none;
-  // appearance: none;
-  // background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
   background-repeat: no-repeat;
-  background-position-x: 100%;
-  background-position-y: 50%;
-  border-right: $padding-big solid transparent;
+  border: $border-style-basic;
 
+  -moz-appearance: none;
+  -webkit-appearance: none;
 
+  &:-ms-expand {
+    display: none;
+  }
 
   &:hover {
     cursor: pointer;
@@ -150,6 +154,8 @@ $dropdown-bck: $color-ligth-gray;
     border-radius: 0 0 $border-radius-basic $border-radius-basic;
     border-top: none;
     padding: 0;
+
+    
 
 }
 
@@ -189,12 +195,12 @@ $dropdown-bck: $color-ligth-gray;
   height: $form-input-height;
 
   & button {
-    color: var(--network-text-color);
+    color: var(--network-accent-color);
     border: none;
     background: transparent;
     height: 100%;
     &:hover {
-      color: var(--network-text-color);
+      color: var(--network-accent-color);
       text-decoration: underline;
     }
   }
@@ -206,13 +212,35 @@ $dropdown-bck: $color-ligth-gray;
 
 }
 
+.dropdown__dropdown-option-wrapper--add-location {
+  background-color: $color-white;
+  border-radius: $border-radius-basic $border-radius-basic 0 0;
+  overflow: hidden;
+
+  & hr {
+    margin: 0;
+  }
+
+}
+
+.dropdown__dropdown-option--add-location {
+
+  background-color: $color-corporative;
+  color: $color-text-over-corporative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: $padding-medium;
+  font-weight: $font-weight-bold;
+
+}
 
 @media #{$breakpoints-xxlarge} {
 
   .dropdown__dropdown-trigger {
 
     display: flex;
-    max-width: auto;
+    width: 100%;
     min-width: $dropdown-width;
     // margin-left: $margin-small;
 

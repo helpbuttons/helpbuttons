@@ -6,14 +6,12 @@ import { GlobalState, store } from 'state';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { alertService } from 'services/Alert';
-import { SetupSteps } from 'shared/setupSteps';
-import { getLocale } from 'shared/sys.helper';
 import { Role } from 'shared/types/roles';
 import { CreateNetwork, FetchDefaultNetwork } from 'state/Networks';
 import { useRef } from 'store/Store';
 import dconsole from 'shared/debugger';
 import getConfig from 'next/config';
-import { IllustrationHead } from '../helper';
+import { IllustrationHead } from '../CreateAdminForm';
 
 // name, description, logo, background image, button template, color pallete, colors
 export default NetworkCreation;

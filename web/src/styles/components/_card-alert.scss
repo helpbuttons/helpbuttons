@@ -24,6 +24,7 @@ $card-alert-icon-size: 30px;
   border-radius: $card-alert-radius;
   color: $color-dark-gray;
   display: flex;
+  align-items: center;
 
 }
 
@@ -56,7 +57,7 @@ $card-alert-icon-size: 30px;
 }
 
 .card-alert--info {
-  background-color: var(--network-text-color);
+  background-color: var(--network-accent-color);
 }
 
 .card-alert__content {
@@ -139,9 +140,7 @@ $card-alert-icon-size: 30px;
     box-shadow: $box-shadow-divs;
 
     a {
-      color: $color-corporative;
       text-decoration: underline;
-
       &:hover {
         text-decoration: none;
       }

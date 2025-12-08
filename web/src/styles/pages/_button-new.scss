@@ -1,13 +1,13 @@
-.publish_btn {
+.publish-button {
     padding: 0;
 
-    .publish_btn-first {
+    .publish-button-first {
 
         // padding: 1rem;
 
     }
 
-    .publish_btn-scd{
+    .publish-button-scd{
         border-top: 1px solid $color-gray-border;
         border-bottom: 1px solid $color-gray-border;
     }
@@ -44,5 +44,29 @@
         border-radius: $border-radius-circle;
     }
 
+}
+
+@media #{$breakpoints-xlarge} {
+
+    .publish-button {
+        display: flex;
+        gap: $padding-huge;
+        padding: $padding-huge;
+        max-width: $grid-max-width;
+        margin: auto;
+
+        overflow: auto;
+        margin: auto;
+        height: calc(100% - $nav-header-height);
+
+    }
+
+    .publish-button__wrapper {
+
+        padding: $padding-big;
+    }
+
+  
+    
 }
 

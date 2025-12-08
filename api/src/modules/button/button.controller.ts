@@ -151,9 +151,10 @@ export class ButtonController {
   )
   {
     return this.buttonService.follow(buttonId, user.id).then((button) => {
-      notifyUser(this.eventEmitter,ActivityEventName.NewFollowingButton,{button, user})
-      // notify owner of button
-      notifyUser(this.eventEmitter, ActivityEventName.NewFollowedButton, {button, user})
+      return this.userService.follow(buttonId, user.id)
+      .then(() => {
+        notifyUser(this.eventEmitter,ActivityEventName.NewFollowingButton,{button, user})
+      })
     })
   }
 
@@ -164,7 +165,11 @@ export class ButtonController {
     @CurrentUser() user: User,
   )
   {
-    return this.buttonService.unfollow(buttonId, user.id);
+    return this.buttonService.unfollow(buttonId, user.id)
+    .then((button) => {
+      notifyUser(this.eventEmitter,ActivityEventName.UnfollowButton,{button, user})
+      return this.userService.unfollow(buttonId, user.id)
+    })
   }
 
   @AllowGuest()
@@ -179,6 +184,12 @@ export class ButtonController {
         return []
       }
     })
+  }
+
+  @OnlyRegistered()
+  @Get('mine')
+  findMyButtons(@CurrentUser() user: User) {
+    return this.buttonService.findByOwner(user.id);
   }
 
   @OnlyRegistered()
@@ -227,8 +238,11 @@ export class ButtonController {
   @Get('approve/:buttonId')
   approve(@Param('buttonId') buttonId: string)
   {
-    return this.buttonService.approve(buttonId).then((button) => {
-      notifyUser(this.eventEmitter,ActivityEventName.NewButton,{button})  
+    return this.buttonService.approve(buttonId).then(() => {
+      this.buttonService.findById(buttonId)
+      .then((button) => 
+      notifyUser(this.eventEmitter,ActivityEventName.NewButton,{button})
+      )
     })
   }
 

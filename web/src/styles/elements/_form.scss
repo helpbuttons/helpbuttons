@@ -108,6 +108,8 @@ padding-bottom: $margin-medium;
   font-size: $font-size-medium;
   margin-bottom: 24px;
   position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
 .form__field--noMargin {
@@ -117,14 +119,12 @@ padding-bottom: $margin-medium;
 .form__input--slider {
   
   margin: $margin-big;
+  margin-bottom: $padding-small;
 
 }
 
 .form__input--slider-value {
 
-  position: absolute;
-  bottom: 68px;
-  left: -20px;
   font-weight: $font-weight-bolder;
   padding: $padding-xxsmall $padding-small;
   background-color: $color-white;
@@ -751,6 +751,26 @@ width: 100%;
 
 }
 
+.form__qr-code {
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: $padding-big;
+  text-align: center;
+  font-weight: $font-weight-bolder;
+  word-break: break-all;
+  
+
+}
+
+.form__qr-code__qr-image {
+
+  max-width: 200px;
+
+}
+
 @media #{$breakpoints-medium} {
 
   .form__input--button-type-field {
@@ -766,6 +786,40 @@ width: 100%;
 
   .form__options-h {
     justify-content: space-between;
+  }
+
+}
+
+
+
+@media #{$breakpoints-xlarge} {
+
+  .form__types-wrapper {
+
+    // flex-direction: row;
+    background-color: $color-white;
+    padding: $padding-huge;
+    flex: 0 40%;
+    border-radius: $border-radius-circle;
+    height: auto;
+    margin-bottom: auto;
+
+  }
+
+  .form__inputs-types-wrapper {
+    background-color: $color-white;
+    padding: $padding-huge;
+    flex: 0 60%;
+     border-radius: $border-radius-circle;
+     overflow: hidden;
+     position: relative;
+     height: $grid-desktop-double-column-height;
+    min-height: 400px;
+  }
+
+  .form__inputs-content {
+    overflow: auto;
+    height: 100%;
   }
 
 }

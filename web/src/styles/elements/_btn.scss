@@ -50,6 +50,7 @@ $btn-font-size-medium: $font-size-medium;
   border-right: 1px solid $color-gray-border;
   text-overflow: ellipsis;
   overflow: hidden;
+  min-width: fit-content;
 
 
 }
@@ -128,6 +129,7 @@ $btn-font-size-medium: $font-size-medium;
 
   @extend .btn-filter;
   padding: $padding-small;
+  padding-right: $padding-medium;
 
 }
 
@@ -141,7 +143,6 @@ $btn-font-size-medium: $font-size-medium;
   max-width: 100%;
   font-weight: $font-weight-bold;
   position: relative;
-
 
 
 
@@ -212,6 +213,8 @@ $btn-font-size-medium: $font-size-medium;
   border-radius: $btn-border-radius-semicircle;
   margin-right: $btn-filter-icon-margin;
   display: flex;
+  min-width: 0;
+
 
 }
 
@@ -243,7 +246,7 @@ $btn-font-size-medium: $font-size-medium;
   border-radius: $border-radius-circle;
   height: $btn-height;
   font-weight: $font-weight-bold;
-  margin-top: $margin-xsmall;
+  // margin-top: $margin-xsmall;
   width: 100%;
   color: $color-black;
 }
@@ -253,7 +256,7 @@ $btn-font-size-medium: $font-size-medium;
 
 .btn-with-icon {
 
-  gap: $margin-medium;
+  gap: $padding-medium;
 
 }
 
@@ -338,7 +341,7 @@ $btn-font-size-medium: $font-size-medium;
     height: $btn-circle-height;
     background-color: $color-corporative;
     border: none;
-    color: $color-black;
+    color: $color-text-over-corporative;
     margin-top: 0;
 
 }
@@ -368,10 +371,18 @@ $btn-font-size-medium: $font-size-medium;
 
   & svg {
 
-    fill: $color-black;
-    color:  $color-black;
     height: $btn-circle-icon-height;
     width: $btn-circle-icon-height;
+
+  }
+}
+
+.btn-circle__icon--corporative {
+
+  & svg {
+
+    fill: $color-text-over-corporative;
+    color:  $color-text-over-corporative;
 
   }
 }
@@ -470,31 +481,64 @@ $btn-font-size-medium: $font-size-medium;
 
 }
 
+@media (hover: hover) {
 
-.btn,
-.btn-circle,
-.btn-with-icon,
-.btn-filter
-{
-  
-  &:hover {
+  .btn,
+  .btn-circle,
+  .btn-with-icon,
+  .btn-filter
+  {
+    
+    &:hover {
 
-    border-color:  $color-gray;
-    color: $color-white;
-    cursor: pointer;
-    background-color: $color-gray;
-
-
-    & svg {
+      border-color:  $color-gray;
       color: $color-white;
-      fill: $color-white;
+      cursor: pointer;
+      background-color: $color-gray;
+
+
+      & svg {
+        color: $color-white;
+        fill: $color-white;
+      }
+
     }
+
+
+    // &:active,
+    // &:focus {
+
+    //   // background-color: $color-dark-gray;
+    //   // color: $color-white;
+    //   // border-color: $color-dark-gray;
+
+    //   // & svg {
+    //   //   color: $color-white;
+    //   //   fill: $color-white;
+    //   // }
+
+    // }
+
+
+    // &:active {
+
+    //   background-color: $color-black;
+    //   color: $color-white;
+    //   border-color: $color-black;
+
+    //   & svg {
+    //     color: $color-white;
+    //     fill: $color-white;
+    //   }
+
+    // }
 
   }
 
+}
 
 
-  &:focus {
+.btn-filter--active {
 
     background-color: $color-dark-gray;
     color: $color-white;
@@ -503,62 +547,10 @@ $btn-font-size-medium: $font-size-medium;
     & svg {
       color: $color-white;
       fill: $color-white;
-    }
-
-  }
-
-
-  &:active {
-
-    background-color: $color-black;
-    color: $color-white;
-    border-color: $color-black;
-
-    & svg {
-      color: $color-white;
-      fill: $color-white;
-    }
-
-  }
-
+    } 
 }
 
-@media (hover: none) {
-  .btn,
-  .btn-circle,
-  .btn-with-icon,
-  .btn-filter {
 
-    &:hover {
-
-      border-color:  $color-gray;
-      color: $color-black;
-      cursor: pointer;
-      background-color: $color-white;
-  
-      & svg {
-        color: $color-black;
-        fill: $color-black;
-      }
-  
-    }
-  
-    &:focus {
-  
-      background-color: $color-white;
-      color: $color-black;
-      border-color: $color-gray;
-  
-      & svg {
-        color: $color-black;
-        fill: $color-black;
-      }
-  
-    }
-
-  }
-
-}
 
 
 //BLACK btn VARIATION
@@ -576,6 +568,7 @@ $btn-font-size-medium: $font-size-medium;
 
   background: $color-corporative;
   border-color: $color-corporative;
+  color: $color-text-over-corporative;
 
 }
 
@@ -671,6 +664,7 @@ $btn-font-size-medium: $font-size-medium;
 
   font-size: $font-size-small;
   margin-top: 0;
+  color: $color-text-over-corporative;
 
 
 } 
@@ -691,6 +685,12 @@ $btn-font-size-medium: $font-size-medium;
 
 
 @media #{$breakpoints-large} {
+
+  .btn-with-icon {
+
+  gap: $margin-medium;
+
+  }
 
   .btn-filter {
 

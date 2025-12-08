@@ -10,24 +10,23 @@ $message-you-margin-left: $margin-xbig;
 .message {
   border-radius: $message-border-radius;
   max-width: $message-max-width;
-  padding: $padding-medium $padding-big 0 $padding-medium;
+  padding: $padding-big $padding-big $padding-big $padding-big;
   word-break: break-word;
   width: fit-content;
   position: relative;
+
 }
+
+
+
 
 .message--me {
 
-    background: $color-white;
+    background: $color-dark-gray;
+    color: $color-ligth-gray;
     border-radius: $message-border-radius-semicircle $message-border-radius-semicircle 0 $message-border-radius-semicircle;
     margin-left: auto;
-    margin-right: $message-you-margin-left;
-    padding-bottom: 0;
-
-    .message__hour {
-
-        text-align: right;
-    }
+    
 
     .message__content {
 
@@ -40,6 +39,13 @@ $message-you-margin-left: $margin-xbig;
 
     font-size: $font-size-xsmall;
     color: $color-gray;
+    padding-left: $padding-big;
+
+}
+
+.message__hour--me {
+
+    text-align: right;
 }
 
 .message__header {
@@ -92,6 +98,12 @@ $message-you-margin-left: $margin-xbig;
 
 }
 
+.message__user-name {
+ font-weight: $font-weight-bolder;
+ color: $color-gray;
+  font-size: $font-size-small;
+
+}
 .message__content {
 
   font-size: $font-size-general;
@@ -106,9 +118,6 @@ $message-you-margin-left: $margin-xbig;
   margin-left: $message-you-margin-left;
   min-width: 50%;
   border-radius: $message-border-radius-semicircle $message-border-radius-semicircle $message-border-radius-semicircle 0;
-  margin-bottom: $margin-xsmall;
-
-
 
   .message__hour {
 

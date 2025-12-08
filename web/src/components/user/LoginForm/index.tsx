@@ -16,7 +16,7 @@ import { useRouter } from 'next/router';
 import t from 'i18n';
 import { alertService } from 'services/Alert';
 import { CookiesState, MainPopupPage, SetMainPopup } from 'state/HomeInfo';
-import { AcceptCookiesWarn } from 'components/home/CookiesBanner';
+import { handleAcceptCookies } from 'components/home/CookiesBanner';
 import { Network } from 'shared/entities/network.entity';
 
 export default function LoginForm() {
@@ -33,6 +33,7 @@ export default function LoginForm() {
   );
   
   const onSubmit = (data) => {
+    handleAcceptCookies()
     store.emit(
       new Login(data.email.toLowerCase(), data.password, onSuccess, onError),
     );
@@ -45,7 +46,7 @@ export default function LoginForm() {
 
   const onError = (err) => {
     if (err === 'login-incorrect') {
-      setErrorMsg('User or password not found');
+      setErrorMsg(t('user.loginNotFound'));
     }
   };
   const params: URLSearchParams = new URLSearchParams(router.query);
@@ -56,8 +57,7 @@ export default function LoginForm() {
   );
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit)} classNameExtra="login">
-      <div className="login__form">
+    <Form onSubmit={handleSubmit(onSubmit)} classNameExtra="login__form">
         <div className="form__inputs-wrapper">
           <FieldText
             name="email"
@@ -70,7 +70,6 @@ export default function LoginForm() {
           <FieldPassword
             name="password"
             label={t('user.password')}
-
             classNameInput="squared"
             onForgotPass={() => store.emit(new SetMainPopup(MainPopupPage.REQUEST_LINK))}
             placeholder={t('user.passwordPlaceHolder')}
@@ -83,34 +82,25 @@ export default function LoginForm() {
             {errorMsg}
           </div>
         )}
-        <div className="form__btn-wrapper">
           <Btn
             submit={true}
-            disabled={isSubmitting || cookieState != CookiesState.ACCEPTED}
+            disabled={isSubmitting}
             btnType={BtnType.submit}
             caption={t('user.loginButton')}
             contentAlignment={ContentAlignment.center}
             isSubmitting={isSubmitting}
           />
-          <AcceptCookiesWarn cookieState={cookieState}/>
-
-          <div className="popup__link">
-            <div onClick={() => store.emit(new SetMainPopup(MainPopupPage.SIGNUP))} className={`nav-bottom__link`}>
+        <div className="form__btn-wrapper">
+          <div className="popup__link" onClick={() => store.emit(new SetMainPopup(MainPopupPage.SIGNUP))} >
               {t('user.noAccount')}
-            </div>
           </div>
            {selectedNetwork?.allowGuestCreation && 
-            <div className="popup__link">
-              <div
-                onClick={() => store.emit(new SetMainPopup(MainPopupPage.SIGNUP_AS_GUEST))}
-                className={`nav-bottom__link`}
-              >
+            <div className="popup__link" onClick={() => store.emit(new SetMainPopup(MainPopupPage.SIGNUP_AS_GUEST))}>
+
                 {t('user.signupAsGuest')}
-              </div>
             </div>
             }
         </div>
-      </div>
     </Form>
   );
 }

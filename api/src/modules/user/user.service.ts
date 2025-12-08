@@ -80,7 +80,6 @@ export class UserService {
     });
   }
   async findCounts(user) {
-
     const q = `SELECT COALESCE(
         (select sum(cardinality("followedBy")) as "followsCount" from button where "ownerId"= $1), 
       0) as "followersCount",
@@ -125,6 +124,9 @@ COALESCE(
     }
 
     delete newUser.center;
+    
+    newUser.hasPhone = newUser.phone ? true : false
+    
     return this.userRepository.update(userId, {
       ...newUser,
       tags: this.tagService.formatTags(newUser.tags),
@@ -250,10 +252,7 @@ COALESCE(
 
   getPhone(userId) {
     return this.findById(userId).then((user) => {
-      if (user.publishPhone) {
-        return user.phone
-      }
-      return ''
+      return user.phone
     });
   }
 
@@ -287,4 +286,23 @@ COALESCE(
     this.entityManager.query(`update public.user set locale = '${locale}' where role = '${Role.admin}'`)
   }
 
+  async follow(buttonId: string, userId: string) {
+    const user = await this.findById(userId);
+    const index = user.follows.indexOf(buttonId);
+    if (index < 0) {
+      user.follows.push(buttonId);
+      return await this.userRepository.save(user);
+    }
+    return user;
+  }
+
+  async unfollow(buttonId: string, userId: string) {
+    const user = await this.findById(userId);
+    const index = user.follows.indexOf(buttonId);
+    if (index > -1) {
+      user.follows.splice(index, 1);
+      return await this.userRepository.save(user);
+    }
+    return true;
+  }
 }

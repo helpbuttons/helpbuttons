@@ -52,10 +52,11 @@ import MarkerViewMap from 'components/map/Map/MarkerSelectorMap';
 import { TagsNav } from 'elements/Fields/FieldTags';
 import { ImageGallery } from 'elements/ImageGallery';
 import Loading from 'components/loading';
-import { SetMainPopupCurrentProfile } from 'state/HomeInfo';
+import { MainPopupPage, SetMainPopup, SetMainPopupCurrentProfile } from 'state/HomeInfo';
 import React from 'react';
 import dconsole from 'shared/debugger';
 import { ButtonPin, ButtonUnpin } from 'state/Button';
+import { SetDraftButton } from 'state/Activity';
 
 export default function CardButton({ button, buttonTypes, toggleShowReplyFirstPost }) {
   const buttonType = useButtonType(button, buttonTypes);
@@ -283,19 +284,15 @@ function CardButtonSubmenu({ button }) {
   );
 }
 
-function SendMessageButton({toggleShowReplyFirstPost, sessionUser})
+function SendMessageButton({toggleShowReplyFirstPost})
 {
-  if(!sessionUser)
-  {
-    return ;
-  }
   return <Btn
           btnType={BtnType.smallCircle}
           contentAlignment={ContentAlignment.center}
           iconLeft={IconType.circle}
           iconLink={<IoMailOutline />}
           onClick={()=> {
-            toggleShowReplyFirstPost(true)
+            sendCurrentButtonMessage()
         }}
         />
 }
@@ -314,7 +311,7 @@ export function CardButtonHeadBig({ button, buttonTypes, toggleShowReplyFirstPos
           button={button}
           sessionUser={sessionUser}
         />
-        <SendMessageButton toggleShowReplyFirstPost={toggleShowReplyFirstPost} sessionUser={sessionUser}/>
+        {sessionUser && !isButtonOwner(sessionUser, button) && <SendMessageButton toggleShowReplyFirstPost={toggleShowReplyFirstPost} sessionUser={sessionUser}/>}
         
         <CardButtonSubmenu button={button} />
       </div>
@@ -351,9 +348,10 @@ export function CardButtonHeadBig({ button, buttonTypes, toggleShowReplyFirstPos
         <div className="card-button__paragraph">
           <TextFormatted text={button.description} />
         </div>
+        {/* REMOVING TAGS FOR NOW TO TEST BEHAVIOUR FOR CLEANER CARD LOOK - REVISE IN THE FUTURE
         <div className="card-button__hashtags">
           <TagsNav tags={button.tags} />
-        </div>
+        </div> */}
 
         <div className="card-button__bottom-properties">
           {customFields && customFields.length > 0 && (
@@ -426,7 +424,8 @@ function ExpiringAlert({
 
 export function ButtonOwnerPhone({ user, button }) {
   const [phone, setPhone] = useState(null);
-  
+  const sessionUser = useGlobalStore((state: GlobalState) => state.sessionUser);
+
   const showPhone = () => {
     store.emit(
         new GetPhone(
@@ -443,7 +442,7 @@ export function ButtonOwnerPhone({ user, button }) {
   }
   return (
     <>
-      {user?.publishPhone && (
+      {user?.hasPhone && (
         <>
           {!phone && 
             <Btn
@@ -627,4 +626,11 @@ function isButtonOwner(sessionUser, button) {
   return (
     sessionUser && sessionUser.username == button.owner.username
   );
+}
+
+
+export const sendCurrentButtonMessage = () => {
+  store.emit(new SetDraftButton())
+  store.emit(new SetMainPopup(MainPopupPage.HIDE))
+  router.push(`/Activity?draft=true`)
 }

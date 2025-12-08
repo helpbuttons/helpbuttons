@@ -113,6 +113,20 @@ export class FindUserButtons implements WatchEvent {
   }
 }
 
+export class FindMyButtons implements WatchEvent {
+  public constructor(
+    private onResult,
+  ) {}
+
+  public watch(state: GlobalState) {
+    return UserService.findMyButtons().pipe(
+      map((buttonList) => {
+        this.onResult(buttonList);
+      }),
+      catchError((error) => {this.onResult([]); dconsole.log(error); return  of(undefined)})
+    )
+  }
+}
 
 
 export function isAdmin(sessionUser)

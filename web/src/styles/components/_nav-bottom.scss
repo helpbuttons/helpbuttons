@@ -26,6 +26,8 @@ $nav-bottom-border: 32px;
   z-index: $z-index-03;
   align-items: flex-start;
   justify-content: space-around;
+  border-top: $border-style-basic;
+  height: $nav-bottom-height;
 }
 
 .nav-bottom--repo {
@@ -40,13 +42,13 @@ $nav-bottom-border: 32px;
   align-items: center;
   text-decoration: none;
   flex-flow: column;
-  color: $color-black;
+  color: $color-text-over-corporative;
   padding: 8px 0 0 0;
 
   &:hover, :active {
 
     svg {
-      fill: $color-black;
+      fill: $color-gray;
     }
 
     cursor: pointer;
@@ -54,8 +56,6 @@ $nav-bottom-border: 32px;
 
     .nav-bottom__icon {
       transition: 0.2s;
-      // transform: translateY(-0.4rem);
-
     }
 
   }
@@ -68,7 +68,7 @@ $nav-bottom-border: 32px;
 }
 
 .nav-bottom__link--current{
-  color: $color-black;
+  color: $color-text-over-corporative;
   font-weight: $font-weight-bolder;
 
   .nav-bottom__text::after {
@@ -78,7 +78,7 @@ $nav-bottom-border: 32px;
     width: 20px;
     height: 2px;
     left: 50%;
-    background-color: var(--network-text-color);
+    background-color: var(--network-accent-color);
     transform: translateX(-50%);
     border-radius: $nav-bottom-border;
     opacity: 1;
@@ -109,7 +109,7 @@ $nav-bottom-border: 32px;
 
 .nav-bottom__icon {
   & svg {
-    fill: $color-black;
+    fill: $color-text-over-corporative;
     height: $nav-bottom-icon-size;
     width: $nav-bottom-icon-size;
     padding: 3px;
@@ -134,25 +134,28 @@ $nav-bottom-border: 32px;
    cursor: pointer;
    text-decoration: none;
    z-index: $z-index-01;
-   background: var(--network-text-color);
+   background: var(--network-accent-color);
    pointer-events:none;
 }
 
 @media #{$breakpoints-xlarge} {
   .nav-bottom {
     border-radius: 0 0 $nav-bottom-border  $nav-bottom-border;
-    z-index: 0;
     justify-content: flex-end;
     gap: 24px;
     position: relative;
     top: 0;
     align-items: center;
     background: none;
+    border-top: transparent;
+    min-width: 400px;
 
   }
 
   .nav-bottom__link {
-    flex: 0 1 58px;
+    flex: 0 58px;
+    min-width: 0;
+    padding-top: 0;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -170,7 +173,16 @@ $nav-bottom-border: 32px;
 
   }
 
+  .nav-bottom__icon {
+    & svg {
+      
+      height: 20px;
+
+    }
+  }
+
   .nav-bottom__text {
+    line-height: 15px;
     font-size: $font-size-small;
   }
 

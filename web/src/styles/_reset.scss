@@ -147,19 +147,20 @@ body,
 .list__container--full-screen,
 .list__content--full-screen{
 
-  height: calc(var(--vh) - 120px ) !important; //header + filters bar
+  height: calc(var(--vh) - 220px ) !important; //header + filters bar
 
 }
 
 .list__container--mid-screen,
 .list__content--mid-screen{
 
-  height: calc(var(--vh) - 190px ) !important; //header + filters bar
+  height: calc(var(--vh) - 150px ) !important; //header + filters bar
 
 }
 
 .popup,
-.filters__wrapper
+.filters__wrapper,
+.feed-section__center--mobile
 {
   height: calc(var(--vh) ) !important;
   /* Add other styles as needed */
@@ -230,20 +231,24 @@ p {
   .list__container--full-screen,
   .popup--button-file,
   .index__explore-container,
-  .feed-section--activity-content,
-  .feed__container
+  .feed-section--activity-content
   {
     height: calc(var(--vh) - $header-height-desktop - $nav-header-height-desktop) !important;
   }
 
-  .popup__content {
-    height: calc(var(--vh) - 199px) !important;
-  }
-
   .homeinfo__container {
 
-    height: calc(var(--vh) - 134px) !important;
+    height: var(--vh) !important;
+  }
 
+  .feed__container {
+
+    height: calc(var(--vh) - $nav-header-height-desktop) !important;
+
+  }
+
+  .popup__content {
+    height: calc(var(--vh) - 199px) !important;
   }
 
   .list__content {
@@ -257,4 +262,25 @@ p {
 
 body {
   overflow: hidden; // Revise: Adiós Scroll desde el Body
+}
+
+@media (hover: none) {
+  
+  /* Apply to your specific class, or use '*' for everything */
+  button, 
+  a {
+    /* 1. Remove the standard hover/active/focus states */
+    &:hover,
+    &:active
+    &:focus 
+    {
+      
+    }
+  }
+
+  /* 2. Remove the specific mobile "Tap Highlight" (Gray/Blue flash) */
+  * {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none; /* Disables long-touch menu on iOS */
+  }
 }

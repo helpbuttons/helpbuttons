@@ -20,7 +20,7 @@ $card-notification-delete-size: 100px;
   border-radius: $border-radius-basic;
   // box-shadow: $card-notification-box-shadow;
   display: block;
-  text-decoration: none; /* remove underline */
+  text-decoration: none; 
   position: relative;
   color: $color-gray;
 
@@ -95,7 +95,7 @@ $card-notification-delete-size: 100px;
 
 .card-notification__content {
   display: flex;
-  padding: 1rem;
+  padding: $padding-big;
   position: relative;
 }
 
@@ -133,6 +133,10 @@ $card-notification-delete-size: 100px;
 
 .card-notification__text {
   flex: 0 1 100%;
+  display: flex;
+  flex-direction: column;
+  flex: 1;       
+  min-width: 0;
   
 }
 
@@ -159,6 +163,8 @@ $card-notification-delete-size: 100px;
   // flex: 0 1 50%;
   font-weight: $font-weight-light;
   color: $color-med-gray;
+  display: flex;
+  flex-direction: row;
 
 
 }
@@ -317,12 +323,19 @@ $card-notification-delete-size: 100px;
   font-size: $font-size-general;
   padding: 0;
   text-align: left;
-  font-weight: $font-weight-bolder;
   hyphens: auto;
   word-break: keep-all;
   &:first-letter {
     text-transform: uppercase;
   }
+}
+
+.card-notification__title,
+.card-notification__paragraph,
+.card-notification__footer {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .card-notification__name {
@@ -379,6 +392,11 @@ $card-notification-delete-size: 100px;
 
 }
 
-.card-notification-comment-focus {
-  border: 2px solid $color-blue;
+.card-notification-comment--focus, .card-notification--selected {
+  border: 2px solid $color-corporative;
+  background-color: $color-corporative;
+}
+
+.card-notification--unread{
+  font-weight: $font-weight-bolder;
 }

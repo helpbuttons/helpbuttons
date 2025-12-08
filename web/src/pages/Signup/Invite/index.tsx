@@ -98,7 +98,9 @@ export function InviteForm() {
     <>
       <Form onSubmit={handleSubmit(onSubmit)} classNameExtra="login">
         <div className="login__form">
-          {t('user.explainGuestDetails')}          
+          <div className="form__header">
+            {t('user.explainGuestDetails')}   
+          </div>       
           <div className="form__inputs-wrapper">
             <NewUserFields
               control={control}
@@ -110,7 +112,7 @@ export function InviteForm() {
             />
           </div>
           <div className="form__btn-wrapper">
-            <div className="from__btn-register">
+            <div className="form__btn-register">
               <Btn
                 submit={true}
                 btnType={BtnType.submit}
@@ -120,7 +122,7 @@ export function InviteForm() {
               />
             </div>
           </div>
-        </div>
+          </div>
       </Form>
     </>
     

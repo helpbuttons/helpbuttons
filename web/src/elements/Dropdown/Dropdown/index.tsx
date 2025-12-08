@@ -1,12 +1,15 @@
-///dropddown selector component
-import React, { useState } from 'react';
+///dropdown selector component
+import FieldRadio from 'elements/Fields/FieldRadio';
+import FieldRadioOption from 'elements/Fields/FieldRadio/option';
+import React, { useRef, useState } from 'react';
+import { IoList } from 'react-icons/io5';
 export function DropdownField({
   label = null,
   options,
   onChange = (value) => {},
   defaultSelected = null,
   explain = '',
-  className = 'dropdown-select__trigger',
+  className = 'dropdown__dropdown-trigger',
   value = null
 }) {
   return (
@@ -17,6 +20,7 @@ export function DropdownField({
     </div>
   );
 }
+
 export function Dropdown({
   options,
   onChange = (value) => {},
@@ -34,23 +38,22 @@ export function Dropdown({
   };
 
   let selectAttrs = {
-    className: className,
+    className: `${className} dropdown-select-with-icon`,
     onChange: handleChange,
     defaultValue: defaultSelected,
   }
   if(!defaultSelected)
   {
     selectAttrs = {
-      className: className,
+      className: `${className} dropdown-select-with-icon`,
       onChange: handleChange,
       defaultValue: false,
     }
   }
   return (
-    <>
-      <select
-        {...selectAttrs}
-      >
+    <div className="dropdown-select__container">
+      <IoList className="dropdown-select__icon" />
+      <select {...selectAttrs}>
         {options.map((option, index) => (
           <option
             className="dropdown-select__option"
@@ -61,6 +64,29 @@ export function Dropdown({
           </option>
         ))}
       </select>
-    </>
+    </div>
   );
 }
+
+export const DropdownLine = React.forwardRef(
+  ({ name, onChange, onBlur, validationError, label, explain, options }, ref) => {
+
+  return (
+    <FieldRadio label={label} explain={explain} validationError={null}>
+          {options.map((option, idx) => {
+            return (
+              <FieldRadioOption
+                onChange={(e) => onChange(e.target.value)}
+                name={name}
+                value={option.value}
+                key={idx}
+                ref={ref}
+              >
+                {option.name}
+              </FieldRadioOption>
+
+            );
+          })}
+        </FieldRadio>
+  )
+})

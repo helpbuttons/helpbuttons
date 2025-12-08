@@ -11,7 +11,7 @@ import { SetupSteps } from '../../../shared/setupSteps';
 import t from 'i18n';
 import Link from 'next/link';
 import ImageWrapper, { ImageType } from 'elements/ImageWrapper';
-import { IllustrationHead } from '../helper';
+import { IllustrationHead } from '../CreateAdminForm';
 
 export default FirstOpen;
 

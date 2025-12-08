@@ -24,6 +24,10 @@ export class FollowButton implements WatchEvent, UpdateEvent {
   public update(state: GlobalState) {
     return produce(state, (newState) => {
       newState.explore.currentButton.isFollowing = true
+      if(state.homeInfo.mainPopupButton)
+      {
+        newState.homeInfo.mainPopupButton.isFollowing = true;
+      }
     });
   }
 }
@@ -44,6 +48,10 @@ export class UnfollowButton implements WatchEvent, UpdateEvent {
   public update(state: GlobalState) {
     return produce(state, (newState) => {
       newState.explore.currentButton.isFollowing = false;
+      if(state.homeInfo.mainPopupButton)
+      {
+        newState.homeInfo.mainPopupButton.isFollowing = false;
+      }
     });
   }
 }

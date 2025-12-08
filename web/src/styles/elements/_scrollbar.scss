@@ -1,10 +1,10 @@
 //Revise: Esto puede ir en un breakpoint
 
-
+$scrollbar-width: 8px;
 
   ::-webkit-scrollbar {
     display: block;
-    width: 8px;
+    width: $scrollbar-width;
     height: 8px;
   
   }
@@ -14,7 +14,7 @@
     width: 5px;
     background: $color-corporative;
     border: $border-style-basic;
-    background-size: 8px 8px;
+    background-size: $scrollbar-width $scrollbar-width;
     background-repeat:no-repeat;
     background-position:center;
     

@@ -70,7 +70,8 @@ export class AuthService {
           tags: signupUserDto.tags,
           radius: 0,
           qrcode: signupUserDto.qrcode,
-          showWassap: false
+          showWassap: false,
+          follows: []
         };
 
         return this.createUser(newUserDto, signupUserDto).then(

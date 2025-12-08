@@ -150,7 +150,7 @@ export default function ProfileEdit() {
           <Popup title={t('user.updateProfile')} linkBack={() => router.back()}>
             <Form
               onSubmit={handleSubmit(onSubmit)}
-              classNameExtra="login"
+              classNameExtra="login__form"
             >              
                 <div className="form__inputs-wrapper">
                 <Accordion collapsed={true} title={t('user.personalData')}>
@@ -186,7 +186,7 @@ export default function ProfileEdit() {
                     setValue={setValue}
                     setFocus={setFocus}
                     validationError={errors.description}
-                    {...register('description', { required: true })}
+                    {...register('description')}
                   />
                                   
                   <FieldLanguagePick onChange={(value) => set_Locale(value)} explain={t('user.pickLanguageExplain')} defaultValue={sessionUser.locale}/>

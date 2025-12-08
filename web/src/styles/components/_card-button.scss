@@ -487,7 +487,7 @@ $card-button-border-height: $border-general-height;
   }
 
   & a {
-    color: var(--network-text-color);
+    color: var(--network-accent-color);
     cursor: pointer;
   }
 }
@@ -524,7 +524,7 @@ $card-button-border-height: $border-general-height;
   top: $padding-medium;
 
   padding: $padding-small $padding-big;
-  background-color: var(--network-text-color);
+  background-color: var(--network-accent-color);
   border-radius: $border-radius-circle;
   width: fit-content;
   display: flex;
@@ -836,7 +836,7 @@ $card-button-border-height: $border-general-height;
 
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: baseline;
   flex-wrap: wrap;
   gap: $margin-xsmall;
   align-items: flex-start;
@@ -915,15 +915,14 @@ $card-button-border-height: $border-general-height;
 @media #{$breakpoints-medium} {
 
   .card-button__bottom-properties {
-    gap: $margin-small;
+    display: flex;
     flex-direction: row;
     justify-content: flex-start;
+    align-items: baseline;
     flex-wrap: wrap;
-    align-items: center;
     overflow: visible;
     gap: $margin-small;
     margin-bottom: $margin-small;
-
   }
 
   .card-button__head-actions {
@@ -942,7 +941,7 @@ $card-button-border-height: $border-general-height;
 
   .card-max-width {
 
-    max-width: $grid-max-width;
+    max-width: $grid-column-max-width;
 
 
   }

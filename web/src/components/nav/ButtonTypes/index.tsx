@@ -24,45 +24,41 @@ export function ListButtonTypes() {
   const selectedNetwork = useGlobalStore((state: GlobalState) => state.networks.selectedNetwork)
 
   const [types, setTypes] = useState([]);
-  useEffect(() => {
-    if (buttonTypes) {
 
-      setTypes(() => {
-      return buttonTypes.map((buttonType) => {
+  useEffect(() => {
+    const selectedTypes = filters.helpButtonTypes;
+    if (selectedTypes) {
+      const bttypes = buttonTypes.map((buttonType) => {
         const typeCount = selectedNetwork.buttonTypesCount.find(
           (buttonTypeCount) =>
             buttonTypeCount.type == buttonType.name,
         )?.count;
 
         const disabled = !typeCount;
-
-        return {
-          ...buttonType,
-          caption: `${buttonType.caption}`,
-          selected: false,
-          disabled,
+        if (selectedTypes.indexOf(buttonType.name) > -1) {
+          return { ...buttonType, selected: true, disabled }
         }
-      });
-    });
-
+        return { ...buttonType, selected: false, disabled };
+      })
+      setTypes(() => bttypes)
     }
-  }, [buttonTypes]);
+  }, [filters.helpButtonTypes, buttonTypes])
+    const handleClick = (type) => {
+    // 1. FIX THE CHECK: Check the array, not index [0]
+    // We use optional chaining (?.) to avoid crashing if helpButtonTypes is null
+    const isAlreadySelected = filters.helpButtonTypes?.includes(type);
 
-  useEffect(() => {
-    const selectedTypes = filters.helpButtonTypes;
-    if (selectedTypes) {
-      setTypes(() => types.map((type) => {
-        if (selectedTypes.indexOf(type.name) > -1) {
-          return { ...type, selected: true, }
-        }
-        return { ...type, selected: false };
-      }))
-    }
-  }, [filters.helpButtonTypes])
-  const handleClick = (type) => {
-    const newFilters = { ...filters, helpButtonTypes: [type] }
+    // 2. FIX THE LOGIC: Swap the result
+    // If isAlreadySelected is TRUE -> We want to empty it (Deselect)
+    // If isAlreadySelected is FALSE -> We want to set it (Select)
+    const newFilters = { 
+      ...filters, 
+      helpButtonTypes: isAlreadySelected ? [] : [type] 
+    };
+
     store.emit(new UpdateFilters(newFilters));
-    store.emit(new updateCurrentButton(null))
+    store.emit(new updateCurrentButton(null));
+    
     if (pageName != 'Explore') {
       router.push('/Explore');
     }

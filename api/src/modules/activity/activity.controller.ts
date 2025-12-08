@@ -1,4 +1,5 @@
 import {
+  Body,
   Controller,
   Get,
   Param,
@@ -11,7 +12,7 @@ import { AllowGuest, OnlyRegistered } from '@src/shared/decorator/roles.decorato
 import { User } from '../user/user.entity';
 import { ActivityService } from './activity.service';
 import { ActivityCron } from './activity.cron';
-import { ActivityDtoOut, ActivityMessageDto } from './activity.dto';
+import { ActivityDtoOut, MessageDto } from './activity.dto';
 
 @ApiTags('activity')
 @Controller('activity')
@@ -19,57 +20,23 @@ export class ActivityController {
   constructor(private readonly activityService: ActivityService,
     private readonly activityCron: ActivityCron
     ) {}
-
-  @OnlyRegistered()
-  @Get('messages/search/:query')
-  async messagesSearch(@CurrentUser() user: User, @Param('query') query: string) : Promise<boolean> {
-    console.log('search... ' + query)
-    return true;
-  }
-
-  @OnlyRegistered()
-  @Get('messages/markAllAsRead')
-  async messagesMarkAllAsRead(@CurrentUser() user: User) : Promise<any> {
-    return this.activityService.markAllMessagesAsRead(user.id);
-  }
-
-  @OnlyRegistered()
-  @Get('messages/unread')
-  async messagesUnread(@CurrentUser() user: User) : Promise<ActivityMessageDto[]> {
-    return this.activityService.findMessagesByUserId(user.id, user.locale, false, null);
-  }
   
   @OnlyRegistered()
-  @Get('messages/read/:page')
-  async messagesRead(@CurrentUser() user: User, @Param('page') page: string) : Promise<ActivityMessageDto[]> {
-    return this.activityService.findMessagesByUserId(user.id, user.locale, true, page ? page : 0);
-  }
-  
-
-  @OnlyRegistered()
-  @Get('notifications/search/:query')
-  async notificationsSearch(@CurrentUser() user: User, @Param('query') query: string) : Promise<boolean> {
-    console.log('search... ' + query)
-    return true;
-  }
-  
-  // @OnlyRegistered()
-  // @Get('notifications/markAllAsRead')
-  // async notificationsMarkAllAsRead(@CurrentUser() user: User) : Promise<any> {
-  //   return this.activityService.markAllMessagesAsRead(user.id);
-  // }
-
-
-  // @OnlyRegistered()
-  // @Get('notifications/unread')
-  // async notificationsUnread(@CurrentUser() user: User) : Promise<ActivityDtoOut[]> {
-  //   return this.activityService.findNotificationsByUserId(user.id, user.locale, false, null);
-  // }
-  
-  @OnlyRegistered()
-  @Get('notifications/:page')
+  @Get('activities/:page')
   async notificationsRead(@CurrentUser() user: User, @Param('page') page: string) : Promise<ActivityDtoOut[]> {
-    return this.activityService.findNotificationsByUserId(user.id, user.locale, null, page ? page : 0);
+    return this.activityService.findNotificationsByUserId(user.id, user.locale, page ? page : 0);
+  }
+
+  @OnlyRegistered()
+  @Get('activities/button/:buttonId/:consumerId/:page')
+  async activityButton(@CurrentUser() user: User, @Param('buttonId') buttonId: string, @Param('consumerId') consumerId: string, @Param('page') page: string) : Promise<ActivityDtoOut[]> {
+    return this.activityService.findNotificationByButtonAndUser(user.id, buttonId, consumerId, user.locale, page ? page : 0);
+  }
+  
+  @OnlyRegistered()
+  @Post('sendMessage/:buttonId/:consumerId')
+  async sendMessage(@CurrentUser() user: User, @Body() message: MessageDto, @Param('buttonId') buttonId: string,  @Param('consumerId') consumerId: string){
+    return this.activityService.sendMessage(user.id, consumerId, buttonId, message.message)
   }
 
   @OnlyRegistered()

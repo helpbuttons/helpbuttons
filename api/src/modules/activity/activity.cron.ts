@@ -14,7 +14,6 @@ import translate, {
 import { UserService } from '../user/user.service';
 import { getUrl } from '@src/shared/helpers/mail.helper';
 import { NetworkService } from '../network/network.service';
-import { getButtonActivity, getPostActivity } from './activity.transform';
 
 const outboxConditions = `created_at between now() - INTERVAL '2 day' AND now()`;
 @Injectable()
@@ -70,48 +69,48 @@ export class ActivityCron {
   sendDailyUserOutbox(userId, outbox: Activity[]) {
     return this.userService.findById(userId).then((user) => {
       const activitiesToSend = outbox.map((activity) => {
-        switch (activity.eventName) {
-          case ActivityEventName.NewPost: {
-            const post = getPostActivity(activity.data);
-            const button = post.button;
-            const author = post.author;
-            return {
-              content: translate(user.locale, 'activities.newpost', [
-                post.message,
-                button.title,
-                author.username,
-              ]),
-              link: getUrl(user.locale, `/ButtonFile/${button.id}`),
-              linkCaption: translate(
-                user.locale,
-                'email.buttonLinkCaption',
-              ),
-            };
+        // switch (activity.eventName) {
+        //   case ActivityEventName.NewPost: {
+        //     const post = getPostActivity(activity.data);
+        //     const button = post.button;
+        //     const author = post.author;
+        //     return {
+        //       content: translate(user.locale, 'activities.newpost', [
+        //         post.message,
+        //         button.title,
+        //         author.username,
+        //       ]),
+        //       link: getUrl(user.locale, `/ButtonFile/${button.id}`),
+        //       linkCaption: translate(
+        //         user.locale,
+        //         'email.buttonLinkCaption',
+        //       ),
+        //     };
 
-            // add to email to send...
-            break;
-          }
-          case ActivityEventName.NewButton: {
-            const button = getButtonActivity(activity.data);
-            const interests = user.tags.filter(x => button.tags.includes(x));
+        //     // add to email to send...
+        //     break;
+        //   }
+        //   case ActivityEventName.NewButton: {
+        //     const button = getButtonActivity(activity.data);
+        //     const interests = user.tags.filter(x => button.tags.includes(x));
 
-            return {
-              content: translate(
-                user.locale,
-                'activities.newbuttoninterest',
-                [interests.join(',')],
-              ),
-              link: getUrl(user.locale, `/ButtonFile/${button.id}`),
-              linkCaption: translate(
-                user.locale,
-                'email.buttonLinkCaption',
-              ),
-            };
-            break;
-          }
-          default:
-            return null;
-        }
+        //     return {
+        //       content: translate(
+        //         user.locale,
+        //         'activities.newbuttoninterest',
+        //         [interests.join(',')],
+        //       ),
+        //       link: getUrl(user.locale, `/ButtonFile/${button.id}`),
+        //       linkCaption: translate(
+        //         user.locale,
+        //         'email.buttonLinkCaption',
+        //       ),
+        //     };
+        //     break;
+        //   }
+        //   default:
+        //     return null;
+        // }
       });
       return this.networkService
         .findDefaultNetwork()

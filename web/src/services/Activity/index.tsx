@@ -11,18 +11,16 @@ export class ActivityService {
   public static markAsRead(activityId): Observable<Activity[]> {
     return httpService.post<any>("activity/markAsRead/" + activityId);
   }
-  
-  public static messagesMarkAllAsRead(): Observable<Activity[]> {
-    return httpService.post<any>("activity/messages/markAllAsRead");
-  }
-  public static messagesUnread(): Observable<ActivityMessageDto[]> {
-    return httpService.get<any>("activity/messages/unread");
-  }
-  public static messagesRead(page): Observable<ActivityMessageDto[]> {
-    return httpService.get<any>(`activity/messages/read/${page ? page : 0}`);
+
+  public static activities(page): Observable<ActivityDtoOut[]> {
+    return httpService.get<any>(`activity/activities/${page}`);
   }
 
-  public static notificationsRead(page): Observable<ActivityDtoOut[]> {
-    return httpService.get<any>(`activity/notifications/${page}`);
+
+  public static activitiesButton(buttonId, consumerId, page): Observable<ActivityDtoOut[]> {
+    return httpService.get<any>(`activity/activities/button/${buttonId}/${consumerId}/${page}`);
+  }
+  public static sendMessage(message, buttonId, consumerId){
+    return httpService.post<any>(`activity/sendMessage/${buttonId}/${consumerId}`, {message});
   }
 }
