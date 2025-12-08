@@ -234,9 +234,12 @@ export class AuthService {
     email: string,
     plainPassword: string,
   ): Promise<any> {
-    const user = await this.userService.findOneByEmail(email);
+    let user = await this.userService.findOneByEmail(email);
     if (!user) {
-      return null;
+      user = await this.userService.findByUsername(email);
+      if (!user) {
+        return null;
+      }
     }
 
     const userCredential = await this.userCredentialService.findOne(
