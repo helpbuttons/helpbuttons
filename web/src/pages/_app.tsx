@@ -1,6 +1,6 @@
 import '../styles/app.scss';
 import { useState, useEffect, useRef } from 'react';
-import { Router, useRouter } from 'next/router';
+import router, { Router, useRouter } from 'next/router';
 import NavBottom from 'components/nav/NavBottom'; //just for mobile
 import Alert from 'components/overlay/Alert';
 import { appWithTranslation } from 'next-i18next';
@@ -43,8 +43,8 @@ export default appWithTranslation(MyApp);
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
 
+  const isSetup = useIsSetup();
   const [authorized, setAuthorized] = useState(null);
-  const [isSetup, setIsSetup] = useState(false);
   const [isLoadingUser, setIsLoadingUser] = useState(false);
   const [fetchingNetworkError, setFetchingNetworkError] = useState(false)
   const path = router.asPath.split('?')[0];
@@ -105,12 +105,6 @@ function MyApp({ Component, pageProps }) {
   const config = useConfig(pageProps._config, onFetchingConfigError);
   const selectedNetwork = useSelectedNetwork(pageProps._selectedNetwork, onFetchingNetworkError);
 
-  const setupPaths: string[] = [
-    SetupSteps.CREATE_ADMIN_FORM,
-    SetupSteps.FIRST_OPEN,
-    SetupSteps.NETWORK_CREATION,
-    SetupSteps.SETUP_LOGIN
-  ];
   useEffect(() => {
     if (
       fetchingNetworkError &&
@@ -137,11 +131,6 @@ function MyApp({ Component, pageProps }) {
 
   useEffect(() => {
     setAuthorized(() => false)
-    if (setupPaths.includes(path) || path.startsWith('/LoginClick')) {
-      setIsSetup(() => true);
-    } else {
-      setIsSetup(() => false);
-    }
 
     if (
       config &&
@@ -374,4 +363,28 @@ const useWhichLocale = ({ sessionLocale, networkLocale }) => {
     });
   }, [networkLocale, sessionLocale]);
   return;
+}
+
+export const useIsSetup = () => {
+  const [isSetup, setIsSetup] = useState(false);
+
+  useEffect(() => {
+    const path = router.asPath.split('?')[0];
+  
+    const setupPaths: string[] = [
+      SetupSteps.CREATE_ADMIN_FORM,
+      SetupSteps.FIRST_OPEN,
+      SetupSteps.NETWORK_CREATION,
+      SetupSteps.SETUP_LOGIN
+    ];
+  
+    if (setupPaths.includes(path) || path.startsWith('/LoginClick')) {
+      setIsSetup(() => true);
+    } else {
+      setIsSetup(() => false);
+    }
+  
+  }, [router])
+  
+  return isSetup;
 }

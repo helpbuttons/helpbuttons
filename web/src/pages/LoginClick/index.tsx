@@ -11,6 +11,7 @@ import { RequestNewLoginToken } from 'state/Profile';
 import { alertService } from 'services/Alert';
 import { useRouter } from 'next/router';
 import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
+import { useIsSetup } from 'pages/_app';
 
 export default function LoginClick() {
   const {
@@ -39,6 +40,7 @@ export default function LoginClick() {
     );
   };
 
+  const isSetup = useIsSetup();
   const [params, setParams] = useState([])
   useEffect(() => {
     if(!router.isReady)
@@ -48,6 +50,8 @@ export default function LoginClick() {
     setParams(() => new URLSearchParams(router.query))
   },[router.isReady])
 
+  
+  
   return (
     <>
         <Form
@@ -78,14 +82,17 @@ export default function LoginClick() {
                 contentAlignment={ContentAlignment.center}
                 isSubmitting={isSubmitting}
               />
-              <div className="popup__link" onClick={() => store.emit(new SetMainPopup(MainPopupPage.LOGIN))}>
-                  {t('user.loginWEmail')}
-              </div>
-              <div className="popup__link" onClick={() => store.emit(new SetMainPopup(MainPopupPage.SIGNUP))}>
-                  {t('user.noAccount')}
-              </div>
+              {!isSetup && <>
+                <div className="popup__link" onClick={() => store.emit(new SetMainPopup(MainPopupPage.LOGIN))}>
+                    {t('user.loginWEmail')}
+                </div>
+                <div className="popup__link" onClick={() => store.emit(new SetMainPopup(MainPopupPage.SIGNUP))}>
+                    {t('user.noAccount')}
+                </div>
+              </>}
             </div>
-        </Form>
+
+</Form>
     </>
   );
 }
