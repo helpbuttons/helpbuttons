@@ -398,7 +398,7 @@ function ActivityListHomeInfo ({activities}) {
 function HomeInfoAdministeredBy({ scrollToContact }) {
 
   return (<>
-    <div className="homeinfo-card" ref={scrollToContact}>
+    <div id="Admin" className="homeinfo-card" ref={scrollToContact}>
       <div className="homeinfo-card__header">
         <h3 className="homeinfo-card__header-title">
           <IoHelpOutline/>

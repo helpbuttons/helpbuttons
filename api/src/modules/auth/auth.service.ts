@@ -86,7 +86,6 @@ export class AuthService {
   }
   async signup(signupUserDto: SignupRequestDto): Promise<UserOutDto> {
     let emailVerified = false;
-
     let userRole = Role.registered;
     const userCount = await this.userService.userCount();
     if (userCount < 1) {
@@ -155,7 +154,7 @@ export class AuthService {
     }
     return this.createUser(newUserDto, signupUserDto).
       then((newUser) => {
-        this.sendWelcomeMail(newUser)
+        this.sendWelcomeMail(newUser.name, newUser.email, newUser.locale)
 
         // verify email address
         // if (!newUser.emailVerified && userCount > 1) {
@@ -205,10 +204,11 @@ export class AuthService {
     });
   }
 
-  private sendWelcomeMail(user: User){
+  private sendWelcomeMail(name, to, locale = 'en'){
     this.mailService.sendWelcomeMail({
-      to: user.email,
-      locale: user.locale
+      name,
+      to,
+      locale
     })
   }
   private sendLoginToken(user: User, sendActivation = false) {
