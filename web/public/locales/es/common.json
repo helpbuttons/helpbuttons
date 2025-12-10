@@ -222,7 +222,8 @@
     "deletedType": "Eliminación _helpbutton_",
     "myhelpbuttons": "Mis _helpbuttons_",
     "expiredEventType": "_helpbutton_ terminó",
-    "expiredEventTitle": "'{0}' ha pasado su fecha de finalización el dia {1}, no aparecerá más en la lista pública."
+    "expiredEventTitle": "'{0}' ha pasado su fecha de finalización el dia {1}, no aparecerá más en la lista pública.",
+    "pickOne": "Selecciona una conversación"
   },
   "activitiesWithSubject": {
     "newbutton": "{0} creó _helpbutton_ en {1}",
@@ -556,7 +557,9 @@
     "onceExplain": "Selecciona el día y la hora para tu evento",
     "recurringExplain": "Selecciona días de inicio y final, días de la semana y la hora para tus eventos",
     "afterStart": "Por favor selecciona una fecha/hora posterior a {0}",
-    "beforeEnd": "Por favor selecciona una fecha/hora anterior a {0}"
+    "beforeEnd": "Por favor selecciona una fecha/hora anterior a {0}",
+    "changeToMultipleDates": "Presiona para seleccionar varios días"
+
   },
   "faqs": {
     "title": "Preguntas frecuentes",

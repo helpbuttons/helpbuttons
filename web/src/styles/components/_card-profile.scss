@@ -303,7 +303,7 @@ $avatar-margin: $padding-big;
 }
 
 .card-profile__role {
-  padding-top: $padding-medium;
+  padding: $padding-medium 0;
   display: flex;
   flex-direction: row;
 
@@ -355,7 +355,7 @@ $avatar-margin: $padding-big;
       flex: 0; 
       height: min-content;
       border-radius: $border-radius-circle  ;
-      min-width: $grid-desktop-double-column-height;
+      min-width: $grid-desktop-double-column-left-width;
 
   }
 
@@ -383,7 +383,7 @@ $avatar-margin: $padding-big;
   }
 
  .card-profile__role {
-  padding-top: $padding-huge;
+  padding: $padding-huge 0;
 
  }
 
