@@ -92,9 +92,15 @@ export default function CardButton({ button, buttonTypes, toggleShowReplyFirstPo
               return { src: image, alt: button.description };
             })}
           />
-          <CardButtonFollowerSection
-            button={button}
-          />
+
+          
+          {button.followCount > 0 &&
+            //if you're the owner of the button, open popup with list of users when click, 
+            <CardButtonFollowerSection
+              button={button}
+            />
+          }
+
           <CardButtonAuthorSection
             button={button}
           />
