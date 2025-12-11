@@ -92,7 +92,9 @@ export default function CardButton({ button, buttonTypes, toggleShowReplyFirstPo
               return { src: image, alt: button.description };
             })}
           />
-
+          <CardButtonFollowerSection
+            button={button}
+          />
           <CardButtonAuthorSection
             button={button}
           />
@@ -554,6 +556,57 @@ export function CardButtonAuthorSection({ button }) {
           </div>
         </Link>
       </div>
+      
+    </div>
+  );
+}
+
+export function CardButtonFollowerSection({ button }) {
+  const sessionUser = useGlobalStore((state: GlobalState) => state.sessionUser);
+  const onClick = (e) => {
+    e.preventDefault()
+    if(sessionUser?.id == button.owner.id)
+    {
+      store.emit(new SetMainPopupCurrentProfile(null))
+      router.push('/Profile', undefined, {shallow: true})
+    }else{
+      return;
+    }
+    
+  }
+  return (
+    <div className="card-button__suscribers">
+      <div className="card-button__suscribers__number">
+        <Link href="#" onClick={onClick}>
+          <div className="card-button__name">
+          {t('button.followers',[button.followCount])}
+          </div>
+          <div className="card-button__author-description">
+            <TextFormatted maxChars={600} text={button.owner.description} />
+          </div>
+        </Link>
+      </div>
+      <div className="card-button__suscribers__avatars">
+        <div className="avatar-small">
+          <Link href="#" onClick={onClick}>
+            <ImageWrapper
+              imageType={ImageType.avatarMed}
+              src={button.owner.avatar}
+              alt="Avatar"
+            />
+          </Link>
+        </div>
+        <div className="avatar-small">
+          <Link href="#" onClick={onClick}>
+            <ImageWrapper
+              imageType={ImageType.avatarMed}
+              src={button.owner.avatar}
+              alt="Avatar"
+            />
+          </Link>
+        </div>
+      </div>
+      
       
     </div>
   );

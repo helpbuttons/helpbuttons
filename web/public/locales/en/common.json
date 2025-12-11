@@ -312,7 +312,9 @@
     "placeHodlerCustomAddress": "Write the new name and select place on the map",
     "selectPlace": "Select place on map and save",
     "sendPrivateMessage": "Send private message to {0}",
-    "showMoreTags": "more tags"
+    "showMoreTags": "more tags",
+    "followers": "Suscribed by {0} users."
+
   },
   "user": {
     "login": "Write your credentials",
