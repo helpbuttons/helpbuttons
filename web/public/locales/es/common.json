@@ -336,7 +336,11 @@
     "emptyList": "Cuando publiques, podrás ver tus _helpbuttons_ en esta sección.",
     "timesFollowed":"Seguido",
     "commentsAmount":"Comentado",
-    "loginNotFound": "Usuario o contraseña erróneos"
+    "loginNotFound": "Usuario o contraseña erróneos",
+     "iHaveCode":"Tengo código de invitado",
+    "guestCode":"Código de invitado",
+    "guestCodePlaceHolder":"Escribe tu código aquí",
+    "askForNewCode":"No tengo mi información de invitado"
   },
   "configure": {
     "browsePins": "Mapa con pins de ubicación",
