@@ -272,8 +272,7 @@ function ActivityDetailMessage({ activity }) {
         <div className="message message--you">
           <div className="message__header">
             <div className="message__avatar">
-              {/* <ImageWrapper imageType={ImageType.avatar} src={activity.activityFrom.avatar} alt={"ups"}  /> */}
-              <img src={activity.activityFrom.avatar} alt="avd1rada" className="avatar picture__img"></img>
+              <ImageWrapper imageType={ImageType.avatar} src={activity.activityFrom.avatar} alt={activity.activityFrom.name}  />
             </div>
 
             <div className="message__user-name-container">
