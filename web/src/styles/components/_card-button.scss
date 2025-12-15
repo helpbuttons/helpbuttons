@@ -31,6 +31,32 @@ $card-button-border-height: $border-general-height;
   padding: $padding-big $padding-big $padding-medium $padding-big ;
 }
 
+.card-button__content--layer {
+
+  background-color: red;
+
+}
+
+.card-button__content--expired {
+
+  @extend .card-button-list;
+  position: absolute;
+  background-color: $color-transparent;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: $z-index-base;
+  color: $color-white;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: $font-size-title;
+  font-weight: $font-weight-bolder;
+  transform: rotate(45);
+
+}
 
 .card-button__full-content{
   padding: $padding-huge $padding-huge;

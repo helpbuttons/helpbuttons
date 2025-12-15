@@ -106,7 +106,8 @@ export default function CardButton({ button, buttonTypes, toggleShowReplyFirstPo
 export function CardButtonHeadMedium({ button, buttonType }) {
 
   return (
-    <div className="card-button__content card-button__content--small">
+    <div className="card-button__content card-button__content--small ">
+      <div className='card-button__content--expired'>EXPIRED</div>
       <div className="card-button__header">
         {/* <div className="card-button__avatar">
           <div className="avatar-small">
@@ -325,7 +326,7 @@ export function CardButtonHeadBig({ button, buttonTypes, toggleShowReplyFirstPos
           message={t('moderation.awaitingApproval')}
         />
       )}
-      <div className="card-button__content card-button__full-content">
+      <div className="card-button__content card-button__full-content ">
         <div className="card-button__header">
           <div className="card-button__info">
             <div className="card-button__status">
