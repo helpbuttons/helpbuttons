@@ -19,7 +19,7 @@ export default function LoginClick() {
       if (router?.query?.returnUrl) {
         returnUrl = router.query.returnUrl.toString();
       }
-      alertService.success(t('user.loginSucess'));
+      alertService.success(t('user.loginSucessLink'));
       router.push(returnUrl);
     };
 

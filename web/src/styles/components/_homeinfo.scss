@@ -3,7 +3,7 @@ $info-nets-field-bottom: 90px;
 $info-nets-max-width: $grid-max-width--mobile;
 $info-image-height: 700px;
 $info-content-mobile-bottom-padding: calc( $footer-height-mobile*2 );
-$info-content-head-margin-mobile: 71px;
+$info-content-head-margin-mobile: 70px;
 
 
 
@@ -46,7 +46,6 @@ $info-content-head-margin-mobile: 71px;
 
 .homeinfo__content {
 
-  @extend .form__field;
   margin: auto;
   font-family: inherit;
   padding: 0 0 ;
@@ -54,7 +53,7 @@ $info-content-head-margin-mobile: 71px;
   background-color: transparent;
   width: 100%;
   height: auto;
-  overflow: scroll;
+  overflow: auto;
   box-sizing: border-box;
   // margin-top: $margin-small;
   // margin-bottom: $info-content-mobile-bottom-padding;
@@ -65,7 +64,7 @@ $info-content-head-margin-mobile: 71px;
 .homeinfo-card {
   max-width: -webkit-fill-available;
   max-width: -moz-available;
-  border-radius: $border-radius-basic;
+  border-radius: $border-radius-semicircle;
   background-color: $color-white;
   padding: $padding-big;
   position: relative;
@@ -84,6 +83,10 @@ $info-content-head-margin-mobile: 71px;
   overflow-x: auto;
   overflow-y: hidden;
   width: inherit;
+  background-color: $color-white;
+  border-top: $border-style-basic;
+    border-bottom: $border-style-basic;
+  padding-left: $padding-xsmall;
   
 
   & .list__element {
@@ -93,6 +96,7 @@ $info-content-head-margin-mobile: 71px;
   }
   
 }
+
 
 
 .homeinfo-card__action-bottom {
@@ -106,7 +110,7 @@ $info-content-head-margin-mobile: 71px;
 
 .homeinfo__search-section {
 
-  background-color: $color-corporative;
+  background-color: transparent;
   padding: 0;
   border-radius: 25px 25px 25px 25px;
   width: 100%;
@@ -139,7 +143,6 @@ $info-content-head-margin-mobile: 71px;
   flex-direction: column;
   flex-wrap: nowrap;
   align-items: center;
-  // justify-content: center;
   margin: 0 ;
   min-height: 20rem;
   flex-basis: 100%;
@@ -148,9 +151,21 @@ $info-content-head-margin-mobile: 71px;
 
 }
 
+.homeinfo-card.homeinfo__card--title-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;                     
+  pointer-events: none;          
+  background: linear-gradient(0deg, transparent, $color-gray-transparent 10%) no-repeat;
+  max-width: $grid-column-max-width ;
+  margin: auto;
+
+
+}
+
 .homeinfo__card--slogan-card {
 
-  background-color: $color-gray-transparent;
+  background-color: transparent;
 }
 
 
@@ -167,19 +182,27 @@ $info-content-head-margin-mobile: 71px;
 
   padding: $padding-big;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  border-radius: $border-radius-basic;
+  text-align: center;
+  border-radius: $border-radius-semicircle;
   width: auto;
-  background-color: rgba(255, 255, 255, 0.5);
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
-  border-radius: 8px;
+  // border: $border-style-basic;
+  background-color: transparent;
+  // backdrop-filter: blur(5px);
+  // -webkit-backdrop-filter: blur(5px);
   padding: 15px;
   position: relative;
-  margin: $margin-small $margin-xsmall;
+  margin: auto;
+  top: 0;
   margin-top: 0;
+  max-width: 600px;
+
+    text-shadow: 
+      -15px 0 30px $color-corporative, /* Cyan float left */
+      15px 0 30px $color-secondary;  /* Magenta float right */
+
 
 
 
@@ -187,21 +210,20 @@ $info-content-head-margin-mobile: 71px;
 
 .homeinfo__network-title-text {
 
-  font-size: $font-size-huge;
-  line-height: $font-size-huge;
+  font-size: $font-size-xhuge;
+  line-height: $text-line-height-medium;
   font-weight: $font-weight-bolder;
   display: flex;
   border-radius: $border-radius-basic;
   // background-color: $color-dark-gray;
   padding: $padding-big;
-  color: $color-dark-gray;
+  color: $color-white;
   max-width: 100%;
   align-self: center;
   justify-content: center;
-
-  word-wrap: break-word;
-  word-break: break-word;
-  overflow-wrap: break-word;
+  // word-wrap:normal;
+  word-break:keep-all;
+  // overflow-wrap:normal;
   max-width: 100%; /* Adjust as needed */
 
   &:first-letter {
@@ -222,14 +244,31 @@ $info-content-head-margin-mobile: 71px;
 .homeinfo__network-title-card--buttons {
 
   margin-top: $margin-small;
-  width: fit-content;
+  // width: fit-content;
+
+}
+
+.homeinfo__share {
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  border-radius: $border-radius-circle;
+  width: auto;
+  background-color: $color-dark-gray;
+  backdrop-filter: blur(5px);
+  height: 3em;
+  -webkit-backdrop-filter: blur(5px);
+  position: relative;
+  margin: $margin-xsmall $margin-xsmall;
 
 }
 
 .homeinfo__sections {
   position: relative;
   z-index: $z-index-base;
-  max-width: 840px;
+  max-width: $grid-column-max-width;
   margin: auto;
   flex-grow: 1;
   color: $color-dark-gray;
@@ -240,8 +279,13 @@ $info-content-head-margin-mobile: 71px;
   justify-content:space-around;
   align-items: flex-start;
 
-}
+  -webkit-overflow-scrolling: touch; // Smooth momentum on iOS
+  overscroll-behavior: contain; // Prevent scroll propagation to parents (keeps background stable)
+  
+  // For drag-and-drop: Restrict touch to taps/drags, no panning
+  touch-action: manipulation;
 
+}
 
 
 .homeinfo-card__header {
@@ -249,25 +293,46 @@ $info-content-head-margin-mobile: 71px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-
-  padding-bottom: $padding-small;
   width: 100%;
+  padding-bottom: $padding-big;
 
   
   .homeinfo-card__header-image {
     height: 25px;
     width: 25px;
-    border-radius: 50%;
+    border-radius: $border-radius-circle;
     background-color: $color-gray;
   }
 
 
+}
+
+.homeinfo-card__header--openable {
+
+  padding-bottom: $padding-big;
+
+
+}
+
+.homeinfo-card__header--openable:hover {
+ 
+  cursor: pointer;
+  text-decoration: underline;
+  // padding-bottom: $padding-big;
 
 }
 
 .homeinfo-card__header-title {
-  font-weight: bold;
-  font-size: $font-size-title;
+  font-weight: $font-weight-bold;
+  font-size: $font-size-medium;
+  color: $color-gray;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: $padding-medium;
+
+
+
 }
 
 
@@ -282,9 +347,11 @@ hr {
   padding: $padding-medium 0;
   word-wrap: break-word;
   display: inline-block;
-  font-size: $font-size-medium;
+  font-size: $font-size-general;
   width: 98%;
   max-width: 98%;
+
+
 
 }
 
@@ -309,6 +376,13 @@ hr {
     margin-top: $padding-medium;
     margin-left: unset;
   }
+}
+
+.homeinfo__hashtags--admins {
+
+  pointer-events: none;
+
+
 }
 
 .homeinfo-card__section {
@@ -388,12 +462,6 @@ hr {
 
   }
 
-  .homeinfo__network-title {
-
-    display: none;
-
-  }
-
   .homeinfo-card__controls {
     flex-flow: row nowrap
   }
@@ -406,12 +474,56 @@ hr {
       flex: 0 1 50%;
     }
   }
+
+  .homeinfo-card.homeinfo__card--title-card::before {
+              
+    max-width: $grid-column-max-width ;
+    margin: auto;
+    transform: translateX(-$scrollbar-width/2);
+
+  }
+
 }
 
 
 @media #{$breakpoints-xlarge} {
+
+
+  .homeinfo__network-title-text {
+    font-size: $font-size-xhuge;
+    line-height: $text-line-height-big;
+
+  }
   .homeinfo__bottom {
     bottom: 2%;
+  }
+
+  .homeinfo-card__controls--openable {
+
+    position: absolute;
+    right: -60px;
+    
+  }
+
+  .homeinfo-card__controls--openable::before {
+
+    content: "";
+    width: 6px;
+    position: absolute;
+    height: 10px;
+    top: 30%;
+    left: -5px;
+    border-bottom: $border-style-basic;
+    background: transparent;
+    z-index: 100000;
+
+  }
+
+  .homeinfo-card__controls--openable-right {
+
+    position: absolute;
+    left: -60px;
+    
   }
 
   .homeinfo__container {
@@ -432,16 +544,78 @@ hr {
     // margin-top: -150px;
     padding: $padding-small;
     padding-bottom: 48px;
-    padding-top: $padding-huge;
+    padding-top: $margin-xxbig;
     border-right: $border-style-basic;
     border-left: $border-style-basic;
-    background-color: $color-gray-transparent;
   }
 
   .homeinfo-card {
     margin: 0;
-    padding: $margin-medium;
     margin-bottom: $margin-xsmall;
+        padding: $padding-huge;
+
+  }
+
+  .homeinfo-card--network-description {
+
+    position: fixed;
+    left: -290px;
+    border-radius:  0 $border-radius-semicircle $border-radius-semicircle 0;
+    width: 300px;
+    height: 60%;
+    border: $border-style-basic;
+    padding: $padding-huge;
+    max-height: 60%;
+    min-height: 0;
+    text-overflow: ellipsis;
+    transition: $transition-default-slow;
+
+
+    & span {
+      max-height: 40px;
+      min-height: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+  }
+
+  .homeinfo__description--openable {
+
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 85%;
+
+  }
+
+  .homeinfo-card--opened {
+
+    left: 0px;
+    z-index: $z-index-02;
+
+  }
+
+  .homeinfo-card--activity {
+
+    position: fixed;
+    right: -290px;
+
+    border-radius:   $border-radius-semicircle 0 0 $border-radius-semicircle;
+    width: 300px;
+    height: 60%;
+    border: $border-style-basic;
+    transition: $transition-default-slow;
+    overflow: visible;
+
+
+  }
+
+   .homeinfo-card--opened-right {
+
+    max-width: 20%;
+    right: 0;
+    z-index: $z-index-02;
+
   }
 
 

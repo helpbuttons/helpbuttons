@@ -24,7 +24,7 @@ export default function PopupHeader({children, linkBack = null,linkFwd = null}) 
           <div className="popup__header-left">
             {linkBack &&            
               <div onClick={()=>onClick(linkBack)} className="popup__header-button">
-                <div className="btn-circle__icon">
+                <div className="popup__header-button__icon">
                   <IoArrowBack />
                 </div>
               </div>           
@@ -38,7 +38,7 @@ export default function PopupHeader({children, linkBack = null,linkFwd = null}) 
           <div className="popup__header-right">
             {linkFwd &&
               <div onClick={()=>onClick(linkFwd)} className="popup__header-button">
-                <div className="btn-circle__icon">
+                <div className="popup__header-button__icon">
                   <IoClose />
                 </div>
               </div>

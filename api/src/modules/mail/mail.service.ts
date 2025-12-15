@@ -55,13 +55,21 @@ export class MailService {
     activationUrl: string;
     locale: string
   }) {
+
     return this.networkService.findDefaultNetwork().then((network) => {
+      return network.name;
+    })
+    .catch((err) => {
+      console.log(err)
+      return 'network in configuration'
+    })
+    .then((networkName) => {
       return this.sendWithLink({
         to,
         content: translate(
           locale,
           'email.loginTokenContent',
-          [network.name]
+          [networkName]
         ),
         subject: translate(
           locale,
@@ -73,7 +81,7 @@ export class MailService {
           'email.loginTokenLinkCaption'
         ),
       });
-    });
+    })
   }
   
   private async sendMail({
@@ -108,25 +116,22 @@ export class MailService {
     this.networkService
       .findDefaultNetwork()
       .then((network) => {
+        return {name: network.name, logo: configs().WEB_URL + '/api' + network.logo}
+      })
+      .catch((err) => {
+        console.log(err)
+        console.log('catched, is it in setup?')
+        return {name: 'continue the setup of your network...', logo: 'no'}
+      })
+      .then(({name, logo}) => {
         let from  = configs().from
-        try {
-          from = network.name + configs().from.slice(configs().from.indexOf('<'))
-        }catch(err)
-        {
-          console.log('could not add network name to from')
-        }
+          from = name + configs().from.slice(configs().from.indexOf('<'))
+        
 
         if(!configs().smtpHost)
         {
           console.log('smtp host not set. not sending')
           return;
-        }
-        let logo = 'no logo'
-        try{
-          logo = configs().WEB_URL + '/api' + network.logo
-        }catch(err)
-        {
-          console.log(err)
         }
         return this.mailerService
           .sendMail({
@@ -136,7 +141,7 @@ export class MailService {
             from: from,
             subject: subject,
             template,
-            context: {...context, hostName: configs().hostName, to: to, logo},
+            context: {...context, url: configs().WEB_URL, to: to, logo},
             headers: {'Message-ID': `<${uuid()}@${configs().hostName}>`}
           })
           .then((mail) => {
@@ -149,7 +154,6 @@ export class MailService {
             console.trace();
           });
       })
-      .catch((error) => console.log('getting network error?'));
   }
 
   sendWithLink({
@@ -191,6 +195,38 @@ export class MailService {
           activities,
           subject
       },
+    });
+  }
+
+  sendWelcomeMail({
+    name,
+    to,
+    locale,
+  }: {
+    name: string;
+    to: string;
+    locale: string;
+  }) {
+    return this.networkService.findDefaultNetwork().then((network) => {
+      let template = `welcome/${locale}`
+      const fs = require('fs');
+      if(!fs.existsSync(`${template}.hbs`)){
+        console.log(`${template} not found, changing to 'en'`)
+        template = `welcome/en`
+      }
+      return this.sendMail({
+        to: `${name}<${to}>`,
+        cc: null,
+        bcc: null,
+        subject: translate(locale,'email.welcomeSubject', [network.name]),
+        template,
+        context: {
+          network,
+          locale,
+          url: configs().WEB_URL,
+          name: name,
+        },
+      });
     });
   }
 }

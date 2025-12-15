@@ -6,15 +6,12 @@ import React, {
 import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
 import { MarkerEditorMap } from 'components/map/Map/MarkerSelectorMap';
 import t from 'i18n';
-import { roundCoord, roundCoords } from 'shared/honeycomb.utils';
+import { roundCoord } from 'shared/honeycomb.utils';
 import { FieldCheckbox } from '../FieldCheckbox';
 import PickerField from 'components/picker/PickerField';
-import { minZoom } from 'components/map/Map/Map.consts';
 import { useGeoReverse } from './location.helpers';
-import { IoLocation, IoLocationOutline, IoLocationSharp, IoSearchOutline } from 'react-icons/io5';
+import { IoLocationOutline } from 'react-icons/io5';
 import LocationSearchBar from 'elements/LocationSearchBar';
-import dconsole from 'shared/debugger';
-
 
 export default function FieldLocation({
   validationError,
@@ -32,7 +29,9 @@ export default function FieldLocation({
   setLongitude,
   isCustomAddress,
   setIsCustomAddress,
-  markerPosition
+  markerPosition,
+  onCloseAndSave = (place, close) => { },
+  isLocationKey = false,
 }) {
   const [pickedPosition, setPickedPosition] = useState(markerPosition)
 
@@ -40,7 +39,7 @@ export default function FieldLocation({
   const [showPopup, setShowPopup] = useState(false);
   const [isLoading, setIsLoading] = useState(false)
   const [pickedAddress, setPickedAddress] = useState(markerAddress)
-
+  const [findNewAddress, setFindNewAddress] = useState(false)
   const closeWithoutSaving = () => {
 
     setPickedAddress(() => markerAddress)
@@ -64,6 +63,13 @@ export default function FieldLocation({
           setShowPopup(() => false)
         }
       );
+    } else if (isLocationKey) {
+      onCloseAndSave({ address: pickedAddress, latitude: Number(pickedPosition[0]), longitude: Number(pickedPosition[1]) }, () => {
+        setShowPopup(() => false)
+        setPickedAddress(() => null)
+        setPickedPosition(() => selectedNetwork.exploreSettings.center)
+        setZoom(() => selectedNetwork.exploreSettings.zoom)
+      })
     } else {
       setMarkerAddress(pickedAddress)
       setLatitude(pickedPosition[0])
@@ -76,10 +82,16 @@ export default function FieldLocation({
 
   const onMapClick = (latLng) => {
     setPickedPosition(() => latLng)
-    if (!isCustomAddress) {
-      findAddressFromPosition(latLng)
-    }
+    setFindNewAddress(() => true)
   }
+
+  useEffect(() => {
+    if (!isCustomAddress && findNewAddress) {
+      findAddressFromPosition(pickedPosition)
+    }else{
+      setIsLoading(() => false)
+    }
+  }, [findNewAddress, pickedPosition])
 
   const getLatLngAddress = useGeoReverse()
   const findAddressFromPosition = (latLng) => {
@@ -87,7 +99,6 @@ export default function FieldLocation({
     setIsLoading(() => true)
     if (latLng[0] && latLng[1]) {
       getLatLngAddress(latLng, false, (place) => {
-        dconsole.log('gettings place... ', place)
         setPickedAddress(() => place.formatted)
         setIsLoading(() => false)
       },
@@ -134,7 +145,7 @@ export default function FieldLocation({
       setIsLoading={setIsLoading}
       pickedAddress={pickedAddress}
       setPickedAddress={setPickedAddress}
-      focusPoint={pickedPosition}
+      focusPoint={pickedPosition ? pickedPosition : selectedNetwork.exploreSettings.center}
     />
     <MarkerEditorMap
       toggleLoadingNewAddress={() => setIsLoading(() => true)}
@@ -177,7 +188,7 @@ export function LocationCoordinates({
       {address || (longitude && latitude) ? (
         <>
           {address && <span>{address}</span>}
-          {latitude && longitude && (
+          {(latitude && longitude) && (
             <span>
               {' '}
               ({roundCoord(latitude)},{roundCoord(longitude)})

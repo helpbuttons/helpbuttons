@@ -4,6 +4,7 @@ import { GlobalState, store, useGlobalStore } from 'state';
 import { useEffect, useState } from 'react';
 import { useButtonTypes } from 'shared/buttonTypes';
 import {
+  updateCurrentButton,
   UpdateFilters,
   UpdateFiltersToFilterButtonType,
 } from 'state/Explore';
@@ -23,39 +24,41 @@ export function ListButtonTypes() {
   const selectedNetwork = useGlobalStore((state: GlobalState) => state.networks.selectedNetwork)
 
   const [types, setTypes] = useState([]);
-  useEffect(() => {
-    if (buttonTypes) {
-      setTypes(() => {
-        return buttonTypes.map((buttonType) => {
-          const typeCount = selectedNetwork.buttonTypesCount.find(
-            (buttonTypeCount) =>
-              buttonTypeCount.type == buttonType.name,
-          )?.count;
-          return {
-            ...buttonType,
-            caption: `${buttonType.caption} ${typeCount ? typeCount : 0}`,
-            selected: false,
-          }
-        });
-      });
-    }
-  }, [buttonTypes]);
 
   useEffect(() => {
     const selectedTypes = filters.helpButtonTypes;
     if (selectedTypes) {
-      setTypes(() => types.map((type) => {
-        if (selectedTypes.indexOf(type.name) > -1) {
-          return { ...type, selected: true, }
-        }
-        return { ...type, selected: false };
-      }))
-    }
-  }, [filters.helpButtonTypes])
-  const handleClick = (type) => {
+      const bttypes = buttonTypes.map((buttonType) => {
+        const typeCount = selectedNetwork.buttonTypesCount.find(
+          (buttonTypeCount) =>
+            buttonTypeCount.type == buttonType.name,
+        )?.count;
 
-    const newFilters = { ...filters, helpButtonTypes: [type] }
+        const disabled = !typeCount;
+        if (selectedTypes.indexOf(buttonType.name) > -1) {
+          return { ...buttonType, selected: true, disabled }
+        }
+        return { ...buttonType, selected: false, disabled };
+      })
+      setTypes(() => bttypes)
+    }
+  }, [filters.helpButtonTypes, buttonTypes])
+    const handleClick = (type) => {
+    // 1. FIX THE CHECK: Check the array, not index [0]
+    // We use optional chaining (?.) to avoid crashing if helpButtonTypes is null
+    const isAlreadySelected = filters.helpButtonTypes?.includes(type);
+
+    // 2. FIX THE LOGIC: Swap the result
+    // If isAlreadySelected is TRUE -> We want to empty it (Deselect)
+    // If isAlreadySelected is FALSE -> We want to set it (Select)
+    const newFilters = { 
+      ...filters, 
+      helpButtonTypes: isAlreadySelected ? [] : [type] 
+    };
+
     store.emit(new UpdateFilters(newFilters));
+    store.emit(new updateCurrentButton(null));
+    
     if (pageName != 'Explore') {
       router.push('/Explore');
     }
@@ -64,6 +67,7 @@ export function ListButtonTypes() {
   return (
     <>
       {types.map((buttonType, idx) => {
+        // if (!buttonType.disabled)
         return <div key={idx} className="hashtags__list-item"><BtnButtonType type={buttonType} onClick={handleClick} /></div>
 
       })}
@@ -74,9 +78,10 @@ export function ListButtonTypes() {
 export function BtnButtonType({ type, onClick = (type) => { } }) {
   return (
     <BtnCaption
-      caption={`${type.caption}`}
+      caption={`${type.caption} `}
       selected={type.selected}
       icon={type?.icon}
+      disabled={type.disabled}
       color={type.cssColor}
       onClick={() =>
         onClick(type.name)
@@ -84,6 +89,8 @@ export function BtnButtonType({ type, onClick = (type) => { } }) {
     />
   );
 }
+
+
 
 export function FieldMultiSelectButtonTypes({ selectedTypes, types, handleChange }) {
   return (<FieldMultiSelect

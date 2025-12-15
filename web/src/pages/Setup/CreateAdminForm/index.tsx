@@ -20,10 +20,13 @@ import { Role } from 'shared/types/roles';
 import { setValidationErrors } from 'state/helper';
 import dconsole from 'shared/debugger';
 import { localStorageService, LocalStorageVars } from 'services/LocalStorage';
+import getEnvConfig from 'next/config';
+import ImageWrapper, { ImageType } from 'elements/ImageWrapper';
 
-export default CreateAdminForm;
 
-function CreateAdminForm() {
+export default function CreateAdminForm() {
+  const { publicRuntimeConfig } = getEnvConfig();
+  const adminemail = publicRuntimeConfig.adminemail;
   const {
     handleSubmit,
     formState: { errors, isSubmitting, isDirty, isValid },
@@ -37,7 +40,7 @@ function CreateAdminForm() {
       username: '',
       password: '',
       password_confirm: '',
-      email: '',
+      email: adminemail ? adminemail : '',
       name: '',
       locale: 'en',
       acceptPrivacyPolicy: 'no'
@@ -144,6 +147,7 @@ function CreateAdminForm() {
       <Popup
         title={t('setup.createAdminTitle')}
       >
+        <IllustrationHead title={t('setup.createAdmin')}/>
         <Form
           onSubmit={handleSubmit(onSubmit)}
           classNameExtra="create-admin"
@@ -182,4 +186,21 @@ function CreateAdminForm() {
       </Popup>
     </>
   );
+}
+
+export function IllustrationHead({imageSrc = null, title}) {
+  return (
+      <div className='form__field'>
+          {imageSrc && 
+              <div className='form__illustration'>
+                  <ImageWrapper
+                      imageType={ImageType.formIllustration}
+                      alt={title} src={imageSrc} localUrl={true} />
+              </div>
+          }
+          <div className='form__header'>
+              {title}
+          </div>
+      </div>
+  )
 }

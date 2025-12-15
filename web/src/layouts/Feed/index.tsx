@@ -34,7 +34,7 @@ import { useStore } from 'state';
 import MessageNew from 'components/feed/MessageNew';
 import { PrivacyType } from 'shared/types/privacy.enum';
 import { useToggle } from 'shared/custom.hooks';
-import { ButtonOwnerPhone, CardButtonHeadActions } from 'components/button/CardButton';
+import { ButtonOwnerPhone, CardButtonHeadActions, sendCurrentButtonMessage } from 'components/button/CardButton';
 import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
 import router from 'next/router';
 
@@ -69,13 +69,13 @@ export default function Feed({ button,showReplyFirstPost, toggleShowReplyFirstPo
 
   useEffect(() => {
     reloadPosts();
-  }, [button]);
+  }, []);
 
   const isButtonOwner = sessionUser?.id == button.owner.id;
   const buttonOwnerId = button.owner.id;
 
   return (
-    <div className="feed-container">
+    <div className="feed__board-container">
       <div className="card-button__actions">
         <ButtonOwnerPhone user={button.owner} button={button}/>
 
@@ -85,8 +85,7 @@ export default function Feed({ button,showReplyFirstPost, toggleShowReplyFirstPo
               button={button}
               isButtonOwner={isButtonOwner}
               action={() => {
-                setPrivateMessage(true);
-                toggleShowReplyFirstPost(true);
+                sendCurrentButtonMessage()
               } }
             />
           )}

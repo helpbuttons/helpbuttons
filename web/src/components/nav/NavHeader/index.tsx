@@ -6,7 +6,7 @@ import { useGlobalStore } from 'state';
 import { GlobalState, store } from 'state';
 import NavBottom from '../NavBottom';
 import BrandCard from 'components/map/Map/BrandCard';
-import { ShowDesktopOnly } from 'elements/SizeOnly';
+import { ShowDesktopOnly, ShowMobileOnly } from 'elements/SizeOnly';
 import router from 'next/router';
 import { ListButtonTypes } from '../ButtonTypes';
 import { ExploreMapState, ToggleAdvancedFilters } from 'state/Explore';
@@ -23,30 +23,38 @@ function NavHeader({ selectedNetwork }){
     }
   }
 
+    const IsHomeInfo = pageName == 'HomeInfo';
+    const IsExplorePage = pageName == 'Explore';
+
   return (
-    <div className="nav-header">
-      <div className="nav-header__container">
+    <div className={(IsHomeInfo ? "nav-header--homeinfo " : "" )+ " nav-header"}>
+
+      <div  className={(IsHomeInfo ? "nav-header__container--homeinfo " : "" )+ " nav-header__container"} >
         <ShowDesktopOnly>
           <BrandCard />
         </ShowDesktopOnly>
-        <form className="nav-header__content">
-          <div className="nav-header__content-message">
-            <HeaderSearch
-              toggleAdvancedFilters={toggleAdvancedFilters}
-              selectedNetwork={selectedNetwork}
-              exploreMapState={exploreMapState}
-            />
-          </div>
-        </form>
+        <>
+        {((IsExplorePage || IsHomeInfo )  &&    
+            <form  className={(IsHomeInfo ? "nav-header__content--homeinfo " : "" )+ " nav-header__content"} >
+            <div className="nav-header__content-message">
+              <HeaderSearch
+                toggleAdvancedFilters={toggleAdvancedFilters}
+                selectedNetwork={selectedNetwork}
+                exploreMapState={exploreMapState}
+              />
+            </div>
+          </form>
+          )}  
+       </> 
+
+        
         <ShowDesktopOnly>
           <NavBottom sessionUser={sessionUser} />
         </ShowDesktopOnly>
       </div>
-      <ShowDesktopOnly>
-        <div className="nav-header__filters">
-          <ListButtonTypes/>
-        </div>
-      </ShowDesktopOnly>
+      <div className="nav-header__filters">
+        {(IsExplorePage && <ListButtonTypes/>)}
+      </div>
     </div>
   );
 }

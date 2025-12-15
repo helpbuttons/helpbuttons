@@ -19,11 +19,17 @@ import { User } from '../user/user.entity';
 import { SignupQRRequestDto, SignupRequestDto } from './auth.dto';
 import { AuthService } from './auth.service';
 import { LocalAuthGuard } from './guards/local-auth.guard';
+import { notifyUser } from '@src/app/app.event';
+import { ActivityEventName } from '@src/shared/types/activity.list';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 
 @ApiTags('User')
 @Controller('users')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private eventEmitter: EventEmitter2
+  ) {}
 
   @AllowGuest()
   @Post('signupQR')
@@ -39,11 +45,14 @@ export class AuthController {
   @AllowGuest()
   @Post('signup')
   async signup(@Body() signupUserDto: SignupRequestDto) {
-    return this.authService.signup(signupUserDto).then((accessToken) => {
-      if (typeof accessToken === typeof undefined) {
+    return this.authService.signup(signupUserDto).then((newUser) => {
+      if (typeof newUser === typeof undefined) {
         throw new HttpException('could not create token', HttpStatus.BAD_GATEWAY)
       }
-      return accessToken;
+      // this.notifyAdmins()
+      notifyUser(this.eventEmitter,ActivityEventName.NotifyAdmins,{user: newUser })  
+
+      return newUser;
     });
   }
 

@@ -1,5 +1,5 @@
 $card-notification-background: $color-white;
-$card-notification-border: 1px solid $color-ligth-gray;
+$card-notification-border: $border-style-light;
 $card-notification-box-shadow: $box-shadow-card;
 $card-notification-busca-background: $color-red;
 $card-notification-ofrece-background: $color-green;
@@ -20,9 +20,11 @@ $card-notification-delete-size: 100px;
   border-radius: $border-radius-basic;
   // box-shadow: $card-notification-box-shadow;
   display: block;
-  text-decoration: none; /* remove underline */
+  text-decoration: none; 
   position: relative;
   color: $color-gray;
+
+
 
   a {
     font-weight: $font-weight-bold;
@@ -31,14 +33,14 @@ $card-notification-delete-size: 100px;
 
   &:hover {
 
-    border: 1px solid var(--network-text-color);
-
+    box-shadow: $box-shadow-card;
   }
 }
 
 .card-notification:hover {
  
-  box-shadow: $card-notification-box-shadow;
+  box-shadow: $box-shadow-divs;
+  cursor: pointer;
   
 }
 
@@ -93,7 +95,7 @@ $card-notification-delete-size: 100px;
 
 .card-notification__content {
   display: flex;
-  padding: 1rem;
+  padding: $padding-big;
   position: relative;
 }
 
@@ -131,6 +133,11 @@ $card-notification-delete-size: 100px;
 
 .card-notification__text {
   flex: 0 1 100%;
+  display: flex;
+  flex-direction: column;
+  flex: 1;       
+  min-width: 0;
+  
 }
 
 .card-notification__header {
@@ -156,6 +163,10 @@ $card-notification-delete-size: 100px;
   // flex: 0 1 50%;
   font-weight: $font-weight-light;
   color: $color-med-gray;
+  display: flex;
+  flex-direction: row;
+
+
 }
 
 .card-notification__date {
@@ -312,32 +323,49 @@ $card-notification-delete-size: 100px;
   font-size: $font-size-general;
   padding: 0;
   text-align: left;
-  font-weight: $font-weight-bolder;
   hyphens: auto;
   word-break: keep-all;
+  &:first-letter {
+    text-transform: uppercase;
+  }
+}
+
+.card-notification__title,
+.card-notification__paragraph,
+.card-notification__footer {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .card-notification__name {
+  display: inline-block;
   color: $color-dark-gray;
-  font-weight: $font-weight-bold;
-  font-size: $font-size-small;
-  color: $color-med-gray;
-  font-weight: $font-weight-light;
-
+  font-weight: $font-weight-bolder;
+  font-size: $font-size-general;
   display: flex;
-  color: #8da0a0;
-  line-height: 15px;
-  padding-bottom: 5px;
+  line-height: $line-height-regular;
+  padding-bottom: $padding-medium;
+
+ 
+  
+}
+
+.card-notification__name::first-letter {
+  text-transform: uppercase;
 }
 
 .card-notification__paragraph {
 
-  color: $color-gray;
   text-overflow: ellipsis;
   word-wrap: break-word;
   line-height: $text-line-height-xsmall;
   font-size: $font-size-small;
-  color: $color-gray;
+  font-weight: $font-weight-light;
+  color: $color-dark-gray;
+    &:first-letter {
+    text-transform: uppercase;
+  }
 }
 
 
@@ -364,6 +392,11 @@ $card-notification-delete-size: 100px;
 
 }
 
-.card-notification-comment-focus {
-  border: 2px solid $color-blue;
+.card-notification-comment--focus, .card-notification--selected {
+  border: 2px solid $color-corporative;
+  background-color: $color-corporative;
+}
+
+.card-notification--unread{
+  font-weight: $font-weight-bolder;
 }

@@ -1,6 +1,7 @@
 import CardButtonList, { ButtonLinkType } from "components/list/CardButtonList";
 import t from "i18n";
 import { useEffect } from "react";
+import { IoTrendingUp } from "react-icons/io5";
 import { useButtonTypes } from "shared/buttonTypes";
 import { GlobalState, store, useGlobalStore } from "state";
 import { FindPinnedButtons } from "state/Button";
@@ -20,7 +21,9 @@ export default function HomeInfoPinnedButtons({ }) {
         {(pinnedButtons && pinnedButtons.length > 0) &&
             <div className="homeinfo-card">
                 <div className="homeinfo-card__header">
+                    
                     <h3 className="homeinfo-card__header-title">
+                        <IoTrendingUp/>
                         {t('homeinfo.featured')}
                     </h3>
                 </div>

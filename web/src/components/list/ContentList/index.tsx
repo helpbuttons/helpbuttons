@@ -5,7 +5,7 @@ import router from 'next/router';
 
 import CardButtonList from 'components/list/CardButtonList';
 import t from 'i18n';
-import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
+import Btn, { BtnType, ContentAlignment, IconType } from 'elements/Btn';
 import { useScroll } from 'shared/helpers/scroll.helper';
 import { FindMoreReadMessages } from 'state/Activity';
 import { GlobalState, store } from 'state';
@@ -14,18 +14,33 @@ import { ResetFilters, ToggleAdvancedFilters } from 'state/Explore';
 import { useGlobalStore } from 'state';
 import { isFiltering } from 'components/search/AdvancedFilters/filters.type';
 import dconsole from 'shared/debugger';
+import { IoAccessibility, IoAdd, IoAlert, IoAnalyticsOutline, IoBugOutline, IoBugSharp, IoCloudyNightSharp, IoCloudyOutline, IoFemale, IoFilterOutline, IoRemoveOutline } from 'react-icons/io5';
 
+export function ButtonList({ buttons,
+  buttonTypes,
+  showMap = false,
+  linkType = null }) {
+  const isLoadingButtons = useGlobalStore(
+    (state: GlobalState) => state.explore.map.loading,
+  );
+  const filtered = isFiltering();
+
+  if (!buttons ||
+    buttons?.length < 1) {
+    return (<ButtonsListEmpty isLoadingButtons={isLoadingButtons} buttons={buttons} filtered={filtered}/>)
+  }
+
+  return (<ContentList buttons={buttons} buttonTypes={buttonTypes} showMap={showMap} linkType={linkType}/>)
+}
 export default function ContentList({
   buttons,
   buttonTypes,
   showMap = false,
   linkType = null,
-  ...props
+  isProfileList=false,
 }) {
   const [buttonsSlice, setButtonsSlice] = useState(2);
-  const isLoadingButtons = useGlobalStore(
-    (state: GlobalState) => state.explore.map.loading,
-  );
+
   const { endDivLoadMoreTrigger, noMoreToLoad } =
     useScroll(({ setNoMoreToLoad, setScrollIsLoading }) => {
       setScrollIsLoading(() => true);
@@ -37,34 +52,9 @@ export default function ContentList({
       setScrollIsLoading(() => false);
     });
 
-  if (buttons.length < 1) {
-    return (
-      <>
-        <div className="list__empty-message">
-          {isLoadingButtons && <LoadingWrapper />}
-          {!isLoadingButtons && (
-            <>
-              <div className="list__empty-message--prev">
-                {t('explore.noResults')}
-              </div>
-              <div className="list__empty-message--comment">
-                {t('explore.emptyList')}
-              </div>
-            </>
-          )}
-          <Btn
-            caption={t('explore.createEmpty')}
-            onClick={() => router.push('/ButtonNew')}
-            contentAlignment={ContentAlignment.center}
-          />
-        </div>
-      </>
-    );
-  }
-
   return (
     <>
-      {buttons.slice(0, buttonsSlice).map((btn, i) => (
+      {buttons?.slice(0, buttonsSlice).map((btn, i) => (
         <CardButtonList
           button={btn}
           key={i}
@@ -73,40 +63,97 @@ export default function ContentList({
           linkType={linkType}
         />
       ))}
-      <NoMoreToLoad />
+      {!isProfileList  &&
+        <NoMoreToLoad />
+      }
+      
       {endDivLoadMoreTrigger}
     </>
   );
 }
 
-export function NoMoreToLoad() {
+export function ButtonsListEmpty({isLoadingButtons, buttons, filtered, isProfileList=false}){
+
+  if (buttons?.length < 1) {
+    return (
+      <>
+        <div className="list__empty-message">
+          {isLoadingButtons && <LoadingWrapper />}
+          {!isLoadingButtons && (
+            <>
+              <div className='list__empty-message--img'><IoCloudyOutline/></div>
+              <div className="list__empty-message--prev">
+                {t('explore.noResults')}
+              </div>
+              <div className="list__empty-message--comment">
+                {isProfileList ? (t('user.emptyList')) : (t('explore.emptyList'))}
+              </div>
+            </>
+          )}
+          <div className="list__empty-message--button">
+            {filtered && (
+              <Btn
+                btnType={BtnType.submit}
+                caption={t('common.reset')}
+                iconLeft={IconType.svg}
+                iconLink={<IoFilterOutline/>}
+                onClick={(e) => {
+                  store.emit(new ResetFilters());
+                  store.emit(new ToggleAdvancedFilters(false));
+                }}
+              />
+            )}
+            <Btn
+              btnType={BtnType.corporative}
+              caption={t('explore.createEmpty')}
+              iconLeft={IconType.svg}
+              iconLink={<IoAdd/>}
+              onClick={() => router.push('/ButtonNew')}
+              contentAlignment={ContentAlignment.center}
+            />
+          </div>
+
+        </div>
+      </>
+    );
+  }
+}
+export function NoMoreToLoad({isProfileList=false}) {
   const filtered = isFiltering();
   return (
     <div className="list__empty-message">
       <div className="list__empty-message--comment">
         {t('explore.emptyList')}
       </div>
+      <div className="list__empty-message--button">
+
       {filtered && (
+          <Btn
+            btnType={BtnType.submit}
+            caption={t('common.reset')}
+            iconLink={<IoFilterOutline/>}
+            iconLeft={IconType.svg}
+            onClick={(e) => {
+              store.emit(new ResetFilters());
+              store.emit(new ToggleAdvancedFilters(false));
+            }}
+          />
+        )}
         <Btn
-          btnType={BtnType.splitIcon}
-          caption={t('common.reset')}
+          caption={t('explore.createEmpty')}
+          btnType={BtnType.corporative}
+          iconLink={<IoAdd/>}
+          onClick={() => router.push('/ButtonNew')}
+          iconLeft={IconType.svg}
           contentAlignment={ContentAlignment.center}
-          onClick={(e) => {
-            store.emit(new ResetFilters());
-            store.emit(new ToggleAdvancedFilters(false));
-          }}
         />
-      )}
-      <Btn
-        caption={t('explore.createEmpty')}
-        onClick={() => router.push('/ButtonNew')}
-        contentAlignment={ContentAlignment.center}
-      />
+      </div>
     </div>
   );
 }
 
 export function EndListMessage() {
+    const filtered = isFiltering();
   return (
     <div className="list__empty-message">
       <div className="list__empty-message--prev">
@@ -115,11 +162,27 @@ export function EndListMessage() {
       <div className="list__empty-message--comment">
         {t('explore.emptyList')}
       </div>
-      <Btn
-        caption={t('explore.createEmpty')}
-        onClick={() => router.push('/ButtonNew')}
-        contentAlignment={ContentAlignment.center}
-      />
+      <div className="list__empty-message--button">
+        {filtered && (
+          <Btn
+            btnType={BtnType.submit}
+            caption={t('common.reset')}
+            iconLink={<IoFilterOutline/>}
+            iconLeft={IconType.svg}
+            onClick={(e) => {
+              store.emit(new ResetFilters());
+              store.emit(new ToggleAdvancedFilters(false));
+            }}
+          />
+        )}
+        <Btn
+          caption={t('explore.createEmpty')}
+          iconLeft={IconType.circle}
+          iconLink={<IoAdd/>}
+          onClick={() => router.push('/ButtonNew')}
+          contentAlignment={ContentAlignment.center}
+        />  
+       </div>
     </div>
   );
 }

@@ -8,6 +8,8 @@ import {
   IoHeart,
   IoLogoWhatsapp,
   IoLocationOutline,
+  IoNotificationsOutline,
+  IoNotifications,
 } from 'react-icons/io5';
 import t from 'i18n';
 
@@ -50,10 +52,11 @@ import MarkerViewMap from 'components/map/Map/MarkerSelectorMap';
 import { TagsNav } from 'elements/Fields/FieldTags';
 import { ImageGallery } from 'elements/ImageGallery';
 import Loading from 'components/loading';
-import { SetMainPopupCurrentProfile } from 'state/HomeInfo';
+import { MainPopupPage, SetMainPopup, SetMainPopupCurrentProfile } from 'state/HomeInfo';
 import React from 'react';
 import dconsole from 'shared/debugger';
 import { ButtonPin, ButtonUnpin } from 'state/Button';
+import { SetDraftButton } from 'state/Activity';
 
 export default function CardButton({ button, buttonTypes, toggleShowReplyFirstPost }) {
   const buttonType = useButtonType(button, buttonTypes);
@@ -116,15 +119,14 @@ export function CardButtonHeadMedium({ button, buttonType }) {
         </div> */}
 
         <div className="card-button__info">
-          <div className="card-button__status">
+          <div className="card-button-list__status">
             {buttonType.icon && (
               <div className="card-button__emoji">
                 {buttonType.icon}
               </div>
             )}
             <span
-              className="card-button"
-              style={buttonColorStyle(buttonType.cssColor)}
+              className=""
             >
               {buttonType.caption}
             </span>
@@ -166,6 +168,7 @@ export function CardButtonHeadMedium({ button, buttonType }) {
           )}
           
         <div className="card-button__city card-button__everywhere ">
+          {/* show post count and follow count {button.followCount} | {button.postsCount} */}
           <IoLocationOutline/>
           {button.address}{' '}
           {button?.distance && (
@@ -241,25 +244,6 @@ function CardButtonSubmenu({ button }) {
     if (!canFollowButton(button, sessionUser)) {
       return;
     }
-
-    if (isFollowingButton(button, sessionUser)) {
-      return (
-        <CardSubmenuOption
-          onClick={() => {
-            followButton(button.id);
-          }}
-          label={t('button.follow')}
-        />
-      );
-    }
-    return (
-      <CardSubmenuOption
-        onClick={() => {
-          unFollowButton(button.id);
-        }}
-        label={t('button.unfollow')}
-      />
-    );
   };
   return (
     <CardSubmenu>
@@ -300,19 +284,15 @@ function CardButtonSubmenu({ button }) {
   );
 }
 
-function SendMessageButton({toggleShowReplyFirstPost, sessionUser})
+function SendMessageButton({toggleShowReplyFirstPost})
 {
-  if(!sessionUser)
-  {
-    return ;
-  }
   return <Btn
           btnType={BtnType.smallCircle}
           contentAlignment={ContentAlignment.center}
           iconLeft={IconType.circle}
           iconLink={<IoMailOutline />}
           onClick={()=> {
-            toggleShowReplyFirstPost(true)
+            sendCurrentButtonMessage()
         }}
         />
 }
@@ -324,7 +304,6 @@ export function CardButtonHeadBig({ button, buttonTypes, toggleShowReplyFirstPos
     false,
   );
   const [showMap, setShowMap] = useState(true);
-
   return (
     <>
       <div className='card-button__head-actions'>
@@ -332,7 +311,7 @@ export function CardButtonHeadBig({ button, buttonTypes, toggleShowReplyFirstPos
           button={button}
           sessionUser={sessionUser}
         />
-        <SendMessageButton toggleShowReplyFirstPost={toggleShowReplyFirstPost} sessionUser={sessionUser}/>
+        {sessionUser && !isButtonOwner(sessionUser, button) && <SendMessageButton toggleShowReplyFirstPost={toggleShowReplyFirstPost} sessionUser={sessionUser}/>}
         
         <CardButtonSubmenu button={button} />
       </div>
@@ -354,8 +333,7 @@ export function CardButtonHeadBig({ button, buttonTypes, toggleShowReplyFirstPos
                 <div className="card-button__emoji">{icon}</div>
               )}
               <span
-                className="card-button__status"
-                style={buttonColorStyle(cssColor)}
+                className=""
               >
                 {caption}
               </span>
@@ -370,18 +348,19 @@ export function CardButtonHeadBig({ button, buttonTypes, toggleShowReplyFirstPos
         <div className="card-button__paragraph">
           <TextFormatted text={button.description} />
         </div>
+        {/* REMOVING TAGS FOR NOW TO TEST BEHAVIOUR FOR CLEANER CARD LOOK - REVISE IN THE FUTURE
         <div className="card-button__hashtags">
           <TagsNav tags={button.tags} />
-        </div>
+        </div> */}
 
         <div className="card-button__bottom-properties">
           {customFields && customFields.length > 0 && (
-            <>
+            <div className='card-button__price--button-page'>
               <CardButtonCustomFields
                 customFields={customFields}
                 button={button}
               />
-            </>
+            </div>
           )}
           <div
             className={
@@ -445,7 +424,8 @@ function ExpiringAlert({
 
 export function ButtonOwnerPhone({ user, button }) {
   const [phone, setPhone] = useState(null);
-  
+  const sessionUser = useGlobalStore((state: GlobalState) => state.sessionUser);
+
   const showPhone = () => {
     store.emit(
         new GetPhone(
@@ -462,7 +442,7 @@ export function ButtonOwnerPhone({ user, button }) {
   }
   return (
     <>
-      {user?.publishPhone && (
+      {user?.hasPhone && (
         <>
           {!phone && 
             <Btn
@@ -523,7 +503,7 @@ export function CardButtonHeadActions({
       )}
       {button.hearts && !isButtonOwner && (
         <span className="btn-circle__icon">
-          <IoHeartOutline />
+          <IoNotificationsOutline />
           {button.hearts}
         </span>
       )}
@@ -585,32 +565,26 @@ function FollowButtonHeart({ button, sessionUser }) {
     return;
   }
 
-  if (isFollowingButton(button, sessionUser)) {
+  if (!button.isFollowing) {
     return (
-      <div className='card-button__follow-wrap'>
-        {t('button.followme')}
         <Btn
-          btnType={BtnType.iconActions}
+          btnType={BtnType.smallCircle}
           contentAlignment={ContentAlignment.center}
-          iconLink={<IoHeartOutline />}
+          iconLink={<IoNotificationsOutline />}
           iconLeft={IconType.circle}
           onClick={() => followButton(button.id)}
         />
-      </div>  
     );
   }
 
   return (
-    <div className='card-button__follow-wrap'>
-      {t('button.following')}
       <Btn
-        btnType={BtnType.iconActions}
+        btnType={BtnType.smallCircle}
         contentAlignment={ContentAlignment.center}
-        iconLink={<IoHeart />}
+        iconLink={<IoNotifications />}
         iconLeft={IconType.circle}
         onClick={() => unFollowButton(button.id)}
       />
-    </div>  
   );
 }
 
@@ -623,10 +597,6 @@ const canFollowButton = (button, user) => {
     return false;
   }
   return true;
-};
-
-const isFollowingButton = (button, user) => {
-  return button.followedBy.indexOf(user.id) < 0;
 };
 
 const followButton = (buttonId) => {
@@ -656,4 +626,11 @@ function isButtonOwner(sessionUser, button) {
   return (
     sessionUser && sessionUser.username == button.owner.username
   );
+}
+
+
+export const sendCurrentButtonMessage = () => {
+  store.emit(new SetDraftButton())
+  store.emit(new SetMainPopup(MainPopupPage.HIDE))
+  router.push(`/Activity?draft=true`)
 }

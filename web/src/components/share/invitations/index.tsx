@@ -8,7 +8,7 @@ import {
   StyleSheet,
   Image,
 } from '@react-pdf/renderer';
-import Btn, { IconType } from 'elements/Btn';
+import Btn, { BtnType, IconType } from 'elements/Btn';
 import { IoAdd } from 'react-icons/io5';
 import { PdfIframe, usePdfGenerateBlob } from '../pdf';
 import { getShareLink, makeImageUrl } from 'shared/sys.helper';
@@ -81,18 +81,18 @@ export default function ShareInvitationsForm() {
   return (
         <>
           <div className="form__field">
-            <div className="form__label">
+            <div className="form__explain">
               {t('share.explainInvitations')}
-              
             </div>
-          <Btn
-            onClick={() => {
-              getNewQrCode();
-            }}
-            caption={invitations.length}
-            iconLeft={IconType.svg}
-            iconLink={<IoAdd />}
-          />
+            <Btn
+              onClick={() => {
+                getNewQrCode();
+              }}
+              caption={invitations.length}
+              iconLeft={IconType.svg}
+              iconLink={<IoAdd />}
+              btnType={BtnType.searchPickerField}
+            />
         </div>
 
           {loading && <Loading />}
@@ -155,9 +155,10 @@ const InvitationCard = ({ selectedNetwork, qrCode, qrCodeImage }) => {
       position: 'relative',
       alignContent:'center',
       textAlign: 'center',
+            color:  selectedNetwork.textColor,
+
       paddingBottom:'40px',
       paddingTop:'0',
-
 
     },
     networkLogo: {
@@ -170,6 +171,7 @@ const InvitationCard = ({ selectedNetwork, qrCode, qrCodeImage }) => {
     networkHeader: {
       backgroundColor: selectedNetwork.backgroundColor,
       display: 'flex',
+      
       flexDirection: 'row',
       flexWrap: 'nowrap',
       alignItems: 'center',
@@ -217,6 +219,8 @@ const InvitationCard = ({ selectedNetwork, qrCode, qrCodeImage }) => {
       flexDirection: 'column',
       width: '160px',
       fontSize: '11px',
+      color:  selectedNetwork.textColor,
+
       flexWrap: 'wrap',
       height: 'auto',
       gap: '5px',
@@ -233,6 +237,8 @@ const InvitationCard = ({ selectedNetwork, qrCode, qrCodeImage }) => {
       wordBreak: 'break-all',
       paddingTop: '10px',
       maxWidth: '100%',
+      color:  selectedNetwork.textColor,
+
           // Allow text to wrap to the next line
       // hyphens: 'auto',             // Add hyphenation to break long words
       flexWrap: 'wrap',

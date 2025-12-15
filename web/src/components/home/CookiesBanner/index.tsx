@@ -8,6 +8,16 @@ import { localStorageService, LocalStorageVars } from "services/LocalStorage";
 import { GlobalState, store, useGlobalStore } from "state";
 import { CookiesState, SetCookieState, SetMainPopup } from "state/HomeInfo";
 
+export const handleAcceptCookies = () => {
+  localStorageService.save(LocalStorageVars.COOKIES_ACCEPTANCE, CookiesState.ACCEPTED)
+  store.emit(new SetCookieState(CookiesState.ACCEPTED))
+};
+
+export const handleRejectCookies = () => {
+  localStorageService.save(LocalStorageVars.COOKIES_ACCEPTANCE, CookiesState.REJECTED)
+  store.emit(new SetCookieState(CookiesState.REJECTED))
+}
+
 export default function CookiesBanner() {
 
   const cookiesState = useGlobalStore((state: GlobalState) => state.homeInfo.cookiesState) 
@@ -15,19 +25,8 @@ export default function CookiesBanner() {
 
   useEffect(() => {
     const cookieState = localStorageService.read(LocalStorageVars.COOKIES_ACCEPTANCE) as CookiesState 
-    console.log('cookie is set as ' + cookieState)
     store.emit(new SetCookieState(cookieState ? cookieState : CookiesState.UNREAD))
   }, [])
-  
-  const handleAcceptCookies = () => {
-    localStorageService.save(LocalStorageVars.COOKIES_ACCEPTANCE, CookiesState.ACCEPTED)
-    store.emit(new SetCookieState(CookiesState.ACCEPTED))
-  };
-
-  const handleRejectCookies = () => {
-    localStorageService.save(LocalStorageVars.COOKIES_ACCEPTANCE, CookiesState.REJECTED)
-    store.emit(new SetCookieState(CookiesState.REJECTED))
-  }
 
   useEffect(() => {
     if(sessionUser){
@@ -71,8 +70,7 @@ export default function CookiesBanner() {
 export function AcceptCookiesWarn({cookieState})
 {
   return <>
-          <div>{ cookieState != CookiesState.ACCEPTED && t('user.pleaseAcceptCookies')}</div>
-          <div>{ cookieState == CookiesState.REJECTED && <Link href="#" onClick={() => {store.emit(new SetCookieState(CookiesState.UNREAD))}}>{t('user.showCookiesBanner')}</Link>}</div>
+          <div>{ cookieState != CookiesState.ACCEPTED && <Link href="#" onClick={() => {store.emit(new SetCookieState(CookiesState.UNREAD))}}>{t('user.showCookiesBanner')}</Link>}</div>
         </>
 }
 

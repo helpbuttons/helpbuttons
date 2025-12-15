@@ -3,6 +3,7 @@ import { GeoJson, GeoJsonFeature, Marker, Overlay, Point } from 'pigeon-maps';
 import { GlobalState, store, useGlobalStore } from 'state';
 import {
   RecenterExplore,
+  UpdateExploreSettings,
   UpdateFiltersToFilterButtonType,
   UpdateHexagonClicked, updateCurrentButton,
 } from 'state/Explore';
@@ -18,7 +19,7 @@ import { ShowMobileOnly } from 'elements/SizeOnly';
 import { useStore } from 'state';
 import { showMarkersZoom } from './Map.consts';
 import { Button } from 'shared/entities/button.entity';
-import { MarkerButton } from './MarkerButton';
+import { LocationKeyIcon, MarkerButton } from './MarkerButton';
 import t from 'i18n';
 import { PoweredBy } from 'components/brand/powered';
 import { circleGeoJSON } from 'shared/geo.utils';
@@ -31,7 +32,8 @@ export default function HexagonExploreMap({
   handleBoundsChange,
   exploreSettings,
   selectedNetwork,
-  countFilteredButtons
+  countFilteredButtons,
+  keyLocations = []
 }) {
   const [centerBounds, setCenterBounds] = useState<Point>(null);
   const [geoJsonFeatures, setGeoJsonFeatures] = useState([])
@@ -189,7 +191,7 @@ export default function HexagonExploreMap({
                       strokeWidth: '2',
                       stroke: '#18AAD2',
                       r: '20',
-                      opacity: '0.4',
+                      opacity: '0.2',
                     };
                   }}
                 />
@@ -262,6 +264,21 @@ export default function HexagonExploreMap({
                   );
                 }
               })}
+              
+             {keyLocations?.length > 0 && 
+              keyLocations.map((place, idx) => {
+                return (
+                  <LocationKeyIcon
+                    key={idx}
+                    anchor={[place.latitude, place.longitude]}
+                    offset={[35, 65]}
+                    color={'white'}
+                    title={place.address}
+                    onClick={() => store.emit(new UpdateExploreSettings({zoom: place.zoom, center: [place.latitude, place.longitude]}))}
+                  />
+                );
+              })
+            }
 
             {/* draw clicked hexagon */}
             {!exploreSettings.loading &&
@@ -350,6 +367,7 @@ export default function HexagonExploreMap({
                 <Loading />
               </Overlay>
             )}
+           
           </HbMap>
         </>
       )}

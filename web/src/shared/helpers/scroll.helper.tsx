@@ -1,9 +1,16 @@
 import Loading from "components/loading";
 import { useEffect, useRef, useState } from "react";
 
-export function useScroll(onLoadMore) {
+export function useScroll(onLoadMore, watchThis = null) {
   const [noMoreToLoad, setNoMoreToLoad] = useState(false)
   const [scrollIsLoading, setScrollIsLoading] = useState(false)
+
+  useEffect(() => {
+    if(watchThis)
+    {
+      setNoMoreToLoad(() => false)
+    }
+  }, [watchThis])
 
   const callbackFunction = (entries) => {
     if (scrollIsLoading) {
@@ -54,5 +61,25 @@ export function useScroll(onLoadMore) {
     <br />
     <br />
   </>
-  return { noMoreToLoad, endDivLoadMoreTrigger };
+  return { noMoreToLoad, endDivLoadMoreTrigger, scrollIsLoading };
+}
+
+export function useFocusOn(focusId, id) {
+  const ref = useRef( null );
+  const [focus, setFocus] = useState(false)
+  useEffect(() => {
+    if(focusId == id){
+      setFocus(() => true)
+    }else{
+      setFocus(() => false)
+    }
+  }, [focusId])
+
+  useEffect(() => {
+    if (ref.current) {
+      ref.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [focus]); 
+
+  return {ref, focus}
 }

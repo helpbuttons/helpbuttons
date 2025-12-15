@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import FieldError from "../FieldError";
 import t from "i18n";
+import { IoEye, IoEyeOff, IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 
 interface IFieldPassword {
     label: string,
@@ -18,6 +19,7 @@ const FieldPassword = React.forwardRef(({
     placeholder,
     onChange,
     onBlur,
+    onForgotPass,
     validationError,
     explain,
 }, ref): IFieldPassword => {
@@ -37,23 +39,29 @@ const FieldPassword = React.forwardRef(({
                 className={`form__input ${classNameInput} ${validationError ? 'validation-error' : ''}`} 
                 placeholder={placeholder ? placeholder : label}
             />
+            {showPassword &&
+            <div className="form__input__pass-toggle__wrapper">
+                <div className="form__input__pass-toggle" onClick={() => setShowPassword(!showPassword)}><IoEyeOffOutline/></div>
+            </div>
+            }            
+            {!showPassword &&
+            <div className="form__input__pass-toggle__wrapper">
+                <div className="form__input__pass-toggle" onClick={() => setShowPassword(!showPassword)}><IoEyeOutline/></div>
+            </div>
+            }
             {/* <FieldError validationError={validationError}/> */}
+
             <div className="form__input-subtitle">
 
                 <div className="form__input-subtitle-side">
-                <FieldError validationError={validationError}/> 
+                    <FieldError validationError={validationError}/> 
                 </div>
                 <div className="form__input-subtitle-side">
-                    {showPassword &&
-                        <div onClick={() => setShowPassword(!showPassword)} className="form__input-subtitle--text link">
-                            {t('user.hidePassword')}
-                        </div>
-                    }
-                    {!showPassword &&
-                        <div onClick={() => setShowPassword(!showPassword)} className="form__input-subtitle--text link">
-                            {t('user.showPassword')}
-                        </div>
-                    }
+                   {onForgotPass &&
+                        <div onClick={onForgotPass} className="form__input-subtitle--text link">
+                            {t('user.loginClick')}
+                        </div>                   
+                   }
                 </div>
                 
             </div>

@@ -3,7 +3,7 @@
     "explore": "Explore",
     "create": "Publish",
     "profile": "Profile",
-    "activity": "Activity",
+    "activity": "Messages",
     "faqs": "Faqs",
     "signup": "SignUp",
     "login": "Login",
@@ -19,15 +19,15 @@
     "loading": "...",
     "goToExplore": "Explore _helpbuttons_",
     "install": "Install {0} and receive notifications:",
-    "knowMore": "Know more",
+    "knowMore": "About {0}",
     "goToCreate": "Create _helpbutton_",
     "activity": "Recent Activity",
     "exploreSubtitle": "See & Search the _helpbuttons_ on this map",
     "createSubtitle": "Publish your _helpbuttons_ and collaborate",
     "faqsSubtitle": "Read more about this app",
     "popularHashtags": "Which topics are covered?",
-    "popularHashtagsExplain": "These are the topics created till now. Make your _helpbutton_ to add new topics.",
-    "recommendedHashtags": "Which topics are recomended by the admins?",
+    "popularHashtagsExplain": "These are the most popular topics created till now. Make your _helpbutton_ to add new topics and follow them to receive alerts.",
+    "recommendedHashtags": "Recommended topics",
     "profileSubtitle": "Check your profile",
     "loginSubtitle": "Enter or create your account!",
     "locationDetected": "Do you want to navigate to check _helpbuttons_ in your region?",
@@ -48,20 +48,32 @@
     "share": "Share options",
     "notificationsPermission": "Allow notifications",
     "featured": "Featured",
-    "powered": "Powered by"
+    "powered": "2025 - Powered by",
+    "keyLocations": "Key Spots",
+    "inviteToNetwork": "Share",
+    "inviteCopied": "Link copied to clipboard"
   },
   "share": {
     "header": "Share this app",
     "showSharePopup": "Share this app",
     "shareField": "Choose your share option",
     "shareTypeLabel": "Sharing types",
-    "shareTypeExplain": "Choose the type of share you want to do. If problems, try in desktop.",
+    "shareTypeExplain": "Embed in other sites, connect RSS or generate a pdf with _helpbuttons_",
     "shareExplain": "Select the amount of results you want to show and copy the code to your site",
-    "explainInvitations": "Generate individual invitation cards for your community",
-    "optionIframe": "List Iframe to insert in other sites",
+    "explainInvitations": "Generate individual printable invitation cards for your community",
+    "optionIframe": "Iframe to insert in your site",
+    "optionRss": "Suscribe to Rss feed",
     "optionBulletin": "Printable bulletin",
     "optionInvitations": "Printable invitations",
-    "share": ""
+    "invitePeople": "Invite people",
+    "shareContent": "Share app's content",
+    "invitePeopleExplain":"Copy and share this link to add others to the network",
+    "copyLink": "Copy link",
+    "advancedInviteOptions": "Printable PDF invitations",
+    "printInvites":"Printable pdf invitations",
+    "linkCopied": "{0} copied to clipboard",
+    "copyCode": "Copy code"
+
   },
   "feed": {
     "write": "Write message",
@@ -87,7 +99,7 @@
   },
   "explore": {
     "noResults": "Sorry, there are no results here",
-    "emptyList": "Please browse the map to find more _helpbuttons_",
+    "emptyList": "Please browse the map to find more _helpbuttons_ or:",
     "createEmpty": "Publish",
     "selectedHexagon": "in the selected area",
     "filteredRadius": "in {0} · {1}km",
@@ -96,7 +108,7 @@
     "showMap": "Show Map",
     "showList": "Show List",
     "hideList": "Hide List",
-    "displayInstructions": "Press an hexagon to display _helpbuttons_ info in that area",
+    "displayInstructions": "Press an area to display _helpbuttons_ info in it",
     "both": "Map & List",
     "list": "List",
     "map": "Map",
@@ -134,7 +146,7 @@
     "byEventDate": "By start of event",
     "orderBy": "Order",
     "orderByExplain": "Choose the order in which _helpbuttons_ will appear in the list",
-    "followTagSucess": "{0} has been added to your interests",
+    "followTagsSuccess": "{0} has been added to your interests",
     "filteredSearch": "in filtered search by:",
     "focusedArea": "in framed area",
     "locationLimited": "Limited to {0}, {1}",
@@ -151,6 +163,8 @@
     "smtpUrl": "Smtp url",
     "createAdminTitle": "Create administrator account",
     "welcomeMessage": "Welcome to your _helpbuttons_ instance",
+    "createAdmin": "First step, is create an admin",
+    "configureNetwork": "Customize your site's appearance, topics, post types, and alerts. Add prices, dates, and other modular features to your posts.",
     "welcomeMessageLong": "Next you´ll see your collaborative network description. Create your first network with the options in the next step.",
     "finish": "Finish setup",
     "configureInstanceDescription": "Wizard to help on configuring your network",
@@ -161,7 +175,8 @@
     "smtpHost": "",
     "smtpUser": "",
     "from": "",
-    "connect": ""
+    "connect": "",
+    "needsLogin": "Login to proceed with the configuration of your network"
   },
   "activities": {
     "messages": "Messages",
@@ -178,27 +193,32 @@
     "newprivatecommentType": "Private message",
     "newfollowType": "New Suscription",
     "creatorUpdate": "_helpbutton_ updated",
-    "deletedType": "_helpbutton_ deleted",
+    "deleted": "_helpbutton_ deleted",
     "noactivity": "You have no activity yet! Start creating your _helpbutton_ or interact with others!",
     "markedAllAsRead": "Notifications marked as read",
     "markedAsRead": "Marked as read",
-    "newpost": "You posted in '{0}'",
-    "newcomment": "@{0} replied with a message '{1}'",
-    "newcommentSubject": "Someone commented on your _helpbutton_ '{0}'",
+    "newpost": "New posted created '{0}'",
+    "newcomment": "New comment wrote by {0}: '{1}'",
+    "newcommentOwn": "You wrote a comment '{0}'",
+    "newmention": "You were mentioned in a public conversation. {0}: '{1}'",
+    "newmentionOwn": "You post a new coment in a conversation. '{0}'",
     "newfollow": "{0} is now following your _helpbutton_ {1}",
-    "newfollowing": "your are now following the '{0}'",
-    "newfollowed": "{0} now follows your '{1}'",
+    "newfollowing": "You started following",
+    "newfollowed": "Followed your _helpbutton_",
     "myhelpbuttons": "My _helpbuttons_",
     "deletebutton": "{0} was deleted",
     "expiredEventType": "_helpbutton_ ended",
     "expiredEventTitle": "'{0}' has passed its end date, it won't show no more on the public list.",
     "endorsed": "You have been endorsed by the administration, now you have a 'trusted' badge on your profile",
     "revokeEndorse": "Unfortunately you're 'trusted' badge has been removed",
-    "roleupdate": "Your role has been updated to '{0}'"
-  },
-  "activitiesWithSubject": {
-    "newbutton": "{0} published a new _helpbutton_ in {1}",
-    "newpost": "{0} published a new post in {1}"
+    "roleupdate": "Your role has been updated to '{0}'",
+    "newSignup": "New user '{0}' signed up",
+    "notice": "Notice",
+    "sent": "Message sent!",
+    "writingDraft": "Writing private message to....",
+    "draft": "Draft",
+    "pickOne": "Select one chat",
+    "newbuttonHomeinfo": "New _helpbutton_ "
   },
   "common": {
     "notfound": "No {0} found. Sorry. 🤔",
@@ -212,7 +232,6 @@
     "done": "Done",
     "saveSuccess": "{0} saved",
     "publishTitle": "Publish new {0}",
-    "editTitle": "Edit {0}",
     "next": "Next",
     "choose": "Choose {0}",
     "click": "Click here",
@@ -221,7 +240,8 @@
     "error": "Something went wrong",
     "notFoundMessage": "Page not found or deleted",
     "options": "Options",
-    "edit": "Edit"
+    "edit": "Edit",
+    "show": "Show"
   },
   "button": {
     "title": "_helpbutton_ view",
@@ -257,7 +277,7 @@
     "locationPlaceholder": "Write a place or address",
     "hideAddress": "Hide exact location",
     "follow": "Follow",
-    "unfollow": "Unfollow",
+    "unfollow": "following!",
     "followAlert": "Followed",
     "unfollowAlert": "Unfollowed",
     "unfollowAlertError": "Unfollow Error",
@@ -285,14 +305,14 @@
     "unfollowErrorAlert": "Can`t unfollow now, sorry",
     "extraOptions": "Extra editing options",
     "autoGenerated": ", autogenerated from the description.",
-    "proposeAddress": "Add a missing place in {0}",
+    "proposeAddress": "¿Can't find it? Add or edit a missing place",
     "whatsapp": "Connect in Whatsapp",
-    "followme": "Follow for news",
-    "following": "following!",
     "seeHashtags": "See tags",
     "publishComment": "Publish comment",
     "placeHodlerCustomAddress": "Write the new name and select place on the map",
-    "sendPrivateMessage": "Send private message to {0}"
+    "selectPlace": "Select place on map and save",
+    "sendPrivateMessage": "Send private message to {0}",
+    "showMoreTags": "more tags"
   },
   "user": {
     "login": "Write your credentials",
@@ -318,13 +338,12 @@
     "newPassword": "Type your new password",
     "newPasswordPlaceHolder": "Your new password",
     "passwordMismatch": "passwords won't match",
-    "loginButton": "ENTER",
-    "noAccount": "I don&apos;t have an account",
+    "loginButton": "Enter",
+    "noAccount": "Register as new user",
     "tags": "Your interests",
     "editProfile": "Edit profile",
     "myHelpbuttons": "Your _helpbuttons_",
     "name": "Name",
-    "showWassap": "Enable Whatsapp link",
     "showWassapExplain": "Show a link to your whatsapp app if you want. You need to have public phone enabled.",
     "nameExplain": "This is the name that other users will see",
     "namePlaceHolder": "Type your name",
@@ -336,7 +355,7 @@
     "logout": "Logout",
     "description": "Description",
     "descriptExplain": "Short description of waht you do or what you are",
-    "loginLink": "You have an account",
+    "loginLink": "I have an account",
     "showPassword": "Show Password",
     "hidePassword": "Hide Password",
     "loginWEmail": "Login with password",
@@ -350,6 +369,7 @@
     "receiveNotificationsExplain": "Specify if you want to receive emails with the messages sent to you or relevant activity of the topics and publications that you follow",
     "textReceiveNotifications": "Receive mail notifications",
     "loginSucess": "Login successfuly",
+    "loginSucessLink": "Login successfuly, please <a href='/ProfileEdit'>change your password</a>",
     "unsubscribed": "You will no longer receive this kind of emails",
     "showButtonsProfileLabel": "_helpbuttons_ on my profile page",
     "showButtonsProfileExplain": "Mark if you want to show a list of what you publish in your public profile",
@@ -368,7 +388,7 @@
     "phonePlaceHolder": "i.e. 34699000000",
     "signupOptions": "Extra options",
     "adminPhonePublish": "Publish my phone in the home page",
-    "showWhatsapp": "Show Whatsapp",
+    "showWassap": "Enable Whatsapp link",
     "adminPhonePublishExplain": "You are a network administrator, do you want your phone to be available on the main page?",
     "addSupport": "You're admin, add a phone of contact so people can reach you",
     "deleteProfile": "Delete my account",
@@ -391,12 +411,23 @@
     "endorse": "Endorse",
     "revokeEndorse": "Withdraw endorsement",
     "endorsed": "Trusted",
-    "signupAsGuest": "Signup anonymous",
-    "signupGuestDetails": "Proceed with signup details",
-    "explainPublishAsGuest": "Signup as anonymous, please generate a new code, that you can use it for logging in to check your _helpbuttons_",
-    "generateCode": "Generate new anonymous code",
+    "signupAsGuest": "Participate as guest",
+    "signupGuestDetails": "Proceed with guest details",
+    "explainPublishAsGuest": "To signup as guest, please generate a new login code. You can use it for logging in to check your _helpbuttons_ in the future.",
+    "generateCode": "Generate new guest code",
     "explainUseGuestCode": "Please store this code, it is your only way to keep track of your publications",
-    "explainGuestDetails": "We need some details to complete your signup"
+    "explainGuestDetails": "We need some details to complete your signup",
+    "editUsername": "Edit username",
+    "optionalFields": "Optional fields",
+    "emailRecovery":"Recovery email address",
+    "emailRecoveryExplain":"If you already have an account, login clicking a link we'll send to your email address.",
+    "emptyList": "Your own _helpbuttons_ could be seen in this spot.",
+    "loginNotFound": "User or password not found",
+    "iHaveCode":"I have a guest code",
+    "guestCode":"Guest code",
+    "guestCodePlaceHolder":"Write the code here",
+    "askForNewCode":"I don't have my guest info"
+
   },
   "picker": {
     "headerText": "Choose a location"
@@ -415,7 +446,7 @@
     "onceExplain": "Select date and time for your event",
     "recurringExplain": "Select starting and finish dates, days of the week and time",
     "afterStart": "Please select a time/date after {0}",
-    "beforeEnd": "Please select a time/date after {0}",
+    "beforeEnd": "Please select a time/date before {0}",
     "changeToMultipleDates": "Do you want the event to be multiple days?"
   },
   "validation": {
@@ -450,7 +481,7 @@
     "delete": "Delete",
     "private": "You're sending a private message. Only the destination user will see it.",
     "public": "This comment is public, everyone will see it.",
-    "placeholderWrite": "Write a message in this post",
+    "placeholderWrite": "Write a message",
     "posted": "Comment posted",
     "sendPublic": "Answer",
     "sendPrivate": "Answer privately",
@@ -518,7 +549,7 @@
     "moderation": "Moderation",
     "nomeclaturePluralPlaceHolder": "",
     "setType": "Set _helpbutton_ type properties",
-    "addType": "+ Create _helpbutton_ type",
+    "addType": "Create _helpbutton_ type",
     "areaPicked": "Center: ({0},{1}) zoom: {2}",
     "hideLocationByDefaultLabel": "Exact location protection",
     "hideLocationByDefaultExplain": "Protect exact location in _helpbuttons_ by showing a wide area, users can deactivate this individually.",
@@ -526,7 +557,12 @@
     "requiredLocation": "Please pickup a place in the map for your network",
     "allowGuestCreationLabel": "Allow anonymous signups",
     "allowGuestCreationExplain": "When allowing anonymous signups, is important to remmember that your network will be easier exposed to spam",
-    "allowGuestCreation": "Allow annoymous signup"
+    "allowGuestCreation": "Allow annoymous signup",
+    "showAdvanced": "Show advanced options...",
+    "hideAdvanced": "Hide advanced options...",
+    "locationKeys": "Key Spots",
+    "keyLocationsExplain": "Key spots that will be highlighted in your network. They will appear in the main menus and map for easy access",
+    "addLocationKey": "Add Location"
   },
   "configure": {
     "browsePins": "",
@@ -537,7 +573,7 @@
   "faqs": {
     "title": "Faqs",
     "networkQuestion": "What's {0}",
-    "helpbuttonsQuestion": "What's _helpbuttons_",
+    "helpbuttonsQuestion": "What's Helpbuttons",
     "forQuestion": "What's for",
     "helpbuttonQuestion": "What's a _helpbutton_",
     "networkDescription": "A Network refers to your individual instance of _helpbuttons_. You can create your own network, designate a purpose (such as sharing food, helping animals, caring for elders, etc.) and begin collaborating with any group you want (be it your neighborhood, sports club, village, course mates, etc.).",
@@ -569,7 +605,8 @@
     "1hr": "1 hour",
     "1day": "1 day",
     "1week": "1 week",
-    "expiresIn": "Expires",
+    "setExpiration": "Set expiration period",
+    "expiresIn": "Expires:",
     "clickToCopy": "Copy invitation link",
     "maximumUsageTimes": "Number of usages",
     "nolimit": "Without limit",
@@ -606,7 +643,8 @@
     "activateLinkCaption": "Click here to activate your account",
     "activitySubject": "New activity",
     "buttonLinkCaption": "Click here to open",
-    "dailyOutBox": "There are {0} activities in {1}, {2}"
+    "dailyOutBox": "There are {0} activities in {1}, {2}",
+    "welcomeSubject": "Welcome to {0}"
   },
   "dates": {
     "eachMonthFrom": "of each month from",
@@ -661,7 +699,7 @@
     "pdfDate": "since {0}",
     "since": "Since {0}",
     "filter": "",
-    "noButtons": ""
+    "noButtons": "No _helpbuttons_ found"
   },
   "notificaction": {
     "markedAsRead": "Marked as read"
@@ -673,5 +711,21 @@
   },
   "seo": {
     "embbed": ""
+  },
+  "footer": {
+    "whatIsNetwork": "Know more",
+    "create": "Create your _helpbutton_",
+    "explore": "Explore _helpbuttons_",
+    "privacyPolicy": "Privacy policy",
+    "assistance": "Assistance",
+    "adminSupport": "Admin Support",
+    "securitySupport": "Alert of a safety problem",
+    "sendAProblem": "Send a technical issue",
+    "whatsHelpbuttons": "What's Helpbuttons",
+    "investDonations": "Donate to project",
+    "otherNetworks": "See other networks",
+    "developers": "Developers",
+    "ethicCode": "Ethical principles"
+
   }
 }

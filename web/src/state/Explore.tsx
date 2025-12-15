@@ -24,6 +24,7 @@ import { markerFocusZoom } from 'components/map/Map/Map.consts';
 import _ from 'lodash';
 import { nextElement, previousElement } from 'shared/sys.helper';
 import dconsole from 'shared/debugger';
+import { ButtonEntry } from 'shared/dtos/button.dto';
 
 
 export enum ExploreViewMode {
@@ -33,7 +34,7 @@ export enum ExploreViewMode {
 }
 export interface ExploreState {
   draftButton: any;
-  currentButton: Button;
+  currentButton: ButtonEntry;
   map: ExploreMapState;
   settings: ExploreSettings;
 }
@@ -155,7 +156,6 @@ export class CreateButton implements WatchEvent, UpdateEvent {
       dconsole.log('[CreateButton] update')
       newState.explore.map.filters = defaultFilters
       newState.explore.map.showAdvancedFilters = false
-      newState.explore.settings.forceRefetch = true;
     });
   }
 }
@@ -282,6 +282,11 @@ export class updateCurrentButton implements UpdateEvent {
   public update(state: GlobalState) {
     return produce(state, (newState) => {
       newState.explore.currentButton = this.button;
+      if (this?.button?.hexagon) {
+        newState.explore.settings.hexagonClicked = cellToZoom(this.button.hexagon, state.explore.settings.zoom)
+      } else {
+        newState.explore.settings.hexagonClicked = null
+      }
     });
   }
 }
@@ -295,7 +300,7 @@ export class UpdateFilters implements UpdateEvent {
         newState.explore.settings.zoom = newZoom
         newState.explore.settings.center = this.filters.where.center
       }
-      
+
       let newFilters = this.filters;
       const words = this.filters.query.split(' ')
       const tagsFound = words.map((word) => {
@@ -407,7 +412,7 @@ export class UpdateBoundsFilteredButtons implements UpdateEvent, WatchEvent {
   public constructor(private boundsFilteredButtons: Button[]) { }
 
   public watch(state: GlobalState) {
-    
+
     /** this functionality is used so that when a button type is clicked, and no buttons are found the map will be recentered */
     if (state.explore.map.buttonTypeClicked) {
       store.emit(new ResetButtonTypeClicked())
@@ -443,8 +448,7 @@ export class UpdateBoundsFilteredButtons implements UpdateEvent, WatchEvent {
       newState.explore.settings.forceRefetch = false;
       newState.explore.map.boundsFilteredButtons =
         this.boundsFilteredButtons;
-      if(state.explore.currentButton)
-      {
+      if (state.explore.currentButton) {
         newState.explore.map.boundsFilteredButtons = [state.explore.currentButton]
       }
       newState.explore.map.listButtons = listButtonsFilteredByHexagon(state.explore.settings.hexagonClicked, this.boundsFilteredButtons)
@@ -546,7 +550,7 @@ export class ResetExploreSettings implements UpdateEvent {
   ) { }
   public update(state: GlobalState) {
     return produce(state, (newState) => {
-      newState.explore.settings = { ...state.explore.settings, ...this.newExploreSettings, ...{forceRefetch: true} };
+      newState.explore.settings = { ...state.explore.settings, ...this.newExploreSettings, ...{ forceRefetch: true } };
     })
   }
 }
@@ -636,6 +640,32 @@ export class UpdateExploreViewMode implements UpdateEvent {
   public update(state: GlobalState) {
     return produce(state, (newState) => {
       newState.explore.settings.viewMode = this.viewMode
+    });
+  }
+}
+
+
+export class UpdateListButton implements UpdateEvent {
+  public constructor(
+    private buttonId: string,
+    private attrs,
+  ) { }
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      newState.explore.map.boundsFilteredButtons = []
+      state.explore.map.boundsFilteredButtons.map((entry) => {
+        if (entry.id == this.buttonId) {
+          return { ...entry, ...this.attrs }
+        }
+        return entry
+      })
+
+      newState.explore.map.listButtons = state.explore.map.listButtons.map((entry) => {
+        if (entry.id == this.buttonId) {
+          return { ...entry, ...this.attrs }
+        }
+        return entry
+      })
     });
   }
 }

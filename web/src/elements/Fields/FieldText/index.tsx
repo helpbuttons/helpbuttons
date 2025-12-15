@@ -18,6 +18,7 @@ interface IFieldText {
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
     onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
     onFocus?: (e: React.FocusEvent<HTMLInputElement>) => void;
+    onInputKeyDown?:(e: React.KeyboardEventHandler<HTMLInputElement>) => void;
 }
 
 const FieldText = React.forwardRef<HTMLInputElement, IFieldText>(
@@ -37,6 +38,7 @@ const FieldText = React.forwardRef<HTMLInputElement, IFieldText>(
         maxLength = -1,
         defaultValue,
         children,
+        onInputKeyDown,
       },
       ref: ForwardedRef<HTMLInputElement>
     ) => {
@@ -50,15 +52,15 @@ const FieldText = React.forwardRef<HTMLInputElement, IFieldText>(
           setTextLength(obj.target.value.length);
         }
       };
-  
+   
       return (
-        <div
+          <div
           className={
             "form__field " + (multiInput ? "form__field--noMargin" : "")
           }
-        >
+           >
           {label && <label className="form__label">{label}</label>}
-          <p className="form__explain">{explain}</p>
+          {explain && <p className="form__explain">{explain}</p> }
           <input
             name={name}
             ref={ref}
@@ -72,6 +74,7 @@ const FieldText = React.forwardRef<HTMLInputElement, IFieldText>(
             defaultValue={defaultValue}
             onInput={onInput}
             onFocus={onFocus}
+            onKeyDown={onInputKeyDown}
           />
           <div className="form__input-subtitle">
               {maxLength > 0 && (

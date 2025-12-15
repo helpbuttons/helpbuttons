@@ -110,6 +110,7 @@ export class NetworkService {
           `network.logo ${network.logo} jumbo ${network.jumbo}`,
         );
         await this.networkRepository.insert([network]);
+        await this.userService.setAdminLocale(createDto.locale)
       },
     );
 
@@ -132,6 +133,7 @@ export class NetworkService {
             .then((networks) => {
               if (networks.length < 1) {
                 console.log('no networks found?')
+                console.trace()
                 throw new HttpException(
                   { message: '🙆🏼‍♂️Default network not found' },
                   HttpStatus.NOT_FOUND,
@@ -279,6 +281,7 @@ export class NetworkService {
           defaultNetwork.id,
           removeUndefined(network),
         );
+        await this.userService.setAdminLocale(updateDto.locale)
       },
     );
 

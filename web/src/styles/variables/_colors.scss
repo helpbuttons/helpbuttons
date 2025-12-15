@@ -7,26 +7,32 @@
 // hex value.
 //
 // @author Alex M. Gorgal (@gruncho) <alex@worldx3.com>
+// revision @author Wof <alex@worldx3.com>
 
 // basic
 
 $color-white: #fff;
 $color-black: #0E0E0E;
-$color-gray:  #828282;
+
 $color-gray-transparent: rgba(0,0,0,0.2);
 $color-white-transparent: rgba(255, 255, 255, 0.7);
-$color-gray-btn: #3f3f3f;
+$color-corporative-transparent: color-mix(in srgb, var(--network-background-color), transparent 50%);
 $color-transparent: #3f3b33ad;
+
 $color-ligth-gray: #f0f0f0;
 $color-med-gray: #8da0a0;
+$color-gray:  #828282;
+$color-gray-btn: #3f3f3f;
 $color-dark-gray: #2E2E2E;
-$color-black-fonts: #0E0E0E;
 
 $color-gray-border: #D4D4D4;
+$color-black-fonts: #0E0E0E;
 
 // corporative
 $color-corporative: var(--network-background-color); // yellow
-$color-secondary:  var(--network-text-color);
+$color-secondary:  var(--network-accent-color);
+$color-text-over-corporative:  var(--network-text-over-color);
+
 $color-red: #EA5648;
 $color-green: #19AF96;
 $color-blue: #18AAD2;

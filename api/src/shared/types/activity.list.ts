@@ -1,14 +1,16 @@
 export enum ActivityEventName {
   NewButton = 'new.button',
   NewPost = 'new.post',
+  NewMention = 'new.mention',
   NewPostComment = 'new.post.comment',
   DeleteButton = 'delete.button',
   NewFollowingButton = 'following.button',
-  NewFollowedButton = 'followed.button',
   RenewButton = 'renew.button',
   ExpiredButton = 'expired.button',
   Endorsed = 'user.endorsed',
-  RevokeEndorsed = 'user.revokeEndorsed',
+  EndorseRevoked = 'user.endorseRevoked',
   RoleUpdate = 'user.roleChange',
+  NotifyAdmins = 'admin.notify',
+  Message = 'message',
+  UnfollowButton = 'unfollow.button'
 }
-

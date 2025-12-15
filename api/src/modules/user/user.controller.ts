@@ -35,14 +35,7 @@ export class UserController {
     }
     return {...userClean, t: 'k'}
   }
-
-  @OnlyAdmin()
-  @Get('findExtra/:userId')
-  async findExtra(@Param('userId') userId: string){
-    return await this.userService
-    .findById(userId);
-  }
-
+  
   @OnlyRegistered()
   @Get('invites')
   async invites(@CurrentUser() user: User) {
@@ -124,9 +117,15 @@ export class UserController {
   @Get('revokeEndorse/:userId')
   untrust(@CurrentUser() sessionUser: User, @Param('userId') userId: string) {
     return this.userService.revokeEndorse(userId).then((user) => {
-      notifyUser(this.eventEmitter,ActivityEventName.RevokeEndorsed, {user, sessionUser})
+      notifyUser(this.eventEmitter,ActivityEventName.EndorseRevoked, {user, sessionUser})
     });
   }
 
-  // create new invite.. per ip address ? 
+  @AllowGuest()
+  @Get('/find/:username')
+  async find(@Param('username') username: string) {
+    const user = await this.userService.findByUsername(username, true);
+     return plainToClass(UserExtended, user, { excludeExtraneousValues: true })
+  }
+
 }

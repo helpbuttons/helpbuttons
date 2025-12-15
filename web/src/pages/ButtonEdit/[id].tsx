@@ -92,7 +92,7 @@ export default function ButtonEdit() {
         setValue={setValue}
         isSubmitting={isSubmitting}
         onSubmit={onSubmit}
-        title={t('common.editTitle', ['button'])}
+        title={t('button.edit')}
         clearErrors={clearErrors}
       ></ButtonForm>
     }

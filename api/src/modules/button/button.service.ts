@@ -212,6 +212,7 @@ export class ButtonService {
   async findById(
     id: string,
     includeExpired: boolean = false,
+    currentUser = null,
   ): Promise<Button> {
     let button: Button = await this.buttonRepository.findOne({
       where: { id, ...this.expiredBlockedConditions(includeExpired) },
@@ -223,8 +224,8 @@ export class ButtonService {
         HttpStatus.NOT_FOUND,
       );
     }
-
-    return await this.checkAndSetExpired(button);
+    return await this.checkAndSetExpired(button).then((btn) => this.transformButton(btn, currentUser));
+    // return this.transformButton(button, currentUser)
   }
 
   async update(
@@ -326,7 +327,7 @@ export class ButtonService {
   @UseInterceptors(CacheInterceptor)
   @CacheKey(CacheKeys.FINDH3_CACHE_KEY)
   @CacheTTL(30)
-  async findh3(resolution, hexagons): Promise<Button[]> {
+  async findh3(resolution, hexagons, currentUser: User = null): Promise<Button[]> {
     try {
       if (hexagons && hexagons.length > 1000) {
         throw new HttpException(
@@ -355,7 +356,7 @@ export class ButtonService {
             updated_at: 'DESC',
           },
         })
-        .then((buttons) => {
+        .then((buttons) => { // filter buttons which button type is hidden
           return this.networkService
             .findButtonTypes()
             .then((buttonTypes) => {
@@ -377,12 +378,9 @@ export class ButtonService {
               return btns.filter((btn) => !btn.expired);
             })
             .then((btns) => {
-              return btns.map((btn) => {
-                return {
-                  ...btn,
-                  hasPhone: btn.owner.phone ? true : false,
-                };
-              });
+              return btns.map((btn) => 
+                this.transformButton(btn, currentUser)
+              );
             });
           // return Promise.all(btns)
         });
@@ -392,6 +390,16 @@ export class ButtonService {
     }
   }
 
+  transformButton(btn, currentUser = null) {
+    const isFollowing = currentUser ? btn.followedBy.includes(currentUser.id) : false
+    return {
+      ...btn,
+      postsCount: btn.feed ? btn.feed.length : 0,
+      followCount: btn.followedBy ? btn.followedBy.length : 0,
+      hasPhone: btn.owner.phone ? true : false,
+      isFollowing: isFollowing,
+    };
+  }
   async delete(buttonId: string) {
     this.cacheManager.del(CacheKeys.FINDH3_CACHE_KEY)
     return this.findById(buttonId).then((button) => {
@@ -465,7 +473,7 @@ export class ButtonService {
       button.followedBy.splice(index, 1);
       return await this.buttonRepository.save(button);
     }
-    return true;
+    return button;
   }
 
   findDeletedAndRemoveMedia() {

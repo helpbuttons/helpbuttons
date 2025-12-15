@@ -7,7 +7,6 @@ import {
   IoMap,
   IoMapOutline,
 } from 'react-icons/io5';
-import ContentList from 'components/list/ContentList';
 import t from 'i18n';
 import { AdvancedFiltersSortDropDown } from 'components/search/AdvancedFilters';
 import { GlobalState, store } from 'state';
@@ -25,6 +24,7 @@ import { ShowDesktopOnly, ShowMobileOnly } from 'elements/SizeOnly';
 import { useButtonTypes } from 'shared/buttonTypes';
 import DraggableList from '../DraggableList';
 import { ButtonLinkType } from '../CardButtonList';
+import { ButtonList } from '../ContentList';
 
 function List({
   onLeftColumnToggle,
@@ -136,7 +136,7 @@ function List({
                     : '')
                 }
               >
-                <div className="drag-tab__line"></div>
+                {!isListFullScreen && <span className="drag-tab__line"></span>}
                 {isListOpen && (
                   <AdvancedFiltersSortDropDown
                     className={'dropdown__dropdown-trigger--list'}
@@ -164,7 +164,7 @@ function List({
                 }
               >
                 {buttonTypes?.length > 0 && (
-                  <ContentList
+                  <ButtonList
                     buttons={buttons}
                     buttonTypes={buttonTypes}
                     showMap={showMap}
@@ -213,7 +213,7 @@ function List({
                     (showMap ? '' : 'drag-tab--hide')
                   }
                 >
-                  <span className="drag-tab__line"></span>
+                  {!isListFullScreen && <span className="drag-tab__line"></span>}
                   <div className="drag-tab__icon">
                     <IoList />
                   </div>
@@ -232,7 +232,7 @@ function List({
                     (showMap ? '' : 'drag-tab--hide')
                   }
                 >
-                  <span className="drag-tab__line"></span>
+                  {!isListFullScreen && <span className="drag-tab__line"></span>}
                   <div className="drag-tab__icon">
                     <IoClose />
                   </div>
@@ -248,7 +248,7 @@ function List({
               }
             >
               {buttonTypes?.length > 0 && (
-                <ContentList
+                <ButtonList
                   buttons={buttons}
                   buttonTypes={buttonTypes}
                   showMap={showMap}

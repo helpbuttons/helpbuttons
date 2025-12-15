@@ -22,13 +22,9 @@ $drag-tab-icon-size: 25px;
   margin: 0;
   z-index: $z-index-01;
   margin-bottom: calc( $footer-height-mobile + 70px);
-  // padding: $padding-small $padding-small;
   border-radius: $border-radius-circle $border-radius-circle;
-  // transform: translateY(-35px);
   transition: $transition-default-slow;
-
-  // margin-right: $margin-small;
-
+  color: $color-text-over-corporative;
 
   :hover {
 
@@ -57,18 +53,14 @@ $drag-tab-icon-size: 25px;
   margin: auto;
   height: $drag-tab-line-height;
   left: calc(50% - 10%);
-  top: $margin-xsmall;
+  top: $margin-xxsmall;
 
 }
-
 
 .drag-tab__order {
 
   margin: $margin-small;
 
-}
-
-.drag-tab__list {
 }
 
 .drag-tab__icon {
@@ -78,10 +70,10 @@ $drag-tab-icon-size: 25px;
 
   svg {
     transition: $transition-no;
-    // transform: rotate(-90deg);
     transform-origin: 50% 50%;
     width: $drag-tab-icon-size;
     height: $drag-tab-icon-size;
+    color: $color-text-over-corporative;
   }
 
 }

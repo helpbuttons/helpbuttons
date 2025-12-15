@@ -1,8 +1,8 @@
 .react-timekeeper {
 
     width: 100% !important;
-    border: none;
-    box-shadow: none;
+    border: none !important;
+    box-shadow: none !important;
 
 }
 
@@ -10,11 +10,14 @@
 
     background-color: transparent !important;
 
+
 }
 
 .react-timekeeper__tb-meridiem{
 
-    @extend .btn ;
+    @extend .btn-circle ;
+
+    display: none !important;
 
     background-color: $color-white !important;
     color: $color-black  !important;
@@ -42,4 +45,42 @@
     background-color: $color-black !important;
     color: $color-white  !important;
 
+}
+
+.react-timekeeper__tb-hour {
+
+    color: $color-dark-gray !important;
+
+
+}
+
+.react-timekeeper__tb-hour--active {
+       color: $color-text-over-corporative!important;
+    background-color: $color-corporative;
+    padding: $padding-xsmall $padding-big;
+    border-radius: $border-radius-circle;
+
+}
+
+.react-timekeeper__tb-minute--active {
+       color: $color-text-over-corporative !important;
+    background-color: $color-corporative;
+    padding: $padding-xsmall $padding-big;
+    border-radius: $border-radius-circle;
+
+}
+
+
+.react-timekeeper__top-bar {
+
+    display: flex;
+
+
+    
+}
+
+
+.react-timekeeper__tb-minute-wrapper {
+
+    margin: unset !important;
 }

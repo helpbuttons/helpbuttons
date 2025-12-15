@@ -1,21 +1,5 @@
-//feed page for a determine button (id), you can see the private or group cfeed in this URL
-'use client'
-
-import { GlobalState, store } from 'state';
-import {  useRef } from 'store/Store';
-import ActivityLayout from 'layouts/Activity';
+import ActivitiesUser from "components/feed/Activities/Activity";
 
 export default function Activity() {
-  const sessionUser = useRef(
-    store,
-    (state: GlobalState) => state.sessionUser,
-    false,
-  );
-  return (
-    <>
-       <ActivityLayout
-          sessionUser={sessionUser}
-        />
-    </>
-  );
+  return <ActivitiesUser/>
 }

@@ -13,7 +13,7 @@ import Form from 'elements/Form';
 
 import t, { updateNomeclature } from 'i18n';
 import { useRouter } from 'next/router';
-import { findError, getUrlOrigin } from 'shared/sys.helper';
+import { findError, getUrlOrigin, setLocale } from 'shared/sys.helper';
 // name, description, logo, background image, button template, color pallete, colors
 
 import { FieldColorPick } from 'elements/Fields/FieldColorPick';
@@ -22,6 +22,7 @@ import Accordion from 'elements/Accordion';
 import { FieldCheckbox } from 'elements/Fields/FieldCheckbox';
 import { FieldLanguagePick } from 'elements/Fields/FieldLanguagePick';
 import FieldButtonTemplates from 'components/button/ButtonType/FieldButtonTemplates';
+import { FieldKeySpots } from 'components/map/LocationKey';
 
 export default NetworkForm;
 
@@ -98,7 +99,7 @@ function NetworkForm({
               <b>{getUrlOrigin()}</b>
             </p>
           </div>
-
+          
 
           <Accordion collapsed={hasErrors('defineNetwork')} title={t('configuration.defineNetwork')}>
             <FieldText
@@ -131,33 +132,35 @@ function NetworkForm({
               setValue={setValue}
               setFocus={setFocus}
               {...register('slogan', { required: true })}
-            />
-            <FieldCheckbox
-              name='inviteOnly'
-              label={t('invite.inviteOnlyLabel')}
-              explain={t('invite.inviteOnlyExplain')}
-              defaultValue={watch('inviteOnly')}
-              text={t('invite.inviteOnly')}
-              onChanged={(value) => setValue('inviteOnly', value)}
-            />
+            />            
+            <>
+              <FieldCheckbox
+                name='inviteOnly'
+                label={t('invite.inviteOnlyLabel')}
+                explain={t('invite.inviteOnlyExplain')}
+                defaultValue={watch('inviteOnly')}
+                text={t('invite.inviteOnly')}
+                onChanged={(value) => setValue('inviteOnly', value)}
+              />
 
-            <FieldCheckbox
-              name='requireApproval'
-              label={t('moderation.requireApprovalLabel')}
-              explain={t('moderation.requireApprovalExplain')}
-              defaultValue={watch('requireApproval')}
-              text={t('moderation.requireApproval')}
-              onChanged={(value) => setValue('requireApproval', value)}
-            />
-            <FieldCheckbox
-              name='allowGuestCreation'
-              label={t('configuration.allowGuestCreationLabel')}
-              explain={t('configuration.allowGuestCreationExplain')}
-              defaultValue={watch('allowGuestCreation')}
-              text={t('configuration.allowGuestCreation')}
-              onChanged={(value) => setValue('allowGuestCreation', value)}
-            />
-            <FieldLanguagePick onChange={(value) => setValue('locale',value)} defaultValue={watch('locale')}/>
+              <FieldCheckbox
+                name='requireApproval'
+                label={t('moderation.requireApprovalLabel')}
+                explain={t('moderation.requireApprovalExplain')}
+                defaultValue={watch('requireApproval')}
+                text={t('moderation.requireApproval')}
+                onChanged={(value) => setValue('requireApproval', value)}
+              />
+              <FieldCheckbox
+                name='allowGuestCreation'
+                label={t('configuration.allowGuestCreationLabel')}
+                explain={t('configuration.allowGuestCreationExplain')}
+                defaultValue={watch('allowGuestCreation')}
+                text={t('configuration.allowGuestCreation')}
+                onChanged={(value) => setValue('allowGuestCreation', value)}
+              />
+            </>
+            <FieldLanguagePick onChange={(value) => {setValue('locale',value); setLocale(value)}} defaultValue={watch('locale')}/>
 
             {/* https://github.com/helpbuttons/helpbuttons/issues/290 */}
             {/* <FieldPrivacy
@@ -171,7 +174,7 @@ function NetworkForm({
            </Accordion>
          
            <Accordion collapsed={hasErrors('appearance')} title={t('configuration.customizeAppearance')}>
-
+           <>
              <FieldText
                 name="nomeclature"
                 label={t('configuration.nomeclatureLabel')}
@@ -188,6 +191,7 @@ function NetworkForm({
                 validationError={errors.nomeclaturePlural}
                 {...register('nomeclaturePlural', { required: true })}
               />
+              </>
             <div className="form__field">
                 <label className="form__label">{t('configuration.chooseColors')}</label>
                 <p className="form__explain">{t('configuration.chooseColorsExplain')}</p>
@@ -287,6 +291,7 @@ function NetworkForm({
               value={watch('exploreSettings')}
               markerColor={watch('backgroundColor')}
             />
+            <FieldKeySpots/>
             <FieldCheckbox
               name='hideLocationDefault'
               label={t('configuration.hideLocationByDefaultLabel')}

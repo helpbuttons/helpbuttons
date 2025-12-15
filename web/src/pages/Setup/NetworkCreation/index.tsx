@@ -6,17 +6,20 @@ import { GlobalState, store } from 'state';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { alertService } from 'services/Alert';
-import { SetupSteps } from 'shared/setupSteps';
-import { getLocale } from 'shared/sys.helper';
 import { Role } from 'shared/types/roles';
 import { CreateNetwork, FetchDefaultNetwork } from 'state/Networks';
 import { useRef } from 'store/Store';
 import dconsole from 'shared/debugger';
+import getConfig from 'next/config';
+import { IllustrationHead } from '../CreateAdminForm';
 
 // name, description, logo, background image, button template, color pallete, colors
 export default NetworkCreation;
 
 function NetworkCreation() {
+  const { publicRuntimeConfig } = getConfig();
+  const title = publicRuntimeConfig.title;
+  const description = publicRuntimeConfig.description;
   const {
     handleSubmit,
     formState: { errors, isSubmitting },
@@ -28,15 +31,15 @@ function NetworkCreation() {
     setError,
   } = useForm({
     defaultValues: {
-      name: '',
-      description: '',
+      name: title,
+      description: description,
       logo: '',
       jumbo: '',
       tags: [],
       privacy: 'public',
       address: '',
       exploreSettings: null,
-      buttonTemplates: JSON.parse('[{"name":"offer","caption":"Offer","color":"custom","cssColor":"#FFDD02"},{"name":"need","caption":"Need","color":"custom","cssColor":"#19AF96"},{"caption":"Business","name":"business","cssColor":"#071315","customFields":[]},{"caption":"Event","name":"event","cssColor":"#c5d51b","customFields":[{"type":"event"}]},{"caption":"Selling","name":"selling","cssColor":"#d51bd1","customFields":[{"type":"price"}]}]'),
+      buttonTemplates: JSON.parse(' [ {"name":"offer","caption":"Offer","color":"custom","cssColor":"#FFDD02","icon":"🤗"} , {"name":"need","caption":"Need","color":"custom","cssColor":"#19AF96","icon":"🤕"},{"caption":"Business","name":"business","cssColor":"#071315","customFields":[],"icon":"🤠"},{"caption":"Event","name":"event","cssColor":"#c5d51b","customFields":[{"type":"event"}],"icon":"🥳"},{"caption":"Selling","name":"selling","cssColor":"#d51bd1","customFields":[{"type":"price"}],"icon":"🤑"}] ' ),
       backgroundColor: '#FFDD02',
       textColor: '#0E0E0E',
       inviteOnly: false,
@@ -157,6 +160,7 @@ function NetworkCreation() {
     <>
       {sessionUser?.role == Role.admin && (
         <Popup title={t('setup.configureInstanceTitle')}>
+          <IllustrationHead title={t('setup.configureNetwork')} />
           <NetworkForm
             captionAction={t('setup.finish')}
             handleSubmit={handleSubmit}

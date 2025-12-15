@@ -9,7 +9,6 @@ export const allowedPathsPerRole =
             '/Signup',
             '/Faqs',
             '/',
-            '/ButtonNew',
             '/Show/:btn',
             '/Explore',
             '/Explore/:zoom/:lat/:lng',
@@ -25,17 +24,20 @@ export const allowedPathsPerRole =
             '/Error',
             '/Logout',
             '/HomeInfo',
-            '/Embbed/:number'
+            '/Embbed/:number',
+            '/Show/:buttonId/:messageId'
         ]
     },
     {
         role: Role.registered,
         paths: [
+            '/ButtonNew',
             '/Profile',
             '/Activity',
             '/ProfileEdit',
             '/ButtonEdit/:id',
-            '/ProfileDelete'
+            '/ProfileDelete',
+            '/Profile/Invites'
         ]
     },
     {

@@ -86,7 +86,7 @@ export function FieldAreaMapSettings({
 
   
   const setZoom = (newZoom) => {
-    setMapSettings((prevSettings) => {return {...prevSettings, zoom: newZoom}})
+    setMapSettings((prevSettings) => {return {...prevSettings, zoom: Math.round(newZoom)}})
   }
   const setCenter = (newCenter) => {
     setMapSettings((prevSettings) => {
@@ -114,9 +114,9 @@ export function FieldAreaMapSettings({
     setMapSettings((prevSettings) => {
       if(prevSettings.browseType == BrowseType.HONEYCOMB)
       {
-        return {...prevSettings, center, zoom: zoom, slider: getSliderSettings(zoom, bounds), geometry: circleGeoJSON(center[1],center[0], prevSettings.radius), bounds: bounds, honeyCombFeatures: getBoundsHexFeatures(bounds,zoom)}
+        return {...prevSettings, center, zoom: Math.round(zoom), slider: getSliderSettings(zoom, bounds), geometry: circleGeoJSON(center[1],center[0], prevSettings.radius), bounds: bounds, honeyCombFeatures: getBoundsHexFeatures(bounds,zoom)}
       }
-      return {...prevSettings, center, zoom: zoom, slider: getSliderSettings(zoom, bounds), geometry: circleGeoJSON(center[1],center[0], prevSettings.radius), bounds: bounds}
+      return {...prevSettings, center, zoom: Math.round(zoom), slider: getSliderSettings(zoom, bounds), geometry: circleGeoJSON(center[1],center[0], prevSettings.radius), bounds: bounds}
     })
   }
 
@@ -180,21 +180,7 @@ return (
                 markerColor={markerColor}
               />
                <FieldDefaultViewMode defaultValue={mapSettings.viewMode} onChange={setViewMode}/>
-               <div className="form__field">
-                <div className="form__label">{t('configuration.zoomLevel')}</div>
-                <div className="form__input--slider">
-                  <Slider
-                    min={minZoom}
-                    max={maxZoom}
-                    onChange={(newZoom) => {
-                      setZoom(newZoom)
-                      dconsole.log('change zoom in the map')
-                    }}
-                    value={mapSettings.zoom}
-                  />
-                </div>
-                <div className="form__input-subtitle--text form__input--slider-value">{mapSettings.zoom}</div>
-              </div>
+               <FieldMapZoomSlide zoom={mapSettings.zoom} setZoom={setZoom}/>
               <Btn
                 btnType={BtnType.submit}
                 caption={t('common.save')}
@@ -205,6 +191,20 @@ return (
 )
 }
 
+export function FieldMapZoomSlide({ zoom, setZoom }) {
+  return <div className="form__field">
+    <div className="form__label">{t('configuration.zoomLevel')}</div>
+    <div className="form__input--slider">
+      <Slider
+        min={minZoom}
+        max={maxZoom}
+        onChange={setZoom}
+        value={zoom}
+      />
+    </div>
+    <div className="form__input-subtitle--text form__input--slider-value">{zoom}</div>
+  </div>
+}
 
 function FieldDefaultViewMode({defaultValue, onChange}) {
   return <DropdownField

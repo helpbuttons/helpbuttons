@@ -77,6 +77,10 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
   // flex-grow: 1;
   flex-basis: 100%;
   padding-right: $padding-xsmall;
+  padding-bottom: $padding-xxsmall;
+  padding-top: $padding-xsmall;
+  transition: $transition-default-slow;
+
 
 }
 
@@ -121,18 +125,31 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
   display: flex;
   justify-content: center;
   flex-direction: column;
-  // height: 100%;
+  height: 300px;
   width: 100%;
   margin: auto;
   align-items: center;
   padding: $padding-big;
   font-size: $font-size-small;
+  grid-column: 1 / -1; 
+
+}
+
+.list__empty-message--img{
+
+
+  & svg {
+    height: 80px;
+    width: 80px;
+
+  }
 
 }
 
 .list__empty-message--prev{
 
  font-weight: $font-weight-bold;
+ text-align: center;
 
 }
 
@@ -145,6 +162,16 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
 .list__empty-message--create{
 
   width: 50%;
+
+}
+
+.list__empty-message--button {
+
+  display: flex;
+  flex-direction: column;
+  max-width: 500px;
+  padding-top: $padding-medium;
+  gap: $margin-xsmall;
 
 }
 
@@ -279,6 +306,7 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
     left: auto;
     border-radius: 0;
     padding: 0 0 ;
+    padding-left: $margin-small;
     
   }
 

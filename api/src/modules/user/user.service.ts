@@ -30,7 +30,8 @@ export class UserService {
   ) { }
 
   createUser(user: User) {
-    return this.userRepository.insert([user]);
+    const _user = this.userRepository.create(user);
+    return this.userRepository.save(_user)
   }
 
   isEmailExists(email: string) {
@@ -79,7 +80,6 @@ export class UserService {
     });
   }
   async findCounts(user) {
-
     const q = `SELECT COALESCE(
         (select sum(cardinality("followedBy")) as "followsCount" from button where "ownerId"= $1), 
       0) as "followersCount",
@@ -124,6 +124,9 @@ COALESCE(
     }
 
     delete newUser.center;
+    
+    newUser.hasPhone = newUser.phone ? true : false
+    
     return this.userRepository.update(userId, {
       ...newUser,
       tags: this.tagService.formatTags(newUser.tags),
@@ -182,7 +185,7 @@ COALESCE(
   }
 
   moderationList(user: User, page: number) {
-    return this.userRepository.find({ take: 10, skip: page * 10, order: { name: 'ASC' }, where: { id: Not(user.id) } })
+    return this.userRepository.find({ take: 10, skip: page * 10, order: { name: 'ASC' }})
   }
 
   async unsubscribe(email) {
@@ -249,10 +252,7 @@ COALESCE(
 
   getPhone(userId) {
     return this.findById(userId).then((user) => {
-      if (user.publishPhone) {
-        return user.phone
-      }
-      return ''
+      return user.phone
     });
   }
 
@@ -279,5 +279,30 @@ COALESCE(
     return this.userRepository.update(userId, {
       endorsed: false
     }).then((result) => this.findById(userId));
+  }
+
+  // admin locale should be the same as network
+  public setAdminLocale(locale) {
+    this.entityManager.query(`update public.user set locale = '${locale}' where role = '${Role.admin}'`)
+  }
+
+  async follow(buttonId: string, userId: string) {
+    const user = await this.findById(userId);
+    const index = user.follows.indexOf(buttonId);
+    if (index < 0) {
+      user.follows.push(buttonId);
+      return await this.userRepository.save(user);
+    }
+    return user;
+  }
+
+  async unfollow(buttonId: string, userId: string) {
+    const user = await this.findById(userId);
+    const index = user.follows.indexOf(buttonId);
+    if (index > -1) {
+      user.follows.splice(index, 1);
+      return await this.userRepository.save(user);
+    }
+    return true;
   }
 }

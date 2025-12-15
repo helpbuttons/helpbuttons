@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react';
 import FieldError from '../FieldError';
-import { IoClose } from 'react-icons/io5';
+import { IoAdd, IoClose, IoHeartOutline, IoPencilOutline } from 'react-icons/io5';
 import { tagify } from 'shared/sys.helper';
 import _ from 'lodash';
 import { useStore } from 'state';
 import { GlobalState, store } from 'state';
 import { UpdateFiltersToFilterTag, updateCurrentButton } from 'state/Explore';
 import router from 'next/router';
+import t from 'i18n';
+import Btn, { BtnType, ContentAlignment, IconType } from 'elements/Btn';
 
 export function useTagsList({ tags, setTags }) {
   const onInputChange = (e) => {
@@ -89,6 +91,15 @@ export default function FieldTags({
           e.key === 'Enter' && e.preventDefault();
         }}
       />
+      {input && 
+       <div
+        className="hashtag hashtag--suggestion"
+        onClick={() => addTag(input)}
+        >
+           <IoAdd/>
+          {input}
+        </div>
+      }
       <TagList tags={tags} remove={remove} />
       <AllSuggestedTags word={input.substring(input.lastIndexOf(" ")+1)} maxTags={maxTags} tags={tags} addTag={addTag}/>
       <FieldError validationError={validationError} />
@@ -169,6 +180,7 @@ export function AllSuggestedTags({ word, maxTags, tags, addTag }) {
     (state: GlobalState) => state.networks.selectedNetwork.tags,
   );
 
+  const [numberTags, setNumberTags] = useState(maxTags)
   const [suggestedTags, setSuggestedTags] = useState([]);
   const allSuggestedTags = (sort = false) => {
     if (topTags && allTags && networkTags) {
@@ -211,7 +223,7 @@ export function AllSuggestedTags({ word, maxTags, tags, addTag }) {
         .filter(
           (suggestedTag) => !tags.find((tag) => tag == suggestedTag),
         )
-        .slice(0, maxTags)
+        .slice(0, numberTags)
         .map((tag, idx) => {
           return (
             <div
@@ -223,6 +235,17 @@ export function AllSuggestedTags({ word, maxTags, tags, addTag }) {
             </div>
           );
         })}
+        {(suggestedTags.length > maxTags && numberTags != 1000)  && 
+
+          <Btn
+            btnType={BtnType.smallCircle}
+            contentAlignment={ContentAlignment.center}
+            iconLink={<IoAdd />}
+            iconLeft={IconType.circle}
+            onClick={() => {setNumberTags(1000)}}
+          />
+        
+         }
     </div>
   );
 }

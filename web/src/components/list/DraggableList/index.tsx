@@ -25,14 +25,14 @@ const DraggableList: React.FC<DraggableProps> = ({
   isListFullScreen,
 }) => {
   // Set initial position using `initialPos` or default values
-  const getFullScreenListHeight = () => 68;
+  const getFullScreenListHeight = () => 124;
   const [pos, setPos] = useState<{ x: number; y: number }>({ x: 0, y: getFullScreenListHeight() });
 
   const [dragging, setDragging] = useState<boolean>(false);
   const [rel, setRel] = useState<{ x: number; y: number } | null>(null);
 
   const getClosedListHeight = () => window.innerHeight - 110;
-  const getOpenListHeight = () => window.innerHeight - 360;
+  const getOpenListHeight = () => window.innerHeight - 345;
 
   const functionHandler = (data: number) => {
     if (data < getOpenListHeight()) {
@@ -44,14 +44,14 @@ const DraggableList: React.FC<DraggableProps> = ({
 
   // Update position based on viewMode initially
   useEffect(() => {
-    let initialY = 68; // Default to 68px for LIST mode
+    let initialY = 124; // Default to 68px for LIST mode
     if (viewMode === ExploreViewMode.MAP) {
       initialY = getClosedListHeight(); // Adjust for MAP mode
     } else if (viewMode === ExploreViewMode.BOTH) {
       initialY = getOpenListHeight(); // Adjust for BOTH mode
     
     } else if (viewMode === ExploreViewMode.LIST) {
-      initialY = 68; // Adjust for LIST mode
+      initialY = 124; // Adjust for LIST mode
     }
     setPos({ x: 0, y: initialY });
   }, [viewMode]);
@@ -93,7 +93,7 @@ const DraggableList: React.FC<DraggableProps> = ({
       setDragging(true);
     }
     else if (isListFullScreen) {
-      const targetY = 68;
+      const targetY = 124;
       setPos((prevPos) => ({ ...prevPos, y: targetY }));
       setDragging(true);
     } else {

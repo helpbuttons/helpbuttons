@@ -75,7 +75,7 @@ function Alert({ id, fade }) {
                     <div key={index} className={cssClasses(alert)}>
                         <div className="card-alert__content">
                           <div className="card-alert__icon">{iconShape(alert)}</div>
-                          <span className="card-alert__title" dangerouslySetInnerHTML={{ __html: alert.message }}></span>
+                          <span className="card-alert__title">{alert.message}</span>
                         </div>
                         <Btn
                           btnType={BtnType.smallCircle}

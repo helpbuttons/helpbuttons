@@ -26,7 +26,7 @@ export function handleError(onError, error) {
 }
 
 export function setValidationErrors(validationErrors, setError) {
-  if(validationErrors.length < 1)
+  if(!validationErrors || validationErrors.length < 1)
   {
     return false;
   }

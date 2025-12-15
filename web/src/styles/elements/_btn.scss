@@ -1,8 +1,9 @@
 ///convention: btn is the naming for regular buttons, to avoid conffusion with Buttons the posts of the app.
 $btn-with-icon-icon-width: $icon-width-medium;
 $btn-with-icon-small-icon-width: $icon-width-small;
-$btn-filter-with-icon-icon-width: 15px;
+$btn-filter-with-icon-icon-width: 20px;
 $btn-filter-border: 2px;
+$btn-filter-border-bottom: 4px;
 $btn-background: $color-white;
 $btn-padding: $padding-medium;
 $btn-padding-y: $padding-medium;
@@ -49,6 +50,7 @@ $btn-font-size-medium: $font-size-medium;
   border-right: 1px solid $color-gray-border;
   text-overflow: ellipsis;
   overflow: hidden;
+  min-width: fit-content;
 
 
 }
@@ -83,6 +85,20 @@ $btn-font-size-medium: $font-size-medium;
   margin: 0 $margin-xxsmall ;
   min-height: $btn-filter-height;
 
+  &::after {
+    content: "";
+    position: absolute;
+    height: 8px;
+    background-color: var(--button-color);
+      
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    width: 30%;
+    top:  2px;
+    border-radius: 0 0 $btn-border-radius $btn-border-radius;
+
+  }
+
 
   a {
 
@@ -113,19 +129,22 @@ $btn-font-size-medium: $font-size-medium;
 
   @extend .btn-filter;
   padding: $padding-small;
+  padding-right: $padding-medium;
 
 }
 
 .btn-filter-with-emoji {
 
-  border-width: $btn-filter-border;
-  border-color: var(--button-color);
+  border-width: $btn-filter-border ;
   display: flex;
   align-items: center;
   // padding: 10px 7px 8px 0;
   padding-right: $btn-padding;
   max-width: 100%;
   font-weight: $font-weight-bold;
+  position: relative;
+
+
 
   .btn-with-icon__icon{
 
@@ -134,6 +153,8 @@ $btn-font-size-medium: $font-size-medium;
 
 
   }
+
+
 
 }
 
@@ -192,6 +213,8 @@ $btn-font-size-medium: $font-size-medium;
   border-radius: $btn-border-radius-semicircle;
   margin-right: $btn-filter-icon-margin;
   display: flex;
+  min-width: 0;
+
 
 }
 
@@ -223,7 +246,7 @@ $btn-font-size-medium: $font-size-medium;
   border-radius: $border-radius-circle;
   height: $btn-height;
   font-weight: $font-weight-bold;
-  margin-top: $margin-xsmall;
+  // margin-top: $margin-xsmall;
   width: 100%;
   color: $color-black;
 }
@@ -233,7 +256,7 @@ $btn-font-size-medium: $font-size-medium;
 
 .btn-with-icon {
 
-  gap: $margin-medium;
+  gap: $padding-medium;
 
 }
 
@@ -318,7 +341,7 @@ $btn-font-size-medium: $font-size-medium;
     height: $btn-circle-height;
     background-color: $color-corporative;
     border: none;
-    color: $color-black;
+    color: $color-text-over-corporative;
     margin-top: 0;
 
 }
@@ -348,10 +371,18 @@ $btn-font-size-medium: $font-size-medium;
 
   & svg {
 
-    fill: $color-black;
-    color:  $color-black;
     height: $btn-circle-icon-height;
     width: $btn-circle-icon-height;
+
+  }
+}
+
+.btn-circle__icon--corporative {
+
+  & svg {
+
+    fill: $color-text-over-corporative;
+    color:  $color-text-over-corporative;
 
   }
 }
@@ -438,97 +469,88 @@ $btn-font-size-medium: $font-size-medium;
     }
 
   }
-
-}
-
-.btn,
-.btn-circle,
-.btn-with-icon,
-.btn-filter
-{
   
-  &:hover {
+}
 
-    border-color:  $color-gray;
-    color: $color-white;
-    cursor: pointer;
-    background-color: $color-gray;
+.btn-filter[disabled]{
 
-
-    & svg {
-      color: $color-white;
-      fill: $color-white;
-    }
-
+  &::after {
+    display: none;
   }
 
-
-
-  &:focus {
-
-    background-color: $color-black;
-    color: $color-white;
-    border-color: $color-gray;
-
-    & svg {
-      color: $color-white;
-      fill: $color-white;
-    }
-
-  }
-
-
-  &:active {
-
-    background-color: $color-black;
-    color: $color-white;
-    border-color: $color-black;
-
-    & svg {
-      color: $color-white;
-      fill: $color-white;
-    }
-
-  }
 
 }
 
-@media (hover: none) {
+@media (hover: hover) {
+
   .btn,
   .btn-circle,
   .btn-with-icon,
-  .btn-filter {
-
+  .btn-filter
+  {
+    
     &:hover {
 
       border-color:  $color-gray;
-      color: $color-black;
+      color: $color-white;
       cursor: pointer;
-      background-color: $color-white;
-  
+      background-color: $color-gray;
+
+
       & svg {
-        color: $color-black;
-        fill: $color-black;
+        color: $color-white;
+        fill: $color-white;
       }
-  
+
     }
-  
-    &:focus {
-  
-      background-color: $color-white;
-      color: $color-black;
-      border-color: $color-gray;
-  
-      & svg {
-        color: $color-black;
-        fill: $color-black;
-      }
-  
-    }
+
+
+    // &:active,
+    // &:focus {
+
+    //   // background-color: $color-dark-gray;
+    //   // color: $color-white;
+    //   // border-color: $color-dark-gray;
+
+    //   // & svg {
+    //   //   color: $color-white;
+    //   //   fill: $color-white;
+    //   // }
+
+    // }
+
+
+    // &:active {
+
+    //   background-color: $color-black;
+    //   color: $color-white;
+    //   border-color: $color-black;
+
+    //   & svg {
+    //     color: $color-white;
+    //     fill: $color-white;
+    //   }
+
+    // }
 
   }
 
 }
+
+
+.btn-filter--active {
+
+    background-color: $color-dark-gray;
+    color: $color-white;
+    border-color: $color-dark-gray;
+
+    & svg {
+      color: $color-white;
+      fill: $color-white;
+    } 
+}
+
+
 
 
 //BLACK btn VARIATION
@@ -546,6 +568,7 @@ $btn-font-size-medium: $font-size-medium;
 
   background: $color-corporative;
   border-color: $color-corporative;
+  color: $color-text-over-corporative;
 
 }
 
@@ -641,6 +664,7 @@ $btn-font-size-medium: $font-size-medium;
 
   font-size: $font-size-small;
   margin-top: 0;
+  color: $color-text-over-corporative;
 
 
 } 
@@ -661,6 +685,12 @@ $btn-font-size-medium: $font-size-medium;
 
 
 @media #{$breakpoints-large} {
+
+  .btn-with-icon {
+
+  gap: $margin-medium;
+
+  }
 
   .btn-filter {
 

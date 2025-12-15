@@ -14,7 +14,7 @@ import PickerEventTypeMultipleForm from 'components/picker/PickerEventType/multi
 import FieldError from '../FieldError';
 import PickerEventTypeRecurrentForm, { loadRrules, recurrentToText } from 'components/picker/PickerEventType/recurrent';
 import PickerField from 'components/picker/PickerField';
-import { IoTimeOutline } from 'react-icons/io5';
+import { IoAtCircleOutline, IoCalendarClearOutline, IoCalendarNumberSharp, IoExpandOutline, IoIceCreamOutline, IoRepeat, IoTimeOutline } from 'react-icons/io5';
 
 export default function FieldDate({
   title,
@@ -126,16 +126,19 @@ const EventType = React.forwardRef(
         label: t('eventType.once'),
         explain: t('eventType.onceExplain'),
         type: DateTypes.ONCE,
+        icon: <IoIceCreamOutline/>,
       },
       {
         label: t('eventType.multipleDates'),
         explain: t('eventType.multipleExplain'),
         type: DateTypes.MULTIPLE,
+        icon: <IoExpandOutline/>,
       },
       {
         label: t('eventType.recurring'),
         explain: t('eventType.recurringExplain'),
         type: DateTypes.RECURRENT,
+        icon: <IoRepeat/>,
       },
     ];
     return (
@@ -150,7 +153,7 @@ const EventType = React.forwardRef(
                 value={eventType.type}
                 key={idx}
               >
-                <div className="btn-filter__icon"></div>
+                <div className="btn-filter__icon">{eventType.icon}</div>
                 <div className="btn-with-icon__text">
                   {eventType.label}
                 </div>

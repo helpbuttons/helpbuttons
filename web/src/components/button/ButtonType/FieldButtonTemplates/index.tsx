@@ -171,35 +171,40 @@ const FieldButtonTemplates = forwardRef(
                       iconLink={val.icon}
                       color={val.cssColor}
                     />
-                    <Btn
-                      btnType={BtnType.iconActions}
-                      iconLink={<IoPencilOutline />}
-                      iconLeft={IconType.circle}
-                      contentAlignment={ContentAlignment.center}
-                      onClick={() => edit(val, idx)}
-                    />
-                    {!val.hide && 
+                    <div className='form__list-item__actions'>
                       <Btn
                         btnType={BtnType.iconActions}
-                        iconLink={<IoTrashBinOutline />}
+                        iconLink={<IoPencilOutline />}
                         iconLeft={IconType.circle}
                         contentAlignment={ContentAlignment.center}
-                        onClick={() => {
-                          hideIdx(idx, val)
-                      }}
+                        onClick={() => edit(val, idx)}
                       />
-                    }
-                    {val.hide && 
-                      <Btn
-                        btnType={BtnType.smallCircle}
-                        iconLink={<IoPowerOutline />}
-                        iconLeft={IconType.circle}
-                        contentAlignment={ContentAlignment.center}
-                        onClick={() => {
-                          showIdx(idx, val)
+                      {!val.hide && 
+                        <Btn
+                          btnType={BtnType.iconActions}
+                          iconLink={<IoTrashBinOutline />}
+                          iconLeft={IconType.circle}
+                          contentAlignment={ContentAlignment.center}
+                          onClick={() => {
+                            hideIdx(idx, val)
                         }}
-                      />
-                    }</>
+                        />
+                      }
+                      {val.hide && 
+                        <Btn
+                          btnType={BtnType.smallCircle}
+                          iconLink={<IoPowerOutline />}
+                          iconLeft={IconType.circle}
+                          contentAlignment={ContentAlignment.center}
+                          onClick={() => {
+                            showIdx(idx, val)
+                          }}
+                        />
+                      }
+                    </div>
+
+                    
+                    </>
                 } 
                 
               </div>
@@ -253,7 +258,7 @@ function ButtonTemplateForm({ label, explain, append }) {
   const openPopup = () => setShowPopup(() => true);
   const customFields = watch('customFields')
   return (
-      <PickerField btnType={BtnType.corporative} iconLeft={<IoAdd/>} label={''} explain={''} btnLabel={label} showPopup={showPopup} openPopup={openPopup} closePopup={closePopup}>
+      <PickerField btnType={BtnType.corporative}  iconLeft={IconType.svg} iconLink={<IoAdd/>} label={''} explain={''} btnLabel={label} showPopup={showPopup} openPopup={openPopup} closePopup={closePopup}>
         {/* headerText={t('configuration.setType')} */}
         <>
         {/* <div className="form__input--button-type-field"></div> */}
@@ -297,6 +302,9 @@ function ButtonTemplateForm({ label, explain, append }) {
         }
         <Btn
           caption={t('configuration.addType')}
+          iconLeft={IconType.svg}
+          iconLink={<IoAdd/>}
+          contentAlignment={ContentAlignment.center}
           onClick={() => onAddNewButtonTemplate(getValues())}
           btnType={BtnType.submit}
         />

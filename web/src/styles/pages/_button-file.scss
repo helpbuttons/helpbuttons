@@ -1,5 +1,5 @@
 $button-file-modal-height: calc(var(--vh, 1vh) * 100);
-$button-file__container-max-width: $grid-max-width;
+$button-file__container-max-width: $grid-column-max-width;
 
 .button-file__container {
 
@@ -150,7 +150,7 @@ $button-file__container-max-width: $grid-max-width;
         height: 15px;
         border: 0;
         cursor: pointer;
-        background: var(--network-text-color);
+        background: var(--network-accent-color);
         z-index: 5000;
       }
 }
@@ -259,6 +259,13 @@ $button-file__container-max-width: $grid-max-width;
       margin-bottom: auto;
       margin: auto;
       box-shadow: $box-shadow-divs;
+      transition: $transition-default;
+
+    }
+
+    .button-file__message--closed {
+
+      bottom: -250px; //revise when new message layout is built
 
     }
       

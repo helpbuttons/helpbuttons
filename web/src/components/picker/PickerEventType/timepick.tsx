@@ -78,7 +78,7 @@ export function TimePick({ time, setTime, minTime = null, maxTime = null, handle
       showPopup={showPickerTime}
       btnLabel={
         <>
-          {`${preLabel} ${time !== null ? readableTime(time) : ''} `}
+          {`${preLabel} ${time != null ? readableTime(time) : ''} `}
         </>
       }
       iconLink={<IoTimeOutline />}
