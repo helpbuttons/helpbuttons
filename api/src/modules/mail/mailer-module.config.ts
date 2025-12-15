@@ -48,6 +48,7 @@ export class MailerModuleConfig implements MailerOptionsFactory {
           strict: true,
         },
       },
+      // preview: true, // uncomment for testing, opens a tab on your browser when sending a new email
       options: {
         partials: {
           dir: __dirname + '/templates/partials',

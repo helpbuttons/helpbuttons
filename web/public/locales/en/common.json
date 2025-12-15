@@ -643,7 +643,8 @@
     "activateLinkCaption": "Click here to activate your account",
     "activitySubject": "New activity",
     "buttonLinkCaption": "Click here to open",
-    "dailyOutBox": "There are {0} activities in {1}, {2}"
+    "dailyOutBox": "There are {0} activities in {1}, {2}",
+    "welcomeSubject": "Welcome to {0}"
   },
   "dates": {
     "eachMonthFrom": "of each month from",
