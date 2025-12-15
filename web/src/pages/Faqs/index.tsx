@@ -41,13 +41,6 @@ export function FaqSections() {
         .
       </Accordion>
 
-      <Accordion
-        title={t('faqs.networkEthics', [selectedNetwork?.name])}
-      >
-        {t('faqs.networksEthicsDescription', [selectedNetwork?.name])}
-      </Accordion>
-
-
       <Accordion title={t('faqs.helpbuttonsQuestion')} collapsed={chapter == 'whats'}>
         <span className="highlight">
           {t('faqs.helpbuttonsHighlight')}
@@ -68,14 +61,11 @@ export function FaqSections() {
         title={t('faqs.privacyQuestion')}
         collapsed={chapter == 'privacyPolicy'}
       >
-        {t('faqs.privacyDescription')}
+        {selectedNetwork?.privacyPolicy}
       </Accordion>
 
-
-
-
       <Accordion title={t('faqs.ethicsQuestion')}>
-        {t('faqs.ethicsDescription')}
+        {selectedNetwork?.ethicsPolicy}
       </Accordion>
 
       <Accordion title={t('faqs.securityQuestion')}>
