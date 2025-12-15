@@ -9,6 +9,7 @@ import { useStore } from 'state';
 import { GlobalState, store } from 'state';
 import { LoadabledComponent } from 'components/loading';
 import { useMetadataTitle } from 'state/Metadata';
+import Footer from 'components/footer';
 
 export default function Faqs({ metadata }) {
   useMetadataTitle('F.A.Q.')
@@ -18,6 +19,8 @@ export default function Faqs({ metadata }) {
       <Popup title={t('faqs.title')} linkBack={() => router.back()}>
         <FaqSections />
       </Popup>
+      <Footer />
+
     </>
   );
 }
@@ -41,22 +44,6 @@ export function FaqSections() {
         .
       </Accordion>
 
-      <Accordion title={t('faqs.helpbuttonsQuestion')} collapsed={chapter == 'whats'}>
-        <span className="highlight">
-          {t('faqs.helpbuttonsHighlight')}
-        </span>{' '}
-        {t('faqs.helpbuttonsDescription')}
-      </Accordion>
-
-      <Accordion title={t('faqs.forQuestion')}>
-        {t('faqs.forDescription')}
-      </Accordion>
-
-      <Accordion title={t('faqs.communityQuestion')}>
-        {t('faqs.communityDescription')}
-      </Accordion>
-
-
       <Accordion
         title={t('faqs.privacyQuestion')}
         collapsed={chapter == 'privacyPolicy'}
@@ -68,19 +55,18 @@ export function FaqSections() {
         {selectedNetwork?.ethicsPolicy}
       </Accordion>
 
-      <Accordion title={t('faqs.securityQuestion')}>
-        {t('faqs.securityDescription')}
-      </Accordion>
-
       <Accordion
         title={t('faqs.cookiesQuestion')}
       >
         {t('faqs.cookiesDescription')}
       </Accordion>
 
-      <Accordion title={t('faqs.contactQuestion')}>
-        {t('faqs.contactDescription')}
-      </Accordion>
+      {/* <Accordion title={t('faqs.helpbuttonsQuestion')} collapsed={chapter == 'whats'}>
+        <span className="highlight">
+          {t('faqs.helpbuttonsHighlight')}
+        </span>{' '}
+        {t('faqs.helpbuttonsDescription')}
+      </Accordion> */}
     </>
   );
 }
