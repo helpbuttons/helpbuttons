@@ -192,7 +192,12 @@
     "hideAdvanced": "Ocultar opciones avanzadas",
     "locationKeys": "Lugares destacados",
     "keyLocationsExplain": "Lugares de tu red que se mostrarán resaltados. Aparecerán en los menús principales y mapas para fácil acceso.",
-    "addLocationKey": "Add Location"
+    "addLocationKey": "Add Location",
+    "privacyPolicyLabel": "Política de privacidad",
+    "ethicsPolicyLabel": "Política de Ética",
+    "contactEmailLabel": "Contacto de tu red",
+    "FAQs": "Información complementaria",
+    "contactEmailPlaceHolder": "Escribe un contacto para tu red"
   },
   "activities": {
     "messages": "Mensajes",

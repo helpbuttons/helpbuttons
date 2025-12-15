@@ -562,7 +562,14 @@
     "hideAdvanced": "Hide advanced options...",
     "locationKeys": "Key Spots",
     "keyLocationsExplain": "Key spots that will be highlighted in your network. They will appear in the main menus and map for easy access",
-    "addLocationKey": "Add Location"
+    "addLocationKey": "Add Location",
+    "privacyPolicyLabel": "Privacy policy",
+    "ethicsPolicyLabel": "Ethics",
+    "contactEmailLabel": "Contact data",
+    "FAQs": "Complementary info",
+    "contactEmailPlaceHolder": "Write your network's contact here"
+
+
   },
   "configure": {
     "browsePins": "",
