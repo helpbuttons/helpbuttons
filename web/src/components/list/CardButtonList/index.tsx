@@ -6,9 +6,9 @@ import { CardButtonHeadMedium } from 'components/button/CardButton';
 import { buttonColorStyle } from 'shared/buttonTypes';
 import { HiglightHexagonFromButton, updateCurrentButton } from 'state/Explore';
 import { store } from 'state';
-import router from 'next/router';
-import { MainPopupPage, SetMainPopup, SetMainPopupCurrentButton } from 'state/HomeInfo';
+import { SetMainPopupCurrentButton } from 'state/HomeInfo';
 import { alertService } from 'services/Alert';
+import t from 'i18n';
 
 export enum ButtonLinkType {
   EXPLORE,
@@ -29,6 +29,9 @@ export default function CardButtonList({ buttonTypes, button, showMap, linkType 
       {buttonType && (
         <div className="list__element">
           <CardButtonLink button={button} linkType={linkType}>
+          <CardButtonEntryState expired={button.expired}
+            awaitingApproval={button.awaitingApproval}/>
+            
           <div style={buttonColorStyle(buttonType.cssColor)}>
               <div className={showMap ? "card-button-list" : "card-button-list"}>
                 {button.image && (
@@ -71,6 +74,17 @@ export default function CardButtonList({ buttonTypes, button, showMap, linkType 
   );
 }
 
+function CardButtonEntryState({expired, awaitingApproval})
+{
+  if(expired)
+  {
+    return (<div className="list__element_button--expired">{t('button.expiredLabel')}</div>)
+  }
+  if(awaitingApproval)
+  {
+    return (<div className="list__element_button--awaiting-approval">{t('button.awaitingApprovalLabel')}</div>)
+  }
+}
 export function CardButtonLink({ button, linkType, children }) {
   // Touch device detection
   const isTouchDevice = () => {
