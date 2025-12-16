@@ -48,7 +48,7 @@
     "notificationsPermission": "Permitir notificaciones",
     "share": "Compartir esta app",
     "featured": "Destacados",
-    "powered": "Powered by",
+    "powered": "Impulsado por",
     "install": "Instala {0} y recibe notificaciones:",
     "inviteToNetwork": "Compartir",
     "inviteCopied": "Link copied to clipboard",
@@ -696,5 +696,20 @@
   },
   "seo": {
     "embbed": ""
+  },
+   "footer": {
+    "whatIsNetwork": "Saber más",
+    "create": "Crea tu _helpbutton_",
+    "explore": "Explorar _helpbuttons_",
+    "privacyPolicy": "Política de privacidad",
+    "assistance": "Asistencia",
+    "adminSupport": "Soporte técnico",
+    "securitySupport": "Alerta de problema de seguridad",
+    "sendAProblem": "Enviar problema técnico",
+    "whatsHelpbuttons": "Qué es Helpbuttons",
+    "investDonations": "Donar al proyecto",
+    "otherNetworks": "Ver otras redes",
+    "developers": "Desarrolladores",
+    "ethicCode": "Principios éticos"
   }
 }

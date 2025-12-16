@@ -9,7 +9,7 @@ import { useStore } from 'state';
 import { GlobalState, store } from 'state';
 import { LoadabledComponent } from 'components/loading';
 import { useMetadataTitle } from 'state/Metadata';
-import Footer from 'components/footer';
+import { PoweredExtra } from 'components/brand/powered';
 
 export default function Faqs({ metadata }) {
   useMetadataTitle('F.A.Q.')
@@ -18,8 +18,12 @@ export default function Faqs({ metadata }) {
     <>
       <Popup title={t('faqs.title')} linkBack={() => router.back()}>
         <FaqSections />
+      <div className="footer__bottom">
+        <span className="footer__section--attr">
+          <PoweredExtra />
+        </span>     
+      </div>
       </Popup>
-      <Footer />
 
     </>
   );
@@ -48,11 +52,11 @@ export function FaqSections() {
         title={t('faqs.privacyQuestion')}
         collapsed={chapter == 'privacyPolicy'}
       >
-        {selectedNetwork?.privacyPolicy}
+         {selectedNetwork?.privacyPolicy ? selectedNetwork?.privacyPolicy : t('faqs.securityDescription')}
       </Accordion>
 
       <Accordion title={t('faqs.ethicsQuestion')}>
-        {selectedNetwork?.ethicsPolicy}
+         {selectedNetwork?.ethicsPolicy ? selectedNetwork?.ethicsPolicy : t('faqs.securityDescription')}
       </Accordion>
 
       <Accordion
