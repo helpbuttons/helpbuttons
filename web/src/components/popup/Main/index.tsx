@@ -12,7 +12,7 @@ import { ShowProfile } from "pages/p/[username]";
 import { useEffect } from "react";
 import { replaceUrl, usePreviousUrl } from "components/uri/builder";
 import LoginForm from "components/user/LoginForm";
-import { InviteForm } from "pages/Signup/Invite";
+import { InviteForm, InviteScan } from "pages/Signup/Invite";
 
 export default function MainPopup() {
   const pageName = useGlobalStore((state: GlobalState) => state.homeInfo.pageName)
@@ -84,6 +84,14 @@ export default function MainPopup() {
         >
           <InviteForm />
         </Picker>
+      )}
+      {popupPage == MainPopupPage.INVITE_SCAN && (
+        <Picker
+          headerText={t('user.signup')}
+          closeAction={closePopup}
+        >
+        <InviteScan />
+      </Picker>
       )}
       {(mainPopupUserProfile) && (
         <Picker

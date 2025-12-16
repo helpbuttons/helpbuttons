@@ -254,11 +254,11 @@ export function SignupAsGuestForm() {
         <div className="form__btn-wrapper">
           {(step == steps.REQUEST_CODE) &&
             <>
-              <div className="popup__link" onClick={() => store.emit(new SetMainPopup(MainPopupPage.LOGIN))}>
-                  {t('user.loginLink')}
+             <div className="popup__link" onClick={() => store.emit(new SetMainPopup(MainPopupPage.INVITE_SCAN))}>
+                  {t('user.iHaveCode')}
               </div>
-              <div className="popup__link" onClick={() => store.emit(new SetMainPopup(MainPopupPage.SIGNUP))}>
-                  {t('user.noAccount')}
+              <div className="popup__link" onClick={() => store.emit(new SetMainPopup(MainPopupPage.LOGIN))}>
+                  {t('user.loginWEmail')}
               </div>
             </>}
         </div>

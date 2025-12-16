@@ -6,8 +6,6 @@ import { GlobalState, store } from 'state';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { alertService } from 'services/Alert';
-import { useToggle } from 'shared/custom.hooks';
-import { Network } from 'shared/entities/network.entity';
 import { Role } from 'shared/types/roles';
 import { UpdateExploreSettings } from 'state/Explore';
 import {

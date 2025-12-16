@@ -1,7 +1,7 @@
 //Form component with the main fields for signup in the platform
 //imported from libraries
 import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
+import router, { useRouter } from 'next/router';
 import { GlobalState, store, useGlobalStore } from 'state';
 import Form from 'elements/Form';
 import NewUserFields from 'components/user/NewUserFields';
@@ -16,6 +16,7 @@ import { setMetadata } from 'services/ServerProps';
 import dconsole from 'shared/debugger';
 import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
 import HomeInfo from 'pages/HomeInfo';
+import { Scanner } from '@yudiel/react-qr-scanner';
 
 export default function Invite( {metadata})
 {
@@ -126,6 +127,34 @@ export function InviteForm() {
       </Form>
     </>
     
+  );
+}
+
+
+export function InviteScan() {
+  
+
+  const handleScan = (detectedCodes) => {
+    const regex = /Signup\/Invite\/(([a-zA-Z]|[0-9])*)/gm;
+    detectedCodes.forEach(code => {
+      if(code.format == 'qr_code'){
+        const found = [...code.rawValue.matchAll(regex)];
+        if(found.length > 0){
+          const code = found[0][1]
+          router.push(`/Signup/Invite/${code}`)
+          console.log('invite code found' + code)
+        }
+
+      }
+    });
+  };
+
+  return (
+    <>
+    <Scanner
+      onScan={handleScan}
+      onError={(error) => console.error(error)}
+    /></>
   );
 }
 

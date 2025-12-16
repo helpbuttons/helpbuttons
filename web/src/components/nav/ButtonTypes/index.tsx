@@ -78,7 +78,7 @@ export function ListButtonTypes() {
 export function BtnButtonType({ type, onClick = (type) => { } }) {
   return (
     <BtnCaption
-      caption={`${type.caption} `}
+      caption={`${type.caption}`}
       selected={type.selected}
       icon={type?.icon}
       disabled={type.disabled}
