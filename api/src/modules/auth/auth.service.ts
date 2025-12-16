@@ -85,10 +85,7 @@ export class AuthService {
       });
   }
   async signup(signupUserDto: SignupRequestDto): Promise<UserOutDto> {
-    const verificationToken = token();
     let emailVerified = false;
-    let accessToken = {};
-
     let userRole = Role.registered;
     const userCount = await this.userService.userCount();
     if (userCount < 1) {
@@ -157,9 +154,12 @@ export class AuthService {
     }
     return this.createUser(newUserDto, signupUserDto).
       then((newUser) => {
-        if (!newUser.emailVerified && userCount > 1) {
-          this.sendLoginToken(newUser, true);
-        }
+        this.sendWelcomeMail(newUser.name, newUser.email, newUser.locale)
+
+        // verify email address
+        // if (!newUser.emailVerified && userCount > 1) {
+        //   this.sendLoginToken(newUser, true);
+        // }
         return newUser;
       });
   }
@@ -204,6 +204,13 @@ export class AuthService {
     });
   }
 
+  private sendWelcomeMail(name, to, locale = 'en'){
+    this.mailService.sendWelcomeMail({
+      name,
+      to,
+      locale
+    })
+  }
   private sendLoginToken(user: User, sendActivation = false) {
     const activationUrl: string = `/LoginClick/${user.verificationToken}`;
 
