@@ -210,7 +210,7 @@ const FieldButtonTemplates = forwardRef(
               </div>
             ))}
         </div>
-        <ButtonTemplateForm label={label} explain={explain} append={append}/>
+        <ButtonTemplateForm buttonTemplates={watchValue} label={label} explain={explain} append={append}/>
       </>
     );
   },
@@ -218,7 +218,7 @@ const FieldButtonTemplates = forwardRef(
 
 export default FieldButtonTemplates;
 
-function ButtonTemplateForm({ label, explain, append }) {
+function ButtonTemplateForm({ label, explain, append, buttonTemplates }) {
   const { register, setValue, watch, getValues, reset } = useForm({
     defaultValues: {
       emoji: '😀',
@@ -235,9 +235,13 @@ function ButtonTemplateForm({ label, explain, append }) {
     emoji,
   }) => {
     if (text && color) {
+      let _name = tagify(text);
+      while(buttonTemplates.filter((_val) => _val.name == _name).length > 0){
+          _name = _name + '_'
+      }
       append({
         caption: text,
-        name: tagify(text),
+        name: _name,
         cssColor: color,
         customFields: customFields,
         icon: emoji,
