@@ -463,7 +463,9 @@
     "publishComment": "Publicar comentario",
     "sendPrivateMessage": "Enviar mensaje privado a {0}",
     "proposeAddress": "Añadir o editar nuevo lugar en {0}",
-    "locationPlaceholder": "Escribe un lugar o dirección"
+    "locationPlaceholder": "Escribe un lugar o dirección",
+    "selectPlace": "Pulsa el lugar en el mapa y guarda",
+    "showMoreTags": "más etiquetas"
   },
   "calendarOnce": {
     "label": "Una vez",

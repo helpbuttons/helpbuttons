@@ -201,8 +201,8 @@ $card-button-border-height: $border-general-height;
   flex-wrap:inherit;
   font-size: $font-size-small;
   gap: $padding-medium;
-  margin-top: $margin-xsmall;
-  height: 48px;
+  // margin-top: $margin-xsmall;
+  // height: 48px;
 
 }
 
@@ -329,6 +329,7 @@ $card-button-border-height: $border-general-height;
   overflow: hidden;
   text-overflow: ellipsis;
   word-break: break-word;
+  font-weight: $font-weight-bolder;
 
 
   a {

@@ -15,6 +15,7 @@ import {
   IoArrowBackSharp,
   IoArrowDownSharp,
   IoArrowUpSharp,
+  IoBookOutline,
   IoDownloadOutline,
   IoEaselSharp,
   IoHelpOutline,
@@ -204,6 +205,9 @@ function HomeInfoInfoCard({ selectedNetwork }) {
     <div className={(showInfo ? "homeinfo-card--opened ":" ") + " homeinfo-card homeinfo-card--network-description"}>
         <div className="homeinfo-card__header homeinfo-card__header--openable" onClick={toggleShowInfo}>
                 <h3 className="homeinfo-card__header-title" >
+                  <ShowMobileOnly>
+                    <IoBookOutline/>
+                  </ShowMobileOnly>
                     {t('homeinfo.knowMore',[selectedNetwork.name])}
                 </h3>
                 <div className="homeinfo-card__controls homeinfo-card__controls--openable">
@@ -354,10 +358,14 @@ function HomeInfoRecentActivity({ selectedNetwork }) {
                   />
             </div>
           </ShowDesktopOnly>
+
           <h3 className="homeinfo-card__header-title" >
+              <ShowMobileOnly>
+                <IoStatsChart/> 
+              </ShowMobileOnly>
               {t('homeinfo.activity')}
           </h3>
-          <ShowMobileOnly>
+          {/* <ShowMobileOnly>
               <div className="homeinfo-card__controls--openable-right">
                     <Btn
                       btnType={BtnType.corporative}
@@ -366,7 +374,7 @@ function HomeInfoRecentActivity({ selectedNetwork }) {
                       contentAlignment={ContentAlignment.center}
                     />
               </div>
-            </ShowMobileOnly>
+            </ShowMobileOnly> */}
       </div>
             <hr></hr>
             <div className="homeinfo__description homeinfo__description--openable">

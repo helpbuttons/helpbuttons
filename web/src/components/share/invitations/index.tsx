@@ -131,138 +131,141 @@ const InvitationsPdf = ({ selectedNetwork, invitations }) => {
 const InvitationCard = ({ selectedNetwork, qrCode, qrCodeImage }) => {
   const styles = StyleSheet.create({
     cardWrapper: {
-      display: 'flex',
-      flexDirection: 'column',
-      padding: '0px 10px',
-      paddingTop: '10px',
-      alignItems: 'center',
-      fontSize: '14px',
+      // display: 'flex',
+      // flexDirection: 'column',
+      padding: '10px 10px',
+      // alignItems: 'center',
+      fontSize: '10px',
       height: '165px',
-      minWidth: '140px',
-      maxWidth: '160px',
+            minHeight: '165px',
+      minWidth: '195px',
+      // maxWidth: '160px',
       border: '0px solid selectedNetwork.borderColor',
       borderColor: selectedNetwork.borderColor,
       backgroundColor: selectedNetwork.backgroundColor,
-      boxSizing: 'border-box',
       borderRadius: '20px',
-      gap:'10px',
+      
 
     },
     networkTitleText: {
 
-      minHeight: '2px',
-      width: '100%',
-      position: 'relative',
-      alignContent:'center',
-      textAlign: 'center',
-            color:  selectedNetwork.textColor,
-
-      paddingBottom:'40px',
-      paddingTop:'0',
-
-    },
-    networkLogo: {
-      maxHeight: '25px',
-      maxWidth: '25px',
-      minHeight: '35px',
-      minWidth: '35px',
-      display: 'none',
-    },
-    networkHeader: {
-      backgroundColor: selectedNetwork.backgroundColor,
       display: 'flex',
-      
-      flexDirection: 'row',
-      flexWrap: 'nowrap',
-      alignItems: 'center',
-      gap: '0px',
-      height: 'auto',
-      padding: '30px',
-      boxsizing: 'border-box',
-      paddingBottom: '10px',
-      paddingTop: '10px',
+      flexDirection: 'column',
+      // minHeight: '30px',
+      // width: '100%',
+      position: 'relative',
+      margin: 'auto',
+      fontSize:'15px',
+      // zIndex: '30000',
+      overFlow: 'visible',
+      // alignContent:'center',
+      // textAlign: 'center',
+      color:  selectedNetwork.textColor,
+
+      // paddingBottom:'40px',
+
     },
+    // networkLogo: {
+    //   maxHeight: '25px',
+    //   maxWidth: '25px',
+    //   minHeight: '35px',
+    //   minWidth: '35px',
+    //   display: 'none',
+    // },
+    // networkHeader: {
+    //   backgroundColor: selectedNetwork.backgroundColor,
+    //   display: 'flex',
+    //   flexDirection: 'row',
+    //   flexWrap: 'nowrap',
+    //   alignItems: 'center',
+    //   gap: '0px',
+    //   height: 'auto',
+    //   padding: '30px',
+    //   boxsizing: 'border-box',
+    //   paddingBottom: '10px',
+    //   paddingTop: '10px',
+    // },
     invitationCard: {
-      maxWidth: '100%',
-      padding: '0px',
+      // maxWidth: '100%',
+      // padding: '50px',
       display: 'flex',
       flexDirection: 'column',
       justifyContent:'center',
       alignContent: 'center',
-      minHeight: 'auto',
-      height: '130px',
+      // maxHeight: 'auto',
+      height: '160px',
       overflowX: 'hidden',
       boxSizing: 'border-box',
+      position:'relative',
+      gap: '10px'
 
     },
     qrDiv: {
       display: 'flex',
       flexDirection: 'column',
-      height: '100%',
+      // height: '100%',
       fontSize: '10px',
       // overflow: 'hidden',
-      minWidth: '90px',
-      minHeight: '90px',
+      maxHeight: '110px',
       justifyContent: 'center',
       alignContent: 'center',
       backgroundColor: 'white',
       borderRadius: '5px',
       boxSizing: 'border-box',
       margin: 'auto',
-      wordWrap: 'break-word',      // Ensure that words can break
-      overflowWrap: 'break-word',  // Handle breaking in most browsers
+      // wordWrap: 'break-word',      // Ensure that words can break
+      // overflowWrap: 'break-word',  // Handle breaking in most browsers
+      position: 'relative',
 
     },
-    textDiv: {
-      display: 'flex',
-      position:'relative',
-      flexDirection: 'column',
-      width: '160px',
-      fontSize: '11px',
-      color:  selectedNetwork.textColor,
-
-      flexWrap: 'wrap',
-      height: 'auto',
-      gap: '5px',
-      left: '10px',
-      textOverflow: 'ellipsis',
-      boxSizing: 'border-box',
-      marginLeft: '10px',
-      marginTop: '20px',
-      textAlign:'left',
-      alignContent:'center',
-    },
+    // textDiv: {
+    //   display: 'flex',
+    //   position:'relative',
+    //   flexDirection: 'column',
+    //   // width: '160px',
+    //   fontSize: '11px',
+    //   color:  selectedNetwork.textColor,
+    //   flexWrap: 'wrap',
+    //   height: 'auto',
+    //   gap: '5px',
+    //   left: '10px',
+    //   textOverflow: 'ellipsis',
+    //   boxSizing: 'border-box',
+    //   marginLeft: '10px',
+    //   marginTop: '20px',
+    //   textAlign:'left',
+    //   alignContent:'center',
+    // },
     qrCode: {
-      whiteSpace: 'normal',    
-      wordBreak: 'break-all',
-      paddingTop: '10px',
-      maxWidth: '100%',
+      // display: 'flex',
+      // whiteSpace: 'normal',    
+      // wordBreak: 'break-all',
+      // paddingTop: '10px',
+      // maxWidth: '100px',
       color:  selectedNetwork.textColor,
-
           // Allow text to wrap to the next line
       // hyphens: 'auto',             // Add hyphenation to break long words
-      flexWrap: 'wrap',
-      width: '150px',
+      // flexWrap: 'wrap',
+      // width: '150px',
+      margin:'auto',
       fontSize:'8px',
     },
-    networkTitle: {
-      fontWeight: 'bold',
-      alignContent: 'center',
-      paddingTop: '0',
-    }
+    // networkTitle: {
+    //   fontWeight: 'bold',
+    //   alignContent: 'center',
+    //   paddingTop: '0',
+    // }
   });
 
   return (
     <View style={styles.cardWrapper}>
-
       <View style={styles.invitationCard}>
-        <View style={styles.networkTitle}>
           <Text style={styles.networkTitleText}>{selectedNetwork.name}</Text>
-        </View>
-        <View style={styles.qrDiv}>
+                <View style={styles.qrDiv}>
           <Image src={qrCodeImage} />
-        </View>
-        <Text style={styles.qrCode}>{qrCode}</Text>
+                </View>
+
+          <Text style={styles.qrCode}>{qrCode}</Text>
       </View>
     </View>
   );
