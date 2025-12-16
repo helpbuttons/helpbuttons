@@ -254,7 +254,7 @@ export function SignupAsGuestForm() {
         <div className="form__btn-wrapper">
           {(step == steps.REQUEST_CODE) &&
             <>
-             <div className="popup__link" onClick={() => store.emit(new SetMainPopup(MainPopupPage.LOGIN))}>
+             <div className="popup__link" onClick={() => store.emit(new SetMainPopup(MainPopupPage.INVITE_SCAN))}>
                   {t('user.iHaveCode')}
               </div>
               <div className="popup__link" onClick={() => store.emit(new SetMainPopup(MainPopupPage.LOGIN))}>
