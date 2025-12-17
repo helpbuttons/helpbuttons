@@ -79,7 +79,7 @@ export default function NewUserFields({
       <FieldText
         name="name"
         label={t('user.name')}
-        explain={t('user.nameExplain')}
+        // explain={t('user.nameExplain')}
         classNameInput="squared"
         placeholder={t('user.namePlaceHolder')}
         validationError={errors.name}
