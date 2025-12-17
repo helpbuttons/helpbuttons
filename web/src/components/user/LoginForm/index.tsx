@@ -18,6 +18,7 @@ import { alertService } from 'services/Alert';
 import { CookiesState, MainPopupPage, SetMainPopup } from 'state/HomeInfo';
 import { handleAcceptCookies } from 'components/home/CookiesBanner';
 import { Network } from 'shared/entities/network.entity';
+import { IoQrCode } from 'react-icons/io5';
 
 export default function LoginForm() {
   const {
@@ -97,7 +98,7 @@ export default function LoginForm() {
            {selectedNetwork?.allowGuestCreation && 
             <div className="popup__link" onClick={() => store.emit(new SetMainPopup(MainPopupPage.SIGNUP_AS_GUEST))}>
 
-                {t('user.signupAsGuest')}
+                {t('user.signupAsGuest')}<IoQrCode/>
             </div>
             }
         </div>

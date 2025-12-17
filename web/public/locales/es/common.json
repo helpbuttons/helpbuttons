@@ -612,8 +612,13 @@
     "inviteOnlyLabel": "Privacidad de la red",
     "inviteOnlyExplain": "Si habilitas esto, los usuarios solo podrán registrarse y publicar con un código QR.",
     "inviteOnly": "Sólo permitir el registro con un código QR",
+
+
     "generateQr": "Obtener QR",
-    "registered": "QR usado"
+    "registered": "QR usado",
+    "scanCodeLabel":"Escribe tu código QR",
+    "scanCodeExplain": "Escribe tu código numérico si no puedes escanear",
+    "scanPlaceHolder":"Escribe tu link completo de invitado o tu código alfanumérico"
   },
   "customFields": {
     "priceLabel": "Precio ({0})",

@@ -30,7 +30,6 @@ import { useMetadataTitle } from 'state/Metadata';
 import dconsole from 'shared/debugger';
 import HomeInfo from 'pages/HomeInfo';
 import { getInvitationLink } from 'pages/Profile/Invites';
-import { AcceptCookiesWarn } from 'components/home/CookiesBanner';
 import { IoQrCode } from 'react-icons/io5';
 
 export default function Signup( {metadata})
@@ -147,14 +146,13 @@ export function SignupForm() {
                 contentAlignment={ContentAlignment.center}
                 disabled={isSubmitting || cookieState != CookiesState.ACCEPTED}
               />
-              <AcceptCookiesWarn cookieState={cookieState}/>
             </div>
             <div className="popup__link" onClick={() => store.emit(new SetMainPopup(MainPopupPage.LOGIN))}>
                 {t('user.loginLink')}
             </div>
             {selectedNetwork?.allowGuestCreation && 
               <div className="popup__link" onClick={() => store.emit(new SetMainPopup(MainPopupPage.SIGNUP_AS_GUEST))}>
-                  {t('user.signupAsGuest')}
+                 <IoQrCode/>{t('user.signupAsGuest')}
               </div>
             }
           </div>
@@ -255,7 +253,7 @@ export function SignupAsGuestForm() {
           {(step == steps.REQUEST_CODE) &&
             <>
              <div className="popup__link" onClick={() => store.emit(new SetMainPopup(MainPopupPage.INVITE_SCAN))}>
-                  {t('user.iHaveCode')}
+                 {t('user.iHaveCode')}
               </div>
               <div className="popup__link" onClick={() => store.emit(new SetMainPopup(MainPopupPage.LOGIN))}>
                   {t('user.loginWEmail')}

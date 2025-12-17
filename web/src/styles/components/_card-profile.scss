@@ -228,6 +228,7 @@ $avatar-margin: $padding-big;
   color: $color-black;
   display: flex;
   flex-direction: row;
+  align-content: baseline;
   flex-wrap: wrap;
   text-overflow: ellipsis;
   max-width: 200px;

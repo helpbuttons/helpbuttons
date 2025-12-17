@@ -192,7 +192,9 @@ export default function NewUserFields({
           minLength: 8,
         })}
       ></FieldPassword> */}
-      {t('user.acceptPrivacyPolicy')}<Link onClick={() => store.emit(new SetMainPopup(MainPopupPage.FAQS))} className='link' href="#">{t('user.privacyPolicyLink')}</Link>
+      <div className='form__explain'>
+        {t('user.acceptPrivacyPolicy')}<Link onClick={() => store.emit(new SetMainPopup(MainPopupPage.FAQS))} className='link' href="#">{t('user.privacyPolicyLink')}</Link>
+      </div>
       <FieldCheckbox
         name="acceptPrivacyPolicy"
         // defaultValue={watch('acceptPrivacyPolicy')}

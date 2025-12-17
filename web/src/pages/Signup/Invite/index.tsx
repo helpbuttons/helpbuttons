@@ -17,6 +17,7 @@ import dconsole from 'shared/debugger';
 import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
 import HomeInfo from 'pages/HomeInfo';
 import { Scanner } from '@yudiel/react-qr-scanner';
+import FieldText from 'elements/Fields/FieldText';
 
 export default function Invite( {metadata})
 {
@@ -154,7 +155,15 @@ export function InviteScan() {
     <Scanner
       onScan={handleScan}
       onError={(error) => console.error(error)}
-    /></>
+    />
+    <FieldText
+          name={t('invite.scan')}
+          label={t('invite.scanCodeLabel')}
+          explain={t('invite.scanCodeExplain')}
+          placeholder={t('invite.scanPlaceHolder')}
+          // onChange={(e) => setValue('text', e.target.value)}
+        />
+    </>
   );
 }
 

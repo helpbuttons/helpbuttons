@@ -17,7 +17,6 @@ import FieldCustomFields from '../ButtonType/CustomFields/FieldCustomFields';
 import FieldImageUploads from 'elements/Fields/FieldImagesUpload';
 import { alertService } from 'services/Alert';
 import { CookiesState } from 'state/HomeInfo';
-import { AcceptCookiesWarn } from 'components/home/CookiesBanner';
 
 export default function ButtonForm({
   onSubmit,
@@ -207,7 +206,6 @@ export default function ButtonForm({
                         submit={true}
                         disabled={isSubmitting || cookieState != CookiesState.ACCEPTED}
                       />
-                      <AcceptCookiesWarn cookieState={cookieState} />
                     </div>
                   </div>
                 </div>

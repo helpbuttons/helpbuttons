@@ -619,7 +619,10 @@
     "inviteOnlyExplain": "If you enable this, users will only be able to register and publish if they use a QR code. They will still see the _helpbuttons_.",
     "inviteOnly": "Only allow signup with an QR code",
     "generateQr": "Get QR",
-    "registered": "Qr code already registered"
+    "registered": "Qr code already registered",
+    "scanCodeLabel":"Type your code",
+    "scanCodeExplain": "You can type your QR code if you can't scan the QR",
+    "scanPlaceHolder":"Type your full invite link or your alfanumerical code"
   },
   "invitation": {
     "card": "Anonimous login individual card",
