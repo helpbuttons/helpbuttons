@@ -26,6 +26,12 @@ $card-button-border-height: $border-general-height;
   }
 }
 
+.card-button__wrapper {
+
+  width: 100%;
+
+}
+
 .card-button__content,
 .card-button__content--small {
   padding: $padding-big $padding-big $padding-medium $padding-big ;

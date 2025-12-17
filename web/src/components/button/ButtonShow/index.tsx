@@ -30,7 +30,7 @@ export function ButtonShow({button}) {
   const buttonTypes = useButtonTypes();
 
   return (
-     <div {...handlers}> 
+     <div className='card-button__wrapper' {...handlers}> 
       {button && buttonTypes && (
         <>
           <CardButton
