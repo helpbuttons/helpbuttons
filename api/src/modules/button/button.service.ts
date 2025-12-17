@@ -448,8 +448,6 @@ export class ButtonService {
     let buttons: Button[] = await this.buttonRepository.find({
       where: {
         owner: { id: ownerId, role: Not(Role.blocked) },
-        deleted: false,
-        expired: false,
       },
       relations: ['owner'],
     });

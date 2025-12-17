@@ -312,7 +312,8 @@
     "placeHodlerCustomAddress": "Write the new name and select place on the map",
     "selectPlace": "Select place on map and save",
     "sendPrivateMessage": "Send private message to {0}",
-    "showMoreTags": "more tags"
+    "showMoreTags": "more tags",
+    "expiredLabel": "Expired"
   },
   "user": {
     "login": "Write your credentials",
@@ -684,7 +685,8 @@
     "adminCommunicationLabel": "Administrator communications",
     "adminCommunicationExplain": "Messages that you share here will be send to all admins or all users of the network",
     "created_at": "Date",
-    "edit": "Edit"
+    "edit": "Edit",
+    "awaitingApprovalLabel": "Awaiting approval"
   },
   "roles": {
     "blocked": "blocked",

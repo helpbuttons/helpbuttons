@@ -102,11 +102,23 @@ export default function CardButton({ button, buttonTypes, toggleShowReplyFirstPo
   );
 }
 
+function CardButtonState({expired, awaitingApproval})
+{
+  if(expired)
+  {
+    return (<div className='card-button__content--expired'>{t('button.expiredLabel')}</div>)
+  }
+  if(awaitingApproval)
+  {
+    return (<div className='card-button__content--expired'>{t('moderation.awaitingApprovalLabel')}</div>)
+  }
+}
 // card button list on explore
 export function CardButtonHeadMedium({ button, buttonType }) {
 
   return (
     <div className="card-button__content card-button__content--small">
+      <CardButtonState expired={button.expired} awaitingApproval={button.awaitingApproval}/>
       <div className="card-button__header">
         {/* <div className="card-button__avatar">
           <div className="avatar-small">
@@ -325,7 +337,7 @@ export function CardButtonHeadBig({ button, buttonTypes, toggleShowReplyFirstPos
           message={t('moderation.awaitingApproval')}
         />
       )}
-      <div className="card-button__content card-button__full-content">
+      <div className="card-button__content card-button__full-content ">
         <div className="card-button__header">
           <div className="card-button__info">
             <div className="card-button__status">
