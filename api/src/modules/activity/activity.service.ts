@@ -567,7 +567,7 @@ export class ActivityService {
           buttonType: button.type,
           type: translate(locale, 'activities.notice'),
           footer: button.address,
-          message: translate(locale, 'activities.endorsed'),
+          message: translate(locale, 'activities.newbutton', [button.address]),
         }}
       case ActivityEventName.Endorsed: 
       {return {
