@@ -81,4 +81,13 @@ export class Network extends BaseEntity {
 
   @Column({default: false})
   allowGuestCreation: boolean;
+
+  @Column({default: ''})
+  privacyPolicy: string;
+
+  @Column({default: ''})
+  ethicsPolicy: string;
+
+  @Column({default: ''})
+  contactEmail: string;
 }

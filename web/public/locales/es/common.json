@@ -48,7 +48,7 @@
     "notificationsPermission": "Permitir notificaciones",
     "share": "Compartir esta app",
     "featured": "Destacados",
-    "powered": "Powered by",
+    "powered": "Impulsado por",
     "install": "Instala {0} y recibe notificaciones:",
     "inviteToNetwork": "Compartir",
     "inviteCopied": "Link copied to clipboard",
@@ -192,7 +192,12 @@
     "hideAdvanced": "Ocultar opciones avanzadas",
     "locationKeys": "Lugares destacados",
     "keyLocationsExplain": "Lugares de tu red que se mostrarán resaltados. Aparecerán en los menús principales y mapas para fácil acceso.",
-    "addLocationKey": "Add Location"
+    "addLocationKey": "Add Location",
+    "privacyPolicyLabel": "Política de privacidad",
+    "ethicsPolicyLabel": "Política de Ética",
+    "contactEmailLabel": "Contacto de tu red",
+    "FAQs": "Información complementaria",
+    "contactEmailPlaceHolder": "Escribe un contacto para tu red"
   },
   "activities": {
     "messages": "Mensajes",
@@ -708,5 +713,20 @@
   },
   "seo": {
     "embbed": ""
+  },
+   "footer": {
+    "whatIsNetwork": "Saber más",
+    "create": "Crea tu _helpbutton_",
+    "explore": "Explorar _helpbuttons_",
+    "privacyPolicy": "Política de privacidad",
+    "assistance": "Asistencia",
+    "adminSupport": "Soporte técnico",
+    "securitySupport": "Alerta de problema de seguridad",
+    "sendAProblem": "Enviar problema técnico",
+    "whatsHelpbuttons": "Qué es Helpbuttons",
+    "investDonations": "Donar al proyecto",
+    "otherNetworks": "Ver otras redes",
+    "developers": "Desarrolladores",
+    "ethicCode": "Principios éticos"
   }
 }

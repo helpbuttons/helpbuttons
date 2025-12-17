@@ -9,6 +9,7 @@ import { useStore } from 'state';
 import { GlobalState, store } from 'state';
 import { LoadabledComponent } from 'components/loading';
 import { useMetadataTitle } from 'state/Metadata';
+import { PoweredExtra } from 'components/brand/powered';
 
 export default function Faqs({ metadata }) {
   useMetadataTitle('F.A.Q.')
@@ -17,7 +18,13 @@ export default function Faqs({ metadata }) {
     <>
       <Popup title={t('faqs.title')} linkBack={() => router.back()}>
         <FaqSections />
+      <div className="footer__bottom">
+        <span className="footer__section--attr">
+          <PoweredExtra />
+        </span>     
+      </div>
       </Popup>
+
     </>
   );
 }
@@ -42,44 +49,14 @@ export function FaqSections() {
       </Accordion>
 
       <Accordion
-        title={t('faqs.networkEthics', [selectedNetwork?.name])}
-      >
-        {t('faqs.networksEthicsDescription', [selectedNetwork?.name])}
-      </Accordion>
-
-
-      <Accordion title={t('faqs.helpbuttonsQuestion')} collapsed={chapter == 'whats'}>
-        <span className="highlight">
-          {t('faqs.helpbuttonsHighlight')}
-        </span>{' '}
-        {t('faqs.helpbuttonsDescription')}
-      </Accordion>
-
-      <Accordion title={t('faqs.forQuestion')}>
-        {t('faqs.forDescription')}
-      </Accordion>
-
-      <Accordion title={t('faqs.communityQuestion')}>
-        {t('faqs.communityDescription')}
-      </Accordion>
-
-
-      <Accordion
         title={t('faqs.privacyQuestion')}
         collapsed={chapter == 'privacyPolicy'}
       >
-        {t('faqs.privacyDescription')}
+         {selectedNetwork?.privacyPolicy ? selectedNetwork?.privacyPolicy : t('faqs.securityDescription')}
       </Accordion>
-
-
-
 
       <Accordion title={t('faqs.ethicsQuestion')}>
-        {t('faqs.ethicsDescription')}
-      </Accordion>
-
-      <Accordion title={t('faqs.securityQuestion')}>
-        {t('faqs.securityDescription')}
+         {selectedNetwork?.ethicsPolicy ? selectedNetwork?.ethicsPolicy : t('faqs.securityDescription')}
       </Accordion>
 
       <Accordion
@@ -88,9 +65,12 @@ export function FaqSections() {
         {t('faqs.cookiesDescription')}
       </Accordion>
 
-      <Accordion title={t('faqs.contactQuestion')}>
-        {t('faqs.contactDescription')}
-      </Accordion>
+      {/* <Accordion title={t('faqs.helpbuttonsQuestion')} collapsed={chapter == 'whats'}>
+        <span className="highlight">
+          {t('faqs.helpbuttonsHighlight')}
+        </span>{' '}
+        {t('faqs.helpbuttonsDescription')}
+      </Accordion> */}
     </>
   );
 }

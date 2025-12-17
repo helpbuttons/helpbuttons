@@ -102,6 +102,10 @@ export class CreateNetworkDto implements Partial<Network> {
   hideLocationDefault: boolean;
 
   allowGuestCreation: boolean;
+
+  privacyPolicy: string;
+  ethicsPolicy: string;
+  contactEmail: string;
 }
 
 export class UpdateNetworkDto extends PartialType(CreateNetworkDto) {}

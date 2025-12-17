@@ -50,7 +50,10 @@ function NetworkCreation() {
       requireApproval: false,
       slogan: '',
       hideLocationDefault: false,
-      allowGuestCreation: false
+      allowGuestCreation: false,
+      privacyPolicy: "",
+      ethicsPolicy: "",
+      contactEmail: ""
     },
   });
 
@@ -82,7 +85,9 @@ function NetworkCreation() {
           requireApproval: data.requireApproval,
           slogan: data.slogan,
           hideLocationDefault: data.hideLocationDefault,
-          allowGuestCreation: data.allowGuestCreation
+          allowGuestCreation: data.allowGuestCreation,
+          privacyPolicy: data.privacyPolicy,
+          ethicsPolicy: data.ethicsPolicy,
         },
         () => {
           const onComplete = () => {

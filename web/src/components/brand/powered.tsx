@@ -19,7 +19,7 @@ export function PoweredExtra() {
     <>
       <PoweredBy/>
       <a href={`https://github.com/helpbuttons/helpbuttons/releases/tag/${metadata.version}`}>{metadata.version}</a> - 
-      <a href="/Faqs">{t('menu.faqs')}</a> -
+      <a href="https://helpbuttons.org/faqs">{t('menu.faqs')}</a> -
       <a href={`/api`}>API</a> - 
       <License/>
     </>

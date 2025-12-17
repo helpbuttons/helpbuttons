@@ -598,10 +598,10 @@ hr {
   .homeinfo-card--activity {
 
     position: fixed;
-    right: -290px;
+    right: -390px;
 
     border-radius:   $border-radius-semicircle 0 0 $border-radius-semicircle;
-    width: 300px;
+    width: 400px;
     height: 60%;
     border: $border-style-basic;
     transition: $transition-default-slow;
@@ -612,7 +612,7 @@ hr {
 
    .homeinfo-card--opened-right {
 
-    max-width: 20%;
+    max-width: 40%;
     right: 0;
     z-index: $z-index-02;
 
