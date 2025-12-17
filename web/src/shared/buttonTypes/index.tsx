@@ -28,7 +28,7 @@ export const isButtonTypeEvent = (buttonType) => {
     return false;
   }
   const btnType = buttonTypes.find(({name}) => name == buttonType)
-  if(!btnType.customFields)
+  if(!btnType?.customFields)
   {
     return false;
   }

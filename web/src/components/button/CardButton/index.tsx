@@ -272,6 +272,7 @@ function CardButtonSubmenu({ button }) {
         <>
           <CardSubmenuOption
             onClick={() => {
+              store.emit(new SetMainPopup(MainPopupPage.HIDE))
               router.push(`/ButtonEdit/${button.id}`);
             }}
             label={t('button.edit')}
