@@ -150,6 +150,16 @@ export default function NewUserFields({
             {...register('email')}
           ></FieldText>
 
+          <FieldText
+            name="phone"
+            label={t('user.phone')}
+            explain={t('user.phoneExplain')}
+            classNameInput="squared"
+            placeholder={t('user.phonePlaceHolder')}
+            validationError={errors.phone}
+            {...register('phone')}               
+          ></FieldText>
+
           {selectedNetwork && !isInitAdminForm && short && (
             <FieldTags
               label={t('user.tags')}

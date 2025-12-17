@@ -329,7 +329,7 @@
     "usernameCreateExplain": "Create your username. The username is your alias used to identify you.",
     "usernamePlaceHolder": "Type a unique name",
     "password": "Password",
-    "passwordExplain": "Create your password, 8 characters minimum.",
+    "passwordExplain": "Create your password, 8 chars minimum.",
     "pickLanguageLabel": "Pick your language",
     "pickLanguageExplain": "The app menus will be translated to the language you choose",
     "passwordPlaceHolder": "Type your password here",
