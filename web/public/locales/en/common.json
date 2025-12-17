@@ -215,7 +215,7 @@
     "newSignup": "New user '{0}' signed up",
     "notice": "Notice",
     "sent": "Message sent!",
-    "writingDraft": "Writing private message to....",
+    "writingDraft": "Writing private message",
     "draft": "Draft",
     "pickOne": "Select one chat",
     "newbuttonHomeinfo": "New _helpbutton_ "

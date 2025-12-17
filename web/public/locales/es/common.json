@@ -212,7 +212,7 @@
     "newcommentSubject": "Alguien ha comentado en tu _helpbutton_ '{0}'",
     "newfollow": "'{0}' está ahora siguiendo tu _helpbutton_ '{1}'",
     "newfollowing": "estás ahora siguiendo: _helpbutton_ '{0}'",
-    "newfollowed": "{0} ahora sigue tu _helpbutton_ '{1}'",
+    "newfollowed": "Sigue tu _helpbutton_",
     "newbuttonType": "Nuevo _helpbutton_",
     "newcommentType": "Comentario",
     "deletebutton": "{0} fue finalizado / borrado",
@@ -222,7 +222,18 @@
     "deletedType": "Eliminación _helpbutton_",
     "myhelpbuttons": "Mis _helpbuttons_",
     "expiredEventType": "_helpbutton_ terminó",
-    "expiredEventTitle": "'{0}' ha pasado su fecha de finalización el dia {1}, no aparecerá más en la lista pública."
+    "expiredEventTitle": "'{0}' ha pasado su fecha de finalización el dia {1}, no aparecerá más en la lista pública.",
+    "newSignup": "'{0}' se ha registrado como nuevo usuario/a",
+    "notice": "Aviso",
+    "sent": "Mensaje enviado sent!",
+    "endorsed": "Tu perfil ha sido marcado como de confianza",
+    "roleupdate": "Tu rol ha sido actualizado a '{0}'",
+    "writingDraft": "Escribiendo mensaje",
+    "revokeEndorse": "Tu etiqueta de 'aval' ha sido retirada",
+    "draft": "Borrador",
+    "pickOne": "Selecciona una conversación",
+    "newbuttonHomeinfo": "_helpbutton_ reciente"
+
   },
   "activitiesWithSubject": {
     "newbutton": "{0} creó _helpbutton_ en {1}",
