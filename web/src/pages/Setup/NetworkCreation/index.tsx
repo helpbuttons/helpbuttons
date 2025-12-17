@@ -51,8 +51,8 @@ function NetworkCreation() {
       slogan: '',
       hideLocationDefault: false,
       allowGuestCreation: false,
-      privacyPolicy: "Text to complete by administrators",
-      ethicsPolicy: "Text to complete by administrators",
+      privacyPolicy: "",
+      ethicsPolicy: "",
       contactEmail: ""
     },
   });

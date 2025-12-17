@@ -82,10 +82,10 @@ export class Network extends BaseEntity {
   @Column({default: false})
   allowGuestCreation: boolean;
 
-  @Column({default: 'Text to complete by administrators'})
+  @Column({default: ''})
   privacyPolicy: string;
 
-  @Column({default: 'Text to complete by administrators'})
+  @Column({default: ''})
   ethicsPolicy: string;
 
   @Column({default: ''})
