@@ -253,7 +253,7 @@ export function SignupAsGuestForm() {
           {(step == steps.REQUEST_CODE) &&
             <>
              <div className="popup__link" onClick={() => store.emit(new SetMainPopup(MainPopupPage.INVITE_SCAN))}>
-                 {t('user.iHaveCode')}
+                 <IoQrCode/>{t('user.iHaveCode')}
               </div>
               <div className="popup__link" onClick={() => store.emit(new SetMainPopup(MainPopupPage.LOGIN))}>
                   {t('user.loginWEmail')}
