@@ -687,6 +687,7 @@ export class ButtonService {
         order: {
           created_at: 'DESC',
         },
+        relations: ['owner']
       })
       .then((buttons) => this.filterExpired(buttons));
   }
