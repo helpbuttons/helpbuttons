@@ -275,7 +275,18 @@ $map-btns-size-mobile: 30px;
     cursor: pointer;
 
 }
-
+.pigeon-map__hex-info--text-outter {
+    font-size: $font-size-hex-unselected;
+    font-weight: $font-weight-bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: $color-blue;
+    width: 100%;
+    margin: auto;
+    z-index: $z-index-01;
+    cursor: pointer;
+}
 @media #{$breakpoints-xlarge} {
 
     .pigeon-center-buttons{

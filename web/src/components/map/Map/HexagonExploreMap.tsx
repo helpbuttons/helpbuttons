@@ -348,6 +348,48 @@ export default function HexagonExploreMap({
                   />
                 );
               })}
+
+            {/* show west and east outter buttons */}
+            {(!exploreSettings.loading && exploreSettings.outterButtonsWest > 0 && 
+              !(exploreSettings.zoom >= showMarkersZoom)) &&
+                  <Overlay
+                      anchor={centerBounds}
+                      offset={[300, -50]}
+                      className="pigeon-map__custom-block"
+                    >
+                      <div
+                        className="pigeon-map__hex-wrap"
+                      >
+                        <span className="pigeon-map__hex-element">
+                          <div className="pigeon-map__hex-info--outter">
+                            <div className="pigeon-map__hex-info--text-outter">
+                              {exploreSettings.outterButtonsWest}
+                            </div>
+                          </div>
+                        </span>
+                      </div>
+                    </Overlay>
+            }
+            {(!exploreSettings.loading && exploreSettings.outterButtonsEast > 0 && 
+              !(exploreSettings.zoom >= showMarkersZoom)) &&
+                  <Overlay
+                      anchor={centerBounds}
+                      offset={[-280, -50]}
+                      className="pigeon-map__custom-block"
+                    >
+                      <div
+                        className="pigeon-map__hex-wrap"
+                      >
+                        <span className="pigeon-map__hex-element">
+                          <div className="pigeon-map__hex-info--outter">
+                            <div className="pigeon-map__hex-info--text-outter">
+                              {exploreSettings.outterButtonsEast}
+                            </div>
+                          </div>
+                        </span>
+                      </div>
+                    </Overlay>
+            }
             {/* draw go to center icon */}
             <Overlay
               anchor={[100, 100]}

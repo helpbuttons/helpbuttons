@@ -52,6 +52,8 @@ export interface ExploreSettings {
   viewMode: ExploreViewMode;
   urlUpdated: boolean;
   forceRefetch: boolean;
+  outterButtonsEast: number;
+  outterButtonsWest: number;
 }
 
 export const exploreSettingsDefault: ExploreSettings = {
@@ -67,6 +69,8 @@ export const exploreSettingsDefault: ExploreSettings = {
   viewMode: ExploreViewMode.LIST,
   urlUpdated: false,
   forceRefetch: true,
+  outterButtonsEast: 0,
+  outterButtonsWest: 0
 };
 export interface ExploreMapState {
   filters: ButtonFilters;
@@ -94,7 +98,7 @@ export const exploreInitial = {
     initialized: false,
     showAdvancedFilters: false,
     showInstructions: true,
-    allTags: []
+    allTags: [],
   },
   settings: exploreSettingsDefault,
 };
@@ -573,7 +577,7 @@ export class UpdateExploreSettings implements UpdateEvent {
       }
 
       newExploreSettings = { zoom: this.newExploreSettings.zoom, ...newExploreSettings }
-
+      newExploreSettings = { bounds: this.newExploreSettings.bounds, ...newExploreSettings }
       if (prevSettings.center != null && JSON.stringify(prevSettings.center) != JSON.stringify(this.newExploreSettings.center)) {
         newState.explore.map.showInstructions = false;
       }
@@ -666,6 +670,19 @@ export class UpdateListButton implements UpdateEvent {
         }
         return entry
       })
+    });
+  }
+}
+
+export class UpdateOutterButtonsCounts implements UpdateEvent {
+  public constructor(
+    private eastCount, private westCount
+  ) { }
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      
+      newState.explore.settings.outterButtonsEast = this.eastCount
+      newState.explore.settings.outterButtonsWest = this.westCount
     });
   }
 }

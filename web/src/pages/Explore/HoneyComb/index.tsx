@@ -13,6 +13,7 @@ import {
   UpdateHexagonClicked,
   updateCurrentButton,
   UpdateFilters,
+  UpdateOutterButtonsCounts,
 } from 'state/Explore';
 import NavHeader from 'components/nav/NavHeader'; //just for mobile
 import { useStore } from 'state';
@@ -363,6 +364,35 @@ function useHexagonMap({
     }
   }, [debounceHexagonsToFetch]);
 
+  function calculateOutterButtons(viewableButtons, buttons)
+  {
+    const buttonsIn = viewableButtons.map((_button) => _button.id)
+    const buttonsOut = hexesToButtons(buttonsIn)
+    const biggerThanLongitude = exploreSettings.bounds.ne[1]
+    const lowerThanLongitude = exploreSettings.bounds.sw[1]
+    const buttonsWest = buttonsOut.filter((_btn) => {
+      return _btn.longitude < lowerThanLongitude
+    })
+    const buttonsEast = buttonsOut.filter((_btn) => {
+      return _btn.longitude > biggerThanLongitude
+    })
+    console.log(`west: ${buttonsWest.length} east: ${buttonsEast.length}`)
+    return {west: buttonsWest.length,east: buttonsEast.length}
+  }
+
+  function hexesToButtons (buttonsIn)
+  {
+    let buttons = []
+    cachedH3Hexes.current.map((hexes) => {
+      if(hexes.buttons.length > 0)
+      {
+        buttons = [...buttons, ...hexes.buttons]
+      }
+    })
+    const uniqButtons = _.uniqBy(buttons,'id')
+
+    return uniqButtons.filter((_button) => !(buttonsIn.indexOf(_button.id) > -1) )
+  }
   function updateDensityMap() {
     if (exploreSettings.loading) {
       return;
@@ -393,6 +423,9 @@ function useHexagonMap({
     store.emit(
       new UpdateBoundsFilteredButtons(orderedFilteredButtons),
     );
+
+    const outterButtonsCount = calculateOutterButtons(orderedFilteredButtons, cachedH3Hexes.current)
+    store.emit(new UpdateOutterButtonsCounts(outterButtonsCount.east, outterButtonsCount.west))
   }
 
   useEffect(() => {
