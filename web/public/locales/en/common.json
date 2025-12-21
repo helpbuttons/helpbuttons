@@ -313,7 +313,7 @@
     "selectPlace": "Select place on map and save",
     "sendPrivateMessage": "Send private message to {0}",
     "expiredLabel": "Expired",
-    "followers": "Suscribed by {0} users."
+    "followers": "Suscribed by {0} users.",
     "showMoreTags": "more tags"
   },
   "user": {
