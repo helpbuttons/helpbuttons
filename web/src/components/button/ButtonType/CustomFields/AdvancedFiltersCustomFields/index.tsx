@@ -39,7 +39,6 @@ export function AdvancedFiltersCustomFields({
               name="minPrice"
               label={t('buttonFilters.price')}
               explain={t('buttonFilters.priceExplain')}
-              multiInput={true}
               placeholder={t('buttonFilters.minPricePlaceholder')}
               {...register('minPrice')}
             />

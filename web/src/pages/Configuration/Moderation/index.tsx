@@ -57,7 +57,7 @@ export default function Moderation() {
               {t('moderation.description')}
           </div>
 
-          {mode == null && <>
+          {mode == null && <div className='form__field--multiinput'>
             <Link href="#" onClick={() => setMode(ModerationMode.USERS)}>
               <Btn
                 iconLeft={IconType.svg}
@@ -93,7 +93,7 @@ export default function Moderation() {
                 caption={t('moderation.adminCommunication')}
               />
             </Link>
-          </>}
+          </div>}
 
 
           {mode == ModerationMode.USERS && <ModerationUsersList />}

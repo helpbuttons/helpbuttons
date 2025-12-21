@@ -210,7 +210,7 @@ function FieldDefaultViewMode({defaultValue, onChange}) {
   return <DropdownField
   options={[
     { value: ExploreViewMode.LIST, name: t('explore.list') },
-    { value: ExploreViewMode.MAP, name: t('explore.map') },
+    // { value: ExploreViewMode.MAP, name: t('explore.map') },
     { value: ExploreViewMode.BOTH, name: t('explore.both') },
   ]}
   explain={null}
