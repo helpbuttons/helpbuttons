@@ -325,7 +325,9 @@ $picker-comments-item-padding: 25px;
   height: auto;
   width: auto;
   display: flex;
-  margin: $margin-medium 0;
+  padding-top: $padding-huge ;
+
+  padding-bottom: $padding-huge ;
   min-height: 250px;
 
   .pigeon-zoom-buttons {
@@ -402,5 +404,8 @@ $picker-comments-item-padding: 25px;
     margin: auto;
     z-index: $z-index-05;
   }
+
+
+
 
 }
