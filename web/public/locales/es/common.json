@@ -244,8 +244,6 @@
     "newcommentOwn": "Escribiste un comentario {0}",
     "newmention": "Fuiste mencionado/a en una conversación. {0}: '{1}'",
     "newmentionOwn": "Publicaste un comentario. '{0}'"
-
-    "pickOne": "Selecciona una conversación"
   },
   "activitiesWithSubject": {
     "newbutton": "{0} creó _helpbutton_ en {1}",
