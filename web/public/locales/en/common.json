@@ -314,6 +314,7 @@
     "sendPrivateMessage": "Send private message to {0}",
     "expiredLabel": "Expired",
     "followers": "Suscribed by {0} users."
+    "showMoreTags": "more tags"
   },
   "user": {
     "login": "Write your credentials",

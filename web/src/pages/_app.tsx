@@ -193,8 +193,10 @@ function MyApp({ Component, pageProps }) {
     const isAllowed = isRoleAllowed(Role.guest, path)
 
     if (!isAllowed) {
+      console.log('not allowd')
+      alertService.error(t('common.registeredRequired'));
       store.emit(new ResetFilters()) // TODO: bug when using router.back
-      store.emit(new SetMainPopup(MainPopupPage.SIGNUP))
+      store.emit(new SetMainPopup(MainPopupPage.LOGIN))
       router.back()
       return;
     }

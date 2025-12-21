@@ -989,7 +989,6 @@ $card-button-border-height: $border-general-height;
 
 
   .card-button__full-content,
-  .card-button__suscribers,
   .card-button__author,
   .card-button__actions {
 
@@ -1001,38 +1000,6 @@ $card-button-border-height: $border-general-height;
 
     gap: $padding-huge;
 
-  }
-
-  .card-button__suscribers {
-
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    border-top: $border-style-light;
-
-    &:hover {
-      cursor: pointer;
-      background-color: $color-ligth-gray;
-    }
-  }
-
-  .card-button__suscribers__number {
-
-
-
-  }
-
-  .card-button__suscribers__avatars {
-
-    display: flex;
-    flex-direction: row;
-
-    &.avatar-small{
-          margin-right: $padding-big;
-
-    }
-
-    
   }
 
   .card-button__actions {
