@@ -91,11 +91,18 @@ export default function ActivitiesUser() {
     <div className="feed__container">
         <div className="feed-section--messages">
           <div className="feed-section__left">
-            <PopupHeader >Messages & Alerts</PopupHeader>
+            {/* <PopupHeader >Messages & Alerts</PopupHeader> */}
+            <div className="chat__header">
+              <div className="chat__header-content">
+                <h1 className="chat__header-center">Messages & Alerts</h1>
+              </div>
+            </div>
             <div className="feed-section__left__header">
               <div className="feed-section__filters">
-                <ShowMobileOnly><DropdownLine options={filterButtons} onChange={setButtonType} name="activityType"/></ShowMobileOnly>
-                <ShowDesktopOnly><Dropdown options={filterButtons} onChange={setButtonType}/></ShowDesktopOnly>
+                <DropdownLine options={filterButtons} onChange={setButtonType} name="activityType"/>
+              </div>
+              <div className="feed-section__filters--desktop">
+                <Dropdown options={filterButtons} onChange={setButtonType}/>
               </div>
             </div>
             <div className="feed-section--activity-content">
