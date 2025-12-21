@@ -313,6 +313,37 @@ function NetworkForm({
             />
 
           </Accordion>
+          <Accordion title={t('configuration.FAQs')}>
+            <FieldTextArea
+              name="privacyPolicy"
+              label={t('configuration.privacyPolicyLabel')}
+              placeholder={t('configuration.privacyPolicyPlaceHolder')}
+              classNameInput="squared"
+              validationError={errors.privacyPolicy}
+              watch={watch}
+              setValue={setValue}
+              setFocus={setFocus}
+              {...register('privacyPolicy')}/>
+
+            <FieldTextArea
+              name="ethicsPolicy"
+              label={t('configuration.ethicsPolicyLabel')}
+              placeholder={t('configuration.ethicsPolicyPlaceHolder')}
+              classNameInput="squared"
+              validationError={errors.ethicsPolicy}
+              watch={watch}
+              setValue={setValue}
+              setFocus={setFocus}
+              {...register('ethicsPolicy')}/>
+            <FieldText
+              name="contactEmail"
+              label={t('configuration.contactEmailLabel')}
+              placeholder={t('configuration.contactEmailPlaceHolder')}
+              classNameInput="squared"
+              validationError={errors.contactEmail}
+              {...register('contactEmail')}
+            ></FieldText>
+          </Accordion>
 
 {/*
           <div className="form__section-title">

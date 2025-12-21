@@ -317,6 +317,7 @@ $feed-new-message-radius: $border-radius-circle;
 
   display: flex;
   width: 33vw;
+  overflow: auto;
 
   }
 
@@ -325,7 +326,7 @@ $feed-new-message-radius: $border-radius-circle;
 
   display: flex;
   flex-direction: row;
-  justify-content: stretch;
+  justify-content: space-around;
   height: 100%;
 
 }

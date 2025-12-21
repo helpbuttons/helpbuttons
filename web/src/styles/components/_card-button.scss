@@ -26,11 +26,43 @@ $card-button-border-height: $border-general-height;
   }
 }
 
+.card-button__wrapper {
+
+  width: 100%;
+
+}
+
 .card-button__content,
 .card-button__content--small {
   padding: $padding-big $padding-big $padding-medium $padding-big ;
 }
 
+.card-button__content--layer {
+
+  background-color: red;
+
+}
+
+.card-button__content--expired {
+
+  @extend .card-button-list;
+  position: absolute;
+  background-color: $color-transparent;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: $z-index-base;
+  color: $color-white;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: $font-size-title;
+  font-weight: $font-weight-bolder;
+  transform: rotate(45);
+
+}
 
 .card-button__full-content{
   padding: $padding-huge $padding-huge;
@@ -201,8 +233,8 @@ $card-button-border-height: $border-general-height;
   flex-wrap:inherit;
   font-size: $font-size-small;
   gap: $padding-medium;
-  margin-top: $margin-xsmall;
-  height: 48px;
+  // margin-top: $margin-xsmall;
+  // height: 48px;
 
 }
 
@@ -329,6 +361,7 @@ $card-button-border-height: $border-general-height;
   overflow: hidden;
   text-overflow: ellipsis;
   word-break: break-word;
+  font-weight: $font-weight-bolder;
 
 
   a {

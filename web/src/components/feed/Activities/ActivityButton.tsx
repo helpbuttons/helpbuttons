@@ -153,14 +153,14 @@ function MessageForm({ sendNewMessage, buttonId, consumerId }) {
   return (
     <form className="chat__new-message">
 
-      <Btn
+      {/* <Btn
         btnType={BtnType.circle}
         iconLink={<IoAdd />}
         iconLeft={IconType.circle}
         contentAlignment={ContentAlignment.center}
         onClick={() => {
         }}
-      />
+      /> */}
       <div className="chat__new-message__message">
         <FieldText
           name="message"
@@ -272,8 +272,7 @@ function ActivityDetailMessage({ activity }) {
         <div className="message message--you">
           <div className="message__header">
             <div className="message__avatar">
-              {/* <ImageWrapper imageType={ImageType.avatar} src={activity.activityFrom.avatar} alt={"ups"}  /> */}
-              <img src={activity.activityFrom.avatar} alt="avd1rada" className="avatar picture__img"></img>
+              <ImageWrapper imageType={ImageType.avatar} src={activity.activityFrom.avatar} alt={activity.activityFrom.name}  />
             </div>
 
             <div className="message__user-name-container">

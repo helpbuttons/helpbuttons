@@ -516,7 +516,7 @@ export class ActivityService {
             from: isOwner ? activity.from.name : '',
             image: isOwner ? activity.from.avatar : activity.button.image,
             buttonType: activity.button.type,
-            type: translate(locale, 'activities.notice'),
+            type: translate(locale, 'activities.message'),
             footer: `${activity.button.title} - ${activity.button.address}`,
             message: message,
           }
@@ -532,7 +532,7 @@ export class ActivityService {
             from: isOwner ? activity.from.name : '',
             image: isOwner ? activity.from.avatar : activity.button.image,
             buttonType: activity.button.type,
-            type: translate(locale, 'activities.notice'),
+            type: translate(locale, 'activities.comment'),
             footer: `${activity.button.title} - ${activity.button.address}`,
             message: commentOwner ? translate(locale, 'activities.newcommentOwn', [comment.message]) : translate(locale, 'activities.newcomment', [comment.author.name, comment.message]),
             messageId: comment.id,
@@ -567,7 +567,7 @@ export class ActivityService {
           buttonType: button.type,
           type: translate(locale, 'activities.notice'),
           footer: button.address,
-          message: translate(locale, 'activities.endorsed'),
+          message: translate(locale, 'activities.newbutton', [button.address]),
         }}
       case ActivityEventName.Endorsed: 
       {return {

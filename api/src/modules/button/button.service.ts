@@ -448,8 +448,6 @@ export class ButtonService {
     let buttons: Button[] = await this.buttonRepository.find({
       where: {
         owner: { id: ownerId, role: Not(Role.blocked) },
-        deleted: false,
-        expired: false,
       },
       relations: ['owner'],
     });
@@ -689,6 +687,7 @@ export class ButtonService {
         order: {
           created_at: 'DESC',
         },
+        relations: ['owner']
       })
       .then((buttons) => this.filterExpired(buttons));
   }

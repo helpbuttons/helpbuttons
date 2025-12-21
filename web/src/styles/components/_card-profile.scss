@@ -355,6 +355,7 @@ $avatar-margin: $padding-big;
       flex: 0; 
       height: min-content;
       border-radius: $border-radius-circle  ;
+      min-width: calc(100% - $list-width-desktop);
       min-width: $grid-desktop-double-column-left-width;
 
   }
