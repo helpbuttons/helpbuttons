@@ -454,7 +454,7 @@ const ButtonRow = ({ button, buttonType }) => {
 
             <Text style={styles.place}>{button.address}</Text>
              <Text style={styles.date}>
-                 {button.eventStart && (readableDate(button.eventStart))} {button.eventStart && (readableTime(button.eventStart))} {button.eventEnd && (" - " + readableDate(button.eventStart))} {button.eventEnd && (" " + readableTime(button.eventStart))}{'  '}
+                 {button.eventStart && (readableDate(button.eventStart))} {button.eventStart && (readableTime(button.eventStart))} {button.eventEnd && (" - " + readableDate(button.eventEnd))} {button.eventEnd && (" " + readableTime(button.eventEnd))}{'  '}
               </Text>
               <View style={styles.phoneContainer}>
 
