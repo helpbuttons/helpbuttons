@@ -93,7 +93,7 @@ export function TimePick({ time, setTime, minTime = null, maxTime = null, handle
             setNewTime(newTime.formatted24);
           }}
           doneButton={() =>
-            <>
+            <div className='form__field--multiinput'>
               {errorTime < 0 &&
                 <>
                   <FieldError validationError={{ message: t('eventType.afterStart', [readableTime(minTime)]) }} />
@@ -117,7 +117,7 @@ export function TimePick({ time, setTime, minTime = null, maxTime = null, handle
                 onClick={() => { trySaveNewTime() }}
                 disabled={_time == null}
               />
-            </>
+            </div>
           }
           switchToMinuteOnHourSelect
         />

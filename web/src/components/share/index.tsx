@@ -36,7 +36,6 @@ export function ShareForm({}) {
           {t('share.invitePeople')}
         </div>
         <div className="form__field">
- 
               <div className="form__explain">
                 {t('share.invitePeopleExplain')}
               </div>
@@ -88,7 +87,7 @@ function ShareInviteButton() {
     alertService.info(t('share.linkCopied', [getShareLink('/Signup')]))
   }
   return (
-    <>
+    <div className='form__field--multiinput'>
       <div className='form__input form__fake-input' onClick={onClick} >{getShareLink('/Signup')}</div>
       
       <Btn
@@ -99,7 +98,7 @@ function ShareInviteButton() {
         caption={t('share.copyLink')}
         onClick={onClick}
       />
-    </>
+    </div>
     
   )
 }
@@ -113,7 +112,7 @@ function ShareRssButton() {
     alertService.info(t('share.linkCopied', [getShareLink('/rss')]))
   }
   return (
-    <>
+    <div className='form__field--multiinput'>
       <div className='form__input form__fake-input' onClick={onClick} >{getShareLink('/rss')}</div>
       
       <Btn
@@ -124,7 +123,7 @@ function ShareRssButton() {
         caption={t('share.copyLink')}
         onClick={onClick}
       />
-    </>
+    </div>
     
   )
 }

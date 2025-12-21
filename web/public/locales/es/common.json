@@ -244,7 +244,6 @@
     "newcommentOwn": "Escribiste un comentario {0}",
     "newmention": "Fuiste mencionado/a en una conversación. {0}: '{1}'",
     "newmentionOwn": "Publicaste un comentario. '{0}'"
-
   },
   "activitiesWithSubject": {
     "newbutton": "{0} creó _helpbutton_ en {1}",
@@ -584,7 +583,9 @@
     "onceExplain": "Selecciona el día y la hora para tu evento",
     "recurringExplain": "Selecciona días de inicio y final, días de la semana y la hora para tus eventos",
     "afterStart": "Por favor selecciona una fecha/hora posterior a {0}",
-    "beforeEnd": "Por favor selecciona una fecha/hora anterior a {0}"
+    "beforeEnd": "Por favor selecciona una fecha/hora anterior a {0}",
+    "changeToMultipleDates": "Presiona para seleccionar varios días"
+
   },
   "faqs": {
     "title": "Preguntas frecuentes",

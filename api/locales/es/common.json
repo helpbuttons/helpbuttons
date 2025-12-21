@@ -212,7 +212,7 @@
     "newcommentSubject": "Alguien ha comentado en tu _helpbutton_ '{0}'",
     "newfollow": "'{0}' está ahora siguiendo tu _helpbutton_ '{1}'",
     "newfollowing": "estás ahora siguiendo: _helpbutton_ '{0}'",
-    "newfollowed": "{0} ahora sigue tu _helpbutton_ '{1}'",
+    "newfollowed": "Sigue tu _helpbutton_",
     "newbuttonType": "Nuevo _helpbutton_",
     "newcommentType": "Comentario",
     "deletebutton": "{0} fue finalizado / borrado",
