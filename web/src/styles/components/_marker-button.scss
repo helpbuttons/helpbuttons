@@ -52,6 +52,28 @@ $cycle: 10;
   transform: scale(1.1); 
 }
 
+.marker-button--card {
+
+  height: 100px;
+
+      width: 100%;
+    left: -70px;
+  border: none;
+  margin: auto;
+  margin-bottom: 0;
+  position: absolute;
+  transition: transform 0.3s ease;
+  cursor: pointer;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
+  transform-origin: bottom center; /* Set the origin to bottom center */
+  bottom: -12px;
+
+
+}
+
+
 .marker-button__image {
     align-items: center;
     justify-content: center;
@@ -431,5 +453,14 @@ $cycle: 10;
   align-items: center;
   margin-left: auto;
   max-height: 50px;
+
+}
+@media #{$breakpoints-large} {
+
+  .marker-button--card {
+
+    width: 300px;
+  }
+
 
 }

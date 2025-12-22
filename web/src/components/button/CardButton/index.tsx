@@ -193,30 +193,25 @@ export function CardButtonHeadMedium({ button, buttonType }) {
 }
 
 
-
 // Pin of the map
-/*
 export function CardButtonHeadSmall({ button }) {
-  const { cssColor } = buttonTypes.find((buttonType) => {
-    return buttonType.name === button.type;
-  });
+
   return (
     <>
-      <a href={`/ButtonFile/${button.id}`}>
         <div className="card-button-map__content">
           <div className="card-button-map__header">
             <div className="card-button-map__info">
-              <div className="card-button__name">
-                {button.owner.name}
-              </div>
-
               <div className="card-button__status card-button__status">
-                <span
-                  className="card-button"
-                  style={buttonColorStyle(cssColor)}
-                >
-                  {button.type}
-                </span>
+                {/* {buttonType.icon && (
+                  <div className="card-button__emoji">
+                    {buttonType.icon}
+                  </div>
+                )}
+                  <span
+                    className=""
+                  >
+                    {buttonType.caption}
+                  </span> */}
               </div>
             </div>
           </div>
@@ -227,11 +222,10 @@ export function CardButtonHeadSmall({ button }) {
             {button.address}
           </div>
         </div>
-      </a>
     </>
   );
 }
-*/
+
 function CardButtonSubmenu({ button }) {
   const config: SetupDtoOut = useRef(
     store,

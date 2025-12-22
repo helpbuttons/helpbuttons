@@ -1,9 +1,9 @@
 import { PigeonProps } from 'pigeon-maps';
-import React from 'react';
+import React, { useState } from 'react';
 // import { buttonColorStyle, buttonTypes } from 'shared/buttonTypes';
 import { Button } from 'shared/entities/button.entity';
 import CardButtonMap from '../CardButtonMap';
-import { buttonColorStyle } from 'shared/buttonTypes';
+import { buttonColorStyle, useButtonTypes } from 'shared/buttonTypes';
 import ImageWrapper, { ImageType } from 'elements/ImageWrapper';
 
 interface MarkerButtonProps extends PigeonProps {
@@ -13,6 +13,8 @@ interface MarkerButtonProps extends PigeonProps {
   button: Button;
   handleMarkerClicked: any;
   color: string;
+  showCard?: boolean;
+
 }
 
 interface MarkerButtonIconProps extends PigeonProps {
@@ -23,6 +25,9 @@ interface MarkerButtonIconProps extends PigeonProps {
   title: string;
   onClick?: any;
   cssColor: string;
+  button?: Button;
+  showCard?: boolean;
+
 }
 
 interface MarkerButtonPopupProps extends PigeonProps {
@@ -39,8 +44,17 @@ export function MarkerButton(props: MarkerButtonProps) {
   //   return buttonType.name === props.button.type;
   // });
   const cssColor = 'red' // TODO
-   
+  const [showCard, setshowCard] = useState(true);
+
   const handleMarkerClicked = (button: Button) => {
+    if(showCard)
+    {props.handleMarkerClicked(button);
+    setshowCard(false);}
+    else
+    {setshowCard(true);}
+  };
+
+  const handleCardClicked = (button: Button) => {
     props.handleMarkerClicked(button);
   };
 
@@ -51,6 +65,8 @@ export function MarkerButton(props: MarkerButtonProps) {
         cssColor={props.color}
         image={props.button.image}
         title={props.button.title}
+        button={props.button}
+        showCard={showCard}
         onClick={() => handleMarkerClicked(props.button)}
       />
     </>
@@ -72,12 +88,14 @@ export function MarkerButtonPopup(props: MarkerButtonPopupProps) {
           : 'pigeon-click-block'
       }
     >
-      <CardButtonMap button={props.button} />
+      <CardButtonMap button={props.button} buttonTypes={undefined}/>
     </div>
   );
 }
 
 export function MarkerButtonIcon(props: MarkerButtonIconProps) {
+      const buttonTypes = useButtonTypes();
+  
   return (
     <div style={buttonColorStyle(props.cssColor)}>
       <div
@@ -97,7 +115,7 @@ export function MarkerButtonIcon(props: MarkerButtonIconProps) {
           onClick={props.onClick}
           className="marker-button marker-button-selector"
         >
-          {props.title && 
+          {props.title  && !props.showCard && 
             <div className="marker-button__tags marker-button-selector-title">
               <div className="marker-button__link-tag">
                 {props.title}
@@ -105,7 +123,7 @@ export function MarkerButtonIcon(props: MarkerButtonIconProps) {
             </div>
           }
 
-          {!props.title && 
+          {/* {!props.title && 
             <div className=" marker-button__image--fix">
               <ImageWrapper
                 imageType={ImageType.avatarMed}
@@ -113,9 +131,9 @@ export function MarkerButtonIcon(props: MarkerButtonIconProps) {
                 alt={props.title}
               />
             </div>
-          }
+          } */}
 
-        {props.title && 
+        {props.title && !props.showCard &&                    
           <div className=" marker-button__image">
             <ImageWrapper
               imageType={ImageType.avatarMed}
@@ -123,10 +141,15 @@ export function MarkerButtonIcon(props: MarkerButtonIconProps) {
               alt={props.title}
             />
           </div>
-          }
+        }
           <span className="marker-button__arrow"></span>
-
         </figure>
+        {props.showCard && 
+          <figure className='marker-button--card' onClick={props.onClick}>
+            <CardButtonMap button={props.button} buttonTypes={buttonTypes}/>
+              <span className="marker-button__arrow"></span>
+          </figure>
+        }
       </div>
     </div>
   );

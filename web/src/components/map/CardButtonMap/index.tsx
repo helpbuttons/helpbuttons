@@ -4,14 +4,23 @@ import ImageWrapper, { ImageType } from "elements/ImageWrapper";
 import { buttonColorStyle } from "shared/buttonTypes";
 import { IoChevronForwardOutline } from "react-icons/io5";
 import { IoChevronBackOutline } from "react-icons/io5";
-export default function CardButtonMap({ button }) {
+import { CardButtonHeadSmall } from "components/button/CardButton";
+import { ImageGallery } from "elements/ImageGallery";
+import { alertService } from "services/Alert";
+export default function CardButtonMap({ button, buttonTypes }) {
   // const {cssColor} = buttonTypes.find((buttonType) => buttonType.name == button.type)
-  const cssColor = 'red'; // TODO
+  //   const buttonType = buttonTypes.find(
+  //   (buttonTemplate) => buttonTemplate.name == button.type,
+  // );
+  //   if(!buttonType && buttonTypes.length > 0)
+  //   {
+  //     alertService.error(`type of button not found '${button.type}'`)
+  //     console.error(`type of button not found '${button.type}'`)
+  //   }
   return (
-    <div style={buttonColorStyle(cssColor)}>
+    <div >
       <div className="card-button-map">
-        missing card button head small
-        {/* <CardButtonHeadSmall button={button}/> */}
+        <CardButtonHeadSmall button={button} />
         <div className="card-button-map__picture-container">
           <div className="card-button-map__nav">
             <div className="arrow btn-circle__icon">
@@ -21,10 +30,10 @@ export default function CardButtonMap({ button }) {
               <IoChevronForwardOutline />
             </div>
           </div>
-          <ImageWrapper
-            imageType={ImageType.cardList}
-            src={button.image}
-            alt={button.description}
+          <ImageGallery
+            images={button?.images.map((image) => {
+              return { src: image, alt: button.description };
+            })}
           />
         </div>
       </div>
