@@ -200,44 +200,7 @@ function List({
                 />
               )}
 
-              {!showLeftColumn ? (
-                <div
-                  onClick={() =>
-                    store.emit(
-                      new UpdateExploreViewMode(ExploreViewMode.BOTH),
-                    )
-                  }
-                  className={
-                    'drag-tab ' +
-                    (showLeftColumn ? '' : 'drag-tab--open') +
-                    (showMap ? '' : 'drag-tab--hide')
-                  }
-                >
-                  {!isListFullScreen && <span className="drag-tab__line"></span>}
-                  <div className="drag-tab__icon">
-                    <IoList />
-                  </div>
-                  {t('explore.showList')}
-                </div>
-              ) : (
-                <div
-                  onClick={() =>
-                    store.emit(
-                      new UpdateExploreViewMode(ExploreViewMode.MAP),
-                    )
-                  }
-                  className={
-                    'drag-tab ' +
-                    (showLeftColumn ? '' : 'drag-tab--open') +
-                    (showMap ? '' : 'drag-tab--hide')
-                  }
-                >
-                  {!isListFullScreen && <span className="drag-tab__line"></span>}
-                  <div className="drag-tab__icon">
-                    <IoClose />
-                  </div>
-                </div>
-              )}
+ 
             </div>
             <div
               className={

@@ -331,7 +331,7 @@ $picker-comments-item-padding: 25px;
   .pigeon-zoom-buttons {
 
     right: $padding-small;
-    top: 0;
+    top: $margin-small !important;
 
   }
 

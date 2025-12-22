@@ -28,7 +28,7 @@ $map-btns-size-mobile: 30px;
 
     position: absolute;
     right: 10px !important;
-    top: 130px !important;
+    top: 100px !important;
     display: block;
     left: auto !important;
     z-index: $z-index-02;
@@ -45,6 +45,7 @@ $map-btns-size-mobile: 30px;
     background-color: $color-white;
     height: 40px;
     width: 40px;
+    margin-top: $margin-xsmall;
     border-radius: $border-radius-circle;
     display: flex;
     align-items: center;
@@ -56,6 +57,7 @@ $map-btns-size-mobile: 30px;
     &:hover {
 
         cursor: pointer;
+         background-color: $color-ligth-gray;
 
     }
 
@@ -66,15 +68,45 @@ $map-btns-size-mobile: 30px;
 
 }
 
+.pigeon-full-map {
+
+    border: none;
+    background-color: $color-white;
+    height: 40px;
+    width: 40px;
+    border-radius: $border-radius-circle;
+    display: flex;
+    align-items: center;
+    padding: 0;
+    top: 0;
+    justify-content: center;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+    display: none;
+
+
+    &:hover {
+
+        cursor: pointer;
+         background-color: $color-ligth-gray;
+
+    }
+
+    svg {
+        
+        fill: $color-gray;
+    }
+
+
+}
+
 .pigeon-zoom-buttons {
 
     position: absolute;
-    right: 10px !important;
-    top: 10px !important;
+    right: $margin-xsmall !important;
+    top: $margin-xsmall !important;
     display: block;
     left: auto !important;
     z-index: $z-index-02;
-
 
 }
 
@@ -87,10 +119,25 @@ $map-btns-size-mobile: 30px;
     text-align: center;
     height: 40px !important;
     padding: 0px 0px !important;
-    margin: $margin-xsmall 0 !important;
     line-height: 30px !important;
-    border-radius: $border-radius-circle !important;
 
+
+    &:hover {
+
+        cursor: pointer;
+         background-color: $color-ligth-gray !important;
+
+    }
+}
+
+.pigeon-zoom-in  {
+
+    border-radius:  $border-radius-circle $border-radius-circle 0 0 !important;
+}
+
+.pigeon-zoom-out {
+
+    border-radius:   0 0 $border-radius-circle $border-radius-circle  !important;
 }
 
 .pigeon-map__hex-info {
@@ -280,8 +327,8 @@ $map-btns-size-mobile: 30px;
 
     .pigeon-center-buttons{
 
-        right: 30px !important;
-        top: 150px !important;
+        right: $margin-small !important;
+        top: $margin-small !important;
         display: block;
         left: auto !important;
 
@@ -302,24 +349,33 @@ $map-btns-size-mobile: 30px;
 
         height: $map-btns-size-desktop;
         width: $map-btns-size-desktop;
-        // padding: $padding-medium;
 
     }
 
     .pigeon-zoom-buttons {
 
-        right: 30px !important;
-        top: 30px !important;
+        right: $margin-small !important;
+        top: 140px !important;
         display: block;
         left: auto !important;
     
     }
+
+    .pigeon-full-map {
+        
+        margin-top: $margin-small;
+
+
+    }
+
     .pigeon-zoom-in, .pigeon-zoom-out  {
 
-        height: $map-btns-size-desktop !important;;
-        width: $map-btns-size-desktop !important;;
+        height: $map-btns-size-desktop !important;
+        width: $map-btns-size-desktop !important;
         // padding: $padding-medium !important;;
     }
+
+
   
 }
 
