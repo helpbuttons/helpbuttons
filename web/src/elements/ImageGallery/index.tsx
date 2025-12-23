@@ -82,3 +82,64 @@ export function ImageGallery({ images }) {
       </div>
     );
   }
+
+
+export function ImageGalleryMap({ images }) {
+  
+    const [currentIndex, setCurrentIndex] = useState(0);
+  
+    const next = () => {
+
+      setCurrentIndex((currentIndex + 1) % images.length);
+    };
+  
+    const prev = () => {
+
+      setCurrentIndex(
+        (currentIndex - 1 + images.length) % images.length,
+      );
+    };
+    
+    return (
+      <div className="card-button-map__image-gallery">
+        {images && (
+            <div className="card-button-map__picture">
+              {images.length > 1 && (
+                <div className="card-button-map__picture-nav">
+                  <Btn
+                    btnType={BtnType.smallCircle}
+                    iconLink={<IoChevronBackOutline />}
+                    iconLeft={IconType.circle}
+                    contentAlignment={ContentAlignment.center}
+                    onClick={(e) => { e.preventDefault();  e.stopPropagation(); prev(); }}
+                    extraClass="arrow"
+                  />
+                  <Btn
+                    btnType={BtnType.smallCircle}
+                    iconLink={<IoChevronForwardOutline />}
+                    iconLeft={IconType.circle}
+                    contentAlignment={ContentAlignment.center}
+                    onClick={(e) => { e.preventDefault();  e.stopPropagation(); next(); }}
+                    extraClass="arrow"
+                  />
+                </div>
+              )}
+              {images.map((image, idx) => (
+                <div
+                  key={idx}
+                  className={
+                    images[currentIndex] === image ? 'show' : 'hide'
+                  }
+                >
+                  <ImageWrapper
+                    imageType={ImageType.cardMap}
+                    src={image.src}
+                    alt={image.alt}
+                  />
+                </div>
+              ))}
+          </div>
+        )}
+      </div>
+    );
+  }

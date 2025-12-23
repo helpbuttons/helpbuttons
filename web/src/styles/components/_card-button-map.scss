@@ -25,7 +25,7 @@ $card-button-map-border-height: $border-general-height;
   position: relative;
   margin: auto;
   margin-bottom: $card-button-map-margin-bottom;
-  border-radius: 0 0 $border-radius-basic  $border-radius-basic;
+  border-radius: $border-radius-basic  $border-radius-basic;
   p {
     margin-bottom: 0;
   }
@@ -45,6 +45,15 @@ $card-button-map-border-height: $border-general-height;
 
 .card-button-map:after {
   background:  var(--button-color);
+}
+
+
+.card-button-map {
+  &:hover{
+    
+    box-shadow: $box-shadow-divs;
+
+  }
 }
 
 .card-button-map--wrapper {
@@ -156,8 +165,9 @@ $card-button-map-border-height: $border-general-height;
 }
 
 .card-button-map__title {
-  color: $color-gray;
-  font-size: $font-size-general;
+  font-size: $font-size-title;
+  font-weight: $font-weight-bolder;
+  padding-bottom: $padding-medium;
 }
 
 .card-button-map__situation {
@@ -263,9 +273,34 @@ $card-button-map-border-height: $border-general-height;
   text-align: left;
 }
 
-.card-button-map__picture {
-  position: relative;
 
+.card-button-map__picture {
+  width: 100%;
+  position: relative;
+  text-align: center;
+  height: 100%;
+  & img {
+
+    max-width: 100%;
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover !important;
+    pointer-events: auto;
+
+    &:hover{
+      cursor: pointer;
+    }
+
+  }
+
+  .hide{
+    display:none;
+  }
+  .show{
+    display:block;
+    margin: auto;
+    width: fit-content;
+  }
 }
 
 .card-button-map__picture-container {
@@ -296,6 +331,23 @@ $card-button-map-border-height: $border-general-height;
 
 }
 
+.card-button-map__picture-nav {
+
+  width: 100%;
+  height: 100%;
+  margin: auto;
+  position: absolute;
+  padding: 0 $padding-small;
+  z-index: $z-index-01;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  background: transparent;
+  // display: none; //revise if image navigation
+
+}
+
 .card-button-map__nav .arrow {
 
   @extend .btn-circle--small !optional;
@@ -315,7 +367,7 @@ $card-button-map-border-height: $border-general-height;
 .card-button-map__city-list,
 .card-button-map__date {
   color: black;
-  font-size: $font-size-general;
+  font-size: $font-size-small;
   font-weight: bold;
   text-align: left;
 }
@@ -328,7 +380,6 @@ $card-button-map-border-height: $border-general-height;
 .card-button-map__city {
   cursor: pointer;
   padding-right: 1rem;
-  text-decoration: underline;
   text-align: left;
   display: inline-block;
 }
@@ -385,6 +436,12 @@ $card-button-map-border-height: $border-general-height;
 .card-button-map__date:before {
   background: transparent url('../../../public/assets/svg/icons/time_black.svg') left center no-repeat;
   background-size: 100% auto;
+}
+
+.card-button-map__fields {
+  display: flex;
+  flex-direction: column;
+  
 }
 
 .card-button-map__avatar-container {

@@ -54,21 +54,20 @@ $cycle: 10;
 
 .marker-button--card {
 
-  height: 100px;
+  height: auto;
 
-      width: 100%;
-    left: -70px;
+  left: -120px;
   border: none;
   margin: auto;
   margin-bottom: 0;
-  position: absolute;
+  position: fixed;
   transition: transform 0.3s ease;
   cursor: pointer;
   display: flex;
   justify-content: flex-start;
   align-items: flex-end;
   transform-origin: bottom center; /* Set the origin to bottom center */
-  bottom: -12px;
+  bottom: 0;
 
 
 }
@@ -457,10 +456,28 @@ $cycle: 10;
 }
 @media #{$breakpoints-large} {
 
-  .marker-button--card {
+ 
 
-    width: 300px;
-  }
+.marker-button--card {
+
+  height: auto;
+
+  width: 100%;
+  left: -120px;
+  border: none;
+  margin: auto;
+  margin-bottom: 0;
+  position: absolute;
+  transition: transform 0.3s ease;
+  cursor: pointer;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
+  transform-origin: bottom center; /* Set the origin to bottom center */
+  bottom: -14px;
+
+
+}
 
 
 }

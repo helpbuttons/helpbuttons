@@ -133,21 +133,20 @@ export function MarkerButtonIcon(props: MarkerButtonIconProps) {
             </div>
           } */}
 
-        {props.title && !props.showCard &&                    
-          <div className=" marker-button__image">
-            <ImageWrapper
-              imageType={ImageType.avatarMed}
-              src={props.image}
-              alt={props.title}
-            />
-          </div>
-        }
+          {props.title && !props.showCard &&                    
+            <div className=" marker-button__image">
+              <ImageWrapper
+                imageType={ImageType.avatarMed}
+                src={props.image}
+                alt={props.title}
+              />
+            </div>
+          }
           <span className="marker-button__arrow"></span>
         </figure>
         {props.showCard && 
-          <figure className='marker-button--card' onClick={props.onClick}>
-            <CardButtonMap button={props.button} buttonTypes={buttonTypes}/>
-              <span className="marker-button__arrow"></span>
+          <figure className='marker-button--card'>
+            <CardButtonMap button={props.button} buttonTypes={buttonTypes} onClick={props.onClick}/>
           </figure>
         }
       </div>

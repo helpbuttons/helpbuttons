@@ -107,6 +107,17 @@ export default function ImageWrapper({
       />
     );
   }
+  if (imageType == ImageType.cardMap) {
+    return (
+      <HbImage
+        style={{ objectFit: 'cover', display: 'flex' }}
+        src={makeImageUrl(src, localUrl)}
+        alt={alt}
+        height={160}
+        width={200}
+      />
+    );
+  }
   if (imageType == ImageType.cardListVertical) {
     return (
       <HbImage

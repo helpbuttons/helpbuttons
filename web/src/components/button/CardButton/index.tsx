@@ -194,7 +194,7 @@ export function CardButtonHeadMedium({ button, buttonType }) {
 
 
 // Pin of the map
-export function CardButtonHeadSmall({ button }) {
+export function CardButtonHeadSmall({ button , buttonType}) {
 
   return (
     <>
@@ -216,10 +216,20 @@ export function CardButtonHeadSmall({ button }) {
             </div>
           </div>
 
-          <div className="card-button__title">{button.title}</div>
+          <div className="card-button-map__title">{button.title}</div>
 
-          <div className="card-button__city card-button__everywhere ">
-            {button.address}
+          <div className="card-button-map__fields">
+            <div className="card-button-map__city">
+             {button.address}
+            </div>
+            {buttonType.customFields &&
+              buttonType.customFields.length > 0 && (
+                <CardButtonCustomFields
+                  customFields={buttonType.customFields}
+                  button={button}
+                />
+            )}
+
           </div>
         </div>
     </>
