@@ -94,7 +94,7 @@ export default function ActivitiesUser() {
             {/* <PopupHeader >Messages & Alerts</PopupHeader> */}
             <div className="chat__header">
               <div className="chat__header-content">
-                <h1 className="chat__header-center">Messages & Alerts</h1>
+                <h1 className="chat__header-center">{t('activities.title')}</h1>
               </div>
             </div>
             <div className="feed-section__left__header">
