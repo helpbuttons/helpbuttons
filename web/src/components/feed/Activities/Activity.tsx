@@ -12,6 +12,7 @@ import t from "i18n";
 import { IoChatboxOutline } from "react-icons/io5";
 import { ButtonShow } from "components/button/ButtonShow";
 import { SetMainPopupCurrentButton } from "state/HomeInfo";
+import ActivityGroup from "./ActivityGroup";
 
 export default function ActivitiesUser() {
   const buttonTypes = useButtonTypes()
@@ -19,10 +20,10 @@ export default function ActivitiesUser() {
 
   const [selectedActivity, setSelectedActivity] = useState(null)
   const [filteredUserActivities, setFilteredUserActivities] = useState([])
-
+  const [createChat, setCreateChat] = useState(null)
   
-  const userActivities = useGlobalStore((state: GlobalState) => state.activities.activities)
-  const filterButtons = updateFilters(buttonTypes, userActivities)
+  const userButtonActivities = useGlobalStore((state: GlobalState) => state.activities.buttons)
+  const filterButtons = updateFilters(buttonTypes, userButtonActivities)
   const sideBarButton = useSideBarButton()
   const router = useRouter()
   const {draft} = router.query;
@@ -39,7 +40,7 @@ export default function ActivitiesUser() {
     }
     if(draftButton)
       {
-        const _draftActivity = userActivities.find((_activity) => _activity.buttonId == draftButton.id)
+        const _draftActivity = userButtonActivities.find((_activity) => _activity.buttonId == draftButton.id)
         
         if(_draftActivity){
           setSelectedActivity(() => _draftActivity) 
@@ -61,13 +62,23 @@ export default function ActivitiesUser() {
         query: { ...routerQuery },
       });
     }
+    if(selectedActivity)
+    {
+      setCreateChat(() => null)
+    }
   }, [selectedActivity])
 
+  useEffect(() => {
+    if(createChat)
+    {
+      setSelectedActivity(() => null)
+    }
+  }, [createChat])
   useEffect(() => {
     setFilteredUserActivities(() => {
       if(localFilters)
       {
-        return userActivities.filter((_activity) => {
+        return userButtonActivities.filter((_activity) => {
           if(localFilters.buttonType == 'all') 
           {
             return true;
@@ -75,9 +86,9 @@ export default function ActivitiesUser() {
           return _activity.buttonType == localFilters.buttonType
         })
       }
-      return userActivities
+      return userButtonActivities
     })
-  }, [userActivities, localFilters])
+  }, [userButtonActivities, localFilters])
 
   const setButtonType = (type) => {
     setLocalFilters(() => {return {buttonType: type}})
@@ -86,7 +97,7 @@ export default function ActivitiesUser() {
   const closeConversation = () => {
     setSelectedActivity(() => null)
   }
-
+  
   return (
     <div className="feed__container">
         <div className="feed-section--messages">
@@ -99,16 +110,18 @@ export default function ActivitiesUser() {
               </div>
             </div>
             <div className="feed-section--activity-content">
+                  <ActivityGroup creatingNewChat={createChat} setCreatingNewChat={setCreateChat}/>
+                  <div>{t('activities.buttons')}</div>
                   <ActivityList selectedActivity={selectedActivity} activities={filteredUserActivities} setSelectedActivity={setSelectedActivity} isDrafting={draft} />       
             </div>
           </div>
-          {(selectedActivity || draft) &&
+          {(selectedActivity || draft || createChat) &&
             <div className="feed-section__center">
-              <ActivityButton setSelectedActivity={setSelectedActivity} closeConversation={closeConversation} selectedActivity={selectedActivity} isDrafting={draft}/>
+              <ActivityButton setSelectedActivity={setSelectedActivity} closeConversation={closeConversation} selectedActivity={selectedActivity} isDrafting={draft} createChat={createChat}/>
               <div className="feed-section__center__chat"></div>
               </div>
             }
-            {(!selectedActivity && !draft) && 
+            {(!selectedActivity && !draft && !createChat) && 
               <>
                 <div className="feed-section__center feed-section__center--no-select">
                     <div className="feed-section__center__chat feed-section__center__chat-no-select">

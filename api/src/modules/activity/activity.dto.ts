@@ -1,3 +1,10 @@
+import { GroupMessageDtoOut } from "../group-message/group-message.dto";
+
+export class Activities {
+  buttons: ActivityDtoOut[];
+  community: GroupMessageDtoOut;
+  admin?: GroupMessageDtoOut;
+}
 export class ActivityDtoOut {
   id: string;
   eventName: string;

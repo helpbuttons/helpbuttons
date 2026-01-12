@@ -16,9 +16,14 @@ import { GlobalState, store, useGlobalStore } from "state"
 import { FindActivityDetails, FindLatestActivities, SendNewMessage, SetFocusOnMessage, SetFocusOnPost } from "state/Activity"
 import { FindButton } from "state/Explore"
 import { FindAndSetMainPopupCurrentButton, FindAndSetMainPopupCurrentProfile } from "state/HomeInfo"
+import { ActivityGroupChatCreate } from "./ActivityGroup"
 
-export function ActivityButton({ selectedActivity, setSelectedActivity, closeConversation, isDrafting }) {
+export function ActivityButton({ selectedActivity, setSelectedActivity, closeConversation, isDrafting, createChat }) {
 
+  if(createChat)
+  {
+    return <ActivityGroupChatCreate groupType={createChat} setSelectedActivity={setSelectedActivity}/>
+  }
   if (isDrafting) {
     return <ActivityDetailDraft setSelectedActivity={setSelectedActivity} />
   }
@@ -53,18 +58,18 @@ export function ActivityDetailConversation({ selectedActivity, closeConversation
     loadButtonActivities()
   }, [selectedActivity])
 
-  const activities = useGlobalStore((state: GlobalState) => state.activities.activities)
+  const buttonsActivities = useGlobalStore((state: GlobalState) => state.activities.buttons)
   useEffect(() => {
-    if(activities)
+    if(buttonsActivities)
     {
-      const foundSelectedActivity = activities.find((_activity) => _activity.consumerId == selectedActivity.consumerId && _activity.buttonId == selectedActivity.buttonId)
+      const foundSelectedActivity = buttonsActivities.find((_activity) => _activity.consumerId == selectedActivity.consumerId && _activity.buttonId == selectedActivity.buttonId)
       if(foundSelectedActivity && buttonActivities.length > 0 && foundSelectedActivity.createdAt > buttonActivities[0].createdAt)
       {
         // a new activity on the selected activity has been received, refetch!!
         loadButtonActivities()
       }
     }
-  }, [activities])
+  }, [buttonsActivities])
 
   const sendNewMessage = (message, buttonId, consumerId) => {
     store.emit(new SendNewMessage(message, buttonId, consumerId, () => { loadButtonActivities(); alertService.success(t('activities.sent')) }))

@@ -1,8 +1,8 @@
 import { Observable } from "rxjs";
 import { httpService } from "services/HttpService";
 import getConfig from "next/config";
-import { Activity, ActivityDtoOut } from "shared/entities/activity.entity";
-import { ActivityMessageDto } from "shared/dtos/activity.dto";
+import { Activity} from "shared/entities/activity.entity";
+import { Activities, ActivityDtoOut } from "shared/dtos/activity.dto";
 const { publicRuntimeConfig } = getConfig();
 const baseUrl = `${publicRuntimeConfig.apiUrl}`;
 
@@ -12,7 +12,7 @@ export class ActivityService {
     return httpService.post<any>("activity/markAsRead/" + activityId);
   }
 
-  public static activities(page): Observable<ActivityDtoOut[]> {
+  public static activities(page): Observable<Activities> {
     return httpService.get<any>(`activity/activities/${page}`);
   }
 

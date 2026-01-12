@@ -12,7 +12,7 @@ import { AllowGuest, OnlyRegistered } from '@src/shared/decorator/roles.decorato
 import { User } from '../user/user.entity';
 import { ActivityService } from './activity.service';
 import { ActivityCron } from './activity.cron';
-import { ActivityDtoOut, MessageDto } from './activity.dto';
+import { Activities, ActivityDtoOut, MessageDto } from './activity.dto';
 
 @ApiTags('activity')
 @Controller('activity')
@@ -23,8 +23,8 @@ export class ActivityController {
   
   @OnlyRegistered()
   @Get('activities/:page')
-  async notificationsRead(@CurrentUser() user: User, @Param('page') page: string) : Promise<ActivityDtoOut[]> {
-    return this.activityService.findNotificationsByUserId(user.id, user.locale, page ? page : 0);
+  async notificationsRead(@CurrentUser() user: User, @Param('page') page: string) : Promise<Activities> {
+    return this.activityService.findNotificationsByUser(user, page ? page : 0);
   }
 
   @OnlyRegistered()
