@@ -22,4 +22,7 @@ export class GroupMessage extends BaseEntity {
 
   @Column({default: false})
   last: boolean;
+
+  @Column({})
+  message: string;
 }

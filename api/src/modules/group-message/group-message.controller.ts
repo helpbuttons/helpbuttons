@@ -16,12 +16,24 @@ export class GroupMessageController {
     @OnlyAdmin()
     @Post('send/admin')
     async sendAdminMessage(@CurrentUser() user: User, @Body() message) {
-        return this.groupMessageService.sendMessage(user.id, GroupMessageType.admin, message)
+        return this.groupMessageService.sendMessage(user, GroupMessageType.admin, message)
     }
 
     @OnlyRegistered()
     @Post('send/community')
     async sendCommunityMessage(@CurrentUser() user: User, @Body() message) {
-        return this.groupMessageService.sendMessage(user.id, GroupMessageType.community, message)
+        return this.groupMessageService.sendMessage(user, GroupMessageType.community, message.message)
+    }
+
+    @OnlyAdmin()
+    @Get('messages/admin/:page')
+    async messagesAdmin(@CurrentUser() user: User) {
+        return this.groupMessageService.findAdminMessages(user.id)
+    }
+
+    @OnlyRegistered()
+    @Get('messages/community/:page')
+    async messagesCommunity(@CurrentUser() user: User) {
+        return this.groupMessageService.findCommunityMessages(user.id)
     }
 }

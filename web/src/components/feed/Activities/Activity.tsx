@@ -12,7 +12,8 @@ import t from "i18n";
 import { IoChatboxOutline } from "react-icons/io5";
 import { ButtonShow } from "components/button/ButtonShow";
 import { SetMainPopupCurrentButton } from "state/HomeInfo";
-import ActivityGroup from "./ActivityGroup";
+import ActivityGroup, { ActivityGroupChat } from "./ActivityGroup";
+import { FindLatestActivities } from "state/Activity";
 
 export default function ActivitiesUser() {
   const buttonTypes = useButtonTypes()
@@ -20,7 +21,7 @@ export default function ActivitiesUser() {
 
   const [selectedActivity, setSelectedActivity] = useState(null)
   const [filteredUserActivities, setFilteredUserActivities] = useState([])
-  const [createChat, setCreateChat] = useState(null)
+  const [selectedGroupMessageType, setSelectedGroupMessageType] = useState(null)
   
   const userButtonActivities = useGlobalStore((state: GlobalState) => state.activities.buttons)
   const filterButtons = updateFilters(buttonTypes, userButtonActivities)
@@ -64,16 +65,16 @@ export default function ActivitiesUser() {
     }
     if(selectedActivity)
     {
-      setCreateChat(() => null)
+      setSelectedGroupMessageType(() => null)
     }
   }, [selectedActivity])
 
   useEffect(() => {
-    if(createChat)
+    if(selectedGroupMessageType)
     {
       setSelectedActivity(() => null)
     }
-  }, [createChat])
+  }, [selectedGroupMessageType])
   useEffect(() => {
     setFilteredUserActivities(() => {
       if(localFilters)
@@ -90,6 +91,11 @@ export default function ActivitiesUser() {
     })
   }, [userButtonActivities, localFilters])
 
+  useEffect(() => {
+    store.emit(new FindLatestActivities())
+    setSelectedGroupMessageType(() => null)
+    setSelectedActivity(() => null)
+  }, [])
   const setButtonType = (type) => {
     setLocalFilters(() => {return {buttonType: type}})
   }
@@ -102,7 +108,7 @@ export default function ActivitiesUser() {
     <div className="feed__container">
         <div className="feed-section--messages">
           <div className="feed-section__left">
-            <PopupHeader >Messages & Alerts</PopupHeader>
+            <PopupHeader>Messages & Alerts</PopupHeader>
             <div className="feed-section__left__header">
               <div className="feed-section__filters">
                 <ShowMobileOnly><DropdownLine options={filterButtons} onChange={setButtonType} name="activityType"/></ShowMobileOnly>
@@ -110,18 +116,23 @@ export default function ActivitiesUser() {
               </div>
             </div>
             <div className="feed-section--activity-content">
-                  <ActivityGroup creatingNewChat={createChat} setCreatingNewChat={setCreateChat}/>
+                  <ActivityGroup groupMessageType={selectedGroupMessageType} setGroupMessageType={setSelectedGroupMessageType}/>
                   <div>{t('activities.buttons')}</div>
                   <ActivityList selectedActivity={selectedActivity} activities={filteredUserActivities} setSelectedActivity={setSelectedActivity} isDrafting={draft} />       
             </div>
           </div>
-          {(selectedActivity || draft || createChat) &&
+          {(selectedActivity || draft) &&
             <div className="feed-section__center">
-              <ActivityButton setSelectedActivity={setSelectedActivity} closeConversation={closeConversation} selectedActivity={selectedActivity} isDrafting={draft} createChat={createChat}/>
+              <ActivityButton setSelectedActivity={setSelectedActivity} closeConversation={closeConversation} selectedActivity={selectedActivity} isDrafting={draft}/>
               <div className="feed-section__center__chat"></div>
               </div>
             }
-            {(!selectedActivity && !draft && !createChat) && 
+            {selectedGroupMessageType && 
+            <div className="feed-section__center">
+              <ActivityGroupChat groupType={selectedGroupMessageType} close={() => setSelectedGroupMessageType(() => null)}/>
+              </div>
+            }
+            {(!selectedActivity && !draft && !selectedGroupMessageType) && 
               <>
                 <div className="feed-section__center feed-section__center--no-select">
                     <div className="feed-section__center__chat feed-section__center__chat-no-select">

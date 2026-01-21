@@ -7,6 +7,8 @@ import { GroupMessage } from "./group-message.entity";
 import { In, Repository } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
 import { GroupMessageType } from "@src/shared/types/group-message.enum";
+import { uuid } from "@src/shared/helpers/uuid.helper";
+import { ActivitiesPageSize } from "../activity/activity.dto";
 
 @Injectable()
 export class GroupMessageService {
@@ -30,25 +32,52 @@ export class GroupMessageService {
 
             const adminLastMessage = groupMessages.find((groupMessage) => groupMessage.to == GroupMessageType.admin)
 
-            // TODO: missing READ!
             return {
-                community: this.transformGroupMessage(commmunityLastMessage, false),
-                admin: this.transformGroupMessage(adminLastMessage, true)
+                community: this.transformGroupMessage(commmunityLastMessage, user.id),
+                admin: this.transformGroupMessage(adminLastMessage, user.id)
             }
         }) 
     }
     
-    sendMessage(userId, groupMessageType , message)
+    sendMessage(user, groupMessageType : GroupMessageType, message)
     {
-        // TODO: implement sending message
-        console.log('send message to ' + groupMessageType + ' content: ' + message)
+        const groupMessage = {
+            id: uuid(),
+            from: user,
+            to: groupMessageType,
+            last: true,
+            message: message
+        }
+
+        return this.groupMessageRepository.update({ to: groupMessageType }, { last: false })
+        .then(()=> {
+            this.groupMessageRepository.insert([groupMessage])
+        })
+        
     }
 
-    transformGroupMessage (groupMessage, type, read = false) {
+    transformGroupMessage (groupMessage, userId) {
         if(!groupMessage)
         {
             return null;
         }
-        return {id: groupMessage.id, createdAt: groupMessage.created_at, title:groupMessage.from.name, message: groupMessage.message, read: read};
+        if(groupMessage.from.id == userId)
+        {
+            return {id: groupMessage.id, createdAt: groupMessage.created_at, title:groupMessage.from.name, message: groupMessage.message, read: false};
+        }else{
+            return {id: groupMessage.id, createdAt: groupMessage.created_at, title:groupMessage.from.name, message: groupMessage.message, read: false, from: groupMessage.from.name, activityFrom: groupMessage?.from};
+        }
+        
+    }
+
+    findAdminMessages(userId, page = 0){
+        return this.groupMessageRepository.find({where: { to:GroupMessageType.admin}, relations: ['from'], take: ActivitiesPageSize, skip: page * ActivitiesPageSize,order: { created_at: 'DESC' }})
+        .then((messages) => messages.map(_msg => this.transformGroupMessage(_msg, userId)))
+    }
+
+    findCommunityMessages(userId, page = 0)
+    {
+        return this.groupMessageRepository.find({where: { to:GroupMessageType.community}, relations: ['from'], take: ActivitiesPageSize, skip: page * ActivitiesPageSize,order: { created_at: 'DESC' }})
+        .then((messages) => messages.map(_msg => this.transformGroupMessage(_msg, userId)))
     }
 }

@@ -16,11 +16,18 @@ export class ActivityService {
     return httpService.get<any>(`activity/activities/${page}`);
   }
 
-
   public static activitiesButton(buttonId, consumerId, page): Observable<ActivityDtoOut[]> {
     return httpService.get<any>(`activity/activities/button/${buttonId}/${consumerId}/${page}`);
   }
   public static sendMessage(message, buttonId, consumerId){
     return httpService.post<any>(`activity/sendMessage/${buttonId}/${consumerId}`, {message});
+  }
+
+  public static sendGroupMessage(groupType, message){
+    return httpService.post<any>(`group-message/send/${groupType}`, {message});
+  }
+
+  public static groupMessages(groupType, page): Observable<Activities> {
+    return httpService.get<any>(`group-message/messages/${groupType}/${page}`);
   }
 }

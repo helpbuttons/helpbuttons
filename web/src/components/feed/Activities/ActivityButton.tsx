@@ -16,14 +16,8 @@ import { GlobalState, store, useGlobalStore } from "state"
 import { FindActivityDetails, FindLatestActivities, SendNewMessage, SetFocusOnMessage, SetFocusOnPost } from "state/Activity"
 import { FindButton } from "state/Explore"
 import { FindAndSetMainPopupCurrentButton, FindAndSetMainPopupCurrentProfile } from "state/HomeInfo"
-import { ActivityGroupChatCreate } from "./ActivityGroup"
 
-export function ActivityButton({ selectedActivity, setSelectedActivity, closeConversation, isDrafting, createChat }) {
-
-  if(createChat)
-  {
-    return <ActivityGroupChatCreate groupType={createChat} setSelectedActivity={setSelectedActivity}/>
-  }
+export function ActivityButton({ selectedActivity, setSelectedActivity, closeConversation, isDrafting }) {
   if (isDrafting) {
     return <ActivityDetailDraft setSelectedActivity={setSelectedActivity} />
   }
@@ -267,7 +261,7 @@ function ActivityDetailCard({ activity }) {
   )
 }
 
-function ActivityDetailMessage({ activity }) {
+export function ActivityDetailMessage({ activity }) {
   if (activity.from) {
     return (
       <>

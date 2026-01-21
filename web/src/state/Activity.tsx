@@ -230,3 +230,32 @@ export class SetDraftButton implements UpdateEvent{
     })
   }
 }
+
+export class SendNewGroupMessage implements WatchEvent{
+  public constructor(private groupType, private message, private onSuccess) {}
+
+  public watch(state: GlobalState) {
+    if (!state.sessionUser) {
+      return of(undefined);
+    }
+    return ActivityService.sendGroupMessage(this.groupType, this.message).pipe(map(() => {this.onSuccess()} ))
+  }
+}
+
+
+export class FindGroupMessages implements WatchEvent {
+  public constructor(private groupType, private page, private onSuccess) {}
+
+  public watch(state: GlobalState) {
+    if (!state.sessionUser) {
+      return of(undefined);
+    }
+    
+    return ActivityService.groupMessages(this.groupType, this.page).pipe(
+      map((messages) => {
+        store.emit(new FindLatestActivities())
+        this.onSuccess(messages)
+      }),
+    );
+  }
+}
