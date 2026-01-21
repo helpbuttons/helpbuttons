@@ -176,6 +176,11 @@ function ActivityGroupMessageForm({ sendNewMessage, groupType }) {
   const sendMessage = () => {
     // TODO: IMPLEMENT SEND NEW GROUP MESSAGE
     //   sendNewGroupMessage(messageContent.current.value, groupType)
+    const message = messageContent.current.value; 
+    if(message.length < 1)
+    {
+      return;
+    }
     sendNewMessage(messageContent.current.value, groupType, () => {
       messageContent.current.value = ''
     })
