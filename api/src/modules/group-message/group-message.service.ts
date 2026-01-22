@@ -1,20 +1,21 @@
 import { Injectable } from "@nestjs/common";
-import { OnEvent } from "@nestjs/event-emitter";
-import { ActivityEventName } from "@src/shared/types/activity.list";
 import { Role } from "@src/shared/types/roles";
-import { GroupMessageDtoOut, GroupMessages } from "./group-message.dto";
+import {  GroupMessages } from "./group-message.dto";
 import { GroupMessage } from "./group-message.entity";
 import { In, Repository } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
 import { GroupMessageType } from "@src/shared/types/group-message.enum";
 import { uuid } from "@src/shared/helpers/uuid.helper";
 import { ActivitiesPageSize } from "../activity/activity.dto";
+import { UserService } from "../user/user.service";
+import translate from "@src/shared/helpers/i18n.helper";
 
 @Injectable()
 export class GroupMessageService {
     constructor(
         @InjectRepository(GroupMessage)
         private readonly groupMessageRepository: Repository<GroupMessage>,
+        private readonly userService: UserService,
     ) { }
 
     findByUser(user): Promise<GroupMessages> 
@@ -32,9 +33,13 @@ export class GroupMessageService {
 
             const adminLastMessage = groupMessages.find((groupMessage) => groupMessage.to == GroupMessageType.admin)
 
+            const readAdmin = user?.readGroupMessages?.admin ? this.isRead(adminLastMessage?.created_at, user?.readGroupMessages?.admin) : false;
+
+            const readCommunity = user?.readGroupMessages?.community ? this.isRead(commmunityLastMessage?.created_at, user?.readGroupMessages?.community) : false;
+
             return {
-                community: this.transformGroupMessage(commmunityLastMessage, user.id),
-                admin: this.transformGroupMessage(adminLastMessage, user.id)
+                community: this.transformGroupMessage(commmunityLastMessage, user, readCommunity),
+                admin: this.transformGroupMessage(adminLastMessage, user, readAdmin)
             }
         }) 
     }
@@ -56,28 +61,48 @@ export class GroupMessageService {
         
     }
 
-    transformGroupMessage (groupMessage, userId) {
+    transformGroupMessage (groupMessage, user, read = false) {
         if(!groupMessage)
         {
             return null;
         }
-        if(groupMessage.from.id == userId)
+
+        if(groupMessage.from.id == user.id)
         {
-            return {id: groupMessage.id, createdAt: groupMessage.created_at, title:groupMessage.from.name, message: groupMessage.message, read: false};
-        }else{
-            return {id: groupMessage.id, createdAt: groupMessage.created_at, title:groupMessage.from.name, message: groupMessage.message, read: false, from: groupMessage.from.name, activityFrom: groupMessage?.from};
+            return {id: groupMessage.id, createdAt: groupMessage.created_at, title: translate(user.locale,'groupChat.you') , message: groupMessage.message, read: true};
+        }else{            
+            return {id: groupMessage.id, createdAt: groupMessage.created_at, title:groupMessage.from.name, message: groupMessage.message, read: read, from: groupMessage.from.name, activityFrom: groupMessage?.from};
         }
         
     }
 
-    findAdminMessages(userId, page = 0){
+    findAdminMessages(user, page = 0){
+        this.markAsRead(user, GroupMessageType.admin)
         return this.groupMessageRepository.find({where: { to:GroupMessageType.admin}, relations: ['from'], take: ActivitiesPageSize, skip: page * ActivitiesPageSize,order: { created_at: 'DESC' }})
-        .then((messages) => messages.map(_msg => this.transformGroupMessage(_msg, userId)))
+        .then((messages) => messages.map(_msg => 
+            {
+                return this.transformGroupMessage(_msg, user, true)
+            }))
     }
 
-    findCommunityMessages(userId, page = 0)
+    findCommunityMessages(user, page = 0)
     {
+        this.markAsRead(user, GroupMessageType.community)
         return this.groupMessageRepository.find({where: { to:GroupMessageType.community}, relations: ['from'], take: ActivitiesPageSize, skip: page * ActivitiesPageSize,order: { created_at: 'DESC' }})
-        .then((messages) => messages.map(_msg => this.transformGroupMessage(_msg, userId)))
+        .then((messages) => messages.map(_msg => {
+            return this.transformGroupMessage(_msg, user, true) 
+        } ))
+    }
+
+    markAsRead(user, groupMessageType){
+        return this.userService.markAsRead(user, groupMessageType, new Date())
+    }
+
+    isRead(messageCreatedAt, lastDateRead)
+    {
+        if(new Date(messageCreatedAt) > new Date(lastDateRead)){
+            return false;
+        }
+        return true;
     }
 }

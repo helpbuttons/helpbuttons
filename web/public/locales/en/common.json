@@ -742,6 +742,7 @@
     "creating": "After sending the first message to this group, other users will be able to participate on this group chat",
     "admin": "administrators",
     "community": "commmunity",
-    "admin_community": "Admin & Community"
+    "admin_community": "Admin & Community",
+    "you": "You"
   }
 }

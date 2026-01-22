@@ -27,13 +27,13 @@ export class GroupMessageController {
 
     @OnlyAdmin()
     @Get('messages/admin/:page')
-    async messagesAdmin(@CurrentUser() user: User) {
-        return this.groupMessageService.findAdminMessages(user.id)
+    async messagesAdmin(@CurrentUser() user: User, @Param('page') page: number) {
+        return this.groupMessageService.findAdminMessages(user, page)
     }
 
     @OnlyRegistered()
     @Get('messages/community/:page')
-    async messagesCommunity(@CurrentUser() user: User) {
-        return this.groupMessageService.findCommunityMessages(user.id)
+    async messagesCommunity(@CurrentUser() user: User, @Param('page') page: number) {
+        return this.groupMessageService.findCommunityMessages(user, page)
     }
 }
