@@ -23,7 +23,7 @@ export class ActivityController {
   
   @OnlyRegistered()
   @Get('activities/:page')
-  async notificationsRead(@CurrentUser() user: User, @Param('page') page: string) : Promise<Activities> {
+  async notificationsRead(@CurrentUser() user: User, @Param('page') page: number) : Promise<Activities> {
     return this.activityService.findNotificationsByUser(user, page ? page : 0);
   }
 

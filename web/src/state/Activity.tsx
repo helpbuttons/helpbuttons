@@ -110,6 +110,17 @@ function uniqActivities(arr1, arr2)
   ],  (a,b) => {return a.buttonId == b.buttonId && a.consumerId == b.consumerId})
 }
 
+export function uniqById(arr1, arr2)
+{
+  if(!arr1)
+    return arr2;
+  return _.uniqWith([
+    ...arr1,
+    ...arr2,
+  ],  (a,b) => {return a.id == b.id})
+}
+
+
 export class FindMoreActivities implements WatchEvent {
   public constructor(private onSuccess = (loadedActivities) => { }) { }
 
@@ -154,14 +165,7 @@ export class FindActivityDetails implements WatchEvent {
     return ActivityService.activitiesButton(this.buttonId, this.consumerId, this.page).pipe(
       map((_activities: ActivityDtoOut[]) => {
         store.emit(new FindLatestActivities())
-        const activities = _activities.map((_activity, idx) => {
-          if(idx == 0)
-          {
-            return {last:true, ..._activity}
-          }
-          return _activity
-        })
-        this.onSuccess(activities)
+        this.onSuccess(_activities)
       }),
     );
   }

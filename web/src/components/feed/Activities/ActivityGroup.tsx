@@ -9,9 +9,10 @@ import { IoArrowBack, IoSend } from "react-icons/io5";
 import { useEffect, useRef, useState } from "react";
 import FieldText from "elements/Fields/FieldText";
 import Btn, { BtnType, ContentAlignment, IconType } from "elements/Btn";
-import { FindGroupMessages, SendNewGroupMessage } from "state/Activity";
+import { FindGroupMessages, FindLatestActivities, SendNewGroupMessage, uniqById } from "state/Activity";
+import { useScroll } from "shared/helpers/scroll.helper";
 import { ActivityDetailMessage } from "./ActivityButton";
-import Loading from "components/loading";
+import { ActivitiesPageSize } from "shared/dtos/activity.dto";
 
 export default function ActivityGroup({ setGroupMessageType, groupMessageType }) {
   const sessionUser = useGlobalStore(
@@ -60,12 +61,11 @@ export function ActivityGroupCreate({ groupType, onClick, creatingNewChat }) {
 
 export function ActivityGroupChat({ groupType, close }) {
   const [messages, setMessages] = useState(null)
-  const [isLoading, setIsLoading] = useState(true)
   const activities = useGlobalStore((state: GlobalState) => state.activities)
-  const loadMessages = () => {
-    store.emit(new FindGroupMessages(groupType,0, (_messages) => {
-      setMessages(() => _messages)
-      setIsLoading(() => false)
+
+  const loadMessages = (page, onSuccess) => {
+    store.emit(new FindGroupMessages(groupType, page, (_messages) => {
+      onSuccess(_messages)
     }))
   }
 
@@ -73,55 +73,76 @@ export function ActivityGroupChat({ groupType, close }) {
     let latestMessageFromPoll = null
     if(groupType == GroupMessageType.admin){
       if(!activities.admin){
-        setIsLoading(() => false)
         return;
       }
       latestMessageFromPoll = activities.admin.createdAt;
     }
     if(groupType == GroupMessageType.community){
       if(!activities.community){
-        setIsLoading(() => false)
         return;
       }
       latestMessageFromPoll = activities.community.createdAt;
     }
 
-    if(messages)
+    if(messages?.length > 0)
     {
       const latestMessage = messages[0].createdAt
       if(latestMessageFromPoll > latestMessage){
-        loadMessages()
+        loadMessages(0, (_msgs) => {
+          setMessages((prev) => uniqById( _msgs, prev))
+        })
       }
     }
     
   }, [activities])
 
-  useEffect(() => {
-      if(groupType)
-      {
-        loadMessages()
-      } else {
-        setMessages(() => null)
-      }
-  }, [groupType])
-
   const sendNewMessage = (message, groupType, onSuccess) => {
     store.emit(new SendNewGroupMessage(groupType, message, () => {
       onSuccess()
-      loadMessages()
+      store.emit(new FindLatestActivities())
     }))
   }
 
   return (
     <>
       <ActivityGroupChatDetailHeader closeConversation={close} groupType={groupType} />
-      <div className="chat__messages">
-      {messages && messages.map((message, idx) => <ActivityDetailMessage key={idx} activity={message}/>)}
-      {isLoading && <Loading/>}
-      </div>
-      {(messages?.length < 1 && !isLoading) && <div className="chat__notice">{t('groupChat.creating')}</div>}
+      <ActivityGroupMessages messages={messages} loadMessages={loadMessages} groupType={groupType} setMessages={setMessages}/>
+      {(messages?.length < 1 ) && <div className="chat__notice">{t('groupChat.creating')}</div>}
       <ActivityGroupMessageForm sendNewMessage={sendNewMessage} groupType={groupType} />
     </>
+  )
+}
+
+function ActivityGroupMessages({ messages, loadMessages, setMessages, groupType }) {
+  const [page, setPage] = useState(0)
+  useEffect(() => {
+    if(groupType)
+    {
+      setMessages(() => [])
+      setPage(() => 0)
+    }
+  }, [groupType])
+  const { endDivLoadMoreTrigger, noMoreToLoad, scrollIsLoading } = useScroll(
+    ({ setNoMoreToLoad, setScrollIsLoading }) => {
+      setScrollIsLoading(() => true)
+      loadMessages(page, (_msgs) => {
+        if (_msgs.length < ActivitiesPageSize  - 1) {
+          setNoMoreToLoad(() => true)
+        }else{
+          setNoMoreToLoad(() => false)
+        }
+        setMessages((prev) => uniqById(prev, _msgs))
+        setScrollIsLoading(() => false)
+      })
+      setPage(() => page +1 )
+    },groupType
+  );
+
+  return (
+    <div className="chat__messages">
+      {messages && messages.map((message, idx) => <ActivityDetailMessage key={idx} activity={message}/>)}
+      {endDivLoadMoreTrigger}
+    </div>
   )
 }
 

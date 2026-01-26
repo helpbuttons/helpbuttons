@@ -321,22 +321,15 @@ function ActivityDetailList({ buttonActivities, setButtonActivities, buttonId, c
         setButtonActivities((prev) => [...prev, ...newActivities])
         setScrollIsLoading(() => false)
       }))
-    },selectedActivity
+    }, selectedActivity
   );
 
   return (
     <div className="chat__messages">
       {buttonActivities && <>
         {buttonActivities.map((activity, idx) => <ActivityDetailCard activity={activity} key={idx} />)}
-      </>
+        </>
       }
-      {/* {noMoreToLoad &&
-        <div className="feed__empty-message">
-          <div className="feed__empty-message--prev">
-            {t('feed.noMoreMessages')}
-          </div>
-        </div>
-      } */}
 
       {endDivLoadMoreTrigger}
     </div>

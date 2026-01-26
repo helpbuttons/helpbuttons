@@ -388,7 +388,7 @@ export class ActivityService {
 
   public findNotificationsByUser(
     user,
-    page = null,
+    page = 0,
   ): Promise<Activities> {
 
     return this.activityRepository.find({
