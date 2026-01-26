@@ -5,6 +5,10 @@ import { GlobalState, useGlobalStore } from "state";
 
 export function ActivityListEntryCard({ activity, selected = false, onClick }) {
 
+    if(!activity)
+    {
+        return <></>
+    }
     return (
         <div className="feed-element">
             <div onClick={onClick} className={`card-notification ${selected ? 'card-notification--selected' : ''}`}>
@@ -15,7 +19,7 @@ export function ActivityListEntryCard({ activity, selected = false, onClick }) {
 
 }
 
-function ActivityListEntryCardInner({ image, createdAt, type, read, premessage, message, footer, title }) {
+export function ActivityListEntryCardInner({ image, createdAt, type, read, premessage, message, footer, title }) {
     return (
         <div className="card-notification__content">
             <div className="card-notification__avatar">
@@ -30,7 +34,7 @@ function ActivityListEntryCardInner({ image, createdAt, type, read, premessage, 
             <div className="card-notification__text">
                 <div className="card-notification__header">
                     <div className="card-notification__info">
-                        <div className="">{readableTimeLeftToDate(createdAt)}</div>&nbsp;-&nbsp;<div className=""> {type}</div>
+                        {createdAt && <><div className="">{readableTimeLeftToDate(createdAt)}</div>&nbsp;-&nbsp;</>}<div className=""> {type}</div>
                     </div>
 
                 </div>

@@ -26,7 +26,7 @@ import { ShowDesktopOnly, ShowMobileOnly } from 'elements/SizeOnly';
 export default NavBottom;
 
 function NavBottom({ sessionUser }) {
-  const activities = useGlobalStore((state: GlobalState) => state.activities.activities)
+  const activities = useGlobalStore((state: GlobalState) => state.activities.buttons)
   const pageName = useGlobalStore((state: GlobalState) => state.homeInfo.pageName)
 
   const [countUnreadNotifications, setCountUnreadNotifications] =
