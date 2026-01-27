@@ -218,7 +218,8 @@
     "writingDraft": "Writing private message",
     "draft": "Draft",
     "pickOne": "Select one chat",
-    "newbuttonHomeinfo": "New _helpbutton_ "
+    "newbuttonHomeinfo": "New _helpbutton_ ",
+    "message": "Message"
   },
   "common": {
     "notfound": "No {0} found. Sorry. 🤔",

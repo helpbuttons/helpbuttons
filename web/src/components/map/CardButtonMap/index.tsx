@@ -10,7 +10,7 @@ export default function CardButtonMap({ button, buttonTypes, onClick }) {
   return (
     < >
       <div className="card-button-map" onClick={onClick}>
-        {/* <CardButtonHeadSmall buttonType={buttonType} button={button} /> */}
+        <CardButtonHeadSmall buttonType={buttonType} button={button} />
         <div className="card-button-map__picture-container">
           <ImageGalleryMap
             images={button?.images.map((image) => {
