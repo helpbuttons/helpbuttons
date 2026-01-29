@@ -405,7 +405,7 @@ function DisplayHiddenButtonsWarning({ countFilteredButtons }) {
     <>
       {countFilteredButtons > 0 &&
         <div className="search-map__hidden-buttons-warning">
-          {t('explore.hiddenButtons')}
+          {t('explore.hiddenButtons', [countFilteredButtons])}
         </div>
       }
     </>
