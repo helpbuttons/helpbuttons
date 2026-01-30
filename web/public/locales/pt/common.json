@@ -662,7 +662,12 @@
     "invitePeople": "Convidar pessoas",
     "advancedInviteOptions": "Convites em versão pdf para imprimir",
     "copyCode": "Copiar código",
-    "linkCopied": "{0} copiado para a àrea de transferência"
+    "linkCopied": "{0} copiado para a àrea de transferência",
+    "shareContent": "Partilhar conteúdos da app",
+    "optionRss": "Subscrever rss",
+    "copyLink": "Copiar link",
+    "invitePeopleExplain": "Copia este link e partilha com outros para se juntarem à rede"
+
   },
   "places": {
     "addNew": "",
@@ -680,11 +685,15 @@
     "create": "Criar novo chat de grupo para {0}"
   },
   "footer": {
-    "create": "Cria _helpbutton_",
+    "create": "Criar _helpbutton_",
     "privacyPolicy": "Política de privacidade",
     "adminSupport": "Apoio de administradores",
     "sendAProblem": "Envia-nos um problema técnico Send a technical issue",
     "investDonations": "Doar ao projeto",
-    "developers": "Programadores"
+    "developers": "Programadores",
+    "whatsHelpbuttons": "O que é o helpbuttons.org?",
+    "otherNetworks": "Ver outras redes",
+    "explore": "Explorar _helpbuttons_",
+    "whatIsNetwork": "Saber mais..."
   }
 }
