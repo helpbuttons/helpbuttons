@@ -219,16 +219,16 @@ export function CardButtonHeadSmall({ button , buttonType}) {
           <div className="card-button-map__title">{button.title}</div>
 
           <div className="card-button-map__fields">
-            {/* <div className="card-button-map__city">
+            <div className="card-button-map__city">
              {button.address}
-            </div> */}
-            {buttonType.customFields &&
+            </div>
+            {/* {buttonType.customFields &&
               buttonType.customFields.length > 0 && (
                 <CardButtonCustomFields
                   customFields={buttonType.customFields}
                   button={button}
                 />
-            )}
+            )} */}
 
           </div>
         </div>
