@@ -80,7 +80,7 @@ $index-content-left--distance: $grid-column-max-width;
 
 @media #{$breakpoints-xlarge} {
   .index__explore-container {
-    position: fixed;
+    position: relative;
     display: flex;
     flex-direction: row;
   }

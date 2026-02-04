@@ -11,26 +11,34 @@ import {
   localStorageService,
 } from 'services/LocalStorage';
 import { ActivityDtoOut } from 'shared/dtos/activity.dto';
+import { Activities as AllActivities}  from 'shared/dtos/activity.dto';
+
 import _ from 'lodash';
+
 import { ButtonEntry } from 'shared/dtos/button.dto';
+import { GroupMessageDtoOut } from 'shared/dtos/group-message.dto';
 
 export interface Activities {
-  activities: ActivityDtoOut[];
+  buttons: ActivityDtoOut[];
   activitiesPage: number;
   notificationsPermissionGranted: boolean;
   focusMessageId: string;
   focusPostId: string;
   draftButton: ButtonEntry;
+  community: GroupMessageDtoOut;
+  admin: GroupMessageDtoOut; 
 }
 
 export const activitiesInitialState: Activities = {
   //@ts-ignore
-  activities: [],
+  buttons: [],
   activitiesPage: 0,
   notificationsPermissionGranted: false,
   focusMessageId: null,
   focusPostId: null,
-  draftButton: null
+  draftButton: null,
+  community: null,
+  admin: null,
 };
 
 export class PermissionGranted implements UpdateEvent {
@@ -71,8 +79,8 @@ export class FindLatestActivities implements WatchEvent {
       return of(undefined);
     }
     return ActivityService.activities(0).pipe(
-      map((activities: ActivityDtoOut[]) => {
-        this.onSuccess(activities);
+      map((activities: AllActivities) => {
+        this.onSuccess(activities.buttons);
         store.emit(new FoundLatestActivities(activities));
       }),
     );
@@ -80,14 +88,16 @@ export class FindLatestActivities implements WatchEvent {
 }
 
 export class FoundLatestActivities implements UpdateEvent {
-  public constructor(private activities: ActivityDtoOut[]) { }
+  public constructor(private activities: AllActivities) { }
 
   public update(state: GlobalState) {
     return produce(state, (newState) => {
 
       // in here we merge the current activities on the state, with the new activity on ddbb
-      newState.activities.activities = uniqActivities(this.activities, state.activities.activities)
+      newState.activities.buttons = uniqActivities(this.activities.buttons, state.activities.buttons)
       newState.activities.activitiesPage = 1
+      newState.activities.community = this.activities.community
+      newState.activities.admin = this.activities.admin
     });
   }
 }
@@ -100,6 +110,17 @@ function uniqActivities(arr1, arr2)
   ],  (a,b) => {return a.buttonId == b.buttonId && a.consumerId == b.consumerId})
 }
 
+export function uniqById(arr1, arr2)
+{
+  if(!arr1)
+    return arr2;
+  return _.uniqWith([
+    ...arr1,
+    ...arr2,
+  ],  (a,b) => {return a.id == b.id})
+}
+
+
 export class FindMoreActivities implements WatchEvent {
   public constructor(private onSuccess = (loadedActivities) => { }) { }
 
@@ -109,8 +130,8 @@ export class FindMoreActivities implements WatchEvent {
     }
     const page = state.activities.activitiesPage;
     return ActivityService.activities(page).pipe(
-      map((activities: ActivityDtoOut[]) => {
-        this.onSuccess(activities);
+      map((activities: AllActivities) => {
+        this.onSuccess(activities.buttons);
         store.emit(new FoundActivities(activities));
       }),
     );
@@ -118,13 +139,14 @@ export class FindMoreActivities implements WatchEvent {
 }
 
 export class FoundActivities implements UpdateEvent {
-  public constructor(private activities: ActivityDtoOut[]) { }
+  public constructor(private activities: AllActivities) { }
 
   public update(state: GlobalState) {
     return produce(state, (newState) => {
-      newState.activities.activities = uniqActivities(state.activities.activities, this.activities)
-      
-      if (this.activities.length > 0) {
+      newState.activities.buttons = uniqActivities(state.activities.buttons, this.activities.buttons)
+      newState.activities.community = this.activities.community
+      newState.activities.admin = this.activities.admin
+      if (this.activities.buttons.length > 0) {
         newState.activities.activitiesPage =
           state.activities.activitiesPage + 1;
       }
@@ -143,14 +165,7 @@ export class FindActivityDetails implements WatchEvent {
     return ActivityService.activitiesButton(this.buttonId, this.consumerId, this.page).pipe(
       map((_activities: ActivityDtoOut[]) => {
         store.emit(new FindLatestActivities())
-        const activities = _activities.map((_activity, idx) => {
-          if(idx == 0)
-          {
-            return {last:true, ..._activity}
-          }
-          return _activity
-        })
-        this.onSuccess(activities)
+        this.onSuccess(_activities)
       }),
     );
   }
@@ -194,7 +209,7 @@ export class ActivityMarkAsRead implements WatchEvent, UpdateEvent {
   public constructor(private activityId: string) {}
   public update(state: GlobalState) {
     return produce(state, (newState) => {
-      newState.activities.activities = state.activities.activities.map((activity) => {
+      newState.activities.buttons = state.activities.buttons.map((activity) => {
         if(activity.id == this.activityId){
           return {...activity,read: true}
         }
@@ -217,5 +232,34 @@ export class SetDraftButton implements UpdateEvent{
         newState.activities.draftButton = state.explore.currentButton
       }
     })
+  }
+}
+
+export class SendNewGroupMessage implements WatchEvent{
+  public constructor(private groupType, private message, private onSuccess) {}
+
+  public watch(state: GlobalState) {
+    if (!state.sessionUser) {
+      return of(undefined);
+    }
+    return ActivityService.sendGroupMessage(this.groupType, this.message).pipe(map(() => {this.onSuccess()} ))
+  }
+}
+
+
+export class FindGroupMessages implements WatchEvent {
+  public constructor(private groupType, private page, private onSuccess) {}
+
+  public watch(state: GlobalState) {
+    if (!state.sessionUser) {
+      return of(undefined);
+    }
+    
+    return ActivityService.groupMessages(this.groupType, this.page).pipe(
+      map((messages) => {
+        store.emit(new FindLatestActivities())
+        this.onSuccess(messages)
+      }),
+    );
   }
 }

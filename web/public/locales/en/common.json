@@ -416,10 +416,10 @@
     "endorsed": "Trusted",
     "signupAsGuest": "Participate as guest",
     "signupGuestDetails": "Proceed with guest details",
-    "explainPublishAsGuest": "To signup as guest, please generate a new login code. You can use it for logging in to check your _helpbuttons_ in the future.",
+    "explainPublishAsGuest": "Step 1/3: Generate a new guest code.",
     "generateCode": "Generate new guest code",
-    "explainUseGuestCode": "Please store this code, it is your only way to keep track of your publications",
-    "explainGuestDetails": "We need some details to complete your signup",
+    "explainUseGuestCode": "Store this code, so you can enter again in the future.",
+    "explainGuestDetails": "Last step: Complete your access.",
     "editUsername": "Edit username",
     "optionalFields": "Optional fields",
     "emailRecovery":"Recovery email address",
@@ -738,5 +738,14 @@
     "developers": "Developers",
     "ethicCode": "Ethical principles"
 
+  },
+  "groupChat":
+  {
+    "create": "Create new group chat for the {0}",
+    "creating": "After sending the first message to this group, other users will be able to participate on this group chat",
+    "admin": "administrators",
+    "community": "commmunity",
+    "admin_community": "Admin & Community",
+    "you": "You"
   }
 }

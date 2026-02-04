@@ -808,17 +808,9 @@ $card-button-border-height: $border-general-height;
   text-decoration: underline;
   text-decoration-color: $color-black;
   background-color: transparent;
+  margin-bottom: $margin-small ;
 }
 
-.card-button__city--displayMap::after {
-  background: var(--network-background-color);
-  border-radius: 34px;
-  margin-left: $margin-xxsmall;
-  content: "";
-  display: inline-block;
-  height: 10px;
-  width: 10px;
-}
 
 .card-button__city-list {
   cursor: pointer;
