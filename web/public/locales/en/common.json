@@ -163,12 +163,12 @@
     "smtpUrl": "Smtp url",
     "createAdminTitle": "Create administrator account",
     "welcomeMessage": "Welcome to your _helpbuttons_ instance",
-    "createAdmin": "First step, is create an admin",
+    "createAdmin": "Let's create your Network. First step: Create your admin account.",
     "configureNetwork": "Customize your site's appearance, topics, post types, and alerts. Add prices, dates, and other modular features to your posts.",
     "welcomeMessageLong": "Next you´ll see your collaborative network description. Create your first network with the options in the next step.",
     "finish": "Finish setup",
     "configureInstanceDescription": "Wizard to help on configuring your network",
-    "configureInstanceTitle": "Setup the last details of your network",
+    "configureInstanceTitle": "Setup your network",
     "test": "test",
     "needLogo": "Before selecting a place for your network, please upload a logo",
     "needPlace": "Please select the area of your network",
@@ -218,8 +218,8 @@
     "writingDraft": "Writing private message",
     "draft": "Draft",
     "pickOne": "Select one chat",
-    "newbuttonHomeinfo": "New _helpbutton_ "
-
+    "newbuttonHomeinfo": "New _helpbutton_ ",
+    "title": "Messages & Alerts"
   },
   "common": {
     "notfound": "No {0} found. Sorry. 🤔",
@@ -313,6 +313,9 @@
     "placeHodlerCustomAddress": "Write the new name and select place on the map",
     "selectPlace": "Select place on map and save",
     "sendPrivateMessage": "Send private message to {0}",
+    "expiredLabel": "Expired",
+    "followers": "Suscribed by {0} users.",
+    "showMoreTags": "more tags"
     "showMoreTags": "more tags",
     "expiredLabel": "Expired",
     "followers": "{0} followers",
@@ -417,10 +420,10 @@
     "endorsed": "Trusted",
     "signupAsGuest": "Participate as guest",
     "signupGuestDetails": "Proceed with guest details",
-    "explainPublishAsGuest": "To signup as guest, please generate a new login code. You can use it for logging in to check your _helpbuttons_ in the future.",
+    "explainPublishAsGuest": "Step 1/3: Generate a new guest code.",
     "generateCode": "Generate new guest code",
-    "explainUseGuestCode": "Please store this code, it is your only way to keep track of your publications",
-    "explainGuestDetails": "We need some details to complete your signup",
+    "explainUseGuestCode": "Store this code, so you can enter again in the future.",
+    "explainGuestDetails": "Last step: Complete your access.",
     "editUsername": "Edit username",
     "optionalFields": "Optional fields",
     "emailRecovery":"Recovery email address",
@@ -451,7 +454,7 @@
     "recurringExplain": "Select starting and finish dates, days of the week and time",
     "afterStart": "Please select a time/date after {0}",
     "beforeEnd": "Please select a time/date before {0}",
-    "changeToMultipleDates": "Do you want the event to be multiple days?"
+    "changeToMultipleDates": "Press here to select several days"
   },
   "validation": {
     "fieldRequired": "{0} is required.",
@@ -568,6 +571,8 @@
     "keyLocationsExplain": "Key spots that will be highlighted in your network. They will appear in the main menus and map for easy access",
     "addLocationKey": "Add Location",
     "privacyPolicyLabel": "Privacy policy",
+    "privacyPolicyPlaceHolder": "Write basic privacy policy, like where are your storing your users' data, what type of data are you using and what for. ",
+    "ethicsPolicyPlaceHolder": "Write basic ethics. What are the values behind your networks' purpose and users' actions.",
     "ethicsPolicyLabel": "Ethics",
     "contactEmailLabel": "Contact data",
     "FAQs": "Complementary info",
@@ -737,5 +742,14 @@
     "developers": "Developers",
     "ethicCode": "Ethical principles"
 
+  },
+  "groupChat":
+  {
+    "create": "Create new group chat for the {0}",
+    "creating": "After sending the first message to this group, other users will be able to participate on this group chat",
+    "admin": "administrators",
+    "community": "commmunity",
+    "admin_community": "Admin & Community",
+    "you": "You"
   }
 }

@@ -14,10 +14,11 @@ import { MailService } from '../mail/mail.service';
 import translate from '@src/shared/helpers/i18n.helper';
 import { ButtonService } from '../button/button.service';
 import { NetworkService } from '../network/network.service';
-import { ActivitiesPageSize, ActivityDtoOut } from './activity.dto';
+import { Activities, ActivitiesPageSize, ActivityDtoOut } from './activity.dto';
 import { PostService } from '../post/post.service';
 import { unique } from '@src/shared/helpers/array.helper';
 import { IsNull } from "typeorm"
+import { GroupMessageService } from '../group-message/group-message.service';
 
 @Injectable()
 export class ActivityService {
@@ -31,6 +32,7 @@ export class ActivityService {
     private readonly buttonService: ButtonService,
     private readonly networkService: NetworkService,
     private readonly postService: PostService,
+    private readonly groupMessageService: GroupMessageService
   ) { }
 
   @OnEvent(ActivityEventName.NewPost)
@@ -384,17 +386,16 @@ export class ActivityService {
       })
   }
 
-  public findNotificationsByUserId(
-    userId,
-    locale,
-    page = null,
-  ): Promise<ActivityDtoOut[]> {
+  public findNotificationsByUser(
+    user,
+    page = 0,
+  ): Promise<Activities> {
 
     return this.activityRepository.find({
       where: [
-        { consumer: { id: userId }, lastActivityButtonConsumer: true },
-        { button: { owner: { id: userId } }, lastActivityButtonOwner: true },
-        {consumer: {id: userId}, button: IsNull()}
+        { consumer: { id: user.id }, lastActivityButtonConsumer: true },
+        { button: { owner: { id: user.id } }, lastActivityButtonOwner: true },
+        {consumer: {id: user.id}, button: IsNull()}
       ],
       relations: ['button.owner', 'to', 'from', 'consumer'],
       take: ActivitiesPageSize, skip: page * ActivitiesPageSize,
@@ -402,7 +403,15 @@ export class ActivityService {
     })
       .then((activities) => {
         return activities.map((activity) => {
-          return this.transformActivity(activity, locale, userId);
+          return this.transformActivity(activity, user.locale, user.id);
+        })
+      }).then((activities) => {
+        return this.groupMessageService.findByUser(user)
+        .then((groupMessages) => {
+          return {
+            buttons: activities,
+            ...groupMessages
+          }
         })
       })
   }

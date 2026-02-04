@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from "react";
 export function useScroll(onLoadMore, watchThis = null) {
   const [noMoreToLoad, setNoMoreToLoad] = useState(false)
   const [scrollIsLoading, setScrollIsLoading] = useState(false)
-
   useEffect(() => {
     if(watchThis)
     {
@@ -56,10 +55,6 @@ export function useScroll(onLoadMore, watchThis = null) {
         {scrollIsLoading && <Loading />}
       </div>
     )}
-    <br />
-    <br />
-    <br />
-    <br />
   </>
   return { noMoreToLoad, endDivLoadMoreTrigger, scrollIsLoading };
 }

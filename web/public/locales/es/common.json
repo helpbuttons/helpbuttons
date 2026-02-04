@@ -244,7 +244,6 @@
     "newcommentOwn": "Escribiste un comentario {0}",
     "newmention": "Fuiste mencionado/a en una conversación. {0}: '{1}'",
     "newmentionOwn": "Publicaste un comentario. '{0}'"
-
   },
   "activitiesWithSubject": {
     "newbutton": "{0} creó _helpbutton_ en {1}",
@@ -346,15 +345,15 @@
     "showWassapExplain": "Muestra un link a Whatsapp si quieres. Necesitas publicar tu teléfono antes para ello.",
     "editUsername": "Editar usuario",
     "endorse": "Avalar",
-    "explainPublishAsGuest": "Por favor, pulsa para generar tu código, que podrás usar para entrar y comprobar tus _helpbuttons_",
-    "explainUseGuestCode": "Por favor guarda este código, es la única forma que tendrás de entrar para comprobar tus publicaciones en el futuro.",
+    "explainPublishAsGuest": "Paso 1 de 3: Genera tu código de invitado.",
+    "explainUseGuestCode": "Guarda este código, así podrás comprobar tus publicaciones en el futuro.",
     "emailRecovery":"Email de recuperación",
     "emailRecoveryExplain":"Si ya tienes cuenta, entra pulsando un enlace que mandaremos a tu correo.",
     "generateCode": "Generar nuevo código de invitado",
     "signupAsGuest": "Participar como invitado",
     "signupGuestDetails": "Continuar con ingreso",
     "optionalFields": "Campos opcionales",
-    "explainGuestDetails": "Necesitamos algunos detalles para completar tu ingreso",
+    "explainGuestDetails": "Último paso: Completa tu ingreso.",
     "emptyList": "Cuando publiques, podrás ver tus _helpbuttons_ en esta sección.",
     "timesFollowed":"Seguido",
     "commentsAmount":"Comentado",
@@ -584,7 +583,9 @@
     "onceExplain": "Selecciona el día y la hora para tu evento",
     "recurringExplain": "Selecciona días de inicio y final, días de la semana y la hora para tus eventos",
     "afterStart": "Por favor selecciona una fecha/hora posterior a {0}",
-    "beforeEnd": "Por favor selecciona una fecha/hora anterior a {0}"
+    "beforeEnd": "Por favor selecciona una fecha/hora anterior a {0}",
+    "changeToMultipleDates": "Presiona para seleccionar varios días"
+
   },
   "faqs": {
     "title": "Preguntas frecuentes",

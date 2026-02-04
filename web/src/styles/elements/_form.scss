@@ -20,7 +20,7 @@ $form-input-border-radius: $border-general-height;
 .form__section {
 
   padding: $margin-big 0;
-  padding-bottom: $margin-big;
+  padding-bottom: 0;
 
 }
 
@@ -110,6 +110,12 @@ padding-bottom: $margin-medium;
   position: relative;
   display: flex;
   flex-direction: column;
+}
+
+.form__field--multiinput {
+  display: flex;
+  flex-direction: column;
+  gap: $padding-medium;
 }
 
 .form__field--noMargin {
@@ -644,13 +650,6 @@ width: 100%;
 
 }
 
-.form__image-upload-wrapper {
-
-  @extend .form__field;
-
-}
-
-
 
 .form__image-upload-preview--wrap {
 
@@ -662,6 +661,10 @@ width: 100%;
   flex-wrap: wrap;
   gap: $padding-big;
 
+}
+
+.form__image-upload-preview--wrap:empty {
+  display: none;
 }
 
 .form__image-upload-preview--image {
@@ -820,6 +823,12 @@ width: 100%;
   .form__inputs-content {
     overflow: auto;
     height: 100%;
+  }
+
+  .form__field--multiinput {
+    display: flex;
+    flex-direction: column;
+    gap: $padding-big;
   }
 
 }

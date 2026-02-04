@@ -16,6 +16,7 @@ import { token } from '@src/shared/helpers/uuid.helper';
 import { plainToClass } from 'class-transformer';
 import { StorageService } from '../storage/storage.service';
 import { MailService } from '../mail/mail.service';
+import { GroupMessageType } from '@src/shared/types/group-message.enum';
 
 @Injectable()
 export class UserService {
@@ -304,6 +305,23 @@ COALESCE(
       return await this.userRepository.save(user);
     }
     return true;
+  }
+
+  markAsRead(user, groupMessageType, date){
+    
+    if(groupMessageType == GroupMessageType.admin)
+    {
+      return this.userRepository.update(user.id, {
+        readGroupMessages: {...user.readGroupMessages, admin: date},
+      });
+    }
+
+    if(groupMessageType == GroupMessageType.community)
+      {
+        return this.userRepository.update(user.id, {
+          readGroupMessages: {...user.readGroupMessages, community: date},
+        });
+      }
   }
 
   findByIds(userIds : string[]) {

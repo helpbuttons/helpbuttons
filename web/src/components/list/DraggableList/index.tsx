@@ -49,11 +49,10 @@ const DraggableList: React.FC<DraggableProps> = ({
       initialY = getClosedListHeight(); // Adjust for MAP mode
     } else if (viewMode === ExploreViewMode.BOTH) {
       initialY = getOpenListHeight(); // Adjust for BOTH mode
-    
     } else if (viewMode === ExploreViewMode.LIST) {
       initialY = 124; // Adjust for LIST mode
     }
-    setPos({ x: 0, y: initialY });
+    setPos(() => {return { x: 0, y: initialY }});
   }, [viewMode]);
 
   // Handle resizing the window and adjusting position
@@ -101,7 +100,7 @@ const DraggableList: React.FC<DraggableProps> = ({
       setPos((prevPos) => ({ ...prevPos, y: targetY }));
       setDragging(false);
     }
-  }, [isListOpen]);
+  }, [isListOpen, isListFullScreen]);
 
   // MOUSE EVENTS
   const onMouseDown = (e: MouseEvent<HTMLDivElement>) => {

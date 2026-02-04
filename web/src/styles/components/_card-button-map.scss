@@ -322,7 +322,7 @@ $card-button-map-border-height: $border-general-height;
 
 .card-button-map__date {
   text-indent: -29px;
-  padding-left: 44px;
+  padding-left: 1rem;
 }
 
 .card-button-map__city {
@@ -415,4 +415,5 @@ $card-button-map-border-height: $border-general-height;
 //revise nueva clase
 .card-button-maps {
   display: flex;
+  flex-direction: column;
 }

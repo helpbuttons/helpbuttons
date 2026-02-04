@@ -137,6 +137,10 @@ export class User extends BaseEntity {
   @Expose()
   @Column({default: false})
   hasPhone?: boolean;
+
+  @Expose()
+  @Column({type: 'jsonb', default: {}})
+  readGroupMessages?: string;
 }
 
 export interface UserRelations {
