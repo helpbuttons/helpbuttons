@@ -43,15 +43,8 @@ export default function FieldDate({
     setEventEnd(_eventEnd)
     closePopup()
   }
-  const [_eventStart, _setEventStart] = useState(eventStart)
-  const [_eventEnd, _setEventEnd] = useState(eventEnd)
-
-  const handleChangeToMultipleDates = (newStartTimeDate, newEndTimeDate) => {
-    _setEventStart(newStartTimeDate)
-    _setEventEnd(newEndTimeDate)
-    setEventType(DateTypes.MULTIPLE)
-  }
-  // https://www.npmjs.com/package/react-time-picker
+  const [_eventStart, _setEventStart] = useState(eventStart ? eventStart : null)
+  const [_eventEnd, _setEventEnd] = useState(eventEnd ? eventEnd : null)
   return (
     <>
     <PickerField
@@ -85,7 +78,6 @@ export default function FieldDate({
                   eventEnd={_eventEnd}
                   setEventEnd={_setEventEnd}
                   setEventStart={_setEventStart} 
-                  handleChangeToMultipleDates={handleChangeToMultipleDates}                  
                 ></PickerEventTypeOnceForm>
               )}
               {eventType == DateTypes.MULTIPLE && (

@@ -1,127 +1,126 @@
-import { useState } from 'react';
-import { IoSaveOutline, IoTimeOutline } from 'react-icons/io5';
-import TimeKeeper from 'react-timekeeper';
-import t from 'i18n';
-import PickerField from '../PickerField';
-import Btn, { BtnType, ContentAlignment, IconType } from 'elements/Btn';
-import FieldError from 'elements/Fields/FieldError';
-import { readableTime } from 'shared/date.utils';
+import { useEffect, useState } from 'react';
+import { DropdownSearch } from 'elements/Dropdown/DropdownSearch';
 
-export function TimePick({ time, setTime, minTime = null, maxTime = null, handleChangeToMultipleDates = null, preLabel = '' }) {
-  const [showPickerTime, setShowPickerTime] = useState(false);
+export function TimePickInput({defaultDateTime, handleChange}) {
+  const [results, setResults] = useState([])
+  const [invalid, setInvalid] = useState(false)
 
-  const [_time, _setTime] = useState(
-    time
-      ? time.getHours() +
-      ':' +
-      String(time.getMinutes()).padStart(2, '1')
-      : '12:00',
-  );
-  const [errorTime, setErrorTime] = useState(0) // 0- no error, -1 minTime bigger, 1 maxTime is lower
-
-  const saveTime = (newTimeDate) => {
-    setTime(newTimeDate)
-    hidePickTime()
+  const dateToTime = (date) => {
+    if(date){
+      return `${date.getHours()}:${ String(date.getMinutes()).padStart(2, '0')}`
+    }
+    return ''
   }
-  const getDateFromPickerTime = (pickerTime) => {
-    const _date_newTime = pickerTime.split(':').map(Number);
-    const newHours = _date_newTime[0];
-    const newMinutes = _date_newTime[1];
-    const newTimeDate = new Date();
-    newTimeDate.setHours(newHours);
-    newTimeDate.setMinutes(newMinutes);
-    return newTimeDate
+  const defaultTime = dateToTime(defaultDateTime);
+  const [input, setInput] = useState(defaultTime)
+
+  const timeRegex = /^([01]?\d|2[0-3])(:([0-5]?\d?)?)?$/gm;
+
+  const getTimes = (hours: number, minutes: number) => {
+    const results = []
+
+    const maximumHours = (hours+5) < 24 ? hours+5 : 23;
+    for (let i = hours; i <= maximumHours; i++) {
+      if(!minutes || minutes < 1 || i != hours)
+      {
+        results.push(
+          {label: i + ':00', value: {hour: Number(i), minutes: 0}}
+        )
+      }
+      if(!minutes || (minutes < 31 && i != hours))
+        {
+          results.push(
+            {label: i + ':30', value: {hour: Number(i), minutes: 30}}
+          )
+      }
+    }    
+    return results
   }
-  const trySaveNewTime = () => {
-    const newTimeDate = getDateFromPickerTime(_time)
-    const newHours = newTimeDate.getHours()
-    const newMinutes = newTimeDate.getMinutes()
-    if (minTime == null && maxTime == null) {
-      saveTime(newTimeDate)
+  const getHours = (input) => {
+    return input.substring(0,2)
+  }
+
+  const getMinutes = (input) => {
+    return input.substring(3,5)
+  }
+
+  const timesToPickList = (input) => {
+    const found = input.match(timeRegex)
+    if(found)
+    {
+      setInvalid(() => false)
+      const hours = getHours(input)
+      const minutes = getMinutes(input)
+      return getTimes(hours, minutes)
+    }
+    if(!input)
+    {
+      setInvalid(() => false)
+      return []
+    }
+    setInvalid(() => true)
+    
+    return []
+  }
+
+  const toDate = (newTime) => {
+    const newDate = new Date()
+    newDate.setHours(newTime.value.hour)
+    newDate.setMinutes(newTime.value.minutes)
+    return newDate;
+  }
+
+  const setSelected = (timeSelected) => {
+    setInput(() => timeSelected.label)
+    setResults(() => [])
+    handleChange(toDate(timeSelected))
+  }
+  useEffect(() => {
+    if(!input)
+    {
       return;
     }
-
-    if (minTime) {
-      if (newHours >= minTime.getHours()) {
-        setErrorTime(() => 0)
-        saveTime(newTimeDate)
-      } else if (newHours == minTime.getHours() && newMinutes > minTime.getMinutes()) {
-        setErrorTime(() => 0)
-        saveTime(newTimeDate)
-      } else {
-        setErrorTime(() => -1)
-      }
+    if(!invalid && input.length == 5)
+    {
+      return;
     }
-    if (maxTime) {
-      if (newHours <= maxTime.getHours()) {
-        setErrorTime(() => 0)
-        saveTime(newTimeDate)
-      } else if (newHours == maxTime.getHours() && newMinutes > maxTime.getMinutes()) {
-        setErrorTime(() => 0)
-        saveTime(newTimeDate)
-      } else {
-        setErrorTime(() => 1)
-      }
-    }
+    setResults(() => timesToPickList(input))
+  }, [input])
 
+  const handleBlur = (input) => {
+    if(!input)
+    {
+      return;
+    }
+    if(!invalid && input.length == 5)
+    {
+      setResults(() => [])
+      return;
+    }
+    if(results.length > 0){
+      setSelected(results[0])
+      setResults(() => [])
+    }
   }
 
-  const setNewTime = (newTime) => {
-    _setTime(() => newTime)
-  };
+  const handleSelected = (timeSelected) => {
+    setSelected(timeSelected)
+  }
 
-  const hidePickTime = () => setShowPickerTime(() => false);
-  const showPickTime = () => setShowPickerTime(() => true);
+  const handleFocus = () => {
+    if(!input && !invalid)
+    {
+      const now = new Date()
+      setInput(() => `${now.getHours()}`)
+    }
+    if(!invalid)
+    {
+      setResults(() => timesToPickList(input.substring(0,2)))
+    }
+  }
 
-  return (
-    <PickerField
-      showPopup={showPickerTime}
-      btnLabel={
-        <>
-          {`${preLabel} ${time != null ? readableTime(time) : ''} `}
+  return <>
+          <DropdownSearch input={input} setInput={setInput} results={results} handleSelected={handleSelected} handleBlur={handleBlur} handleFocus={handleFocus}/>
+          {invalid && <span>invalid</span>}
         </>
-      }
-      iconLink={<IoTimeOutline />}
-      headerText={''}
-      openPopup={showPickTime}
-      closePopup={hidePickTime}
-    >
-      <div className="picker__section">
-        <TimeKeeper
-          time={_time}
-          onChange={(newTime) => {
-            setNewTime(newTime.formatted24);
-          }}
-          doneButton={() =>
-            <div className='form__field--multiinput'>
-              {errorTime < 0 &&
-                <>
-                  <FieldError validationError={{ message: t('eventType.afterStart', [readableTime(minTime)]) }} />
-                  {handleChangeToMultipleDates &&
-                    <Btn
-                      btnType={BtnType.corporative}
-                      caption={t('eventType.changeToMultipleDates')}
-                      iconLeft={IconType.circle}
-                      contentAlignment={ContentAlignment.center}
-                      onClick={() => { handleChangeToMultipleDates(getDateFromPickerTime(_time)) }}
-                    />
-                  }
-                </>
-              }
-              {errorTime > 0 && <FieldError validationError={{ message: t('eventType.beforeEnd', [readableTime(maxTime)]) }} />}
-              <Btn
-                btnType={BtnType.corporative}
-                iconLink={<IoSaveOutline />}
-                iconLeft={IconType.circle}
-                contentAlignment={ContentAlignment.center}
-                onClick={() => { trySaveNewTime() }}
-                disabled={_time == null}
-              />
-            </div>
-          }
-          switchToMinuteOnHourSelect
-        />
-      </div>
-    </PickerField>
-  );
 }
