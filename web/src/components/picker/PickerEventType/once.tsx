@@ -1,8 +1,7 @@
-import t from 'i18n';
-import { TimePickInput } from './timepick';
+import { TimeRangePicker } from './timepick';
 import CalendarHb from 'components/calendar';
 import { mergeDateTime } from 'shared/date.utils';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function PickerEventTypeOnceForm({
   eventStart,
@@ -12,6 +11,15 @@ export default function PickerEventTypeOnceForm({
 }) {
   const [dateStart, setDateStart] = useState(eventStart ? eventStart : null)
 
+  useEffect(() => {
+    if(eventStart){
+      setEventStart(() => mergeDateTime(dateStart,eventStart))
+    }
+    if(eventEnd){
+      setEventEnd(() => mergeDateTime(dateStart,eventEnd))
+    }
+  }, [dateStart])
+  
   const setTimeStart = (newTime) => {
     setEventStart(() => mergeDateTime(dateStart,newTime))
   }
@@ -33,12 +41,7 @@ export default function PickerEventTypeOnceForm({
         />
       </div>
       {(dateStart) && (
-        <div className="picker__row">
-          <span><span>{t('eventType.from')}</span><TimePickInput defaultDateTime={eventStart}
-            handleChange={(value) => setTimeStart(value)}/></span>
-          <span><span>{t('eventType.until')}</span><TimePickInput defaultDateTime={eventStart}
-            handleChange={(value) => setTimeEnd(value)}/></span>
-        </div>
+        <TimeRangePicker defaultStart={eventStart} defaultEnd={eventEnd} handleChangeEnd={setTimeEnd} handleChangeStart={setTimeStart}/>
       )}
     </>
   );
