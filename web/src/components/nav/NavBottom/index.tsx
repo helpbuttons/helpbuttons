@@ -91,7 +91,6 @@ function NavBottom({ sessionUser }) {
           </div>
           <div className="nav-bottom__text">{t('menu.explore')}</div>
         </NavLink>
-          <ShowMobileOnly>
             <NavLink
               href="/ButtonNew"
               className={`nav-bottom__link nav-bottom__link--create ${isCurrent(
@@ -109,7 +108,6 @@ function NavBottom({ sessionUser }) {
               </div>
               <div className="nav-bottom__text">{t('menu.create')}</div>
             </NavLink>
-          </ShowMobileOnly>
         {!sessionUser && (
           <div
             onClick={() =>
@@ -134,25 +132,7 @@ function NavBottom({ sessionUser }) {
 
         {sessionUser && (
           <>
-            <NavLink
-              href="/Profile"
-              className={`nav-bottom__link ${isCurrent(
-                'Profile',
-              )}`}
-            >
-              <div className="nav-bottom__icon">
-                 {isCurrent(
-                    'Profile',
-                  ) ? 
-                      <IoPerson/>
-                    :
-                      <IoPersonOutline/>
-                  }
-              </div>
-              <div className="nav-bottom__text">
-                {t('menu.profile')}
-              </div>
-            </NavLink>
+            
 
             <NavLink
               href="/Activity"
@@ -179,6 +159,26 @@ function NavBottom({ sessionUser }) {
                 {t('menu.activity')}
               </div>
             </NavLink>
+
+            <NavLink
+              href="/Profile"
+              className={`nav-bottom__link ${isCurrent(
+                'Profile',
+              )}`}
+            >
+              <div className="nav-bottom__icon">
+                 {isCurrent(
+                    'Profile',
+                  ) ? 
+                      <IoPerson/>
+                    :
+                      <IoPersonOutline/>
+                  }
+              </div>
+              <div className="nav-bottom__text">
+                {t('menu.profile')}
+              </div>
+            </NavLink>
           </>
         )}
 
@@ -203,25 +203,7 @@ function NavBottom({ sessionUser }) {
             <div className="nav-bottom__text">{t('menu.login')}</div>
           </div>
         )}
-        <ShowDesktopOnly>
-            <NavLink
-              href="/ButtonNew"
-              className={`nav-bottom__link ${isCurrent(
-                'ButtonNew',
-              )}`}
-            >
-              <div className="nav-bottom__icon">
-                {isCurrent(
-                    'ButtonNew',
-                  ) ?  
-                  <IoAddCircle/>
-                 :
-                  <IoAddCircleOutline/>
-                }
-              </div>
-              <div className="nav-bottom__text">{t('menu.create')}</div>
-            </NavLink>
-          </ShowDesktopOnly>
+    
       </nav>
     </>
   );

@@ -2,8 +2,10 @@ import React, { useEffect, useState, useRef } from 'react';
 import { GeoJson, GeoJsonFeature, Marker, Overlay, Point } from 'pigeon-maps';
 import { GlobalState, store, useGlobalStore } from 'state';
 import {
+  ExploreViewMode,
   RecenterExplore,
   UpdateExploreSettings,
+  UpdateExploreViewMode,
   UpdateFiltersToFilterButtonType,
   UpdateHexagonClicked, updateCurrentButton,
 } from 'state/Explore';
@@ -14,7 +16,7 @@ import {
 import _ from 'lodash';
 import { buttonColorStyle, useButtonType } from 'shared/buttonTypes';
 import Loading from 'components/loading';
-import { IoStorefrontSharp } from 'react-icons/io5';
+import { IoContract, IoResize, IoResizeOutline, IoResizeSharp, IoStorefrontSharp } from 'react-icons/io5';
 import { ShowMobileOnly } from 'elements/SizeOnly';
 import { useStore } from 'state';
 import { showMarkersZoom } from './Map.consts';
@@ -61,6 +63,11 @@ export default function HexagonExploreMap({
     (state: GlobalState) => state.explore.map.filters.where
   );
 
+   const viewMode = useStore(
+    store,
+    (state: GlobalState) => state.explore.settings.viewMode
+  );
+
   const [loadingNewResolution, setLoadingNewResolution] = useState(true)
 
   const currentButton = useGlobalStore((state: GlobalState) => state.explore.currentButton)
@@ -78,6 +85,7 @@ export default function HexagonExploreMap({
 
   const [filteredCircle, setFilteredCircle] = useState(null)
   useEffect(() => {
+
     if(filtersByLocation?.center && filtersByLocation?.radius)
     {
       setFilteredCircle(() => circleGeoJSON(filtersByLocation.center[1],filtersByLocation.center[0], filtersByLocation.radius*0.001));
@@ -353,15 +361,44 @@ export default function HexagonExploreMap({
               anchor={[100, 100]}
               className="pigeon-center-buttons"
             >
-              <button
-                className="pigeon-center-view"
-                onClick={() => {
-                  store.emit(new RecenterExplore());
-                }}
-              >
-                <IoStorefrontSharp />
-              </button>
+              {viewMode == 'map' &&
+                  <button
+                    className="pigeon-full-map"                
+                    onClick={() =>
+                        store.emit(
+                          new UpdateExploreViewMode(ExploreViewMode.BOTH),
+                        )
+                      }
+                  >
+                  
+                  <IoContract />
+                </button>
+              }
+              {viewMode != 'map' &&
+                  <button
+                    className="pigeon-full-map"                
+                    onClick={() =>
+                        store.emit(
+                          new UpdateExploreViewMode(ExploreViewMode.MAP),
+                        )
+                      }
+                  >
+                  
+                  <IoResize />
+                </button>
+              }
+                <button
+                  className="pigeon-center-view"
+                  onClick={() => {
+                    store.emit(new RecenterExplore());
+                  }}
+                >
+                  <IoStorefrontSharp />
+                </button>
+
+              
             </Overlay>
+             
             {(exploreSettings.loading || loadingNewResolution) && (
               <Overlay anchor={centerBounds}>
                 <Loading />
