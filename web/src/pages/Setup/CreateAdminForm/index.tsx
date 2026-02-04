@@ -191,6 +191,10 @@ export default function CreateAdminForm() {
 export function IllustrationHead({imageSrc = null, title}) {
   return (
       <div className='form__field'>
+
+          <div className='form__header'>
+              {title}
+          </div>
           {imageSrc && 
               <div className='form__illustration'>
                   <ImageWrapper
@@ -198,9 +202,6 @@ export function IllustrationHead({imageSrc = null, title}) {
                       alt={title} src={imageSrc} localUrl={true} />
               </div>
           }
-          <div className='form__header'>
-              {title}
-          </div>
       </div>
   )
 }

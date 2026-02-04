@@ -66,6 +66,7 @@ $card-button-border-height: $border-general-height;
 
 .card-button__full-content{
   padding: $padding-huge $padding-huge;
+  padding-bottom: 0;
 }
 
 .card-button__content {
@@ -1021,7 +1022,7 @@ $card-button-border-height: $border-general-height;
 
   .card-button__full-content {
 
-    padding-bottom: $padding-huge;
+    padding-bottom: 0;
 
   }
 

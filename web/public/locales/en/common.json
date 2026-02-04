@@ -163,12 +163,12 @@
     "smtpUrl": "Smtp url",
     "createAdminTitle": "Create administrator account",
     "welcomeMessage": "Welcome to your _helpbuttons_ instance",
-    "createAdmin": "First step, is create an admin",
+    "createAdmin": "Let's create your Network. First step: Create your admin account.",
     "configureNetwork": "Customize your site's appearance, topics, post types, and alerts. Add prices, dates, and other modular features to your posts.",
     "welcomeMessageLong": "Next you´ll see your collaborative network description. Create your first network with the options in the next step.",
     "finish": "Finish setup",
     "configureInstanceDescription": "Wizard to help on configuring your network",
-    "configureInstanceTitle": "Setup the last details of your network",
+    "configureInstanceTitle": "Setup your network",
     "test": "test",
     "needLogo": "Before selecting a place for your network, please upload a logo",
     "needPlace": "Please select the area of your network",
@@ -218,7 +218,8 @@
     "writingDraft": "Writing private message",
     "draft": "Draft",
     "pickOne": "Select one chat",
-    "newbuttonHomeinfo": "New _helpbutton_ "
+    "newbuttonHomeinfo": "New _helpbutton_ ",
+    "title": "Messages & Alerts"
   },
   "common": {
     "notfound": "No {0} found. Sorry. 🤔",
@@ -566,6 +567,8 @@
     "keyLocationsExplain": "Key spots that will be highlighted in your network. They will appear in the main menus and map for easy access",
     "addLocationKey": "Add Location",
     "privacyPolicyLabel": "Privacy policy",
+    "privacyPolicyPlaceHolder": "Write basic privacy policy, like where are your storing your users' data, what type of data are you using and what for. ",
+    "ethicsPolicyPlaceHolder": "Write basic ethics. What are the values behind your networks' purpose and users' actions.",
     "ethicsPolicyLabel": "Ethics",
     "contactEmailLabel": "Contact data",
     "FAQs": "Complementary info",
