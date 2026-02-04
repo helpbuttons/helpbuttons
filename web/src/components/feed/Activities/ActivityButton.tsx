@@ -18,7 +18,6 @@ import { FindButton } from "state/Explore"
 import { FindAndSetMainPopupCurrentButton, FindAndSetMainPopupCurrentProfile } from "state/HomeInfo"
 
 export function ActivityButton({ selectedActivity, setSelectedActivity, closeConversation, isDrafting }) {
-
   if (isDrafting) {
     return <ActivityDetailDraft setSelectedActivity={setSelectedActivity} />
   }
@@ -53,18 +52,18 @@ export function ActivityDetailConversation({ selectedActivity, closeConversation
     loadButtonActivities()
   }, [selectedActivity])
 
-  const activities = useGlobalStore((state: GlobalState) => state.activities.activities)
+  const buttonsActivities = useGlobalStore((state: GlobalState) => state.activities.buttons)
   useEffect(() => {
-    if(activities)
+    if(buttonsActivities)
     {
-      const foundSelectedActivity = activities.find((_activity) => _activity.consumerId == selectedActivity.consumerId && _activity.buttonId == selectedActivity.buttonId)
+      const foundSelectedActivity = buttonsActivities.find((_activity) => _activity.consumerId == selectedActivity.consumerId && _activity.buttonId == selectedActivity.buttonId)
       if(foundSelectedActivity && buttonActivities.length > 0 && foundSelectedActivity.createdAt > buttonActivities[0].createdAt)
       {
         // a new activity on the selected activity has been received, refetch!!
         loadButtonActivities()
       }
     }
-  }, [activities])
+  }, [buttonsActivities])
 
   const sendNewMessage = (message, buttonId, consumerId) => {
     store.emit(new SendNewMessage(message, buttonId, consumerId, () => { loadButtonActivities(); alertService.success(t('activities.sent')) }))
@@ -262,7 +261,7 @@ function ActivityDetailCard({ activity }) {
   )
 }
 
-function ActivityDetailMessage({ activity }) {
+export function ActivityDetailMessage({ activity }) {
   if (activity.from) {
     return (
       <>
@@ -322,22 +321,15 @@ function ActivityDetailList({ buttonActivities, setButtonActivities, buttonId, c
         setButtonActivities((prev) => [...prev, ...newActivities])
         setScrollIsLoading(() => false)
       }))
-    },selectedActivity
+    }, selectedActivity
   );
 
   return (
     <div className="chat__messages">
       {buttonActivities && <>
         {buttonActivities.map((activity, idx) => <ActivityDetailCard activity={activity} key={idx} />)}
-      </>
+        </>
       }
-      {/* {noMoreToLoad &&
-        <div className="feed__empty-message">
-          <div className="feed__empty-message--prev">
-            {t('feed.noMoreMessages')}
-          </div>
-        </div>
-      } */}
 
       {endDivLoadMoreTrigger}
     </div>

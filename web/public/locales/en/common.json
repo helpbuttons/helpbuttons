@@ -735,5 +735,14 @@
     "developers": "Developers",
     "ethicCode": "Ethical principles"
 
+  },
+  "groupChat":
+  {
+    "create": "Create new group chat for the {0}",
+    "creating": "After sending the first message to this group, other users will be able to participate on this group chat",
+    "admin": "administrators",
+    "community": "commmunity",
+    "admin_community": "Admin & Community",
+    "you": "You"
   }
 }

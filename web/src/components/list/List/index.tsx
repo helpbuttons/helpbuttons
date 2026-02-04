@@ -73,22 +73,23 @@ function List({
         toggleShowMap(true);
         onLeftColumnToggle(false);
         setListOpen(false);
-        setListFullScreen(false);
+        setListFullScreen(() => false);
         break;
       }
       case ExploreViewMode.LIST: {
         toggleShowMap(false);
         onLeftColumnToggle(true);
         setListOpen(true);
-        setListFullScreen(true);
+        setListFullScreen(() => true);
         break;
       }
       default:
       case ExploreViewMode.BOTH: {
+        console.log('oiiii bothhhh')
         toggleShowMap(true);
         onLeftColumnToggle(true);
         setListOpen(true);
-        setListFullScreen(false);
+        setListFullScreen(() => false);
         break;
       }
     }
