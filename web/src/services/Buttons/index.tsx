@@ -102,4 +102,8 @@ export class ButtonService {
   public static unpin(buttonId): Observable<any> {
     return httpService.get<any>(`buttons/unpin/${buttonId}`);
   }
+
+  public static followers(buttonId): Observable<any> {
+    return httpService.get<any>(`buttons/followers/${buttonId}`);
+  }
 }

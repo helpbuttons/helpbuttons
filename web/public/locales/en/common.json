@@ -314,7 +314,9 @@
     "selectPlace": "Select place on map and save",
     "sendPrivateMessage": "Send private message to {0}",
     "showMoreTags": "more tags",
-    "expiredLabel": "Expired"
+    "expiredLabel": "Expired",
+    "followers": "{0} followers",
+    "nofollowers": "no one is following yet"
   },
   "user": {
     "login": "Write your credentials",

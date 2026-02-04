@@ -760,4 +760,12 @@ export class ButtonService {
         return compiledTemplate(context);
       });
   }
+
+  public findFollowers(buttonId){
+    return this.buttonRepository.findOneBy({id: buttonId})
+    .then((button) => {
+      return this.userService.findByIds(button.followedBy)
+      .then((dd) => {console.log(dd); return dd;})
+    })
+  }
 }

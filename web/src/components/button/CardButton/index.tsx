@@ -52,11 +52,12 @@ import MarkerViewMap from 'components/map/Map/MarkerSelectorMap';
 import { TagsNav } from 'elements/Fields/FieldTags';
 import { ImageGallery } from 'elements/ImageGallery';
 import Loading from 'components/loading';
-import { MainPopupPage, SetMainPopup, SetMainPopupCurrentProfile } from 'state/HomeInfo';
+import { FindAndSetMainPopupCurrentProfile, MainPopupPage, SetMainPopup, SetMainPopupCurrentProfile } from 'state/HomeInfo';
 import React from 'react';
 import dconsole from 'shared/debugger';
-import { ButtonPin, ButtonUnpin } from 'state/Button';
+import { ButtonPin, ButtonUnpin, FindFollowers } from 'state/Button';
 import { SetDraftButton } from 'state/Activity';
+import { useToggle } from 'shared/custom.hooks';
 
 export default function CardButton({ button, buttonTypes, toggleShowReplyFirstPost }) {
   const buttonType = useButtonType(button, buttonTypes);
@@ -575,56 +576,55 @@ export function CardButtonAuthorSection({ button }) {
 }
 
 export function CardButtonFollowerSection({ button }) {
-  const sessionUser = useGlobalStore((state: GlobalState) => state.sessionUser);
-  const onClick = (e) => {
-    e.preventDefault()
-    if(sessionUser?.id == button.owner.id)
-    {
-      store.emit(new SetMainPopupCurrentProfile(null))
-      router.push('/Profile', undefined, {shallow: true})
-    }else{
-      return;
+  const [showFollowers, toggleShowFollowers] = useToggle(false)
+  const [followers, setFollowers] = useState(null)
+  useEffect(() => {
+    if (showFollowers) {
+      store.emit(new FindFollowers(button.id, (followers => setFollowers(() => followers))))
     }
-    
-  }
+  }, [showFollowers])
+
   return (
     <div className="card-button__suscribers">
       <div className="card-button__suscribers__number">
-        <Link href="#" onClick={onClick}>
-          <div className="card-button__name">
-          {t('button.followers',[button.followCount])}
-          </div>
-          <div className="card-button__author-description">
-            <TextFormatted maxChars={600} text={button.owner.description} />
-          </div>
-        </Link>
-      </div>
-      <div className="card-button__suscribers__avatars">
-        <div className="avatar-small">
-          <Link href="#" onClick={onClick}>
-            <ImageWrapper
-              imageType={ImageType.avatarMed}
-              src={button.owner.avatar}
-              alt="Avatar"
-            />
+        {button.followCount > 0 &&
+          <Link href="#" onClick={() => toggleShowFollowers((prev) => !prev)}>
+            <div className="card-button__name">
+              {t('button.followers', [button.followCount])}
+            </div>
+            <div className="card-button__author-description">
+              <TextFormatted maxChars={600} text={button.owner.description} />
+            </div>
           </Link>
-        </div>
-        <div className="avatar-small">
-          <Link href="#" onClick={onClick}>
-            <ImageWrapper
-              imageType={ImageType.avatarMed}
-              src={button.owner.avatar}
-              alt="Avatar"
-            />
-          </Link>
-        </div>
+        }
+        {button.followCount < 1 &&
+          <span>{t('button.nofollowers')}</span>
+        }
       </div>
-      
-      
+      {showFollowers && <>{followers.map((follower, idx) => 
+          <Follower user={follower} key={idx}/>
+      )}</>}
     </div>
   );
 }
+function Follower({ user }) {
+  const onClick = () => {
+    store.emit(new FindAndSetMainPopupCurrentProfile(user.username))
 
+  }
+  return <div className="card-button__suscribers__avatars">
+    <Link href="#" onClick={onClick}>
+      <span>{user.name}</span>
+      <div className="avatar-small">
+        <ImageWrapper
+          imageType={ImageType.avatarMed}
+          src={user.avatar}
+          alt="Avatar"
+        />
+      </div>
+    </Link>
+  </div>
+}
 
 function FollowButtonHeart({ button, sessionUser }) {
   if (!canFollowButton(button, sessionUser)) {
@@ -633,24 +633,24 @@ function FollowButtonHeart({ button, sessionUser }) {
 
   if (!button.isFollowing) {
     return (
-        <Btn
-          btnType={BtnType.smallCircle}
-          contentAlignment={ContentAlignment.center}
-          iconLink={<IoNotificationsOutline />}
-          iconLeft={IconType.circle}
-          onClick={() => followButton(button.id)}
-        />
+      <Btn
+        btnType={BtnType.smallCircle}
+        contentAlignment={ContentAlignment.center}
+        iconLink={<IoNotificationsOutline />}
+        iconLeft={IconType.circle}
+        onClick={() => followButton(button.id)}
+      />
     );
   }
 
   return (
-      <Btn
-        btnType={BtnType.smallCircle}
-        contentAlignment={ContentAlignment.center}
-        iconLink={<IoNotifications />}
-        iconLeft={IconType.circle}
-        onClick={() => unFollowButton(button.id)}
-      />
+    <Btn
+      btnType={BtnType.smallCircle}
+      contentAlignment={ContentAlignment.center}
+      iconLink={<IoNotifications />}
+      iconLeft={IconType.circle}
+      onClick={() => unFollowButton(button.id)}
+    />
   );
 }
 
