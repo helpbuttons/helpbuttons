@@ -130,7 +130,7 @@ $map-btns-size-mobile: 30px;
     display: flex;
     align-items: center;
     justify-content: center;
-    left: -10px;
+    left: 40px;
 
 }
 
@@ -315,6 +315,21 @@ content: '';
     cursor: pointer;
 }
 @media #{$breakpoints-xlarge} {
+
+    .pigeon-map__hex-info--outter {
+
+        background-color: $color-white;
+        border-radius: $border-radius-circle;
+        position: relative;
+        width: $margin-big;
+        height: $margin-big;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        left: -10px;
+
+    }
 
     .pigeon-center-buttons{
 
