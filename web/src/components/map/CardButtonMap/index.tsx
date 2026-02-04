@@ -49,13 +49,13 @@ export default function CardButtonMap({ button, buttonTypes }) {
 
             <div className="card-button-maps">
 
-              <div className="card-button-map__city card-button-map__everywhere " >
+              {/* <div className="card-button-map__city card-button-map__everywhere " >
                 En todas partes
               </div>
 
               <div className="card-button-map__date">
                   Date
-              </div>
+              </div> */}
 
             </div>
 

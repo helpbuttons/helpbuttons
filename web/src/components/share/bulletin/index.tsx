@@ -80,8 +80,6 @@ export default function ShareBulletinForm() {
 
   useEffect(() => {
     if (bulletinButtons) {
-              console.log(bulletinButtons);
-
       generatePdf()
       .then(() => {
         setIsLoading(() => false);
