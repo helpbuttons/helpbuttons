@@ -315,10 +315,7 @@
     "sendPrivateMessage": "Send private message to {0}",
     "expiredLabel": "Expired",
     "followers": "Suscribed by {0} users.",
-    "showMoreTags": "more tags"
     "showMoreTags": "more tags",
-    "expiredLabel": "Expired",
-    "followers": "{0} followers",
     "nofollowers": "no one is following yet"
   },
   "user": {
