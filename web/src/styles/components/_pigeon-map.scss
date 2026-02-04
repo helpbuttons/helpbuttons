@@ -26,9 +26,9 @@ $map-btns-size-mobile: 30px;
 
 .pigeon-center-buttons {
 
-    position: absolute;
-    right: 10px !important;
-    top: 100px !important;
+    position: absolute !important;
+    right: $margin-xsmall !important;
+    top: 10px !important;
     display: block;
     left: auto !important;
     z-index: $z-index-02;
@@ -83,7 +83,6 @@ $map-btns-size-mobile: 30px;
     box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
     display: none;
 
-
     &:hover {
 
         cursor: pointer;
@@ -103,7 +102,7 @@ $map-btns-size-mobile: 30px;
 
     position: absolute;
     right: $margin-xsmall !important;
-    top: $margin-xsmall !important;
+    top: 70px !important;
     display: block;
     left: auto !important;
     z-index: $z-index-02;
@@ -323,14 +322,18 @@ $map-btns-size-mobile: 30px;
 
 }
 
+
+
 @media #{$breakpoints-xlarge} {
 
     .pigeon-center-buttons{
 
         right: $margin-small !important;
-        top: $margin-small !important;
+        top: 150px !important;
         display: block;
         left: auto !important;
+        position: fixed !important;
+
 
         & svg {
 
@@ -355,16 +358,17 @@ $map-btns-size-mobile: 30px;
     .pigeon-zoom-buttons {
 
         right: $margin-small !important;
-        top: 140px !important;
+        top: 280px !important;
         display: block;
         left: auto !important;
+        position: fixed !important;
     
     }
 
     .pigeon-full-map {
         
         margin-top: $margin-small;
-
+        display: flex;
 
     }
 
