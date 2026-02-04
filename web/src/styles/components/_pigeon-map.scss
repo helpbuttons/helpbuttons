@@ -123,14 +123,14 @@ $map-btns-size-mobile: 30px;
     background-color: $color-white;
     border-radius: $border-radius-circle;
 
-      position: relative;
+    position: relative;
     width: $margin-big;
     height: $margin-big;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    left: 0;
+    left: -10px;
 
 }
 
