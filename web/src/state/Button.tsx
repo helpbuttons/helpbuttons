@@ -222,3 +222,22 @@ export class ButtonFindAll implements WatchEvent {
     );
   }
 }
+
+export class FindFollowers implements WatchEvent {
+  public constructor(
+    private buttonId: string,
+    private onSuccess,
+  ) { }
+
+  public watch(state: GlobalState) {
+    return ButtonService.followers(this.buttonId).pipe(
+      map((followersList) => {
+        this.onSuccess(followersList);
+      }),
+      catchError((error) => {
+        this.onSuccess([]);
+        return of(undefined);
+      }),
+    );
+  }
+}

@@ -931,12 +931,33 @@ $card-button-border-height: $border-general-height;
 
 }
 
-.card-button__image-gallery {
 
-  // border-top: $border-style-light;
+.card-button__suscribers {
+
+  padding: $padding-big $padding-huge;
+  border-top: $border-style-light;
+  padding-bottom: $padding-medium;
 
 }
 
+.card-button__suscribers-row {
+  display: flex;
+  flex-direction: row;
+  padding: $padding-small;
+  gap: $padding-small;
+}
+
+.card-button__suscribers__avatars {
+
+  font-weight: $font-weight-bolder;
+
+}
+
+.card-button__suscribers-title {
+
+  font-weight: $font-weight-bold;
+
+}
 
 @media #{$breakpoints-medium} {
 

@@ -323,4 +323,11 @@ COALESCE(
         });
       }
   }
+
+  findByIds(userIds : string[]) {
+    return this.userRepository.find({where: {id: In(userIds)}})
+    .then((users) => users.map((user) => {
+      return {username: user.username, name: user.name, id: user.id, avatar: user.avatar};
+    }))
+  }
 }

@@ -293,4 +293,10 @@ export class ButtonController {
   {
     return this.buttonService.findAll(page)
   }
+
+  @AllowGuest()
+  @Get('followers/:buttonId')
+  findFollowers(@Param('buttonId') buttonId: string){
+    return this.buttonService.findFollowers(buttonId)
+  }
 }

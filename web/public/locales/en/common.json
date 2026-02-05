@@ -48,7 +48,7 @@
     "share": "Share options",
     "notificationsPermission": "Allow notifications",
     "featured": "Featured",
-    "powered": "2025 - Powered by",
+    "powered": "2026 - Powered by",
     "keyLocations": "Key Spots",
     "inviteToNetwork": "Share",
     "inviteCopied": "Link copied to clipboard"
@@ -314,8 +314,9 @@
     "selectPlace": "Select place on map and save",
     "sendPrivateMessage": "Send private message to {0}",
     "expiredLabel": "Expired",
-    "followers": "Suscribed by {0} users.",
-    "showMoreTags": "more tags"
+    "followers": "Suscribed by {0} users",
+    "showMoreTags": "more tags",
+    "nofollowers": "no one is following yet"
   },
   "user": {
     "login": "Write your credentials",
@@ -486,7 +487,7 @@
     "public": "This comment is public, everyone will see it.",
     "placeholderWrite": "Write a message",
     "posted": "Comment posted",
-    "sendPublic": "Answer",
+    "sendPublic": "Comment post",
     "sendPrivate": "Answer privately",
     "send": "Send",
     "makePublic": "Show message in public"
