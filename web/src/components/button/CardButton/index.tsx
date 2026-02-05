@@ -600,7 +600,7 @@ export function CardButtonFollowerSection({ button }) {
                   }
                 </div>
                 <div className='card-button__suscribers-row'>
-                  {showFollowers && <>{followers.map((follower, idx) => 
+                  {(showFollowers && button.followCount > 0) && <>{followers.map((follower, idx) => 
                       <Follower user={follower} key={idx}/>
                   )}</>}
                 </div>
