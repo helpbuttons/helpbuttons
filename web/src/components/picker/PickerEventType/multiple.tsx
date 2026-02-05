@@ -1,6 +1,5 @@
-import t from 'i18n';
-import { mergeDateTime, readableTime } from 'shared/date.utils';
-import { TimePick } from './timepick';
+import { mergeDateTime } from 'shared/date.utils';
+import { TimeRangePicker } from './timepick';
 import CalendarHb from 'components/calendar';
 import { useEffect, useState } from 'react';
 
@@ -11,21 +10,28 @@ export default function PickerEventTypeMultipleForm({
   setEventStart,
 }) {
 
-  const [timeStart, setTimeStart] = useState(eventStart);
-  const [timeEnd, setTimeEnd] = useState(eventStart);
+  const [dateStart, setDateStart] = useState(eventStart ? eventStart : null)
+  const [dateEnd, setDateEnd] = useState(eventEnd ? eventEnd : null)
 
-  const [dateStart, setDateStart] = useState(eventEnd)
-  const [dateEnd, setDateEnd] = useState(eventEnd)
+  const setTimeStart = (newTime) => {
+    setEventStart(() => mergeDateTime(dateStart,newTime))
+  }
+
+  const setTimeEnd = (newTime) => {
+    setEventEnd(() => mergeDateTime(dateEnd, newTime))
+  }
 
   useEffect(() => {
-      setEventStart(mergeDateTime(dateStart, timeStart))
-  }, [timeStart, dateStart])
-  
+    if(eventStart){
+      setEventStart(() => mergeDateTime(dateStart,eventStart))
+    }
+  }, [dateStart])
   useEffect(() => {
-      setEventEnd(mergeDateTime(dateEnd, timeEnd))
-  }, [timeEnd, dateEnd])
+    if(eventEnd){
+      setEventEnd(() => mergeDateTime(dateEnd,eventEnd))
+    }
+  }, [dateEnd])
 
-  
   const setDates = (newDates) => {
     const newStartTimeDate = new Date(newDates[0]);
     setDateStart(() => newStartTimeDate);
@@ -33,6 +39,9 @@ export default function PickerEventTypeMultipleForm({
     const newEndTimeDate = new Date(newDates[1]);
     setDateEnd(() => newEndTimeDate);
   };
+
+  const [defaultValue, setDefaultValue] = useState((dateStart && dateEnd) ? [dateStart, dateEnd] : null )
+  
   return (
     <>
       <div className="picker__row">
@@ -40,24 +49,13 @@ export default function PickerEventTypeMultipleForm({
           onChange={(newDates) => {
             setDates(newDates);
           }}
-          value={[dateStart, dateEnd]}
           selectRange
           minDate={new Date()}
+          defaultValue={defaultValue}
         />
       </div>
       {(dateStart && dateEnd) && (
-        <div className="picker__row">
-          <TimePick
-            preLabel={t('eventType.from')}
-            time={timeStart}
-            setTime={(value) => setTimeStart(value)}
-          />
-          <TimePick
-            preLabel={t('eventType.until')}
-            time={timeEnd}
-            setTime={(value) => setTimeEnd(value)}
-          />
-        </div>
+        <TimeRangePicker defaultStart={eventStart} defaultEnd={eventEnd} handleChangeEnd={setTimeEnd} handleChangeStart={setTimeStart}/>
       )}
     </>
   );

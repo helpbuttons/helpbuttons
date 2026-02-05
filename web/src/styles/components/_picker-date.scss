@@ -138,7 +138,7 @@ $picker-date-height: 40px;
   }
 }
 
-.react-calendar__tile--active {
+.react-calendar__tile--active, .react-calendar__tile--hasActive {
 
   background-color: $color-corporative !important;
   color: $color-text-over-corporative !important;
@@ -156,10 +156,10 @@ $picker-date-height: 40px;
   font-size: $font-size-general;
 }
 
-.react-calendar__tile--hasActive {
+// .react-calendar__tile--hasActive {
 
-  background-color: $color-ligth-gray !important;
-}
+//   background-color: $color-ligth-gray !important;
+// }
 
 
 .form__weekdays-list {
