@@ -581,9 +581,11 @@ export function CardButtonFollowerSection({ button }) {
     }
   }, [showFollowers])
 
+
   return (
     <>
         <>
+        
           <div className="card-button__suscribers">
                 <div className="card-button__suscribers__number">
                   {button.followCount > 0 &&
