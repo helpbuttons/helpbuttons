@@ -952,6 +952,12 @@ $card-button-border-height: $border-general-height;
 
 }
 
+.card-button__suscribers-title {
+
+  font-weight: $font-weight-bold;
+
+}
+
 @media #{$breakpoints-medium} {
 
   .card-button__bottom-properties {

@@ -585,25 +585,33 @@ export function CardButtonFollowerSection({ button }) {
   }, [showFollowers])
 
   return (
-    <div className="card-button__suscribers">
-      <div className="card-button__suscribers__number">
-        {button.followCount > 0 &&
-          <Link href="#" onClick={() => toggleShowFollowers((prev) => !prev)}>
-            <div className="card-button__suscribers-title">
-              {t('button.followers', [button.followCount])}
-            </div>
-          </Link>
-        }
-        {button.followCount < 1 &&
-          <span>{t('button.nofollowers')}</span>
-        }
-      </div>
-      <div className='card-button__suscribers-row'>
-        {showFollowers && <>{followers.map((follower, idx) => 
-            <Follower user={follower} key={idx}/>
-        )}</>}
-      </div>
-    </div>
+    <>
+      {showFollowers &&
+        <>
+          <div className="card-button__suscribers">
+                <div className="card-button__suscribers__number">
+                  {button.followCount > 0 &&
+                    <Link href="#" onClick={() => toggleShowFollowers((prev) => !prev)}>
+                      <div className="card-button__suscribers-title">
+                        {t('button.followers', [button.followCount])}
+                      </div>
+                    </Link>
+                  }
+                  {button.followCount < 1 &&
+                    <span>{t('button.nofollowers')}</span>
+                  }
+                </div>
+                <div className='card-button__suscribers-row'>
+                  {showFollowers && <>{followers.map((follower, idx) => 
+                      <Follower user={follower} key={idx}/>
+                  )}</>}
+                </div>
+              </div>
+        </>
+        
+      }
+    </>
+    
   );
 }
 function Follower({ user }) {
