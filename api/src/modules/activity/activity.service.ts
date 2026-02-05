@@ -634,7 +634,7 @@ export class ActivityService {
   public notifyAdmins(payload: any) {
     this.userService.findAdministrators()
       .then((admins) => {
-        console.log(admins)
+        // console.log(admins)
         admins.map((admin) => {
           // this.createActivity(admin, payload, false);
         })
