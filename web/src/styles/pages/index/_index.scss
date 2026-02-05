@@ -52,7 +52,7 @@ $index-content-left--distance: $grid-column-max-width;
 
 .index__content-bottom--mid-screen {
 
-  height: calc(420px + 20px) ;
+  height: calc($list-content-height-mid-screen-mobile + $nav-bottom-height) ;
 
 }
 
