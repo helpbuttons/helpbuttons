@@ -577,7 +577,7 @@ export function CardButtonAuthorSection({ button }) {
 
 export function CardButtonFollowerSection({ button }) {
   const [showFollowers, toggleShowFollowers] = useToggle(false)
-  const [followers, setFollowers] = useState(null)
+  const [followers, setFollowers] = useState([])
   useEffect(() => {
     if (showFollowers) {
       store.emit(new FindFollowers(button.id, (followers => setFollowers(() => followers))))
@@ -589,11 +589,8 @@ export function CardButtonFollowerSection({ button }) {
       <div className="card-button__suscribers__number">
         {button.followCount > 0 &&
           <Link href="#" onClick={() => toggleShowFollowers((prev) => !prev)}>
-            <div className="card-button__name">
+            <div className="card-button__suscribers-title">
               {t('button.followers', [button.followCount])}
-            </div>
-            <div className="card-button__author-description">
-              <TextFormatted maxChars={600} text={button.owner.description} />
             </div>
           </Link>
         }
@@ -601,9 +598,11 @@ export function CardButtonFollowerSection({ button }) {
           <span>{t('button.nofollowers')}</span>
         }
       </div>
-      {showFollowers && <>{followers.map((follower, idx) => 
-          <Follower user={follower} key={idx}/>
-      )}</>}
+      <div className='card-button__suscribers-row'>
+        {showFollowers && <>{followers.map((follower, idx) => 
+            <Follower user={follower} key={idx}/>
+        )}</>}
+      </div>
     </div>
   );
 }
@@ -614,7 +613,7 @@ function Follower({ user }) {
   }
   return <div className="card-button__suscribers__avatars">
     <Link href="#" onClick={onClick}>
-      <span>{user.name}</span>
+      {/* <span>{user.name}</span> */}
       <div className="avatar-small">
         <ImageWrapper
           imageType={ImageType.avatarMed}
