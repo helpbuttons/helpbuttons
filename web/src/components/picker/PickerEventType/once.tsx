@@ -1,63 +1,47 @@
-import t from 'i18n';
-import { TimePick } from './timepick';
-import { mergeDateTime, readableTime } from 'shared/date.utils';
+import { TimeRangePicker } from './timepick';
 import CalendarHb from 'components/calendar';
+import { mergeDateTime } from 'shared/date.utils';
 import { useEffect, useState } from 'react';
-import { alertService } from 'services/Alert';
 
 export default function PickerEventTypeOnceForm({
   eventStart,
   eventEnd,
   setEventEnd,
-  setEventStart,
-  handleChangeToMultipleDates
+  setEventStart
 }) {
-
-  const [timeStart, setTimeStart] = useState(eventStart);
-  const [timeEnd, setTimeEnd] = useState(eventStart);
-
-  const [dateStart, setDateStart] = useState(eventEnd)
-  const [dateEnd, setDateEnd] = useState(eventEnd)
+  const [dateStart, setDateStart] = useState(eventStart ? eventStart : null)
 
   useEffect(() => {
-    setEventStart(mergeDateTime(dateStart, timeStart))
-  }, [timeStart, dateStart])
+    if(eventStart){
+      setEventStart(() => mergeDateTime(dateStart,eventStart))
+    }
+    if(eventEnd){
+      setEventEnd(() => mergeDateTime(dateStart,eventEnd))
+    }
+  }, [dateStart])
+  
+  const setTimeStart = (newTime) => {
+    setEventStart(() => mergeDateTime(dateStart,newTime))
+  }
 
-  useEffect(() => {
-    setEventEnd(mergeDateTime(dateStart, timeEnd))
-  }, [timeEnd, dateStart])
-
+  const setTimeEnd = (newTime) => {
+    setEventEnd(() => mergeDateTime(dateStart, newTime))
+  }
+  
   return (
+    
     <>
       <div className="picker__row">
         <CalendarHb
           onChange={(newDate) => {
-            setDateStart(newDate);
+            setDateStart(() => newDate);
           }}
           value={dateStart}
           minDate={new Date()}
         />
       </div>
-      {dateStart && (
-        <div className="picker__row">
-          <TimePick
-            preLabel={t('eventType.from')}
-            time={timeStart}
-            setTime={(value) => setTimeStart(() => value)}
-            maxTime={timeEnd}
-          />
-          <TimePick
-            preLabel={t('eventType.until')}
-            time={timeEnd}
-            setTime={(value) => setTimeEnd(() => value)}
-            minTime={timeStart}
-            handleChangeToMultipleDates={(neededTime) => {
-              const _newEnd = mergeDateTime(dateStart, neededTime)
-              _newEnd.setDate(_newEnd.getDate() + 1)
-              handleChangeToMultipleDates(mergeDateTime(dateStart, timeStart), _newEnd)
-            }}
-          />
-        </div>
+      {(dateStart) && (
+        <TimeRangePicker defaultStart={eventStart} defaultEnd={eventEnd} handleChangeEnd={setTimeEnd} handleChangeStart={setTimeStart}/>
       )}
     </>
   );

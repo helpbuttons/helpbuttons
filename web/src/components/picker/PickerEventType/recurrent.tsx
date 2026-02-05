@@ -9,7 +9,7 @@ import {
   readableTime,
 } from 'shared/date.utils';
 import t from 'i18n';
-import { TimePick } from './timepick';
+import { TimePick, TimeRangePicker } from './timepick';
 import WeekDayPicker from './weekDayPicker';
 import CalendarHb from 'components/calendar';
 import { IoTimeOutline } from 'react-icons/io5';
@@ -23,7 +23,7 @@ export default function PickerEventTypeRecurrentForm({
   rrule,
   setRrule,
 }) {
-  const [startDate, setStartDate] = useState<Date>(
+  const [dateStart, setDateStart] = useState<Date>(
     rrule?.dtstart ? rrule.dtstart : null,
   );
   const [endDate, setEndDate] = useState<Date>(
@@ -38,14 +38,14 @@ export default function PickerEventTypeRecurrentForm({
   );
 
   useEffect(() => {
-    if (startDate && endDate) {
+    if (dateStart && endDate) {
       switch (parseInt(periodicity)) {
         case RRule.WEEKLY: {
           const newRules = {
             freq: RRule.WEEKLY,
             interval: 1,
-            byweekday: rrule?.byweekday ? rrule.byweekday : [convertWeekDay(startDate)],
-            dtstart: startDate,
+            byweekday: rrule?.byweekday ? rrule.byweekday : [convertWeekDay(dateStart)],
+            dtstart: dateStart,
             until: endDate,
           };
           setRrule(JSON.parse(JSON.stringify(newRules)));
@@ -55,7 +55,7 @@ export default function PickerEventTypeRecurrentForm({
           const newRules = {
             freq: RRule.MONTHLY,
             interval: 1,
-            dtstart: startDate,
+            dtstart: dateStart,
             until: endDate,
           };
           setRrule(JSON.parse(JSON.stringify(newRules)));
@@ -63,7 +63,7 @@ export default function PickerEventTypeRecurrentForm({
         }
       }
     }
-  }, [endDate, startDate, periodicity]);
+  }, [endDate, dateStart, periodicity]);
 
   useEffect(() => {
     if(rrule)
@@ -111,10 +111,10 @@ export default function PickerEventTypeRecurrentForm({
             <div className="picker-date__recurrent_weekly">
               <CalendarHb
                 onChange={(newDates) => {
-                  setStartDate(() => newDates[0]);
+                  setDateStart(() => newDates[0]);
                   setEndDate(() => newDates[1]);
                 }}
-                value={[startDate, endDate]}
+                defaultValue={[dateStart, endDate]}
                 selectRange
                 minDate={new Date()}
                 tileClassName={({ date, view }) => {
@@ -124,7 +124,7 @@ export default function PickerEventTypeRecurrentForm({
                   }
                 }}
               />
-              {(startDate || endDate) && (
+              {(dateStart || endDate) && (
                 <WeekDayPicker
                   selectedWeekDays={
                     rrule?.byweekday ? rrule.byweekday : []
@@ -142,30 +142,19 @@ export default function PickerEventTypeRecurrentForm({
             <div className="picker__row">
               <CalendarHb
                 onChange={(newDates) => {
-                  setStartDate(() => newDates[0]);
+                  setDateStart(() => newDates[0]);
                   setEndDate(() => newDates[1]);
                 }}
-                value={[startDate, endDate]}
+                // defaultValue={[dateStart, endDate]}
                 selectRange
                 minDate={new Date()}
               />
             </div>
           </>
         )}
-        {startDate && endDate && (
-        <div className="picker__row">
-            <TimePick
-              preLabel={t('eventType.from')}
-              time={startDate}
-              setTime={(value) => setStartDate(value)}
-            />
-            <TimePick
-              preLabel={t('eventType.until')}
-              time={endDate}
-              setTime={(value) => setEndDate(value)}
-            />
-          </div>
-        )}
+         {dateStart && endDate && (
+            <TimeRangePicker defaultStart={dateStart} defaultEnd={endDate} handleChangeEnd={(value) => setEndDate(value)} handleChangeStart={(value) => setDateStart(value)}/>
+         )}
         <div className="form__field">
           <label className='card-button__date'>{recrule && <><IoTimeOutline/>{recurrentToText(rrule)}</>}</label>
         </div>
@@ -195,29 +184,29 @@ export const recurrentToText = (rrule, hideRecurrentDates = false) => {
 };
 
 const recurrentMonthlyToText = (rrule, hideRecurrentDate) => {
-      const startDate = new Date(rrule.dtstart);
+      const dateStart = new Date(rrule.dtstart);
       const endDate = new Date(rrule.until);
       
       const until =
-        endDate.getMonth() != startDate.getMonth() ? (
+        endDate.getMonth() != dateStart.getMonth() ? (
           <>
-            {t('dates.eachMonthFrom')} {readableMonth(startDate)}{' '}
+            {t('dates.eachMonthFrom')} {readableMonth(dateStart)}{' '}
             {t('dates.until')} {readableMonth(endDate)} 
           </>
         ) : (
           <>
-            {t('dates.of')} {readableMonth(startDate)}
+            {t('dates.of')} {readableMonth(dateStart)}
           </>
         );
       return (
         <>
-          {t('dates.the')} {startDate.getDate()}  {until} {t('dates.at')} {readableTime(startDate)} {t('dates.until')} {readableTime(endDate)}
+          {t('dates.the')} {dateStart.getDate()}  {until} {t('dates.at')} {readableTime(dateStart)} {t('dates.until')} {readableTime(endDate)}
         </>
       );
 }
 
 const recurrentWeeklyToText = (rrule, hideRecurrentDates) => {
-  const startDate = new Date(rrule.dtstart);
+  const dateStart = new Date(rrule.dtstart);
   const endDate = new Date(rrule.until);
   if (hideRecurrentDates) {
     return (
@@ -227,7 +216,7 @@ const recurrentWeeklyToText = (rrule, hideRecurrentDates) => {
           .map((weekday) => WeekDay(weekday))
           .join(', ')
           .toString()} {' '}
-        {t('dates.at')} {readableTime(startDate)} {t('dates.until')} {readableTime(endDate)}
+        {t('dates.at')} {readableTime(dateStart)} {t('dates.until')} {readableTime(endDate)}
       </>
     );
   }

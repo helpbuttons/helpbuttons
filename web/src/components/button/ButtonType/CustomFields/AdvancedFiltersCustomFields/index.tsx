@@ -60,7 +60,7 @@ export function AdvancedFiltersCustomFields({
                 onChange={(newDates) => {
                   setValue('dateRange', newDates);
                 }}
-                value={dateRange}
+                defaultValue={dateRange}
                 selectRange
               />
               </div>

@@ -22,13 +22,14 @@ import { RecenterExplore } from 'state/Explore';
 import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
 import { useEffect, useState } from 'react';
 import { ShowDesktopOnly, ShowMobileOnly } from 'elements/SizeOnly';
+import router from 'next/router';
 
 export default NavBottom;
 
 function NavBottom({ sessionUser }) {
   const activities = useGlobalStore((state: GlobalState) => state.activities.buttons)
   const pageName = useGlobalStore((state: GlobalState) => state.homeInfo.pageName)
-
+  
   const [countUnreadNotifications, setCountUnreadNotifications] =
     useState(0);
   const isCurrent = (menuName) => {
@@ -92,7 +93,14 @@ function NavBottom({ sessionUser }) {
           <div className="nav-bottom__text">{t('menu.explore')}</div>
         </NavLink>
             <NavLink
-              href="/ButtonNew"
+              href="#"
+              onClick={(e) => {
+                if(!sessionUser){
+                  store.emit(new SetMainPopup(MainPopupPage.LOGIN))
+                }else{
+                  router.push('/ButtonNew')
+                }
+              }}
               className={`nav-bottom__link nav-bottom__link--create ${isCurrent(
                 'ButtonNew',
               )}`}

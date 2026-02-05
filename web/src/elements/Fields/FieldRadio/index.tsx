@@ -1,7 +1,7 @@
 import React from "react";
 import FieldError from "../FieldError";
 
-export default function FieldRadio({ children, label, explain, validationError }) {
+export default function FieldRadio({ children, label, explain, validationError = null }) {
   return (
     <>
       <div className="form__field">

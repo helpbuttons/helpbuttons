@@ -136,7 +136,6 @@ export class NetworkService {
             .then((networks) => {
               if (networks.length < 1) {
                 console.log('no networks found?')
-                console.trace()
                 throw new HttpException(
                   { message: '🙆🏼‍♂️Default network not found' },
                   HttpStatus.NOT_FOUND,
@@ -192,6 +191,13 @@ export class NetworkService {
         } else {
           return network
         }
+      })
+      .catch((err) => {
+        console.log('no networks found?')
+        throw new HttpException(
+          { message: '🙆🏼‍♂️Default network not found' },
+          HttpStatus.NOT_FOUND,
+        );
       })
   }
 
