@@ -71,23 +71,20 @@ export default function CardButton({ button, buttonTypes, toggleShowReplyFirstPo
             className="card-button card-button__file"
             style={buttonColorStyle(buttonType.cssColor)}
           >
-
-            <div>
               {/* <Btn
-              onClick={() => store.emit(new NextCurrentButton())}
-              caption="next"
-            ></Btn>
-            <Btn
-              onClick={() => store.emit(new PreviousCurrentButton())}
-              caption="previous"
-            ></Btn> */}
+                onClick={() => store.emit(new NextCurrentButton())}
+                caption="next"
+              ></Btn>
+              <Btn
+                onClick={() => store.emit(new PreviousCurrentButton())}
+                caption="previous"
+              ></Btn> */}
               <CardButtonHeadBig
                 button={button}
                 buttonTypes={buttonTypes}
                 toggleShowReplyFirstPost={toggleShowReplyFirstPost}
               />
             </div>
-          </div>
           <ImageGallery
             images={button?.images.map((image) => {
               return { src: image, alt: button.description };
@@ -586,7 +583,6 @@ export function CardButtonFollowerSection({ button }) {
 
   return (
     <>
-      {showFollowers &&
         <>
           <div className="card-button__suscribers">
                 <div className="card-button__suscribers__number">
@@ -609,7 +605,7 @@ export function CardButtonFollowerSection({ button }) {
               </div>
         </>
         
-      }
+      
     </>
     
   );

@@ -176,7 +176,7 @@ export function FeedHeader ({
         
           </>
         )}
-        {sessionUser && !isButtonOwner && (
+        {/* {sessionUser && !isButtonOwner && (
           <Btn
             btnType={BtnType.submit}
             contentAlignment={ContentAlignment.left}
@@ -188,7 +188,7 @@ export function FeedHeader ({
               toggleShowReplyFirstPost(true);
             }}
           />
-        )}
+        )} */}
     </div>
   );
 }
@@ -234,7 +234,18 @@ export function FeedElement({
   }, [showCompose]);
 
   return (
-    <div className="feed-element">
+    <div className="feed-element"
+      // onClick={() =>
+      //     setShowComposePostReply(() => {
+      //       return {
+      //         post: post.id,
+      //         privateMessage: false,
+      //         mentions: [post.author.username],
+      //       };
+      //     })
+      //   }
+    
+    >
       <div className="card-notification card-notification--feed">
         <div className="card-notification__comment-count">
           <div className="card-notification__label">
