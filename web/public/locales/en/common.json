@@ -72,6 +72,7 @@
     "advancedInviteOptions": "Printable PDF invitations",
     "printInvites":"Printable pdf invitations",
     "linkCopied": "{0} copied to clipboard",
+    "codeCopied": "Copied on clipboard",
     "copyCode": "Copy code"
 
   },
@@ -636,8 +637,8 @@
   },
   "customFields": {
     "priceLabel": "Price ({0})",
-    "priceExplain": "Specify a value. Use 0 if it's free or select Price to consult if it's not exactly defined.",
-    "consult": "Price to consult",
+    "priceExplain": "Specify a value. Use 0 if it's free or select Price on request if it's not exactly defined.",
+    "consult": "POA",
     "free": "Free"
   },
   "email": {

@@ -369,7 +369,7 @@
     "receiveNotificationsExplain": "Specify if you want to receive emails with the messages sent to you or relevant activity of the topics and publications that you follow",
     "textReceiveNotifications": "Receive mail notifications",
     "loginSucess": "Login successfuly",
-    "loginSucessLink": "Login successfuly, please <a href='/ProfileEdit'>change your password</a>",
+    "loginSucessLink": "Login successfuly, <a href='/ProfileEdit'> here you can change password</a> or go to Profile > Edit Profile > Security ",
     "unsubscribed": "You will no longer receive this kind of emails",
     "showButtonsProfileLabel": "_helpbuttons_ on my profile page",
     "showButtonsProfileExplain": "Mark if you want to show a list of what you publish in your public profile",

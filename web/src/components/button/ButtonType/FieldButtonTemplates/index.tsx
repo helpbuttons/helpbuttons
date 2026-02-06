@@ -151,10 +151,20 @@ const FieldButtonTemplates = forwardRef(
                           />
                       </>
                       }
+
+
                       <Btn
                         btnType={BtnType.corporative}
                         iconLink={<IoSaveOutline />}
                         iconLeft={IconType.circle}
+                        contentAlignment={ContentAlignment.center}
+                        onClick={() => saveEdit(val)}
+                      />
+                      <Btn
+                        btnType={BtnType.searchPickerField}
+                        iconLink={<IoTrashBinOutline />}
+                        iconLeft={IconType.circle}
+                        caption={t('common.delete')}
                         contentAlignment={ContentAlignment.center}
                         onClick={() => saveEdit(val)}
                       />
@@ -170,6 +180,7 @@ const FieldButtonTemplates = forwardRef(
                       caption={val.caption}
                       iconLink={val.icon}
                       color={val.cssColor}
+                      onClick={() => edit(val, idx)}
                     />
                     <div className='form__list-item__actions'>
                       <Btn
