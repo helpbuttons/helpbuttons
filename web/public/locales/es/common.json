@@ -276,7 +276,7 @@
     "dontChangePassword": "No cambies la contraseña",
     "created_date": "Usuario desde",
     "loginSucess": "Entraste sin problemas!",
-    "loginSucessLink": "Entraste sin problemas, <a href='/ProfileEdit'>cambia aquí tu contraseña</a> o ve a Perfil > Editar > Seguridad",
+    "loginSucessLink": "Entraste sin problemas, <a href='/ProfileEdit'>cambia tu contraseña</a>",
     "emailPlaceHolder": "Por ejemplo luis@email.org",
     "pickLanguageLabel": "Elige idioma",
     "pickLanguageExplain": "Los menús de la herramienta serán traducidos a la lengua que elijas",
@@ -623,7 +623,7 @@
   },
   "customFields": {
     "priceLabel": "Precio ({0})",
-    "consult": "P.V.C.",
+    "consult": "Precio a consultar",
     "free": "Gratis",
     "priceExplain": "Especifica un valor. Usa 0 si es gratis o seleciona Precio a Consultar si es variable."
   },
