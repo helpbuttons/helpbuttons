@@ -243,7 +243,8 @@
     "notFoundMessage": "Page not found or deleted",
     "options": "Options",
     "edit": "Edit",
-    "show": "Show"
+    "show": "Show",
+    "registeredRequired": "You need to register"
   },
   "button": {
     "title": "_helpbutton_ view",

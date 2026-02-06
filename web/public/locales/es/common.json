@@ -119,7 +119,8 @@
     "error": "Hubo un problema",
     "reloadConfig": "Recargar configuración",
     "publishTitle": "Crear {0}",
-    "deleteSuccess": "Finalizado con éxito"
+    "deleteSuccess": "Finalizado con éxito",
+    "registeredRequired": "Registro requerido"
   },
   "configuration": {
     "config": "Opciones de configuración",
