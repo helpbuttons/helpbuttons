@@ -325,6 +325,19 @@ $cycle: 10;
 }
 
 
+.marker-button__wrapper:hover {
+
+  position: relative;
+
+
+}
+
+.marker-button__wrapper:hover {
+
+  z-index: 9999999;
+
+
+}
 
 .marker-button-selector{
   .marker-button__link-tag {
@@ -344,6 +357,8 @@ $cycle: 10;
     }
   }
 }
+
+
 
 .marker-button__image--fix {
 
