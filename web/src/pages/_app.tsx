@@ -194,7 +194,6 @@ function MyApp({ Component, pageProps }) {
 
     if (!isAllowed) {
       console.log('not allowd')
-      alertService.error(t('common.registeredRequired'));
       store.emit(new ResetFilters()) // TODO: bug when using router.back
       store.emit(new SetMainPopup(MainPopupPage.LOGIN))
       router.back()
