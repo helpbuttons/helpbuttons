@@ -30,6 +30,9 @@ $radion-label-min-width-mobile: 100px;
   }
 }
 
+.radio--row {
+flex-flow: row nowrap;
+} 
 //label div for enclosing all radio button elements
 .radio__label {
     flex: 0 0 auto;          /* Prevents buttons from growing or shrinking */

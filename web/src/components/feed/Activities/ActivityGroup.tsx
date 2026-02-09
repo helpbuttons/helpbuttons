@@ -22,7 +22,7 @@ export default function ActivityGroup({ setGroupMessageType, groupMessageType })
   const isAdmin = sessionUser.role == Role.admin;
   if (isAdmin) {
     return <>
-      <div>{t('groupChat.admin_community')}</div>
+      {/* <div>{t('groupChat.admin_community')}</div> */}
       <ActivityGroupMessageEntry creatingNewChat={groupMessageType} setCreatingNewChat={setGroupMessageType} groupType={GroupMessageType.admin} groupMessages={userGroupMessages.admin} />
       <ActivityGroupMessageEntry creatingNewChat={groupMessageType} setCreatingNewChat={setGroupMessageType} groupType={GroupMessageType.community} groupMessages={userGroupMessages.community} />
     </>
@@ -31,7 +31,7 @@ export default function ActivityGroup({ setGroupMessageType, groupMessageType })
     return <></>
   }
   return (<>
-    <div>{t('groupChat.community')}</div>
+    {/* <div>{t('groupChat.community')}</div> */}
     <ActivityGroupMessageEntry creatingNewChat={groupMessageType} setCreatingNewChat={setGroupMessageType} groupType={GroupMessageType.community} groupMessages={userGroupMessages.community} />
   </>)
 }

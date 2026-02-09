@@ -439,7 +439,7 @@ export class ActivityService {
           from:button.owner.name,
           image: button.image,
           buttonType: button.type,
-          type: translate(locale, 'activities.notice'),
+          type: translate(locale, 'activities.'),
           footer: button.address,
           message: translate(locale, 'activities.newbuttonHomeinfo'),
         }}
@@ -452,7 +452,7 @@ export class ActivityService {
           from: "",
           image: activity.button.image,
           buttonType: activity.button.type,
-          type: translate(locale, 'activities.notice'),
+          type: translate(locale, 'activities.'),
           footer: `${activity.button.title} - ${activity.button.address}`,
           message: translate(locale, 'activities.newpost', [post.message]),
           postId: post.id,
@@ -585,7 +585,7 @@ export class ActivityService {
           from: "",
           image: "",
           buttonType: "",
-          type: translate(locale, 'activities.notice'),
+          type: translate(locale, 'activities.'),
           footer: "",
           message: translate(locale, 'activities.endorsed'),
         }}

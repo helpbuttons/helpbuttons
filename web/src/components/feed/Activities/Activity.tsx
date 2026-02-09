@@ -119,7 +119,7 @@ export default function ActivitiesUser() {
             </div>
             <div className="feed-section--activity-content">
                   <ActivityGroup groupMessageType={selectedGroupMessageType} setGroupMessageType={setSelectedGroupMessageType}/>
-                  <div>{t('activities.buttons')}</div>
+                  {/* <div>{t('activities.buttons')}</div> */}
                   <ActivityList selectedActivity={selectedActivity} activities={filteredUserActivities} setSelectedActivity={setSelectedActivity} isDrafting={draft} />       
             </div>
           </div>

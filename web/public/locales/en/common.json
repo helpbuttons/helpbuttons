@@ -213,13 +213,14 @@
     "revokeEndorse": "Unfortunately you're 'trusted' badge has been removed",
     "roleupdate": "Your role has been updated to '{0}'",
     "newSignup": "New user '{0}' signed up",
-    "notice": "Notice",
+    "notice": "",
     "sent": "Message sent!",
     "writingDraft": "Writing private message",
     "draft": "Draft",
     "pickOne": "Select one chat",
     "newbuttonHomeinfo": "New _helpbutton_ ",
-    "title": "Messages & Alerts"
+    "title": "Messages & Alerts",
+    "comment": "Comment"
   },
   "common": {
     "notfound": "No {0} found. Sorry. 🤔",
@@ -744,8 +745,8 @@
   {
     "create": "Create new group chat for the {0}",
     "creating": "After sending the first message to this group, other users will be able to participate on this group chat",
-    "admin": "administrators",
-    "community": "commmunity",
+    "admin": "Admins chat",
+    "community": "Commmunity chat",
     "admin_community": "Admin & Community",
     "you": "You"
   }
