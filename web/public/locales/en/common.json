@@ -244,7 +244,9 @@
     "options": "Options",
     "edit": "Edit",
     "show": "Show",
-    "registeredRequired": "You need to register"
+    "registeredRequired": "You need to register",
+    "delete": "Delete"
+
   },
   "button": {
     "title": "_helpbutton_ view",
@@ -545,7 +547,7 @@
     "adminUsers": "These are your Network's Administrator. To edit visit their profiles",
     "contactAdmin": "Contact the administrator",
     "customFields": "Custom fields",
-    "customFieldsExplain": "These are extra fields that you can add to your _helpbuttons_ so they accomplish different tasks. Add date if you want to haddle events, or price if you want the users to be able to sell products.",
+    "customFieldsExplain": "These are extra fields that you can add to your _helpbuttons_ so they accomplish different tasks. Add date if you want to handle events, or price if you want the users to be able to sell products.",
     "priceFieldAdd": "Add price",
     "priceFieldAddLabel": "Display a price so user can buy/sell in their _helpbuttons_",
     "dateFieldAddLabel": "Display a date so the _helpbutton_ type behaves like an event and users can search by calendar",

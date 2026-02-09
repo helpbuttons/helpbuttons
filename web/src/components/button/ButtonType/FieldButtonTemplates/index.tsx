@@ -151,23 +151,23 @@ const FieldButtonTemplates = forwardRef(
                           />
                       </>
                       }
-
-
-                      <Btn
-                        btnType={BtnType.corporative}
-                        iconLink={<IoSaveOutline />}
-                        iconLeft={IconType.circle}
-                        contentAlignment={ContentAlignment.center}
-                        onClick={() => saveEdit(val)}
-                      />
-                      <Btn
-                        btnType={BtnType.searchPickerField}
-                        iconLink={<IoTrashBinOutline />}
-                        iconLeft={IconType.circle}
-                        caption={t('common.delete')}
-                        contentAlignment={ContentAlignment.center}
-                        onClick={() => saveEdit(val)}
-                      />
+                     <div className='form__field--multiinput'>
+                        <Btn
+                          btnType={BtnType.submit}
+                          iconLeft={IconType.svg}
+                          caption={t('common.save')}
+                          contentAlignment={ContentAlignment.center}
+                          onClick={() => saveEdit(val)}
+                        />
+                        <Btn
+                          btnType={BtnType.splitIcon}
+                          iconLeft={IconType.svg}
+                          caption={t('common.delete')}
+                          contentAlignment={ContentAlignment.center}
+                          onClick={() => saveEdit(val)}
+                        />
+                      </div>
+                      
                     </div>
                   </Picker>
                 }
@@ -190,28 +190,7 @@ const FieldButtonTemplates = forwardRef(
                         contentAlignment={ContentAlignment.center}
                         onClick={() => edit(val, idx)}
                       />
-                      {!val.hide && 
-                        <Btn
-                          btnType={BtnType.iconActions}
-                          iconLink={<IoTrashBinOutline />}
-                          iconLeft={IconType.circle}
-                          contentAlignment={ContentAlignment.center}
-                          onClick={() => {
-                            hideIdx(idx, val)
-                        }}
-                        />
-                      }
-                      {val.hide && 
-                        <Btn
-                          btnType={BtnType.smallCircle}
-                          iconLink={<IoPowerOutline />}
-                          iconLeft={IconType.circle}
-                          contentAlignment={ContentAlignment.center}
-                          onClick={() => {
-                            showIdx(idx, val)
-                          }}
-                        />
-                      }
+       
                     </div>
 
                     
