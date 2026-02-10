@@ -573,9 +573,9 @@
     "ethicsPolicyPlaceHolder": "Write basic ethics. What are the values behind your networks' purpose and users' actions.",
     "ethicsPolicyLabel": "Ethics",
     "contactEmailLabel": "Contact data",
-    "FAQs": "Complementary info",
-    "contactEmailPlaceHolder": "Write your network's contact here"
-
+    "FAQs": "Add your legal information",
+    "contactEmailPlaceHolder": "Write your network's contact here",
+    "privacySettings": "Set your privacy prefrences"
 
   },
   "configure": {
