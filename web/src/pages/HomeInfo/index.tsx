@@ -352,10 +352,11 @@ function HomeInfoRecentActivity({ selectedNetwork }) {
             <div className="homeinfo-card__controls--openable-right">
                   <Btn
                     btnType={BtnType.circle}
-                    iconLink={showInfo ? <IoStatsChart/> : <IoStatsChart/>}
+                    iconLink={showInfo ? <IoArrowBackSharp/> : <IoStatsChart/>}
                     iconLeft={IconType.circle}
                     contentAlignment={ContentAlignment.center}
                   />
+                  
             </div>
           </ShowDesktopOnly>
 

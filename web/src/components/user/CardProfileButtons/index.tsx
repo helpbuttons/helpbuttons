@@ -15,8 +15,7 @@ export function CardProfileButtonList({user, buttons})
     }
   
   return (<div className="card-profile__button-list-wrapper">
-              <ButtonListHead user={user}/>
-
+        <ButtonListHead user={user}/>
         <div className="card-profile__button-list-content">
           <div className="card-profile__button-list">
           
