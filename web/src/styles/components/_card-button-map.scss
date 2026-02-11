@@ -349,6 +349,11 @@ $card-button-map-border-height: $border-general-height;
 
 }
 
+.card-button-map__image-gallery {
+
+  width: 100%;
+}
+
 .card-button-map__nav .arrow {
 
   @extend .btn-circle--small !optional;
