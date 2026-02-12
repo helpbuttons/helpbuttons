@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { GeoJson, GeoJsonFeature, Marker, Overlay, Point } from 'pigeon-maps';
+import { GeoJson, GeoJsonFeature, Overlay, Point } from 'pigeon-maps';
 import { GlobalState, store, useGlobalStore } from 'state';
 import {
   ExploreViewMode,
@@ -11,23 +11,23 @@ import {
 } from 'state/Explore';
 import { HbMap } from '.';
 import {
+  convertBoundsToGeoJsonPolygon,
   convertH3DensityToFeatures,
+  getGeoJsonHexesForBounds,
   getZoomResolution} from 'shared/honeycomb.utils';
 import _ from 'lodash';
 import { buttonColorStyle, useButtonType } from 'shared/buttonTypes';
 import Loading from 'components/loading';
-import { IoContract, IoResize, IoResizeOutline, IoResizeSharp, IoStorefrontSharp } from 'react-icons/io5';
-import { ShowMobileOnly } from 'elements/SizeOnly';
+import { IoContract, IoResize, IoStorefrontSharp } from 'react-icons/io5';
 import { useStore } from 'state';
 import { showMarkersZoom } from './Map.consts';
 import { Button } from 'shared/entities/button.entity';
 import { LocationKeyIcon, MarkerButton } from './MarkerButton';
 import t from 'i18n';
-import { PoweredBy } from 'components/brand/powered';
 import { circleGeoJSON } from 'shared/geo.utils';
-import dconsole from 'shared/debugger';
 import { h3SetToFeature } from 'geojson2h3';
 import { cellToParent } from 'h3-js';
+import { getCenter } from 'geolib';
 
 export default function HexagonExploreMap({
   h3TypeDensityHexes,
@@ -68,8 +68,7 @@ export default function HexagonExploreMap({
     (state: GlobalState) => state.explore.settings.viewMode
   );
 
-  const [loadingNewResolution, setLoadingNewResolution] = useState(true)
-
+  const [hexagonsMedianCenters, setHexagonsMedianCenters] = useState([])
   const currentButton = useGlobalStore((state: GlobalState) => state.explore.currentButton)
 
   useEffect(() => {
@@ -99,7 +98,6 @@ export default function HexagonExploreMap({
     const newResolution = getZoomResolution(zoomFloor);
     if(resolution != newResolution){
       setResolution(() => newResolution)
-      setLoadingNewResolution(() => true)
     }
     handleBoundsChange(bounds, center, zoom)
     setCenterBounds(center);
@@ -111,7 +109,16 @@ export default function HexagonExploreMap({
 
   useEffect(() => {
     setGeoJsonFeatures(() => convertH3DensityToFeatures(h3TypeDensityHexes).filter((hex) => hex.properties.count > 0));
+    setHexagonsMedianCenters(() => {
+      return h3TypeDensityHexes.map((hex) => {
+        const coordinates = hex.buttons.map((btn) => { return { latitude: btn.latitude, longitude: btn.longitude } })
 
+        const medianCenterOfButtons = getCenter(coordinates)
+        const center = medianCenterOfButtons ? [medianCenterOfButtons.latitude, medianCenterOfButtons.longitude] : hex.center
+
+        return { center: center, groupByType: hex.groupByType ? hex.groupByType : [], count: hex.count, hexagon: hex.hexagon, buttons: hex.buttons }
+      }).filter((h) => h.count > 0)
+    })
     maxButtonsHexagon.current = h3TypeDensityHexes.reduce((accumulator, currentValue) => {
       return Math.max(accumulator, currentValue.count);
     }, 1);
@@ -128,7 +135,6 @@ export default function HexagonExploreMap({
     } else if (hexagonHighlight) {
       setHexagonClickedFeatures(() => geoJsonFeatures.find((feature) => feature.properties.hex == hexagonHighlight))
     }
-    setLoadingNewResolution(() => false)
   }, [hexagonHighlight, hexagonClicked, geoJsonFeatures])
 
   const filterButtonType = (btnTypeName) => {
@@ -148,7 +154,6 @@ export default function HexagonExploreMap({
             <DisplayInstructions />
             <DisplayHiddenButtonsWarning countFilteredButtons={countFilteredButtons} />
             <GeoJson>
-              
             {filteredCircle && <GeoJsonFeature feature={filteredCircle}/>}
               {/* DRAW HEXAGONS ON MAP */}
               {!(exploreSettings.zoom >= showMarkersZoom)  && geoJsonFeatures.map((hexagonFeature) => (
@@ -237,41 +242,34 @@ export default function HexagonExploreMap({
                 }
             </GeoJson>
             {/*
-        show count of buttons per hexagon
-        */}
-            {!exploreSettings.loading &&
-              !(exploreSettings.zoom >= showMarkersZoom) &&
-              geoJsonFeatures.map((hexagonFeature) => {
-                if (hexagonFeature.properties.count > 0) {
-                  return (
-                    <Overlay
-                      anchor={hexagonFeature.properties.center}
-                      offset={[30, 0]}
-                      className="pigeon-map__custom-block"
-                      key={hexagonFeature.properties.hex}
-                    >
-                      <div
-                        onClick={() =>
-                          store.emit(
-                            new UpdateHexagonClicked(
-                              hexagonFeature.properties.hex,
-                            ),
-                          )
-                        }
-                        className="pigeon-map__hex-wrap"
-                      >
-                        <span className="pigeon-map__hex-element">
-                          <div className="pigeon-map__hex-info--unselect">
-                            <div className="pigeon-map__hex-info--text-unselect">
-                              {hexagonFeature.properties.count}
-                            </div>
-                          </div>
-                        </span>
+            show count of buttons per hexagon
+            */}
+            {hexagonsMedianCenters && hexagonsMedianCenters.map((hexagonMedianCenter) => {
+              return <Overlay
+                anchor={hexagonMedianCenter.center}
+                className="pigeon-map__custom-block"
+                key={hexagonMedianCenter.hexagon}
+              >
+                <div
+                  onClick={() =>
+                    store.emit(
+                      new UpdateHexagonClicked(
+                        hexagonMedianCenter.hexagon,
+                      ),
+                    )
+                  }
+                  className="pigeon-map__hex-wrap"
+                >
+                  <span className="pigeon-map__hex-element">
+                    <div className="pigeon-map__hex-info--unselect">
+                      <div className="pigeon-map__hex-info--text-unselect">
+                        {hexagonMedianCenter.count}
                       </div>
-                    </Overlay>
-                  );
-                }
-              })}
+                    </div>
+                  </span>
+                </div>
+              </Overlay>
+            })}
               
              {keyLocations?.length > 0 && 
               keyLocations.map((place, idx) => {
@@ -399,7 +397,7 @@ export default function HexagonExploreMap({
               
             </Overlay>
              
-            {(exploreSettings.loading || loadingNewResolution) && (
+            {(exploreSettings.loading) && (
               <Overlay anchor={centerBounds}>
                 <Loading />
               </Overlay>
