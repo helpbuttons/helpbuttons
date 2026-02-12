@@ -9,7 +9,7 @@ import {
 } from 'h3-js';
 import { featureToH3Set, h3SetToFeature } from 'geojson2h3';
 import _ from 'lodash';
-import { maxResolution } from './types/honeycomb.const';
+import { hideAddressResolution, maxResolution } from './types/honeycomb.const';
 import dconsole from './debugger';
 
 export function convertBoundsToGeoJsonPolygon(bounds: Bounds) {
@@ -219,14 +219,22 @@ export function calculateDensityMap(
     } else {
       const { hexagon, ...rest } = button;
       const group = groupBy.find(
-        (button) =>
-          cellToParent(button.hexagon, resolution) ===
-          cellToParent(hexagon, resolution),
+        (button) => {
+          if(button.hideAddress && resolution > hideAddressResolution) {
+            return cellToParent(hexagon, hideAddressResolution) === button.hexagon
+          }
+          return cellToParent(button.hexagon, resolution) ===
+          cellToParent(hexagon, resolution)
+        }
+          
       );
       if (group) {
         group.buttons.push(button);
       } else {
         try {
+          if(button.hideAddress && resolution > hideAddressResolution) {
+            return;
+          }
           const cell = cellToParent(button.hexagon, resolution);
           groupBy.push({
             hexagon: cell,
