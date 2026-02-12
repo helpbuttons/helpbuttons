@@ -439,9 +439,6 @@ export class UpdateBoundsFilteredButtons implements UpdateEvent, WatchEvent {
       newState.explore.settings.forceRefetch = false;
       newState.explore.map.boundsFilteredButtons =
         this.boundsFilteredButtons;
-      if (state.explore.currentButton) {
-        newState.explore.map.boundsFilteredButtons = [state.explore.currentButton]
-      }
       newState.explore.map.listButtons = listButtonsFilteredByHexagon(state.explore.settings.hexagonClicked, this.boundsFilteredButtons)
       newState.explore.map.loading = false;
       newState.explore.map.initialized = true;

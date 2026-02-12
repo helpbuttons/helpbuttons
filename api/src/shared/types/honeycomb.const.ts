@@ -1,1 +1,1 @@
-export const maxResolution = 8;
+export const maxResolution = 12;

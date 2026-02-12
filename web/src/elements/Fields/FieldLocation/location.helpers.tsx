@@ -1,5 +1,6 @@
+import { debounce } from 'lodash';
 import { useCallback } from 'react';
-import debounce from 'lodash.debounce';
+
 import { store } from 'state';
 import {
   GeoFindAddress,
