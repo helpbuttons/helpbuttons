@@ -118,8 +118,8 @@ const ZOOM_TO_H3_RES_CORRESPONDENCE = {
   13: 7,
   14: 8,
   15: 9,
-  16: 9,
-  17: 10,
+  16: 10,
+  17: 11,
   18: 12,
 };
 export function getZoomResolution(mapZoom) {
