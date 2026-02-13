@@ -11,9 +11,8 @@ import {
 } from 'state/Explore';
 import { HbMap } from '.';
 import {
-  convertBoundsToGeoJsonPolygon,
+  cellToZoom,
   convertH3DensityToFeatures,
-  getGeoJsonHexesForBounds,
   getZoomResolution} from 'shared/honeycomb.utils';
 import _ from 'lodash';
 import { buttonColorStyle, useButtonType } from 'shared/buttonTypes';
@@ -25,8 +24,6 @@ import { Button } from 'shared/entities/button.entity';
 import { LocationKeyIcon, MarkerButton } from './MarkerButton';
 import t from 'i18n';
 import { circleGeoJSON } from 'shared/geo.utils';
-import { h3SetToFeature } from 'geojson2h3';
-import { cellToParent } from 'h3-js';
 import { getCenter } from 'geolib';
 
 export default function HexagonExploreMap({
@@ -42,20 +39,16 @@ export default function HexagonExploreMap({
   const [resolution, setResolution] = useState(0)
   const maxButtonsHexagon = useRef(1)
 
+  const currentButton = useGlobalStore((state: GlobalState) => state.explore.currentButton)
+
   const hexagonClicked = useStore(
     store,
     (state: GlobalState) => state.explore.settings.hexagonClicked
   );
 
-  const hexagonHighlight = useStore(
+  const hoverButtonList = useStore(
     store,
-    (state: GlobalState) => state.explore.settings.hexagonHighlight
-  );
-
-  const boundsFilteredButtons: Button[] = useStore(
-    store,
-    (state: GlobalState) => state.explore.map.boundsFilteredButtons,
-    false,
+    (state: GlobalState) => state.explore.settings.hoverButton
   );
 
   const filtersByLocation = useGlobalStore(
@@ -68,7 +61,6 @@ export default function HexagonExploreMap({
   );
 
   const [hexagonsMedianCenters, setHexagonsMedianCenters] = useState([])
-  const currentButton = useGlobalStore((state: GlobalState) => state.explore.currentButton)
 
   const [filteredCircle, setFilteredCircle] = useState(null)
   useEffect(() => {
@@ -94,6 +86,7 @@ export default function HexagonExploreMap({
 
   const onMapClick = () => {
     store.emit(new UpdateHexagonClicked(null))
+    store.emit(new updateCurrentButton(null))
   };
 
   useEffect(() => {
@@ -121,15 +114,18 @@ export default function HexagonExploreMap({
   const buttonTypes = selectedNetwork.buttonTemplates;
   const [hexagonClickedFeatures, setHexagonClickedFeatures] = useState(null)
   useEffect(() => {
-    if (!hexagonHighlight && !hexagonClicked) {
+    if (!hoverButtonList && !hexagonClicked) {
       setHexagonClickedFeatures(() => null)
     } else if (hexagonClicked) {
       setHexagonClickedFeatures(() => hexagonsMedianCenters.find((feature) => feature.hexagon == hexagonClicked))
-    } else if (hexagonHighlight) {
-      setHexagonClickedFeatures(() => hexagonsMedianCenters.find((feature) => feature.hexagon == hexagonHighlight))
-    }
-  }, [hexagonHighlight, hexagonClicked, hexagonsMedianCenters])
+    } else if (hoverButtonList) {
+      const highLightHexagon = cellToZoom(hoverButtonList.hexagon, exploreSettings.zoom)
 
+      setHexagonClickedFeatures(() =>
+      hexagonsMedianCenters.find((feature) => feature.hexagon == highLightHexagon))
+    }
+  }, [hoverButtonList, hexagonClicked, hexagonsMedianCenters])
+  
   const filterButtonType = (btnTypeName) => {
     store.emit(new UpdateFiltersToFilterButtonType(btnTypeName))
   }
@@ -181,16 +177,20 @@ export default function HexagonExploreMap({
               </Overlay>
             })}
             {hexagonsMedianCenters && hexagonsMedianCenters.filter((feat) => feat.count == 1).map((hexagonMedianCenter,idx) => {
+              const button = hexagonMedianCenter.buttons[0];
               const btnType = buttonTypes.find((type) => {
-                //@ts-ignore
-                return type.name == hexagonMedianCenter.buttons[0].type;
+                return type.name == button.type;
               });
               return (
                 <Overlay
                   anchor={hexagonMedianCenter.center}
                   className="pigeon-map__custom-block"
                   key={idx}
-                ><div className="pigeon-map__emoji">{btnType.icon}</div></Overlay>
+                >
+                  <div onClick={() => store.emit(new updateCurrentButton(button))} className={`${button.id == currentButton?.id || hoverButtonList?.id == button.id ? 'pigeon-map__hex-element--selected' : ''}  pigeon-map__emoji`}>  
+                    {btnType.icon}
+                  </div>
+                  </Overlay>
               );
             })}
               
@@ -211,7 +211,7 @@ export default function HexagonExploreMap({
 
             {/* draw clicked hexagon */}
             {!exploreSettings.loading &&
-              hexagonClickedFeatures && (
+              hexagonClickedFeatures && hexagonClickedFeatures.count > 1 && (
                 <Overlay
                   anchor={hexagonClickedFeatures.center}
                   className="pigeon-map__custom-block"

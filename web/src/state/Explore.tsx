@@ -48,7 +48,7 @@ export interface ExploreSettings {
   honeyCombFeatures: any;
   loading: boolean;
   hexagonClicked: string;
-  hexagonHighlight: string;
+  hoverButton: Button;
   viewMode: ExploreViewMode;
   urlUpdated: boolean;
   forceRefetch: boolean;
@@ -63,7 +63,7 @@ export const exploreSettingsDefault: ExploreSettings = {
   honeyCombFeatures: null,
   loading: true,
   hexagonClicked: null,
-  hexagonHighlight: null,
+  hoverButton: null,
   viewMode: ExploreViewMode.LIST,
   urlUpdated: false,
   forceRefetch: true,
@@ -489,16 +489,15 @@ export class UpdateHexagonClicked implements UpdateEvent {
   }
 }
 
-
-export class HiglightHexagonFromButton implements UpdateEvent {
-  public constructor(private buttonHexagon: string) { }
+export class HoverButtonList implements UpdateEvent {
+  public constructor(private button: Button) { }
 
   public update(state: GlobalState) {
     return produce(state, (newState) => {
-      if (this.buttonHexagon) {
-        newState.explore.settings.hexagonHighlight = cellToZoom(this.buttonHexagon, state.explore.settings.zoom)
+      if (this.button) {
+        newState.explore.settings.hoverButton = this.button
       } else {
-        newState.explore.settings.hexagonHighlight = null
+        newState.explore.settings.hoverButton = null
       }
     });
   }
