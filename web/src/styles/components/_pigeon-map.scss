@@ -304,7 +304,8 @@ to {
     left: 50%;
     transform: translate(-50%, -50%); /* Center the circle both horizontally and vertically */
     animation: createBox .25s;
-    background-color: $color-white-transparent;
+    background-color: $color-white;
+    border: $border-style-light;
     width: 40px;
     height: 40px;
     border-radius: $border-radius-circle; /* This makes the square a circle */
