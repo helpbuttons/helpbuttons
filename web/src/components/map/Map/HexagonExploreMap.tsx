@@ -20,8 +20,7 @@ import Loading from 'components/loading';
 import { IoContract, IoResize, IoStorefrontSharp } from 'react-icons/io5';
 import { useStore } from 'state';
 import { showMarkersZoom } from './Map.consts';
-import { Button } from 'shared/entities/button.entity';
-import { LocationKeyIcon, MarkerButton } from './MarkerButton';
+import { LocationKeyIcon } from './MarkerButton';
 import t from 'i18n';
 import { circleGeoJSON } from 'shared/geo.utils';
 import { getCenter } from 'geolib';
@@ -114,17 +113,20 @@ export default function HexagonExploreMap({
   const buttonTypes = selectedNetwork.buttonTemplates;
   const [hexagonClickedFeatures, setHexagonClickedFeatures] = useState(null)
   useEffect(() => {
-    if (!hoverButtonList && !hexagonClicked) {
+    if (!hoverButtonList && !hexagonClicked && !currentButton) {
       setHexagonClickedFeatures(() => null)
     } else if (hexagonClicked) {
       setHexagonClickedFeatures(() => hexagonsMedianCenters.find((feature) => feature.hexagon == hexagonClicked))
+    } else if(currentButton) {
+      const highLightHexagon = cellToZoom(currentButton.hexagon, exploreSettings.zoom)
+      setHexagonClickedFeatures(() =>
+        hexagonsMedianCenters.find((feature) => feature.hexagon == highLightHexagon))    
     } else if (hoverButtonList) {
       const highLightHexagon = cellToZoom(hoverButtonList.hexagon, exploreSettings.zoom)
-
       setHexagonClickedFeatures(() =>
       hexagonsMedianCenters.find((feature) => feature.hexagon == highLightHexagon))
     }
-  }, [hoverButtonList, hexagonClicked, hexagonsMedianCenters])
+  }, [hoverButtonList, hexagonClicked, hexagonsMedianCenters, currentButton, exploreSettings.zoom])
   
   const filterButtonType = (btnTypeName) => {
     store.emit(new UpdateFiltersToFilterButtonType(btnTypeName))
@@ -156,40 +158,18 @@ export default function HexagonExploreMap({
                 className="pigeon-map__custom-block"
                 key={hexagonMedianCenter.hexagon}
               >
-                <div
-                  onClick={() =>
-                    store.emit(
-                      new UpdateHexagonClicked(
-                        hexagonMedianCenter.hexagon,
-                      ),
-                    )
-                  }
-                  className="pigeon-map__hex-wrap"
-                >
-                  <span className="pigeon-map__hex-element">
-                    <div className="pigeon-map__hex-info--unselect">
-                      <div className="pigeon-map__hex-info--text-unselect">
-                        {hexagonMedianCenter.count}
-                      </div>
-                    </div>
-                  </span>
-                </div>
+                <MapCircleButtonsCount hexagonCenter={hexagonMedianCenter}/>
               </Overlay>
             })}
+
             {hexagonsMedianCenters && hexagonsMedianCenters.filter((feat) => feat.count == 1).map((hexagonMedianCenter,idx) => {
-              const button = hexagonMedianCenter.buttons[0];
-              const btnType = buttonTypes.find((type) => {
-                return type.name == button.type;
-              });
               return (
                 <Overlay
                   anchor={hexagonMedianCenter.center}
                   className="pigeon-map__custom-block"
                   key={idx}
                 >
-                  <div onClick={() => store.emit(new updateCurrentButton(button))} className={`${button.id == currentButton?.id || hoverButtonList?.id == button.id ? 'pigeon-map__hex-element--selected' : ''}  pigeon-map__emoji`}>  
-                    {btnType.icon}
-                  </div>
+                  <MapButtonIcon button={hexagonMedianCenter.buttons[0]} buttonTypes={buttonTypes}/>
                   </Overlay>
               );
             })}
@@ -210,53 +190,14 @@ export default function HexagonExploreMap({
             }
 
             {/* draw clicked hexagon */}
-            {!exploreSettings.loading &&
+            {!exploreSettings.loading && 
               hexagonClickedFeatures && hexagonClickedFeatures.count > 1 && (
                 <Overlay
                   anchor={hexagonClickedFeatures.center}
                   className="pigeon-map__custom-block"
                   key={hexagonClickedFeatures.hex}
                 >
-                  <div className="pigeon-map__hex-wrap pigeon-map__hex-wrap--selected">
-                    {hexagonClickedFeatures.groupByType.map(
-                      (hexagonBtnType, idx) => {
-                        if (hexagonBtnType.count < 1) {
-                          return;
-                        }
-                        const btnType = buttonTypes.find((type) => {
-                          return type.name == hexagonBtnType.type;
-                        });
-                        if (!btnType) {
-                          return <></>;
-                        }
-                        return (
-                          <span
-                            className="pigeon-map__hex-element--selected"
-                            style={{
-                              color: btnType.cssColor,
-                              fontWeight: 'bold',
-                              cursor: 'pointer',
-                            }}
-                            key={btnType.name}
-                            onClick={() => filterButtonType(btnType.name)}
-                          >
-                            <div
-                              className="pigeon-map__hex-info"
-                              key={idx}
-                              style={buttonColorStyle(
-                                btnType.cssColor,
-                              )}
-                            >
-                              <div className="pigeon-map__emoji pigeon-map__hex-info--icon">{btnType.icon}</div>
-                              <div className="pigeon-map__hex-info--text">
-                                {hexagonBtnType.count.toString()}
-                              </div>
-                            </div>
-                          </span>
-                        );
-                      },
-                    )}
-                  </div>
+                  <MapSelectedHexagon hexagonClickedFeatures={hexagonClickedFeatures} buttonTypes={buttonTypes} filterButtonType={filterButtonType}/>
                 </Overlay>
               )}
             {/* draw go to center icon */}
@@ -350,4 +291,89 @@ function DisplayHiddenButtonsWarning({ countFilteredButtons }) {
       }
     </>
   );
+}
+
+function MapCircleButtonsCount({ hexagonCenter}) {
+  return (
+    <div
+      onClick={() =>
+        store.emit(
+          new UpdateHexagonClicked(
+            hexagonCenter.hexagon,
+          ),
+        )
+      }
+      className="pigeon-map__hex-wrap"
+    >
+      <span className="pigeon-map__hex-element">
+        <div className="pigeon-map__hex-info--unselect">
+          <div className="pigeon-map__hex-info--text-unselect">
+            {hexagonCenter.count}
+          </div>
+        </div>
+      </span>
+    </div>
+  )
+}
+
+function MapButtonIcon({ button, buttonTypes }) {
+  const hoverButtonList = useStore(
+    store,
+    (state: GlobalState) => state.explore.settings.hoverButton
+  );
+  const currentButton = useGlobalStore((state: GlobalState) => state.explore.currentButton)
+
+  const btnType = buttonTypes.find((type) => {
+    return type.name == button.type;
+  });
+  return (
+    <div onClick={() => store.emit(new updateCurrentButton(button))} className={`${button.id == currentButton?.id || hoverButtonList?.id == button.id ? 'pigeon-map__hex-element--selected' : ''}  pigeon-map__emoji`}>
+      {btnType.icon}
+    </div>
+  )
+}
+
+function MapSelectedHexagon({ hexagonClickedFeatures, buttonTypes, filterButtonType }) {
+  return (
+    <div className="pigeon-map__hex-wrap pigeon-map__hex-wrap--selected">
+      {hexagonClickedFeatures.groupByType.map(
+        (hexagonBtnType, idx) => {
+          if (hexagonBtnType.count < 1) {
+            return;
+          }
+          const btnType = buttonTypes.find((type) => {
+            return type.name == hexagonBtnType.type;
+          });
+          if (!btnType) {
+            return <></>;
+          }
+          return (
+            <span
+              className="pigeon-map__hex-element--selected"
+              style={{
+                color: btnType.cssColor,
+                fontWeight: 'bold',
+                cursor: 'pointer',
+              }}
+              key={btnType.name}
+              onClick={() => filterButtonType(btnType.name)}
+            >
+              <div
+                className="pigeon-map__hex-info"
+                key={idx}
+                style={buttonColorStyle(
+                  btnType.cssColor,
+                )}
+              >
+                <div className="pigeon-map__emoji pigeon-map__hex-info--icon">{btnType.icon}</div>
+                <div className="pigeon-map__hex-info--text">
+                  {hexagonBtnType.count.toString()}
+                </div>
+              </div>
+            </span>
+          );
+        },
+      )}
+    </div>
+  )
 }

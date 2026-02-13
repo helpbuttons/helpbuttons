@@ -279,11 +279,6 @@ export class updateCurrentButton implements UpdateEvent {
   public update(state: GlobalState) {
     return produce(state, (newState) => {
       newState.explore.currentButton = this.button;
-      if (this?.button?.hexagon) {
-        newState.explore.settings.hexagonClicked = cellToZoom(this.button.hexagon, state.explore.settings.zoom)
-      } else {
-        newState.explore.settings.hexagonClicked = null
-      }
     });
   }
 }
