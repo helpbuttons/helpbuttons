@@ -11,6 +11,13 @@ export const ShowMobileOnly = ({children}) => {
     return ;
 }
 
+export const useIsMobile = () => {
+    const width = useWindowWith();
+    if((width <  1280)){
+        return true;
+    }
+    return false;
+}
 const useWindowWith = () => {
     const [width, setWidth] = useState(1024)
     const handleWindowSizeChange = () => {
