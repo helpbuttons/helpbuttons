@@ -327,7 +327,7 @@ function MapButtonIcon({ button, buttonTypes }) {
     return type.name == button.type;
   });
   return (
-    <div onClick={() => store.emit(new updateCurrentButton(button))} className={`${button.id == currentButton?.id || hoverButtonList?.id == button.id ? 'pigeon-map__hex-element--selected' : ''}  pigeon-map__emoji`}>
+    <div onClick={() => store.emit(new updateCurrentButton(button))} className={`${button.id == currentButton?.id || hoverButtonList?.id == button.id ? 'pigeon-map__hex-element--emoji-selected' : ''}  pigeon-map__emoji`}>
       {btnType.icon}
     </div>
   )

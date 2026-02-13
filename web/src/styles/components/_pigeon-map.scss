@@ -276,8 +276,6 @@ to {
     flex-wrap: wrap;
     align-items: center;
 
-
-
   }
 
 
@@ -296,6 +294,23 @@ to {
 
     }
     
+}
+
+.pigeon-map__hex-element--emoji-selected::before {
+
+    content: "";
+    position: absolute;
+    top: 50%; /* Adjusted to start from the middle of the div */
+    left: 50%;
+    transform: translate(-50%, -50%); /* Center the circle both horizontally and vertically */
+    animation: createBox .25s;
+    background-color: $color-white-transparent;
+    width: 40px;
+    height: 40px;
+    border-radius: $border-radius-circle; /* This makes the square a circle */
+    z-index: -1;
+    transition: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
 }
 
 
