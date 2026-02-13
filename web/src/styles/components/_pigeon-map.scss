@@ -170,6 +170,17 @@ $map-btns-size-mobile: 30px;
     display: flex;
     align-items: center;
     justify-content: center;
+    margin: auto;
+    transition: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    animation: createBox .25s;
+    transform: scale(1.3);
+
+
+    &:hover {
+        transition: $transition-default;
+        transform: scale(1.5);
+        cursor: pointer;
+    }
 
 }
 
@@ -196,7 +207,7 @@ $map-btns-size-mobile: 30px;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    pointer-events: none;
+    // pointer-events: none;
 
 
 }
