@@ -39,7 +39,6 @@ export default function HexagonExploreMap({
 }) {
   const [centerBounds, setCenterBounds] = useState<Point>(null);
   const [geoJsonFeatures, setGeoJsonFeatures] = useState([])
-  const [currentButtonHexagon, setCurrentButtonHexagon] = useState(null)
   const [resolution, setResolution] = useState(0)
   const maxButtonsHexagon = useRef(1)
 
@@ -70,17 +69,6 @@ export default function HexagonExploreMap({
 
   const [hexagonsMedianCenters, setHexagonsMedianCenters] = useState([])
   const currentButton = useGlobalStore((state: GlobalState) => state.explore.currentButton)
-
-  useEffect(() => {
-    if(currentButton && currentButton.hideAddress)
-    {
-      const hexagon = cellToParent(currentButton.hexagon, getZoomResolution(exploreSettings.zoom))
-      
-      setCurrentButtonHexagon(() => h3SetToFeature([hexagon]))
-    }else{
-      setCurrentButtonHexagon(() => null)
-    }
-  }, [currentButton, exploreSettings.zoom])
 
   const [filteredCircle, setFilteredCircle] = useState(null)
   useEffect(() => {
@@ -131,11 +119,11 @@ export default function HexagonExploreMap({
     if (!hexagonHighlight && !hexagonClicked) {
       setHexagonClickedFeatures(() => null)
     } else if (hexagonClicked) {
-      setHexagonClickedFeatures(() => geoJsonFeatures.find((feature) => feature.properties.hex == hexagonClicked))
+      setHexagonClickedFeatures(() => hexagonsMedianCenters.find((feature) => feature.hexagon == hexagonClicked))
     } else if (hexagonHighlight) {
-      setHexagonClickedFeatures(() => geoJsonFeatures.find((feature) => feature.properties.hex == hexagonHighlight))
+      setHexagonClickedFeatures(() => hexagonsMedianCenters.find((feature) => feature.hexagon == hexagonHighlight))
     }
-  }, [hexagonHighlight, hexagonClicked, geoJsonFeatures])
+  }, [hexagonHighlight, hexagonClicked, hexagonsMedianCenters])
 
   const filterButtonType = (btnTypeName) => {
     store.emit(new UpdateFiltersToFilterButtonType(btnTypeName))
@@ -209,37 +197,6 @@ export default function HexagonExploreMap({
                   }}
                 />
               ))}
-
-              {/* DRAW CLICKED HEXAGON ON MAP */}
-              {!exploreSettings.loading &&
-                hexagonClicked &&
-                hexagonClickedFeatures && (
-                  <GeoJsonFeature
-                    feature={hexagonClickedFeatures}
-                    key={`clicked_${hexagonClicked}`}
-                    styleCallback={(feature, hover) => {
-                      return {
-                        fill: 'white',
-                        opacity: '0.2',
-                      };
-                    }}
-                    onClick={() => {
-                      store.emit(new UpdateHexagonClicked(null));
-                    }}
-                  />
-                )}
-                {currentButtonHexagon &&
-                  <GeoJsonFeature
-                    feature={currentButtonHexagon}
-                    key={`currentButtonHexagon}`}
-                    styleCallback={(feature, hover) => {
-                      return {
-                        fill: '#18AAD2',
-                        opacity: '0.4',
-                      };
-                    }}
-                  />
-                }
             </GeoJson>
             {/*
             show count of buttons per hexagon
@@ -291,13 +248,12 @@ export default function HexagonExploreMap({
               hexagonClickedFeatures &&
               !(exploreSettings.zoom >= showMarkersZoom) && (
                 <Overlay
-                  anchor={hexagonClickedFeatures.properties.center}
-                  offset={[20, 0]}
+                  anchor={hexagonClickedFeatures.center}
                   className="pigeon-map__custom-block"
-                  key={hexagonClickedFeatures.properties.hex}
+                  key={hexagonClickedFeatures.hex}
                 >
                   <div className="pigeon-map__hex-wrap pigeon-map__hex-wrap--selected">
-                    {hexagonClickedFeatures.properties.groupByType.map(
+                    {hexagonClickedFeatures.groupByType.map(
                       (hexagonBtnType, idx) => {
                         if (hexagonBtnType.count < 1) {
                           return;
