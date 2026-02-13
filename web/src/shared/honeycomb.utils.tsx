@@ -307,6 +307,11 @@ export function calculateDensityMap(
 export function cellToZoom(hexagon, zoom)
 {
   const resolution = getZoomResolution(zoom)
+  const maxResolution = getResolution(hexagon)
+  if(resolution > maxResolution)
+  {
+    return hexagon;
+  }
   return cellToParent(hexagon, resolution)
 }
 

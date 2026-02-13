@@ -86,6 +86,7 @@ export default function HexagonExploreMap({
     const newResolution = getZoomResolution(zoomFloor);
     if(resolution != newResolution){
       setResolution(() => newResolution)
+      // setHexagonsMedianCenters(() => [])
     }
     handleBoundsChange(bounds, center, zoom)
     setCenterBounds(center);
@@ -201,7 +202,7 @@ export default function HexagonExploreMap({
             {/*
             show count of buttons per hexagon
             */}
-            {hexagonsMedianCenters && hexagonsMedianCenters.map((hexagonMedianCenter) => {
+            {!(exploreSettings.zoom >= showMarkersZoom) && hexagonsMedianCenters && hexagonsMedianCenters.map((hexagonMedianCenter) => {
               return <Overlay
                 anchor={hexagonMedianCenter.center}
                 className="pigeon-map__custom-block"
