@@ -342,6 +342,7 @@ to {
 
     font-size: $font-size-title;
     font-weight: $font-weight-bold;
+    color: $color-dark-gray;
     cursor: pointer;
 }
 
@@ -353,18 +354,28 @@ to {
     display: flex;
     justify-content: center;
     align-items: center;
-    color: $color-white;
+    color: $color-text-over-corporative;
     width: auto;
     margin: auto;
     z-index: $z-index-01;
     border-radius: $border-radius-circle;
     cursor: pointer;
 
+    &:hover {
+
+        color: $color-corporative;
+
+        &::before {
+            background-color: $color-text-over-corporative;
+        }
+
+    }
+
 }
 
 .pigeon-map__hex-info--text-unselect::before {
 
-   background-color: $color-blue;
+   background-color: $color-corporative;
    padding: $padding-big;
     cursor: pointer;
 
@@ -379,6 +390,7 @@ to {
     border-radius: 34px;
     z-index: -1;
     transition: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
 
 
 }
