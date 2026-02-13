@@ -315,17 +315,34 @@ $map-btns-size-mobile: 30px;
     justify-content: center;
     align-items: center;
     color: $color-white;
-    width: 100%;
+    width: auto;
     margin: auto;
     z-index: $z-index-01;
-    padding: 20px;
-    background-color: $color-blue;
     border-radius: $border-radius-circle;
     cursor: pointer;
 
 }
 
+.pigeon-map__hex-info--text-unselect::before {
 
+   background-color: $color-blue;
+   padding: $padding-big;
+    cursor: pointer;
+
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: createBox 0.25s;
+    width: 20%;
+    height: 50%;
+    border-radius: 34px;
+    z-index: -1;
+    transition: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+
+}
 
 @media #{$breakpoints-xlarge} {
 
