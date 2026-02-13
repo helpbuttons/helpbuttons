@@ -3,6 +3,7 @@ import { GeoJson, GeoJsonFeature, Overlay, Point } from 'pigeon-maps';
 import { GlobalState, store, useGlobalStore } from 'state';
 import {
   ExploreViewMode,
+  HoverButtonList,
   RecenterExplore,
   UpdateExploreSettings,
   UpdateExploreViewMode,
@@ -24,6 +25,7 @@ import { LocationKeyIcon } from './MarkerButton';
 import t from 'i18n';
 import { circleGeoJSON } from 'shared/geo.utils';
 import { getCenter } from 'geolib';
+import { isMobile, useIsMobile } from 'elements/SizeOnly';
 
 export default function HexagonExploreMap({
   h3TypeDensityHexes,
@@ -86,6 +88,7 @@ export default function HexagonExploreMap({
   const onMapClick = () => {
     store.emit(new UpdateHexagonClicked(null))
     store.emit(new updateCurrentButton(null))
+    store.emit(new HoverButtonList(null))
   };
 
   useEffect(() => {
@@ -321,13 +324,33 @@ function MapButtonIcon({ button, buttonTypes }) {
     store,
     (state: GlobalState) => state.explore.settings.hoverButton
   );
+  const zoom = useStore(
+    store,
+    (state: GlobalState) => state.explore.settings.zoom
+  );
   const currentButton = useGlobalStore((state: GlobalState) => state.explore.currentButton)
 
   const btnType = buttonTypes.find((type) => {
     return type.name == button.type;
   });
+  const isMobile = useIsMobile()
+  const handleClick = () => {
+    if(isMobile)
+    {
+      const clickedHexagon = cellToZoom(button.hexagon, zoom)
+      store.emit(new UpdateHexagonClicked(clickedHexagon))
+      store.emit(
+        new HoverButtonList(
+          button
+        ),
+      )
+    }else{
+      store.emit(new updateCurrentButton(button))
+    }
+    
+  }
   return (
-    <div onClick={() => store.emit(new updateCurrentButton(button))} className={`${button.id == currentButton?.id || hoverButtonList?.id == button.id ? 'pigeon-map__hex-element--emoji-selected' : ''}  pigeon-map__emoji`}>
+    <div onClick={handleClick} className={`${button.id == currentButton?.id || hoverButtonList?.id == button.id ? 'pigeon-map__hex-element--emoji-selected' : ''}  pigeon-map__emoji`}>
       {btnType.icon}
     </div>
   )
