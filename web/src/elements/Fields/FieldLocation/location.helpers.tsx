@@ -83,3 +83,11 @@ export const formatedCoords = (place) => {
   
   return `${place.formatted} - ${coordsString}`
 }
+
+export const isPointInBounds = (point, bounds) => {
+  if(point[0] <= bounds.ne[0] && point[0] >= bounds.sw[0] && point[1] <= bounds.ne[1] && point[1] >= bounds.sw[1])
+  {
+    return true;
+  }
+  return false;
+}

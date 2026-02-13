@@ -24,6 +24,7 @@ import { markerFocusZoom } from 'components/map/Map/Map.consts';
 import _ from 'lodash';
 import { nextElement, previousElement } from 'shared/sys.helper';
 import { ButtonEntry } from 'shared/dtos/button.dto';
+import { isPointInBounds } from 'elements/Fields/FieldLocation/location.helpers';
 
 
 export enum ExploreViewMode {
@@ -437,9 +438,13 @@ export class UpdateBoundsFilteredButtons implements UpdateEvent, WatchEvent {
   public update(state: GlobalState) {
     return produce(state, (newState) => {
       newState.explore.settings.forceRefetch = false;
+      
+      //needed to calculate, cause some points go oout of bounds, cause hexagons parts are out.
+      const buttonsInBounds = this.boundsFilteredButtons.filter((btn) => isPointInBounds([btn.latitude, btn.longitude], state.explore.settings.bounds))
+
       newState.explore.map.boundsFilteredButtons =
-        this.boundsFilteredButtons;
-      newState.explore.map.listButtons = listButtonsFilteredByHexagon(state.explore.settings.hexagonClicked, this.boundsFilteredButtons)
+        buttonsInBounds;
+      newState.explore.map.listButtons = listButtonsFilteredByHexagon(state.explore.settings.hexagonClicked, buttonsInBounds)
       newState.explore.map.loading = false;
       newState.explore.map.initialized = true;
     });
@@ -558,7 +563,7 @@ export class UpdateExploreSettings implements UpdateEvent {
       }
 
       newExploreSettings = { zoom: this.newExploreSettings.zoom, ...newExploreSettings }
-
+      newExploreSettings = { bounds: this.newExploreSettings.bounds, ...newExploreSettings }
       if (prevSettings.center != null && JSON.stringify(prevSettings.center) != JSON.stringify(this.newExploreSettings.center)) {
         newState.explore.map.showInstructions = false;
       }
