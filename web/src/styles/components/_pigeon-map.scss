@@ -318,6 +318,9 @@ $map-btns-size-mobile: 30px;
     width: 100%;
     margin: auto;
     z-index: $z-index-01;
+    padding: 20px;
+    background-color: $color-blue;
+    border-radius: $border-radius-circle;
     cursor: pointer;
 
 }

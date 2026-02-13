@@ -174,11 +174,11 @@ export default function HexagonExploreMap({
                   styleCallback={(feature, hover) => {
                     if (hover) {
                       return {
-                        fill: '#18AAD2',
-                        strokeWidth: '4',
+                        fill: 'transparent',
+                        strokeWidth: '0',
                         stroke: '#18AAD2',
                         r: '20',
-                        opacity: 0.8,
+                        opacity: 0.1,
                       };
                     }
                     if (hexagonFeature.properties.count < 1) {
@@ -200,11 +200,11 @@ export default function HexagonExploreMap({
                       };
                     }
                     return {
-                      fill: '#18AAD2',
-                      strokeWidth: '2',
+                      fill: 'transparent',
+                      strokeWidth: '1',
                       stroke: '#18AAD2',
                       r: '20',
-                      opacity: '0.2',
+                      opacity: '0.1',
                     };
                   }}
                 />
