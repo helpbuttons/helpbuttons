@@ -58,6 +58,7 @@ import dconsole from 'shared/debugger';
 import { ButtonPin, ButtonUnpin, FindFollowers } from 'state/Button';
 import { SetDraftButton } from 'state/Activity';
 import { useToggle } from 'shared/custom.hooks';
+import { useIsMobile } from 'elements/SizeOnly';
 
 export default function CardButton({ button, buttonTypes, toggleShowReplyFirstPost }) {
   const buttonType = useButtonType(button, buttonTypes);
@@ -317,6 +318,12 @@ export function CardButtonHeadBig({ button, buttonTypes, toggleShowReplyFirstPos
     false,
   );
   const [showMap, setShowMap] = useState(true);
+  const isMobile = useIsMobile()
+  useEffect(() => {
+    if(!isMobile){
+      setShowMap(() => false)
+    }
+  }, [isMobile])
   return (
     <>
       <div className='card-button__head-actions'>
