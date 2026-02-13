@@ -80,8 +80,6 @@ export default function HexagonExploreMap({
       setFilteredCircle(() => null)
     }
   }, [filtersByLocation])
-  const [allHexagons, setAllHexagons] = useState([])
-
   const onBoundsChanged = ({ center, zoom, bounds }) => {
     
     const zoomFloor = Math.floor(zoom);
@@ -92,10 +90,6 @@ export default function HexagonExploreMap({
     }
     handleBoundsChange(bounds, center, zoom)
     setCenterBounds(center);
-
-    setAllHexagons(() => {
-      return getGeoJsonHexesForBounds(bounds, resolution)
-    })
   };
 
   const onMapClick = () => {
@@ -104,21 +98,26 @@ export default function HexagonExploreMap({
 
   useEffect(() => {
     setGeoJsonFeatures(() => convertH3DensityToFeatures(h3TypeDensityHexes).filter((hex) => hex.properties.count > 0));
-    setHexagonsMedianCenters(() => {
-      return h3TypeDensityHexes.map((hex) => {
-        const coordinates = hex.buttons.map((btn) => { return { latitude: btn.latitude, longitude: btn.longitude } })
-
-        const medianCenterOfButtons = getCenter(coordinates)
-        const center = medianCenterOfButtons ? [medianCenterOfButtons.latitude, medianCenterOfButtons.longitude] : hex.center
-
-        return { center: center, groupByType: hex.groupByType ? hex.groupByType : [], count: hex.count, hexagon: hex.hexagon, buttons: hex.buttons }
-      }).filter((h) => h.count > 0)
-    })
     maxButtonsHexagon.current = h3TypeDensityHexes.reduce((accumulator, currentValue) => {
       return Math.max(accumulator, currentValue.count);
     }, 1);
   }, [h3TypeDensityHexes]);
 
+  useEffect(() => {
+    setHexagonsMedianCenters(() => {
+      return h3TypeDensityHexes.map((hex) => {
+        let btns = hex.buttons
+        if(exploreSettings.zoom > showMarkersZoom){
+          btns = btns.filter((btn) => !btn.hideAddress)
+        }
+        const coordinates = btns.map((btn) => { return { latitude: btn.latitude, longitude: btn.longitude } })
+
+        const medianCenterOfButtons = getCenter(coordinates)
+        const center = medianCenterOfButtons ? [medianCenterOfButtons.latitude, medianCenterOfButtons.longitude] : hex.center
+        return { center: center, groupByType: hex.groupByType ? hex.groupByType : [], count: btns.length, hexagon: hex.hexagon, buttons: btns }
+      }).filter((h) => h.count > 0)
+    })
+  }, [h3TypeDensityHexes, exploreSettings.zoom])
   const buttonTypes = selectedNetwork.buttonTemplates;
   const [hexagonClickedFeatures, setHexagonClickedFeatures] = useState(null)
   useEffect(() => {
@@ -150,16 +149,6 @@ export default function HexagonExploreMap({
             <DisplayHiddenButtonsWarning countFilteredButtons={countFilteredButtons} />
             <GeoJson>
             {filteredCircle && <GeoJsonFeature feature={filteredCircle}/>}
-            {(allHexagons && false) && allHexagons.map((hex) => {
-              return <GeoJsonFeature feature={hex} styleCallback={(feature, hover) => {
-                return {
-                  fill: 'red',
-                  strokeWidth: '1',
-                  stroke: 'yellow',
-                  opacity: 0.4,
-                };
-                }}      />
-            })}
 
             </GeoJson>
             {/*
