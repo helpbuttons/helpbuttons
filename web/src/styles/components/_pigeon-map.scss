@@ -184,7 +184,7 @@ to {
     transition: cubic-bezier(0.68, -0.55, 0.265, 1.55);
     animation: scaleEmoji .25s;
     transform: scale(1.3);
-
+    box-shadow: $box-shadow-card;
 
     &:hover {
         transition: $transition-default;
@@ -193,6 +193,8 @@ to {
     }
 
 }
+
+
 
 .pigeon-attribution {
     position: relative;
