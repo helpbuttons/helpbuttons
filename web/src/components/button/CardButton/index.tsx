@@ -592,15 +592,15 @@ export function CardButtonFollowerSection({ button }) {
   return (
     <>
           {button.followCount > 0 &&
-            <div className="card-button__suscribers">
-                  <div className="card-button__suscribers__number">
+            <div className="card-button__followers">
+                  <div className="card-button__followers__number">
                       <Link href="#" onClick={() => toggleShowFollowers((prev) => !prev)}>
-                        <div className="card-button__suscribers-title">
+                        <div className="card-button__followers-title">
                           {t('button.followers', [button.followCount])}
                         </div>
                       </Link>          
                   </div>
-                  <div className='card-button__suscribers-row'>
+                  <div className='card-button__followers-row'>
                     {(showFollowers && button.followCount > 0) && <>{followers.map((follower, idx) => 
                         <Follower user={follower} key={idx}/>
                     )}</>}
@@ -617,7 +617,7 @@ function Follower({ user }) {
     store.emit(new FindAndSetMainPopupCurrentProfile(user.username))
 
   }
-  return <div className="card-button__suscribers__avatars">
+  return <div className="card-button__followers__avatars">
     <Link href="#" onClick={onClick}>
       {/* <span>{user.name}</span> */}
       <div className="avatar-small">

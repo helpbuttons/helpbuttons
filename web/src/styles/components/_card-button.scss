@@ -932,7 +932,7 @@ $card-button-border-height: $border-general-height;
 }
 
 
-.card-button__suscribers {
+.card-button__followers {
 
   padding: $padding-big $padding-huge;
   border-top: $border-style-light;
@@ -940,20 +940,20 @@ $card-button-border-height: $border-general-height;
 
 }
 
-.card-button__suscribers-row {
+.card-button__followers-row {
   display: flex;
   flex-direction: row;
   padding: $padding-small;
   gap: $padding-small;
 }
 
-.card-button__suscribers__avatars {
+.card-button__followers__avatars {
 
   font-weight: $font-weight-bolder;
 
 }
 
-.card-button__suscribers-title {
+.card-button__followers-title {
 
   font-weight: $font-weight-bold;
 
