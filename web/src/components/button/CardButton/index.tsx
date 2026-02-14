@@ -387,7 +387,7 @@ export function CardButtonHeadBig({ button, buttonTypes, toggleShowReplyFirstPos
               'card-button__city card-button__everywhere' +
               (!button.hideAddress
                 ? ' card-button__city--displayMap'
-                : '')
+                : ' card-button__city--noMap ')
             }
             onClick={() => setShowMap(() => !showMap)}
           >
