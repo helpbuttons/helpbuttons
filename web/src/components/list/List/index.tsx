@@ -34,6 +34,7 @@ function List({
   isListOpen,
   setListOpen,
   toggleShowMap = (e) => {},
+  onScrollChange, 
 }) {
   const filters = useStore(
     store,
@@ -112,6 +113,37 @@ function List({
 
   const buttonTypes = useButtonTypes();
 
+
+
+  const listContentRef = useRef<HTMLDivElement>(null);
+  const lastScrollTopRef = useRef<number>(0);
+  const [isScrollingUp, setIsScrollingUp] = useState(false);
+
+  // Detect scroll direction
+  useEffect(() => {
+    const listContent = listContentRef.current;
+    if (!listContent) return;
+
+    const handleScroll = () => {
+      const currentScrollTop = listContent.scrollTop;
+      const isScrollingUp = currentScrollTop < lastScrollTopRef.current;
+      
+      // Update state and notify parent
+      setIsScrollingUp(isScrollingUp);
+      onScrollChange?.(isScrollingUp);
+      
+      // Update last scroll position
+      lastScrollTopRef.current = currentScrollTop;
+    };
+
+    listContent.addEventListener('scroll', handleScroll);
+
+    return () => {
+      listContent.removeEventListener('scroll', handleScroll);
+    };
+  }, [onScrollChange]);
+
+
   return (
     <>
       <>
@@ -160,6 +192,8 @@ function List({
                 )}
               </div>
               <div
+                ref={listContentRef}
+
                 className={
                   'list__content list__content--full-screen' 
                 }

@@ -149,3 +149,8 @@ export class SetCookieState implements UpdateEvent{
     })
   }
 }
+
+// In your state file
+export class UpdateListScrolling {
+  constructor(public isScrolling: boolean) {}
+}

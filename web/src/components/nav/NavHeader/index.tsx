@@ -11,7 +11,7 @@ import router from 'next/router';
 import { ListButtonTypes } from '../ButtonTypes';
 import { ExploreMapState, ToggleAdvancedFilters } from 'state/Explore';
 
-function NavHeader({ selectedNetwork }){
+function NavHeader({ selectedNetwork , isScrollingUp}){
   const exploreMapState : ExploreMapState = useGlobalStore((state: GlobalState) => state.explore.map);
   const sessionUser = useGlobalStore((state: GlobalState) => state.sessionUser);
   const pageName = useGlobalStore((state: GlobalState) => state.homeInfo.pageName)
@@ -27,8 +27,7 @@ function NavHeader({ selectedNetwork }){
     const IsExplorePage = pageName == 'Explore';
 
   return (
-    <div className={(IsHomeInfo ? "nav-header--homeinfo " : "" )+ " nav-header"}>
-
+    <div className={(IsHomeInfo ? "nav-header--homeinfo " : "" ) + (isScrollingUp ? " nav-header--hide" : " nav-header--hide") + " nav-header "}>
       <div  className={(IsHomeInfo ? "nav-header__container--homeinfo " : "" )+ " nav-header__container"} >
         <ShowDesktopOnly>
           <BrandCard />

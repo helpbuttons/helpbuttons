@@ -125,7 +125,7 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
   display: flex;
   justify-content: center;
   flex-direction: column;
-  height: 300px;
+  height: auto;
   width: 100%;
   margin: auto;
   align-items: center;
@@ -228,6 +228,22 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
 }
 
 @media #{$breakpoints-medium} {
+
+    .list__empty-message{
+
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    height: 300px;
+    width: 100%;
+    margin: auto;
+    align-items: center;
+    padding: $padding-big;
+    font-size: $font-size-small;
+    grid-column: 1 / -1; 
+
+  }
+
   .list__show-map-button--hideList {
     bottom: 40px;
   }

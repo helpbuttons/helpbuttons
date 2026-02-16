@@ -26,7 +26,7 @@ import router from 'next/router';
 
 export default NavBottom;
 
-function NavBottom({ sessionUser }) {
+function NavBottom({ sessionUser, isScrollingUp }) {
   const activities = useGlobalStore((state: GlobalState) => state.activities.buttons)
   const pageName = useGlobalStore((state: GlobalState) => state.homeInfo.pageName)
   
@@ -51,7 +51,7 @@ function NavBottom({ sessionUser }) {
   }, [activities]);
   return (
     <>
-      <nav id="bottom-nav" className="nav-bottom">
+      <nav id="bottom-nav" className={isScrollingUp ? "nav-bottom " : "nav-bottom nav-bottom--hide"}>
         <NavLink
           href="/HomeInfo"
           className={`nav-bottom__link ${isCurrent(

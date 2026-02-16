@@ -52,6 +52,7 @@ export interface ExploreSettings {
   viewMode: ExploreViewMode;
   urlUpdated: boolean;
   forceRefetch: boolean;
+  isScrollingUp?: boolean;
 }
 
 export const exploreSettingsDefault: ExploreSettings = {
@@ -67,6 +68,7 @@ export const exploreSettingsDefault: ExploreSettings = {
   viewMode: ExploreViewMode.LIST,
   urlUpdated: false,
   forceRefetch: true,
+  isScrollingUp: false,
 };
 export interface ExploreMapState {
   filters: ButtonFilters;
@@ -623,6 +625,16 @@ export class UpdateExploreViewMode implements UpdateEvent {
   public update(state: GlobalState) {
     return produce(state, (newState) => {
       newState.explore.settings.viewMode = this.viewMode
+    });
+  }
+}
+
+export class UpdateListScrolling implements UpdateEvent {
+  public constructor(public isScrollingUp: boolean) {}
+
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      newState.explore.settings.isScrollingUp = this.isScrollingUp;
     });
   }
 }

@@ -4,7 +4,7 @@ import router, { Router, useRouter } from 'next/router';
 import NavBottom from 'components/nav/NavBottom'; //just for mobile
 import Alert from 'components/overlay/Alert';
 import { appWithTranslation } from 'next-i18next';
-import { GlobalState, store } from 'state/';
+import { GlobalState, store, useStore } from 'state/';
 import { useSelectedNetwork } from 'state/Networks';
 import { FetchUserData, LoginToken } from 'state/Profile';
 import { getReadableTextColor } from 'shared/helpers/color.helper'; 
@@ -259,6 +259,12 @@ function MyApp({ Component, pageProps }) {
     }
   }, [searchParams]);
 
+  const isScrollingUp = useStore(
+    store,
+    (state: GlobalState) => state.explore.settings.isScrollingUp,
+    false,
+  );
+
   useEffect(() => {
     if (pageProps.metadata) {
       store.emit(new UpdateMetadata(pageProps.metadata))
@@ -304,6 +310,7 @@ function MyApp({ Component, pageProps }) {
                 <ShowDesktopOnly>
                   <NavHeader
                     selectedNetwork={selectedNetwork}
+                    isScrollingUp={isScrollingUp}
                   />
                 </ShowDesktopOnly>
                 {authorized && <Component {...pageProps} />}
@@ -312,6 +319,7 @@ function MyApp({ Component, pageProps }) {
                   <ClienteSideRendering>
                     <NavBottom
                       sessionUser={sessionUser}
+                      isScrollingUp={isScrollingUp}
                     />
                   </ClienteSideRendering>
                 </ShowMobileOnly>

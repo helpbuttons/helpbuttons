@@ -51,6 +51,7 @@ import { applyFiltersHex } from 'components/search/AdvancedFilters/filters.type'
 import { Button } from 'shared/entities/button.entity';
 import { replaceUrl } from 'components/uri/builder';
 import { ListKeyLocation } from 'state/Geo';
+import { UpdateListScrolling } from 'state/Explore';
 
 
 function HoneyComb({ selectedNetwork }) {
@@ -79,6 +80,12 @@ function HoneyComb({ selectedNetwork }) {
   const [showLeftColumn, toggleShowLeftColumn] = useToggle(true);
   const [showMap, toggleShowMap] = useToggle(true);
   const [isListOpen, setListOpen] = useState<boolean>(true);
+  const [isListScrolling, setIsListScrolling] = useState(false);
+
+
+  const handleScrollChange = (isScrollingUp: boolean) => {
+    store.emit(new UpdateListScrolling(isScrollingUp));
+  };
 
   useExploreSettings({
     exploreSettings,
@@ -157,6 +164,8 @@ function HoneyComb({ selectedNetwork }) {
              setListOpen={setListOpen}
              toggleShowMap={toggleShowMap}
              toggleShowLeftColumn={toggleShowLeftColumn}
+              setIsListScrolling={handleScrollChange}
+
           />
         </div>
         </ExploreContainer>
@@ -506,7 +515,7 @@ function ExploreContainerLeftColumn(props) {
     >{children}</div>)
 }
 
-function ExploreContainerList({listButtons, showLeftColumn, showMap, isListOpen, setListOpen, toggleShowMap, toggleShowLeftColumn})
+function ExploreContainerList({listButtons, showLeftColumn, showMap, isListOpen, setListOpen, toggleShowMap, toggleShowLeftColumn, setIsListScrolling=undefined})
 {
   return <List
             buttons={listButtons}
@@ -516,6 +525,7 @@ function ExploreContainerList({listButtons, showLeftColumn, showMap, isListOpen,
             setListOpen={setListOpen}
             toggleShowMap={toggleShowMap}
             onLeftColumnToggle={toggleShowLeftColumn}
+            onScrollChange={setIsListScrolling} // Add this
           />
 }
 
