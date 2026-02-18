@@ -75,6 +75,9 @@ export class NetworkService {
       requireApproval: createDto.requireApproval,
       hideLocationDefault: createDto.hideLocationDefault,
       allowGuestCreation: createDto.allowGuestCreation,
+      privacyPolicy: createDto.privacyPolicy,
+      ethicsPolicy: createDto.ethicsPolicy,
+      contactEmail: createDto.contactEmail
     };
     await getManager().transaction(
       async (transactionalEntityManager) => {
@@ -133,7 +136,6 @@ export class NetworkService {
             .then((networks) => {
               if (networks.length < 1) {
                 console.log('no networks found?')
-                console.trace()
                 throw new HttpException(
                   { message: '🙆🏼‍♂️Default network not found' },
                   HttpStatus.NOT_FOUND,
@@ -190,6 +192,13 @@ export class NetworkService {
           return network
         }
       })
+      .catch((err) => {
+        console.log('no networks found?')
+        throw new HttpException(
+          { message: '🙆🏼‍♂️Default network not found' },
+          HttpStatus.NOT_FOUND,
+        );
+      })
   }
 
   async getCenter(): Promise<any> {
@@ -224,6 +233,9 @@ export class NetworkService {
       requireApproval: updateDto.requireApproval,
       hideLocationDefault: updateDto.hideLocationDefault,
       allowGuestCreation: updateDto.allowGuestCreation,
+      privacyPolicy: updateDto.privacyPolicy,
+      ethicsPolicy: updateDto.ethicsPolicy,
+      contactEmail: updateDto.contactEmail
     };
     const buttonTemplatesNew = network.buttonTemplates.filter((btnTemplate) => !btnTemplate.hide).map((btnTemplate) => btnTemplate.name)
 

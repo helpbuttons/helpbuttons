@@ -12,6 +12,8 @@ import t from "i18n";
 import { IoChatboxOutline } from "react-icons/io5";
 import { ButtonShow } from "components/button/ButtonShow";
 import { SetMainPopupCurrentButton } from "state/HomeInfo";
+import ActivityGroup, { ActivityGroupChat } from "./ActivityGroup";
+import { FindLatestActivities } from "state/Activity";
 
 export default function ActivitiesUser() {
   const buttonTypes = useButtonTypes()
@@ -19,10 +21,10 @@ export default function ActivitiesUser() {
 
   const [selectedActivity, setSelectedActivity] = useState(null)
   const [filteredUserActivities, setFilteredUserActivities] = useState([])
-
+  const [selectedGroupMessageType, setSelectedGroupMessageType] = useState(null)
   
-  const userActivities = useGlobalStore((state: GlobalState) => state.activities.activities)
-  const filterButtons = updateFilters(buttonTypes, userActivities)
+  const userButtonActivities = useGlobalStore((state: GlobalState) => state.activities.buttons)
+  const filterButtons = updateFilters(buttonTypes, userButtonActivities)
   const sideBarButton = useSideBarButton()
   const router = useRouter()
   const {draft} = router.query;
@@ -39,7 +41,7 @@ export default function ActivitiesUser() {
     }
     if(draftButton)
       {
-        const _draftActivity = userActivities.find((_activity) => _activity.buttonId == draftButton.id)
+        const _draftActivity = userButtonActivities.find((_activity) => _activity.buttonId == draftButton.id)
         
         if(_draftActivity){
           setSelectedActivity(() => _draftActivity) 
@@ -61,13 +63,23 @@ export default function ActivitiesUser() {
         query: { ...routerQuery },
       });
     }
+    if(selectedActivity)
+    {
+      setSelectedGroupMessageType(() => null)
+    }
   }, [selectedActivity])
 
+  useEffect(() => {
+    if(selectedGroupMessageType)
+    {
+      setSelectedActivity(() => null)
+    }
+  }, [selectedGroupMessageType])
   useEffect(() => {
     setFilteredUserActivities(() => {
       if(localFilters)
       {
-        return userActivities.filter((_activity) => {
+        return userButtonActivities.filter((_activity) => {
           if(localFilters.buttonType == 'all') 
           {
             return true;
@@ -75,10 +87,15 @@ export default function ActivitiesUser() {
           return _activity.buttonType == localFilters.buttonType
         })
       }
-      return userActivities
+      return userButtonActivities
     })
-  }, [userActivities, localFilters])
+  }, [userButtonActivities, localFilters])
 
+  useEffect(() => {
+    store.emit(new FindLatestActivities())
+    setSelectedGroupMessageType(() => null)
+    setSelectedActivity(() => null)
+  }, [])
   const setButtonType = (type) => {
     setLocalFilters(() => {return {buttonType: type}})
   }
@@ -86,19 +103,23 @@ export default function ActivitiesUser() {
   const closeConversation = () => {
     setSelectedActivity(() => null)
   }
-
+  
   return (
     <div className="feed__container">
         <div className="feed-section--messages">
           <div className="feed-section__left">
-            <PopupHeader >Messages & Alerts</PopupHeader>
+            <PopupHeader>Messages & Alerts</PopupHeader>
             <div className="feed-section__left__header">
               <div className="feed-section__filters">
-                <ShowMobileOnly><DropdownLine options={filterButtons} onChange={setButtonType} name="activityType"/></ShowMobileOnly>
-                <ShowDesktopOnly><Dropdown options={filterButtons} onChange={setButtonType}/></ShowDesktopOnly>
+                <DropdownLine options={filterButtons} onChange={setButtonType} name="activityType"/>
+              </div>
+              <div className="feed-section__filters--desktop">
+                <Dropdown options={filterButtons} onChange={setButtonType}/>
               </div>
             </div>
             <div className="feed-section--activity-content">
+                  <ActivityGroup groupMessageType={selectedGroupMessageType} setGroupMessageType={setSelectedGroupMessageType}/>
+                  <div>{t('activities.buttons')}</div>
                   <ActivityList selectedActivity={selectedActivity} activities={filteredUserActivities} setSelectedActivity={setSelectedActivity} isDrafting={draft} />       
             </div>
           </div>
@@ -108,7 +129,12 @@ export default function ActivitiesUser() {
               <div className="feed-section__center__chat"></div>
               </div>
             }
-            {(!selectedActivity && !draft) && 
+            {selectedGroupMessageType && 
+            <div className="feed-section__center">
+              <ActivityGroupChat groupType={selectedGroupMessageType} close={() => setSelectedGroupMessageType(() => null)}/>
+              </div>
+            }
+            {(!selectedActivity && !draft && !selectedGroupMessageType) && 
               <>
                 <div className="feed-section__center feed-section__center--no-select">
                     <div className="feed-section__center__chat feed-section__center__chat-no-select">

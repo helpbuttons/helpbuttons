@@ -48,7 +48,7 @@
     "share": "Share options",
     "notificationsPermission": "Allow notifications",
     "featured": "Featured",
-    "powered": "2025 - Powered by",
+    "powered": "2026 - Powered by",
     "keyLocations": "Key Spots",
     "inviteToNetwork": "Share",
     "inviteCopied": "Link copied to clipboard"
@@ -163,12 +163,12 @@
     "smtpUrl": "Smtp url",
     "createAdminTitle": "Create administrator account",
     "welcomeMessage": "Welcome to your _helpbuttons_ instance",
-    "createAdmin": "First step, is create an admin",
+    "createAdmin": "Let's create your Network. First step: Create your admin account.",
     "configureNetwork": "Customize your site's appearance, topics, post types, and alerts. Add prices, dates, and other modular features to your posts.",
     "welcomeMessageLong": "Next you´ll see your collaborative network description. Create your first network with the options in the next step.",
     "finish": "Finish setup",
     "configureInstanceDescription": "Wizard to help on configuring your network",
-    "configureInstanceTitle": "Setup the last details of your network",
+    "configureInstanceTitle": "Setup your network",
     "test": "test",
     "needLogo": "Before selecting a place for your network, please upload a logo",
     "needPlace": "Please select the area of your network",
@@ -209,16 +209,17 @@
     "deletebutton": "{0} was deleted",
     "expiredEventType": "_helpbutton_ ended",
     "expiredEventTitle": "'{0}' has passed its end date, it won't show no more on the public list.",
-    "endorsed": "You have been endorsed by the administration, now you have a 'trusted' badge on your profile",
-    "revokeEndorse": "Unfortunately you're 'trusted' badge has been removed",
+    "endorsed": "You have been endorsed by the administration, now you have a 'verified' badge on your profile",
+    "revokeEndorse": "Unfortunately your 'verified' badge has been removed",
     "roleupdate": "Your role has been updated to '{0}'",
     "newSignup": "New user '{0}' signed up",
     "notice": "Notice",
     "sent": "Message sent!",
-    "writingDraft": "Writing private message to....",
+    "writingDraft": "Writing private message",
     "draft": "Draft",
     "pickOne": "Select one chat",
-    "newbuttonHomeinfo": "New _helpbutton_ "
+    "newbuttonHomeinfo": "New _helpbutton_ ",
+    "title": "Messages & Alerts"
   },
   "common": {
     "notfound": "No {0} found. Sorry. 🤔",
@@ -312,7 +313,10 @@
     "placeHodlerCustomAddress": "Write the new name and select place on the map",
     "selectPlace": "Select place on map and save",
     "sendPrivateMessage": "Send private message to {0}",
-    "showMoreTags": "more tags"
+    "expiredLabel": "Expired",
+    "followers": "Suscribed by {0} users",
+    "showMoreTags": "more tags",
+    "nofollowers": "no one is following yet"
   },
   "user": {
     "login": "Write your credentials",
@@ -410,15 +414,15 @@
     "deletedAccount": "Your data was deleted sucessfuly!",
     "pleaseAcceptCookies": "You have to accept the usage of cookies if you wish to signup or login",
     "showCookiesBanner": "Please click here to accept cookies",
-    "endorse": "Endorse",
-    "revokeEndorse": "Withdraw endorsement",
-    "endorsed": "Trusted",
+    "endorse": "Verify",
+    "revokeEndorse": "Withdraw verification",
+    "endorsed": "Verified",
     "signupAsGuest": "Participate as guest",
     "signupGuestDetails": "Proceed with guest details",
-    "explainPublishAsGuest": "To signup as guest, please generate a new login code. You can use it for logging in to check your _helpbuttons_ in the future.",
+    "explainPublishAsGuest": "Step 1/3: Generate a new guest code.",
     "generateCode": "Generate new guest code",
-    "explainUseGuestCode": "Please store this code, it is your only way to keep track of your publications",
-    "explainGuestDetails": "We need some details to complete your signup",
+    "explainUseGuestCode": "Store this code, so you can enter again in the future.",
+    "explainGuestDetails": "Last step: Complete your access.",
     "editUsername": "Edit username",
     "optionalFields": "Optional fields",
     "emailRecovery":"Recovery email address",
@@ -449,7 +453,7 @@
     "recurringExplain": "Select starting and finish dates, days of the week and time",
     "afterStart": "Please select a time/date after {0}",
     "beforeEnd": "Please select a time/date before {0}",
-    "changeToMultipleDates": "Do you want the event to be multiple days?"
+    "changeToMultipleDates": "Press here to select several days"
   },
   "validation": {
     "fieldRequired": "{0} is required.",
@@ -485,7 +489,7 @@
     "public": "This comment is public, everyone will see it.",
     "placeholderWrite": "Write a message",
     "posted": "Comment posted",
-    "sendPublic": "Answer",
+    "sendPublic": "Comment post",
     "sendPrivate": "Answer privately",
     "send": "Send",
     "makePublic": "Show message in public"
@@ -564,7 +568,16 @@
     "hideAdvanced": "Hide advanced options...",
     "locationKeys": "Key Spots",
     "keyLocationsExplain": "Key spots that will be highlighted in your network. They will appear in the main menus and map for easy access",
-    "addLocationKey": "Add Location"
+    "addLocationKey": "Add Location",
+    "privacyPolicyLabel": "Privacy policy",
+    "privacyPolicyPlaceHolder": "Write basic privacy policy, like where are your storing your users' data, what type of data are you using and what for. ",
+    "ethicsPolicyPlaceHolder": "Write basic ethics. What are the values behind your networks' purpose and users' actions.",
+    "ethicsPolicyLabel": "Ethics",
+    "contactEmailLabel": "Contact data",
+    "FAQs": "Complementary info",
+    "contactEmailPlaceHolder": "Write your network's contact here"
+
+
   },
   "configure": {
     "browsePins": "",
@@ -589,9 +602,7 @@
     "forDescription": "We aim to foster a cohesive society, promote cooperation, and optimize the design of collaborative tools in order to fully leverage the advantages of the internet. In brief, we've observed the substantial amounts of money, time, and user participation required each time a new collaborative app is launched. This seems unnecessary. Most of these tools share a significant portion of their core functionalities. We believe these commonalities could be managed using the same software, simply adapted for each unique purpose through various modules.",
     "helpbuttonDescription": "A _helpbutton_ refers to a post. Every post published by a user in _helpbuttons_ is termed a _helpbutton_. _helpbuttons_ can represent offers, needs, exchanges, transport proposals, businesses, and so forth. They can also be renamed to suit the specific needs of your app.",
     "communityDescription": "The _helpbuttons_ community is the backbone of this project, providing it with sustainability. This tool is designed for adaptability to a multitude of purposes, thereby benefitting a diverse range of users while also encouraging support for the project. By federating with other _helpbuttons_ apps, you can share users and resources. This method of collaboration enables us to unite more people and ultimately improve the tool we provide.",
-    "ethicsDescription": "At _helpbuttons_, we are committed to maintaining the highest standards of ethical conduct. We believe in transparency, honesty, and respect for all individuals. Our software is designed to connect people and facilitate sharing, which is a responsibility we take seriously. We encourage our users to use our platform with the same values in mind, prioritizing respectful communication and mindful sharing. Any misuse of the software, including exploitation, harm to others, or manipulation of the platform's functionalities for personal gain, will not be tolerated. Users are required to adhere to these ethics policies at all times.",
-    "privacyDescription": "At _helpbuttons_, we respect your privacy and are committed to protecting your personal data. Our privacy policy outlines how we collect, store, use, and disclose your personal information. We comply with all relevant privacy laws and regulations, ensuring your data is used solely for the purpose of providing and improving our service. We are transparent about our data collection processes, and you have the right to access, update, or delete your personal data at any time. Remember, sharing personal information in _helpbuttons_ posts is at your discretion—be mindful and only share what you are comfortable with others knowing.\nPlease direct your questions to the following email: help@helpbuttons.org",
-    "securityDescription": "Your security is our top priority. At _helpbuttons_, we implement stringent security measures to protect the integrity of our software and the safety of our users. We continually update and review our systems to ensure they meet the highest standards of cybersecurity. However, we also believe that security is a shared responsibility. We encourage our users to practice safe online behaviors, like using strong passwords and protecting personal information.\nPlease direct your questions to the following email: help@helpbuttons.org",
+    "securityDescription": "This is a default message created by Helpbuttons.org, the software behind this app. If you're a user, we recommend you to ask the admins of this networks to fill these fields before you use this app. At _helpbuttons_, we implement stringent security measures to protect the integrity of our software and the safety of our users. We continually update and review our systems to ensure they meet the highest standards of cybersecurity. However, we also believe that security is a shared responsibility. We encourage our users to practice safe online behaviors, like using strong passwords and protecting personal information.\n If you find unethical or unsecure ussage of this software, please direct your questions to the following email: help@helpbuttons.org",
     "contactDescription": "Please direct your questions to the following email: help@helpbuttons.org",
     "networksEthicsDescription": "",
     "cookiesQuestion": "Cookies policy",
@@ -689,7 +700,8 @@
     "adminCommunicationLabel": "Administrator communications",
     "adminCommunicationExplain": "Messages that you share here will be send to all admins or all users of the network",
     "created_at": "Date",
-    "edit": "Edit"
+    "edit": "Edit",
+    "awaitingApprovalLabel": "Awaiting approval"
   },
   "roles": {
     "blocked": "blocked",
@@ -732,5 +744,14 @@
     "developers": "Developers",
     "ethicCode": "Ethical principles"
 
+  },
+  "groupChat":
+  {
+    "create": "Create new group chat for the {0}",
+    "creating": "After sending the first message to this group, other users will be able to participate on this group chat",
+    "admin": "administrators",
+    "community": "commmunity",
+    "admin_community": "Admin & Community",
+    "you": "You"
   }
 }

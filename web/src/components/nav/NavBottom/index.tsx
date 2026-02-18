@@ -22,13 +22,14 @@ import { RecenterExplore } from 'state/Explore';
 import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
 import { useEffect, useState } from 'react';
 import { ShowDesktopOnly, ShowMobileOnly } from 'elements/SizeOnly';
+import router from 'next/router';
 
 export default NavBottom;
 
 function NavBottom({ sessionUser }) {
-  const activities = useGlobalStore((state: GlobalState) => state.activities.activities)
+  const activities = useGlobalStore((state: GlobalState) => state.activities.buttons)
   const pageName = useGlobalStore((state: GlobalState) => state.homeInfo.pageName)
-
+  
   const [countUnreadNotifications, setCountUnreadNotifications] =
     useState(0);
   const isCurrent = (menuName) => {
@@ -91,9 +92,15 @@ function NavBottom({ sessionUser }) {
           </div>
           <div className="nav-bottom__text">{t('menu.explore')}</div>
         </NavLink>
-          <ShowMobileOnly>
             <NavLink
-              href="/ButtonNew"
+              href="#"
+              onClick={(e) => {
+                if(!sessionUser){
+                  store.emit(new SetMainPopup(MainPopupPage.LOGIN))
+                }else{
+                  router.push('/ButtonNew')
+                }
+              }}
               className={`nav-bottom__link nav-bottom__link--create ${isCurrent(
                 'ButtonNew',
               )}`}
@@ -109,7 +116,6 @@ function NavBottom({ sessionUser }) {
               </div>
               <div className="nav-bottom__text">{t('menu.create')}</div>
             </NavLink>
-          </ShowMobileOnly>
         {!sessionUser && (
           <div
             onClick={() =>
@@ -134,25 +140,7 @@ function NavBottom({ sessionUser }) {
 
         {sessionUser && (
           <>
-            <NavLink
-              href="/Profile"
-              className={`nav-bottom__link ${isCurrent(
-                'Profile',
-              )}`}
-            >
-              <div className="nav-bottom__icon">
-                 {isCurrent(
-                    'Profile',
-                  ) ? 
-                      <IoPerson/>
-                    :
-                      <IoPersonOutline/>
-                  }
-              </div>
-              <div className="nav-bottom__text">
-                {t('menu.profile')}
-              </div>
-            </NavLink>
+            
 
             <NavLink
               href="/Activity"
@@ -179,6 +167,26 @@ function NavBottom({ sessionUser }) {
                 {t('menu.activity')}
               </div>
             </NavLink>
+
+            <NavLink
+              href="/Profile"
+              className={`nav-bottom__link ${isCurrent(
+                'Profile',
+              )}`}
+            >
+              <div className="nav-bottom__icon">
+                 {isCurrent(
+                    'Profile',
+                  ) ? 
+                      <IoPerson/>
+                    :
+                      <IoPersonOutline/>
+                  }
+              </div>
+              <div className="nav-bottom__text">
+                {t('menu.profile')}
+              </div>
+            </NavLink>
           </>
         )}
 
@@ -203,25 +211,7 @@ function NavBottom({ sessionUser }) {
             <div className="nav-bottom__text">{t('menu.login')}</div>
           </div>
         )}
-        <ShowDesktopOnly>
-            <NavLink
-              href="/ButtonNew"
-              className={`nav-bottom__link ${isCurrent(
-                'ButtonNew',
-              )}`}
-            >
-              <div className="nav-bottom__icon">
-                {isCurrent(
-                    'ButtonNew',
-                  ) ?  
-                  <IoAddCircle/>
-                 :
-                  <IoAddCircleOutline/>
-                }
-              </div>
-              <div className="nav-bottom__text">{t('menu.create')}</div>
-            </NavLink>
-          </ShowDesktopOnly>
+    
       </nav>
     </>
   );

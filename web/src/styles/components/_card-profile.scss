@@ -304,11 +304,22 @@ $avatar-margin: $padding-big;
 }
 
 .card-profile__role {
-  padding-top: $padding-medium;
+  padding: $padding-medium 0;
   display: flex;
   flex-direction: row;
 
  }
+
+ .card-profile__button-list-wrapper {
+  overflow: hidden;
+   margin-bottom: $margin-big;
+
+ }
+
+ .card-profile__button-list-content {
+    overflow: hidden;
+    height: 100%;
+  }
 
 @media #{$breakpoints-medium} {
 
@@ -325,6 +336,8 @@ $avatar-margin: $padding-big;
   }
 
    .card-profile__button-list {
+      flex:1;
+    display: grid; 
 
     grid-template-columns: 1fr 1fr;
 
@@ -333,6 +346,7 @@ $avatar-margin: $padding-big;
 
 
 }
+
 
 
 @media #{$breakpoints-xlarge} {
@@ -357,7 +371,7 @@ $avatar-margin: $padding-big;
       height: min-content;
       border-radius: $border-radius-circle  ;
       min-width: calc(100% - $list-width-desktop);
-      
+      min-width: $grid-desktop-double-column-left-width;
 
   }
 
@@ -366,9 +380,11 @@ $avatar-margin: $padding-big;
       background: white;
       padding: 30px;
       border-radius: 30px;
+
       overflow: hidden;
       height: $grid-desktop-double-column-height;
       min-height: 500px;
+      margin-bottom: 0;
 
   }
 
@@ -385,7 +401,7 @@ $avatar-margin: $padding-big;
   }
 
  .card-profile__role {
-  padding-top: $padding-huge;
+  padding: $padding-huge 0;
 
  }
 
@@ -459,8 +475,11 @@ $avatar-margin: $padding-big;
   }
 
   .card-profile__button-list-content {
-    overflow: hidden;
-    height: 100%;
+    overflow: auto;
+    height: inherit;
+    height: calc($grid-desktop-double-column-height - 120px );
+    min-height: 380px;
+
   }
 
   .card-profile__button-list {
@@ -471,8 +490,9 @@ $avatar-margin: $padding-big;
     padding: $padding-xsmall;
     padding-top: $padding-big;
     grid-template-columns: 1fr 1fr;
-    overflow-y: auto;
+    overflow-y: unset;
     align-content: start; 
+    height: auto;
     
   }
 

@@ -14,10 +14,11 @@ import { MailService } from '../mail/mail.service';
 import translate from '@src/shared/helpers/i18n.helper';
 import { ButtonService } from '../button/button.service';
 import { NetworkService } from '../network/network.service';
-import { ActivitiesPageSize, ActivityDtoOut } from './activity.dto';
+import { Activities, ActivitiesPageSize, ActivityDtoOut } from './activity.dto';
 import { PostService } from '../post/post.service';
 import { unique } from '@src/shared/helpers/array.helper';
 import { IsNull } from "typeorm"
+import { GroupMessageService } from '../group-message/group-message.service';
 
 @Injectable()
 export class ActivityService {
@@ -31,6 +32,7 @@ export class ActivityService {
     private readonly buttonService: ButtonService,
     private readonly networkService: NetworkService,
     private readonly postService: PostService,
+    private readonly groupMessageService: GroupMessageService
   ) { }
 
   @OnEvent(ActivityEventName.NewPost)
@@ -384,17 +386,16 @@ export class ActivityService {
       })
   }
 
-  public findNotificationsByUserId(
-    userId,
-    locale,
-    page = null,
-  ): Promise<ActivityDtoOut[]> {
+  public findNotificationsByUser(
+    user,
+    page = 0,
+  ): Promise<Activities> {
 
     return this.activityRepository.find({
       where: [
-        { consumer: { id: userId }, lastActivityButtonConsumer: true },
-        { button: { owner: { id: userId } }, lastActivityButtonOwner: true },
-        {consumer: {id: userId}, button: IsNull()}
+        { consumer: { id: user.id }, lastActivityButtonConsumer: true },
+        { button: { owner: { id: user.id } }, lastActivityButtonOwner: true },
+        {consumer: {id: user.id}, button: IsNull()}
       ],
       relations: ['button.owner', 'to', 'from', 'consumer'],
       take: ActivitiesPageSize, skip: page * ActivitiesPageSize,
@@ -402,7 +403,15 @@ export class ActivityService {
     })
       .then((activities) => {
         return activities.map((activity) => {
-          return this.transformActivity(activity, locale, userId);
+          return this.transformActivity(activity, user.locale, user.id);
+        })
+      }).then((activities) => {
+        return this.groupMessageService.findByUser(user)
+        .then((groupMessages) => {
+          return {
+            buttons: activities,
+            ...groupMessages
+          }
         })
       })
   }
@@ -516,7 +525,7 @@ export class ActivityService {
             from: isOwner ? activity.from.name : '',
             image: isOwner ? activity.from.avatar : activity.button.image,
             buttonType: activity.button.type,
-            type: translate(locale, 'activities.notice'),
+            type: translate(locale, 'activities.message'),
             footer: `${activity.button.title} - ${activity.button.address}`,
             message: message,
           }
@@ -532,7 +541,7 @@ export class ActivityService {
             from: isOwner ? activity.from.name : '',
             image: isOwner ? activity.from.avatar : activity.button.image,
             buttonType: activity.button.type,
-            type: translate(locale, 'activities.notice'),
+            type: translate(locale, 'activities.comment'),
             footer: `${activity.button.title} - ${activity.button.address}`,
             message: commentOwner ? translate(locale, 'activities.newcommentOwn', [comment.message]) : translate(locale, 'activities.newcomment', [comment.author.name, comment.message]),
             messageId: comment.id,
@@ -567,7 +576,7 @@ export class ActivityService {
           buttonType: button.type,
           type: translate(locale, 'activities.notice'),
           footer: button.address,
-          message: translate(locale, 'activities.endorsed'),
+          message: translate(locale, 'activities.newbutton', [button.address]),
         }}
       case ActivityEventName.Endorsed: 
       {return {
@@ -625,7 +634,7 @@ export class ActivityService {
   public notifyAdmins(payload: any) {
     this.userService.findAdministrators()
       .then((admins) => {
-        console.log(admins)
+        // console.log(admins)
         admins.map((admin) => {
           // this.createActivity(admin, payload, false);
         })

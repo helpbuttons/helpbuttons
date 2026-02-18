@@ -39,7 +39,6 @@ export function AdvancedFiltersCustomFields({
               name="minPrice"
               label={t('buttonFilters.price')}
               explain={t('buttonFilters.priceExplain')}
-              multiInput={true}
               placeholder={t('buttonFilters.minPricePlaceholder')}
               {...register('minPrice')}
             />
@@ -61,7 +60,7 @@ export function AdvancedFiltersCustomFields({
                 onChange={(newDates) => {
                   setValue('dateRange', newDates);
                 }}
-                value={dateRange}
+                defaultValue={dateRange}
                 selectRange
               />
               </div>

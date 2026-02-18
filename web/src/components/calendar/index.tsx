@@ -8,7 +8,6 @@ import {
 import { Button } from 'shared/entities/button.entity';
 import { FindMonthCalendar } from 'state/Button';
 import _ from 'lodash';
-import dconsole from 'shared/debugger';
 
 export default function CalendarHb(props) {
   const [monthEvents, setMonthEvents] = useState([]);

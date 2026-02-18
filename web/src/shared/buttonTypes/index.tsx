@@ -28,7 +28,7 @@ export const isButtonTypeEvent = (buttonType) => {
     return false;
   }
   const btnType = buttonTypes.find(({name}) => name == buttonType)
-  if(!btnType.customFields)
+  if(!btnType?.customFields)
   {
     return false;
   }
@@ -55,7 +55,7 @@ export const useButtonType = (button,buttonTypes) => {
         ),
       );
     }
-  }, [buttonTypes]);
+  }, [buttonTypes, button]);
   return buttonType;
 }
 

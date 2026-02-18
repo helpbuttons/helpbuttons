@@ -26,14 +26,47 @@ $card-button-border-height: $border-general-height;
   }
 }
 
+.card-button__wrapper {
+
+  width: 100%;
+
+}
+
 .card-button__content,
 .card-button__content--small {
   padding: $padding-big $padding-big $padding-medium $padding-big ;
 }
 
+.card-button__content--layer {
+
+  background-color: red;
+
+}
+
+.card-button__content--expired {
+
+  @extend .card-button-list;
+  position: absolute;
+  background-color: $color-transparent;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: $z-index-base;
+  color: $color-white;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: $font-size-title;
+  font-weight: $font-weight-bolder;
+  transform: rotate(45);
+
+}
 
 .card-button__full-content{
   padding: $padding-huge $padding-huge;
+  padding-bottom: 0;
 }
 
 .card-button__content {
@@ -775,16 +808,13 @@ $card-button-border-height: $border-general-height;
   text-decoration: underline;
   text-decoration-color: $color-black;
   background-color: transparent;
+  margin-bottom: $margin-small ;
 }
 
-.card-button__city--displayMap::after {
-  background: var(--network-background-color);
-  border-radius: 34px;
-  margin-left: $margin-xxsmall;
-  content: "";
-  display: inline-block;
-  height: 10px;
-  width: 10px;
+.card-button__city--noMap {
+
+  background-color: transparent;
+  margin-bottom: $margin-small ;
 }
 
 .card-button__city-list {
@@ -906,12 +936,33 @@ $card-button-border-height: $border-general-height;
 
 }
 
-.card-button__image-gallery {
 
-  // border-top: $border-style-light;
+.card-button__suscribers {
+
+  padding: $padding-big $padding-huge;
+  border-top: $border-style-light;
+  padding-bottom: $padding-medium;
 
 }
 
+.card-button__suscribers-row {
+  display: flex;
+  flex-direction: row;
+  padding: $padding-small;
+  gap: $padding-small;
+}
+
+.card-button__suscribers__avatars {
+
+  font-weight: $font-weight-bolder;
+
+}
+
+.card-button__suscribers-title {
+
+  font-weight: $font-weight-bold;
+
+}
 
 @media #{$breakpoints-medium} {
 
@@ -997,7 +1048,7 @@ $card-button-border-height: $border-general-height;
 
   .card-button__full-content {
 
-    padding-bottom: $padding-huge;
+    padding-bottom: 0;
 
   }
 

@@ -141,12 +141,12 @@ $card-notification-delete-size: 100px;
 }
 
 .card-notification__header {
-  color: $color-gray;
-  display: flex;
-  font-size: $font-size-small;
-  flex-flow: row nowrap;
-  word-break: keep-all;
-  justify-content: space-between;
+  // color: $color-gray;
+  // display: flex;
+  // font-size: $font-size-small;
+  // flex-flow: row nowrap;
+  // word-break: keep-all;
+  // justify-content: space-between;
 }
 
 .card-notification__type {
@@ -155,6 +155,7 @@ $card-notification-delete-size: 100px;
   padding-left: $padding-small;
   font-size: $font-size-xsmall;
   text-wrap: nowrap;
+  line-height: normal;
 
 
 }
@@ -175,7 +176,8 @@ $card-notification-delete-size: 100px;
   color: $color-gray;
   text-align: right;
   font-size: $font-size-xsmall;
-  align-items: center;
+  align-items: flex-start;
+  line-height: normal;
 
 }
 
@@ -294,25 +296,16 @@ $card-notification-delete-size: 100px;
 
 }
 
-.card-notification__date:before {
-  background: $color-corporative;
-  border-radius: $border-radius-circle;
-  content: '';
-  display: inline-block;
-  height: $card-notification-date-before-size;
-  transform: translateX(-.5rem);
-  width: $card-notification-date-before-size;
-}
 
-.card-notification__date:before {
-  background: $color-corporative;
-  border-radius: $border-radius-circle;
-  content: '';
-  display: inline-block;
-  height: $card-notification-date-before-size;
-  transform: translateX(-.5rem);
-  width: $card-notification-date-before-size;
-}
+// .card-notification__date:before {
+//   // background: $color-corporative;
+//   // border-radius: $border-radius-circle;
+//   // content: '';
+//   // display: inline-block;
+//   // height: $card-notification-date-before-size;
+//   // transform: translateX(-.5rem);
+//   // width: $card-notification-date-before-size;
+// }
 
 .card-notification__old:before {
   display: none;
@@ -393,10 +386,17 @@ $card-notification-delete-size: 100px;
 }
 
 .card-notification-comment--focus, .card-notification--selected {
-  border: 2px solid $color-corporative;
-  background-color: $color-corporative;
+  border: 1px solid $color-gray-border;
 }
 
 .card-notification--unread{
   font-weight: $font-weight-bolder;
+}
+
+
+@media #{$breakpoints-medium} {
+
+
+
+
 }

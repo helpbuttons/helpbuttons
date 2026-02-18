@@ -43,12 +43,12 @@ export default appWithTranslation(MyApp);
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
 
-  const isSetup = useIsSetup();
   const [authorized, setAuthorized] = useState(null);
   const [isLoadingUser, setIsLoadingUser] = useState(false);
   const [fetchingNetworkError, setFetchingNetworkError] = useState(false)
   const path = router.asPath.split('?')[0];
   const nonce = randomBytes(128).toString('base64')
+  const isSetup = useIsSetup(path);
 
   const sessionUser = useGlobalStore((state: GlobalState) => state.sessionUser)
   const pageName = useGlobalStore((state: GlobalState) => state.homeInfo.pageName)
@@ -136,7 +136,7 @@ function MyApp({ Component, pageProps }) {
       config &&
       config.userCount < 1 &&
       SetupSteps.CREATE_ADMIN_FORM != path &&
-      !sessionUser
+      sessionUser === false
     ) {
       router.push(SetupSteps.CREATE_ADMIN_FORM);
     } else if (
@@ -194,7 +194,6 @@ function MyApp({ Component, pageProps }) {
 
     if (!isAllowed) {
       console.log('not allowd')
-      alertService.error(t('common.registeredRequired'));
       store.emit(new ResetFilters()) // TODO: bug when using router.back
       store.emit(new SetMainPopup(MainPopupPage.LOGIN))
       router.back()
@@ -365,11 +364,10 @@ const useWhichLocale = ({ sessionLocale, networkLocale }) => {
   return;
 }
 
-export const useIsSetup = () => {
+export const useIsSetup = (path) => {
   const [isSetup, setIsSetup] = useState(false);
 
   useEffect(() => {
-    const path = router.asPath.split('?')[0];
   
     const setupPaths: string[] = [
       SetupSteps.CREATE_ADMIN_FORM,
@@ -384,7 +382,7 @@ export const useIsSetup = () => {
       setIsSetup(() => false);
     }
   
-  }, [router])
+  }, [path])
   
   return isSetup;
 }

@@ -52,11 +52,13 @@ import MarkerViewMap from 'components/map/Map/MarkerSelectorMap';
 import { TagsNav } from 'elements/Fields/FieldTags';
 import { ImageGallery } from 'elements/ImageGallery';
 import Loading from 'components/loading';
-import { MainPopupPage, SetMainPopup, SetMainPopupCurrentProfile } from 'state/HomeInfo';
+import { FindAndSetMainPopupCurrentProfile, MainPopupPage, SetMainPopup, SetMainPopupCurrentProfile } from 'state/HomeInfo';
 import React from 'react';
 import dconsole from 'shared/debugger';
-import { ButtonPin, ButtonUnpin } from 'state/Button';
+import { ButtonPin, ButtonUnpin, FindFollowers } from 'state/Button';
 import { SetDraftButton } from 'state/Activity';
+import { useToggle } from 'shared/custom.hooks';
+import { useIsMobile } from 'elements/SizeOnly';
 
 export default function CardButton({ button, buttonTypes, toggleShowReplyFirstPost }) {
   const buttonType = useButtonType(button, buttonTypes);
@@ -70,29 +72,28 @@ export default function CardButton({ button, buttonTypes, toggleShowReplyFirstPo
             className="card-button card-button__file"
             style={buttonColorStyle(buttonType.cssColor)}
           >
-
-            <div>
               {/* <Btn
-              onClick={() => store.emit(new NextCurrentButton())}
-              caption="next"
-            ></Btn>
-            <Btn
-              onClick={() => store.emit(new PreviousCurrentButton())}
-              caption="previous"
-            ></Btn> */}
+                onClick={() => store.emit(new NextCurrentButton())}
+                caption="next"
+              ></Btn>
+              <Btn
+                onClick={() => store.emit(new PreviousCurrentButton())}
+                caption="previous"
+              ></Btn> */}
               <CardButtonHeadBig
                 button={button}
                 buttonTypes={buttonTypes}
                 toggleShowReplyFirstPost={toggleShowReplyFirstPost}
               />
             </div>
-          </div>
           <ImageGallery
             images={button?.images.map((image) => {
               return { src: image, alt: button.description };
             })}
           />
-
+          <CardButtonFollowerSection
+            button={button}
+          />
           <CardButtonAuthorSection
             button={button}
           />
@@ -102,11 +103,23 @@ export default function CardButton({ button, buttonTypes, toggleShowReplyFirstPo
   );
 }
 
+function CardButtonState({expired, awaitingApproval})
+{
+  if(expired)
+  {
+    return (<div className='card-button__content--expired'>{t('button.expiredLabel')}</div>)
+  }
+  if(awaitingApproval)
+  {
+    return (<div className='card-button__content--expired'>{t('moderation.awaitingApprovalLabel')}</div>)
+  }
+}
 // card button list on explore
 export function CardButtonHeadMedium({ button, buttonType }) {
 
   return (
     <div className="card-button__content card-button__content--small">
+      <CardButtonState expired={button.expired} awaitingApproval={button.awaitingApproval}/>
       <div className="card-button__header">
         {/* <div className="card-button__avatar">
           <div className="avatar-small">
@@ -260,6 +273,7 @@ function CardButtonSubmenu({ button }) {
         <>
           <CardSubmenuOption
             onClick={() => {
+              store.emit(new SetMainPopup(MainPopupPage.HIDE))
               router.push(`/ButtonEdit/${button.id}`);
             }}
             label={t('button.edit')}
@@ -304,6 +318,12 @@ export function CardButtonHeadBig({ button, buttonTypes, toggleShowReplyFirstPos
     false,
   );
   const [showMap, setShowMap] = useState(true);
+  const isMobile = useIsMobile()
+  useEffect(() => {
+    if(!isMobile){
+      setShowMap(() => false)
+    }
+  }, [isMobile])
   return (
     <>
       <div className='card-button__head-actions'>
@@ -325,7 +345,7 @@ export function CardButtonHeadBig({ button, buttonTypes, toggleShowReplyFirstPos
           message={t('moderation.awaitingApproval')}
         />
       )}
-      <div className="card-button__content card-button__full-content">
+      <div className="card-button__content card-button__full-content ">
         <div className="card-button__header">
           <div className="card-button__info">
             <div className="card-button__status">
@@ -367,7 +387,7 @@ export function CardButtonHeadBig({ button, buttonTypes, toggleShowReplyFirstPos
               'card-button__city card-button__everywhere' +
               (!button.hideAddress
                 ? ' card-button__city--displayMap'
-                : '')
+                : ' card-button__city--noMap ')
             }
             onClick={() => setShowMap(() => !showMap)}
           >
@@ -559,6 +579,57 @@ export function CardButtonAuthorSection({ button }) {
   );
 }
 
+export function CardButtonFollowerSection({ button }) {
+  const [showFollowers, toggleShowFollowers] = useToggle(false)
+  const [followers, setFollowers] = useState([])
+  useEffect(() => {
+    if (showFollowers) {
+      store.emit(new FindFollowers(button.id, (followers => setFollowers(() => followers))))
+    }
+  }, [showFollowers])
+
+
+  return (
+    <>
+          {button.followCount > 0 &&
+            <div className="card-button__followers">
+                  <div className="card-button__followers__number">
+                      <Link href="#" onClick={() => toggleShowFollowers((prev) => !prev)}>
+                        <div className="card-button__followers-title">
+                          {t('button.followers', [button.followCount])}
+                        </div>
+                      </Link>          
+                  </div>
+                  <div className='card-button__followers-row'>
+                    {(showFollowers && button.followCount > 0) && <>{followers.map((follower, idx) => 
+                        <Follower user={follower} key={idx}/>
+                    )}</>}
+                  </div>
+                </div>
+            }        
+      
+    </>
+    
+  );
+}
+function Follower({ user }) {
+  const onClick = () => {
+    store.emit(new FindAndSetMainPopupCurrentProfile(user.username))
+
+  }
+  return <div className="card-button__followers__avatars">
+    <Link href="#" onClick={onClick}>
+      {/* <span>{user.name}</span> */}
+      <div className="avatar-small">
+        <ImageWrapper
+          imageType={ImageType.avatarMed}
+          src={user.avatar}
+          alt="Avatar"
+        />
+      </div>
+    </Link>
+  </div>
+}
 
 function FollowButtonHeart({ button, sessionUser }) {
   if (!canFollowButton(button, sessionUser)) {
@@ -567,24 +638,24 @@ function FollowButtonHeart({ button, sessionUser }) {
 
   if (!button.isFollowing) {
     return (
-        <Btn
-          btnType={BtnType.smallCircle}
-          contentAlignment={ContentAlignment.center}
-          iconLink={<IoNotificationsOutline />}
-          iconLeft={IconType.circle}
-          onClick={() => followButton(button.id)}
-        />
+      <Btn
+        btnType={BtnType.smallCircle}
+        contentAlignment={ContentAlignment.center}
+        iconLink={<IoNotificationsOutline />}
+        iconLeft={IconType.circle}
+        onClick={() => followButton(button.id)}
+      />
     );
   }
 
   return (
-      <Btn
-        btnType={BtnType.smallCircle}
-        contentAlignment={ContentAlignment.center}
-        iconLink={<IoNotifications />}
-        iconLeft={IconType.circle}
-        onClick={() => unFollowButton(button.id)}
-      />
+    <Btn
+      btnType={BtnType.smallCircle}
+      contentAlignment={ContentAlignment.center}
+      iconLink={<IoNotifications />}
+      iconLeft={IconType.circle}
+      onClick={() => unFollowButton(button.id)}
+    />
   );
 }
 

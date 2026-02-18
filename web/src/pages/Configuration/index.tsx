@@ -83,7 +83,10 @@ function Configuration() {
           requireApproval: data.requireApproval,
           slogan: data.slogan,
           hideLocationDefault: data.hideLocationDefault,
-          allowGuestCreation: data.allowGuestCreation
+          allowGuestCreation: data.allowGuestCreation,
+          privacyPolicy: data. privacyPolicy,
+          ethicsPolicy: data. ethicsPolicy,
+          contactEmail: data. contactEmail,
         },
         (network) => {
           store.emit(new UpdateExploreSettings(data.exploreSettings));

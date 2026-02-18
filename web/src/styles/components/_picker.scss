@@ -277,6 +277,7 @@ $picker-comments-item-padding: 25px;
   margin: $margin-small 0;
   display: flex;
   justify-content: space-evenly;
+  align-items: center;
 
 }
 
@@ -325,13 +326,16 @@ $picker-comments-item-padding: 25px;
   height: auto;
   width: auto;
   display: flex;
-  margin: $margin-medium 0;
+  margin-bottom: $padding-huge ;
+
+  // padding-bottom: $padding-huge ;
   min-height: 250px;
 
   .pigeon-zoom-buttons {
 
     right: $padding-small;
-    top: 0;
+    top: $margin-small !important;
+    position: absolute !important;
 
   }
 
@@ -352,14 +356,34 @@ $picker-comments-item-padding: 25px;
 .picker--over {
 
   position: absolute;
-  top: 50%; 
+  top: auto; 
   padding: 0;
-  left: 50%;
-  transform: translate(-50%,-50%);
+  // transform: translate(-50%,-50%);
   width: 100%;
   height: 100%;
   z-index: $z-index-05;
   padding: 0;
+
+}
+
+.picker__hours {
+
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  align-items: flex-start;
+  justify-content: space-around;
+  padding-bottom: $padding-big;
+  gap: $padding-big;
+
+}
+
+.picker__hours-dash {
+
+  align-self: center;
+  font-weight: $font-weight-bolder;
+  position: absolute;
+  top: $padding-big;
 
 }
 
@@ -389,9 +413,13 @@ $picker-comments-item-padding: 25px;
 
   .picker--over {
     // max-width: 700px;
-    width: 100%;
+    // width: 100%;
+    position: relative;
+    margin: auto;
     z-index: $z-index-05;
     max-height: 90%;
+    top: 5%;
+    bottom: auto;
     padding: 0;
   }
 
@@ -402,5 +430,8 @@ $picker-comments-item-padding: 25px;
     margin: auto;
     z-index: $z-index-05;
   }
+
+
+
 
 }

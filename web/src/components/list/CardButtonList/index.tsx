@@ -4,11 +4,11 @@ import { IoChevronForwardOutline } from 'react-icons/io5';
 import { IoChevronBackOutline } from 'react-icons/io5';
 import { CardButtonHeadMedium } from 'components/button/CardButton';
 import { buttonColorStyle } from 'shared/buttonTypes';
-import { HiglightHexagonFromButton, updateCurrentButton } from 'state/Explore';
+import { HoverButtonList, updateCurrentButton } from 'state/Explore';
 import { store } from 'state';
-import router from 'next/router';
-import { MainPopupPage, SetMainPopup, SetMainPopupCurrentButton } from 'state/HomeInfo';
+import { SetMainPopupCurrentButton } from 'state/HomeInfo';
 import { alertService } from 'services/Alert';
+import t from 'i18n';
 
 export enum ButtonLinkType {
   EXPLORE,
@@ -87,11 +87,10 @@ export function CardButtonLink({ button, linkType, children }) {
     return (
       <a
         href={`/Show/${button.id}`}
-        onMouseEnter={!touch ? () => store.emit(new HiglightHexagonFromButton(button.hexagon)) : undefined}
-        onMouseLeave={!touch ? () => store.emit(new HiglightHexagonFromButton(null)) : undefined}
+        onMouseEnter={!touch ? () => store.emit(new HoverButtonList(button)) : undefined}
+        onMouseLeave={!touch ? () => store.emit(new HoverButtonList(null)) : undefined}
         onClick={(e) => {
           e.preventDefault();
-          store.emit(new HiglightHexagonFromButton(button.hexagon));
           store.emit(new updateCurrentButton(button));
         }}
         style={{ display: 'block', cursor: 'pointer' }}

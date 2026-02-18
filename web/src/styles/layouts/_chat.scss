@@ -7,7 +7,7 @@
 
     display: flex;
     flex-direction: row;
-    padding: $padding-small;
+    padding: $padding-small $padding-medium;
     align-items: center;
     background-color: $color-white;
 }
@@ -16,6 +16,7 @@
 
     width: 100%;
     padding: $padding-small $padding-medium ;
+    padding-left: 0;
     margin-left: auto;
 
 }
@@ -49,6 +50,7 @@
     gap: $padding-big;
     background-color: $color-white;
     padding: $padding-medium;
+    min-height: 50px;
 
 
 }
@@ -56,6 +58,7 @@
 .chat__header-center {
     min-width: 0; /* Essential for ellipsis to work inside a Flex container */
     flex: 1;  
+    margin: auto;
 }
 
 .chat__header-right {

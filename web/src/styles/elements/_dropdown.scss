@@ -176,6 +176,9 @@ $dropdown-bck: $color-white;
 
 
 }
+.dropdown__dropdown-option-active {
+  background-color: $color-ligth-gray;
+}
 
 .dropdown__dropdown-no-result {
 

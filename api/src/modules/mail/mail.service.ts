@@ -227,6 +227,10 @@ export class MailService {
           name: name,
         },
       });
-    });
+    })
+    .catch((err) => {
+      console.log('not possible to send email ', err)
+    })
+    ;
   }
 }

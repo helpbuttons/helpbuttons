@@ -168,6 +168,9 @@ export class ButtonEntry implements Partial<Button> {
   awaitingApproval: boolean;
 
   @Expose()
+  expired: boolean;
+
+  @Expose()
   pin: boolean;
 
   @Expose()
