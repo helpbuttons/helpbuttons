@@ -66,7 +66,10 @@ export function ActivityDetailConversation({ selectedActivity, closeConversation
   }, [buttonsActivities])
 
   const sendNewMessage = (message, buttonId, consumerId) => {
-    store.emit(new SendNewMessage(message, buttonId, consumerId, () => { loadButtonActivities(); alertService.success(t('activities.sent')) }))
+    store.emit(new SendNewMessage(message, buttonId, consumerId, () => { 
+      loadButtonActivities(); 
+      // alertService.success(t('activities.sent')) 
+    }))
   }
 
   if (!selectedButton || !selectedActivity) {
@@ -292,10 +295,10 @@ export function ActivityDetailMessage({ activity }) {
     return (<>
 
       <div className="message__hour message__hour--me">
-        {activity?.last && t('activity.sent') } - {readableTimeLeftToDate(activity.createdAt)}
+        {activity?.last && `${t('activity.sent')}da ${readableTimeLeftToDate(activity.createdAt)}`}
+        {!(activity?.last) && `${readableTimeLeftToDate(activity.createdAt)}`}
       </div>
       <div className="message message--me">
-
         <div className="message__content">
           {activity.message}
         </div>
