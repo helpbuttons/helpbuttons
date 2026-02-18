@@ -58,6 +58,7 @@ import dconsole from 'shared/debugger';
 import { ButtonPin, ButtonUnpin, FindFollowers } from 'state/Button';
 import { SetDraftButton } from 'state/Activity';
 import { useToggle } from 'shared/custom.hooks';
+import { useIsMobile } from 'elements/SizeOnly';
 
 export default function CardButton({ button, buttonTypes, toggleShowReplyFirstPost }) {
   const buttonType = useButtonType(button, buttonTypes);
@@ -317,6 +318,12 @@ export function CardButtonHeadBig({ button, buttonTypes, toggleShowReplyFirstPos
     false,
   );
   const [showMap, setShowMap] = useState(true);
+  const isMobile = useIsMobile()
+  useEffect(() => {
+    if(!isMobile){
+      setShowMap(() => false)
+    }
+  }, [isMobile])
   return (
     <>
       <div className='card-button__head-actions'>
@@ -380,7 +387,7 @@ export function CardButtonHeadBig({ button, buttonTypes, toggleShowReplyFirstPos
               'card-button__city card-button__everywhere' +
               (!button.hideAddress
                 ? ' card-button__city--displayMap'
-                : '')
+                : ' card-button__city--noMap ')
             }
             onClick={() => setShowMap(() => !showMap)}
           >
@@ -584,29 +591,22 @@ export function CardButtonFollowerSection({ button }) {
 
   return (
     <>
-        <>
-        
-          <div className="card-button__suscribers">
-                <div className="card-button__suscribers__number">
-                  {button.followCount > 0 &&
-                    <Link href="#" onClick={() => toggleShowFollowers((prev) => !prev)}>
-                      <div className="card-button__suscribers-title">
-                        {t('button.followers', [button.followCount])}
-                      </div>
-                    </Link>
-                  }
-                  {button.followCount < 1 &&
-                    <span>{t('button.nofollowers')}</span>
-                  }
+          {button.followCount > 0 &&
+            <div className="card-button__followers">
+                  <div className="card-button__followers__number">
+                      <Link href="#" onClick={() => toggleShowFollowers((prev) => !prev)}>
+                        <div className="card-button__followers-title">
+                          {t('button.followers', [button.followCount])}
+                        </div>
+                      </Link>          
+                  </div>
+                  <div className='card-button__followers-row'>
+                    {(showFollowers && button.followCount > 0) && <>{followers.map((follower, idx) => 
+                        <Follower user={follower} key={idx}/>
+                    )}</>}
+                  </div>
                 </div>
-                <div className='card-button__suscribers-row'>
-                  {(showFollowers && button.followCount > 0) && <>{followers.map((follower, idx) => 
-                      <Follower user={follower} key={idx}/>
-                  )}</>}
-                </div>
-              </div>
-        </>
-        
+            }        
       
     </>
     
@@ -617,7 +617,7 @@ function Follower({ user }) {
     store.emit(new FindAndSetMainPopupCurrentProfile(user.username))
 
   }
-  return <div className="card-button__suscribers__avatars">
+  return <div className="card-button__followers__avatars">
     <Link href="#" onClick={onClick}>
       {/* <span>{user.name}</span> */}
       <div className="avatar-small">

@@ -811,6 +811,11 @@ $card-button-border-height: $border-general-height;
   margin-bottom: $margin-small ;
 }
 
+.card-button__city--noMap {
+
+  background-color: transparent;
+  margin-bottom: $margin-small ;
+}
 
 .card-button__city-list {
   cursor: pointer;

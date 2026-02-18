@@ -522,7 +522,7 @@ hr {
   .homeinfo-card__controls--openable-right {
 
     position: absolute;
-    left: -60px;
+    right: -60px;
     
   }
 
@@ -598,9 +598,10 @@ hr {
   .homeinfo-card--activity {
 
     position: fixed;
-    right: -390px;
+    left: -390px;
+    top: 40%;
 
-    border-radius:   $border-radius-semicircle 0 0 $border-radius-semicircle;
+    border-radius: 0  $border-radius-semicircle  $border-radius-semicircle 0;
     width: 400px;
     height: 60%;
     border: $border-style-basic;
@@ -613,7 +614,7 @@ hr {
    .homeinfo-card--opened-right {
 
     max-width: 40%;
-    right: 0;
+    left: 0;
     z-index: $z-index-02;
 
   }

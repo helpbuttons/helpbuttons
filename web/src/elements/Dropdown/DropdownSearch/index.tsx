@@ -13,8 +13,8 @@ export function DropdownSearch({placeholder = '', input, setInput, results, hand
     const onBlur = (event) => {
         handleBlur(input)
     }
-    return <div onBlur={onBlur}>
-        <div className="form__input--dropdown-search">
+    return <>
+        <div onBlur={onBlur} className="form__input--dropdown-search">
             <input
                 className="form__input--dropdown-search__input"
                 placeholder={placeholder}
@@ -32,6 +32,6 @@ export function DropdownSearch({placeholder = '', input, setInput, results, hand
             })}
         </div>
 
-    </div>
+    </>
 
 }
