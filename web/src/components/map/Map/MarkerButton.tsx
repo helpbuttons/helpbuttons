@@ -88,8 +88,8 @@ export function MarkerButtonIcon(props: MarkerButtonIconProps) {
         }}
         className={
           props.className
-            ? `${props.className} pigeon-click-block`
-            : 'pigeon-click-block'
+            ? `${props.className} pigeon-click-block marker-button__wrapper`
+            : 'pigeon-click-block marker-button__wrapper'
         }
       >
         <figure
@@ -135,14 +135,14 @@ export function MarkerButtonIcon(props: MarkerButtonIconProps) {
 
 export function LocationKeyIcon(props) {
   return (
-    <div >
+    <>
       <div
         style={{
           position: 'absolute',
           transform: `translate(${props.left}px, ${props.top}px)`,
           ...(props.style || {}),
         }}
-        className={'pigeon-click-block'}
+        className={'pigeon-click-block '}
       >
         <figure
           id="markerButton"
@@ -160,6 +160,6 @@ export function LocationKeyIcon(props) {
 
         </figure>
       </div>
-    </div>
+    </>
   );
 }
