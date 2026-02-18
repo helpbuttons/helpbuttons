@@ -277,6 +277,7 @@ $picker-comments-item-padding: 25px;
   margin: $margin-small 0;
   display: flex;
   justify-content: space-evenly;
+  align-items: center;
 
 }
 
@@ -362,6 +363,27 @@ $picker-comments-item-padding: 25px;
   height: 100%;
   z-index: $z-index-05;
   padding: 0;
+
+}
+
+.picker__hours {
+
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  align-items: flex-start;
+  justify-content: space-around;
+  padding-bottom: $padding-big;
+  gap: $padding-big;
+
+}
+
+.picker__hours-dash {
+
+  align-self: center;
+  font-weight: $font-weight-bolder;
+  position: absolute;
+  top: $padding-big;
 
 }
 

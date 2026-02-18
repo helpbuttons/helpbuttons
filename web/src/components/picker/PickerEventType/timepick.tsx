@@ -120,19 +120,20 @@ export function TimePickInput({defaultDateTime, handleChange}) {
     }
   }
 
-  return <>
+  return <span>
           <DropdownSearch input={input} setInput={setInput} results={results} handleSelected={handleSelected} handleBlur={handleBlur} handleFocus={handleFocus}/>
           {invalid && <span>invalid</span>}
-        </>
+        </span>
 }
 
 export function TimeRangePicker({defaultStart, defaultEnd, handleChangeStart, handleChangeEnd}) {
   return (
-    <div className="picker__row">
-      <span><span>{t('eventType.from')}</span><TimePickInput defaultDateTime={defaultStart}
-        handleChange={(value) => handleChangeStart(value)} /></span>
-      <span><span>{t('eventType.until')}</span><TimePickInput defaultDateTime={defaultEnd}
-        handleChange={(value) => handleChangeEnd(value)} /></span>
-    </div>
+      <div className='picker__hours'>
+            <TimePickInput defaultDateTime={defaultStart}
+              handleChange={(value) => handleChangeStart(value)} /> <span className='picker__hours-dash'>-</span>
+            <TimePickInput defaultDateTime={defaultEnd}
+              handleChange={(value) => handleChangeEnd(value)} />
+      </div>
+      
   )
 }
