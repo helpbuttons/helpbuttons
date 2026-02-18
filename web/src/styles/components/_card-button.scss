@@ -204,6 +204,7 @@ $card-button-border-height: $border-general-height;
   justify-content: flex-start;
   vertical-align: baseline;
   background-color: $color-white;
+  
   border-top: 1px dashed $color-ligth-gray;
   border-radius: 0 0 $border-radius-circle $border-radius-circle;
 
@@ -217,6 +218,13 @@ $card-button-border-height: $border-general-height;
     margin-left: 0;
 
   }
+}
+
+
+.card-button__actions:empty {
+
+  padding-top: 0;
+
 }
 
 .card-button__actions--mid {
