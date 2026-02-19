@@ -82,7 +82,8 @@ export function InviteForm() {
             username: data.username,
             qrCode:  code ? code : invitationCode,
             locale: getLocale(),
-            acceptPrivacyPolicy: data.acceptPrivacyPolicy
+            acceptPrivacyPolicy: data.acceptPrivacyPolicy,
+            phone: data.phone
           },
           () => {
             // router.push(`/HomeInfo`)
