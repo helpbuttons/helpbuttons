@@ -432,8 +432,8 @@
     "iHaveCode":"I have a guest code",
     "guestCode":"Guest code",
     "guestCodePlaceHolder":"Write the code here",
-    "askForNewCode":"I don't have my guest info"
-
+    "askForNewCode":"I don't have my guest info",
+    "inviteLogin": "Enter"
   },
   "picker": {
     "headerText": "Choose a location"

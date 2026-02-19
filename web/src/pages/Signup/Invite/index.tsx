@@ -67,6 +67,8 @@ export function InviteForm() {
         {
           setLoading(false)
           dconsole.log('tryin to login, failed, its ok, qr code is not registered yet')
+          store.emit(new SetMainPopup(MainPopupPage.HIDE))
+          alertService.warn(t('user.loginError'))
         }else{
           dconsole.error(err)
         }
@@ -135,7 +137,7 @@ export function InviteForm() {
 
 export function InviteScan() {
   
-
+  const [qrCode, setQrCode] = useState('')
   const handleScan = (detectedCodes) => {
     const regex = /Signup\/Invite\/(([a-zA-Z]|[0-9])*)/gm;
     detectedCodes.forEach(code => {
@@ -150,7 +152,9 @@ export function InviteScan() {
       }
     });
   };
-
+  const handleSubmit = () => {
+    router.push(`/Signup/Invite/${qrCode}`)
+  }
   return (
     <>
     <Scanner
@@ -162,8 +166,14 @@ export function InviteScan() {
           label={t('invite.scanCodeLabel')}
           explain={t('invite.scanCodeExplain')}
           placeholder={t('invite.scanPlaceHolder')}
-          // onChange={(e) => setValue('text', e.target.value)}
+          onChange={(e) => setQrCode(() => e.target.value)}
         />
+      <Btn
+        onClick={handleSubmit}
+        btnType={BtnType.submit}
+        caption={t('user.inviteLogin')}
+        contentAlignment={ContentAlignment.center}
+      />
     </>
   );
 }
