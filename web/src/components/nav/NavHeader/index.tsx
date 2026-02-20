@@ -27,7 +27,7 @@ function NavHeader({ selectedNetwork , isScrollingUp}){
     const IsExplorePage = pageName == 'Explore';
 
   return (
-    <div className={(IsHomeInfo ? "nav-header--homeinfo " : "" ) + (isScrollingUp ? " nav-header--hide" : " nav-header--hide") + " nav-header "}>
+    <div className={(IsHomeInfo ? "nav-header--homeinfo " : "" ) + " nav-header "}>
       <div  className={(IsHomeInfo ? "nav-header__container--homeinfo " : "" )+ " nav-header__container"} >
         <ShowDesktopOnly>
           <BrandCard />
@@ -45,10 +45,9 @@ function NavHeader({ selectedNetwork , isScrollingUp}){
           </form>
           )}  
        </> 
-
         
         <ShowDesktopOnly>
-          <NavBottom sessionUser={sessionUser} />
+          <NavBottom sessionUser={sessionUser} isScrollingUp={false} />
         </ShowDesktopOnly>
       </div>
       <div className="nav-header__filters">
