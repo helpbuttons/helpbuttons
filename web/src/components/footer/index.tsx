@@ -80,7 +80,7 @@ export default function Footer() {
           </span>
         </li>
         <li className="footer__link">
-          <a href="/Faqs?chapter=whats" className="footer__link--item">
+          <a href="https://helpbuttons.org" className="footer__link--item">
             {t('footer.whatsHelpbuttons')}
           </a>
         </li>
