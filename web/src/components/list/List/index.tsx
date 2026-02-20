@@ -126,13 +126,22 @@ function List({
 
     const handleScroll = () => {
       const currentScrollTop = listContent.scrollTop;
+      const scrollHeight = listContent.scrollHeight;
+      const clientHeight = listContent.clientHeight;
+      
+      if (currentScrollTop <= 0) {
+        return; 
+      }
+      
+      if (currentScrollTop + clientHeight >= scrollHeight) {
+        return; 
+      }
+      
       const isScrollingUp = currentScrollTop < lastScrollTopRef.current;
       
-      // Update state and notify parent
       setIsScrollingUp(isScrollingUp);
       onScrollChange?.(isScrollingUp);
       
-      // Update last scroll position
       lastScrollTopRef.current = currentScrollTop;
     };
 
