@@ -15,6 +15,7 @@ import { useRouter } from 'next/router';
 import { ErrorName } from 'shared/types/error.list';
 import { markerFocusZoom } from 'components/map/Map/Map.consts';
 import { onButtonValidationError } from 'pages/ButtonNew';
+import { MobileOnlyPopup } from 'elements/SizeOnly';
 
 export default function ButtonEdit() {
 
@@ -79,23 +80,26 @@ export default function ButtonEdit() {
 
   return (
     <>
-    {button &&
-      <ButtonForm
-        watch={watch}
-        reset={reset}
-        getValues={getValues}
-        handleSubmit={handleSubmit}
-        register={register}
-        errors={errors}
-        control={control}
-        setFocus={setFocus}
-        setValue={setValue}
-        isSubmitting={isSubmitting}
-        onSubmit={onSubmit}
-        title={t('button.edit')}
-        clearErrors={clearErrors}
-      ></ButtonForm>
-    }
+    <MobileOnlyPopup title={t('common.editTitle', ['_helpbutton_'])} linkFwd={'/Explore'}>
+        {button &&
+        <ButtonForm
+          watch={watch}
+          reset={reset}
+          getValues={getValues}
+          handleSubmit={handleSubmit}
+          register={register}
+          errors={errors}
+          control={control}
+          setFocus={setFocus}
+          setValue={setValue}
+          isSubmitting={isSubmitting}
+          onSubmit={onSubmit}
+          title={t('button.edit')}
+          clearErrors={clearErrors}
+        ></ButtonForm>
+        
+      }
+    </MobileOnlyPopup>
     </>
   );
 }
