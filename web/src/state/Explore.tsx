@@ -68,7 +68,7 @@ export const exploreSettingsDefault: ExploreSettings = {
   viewMode: ExploreViewMode.LIST,
   urlUpdated: false,
   forceRefetch: true,
-  isScrollingUp: false,
+  isScrollingUp: true,
 };
 export interface ExploreMapState {
   filters: ButtonFilters;
