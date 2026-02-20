@@ -99,7 +99,7 @@ export function ImageGallery({ images }) {
             />
             
             {images.length > 1 && (
-              <div className="card-button__picture-nav">
+              <div className="card-button__picture-nav card-button__picture-nav--zoom">
                 <Btn
                   btnType={BtnType.smallCircle}
                   iconLink={<IoChevronBackOutline />}
