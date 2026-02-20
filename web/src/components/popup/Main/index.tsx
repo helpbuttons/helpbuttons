@@ -13,6 +13,7 @@ import { useEffect } from "react";
 import { replaceUrl, usePreviousUrl } from "components/uri/builder";
 import LoginForm from "components/user/LoginForm";
 import { InviteForm, InviteScan } from "pages/Signup/Invite";
+import { useIsMobile } from "elements/SizeOnly";
 
 export default function MainPopup() {
   const pageName = useGlobalStore((state: GlobalState) => state.homeInfo.pageName)
@@ -28,6 +29,7 @@ export default function MainPopup() {
   const currentButton = useGlobalStore((state: GlobalState) => state.explore.currentButton)
   const mainPopupUserProfile = useGlobalStore((state: GlobalState) => state.homeInfo.mainPopupUserProfile)
   const mainPopupButton = useGlobalStore((state: GlobalState) => state.homeInfo.mainPopupButton)
+  const isMobile = useIsMobile()
 
   useReplaceUrl(mainPopupUserProfile, mainPopupButton, popupPage)
   return (
@@ -101,7 +103,7 @@ export default function MainPopup() {
           <ShowProfile userProfile={mainPopupUserProfile} sessionUser={sessionUser} />
         </Picker>
       )}
-      {mainPopupButton && pageName != 'Activity' && (
+      {mainPopupButton && (pageName != 'Activity' || isMobile) && (
         <Picker
           headerText={mainPopupButton.title}
           closeAction={() => { store.emit(new SetMainPopupCurrentButton(null)); closePopup() }}

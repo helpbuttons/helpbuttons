@@ -295,8 +295,7 @@ export function ActivityDetailMessage({ activity }) {
     return (<>
 
       <div className="message__hour message__hour--me">
-        {activity?.last && `${t('activity.sent')}da ${readableTimeLeftToDate(activity.createdAt)}`}
-        {!(activity?.last) && `${readableTimeLeftToDate(activity.createdAt)}`}
+        {`${readableTimeLeftToDate(activity.createdAt)}`}
       </div>
       <div className="message message--me">
         <div className="message__content">
