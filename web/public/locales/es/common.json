@@ -641,7 +641,7 @@
   },
   "customFields": {
     "priceLabel": "Precio ({0})",
-    "consult": "P.V.C.",
+    "consult": "A consultar",
     "free": "Gratis",
     "priceExplain": "Especifica un valor. Usa 0 si es gratis o seleciona Precio a Consultar si es variable."
   },

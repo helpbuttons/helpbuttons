@@ -648,7 +648,7 @@
   "customFields": {
     "priceLabel": "Price ({0})",
     "priceExplain": "Specify a value. Use 0 if it's free or select Price on request if it's not exactly defined.",
-    "consult": "POA",
+    "consult": "On request",
     "free": "Free",
     "confirmDeleteLabel": "Delete _helpbutton_ type",
     "confirmDeleteExplain": "Are you sure you want to delete this button type? This operation will delete all buttons"
