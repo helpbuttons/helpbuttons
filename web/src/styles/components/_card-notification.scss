@@ -166,8 +166,15 @@ $card-notification-delete-size: 100px;
   color: $color-med-gray;
   display: flex;
   flex-direction: row;
+  align-items: baseline;
+  margin: auto;
 
 
+}
+.card-notification__date::before {
+  // flex: 0 1 50%;
+  content: '·';
+  padding: $padding-small;
 }
 
 .card-notification__date {
@@ -176,7 +183,7 @@ $card-notification-delete-size: 100px;
   color: $color-gray;
   text-align: right;
   font-size: $font-size-xsmall;
-  align-items: flex-start;
+  align-items: center;
   line-height: normal;
 
 }
@@ -339,6 +346,7 @@ $card-notification-delete-size: 100px;
   display: flex;
   line-height: $line-height-regular;
   padding-bottom: $padding-medium;
+  align-items: center;
 
  
   
