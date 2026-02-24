@@ -16,7 +16,7 @@ export class GroupMessageController {
     @OnlyAdmin()
     @Post('send/admin')
     async sendAdminMessage(@CurrentUser() user: User, @Body() message) {
-        return this.groupMessageService.sendMessage(user, GroupMessageType.admin, message)
+        return this.groupMessageService.sendMessage(user, GroupMessageType.admin, message.message)
     }
 
     @OnlyRegistered()

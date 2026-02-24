@@ -288,7 +288,7 @@ function useHexagonMap({
     hexagons: [],
     init: false,
   });
-  const debounceHexagonsToFetch = useDebounce(hexagonsToFetch, 100);
+  const debounceHexagonsToFetch = useDebounce(hexagonsToFetch, 30);
 
   const foundTags = React.useRef([]);
   const [h3TypeDensityHexes, seth3TypeDensityHexes] = useState([]);

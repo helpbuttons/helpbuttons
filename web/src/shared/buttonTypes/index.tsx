@@ -55,7 +55,7 @@ export const useButtonType = (button,buttonTypes) => {
         ),
       );
     }
-  }, [buttonTypes]);
+  }, [buttonTypes, button]);
   return buttonType;
 }
 

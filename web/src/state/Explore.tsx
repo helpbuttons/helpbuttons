@@ -23,8 +23,8 @@ import { ButtonsOrderBy } from 'components/search/AdvancedFilters';
 import { markerFocusZoom } from 'components/map/Map/Map.consts';
 import _ from 'lodash';
 import { nextElement, previousElement } from 'shared/sys.helper';
-import dconsole from 'shared/debugger';
 import { ButtonEntry } from 'shared/dtos/button.dto';
+import { isPointInBounds } from 'elements/Fields/FieldLocation/location.helpers';
 
 
 export enum ExploreViewMode {
@@ -48,7 +48,7 @@ export interface ExploreSettings {
   honeyCombFeatures: any;
   loading: boolean;
   hexagonClicked: string;
-  hexagonHighlight: string;
+  hoverButton: Button;
   viewMode: ExploreViewMode;
   urlUpdated: boolean;
   forceRefetch: boolean;
@@ -63,7 +63,7 @@ export const exploreSettingsDefault: ExploreSettings = {
   honeyCombFeatures: null,
   loading: true,
   hexagonClicked: null,
-  hexagonHighlight: null,
+  hoverButton: null,
   viewMode: ExploreViewMode.LIST,
   urlUpdated: false,
   forceRefetch: true,
@@ -153,7 +153,6 @@ export class CreateButton implements WatchEvent, UpdateEvent {
 
   public update(state: GlobalState) {
     return produce(state, (newState) => {
-      dconsole.log('[CreateButton] update')
       newState.explore.map.filters = defaultFilters
       newState.explore.map.showAdvancedFilters = false
     });
@@ -222,7 +221,6 @@ export class ButtonDelete implements WatchEvent, UpdateEvent {
 
   public update(state: GlobalState) {
     return produce(state, (newState) => {
-      dconsole.log('[ButtonDelete] update')
       newState.explore.settings.forceRefetch = true;
       newState.activities.messages.unread = []
       newState.activities.messages.read = []
@@ -249,7 +247,6 @@ export class UpdateButton implements WatchEvent, UpdateEvent {
 
   public update(state: GlobalState) {
     return produce(state, (newState) => {
-      dconsole.log('[UpdateButton] update')
       newState.explore.settings.forceRefetch = true;
     });
   }
@@ -282,11 +279,6 @@ export class updateCurrentButton implements UpdateEvent {
   public update(state: GlobalState) {
     return produce(state, (newState) => {
       newState.explore.currentButton = this.button;
-      if (this?.button?.hexagon) {
-        newState.explore.settings.hexagonClicked = cellToZoom(this.button.hexagon, state.explore.settings.zoom)
-      } else {
-        newState.explore.settings.hexagonClicked = null
-      }
     });
   }
 }
@@ -317,7 +309,6 @@ export class UpdateFilters implements UpdateEvent {
       newFilters.tags = _.uniq([...tagsFound, ...this.filters.tags])
       newFilters.query = newQuery
       newState.explore.map.filters = newFilters;
-      dconsole.log(`[UpdateFilters] update`)
 
     });
   }
@@ -328,7 +319,6 @@ export class ResetFilters implements UpdateEvent {
 
   public update(state: GlobalState) {
     return produce(state, (newState) => {
-      dconsole.log('[ResetFilters]')
       newState.explore.settings.hexagonClicked = null;
       newState.explore.map.listButtons = state.explore.map.boundsFilteredButtons
       newState.explore.map.filters = defaultFilters;
@@ -362,7 +352,6 @@ export class UpdateFiltersToFilterTag implements UpdateEvent {
   public update(state: GlobalState) {
     return produce(state, (newState) => {
       // use query to filter tag...
-      dconsole.log('[UpdateFiltersToFilterTag]')
       newState.explore.currentButton = null;
       newState.explore.map.filters = {
         ...defaultFilters,
@@ -402,7 +391,6 @@ export class UpdateFiltersToFilterButtonType implements UpdateEvent {
           }
         }
       }
-      dconsole.log('[UpdateFiltersToFilterButtonType]')
       newState.explore.map.filters = newFilters;
     });
   }
@@ -444,14 +432,14 @@ export class UpdateBoundsFilteredButtons implements UpdateEvent, WatchEvent {
 
   public update(state: GlobalState) {
     return produce(state, (newState) => {
-      dconsole.log('[UpdateBoundsFilteredButtons] update')
       newState.explore.settings.forceRefetch = false;
+      
+      //needed to calculate, cause some points go oout of bounds, cause hexagons parts are out.
+      const buttonsInBounds = this.boundsFilteredButtons.filter((btn) => isPointInBounds([btn.latitude, btn.longitude], state.explore.settings.bounds))
+
       newState.explore.map.boundsFilteredButtons =
-        this.boundsFilteredButtons;
-      if (state.explore.currentButton) {
-        newState.explore.map.boundsFilteredButtons = [state.explore.currentButton]
-      }
-      newState.explore.map.listButtons = listButtonsFilteredByHexagon(state.explore.settings.hexagonClicked, this.boundsFilteredButtons)
+        buttonsInBounds;
+      newState.explore.map.listButtons = listButtonsFilteredByHexagon(state.explore.settings.hexagonClicked, buttonsInBounds)
       newState.explore.map.loading = false;
       newState.explore.map.initialized = true;
     });
@@ -484,30 +472,27 @@ export class UpdateHexagonClicked implements UpdateEvent {
       newState.explore.settings.hexagonClicked = this.hexagonClicked;
       if (this.hexagonClicked) {
         newState.explore.map.showInstructions = false;
-        dconsole.log('[UpdateHexagonClicked] update')
         newState.explore.map.listButtons = listButtonsFilteredByHexagon(this.hexagonClicked, state.explore.map.boundsFilteredButtons)
         newState.explore.currentButton = null
         if (state.explore.settings.viewMode == ExploreViewMode.MAP) {
           newState.explore.settings.viewMode = ExploreViewMode.BOTH
         }
       } else {
-        dconsole.log('[UpdateHexagonClicked] update')
         newState.explore.map.listButtons = state.explore.map.boundsFilteredButtons
       }
     });
   }
 }
 
-
-export class HiglightHexagonFromButton implements UpdateEvent {
-  public constructor(private buttonHexagon: string) { }
+export class HoverButtonList implements UpdateEvent {
+  public constructor(private button: Button) { }
 
   public update(state: GlobalState) {
     return produce(state, (newState) => {
-      if (this.buttonHexagon) {
-        newState.explore.settings.hexagonHighlight = cellToZoom(this.buttonHexagon, state.explore.settings.zoom)
+      if (this.button) {
+        newState.explore.settings.hoverButton = this.button
       } else {
-        newState.explore.settings.hexagonHighlight = null
+        newState.explore.settings.hoverButton = null
       }
     });
   }
@@ -563,7 +548,6 @@ export class UpdateExploreSettings implements UpdateEvent {
 
     return produce(state, (newState) => {
       const prevSettings = state.explore.settings;
-      dconsole.log('[UpdateExploreSettings] update >')
       let newExploreSettings = {
         loading: false,
       };
@@ -573,12 +557,11 @@ export class UpdateExploreSettings implements UpdateEvent {
       }
 
       newExploreSettings = { zoom: this.newExploreSettings.zoom, ...newExploreSettings }
-
+      newExploreSettings = { bounds: this.newExploreSettings.bounds, ...newExploreSettings }
       if (prevSettings.center != null && JSON.stringify(prevSettings.center) != JSON.stringify(this.newExploreSettings.center)) {
         newState.explore.map.showInstructions = false;
       }
       newState.explore.settings = { ...state.explore.settings, ...newExploreSettings };
-      dconsole.log(`[UpdateExploreSettings] update <`)
     });
   }
 }

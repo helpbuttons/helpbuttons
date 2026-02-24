@@ -164,14 +164,37 @@ $map-btns-size-mobile: 30px;
 
 }
 
+@keyframes scaleEmoji {
+from {
+    
+    transform: scale(0.2) ;
+}
+to {
+    transform: scale(1.3) ;
+}
+}
+
 .pigeon-map__emoji{
 
     font-size: $font-size-title;
     display: flex;
     align-items: center;
     justify-content: center;
+    margin: auto;
+    transition: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    animation: scaleEmoji .25s;
+    transform: scale(1.3);
+    box-shadow: $box-shadow-card;
+
+    &:hover {
+        transition: $transition-default;
+        transform: scale(1.5);
+        cursor: pointer;
+    }
 
 }
+
+
 
 .pigeon-attribution {
     position: relative;
@@ -196,7 +219,7 @@ $map-btns-size-mobile: 30px;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    pointer-events: none;
+    // pointer-events: none;
 
 
 }
@@ -255,8 +278,6 @@ $map-btns-size-mobile: 30px;
     flex-wrap: wrap;
     align-items: center;
 
-
-
   }
 
 
@@ -277,16 +298,36 @@ $map-btns-size-mobile: 30px;
     
 }
 
+.pigeon-map__hex-element--emoji-selected::before {
 
-  @keyframes createBox {
-    from {
-        
-      transform: translate(-50%, -50%) scale(0) ;
-    }
-    to {
-      transform: translate(-50%, -50%) scale(1) ;
-    }
-  }
+    content: "";
+    position: absolute;
+    top: 50%; /* Adjusted to start from the middle of the div */
+    left: 50%;
+    transform: translate(-50%, -50%); /* Center the circle both horizontally and vertically */
+    animation: createBox .25s;
+    background-color: $color-white;
+    border: $border-style-light;
+    width: 40px;
+    height: 40px;
+    border-radius: $border-radius-circle; /* This makes the square a circle */
+    z-index: -1;
+    transition: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+}
+
+
+@keyframes createBox {
+from {
+    
+    transform: translate(-50%, -50%) scale(0) ;
+}
+to {
+    transform: translate(-50%, -50%) scale(1) ;
+}
+}
+
+
 
 .pigeon-map__hex-info--icon {
 
@@ -303,6 +344,7 @@ $map-btns-size-mobile: 30px;
 
     font-size: $font-size-title;
     font-weight: $font-weight-bold;
+    color: $color-dark-gray;
     cursor: pointer;
 }
 
@@ -314,15 +356,46 @@ $map-btns-size-mobile: 30px;
     display: flex;
     justify-content: center;
     align-items: center;
-    color: $color-white;
-    width: 100%;
+    color: $color-text-over-corporative;
+    width: auto;
     margin: auto;
     z-index: $z-index-01;
+    border-radius: $border-radius-circle;
     cursor: pointer;
+
+    &:hover {
+
+        color: $color-corporative;
+
+        &::before {
+            background-color: $color-text-over-corporative;
+        }
+
+    }
 
 }
 
+.pigeon-map__hex-info--text-unselect::before {
 
+   background-color: $color-corporative;
+   padding: $padding-big;
+    cursor: pointer;
+
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: createBox 0.25s;
+    width: 20%;
+    height: 50%;
+    border-radius: 34px;
+    z-index: -1;
+    transition: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+
+
+}
 
 @media #{$breakpoints-xlarge} {
 

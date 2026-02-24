@@ -32,7 +32,7 @@ import {
   isImageData,
   isImageUrl,
 } from '@src/shared/helpers/imageIsFile';
-import { maxResolution } from '@src/shared/types/honeycomb.const';
+import { hideAddressResolution, maxResolution } from '@src/shared/types/honeycomb.const';
 import { PostService } from '../post/post.service';
 import { CustomHttpException } from '@src/shared/middlewares/errors/custom-http-exception.middleware';
 import { ErrorName } from '@src/shared/types/error.list';
@@ -54,6 +54,7 @@ import {
 } from '@nestjs/cache-manager';
 import { Cache } from 'cache-manager';
 import { CacheKeys } from '@src/shared/types/cache.keys';
+import { cellToLatLng, cellToParent } from 'h3-js';
 
 @Injectable()
 export class ButtonService {
@@ -392,6 +393,15 @@ export class ButtonService {
 
   transformButton(btn, currentUser = null) {
     const isFollowing = currentUser ? btn.followedBy.includes(currentUser.id) : false
+
+    if(btn.hideAddress)
+    {
+      btn.hexagon = cellToParent(btn.hexagon, hideAddressResolution)
+      const hexCenter = cellToLatLng(btn.hexagon)
+      btn.latitude = hexCenter[0]
+      btn.longitude = hexCenter[1]
+      btn.location = {type: 'Point', coordinates: hexCenter}
+    }
     return {
       ...btn,
       postsCount: btn.feed ? btn.feed.length : 0,
