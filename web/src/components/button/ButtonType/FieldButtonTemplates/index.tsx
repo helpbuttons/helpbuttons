@@ -13,6 +13,7 @@ import { AddCustomFields } from '../CustomFields/AddCustomFields';
 import { EmojiPicker } from 'components/emoji';
 import { Picker } from 'components/picker/Picker';
 import PickerField from 'components/picker/PickerField';
+import { useSelectedNetwork } from 'state/Networks';
 
 
 const FieldButtonTemplates = forwardRef(
@@ -36,7 +37,7 @@ const FieldButtonTemplates = forwardRef(
     ref,
   ) => {
 
-
+    const selectedNetwork = useSelectedNetwork()
     const { remove, append, update } = useFieldArray({
       name,
       control,
@@ -94,6 +95,15 @@ const FieldButtonTemplates = forwardRef(
       update(id, {...values, hide: false})
     }
 
+    const removeIdx = (id, val) => {
+      const buttonCount = selectedNetwork.buttonTypesCount.find((elem) => elem.type == val.name).count
+      console.log(buttonCount)
+      if(buttonCount > 0){
+        alertService.warn('There are buttons on this type, show dialog')
+      }else{
+        remove(id)
+      }
+    }
     return (
       <>
         <div className="form__field">
@@ -164,10 +174,9 @@ const FieldButtonTemplates = forwardRef(
                           iconLeft={IconType.svg}
                           caption={t('common.delete')}
                           contentAlignment={ContentAlignment.center}
-                          onClick={() => saveEdit(val)}
+                          onClick={() => removeIdx(editFieldIdx, val)}
                         />
                       </div>
-                      
                     </div>
                   </Picker>
                 }
