@@ -376,7 +376,7 @@ $feed-new-message-radius: $border-radius-circle;
   border-left: $border-style-basic;
   border-right: $border-style-basic;
   height: calc(100% - $nav-bottom-height);
-
+  
 
   }
 
@@ -447,6 +447,7 @@ $feed-new-message-radius: $border-radius-circle;
   .feed-section__center {
 
    height: 100%;
+   z-index: $z-index-02;
 
   }
 
