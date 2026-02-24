@@ -230,7 +230,7 @@
     "expiredEventTitle": "'{0}' ha pasado su fecha de finalización el dia {1}, no aparecerá más en la lista pública.",
     "newSignup": "'{0}' se ha registrado como nuevo usuario/a",
     "notice": "Aviso",
-    "sent": "Mensaje enviado sent!",
+    "sent": "Enviado",
     "endorsed": "Tu perfil ha sido marcado como de confianza",
     "roleupdate": "Tu rol ha sido actualizado a '{0}'",
     "writingDraft": "Escribiendo mensaje",

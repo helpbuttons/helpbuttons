@@ -214,7 +214,7 @@
     "roleupdate": "Your role has been updated to '{0}'",
     "newSignup": "New user '{0}' signed up",
     "notice": "",
-    "sent": "Message sent!",
+    "sent": "sent",
     "writingDraft": "Writing private message",
     "draft": "Draft",
     "pickOne": "Select one chat",
