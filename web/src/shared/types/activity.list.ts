@@ -12,6 +12,5 @@ export enum ActivityEventName {
   RoleUpdate = 'user.roleChange',
   NotifyAdmins = 'admin.notify',
   Message = 'message',
-  UnfollowButton = 'unfollow.button',
-  NewNetwork = 'new.network'
+  UnfollowButton = 'unfollow.button'
 }
