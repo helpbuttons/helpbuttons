@@ -778,4 +778,8 @@ export class ButtonService {
       .then((dd) => {console.log(dd); return dd;})
     })
   }
+
+  public deleteAllButtonsFromType(type: string) {
+    return this.buttonRepository.update({ type: type }, {deleted: true})
+  }
 }

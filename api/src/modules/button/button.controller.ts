@@ -299,4 +299,10 @@ export class ButtonController {
   findFollowers(@Param('buttonId') buttonId: string){
     return this.buttonService.findFollowers(buttonId)
   }
+
+  @OnlyAdmin()
+  @Get('deleteType/:type')
+  deleteType(@Param('type') type: string) {
+    return this.buttonService.deleteAllButtonsFromType(type)
+  }
 }

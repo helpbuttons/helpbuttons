@@ -237,18 +237,20 @@ export class NetworkService {
       ethicsPolicy: updateDto.ethicsPolicy,
       contactEmail: updateDto.contactEmail
     };
-    const buttonTemplatesNew = network.buttonTemplates.filter((btnTemplate) => !btnTemplate.hide).map((btnTemplate) => btnTemplate.name)
 
-    const buttonTemplateActive = await this.entityManager.query(`select count(id), type from button group by type;`)
+    /** Dont need to check for orphans no more... ! */
+    // const buttonTemplatesNew = network.buttonTemplates.filter((btnTemplate) => !btnTemplate.hide).map((btnTemplate) => btnTemplate.name)
 
-    const orphanButtonTemplates = buttonTemplateActive.filter((btnTemplate) => {
-      return !(buttonTemplatesNew.find((name) => name == btnTemplate.type) !== undefined);
-    })
+    // const buttonTemplateActive = await this.entityManager.query(`select count(id), type from button group by type;`)
 
-    if (orphanButtonTemplates.length > 0) {
-      const undeletedButtonTemplates = orphanButtonTemplates.map((btnTemplate) => btnTemplate.type)
-      throw new ValidationException({ buttonTemplates: 'cant delete button template ' + JSON.stringify(undeletedButtonTemplates) });
-    }
+    // const orphanButtonTemplates = buttonTemplateActive.filter((btnTemplate) => {
+    //   return !(buttonTemplatesNew.find((name) => name == btnTemplate.type) !== undefined);
+    // })
+
+    // if (orphanButtonTemplates.length > 0) {
+    //   const undeletedButtonTemplates = orphanButtonTemplates.map((btnTemplate) => btnTemplate.type)
+    //   throw new ValidationException({ buttonTemplates: 'cant delete button template ' + JSON.stringify(undeletedButtonTemplates) });
+    // }
 
     await this.cacheManager.del('defaultNetwork');
     await getManager().transaction(

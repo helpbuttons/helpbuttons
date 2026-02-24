@@ -245,8 +245,9 @@
     "edit": "Edit",
     "show": "Show",
     "registeredRequired": "You need to register",
-    "delete": "Delete"
-
+    "delete": "Delete",
+    "confirm": "Confirm",
+    "cancel": "Cancel"
   },
   "button": {
     "title": "_helpbutton_ view",
@@ -647,7 +648,8 @@
     "priceLabel": "Price ({0})",
     "priceExplain": "Specify a value. Use 0 if it's free or select Price on request if it's not exactly defined.",
     "consult": "POA",
-    "free": "Free"
+    "free": "Free",
+    "confirmDelete": "Are you sure you want to delete ths button type? This operation will delete all buttons"
   },
   "email": {
     "loginTokenContent": "Welcome to {0}",
