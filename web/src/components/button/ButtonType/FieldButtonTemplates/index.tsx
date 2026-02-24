@@ -99,9 +99,10 @@ const FieldButtonTemplates = forwardRef(
                   onClick={() => openToEdit(val, idx)}
                 />
 
-                {val?.customFields && val.customFields.map((field,idx) => { return <span key={idx}>{CustomFieldIcon[field.type]}</span> })}
 
                 <div className='form__list-item__actions'>
+                  {val?.customFields && val.customFields.map((field,idx) => { return <span className='btn-circle__icon' key={idx}>{CustomFieldIcon[field.type]}</span> })}
+
                   <Btn
                     btnType={BtnType.iconActions}
                     iconLink={<IoPencilOutline />}
@@ -306,7 +307,13 @@ function EditButtonTemplate({cancelEdit, setEditing, editingValue, errors, saveE
         </div>
       </div>
       {showConfirmation && 
-        <PickerConfirmation onCancel={onDeleteCancel} onConfirmation={onDeleteConfirm} title={t('customFields.confirmDelete')}/>
+        <PickerConfirmation onCancel={onDeleteCancel} onConfirmation={onDeleteConfirm} title={t('customFields.confirmDeleteLabel')}>
+          <div className='form__field'>
+            {/* <div className="form__label"> {t('customFields.confirmDeleteLabel')}</div> */}
+           <div className="form__explain"> {t('customFields.confirmDeleteExplain')}</div>
+          </div>
+          
+        </PickerConfirmation>
       }
     </Picker>
       

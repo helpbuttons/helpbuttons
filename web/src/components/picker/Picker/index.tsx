@@ -93,20 +93,22 @@ export function PickerConfirmation({ children = null, title, onCancel, onConfirm
   return (
     <Picker closeAction={onCancel} headerText={title}>
       {children}
-      <Btn
-        btnType={BtnType.submit}
-        iconLeft={IconType.svg}
-        caption={t('common.confirm')}
-        contentAlignment={ContentAlignment.center}
-        onClick={onConfirmation}
-      />
-      <Btn
-        btnType={BtnType.splitIcon}
-        iconLeft={IconType.svg}
-        caption={t('common.cancel')}
-        contentAlignment={ContentAlignment.center}
-        onClick={onCancel}
-      />
+      <div className="form__field--multiinput">
+        <Btn
+          btnType={BtnType.submit}
+          iconLeft={IconType.svg}
+          caption={t('common.confirm')}
+          contentAlignment={ContentAlignment.center}
+          onClick={onConfirmation}
+        />
+        <Btn
+          btnType={BtnType.splitIcon}
+          iconLeft={IconType.svg}
+          caption={t('common.cancel')}
+          contentAlignment={ContentAlignment.center}
+          onClick={onCancel}
+        />
+      </div>
     </Picker>
   )
 }
