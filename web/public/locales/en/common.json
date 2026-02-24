@@ -247,7 +247,8 @@
     "registeredRequired": "You need to register",
     "delete": "Delete",
     "confirm": "Confirm",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "unsavedChanges": "Warning! You have unsaved changes."
   },
   "button": {
     "title": "_helpbutton_ view",

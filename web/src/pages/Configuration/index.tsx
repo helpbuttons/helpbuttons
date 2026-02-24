@@ -17,10 +17,12 @@ import {
 } from 'state/Networks';
 import { useStore } from 'state';
 import dconsole from 'shared/debugger';
+import { useWarnIfUnsavedChanges } from 'shared/custom.hooks';
 
 export default Configuration;
 
 function Configuration() {
+  
   const sessionUser = useStore(
     store,
     (state: GlobalState) => state.sessionUser,
@@ -29,7 +31,7 @@ function Configuration() {
 
   const {
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors, isSubmitting, isDirty },
     register,
     control,
     setValue,
@@ -61,6 +63,11 @@ function Configuration() {
       
     );
   }, []);
+
+  useWarnIfUnsavedChanges(isDirty, () => {
+    return confirm(t('common.unsavedChanges'))
+  })
+
   const onSubmit = (data) => {
     store.emit(
       new UpdateNetwork(
