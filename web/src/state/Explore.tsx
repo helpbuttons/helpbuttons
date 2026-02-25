@@ -222,8 +222,8 @@ export class ButtonDelete implements WatchEvent, UpdateEvent {
   public update(state: GlobalState) {
     return produce(state, (newState) => {
       newState.explore.settings.forceRefetch = true;
-      newState.activities.messages.unread = []
-      newState.activities.messages.read = []
+      // delete button from explore and from users buttons
+      newState.myButtons = state.myButtons.filter((btn) => btn.id != this.buttonId)
     });
   }
 }

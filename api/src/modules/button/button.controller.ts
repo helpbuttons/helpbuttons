@@ -131,7 +131,7 @@ export class ButtonController {
     @CurrentUser() user: User,
   ) {
     return await this.buttonService
-      .isOwner(user, buttonId)
+      .isOwner(user, buttonId, true)
       .then((isOwner) => {
         if (!isOwner) {
           throw new CustomHttpException(ErrorName.NoOwnerShip);
