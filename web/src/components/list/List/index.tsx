@@ -85,7 +85,6 @@ function List({
       }
       default:
       case ExploreViewMode.BOTH: {
-        console.log('oiiii bothhhh')
         toggleShowMap(true);
         onLeftColumnToggle(true);
         setListOpen(true);
