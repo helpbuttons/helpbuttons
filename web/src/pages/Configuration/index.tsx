@@ -47,6 +47,7 @@ function Configuration() {
   const textColor = watch('textColor');
   useTextColor(textColor);
   const { pathname, asPath, query } = useRouter();
+  const [submitting, setSubmitting] = useState(false) // isSubmitting won't work?
 
   const [selectedNetwork, setSelectedNetwork] = useState(null);
   useEffect(() => {
@@ -64,11 +65,12 @@ function Configuration() {
     );
   }, []);
 
-  useWarnIfUnsavedChanges(isDirty, () => {
+  useWarnIfUnsavedChanges(isDirty && !submitting, () => {
     return confirm(t('common.unsavedChanges'))
   })
 
   const onSubmit = (data) => {
+    setSubmitting(() => true)
     store.emit(
       new UpdateNetwork(
         {
@@ -160,6 +162,7 @@ function Configuration() {
           } else {
             dconsole.error(err);
           }
+          setSubmitting(() => false)
         },
       ),
     );
