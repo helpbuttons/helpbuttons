@@ -25,6 +25,8 @@ import { useButtonTypes } from 'shared/buttonTypes';
 import DraggableList from '../DraggableList';
 import { ButtonLinkType } from '../CardButtonList';
 import { ButtonList } from '../ContentList';
+import { useScrollDirection } from 'shared/custom.hooks';
+import { SetHideNavBottom } from 'state/HomeInfo';
 
 function List({
   onLeftColumnToggle,
@@ -65,6 +67,13 @@ function List({
 
   const [isListFullScreen, setListFullScreen] =
   useState<boolean>(true);
+
+  const listContentRef = useRef<HTMLDivElement>(null);
+  const isScrollingUp = useScrollDirection(listContentRef)
+
+  useEffect(() => {
+    store.emit(new SetHideNavBottom(!isScrollingUp))
+  }, [isScrollingUp])
 // const [isListOpen, setListOpen] = useState<boolean>(true);
 
   useEffect(() => {
@@ -160,6 +169,7 @@ function List({
                 )}
               </div>
               <div
+                ref={listContentRef}
                 className={
                   'list__content list__content--full-screen' 
                 }

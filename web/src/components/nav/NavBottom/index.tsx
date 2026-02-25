@@ -21,8 +21,9 @@ import { GlobalState, store, useGlobalStore } from 'state';
 import { RecenterExplore } from 'state/Explore';
 import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
 import { useEffect, useState } from 'react';
-import { ShowDesktopOnly, ShowMobileOnly } from 'elements/SizeOnly';
+import { ShowMobileOnly } from 'elements/SizeOnly';
 import router from 'next/router';
+import { ClienteSideRendering } from 'pages/_app';
 
 export default NavBottom;
 
@@ -215,4 +216,19 @@ function NavBottom({ sessionUser }) {
       </nav>
     </>
   );
+}
+
+export function NavBottomMobile({ sessionUser }) {
+  const hideNavBottom = useGlobalStore(
+    (state: GlobalState) => state.homeInfo.hideNavBottom,
+  );
+  return (
+    <ShowMobileOnly>
+      <ClienteSideRendering>
+        {!hideNavBottom && 
+          <NavBottom sessionUser={sessionUser}/>
+        }
+      </ClienteSideRendering>
+    </ShowMobileOnly>
+  )
 }
