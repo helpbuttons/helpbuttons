@@ -239,18 +239,19 @@ export class NetworkService {
     };
 
     /** Dont need to check for orphans no more... ! */
-    // const buttonTemplatesNew = network.buttonTemplates.filter((btnTemplate) => !btnTemplate.hide).map((btnTemplate) => btnTemplate.name)
+    const buttonTemplatesNew = network.buttonTemplates.filter((btnTemplate) => !btnTemplate.hide).map((btnTemplate) => btnTemplate.name)
 
-    // const buttonTemplateActive = await this.entityManager.query(`select count(id), type from button group by type;`)
+    const buttonTemplateActive = await this.entityManager.query(`select count(id), type from button group by type;`)
 
-    // const orphanButtonTemplates = buttonTemplateActive.filter((btnTemplate) => {
-    //   return !(buttonTemplatesNew.find((name) => name == btnTemplate.type) !== undefined);
-    // })
+    const orphanButtonTemplates = buttonTemplateActive.filter((btnTemplate) => {
+      return !(buttonTemplatesNew.find((name) => name == btnTemplate.type) !== undefined);
+    })
 
-    // if (orphanButtonTemplates.length > 0) {
-    //   const undeletedButtonTemplates = orphanButtonTemplates.map((btnTemplate) => btnTemplate.type)
-    //   throw new ValidationException({ buttonTemplates: 'cant delete button template ' + JSON.stringify(undeletedButtonTemplates) });
-    // }
+    if (orphanButtonTemplates.length > 0) {
+      await orphanButtonTemplates.map(async (btnTemplate) => {
+        await this.entityManager.query(`update button set deleted = true where type = $1`,[btnTemplate.type])
+      } )
+    }
 
     await this.cacheManager.del('defaultNetwork');
     await getManager().transaction(
