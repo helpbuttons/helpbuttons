@@ -27,7 +27,7 @@ import { ClienteSideRendering } from 'pages/_app';
 
 export default NavBottom;
 
-function NavBottom({ sessionUser }) {
+function NavBottom({ sessionUser, hideNavBottom=false }) {
   const activities = useGlobalStore((state: GlobalState) => state.activities.buttons)
   const pageName = useGlobalStore((state: GlobalState) => state.homeInfo.pageName)
   
@@ -52,7 +52,7 @@ function NavBottom({ sessionUser }) {
   }, [activities]);
   return (
     <>
-      <nav id="bottom-nav" className="nav-bottom">
+      <nav id="bottom-nav" className={hideNavBottom ? "nav-bottom nav-bottom--hide" : " nav-bottom"}>
         <NavLink
           href="/HomeInfo"
           className={`nav-bottom__link ${isCurrent(
@@ -225,9 +225,7 @@ export function NavBottomMobile({ sessionUser }) {
   return (
     <ShowMobileOnly>
       <ClienteSideRendering>
-        {!hideNavBottom && 
-          <NavBottom sessionUser={sessionUser}/>
-        }
+          <NavBottom sessionUser={sessionUser} hideNavBottom={hideNavBottom}/>
       </ClienteSideRendering>
     </ShowMobileOnly>
   )
