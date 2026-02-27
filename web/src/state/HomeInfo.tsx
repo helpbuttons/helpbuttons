@@ -35,6 +35,7 @@ export interface HomeInfoState {
   pageName: string;
   cookiesState: CookiesState,
   invitationCode: string;
+  hideNavBottom: boolean;
 }
 
 export const homeInfoStateInitial = {
@@ -45,7 +46,8 @@ export const homeInfoStateInitial = {
   isInstallable: false,
   pageName: '',
   cookiesState: CookiesState.UNREAD,
-  invitationCode: null
+  invitationCode: null,
+  hideNavBottom: false
 };
 
 export class SetMainPopup implements UpdateEvent {
@@ -146,6 +148,15 @@ export class SetCookieState implements UpdateEvent{
   public update(state: GlobalState){
     return produce(state, (newState) => {
       newState.homeInfo.cookiesState = this.cookieState;
+    })
+  }
+}
+
+export class SetHideNavBottom implements UpdateEvent{
+  public constructor(private hide: boolean) {}
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      newState.homeInfo.hideNavBottom = this.hide
     })
   }
 }

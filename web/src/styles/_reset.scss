@@ -147,7 +147,7 @@ body,
 .list__container--full-screen,
 .list__content--full-screen{
 
-  height: calc(var(--vh) - 220px ) !important; //header + filters bar
+    height: calc(var(--vh) - 182px) !important;
 
 }
 
@@ -253,7 +253,7 @@ p {
 
   .list__content {
 
-    height: calc(var(--vh) - 194px) !important;
+    height: calc(var(--vh) - 182px) !important;
 
   }
 
