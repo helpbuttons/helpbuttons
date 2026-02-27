@@ -624,7 +624,7 @@
     "inviteOnlyNetwork": "You can only signup in this network with an invitation",
     "generate": "Generate new invitation",
     "copied": "Invitation link copied to clipboard {0}",
-    "title": "QR invites",
+    "title": "Invites",
     "description": "Invite people, manage and share links with other people to allow them to access your network",
     "inviteOnlyLabel": "Network privacy",
     "inviteOnlyExplain": "If you enable this, users will only be able to register and publish if they use a QR code. They will still see the _helpbuttons_.",
@@ -671,7 +671,7 @@
     "notFoundMessage": "Page not found"
   },
   "moderation": {
-    "description": "Here you can review the users of your network, and the buttons!",
+    "description": "Here you can review the users and _helpbuttons_ of your network",
     "verified": "Verified",
     "revoke": "Revoke administrator rights",
     "activate": "Activate",
@@ -681,7 +681,7 @@
     "actions": "Actions",
     "role": "Role",
     "usersList": "Users",
-    "buttonsList": "_helpbuttons_ approval list",
+    "buttonsList": "_helpbuttons_ waiting list",
     "confirm": "Confirm",
     "preview": "Preview",
     "emptyButtonList": "No _helpbuttons_ to be approved",
@@ -696,7 +696,8 @@
     "adminCommunicationExplain": "Messages that you share here will be send to all admins or all users of the network",
     "created_at": "Date",
     "edit": "Edit",
-    "awaitingApprovalLabel": "Awaiting approval"
+    "awaitingApprovalLabel": "Awaiting approval",
+    "buttonsApproved": "All published _helpbuttons_ "
   },
   "roles": {
     "blocked": "blocked",
