@@ -128,7 +128,7 @@ export const usePoolFunc = ({paused, timeMs, func }) => {
 export const useScrollDirection = (ref) => {
 
   const lastScrollTopRef = useRef<number>(0);
-  const [isScrollingUp, setIsScrollingUp] = useState(false);
+  const [isScrollingUp, setIsScrollingUp] = useState(true);
 
   // Detect scroll direction
   useEffect(() => {
@@ -149,7 +149,6 @@ export const useScrollDirection = (ref) => {
       }
       
       const _isScrollingUp = currentScrollTop < lastScrollTopRef.current;
-      
       setIsScrollingUp(() => _isScrollingUp);
       
       lastScrollTopRef.current = currentScrollTop;
