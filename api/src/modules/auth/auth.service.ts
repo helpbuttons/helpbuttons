@@ -50,7 +50,8 @@ export class AuthService {
           name: signupQRUserDto.name,
           password: token(),
           locale: signupQRUserDto.locale,
-          acceptPrivacyPolicy: signupQRUserDto.acceptPrivacyPolicy
+          acceptPrivacyPolicy: signupQRUserDto.acceptPrivacyPolicy,
+          phone: signupQRUserDto.phone,
         }
       })
       .then((signupUserDto: SignupRequestDto) => {
@@ -71,7 +72,8 @@ export class AuthService {
           radius: 0,
           qrcode: signupUserDto.qrcode,
           showWassap: false,
-          follows: []
+          follows: [],
+          phone: signupUserDto.phone,
         };
 
         return this.createUser(newUserDto, signupUserDto).then(

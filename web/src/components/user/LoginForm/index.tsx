@@ -18,6 +18,7 @@ import { alertService } from 'services/Alert';
 import { CookiesState, MainPopupPage, SetMainPopup } from 'state/HomeInfo';
 import { handleAcceptCookies } from 'components/home/CookiesBanner';
 import { Network } from 'shared/entities/network.entity';
+import { IoQrCode } from 'react-icons/io5';
 
 export default function LoginForm() {
   const {
@@ -61,9 +62,9 @@ export default function LoginForm() {
         <div className="form__inputs-wrapper">
           <FieldText
             name="email"
-            label={t('user.email')}
+            label={t('user.emailOrUsername')}
             classNameInput="squared"
-            placeholder={t('user.emailPlaceHolder')}
+            placeholder={t('user.emailOrUsernamePlaceholder')}
             validationError={errors.email}
             {...register('email', { required: true })}
           ></FieldText>
@@ -97,7 +98,7 @@ export default function LoginForm() {
            {selectedNetwork?.allowGuestCreation && 
             <div className="popup__link" onClick={() => store.emit(new SetMainPopup(MainPopupPage.SIGNUP_AS_GUEST))}>
 
-                {t('user.signupAsGuest')}
+                <IoQrCode/>{t('user.signupAsGuest')}
             </div>
             }
         </div>

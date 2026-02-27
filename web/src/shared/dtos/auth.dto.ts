@@ -112,6 +112,8 @@ export class SignupRequestDto {
   acceptPrivacyPolicy
 
   qrcode: string;
+
+  phone?: string;
 }
 
 
@@ -147,7 +149,9 @@ export class SignupQRRequestDto {
   tags?: string[];
 
   @IsIn(['yes'])
-  acceptPrivacyPolicy
+  acceptPrivacyPolicy;
+  
+  phone?: string;
 }
 
 export class LoginRequestDto {

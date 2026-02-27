@@ -79,7 +79,7 @@ export default function NewUserFields({
       <FieldText
         name="name"
         label={t('user.name')}
-        explain={t('user.nameExplain')}
+        // explain={t('user.nameExplain')}
         classNameInput="squared"
         placeholder={t('user.namePlaceHolder')}
         validationError={errors.name}
@@ -150,6 +150,16 @@ export default function NewUserFields({
             {...register('email')}
           ></FieldText>
 
+          <FieldText
+            name="phone"
+            label={t('user.phone')}
+            explain={t('user.phoneExplain')}
+            classNameInput="squared"
+            placeholder={t('user.phonePlaceHolder')}
+            validationError={errors.phone}
+            {...register('phone')}               
+          ></FieldText>
+
           {selectedNetwork && !isInitAdminForm && short && (
             <FieldTags
               label={t('user.tags')}
@@ -181,7 +191,20 @@ export default function NewUserFields({
             maxTags={30}
           />
       )}
-      <div className='form__explain'>{t('user.acceptPrivacyPolicy')}<Link onClick={() => store.emit(new SetMainPopup(MainPopupPage.FAQS))} className='link' href="#">{t('user.privacyPolicyLink')}</Link></div>
+      {/* <FieldPassword
+        name="password_confirm"
+        label={t('user.passwordConfirmation')}
+        classNameInput="squared"
+        placeholder={t('user.passwordConfirmationPlaceHolder')}
+        validationError={errors.password}
+        {...register('password_confirm', {
+          required: true,
+          minLength: 8,
+        })}
+      ></FieldPassword> */}
+      <div className='form__explain'>
+        {t('user.acceptPrivacyPolicy')}<Link onClick={() => store.emit(new SetMainPopup(MainPopupPage.FAQS))} className='link' href="#">{t('user.privacyPolicyLink')}</Link>
+      </div>
       <FieldCheckbox
         name="acceptPrivacyPolicy"
         // defaultValue={watch('acceptPrivacyPolicy')}

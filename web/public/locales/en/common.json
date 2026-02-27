@@ -331,15 +331,17 @@
     "profileView": "Your profile",
     "otherProfileView": "User",
     "email": "Email",
-    "emailExplain": "This is your login email and where you'll receive notifications",
+    "emailOrUsername": "Email or username",
+    "emailOrUsernamePlaceholder": "i.e. mine@mail.com or mary136",
+    "emailExplain": "Here you'll receive notifications",
     "emailPlaceHolder": "email@example.tld",
     "username": "Username",
     "usernameWillBe": "Your username will be ",
     "usernameExplain": "The username is what will identify you in this network and others",
-    "usernameCreateExplain": "Create your username. The username is your alias used to identify you.",
+    "usernameCreateExplain": "Modify your username. The username is your alias used to identify you.",
     "usernamePlaceHolder": "Type a unique name",
     "password": "Password",
-    "passwordExplain": "Create your password, 8 characters minimum.",
+    "passwordExplain": "Create your password, 8 chars minimum.",
     "pickLanguageLabel": "Pick your language",
     "pickLanguageExplain": "The app menus will be translated to the language you choose",
     "passwordPlaceHolder": "Type your password here",
@@ -436,8 +438,8 @@
     "iHaveCode":"I have a guest code",
     "guestCode":"Guest code",
     "guestCodePlaceHolder":"Write the code here",
-    "askForNewCode":"I don't have my guest info"
-
+    "askForNewCode":"I don't have my guest info",
+    "inviteLogin": "Enter"
   },
   "picker": {
     "headerText": "Choose a location"
@@ -636,7 +638,10 @@
     "inviteOnlyExplain": "If you enable this, users will only be able to register and publish if they use a QR code. They will still see the _helpbuttons_.",
     "inviteOnly": "Only allow signup with an QR code",
     "generateQr": "Get QR",
-    "registered": "Qr code already registered"
+    "registered": "Qr code already registered",
+    "scanCodeLabel":"Type your code",
+    "scanCodeExplain": "You can type your QR code if you can't scan the QR",
+    "scanPlaceHolder":"Type your full invite link or your alfanumerical code"
   },
   "invitation": {
     "card": "Anonimous login individual card",

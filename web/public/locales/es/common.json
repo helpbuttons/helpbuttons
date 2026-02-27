@@ -257,10 +257,10 @@
     "profileView": "Tu Perfil",
     "otherProfileView": "Perfil de usuario",
     "email": "Email",
-    "emailExplain": "Este será tu email para entrar y donde recibirás las notificaciones",
+    "emailExplain": "Aquí recibirás las notificaciones",
     "username": "Nombre de usuario",
     "password": "Contraseña",
-    "passwordExplain": "Crea tu contraseña, mínimo 8 letras",
+    "passwordExplain": "Crea tu contraseña, mínimo 8 caracteres.",
     "passwordConfirmation": "Confirmar contraseña",
     "created": "Creado",
     "loginButton": "Entrar",
@@ -270,9 +270,9 @@
     "myHelpbuttons": "Tus _helpbuttons_",
     "name": "Nombre público",
     "nameExplain": "Este es tu nombre público que otros usuarios podran ver",
-    "namePlaceHolder": "Escribe tu nombre con total libertad",
+    "namePlaceHolder": "Escribe aquí el nombre que otros verán",
     "usernameExplain": "El nombre de usuario es un término que te identificará en esta red y otras",
-    "usernameCreateExplain": "Crea tu nombre de usuario. Debe ser un término único y breve como, por ejemplo: Manuel12, Bobby o RosaB.",
+    "usernameCreateExplain": "Modifica tu nombre de usuario. Debe ser un término único y breve como, por ejemplo: Manuel12, Bobby o RosaB.",
     "description": "Descripción",
     "descriptExplain": "Breve descripción sobre ti o lo que haces que se mostrará en tu perfil",
     "setNewPassword": "Crea una nueva contraseña",
@@ -308,7 +308,7 @@
     "showButtonsProfileLabel": "Contenido en tu página de perfil",
     "showButtonsProfileExplain": "Marca esta opción si quieres mostrar una lista pública de tus _helpbuttons_ en tu página de perfil",
     "showButtons": "Mostrar mis _helpbuttons_ en mi pagina de perfil",
-    "tagsExplain": "Importante. Selecciona o escribe en este campo las palabras que te interesen y recibirás avisos cuando haya _helpbuttons_ sobre dichos temas. Escribe y pulsa enter o separa por comas para añadir.",
+    "tagsExplain": "Selecciona y recibe avisos sobre estos temas. Escribe y pulsa enter o separa por comas para añadir.",
     "tagsSignupExplain": "Opcionalmente, selecciona y/o escribe temas en los que estés interesado/a y recibirás información sobre _helpbuttons_ de esos temas. Escribe y pulsa enter o separa con comas para añadir nuevos temas",
     "distance": "Distancia máxima de avisos",
     "distanceExplain": "_helpbuttons_ que se creen fuera de este radio respecto de tu posición no te serán notificados",
@@ -636,8 +636,13 @@
     "inviteOnlyLabel": "Privacidad de la red",
     "inviteOnlyExplain": "Si habilitas esto, los usuarios solo podrán registrarse y publicar con un código QR.",
     "inviteOnly": "Sólo permitir el registro con un código QR",
+
+
     "generateQr": "Obtener QR",
-    "registered": "QR usado"
+    "registered": "QR usado",
+    "scanCodeLabel":"Escribe tu código QR",
+    "scanCodeExplain": "Escribe tu código numérico si no puedes escanear",
+    "scanPlaceHolder":"Escribe tu link completo de invitado o tu código alfanumérico"
   },
   "customFields": {
     "priceLabel": "Precio ({0})",
