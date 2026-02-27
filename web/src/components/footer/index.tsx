@@ -6,6 +6,12 @@ import { GlobalState, store, useStore } from "state";
 
 export default function Footer() {
 
+  const sessionUser = useStore(
+    store,
+    (state: GlobalState) => state.sessionUser,
+    false,
+  );
+
   const selectedNetwork = useStore(
     store,
     (state: GlobalState) => state.networks.selectedNetwork,
@@ -50,6 +56,7 @@ export default function Footer() {
           </a>
         </li>
       </ul>
+      {sessionUser &&
       <ul className="footer__actions">
         <li className="footer__link-header">
           <a href="/" className="footer__link--item">
@@ -72,6 +79,7 @@ export default function Footer() {
           </a>
         </li>
       </ul>
+      }
       <ul className="footer__contact">
         <li className="footer__link-header">
           <span className="footer__link--item">
