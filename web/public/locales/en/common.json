@@ -72,6 +72,7 @@
     "advancedInviteOptions": "Printable PDF invitations",
     "printInvites":"Printable pdf invitations",
     "linkCopied": "{0} copied to clipboard",
+    "codeCopied": "Copied on clipboard",
     "copyCode": "Copy code"
 
   },
@@ -242,7 +243,12 @@
     "notFoundMessage": "Page not found or deleted",
     "options": "Options",
     "edit": "Edit",
-    "show": "Show"
+    "show": "Show",
+    "registeredRequired": "You need to register",
+    "delete": "Delete",
+    "confirm": "Confirm",
+    "cancel": "Cancel",
+    "unsavedChanges": "Warning! You have unsaved changes."
   },
   "button": {
     "title": "_helpbutton_ view",
@@ -543,7 +549,7 @@
     "adminUsers": "These are your Network's Administrator. To edit visit their profiles",
     "contactAdmin": "Contact the administrator",
     "customFields": "Custom fields",
-    "customFieldsExplain": "These are extra fields that you can add to your _helpbuttons_ so they accomplish different tasks. Add date if you want to haddle events, or price if you want the users to be able to sell products.",
+    "customFieldsExplain": "These are extra fields that you can add to your _helpbuttons_ so they accomplish different tasks. Add date if you want to handle events, or price if you want the users to be able to sell products.",
     "priceFieldAdd": "Add price",
     "priceFieldAddLabel": "Display a price so user can buy/sell in their _helpbuttons_",
     "dateFieldAddLabel": "Display a date so the _helpbutton_ type behaves like an event and users can search by calendar",
@@ -641,9 +647,12 @@
   },
   "customFields": {
     "priceLabel": "Price ({0})",
-    "priceExplain": "Specify a value. Use 0 if it's free or select Price to consult if it's not exactly defined.",
-    "consult": "Price to consult",
-    "free": "Free"
+    "priceExplain": "Specify a value. Use 0 if it's free or select Price on request if it's not exactly defined.",
+    "consult": "On request",
+    "free": "Free",
+    "confirmDeleteLabel": "Delete _helpbutton_ type",
+    "confirmDeleteExplain": "Are you sure you want to delete this button type? This operation will delete all buttons"
+
   },
   "email": {
     "loginTokenContent": "Welcome to {0}",

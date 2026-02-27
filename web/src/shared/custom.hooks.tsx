@@ -1,3 +1,4 @@
+import { Router } from 'next/router';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 export function usePrevious(value) {
@@ -162,4 +163,31 @@ export const useScrollDirection = (ref) => {
   }, []);
 
   return isScrollingUp
+}
+
+
+export const useWarnIfUnsavedChanges = (unsavedChanges: boolean, callback: () => boolean) => {
+  useEffect(() => {
+    if (unsavedChanges) {
+      const routeChangeStart = () => {
+        const ok = callback()
+        if (!ok) {
+          Router.events.emit("routeChangeError")
+          throw "Abort route change. Please ignore this error."
+        }
+      }
+      Router.events.on("routeChangeStart", routeChangeStart)
+
+      const beforeUnload = (e: BeforeUnloadEvent) => {
+        e.preventDefault();
+        return false;
+      }
+      window.addEventListener('beforeunload', beforeUnload);
+
+      return () => {
+        window.removeEventListener('beforeunload', beforeUnload);
+        Router.events.off("routeChangeStart", routeChangeStart)
+      }
+    }
+  }, [unsavedChanges])
 }

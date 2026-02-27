@@ -106,4 +106,8 @@ export class ButtonService {
   public static followers(buttonId): Observable<any> {
     return httpService.get<any>(`buttons/followers/${buttonId}`);
   }
+
+  public static deleteType(type): Observable<any>{
+    return httpService.get<any>(`buttons/deleteType/${type}`)
+  }
 }

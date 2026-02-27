@@ -119,7 +119,8 @@
     "error": "Hubo un problema",
     "reloadConfig": "Recargar configuración",
     "publishTitle": "Crear {0}",
-    "deleteSuccess": "Finalizado con éxito"
+    "deleteSuccess": "Finalizado con éxito",
+    "registeredRequired": "Registro requerido"
   },
   "configuration": {
     "config": "Opciones de configuración",
@@ -296,7 +297,7 @@
     "dontChangePassword": "No cambies la contraseña",
     "created_date": "Usuario desde",
     "loginSucess": "Entraste sin problemas!",
-    "loginSucessLink": "Entraste sin problemas, <a href='/ProfileEdit'>cambia tu contraseña</a>",
+    "loginSucessLink": "Entraste sin problemas, <a href='/ProfileEdit'>cambia aquí tu contraseña</a> o ve a Perfil > Editar > Seguridad",
     "emailPlaceHolder": "Por ejemplo luis@email.org",
     "pickLanguageLabel": "Elige idioma",
     "pickLanguageExplain": "Los menús de la herramienta serán traducidos a la lengua que elijas",
@@ -640,7 +641,7 @@
   },
   "customFields": {
     "priceLabel": "Precio ({0})",
-    "consult": "Precio a consultar",
+    "consult": "A consultar",
     "free": "Gratis",
     "priceExplain": "Especifica un valor. Usa 0 si es gratis o seleciona Precio a Consultar si es variable."
   },

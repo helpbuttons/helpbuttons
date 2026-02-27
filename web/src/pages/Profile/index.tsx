@@ -18,13 +18,11 @@ export default function Profile() {
 
 
   const sessionUser = useGlobalStore((state) => state.sessionUser)
-  const [buttons, setButtons] = useState([])
+  const myButtons = useGlobalStore((state) => state.myButtons)
   useEffect(() => {
     if (sessionUser) {
         store.emit(
-          new FindMyButtons((btns) =>
-            setButtons(() => btns),
-          ),
+          new FindMyButtons(),
         );
       }
     }, [sessionUser]);
@@ -33,7 +31,7 @@ export default function Profile() {
       <DesktopOnlyProfileContainer>
         <LoadabledComponent loading={!sessionUser}>
           <CardProfile user={sessionUser} showProfileEdit={true} />
-          <CardProfileButtonList user={sessionUser} buttons={buttons} />
+          <CardProfileButtonList user={sessionUser} buttons={myButtons} />
         </LoadabledComponent>
       </DesktopOnlyProfileContainer>
     </MobileOnlyPopup>

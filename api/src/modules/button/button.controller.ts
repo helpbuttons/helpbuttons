@@ -131,7 +131,7 @@ export class ButtonController {
     @CurrentUser() user: User,
   ) {
     return await this.buttonService
-      .isOwner(user, buttonId)
+      .isOwner(user, buttonId, true)
       .then((isOwner) => {
         if (!isOwner) {
           throw new CustomHttpException(ErrorName.NoOwnerShip);
@@ -298,5 +298,11 @@ export class ButtonController {
   @Get('followers/:buttonId')
   findFollowers(@Param('buttonId') buttonId: string){
     return this.buttonService.findFollowers(buttonId)
+  }
+
+  @OnlyAdmin()
+  @Get('deleteType/:type')
+  deleteType(@Param('type') type: string) {
+    return this.buttonService.deleteAllButtonsFromType(type)
   }
 }

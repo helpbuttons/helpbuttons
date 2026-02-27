@@ -59,6 +59,7 @@ import { ButtonPin, ButtonUnpin, FindFollowers } from 'state/Button';
 import { SetDraftButton } from 'state/Activity';
 import { useToggle } from 'shared/custom.hooks';
 import { useIsMobile } from 'elements/SizeOnly';
+import { ButtonDelete, updateCurrentButton } from 'state/Explore';
 
 export default function CardButton({ button, buttonTypes, toggleShowReplyFirstPost }) {
   const buttonType = useButtonType(button, buttonTypes);
@@ -259,6 +260,23 @@ function CardButtonSubmenu({ button }) {
       return;
     }
   };
+  const deleteButton = (buttonId) => {
+    store.emit(
+      new ButtonDelete(
+        buttonId,
+        () => {
+          alertService.success(t('common.deleteSuccess', [buttonId]));
+          
+          store.emit(new updateCurrentButton(null))
+          store.emit(new SetMainPopup(MainPopupPage.HIDE))
+        },
+        (errorMessage) => {
+          console.error(errorMessage)
+          alertService.error(errorMessage.caption);
+        },
+      ),
+    );
+  }
   return (
     <CardSubmenu>
       <CardSubmenuOption
@@ -280,9 +298,7 @@ function CardButtonSubmenu({ button }) {
             label={t('button.edit')}
           />
           <CardSubmenuOption
-            onClick={() => {
-              router.push(`/ButtonRemove/${button.id}`);
-            }}
+            onClick={() => deleteButton(button.id)}
             label={t('button.delete')}
           />
         </>

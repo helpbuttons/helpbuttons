@@ -8,17 +8,13 @@ import { NetworkService } from 'services/Networks';
 import { isHttpError } from 'services/HttpService';
 import { of } from 'rxjs';
 import { GlobalState, store } from 'state';
-import { CreateNetworkDto } from 'shared/dtos/network.dto';
 import { Network } from 'shared/entities/network.entity';
 import { HttpStatus } from 'shared/types/http-status.enum';
-import { ExploreViewMode, UpdateExploreSettings } from './Explore';
+import { ExploreViewMode } from './Explore';
 import { useGlobalStore } from 'state';
 import { useEffect, useRef, useState } from 'react';
-import { SetupSteps } from 'shared/setupSteps';
-import { ConfigFound, GetConfig } from './Setup';
 import { getLocale } from 'shared/sys.helper';
-import { roundCoords } from 'shared/honeycomb.utils';
-import dconsole from 'shared/debugger';
+import { ButtonService } from 'services/Buttons';
 // import router from 'next/router';
 
 export interface NetworksState {
@@ -257,3 +253,12 @@ export class FindLatestNetworkActivity implements WatchEvent {
   }
 }
 
+
+export class DeleteButtonsType implements WatchEvent {
+  public constructor(private type, private onSuccess){}
+  public watch (state: GlobalState) {
+    return ButtonService.deleteType(this.type).pipe(
+      map(() => this.onSuccess())
+    )
+  }
+}

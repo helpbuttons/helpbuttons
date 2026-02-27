@@ -17,10 +17,12 @@ import {
 } from 'state/Networks';
 import { useStore } from 'state';
 import dconsole from 'shared/debugger';
+import { useWarnIfUnsavedChanges } from 'shared/custom.hooks';
 
 export default Configuration;
 
 function Configuration() {
+  
   const sessionUser = useStore(
     store,
     (state: GlobalState) => state.sessionUser,
@@ -29,7 +31,7 @@ function Configuration() {
 
   const {
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors, isSubmitting, isDirty },
     register,
     control,
     setValue,
@@ -45,6 +47,7 @@ function Configuration() {
   const textColor = watch('textColor');
   useTextColor(textColor);
   const { pathname, asPath, query } = useRouter();
+  const [submitting, setSubmitting] = useState(false) // isSubmitting won't work?
 
   const [selectedNetwork, setSelectedNetwork] = useState(null);
   useEffect(() => {
@@ -61,7 +64,16 @@ function Configuration() {
       
     );
   }, []);
+
+  const _setValue = (name, value) => {
+    setValue(name, value, { shouldDirty: true });
+  }
+  useWarnIfUnsavedChanges(isDirty && !submitting, () => {
+    return confirm(t('common.unsavedChanges'))
+  })
+
   const onSubmit = (data) => {
+    setSubmitting(() => true)
     store.emit(
       new UpdateNetwork(
         {
@@ -153,6 +165,7 @@ function Configuration() {
           } else {
             dconsole.error(err);
           }
+          setSubmitting(() => false)
         },
       ),
     );
@@ -168,7 +181,7 @@ function Configuration() {
               handleSubmit={handleSubmit}
               onSubmit={onSubmit}
               register={register}
-              setValue={setValue}
+              setValue={_setValue}
               setFocus={setFocus}
               watch={watch}
               isSubmitting={isSubmitting}

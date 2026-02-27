@@ -9,10 +9,12 @@ import { useState, forwardRef, useEffect, useRef } from 'react';
 import { FieldColorPick } from 'elements/Fields/FieldColorPick';
 import { tagify } from 'shared/sys.helper';
 import { buttonColorStyle } from 'shared/buttonTypes';
-import { AddCustomFields } from '../CustomFields/AddCustomFields';
+import { AddCustomFields, CustomFieldIcon } from '../CustomFields/AddCustomFields';
 import { EmojiPicker } from 'components/emoji';
-import { Picker } from 'components/picker/Picker';
+import { Picker, PickerConfirmation } from 'components/picker/Picker';
 import PickerField from 'components/picker/PickerField';
+import { DeleteButtonsType, useSelectedNetwork } from 'state/Networks';
+import { store } from 'state';
 
 
 const FieldButtonTemplates = forwardRef(
@@ -36,62 +38,34 @@ const FieldButtonTemplates = forwardRef(
     ref,
   ) => {
 
-
     const { remove, append, update } = useFieldArray({
       name,
       control,
     });
 
-    const [editFieldIdx, setEditFieldIdx] = useState(null)
-    const [editFieldCaption, setEditFieldCaption] = useState(null)
-    const [editFieldCssColor, setEditFieldCssColor] = useState(null)
-    const [editFieldEmoji, setEditFieldEmoji] = useState('😀')
-    const [editFieldCustomTypes, setEditFieldCustomTypes] = useState([])
-    const [hideField, setHideField] = useState(false)
-
-    let closeMenu = () => {
-      setEditFieldIdx(false);
+    const editingDefaultValue = {
+      id: null,
+      icon: '😀',
+      cssColor: null, 
+      caption: '',
+      hide: false,
+      customFields: null
     };
-
+    const [editingValue, setEditingValue] = useState(editingDefaultValue)
    
     const watchValue = watch(name);
-
-    const edit = (value, idx) => {
-      setEditFieldIdx(() => idx)
-      setEditFieldCssColor(() => value.cssColor)
-      setEditFieldCaption(() => value.caption)
-      setHideField(() => value.hide)
-      setEditFieldCustomTypes(() => value.customFields)
-      if(value.icon)
-      {
-        setEditFieldEmoji(() => value.icon)
-      }else{
-        setEditFieldEmoji(() => '😀')
-      }
+    const openToEdit = (value, idx) => {
+      setEditingValue(() => {return {id: idx, ...value}})
     }
-
+    const setEditing = (keyValue) => {
+      setEditingValue((prevValues) => {return {...prevValues, ...keyValue}})
+    }
     const saveEdit = (value) => {
-      update(editFieldIdx, {
-        ...value, 
-        icon: editFieldEmoji,
-        cssColor: editFieldCssColor, 
-        caption: editFieldCaption,
-        hide: hideField,
-        customFields: editFieldCustomTypes
-      })
-      setEditFieldIdx(() => null)
-      setEditFieldCssColor(() => null)
-      setEditFieldCaption(() => null)
-      setHideField(() => false)
-      setEditFieldCustomTypes(() => [])
+      update(editingValue.id, {...value,...editingValue})
+      cancelEdit()
     }
-
-    const hideIdx = (id, values) => {
-      update(id, {...values, hide: true})
-    }
-
-    const showIdx = (id, values) => {
-      update(id, {...values, hide: false})
+    const cancelEdit = () => {
+      setEditingValue(() => editingDefaultValue)
     }
 
     return (
@@ -108,105 +82,35 @@ const FieldButtonTemplates = forwardRef(
           {watchValue?.length > 0 &&
             watchValue.map((val, idx) => (
               <div
-                className="form__list-item--button-type-field"
                 key={idx}
-                style={buttonColorStyle(val.cssColor)}
-              >
-                {editFieldIdx == idx &&
-                  <Picker closeAction={() => setEditFieldIdx(() => null)} headerText={t('configuration.setType')}>
-                    <div className="form__button-type-section">
-                      <FieldText
-                        name="buttonTemplate.name"
-                        label={t('configuration.buttonTemplateName')}
-                        className="field-text"
-                        onChange={(e) => setEditFieldCaption(() => e.target.value)}
-                        defaultValue={editFieldCaption}
-                      />
-                      <EmojiPicker
-                      updateEmoji={(newEmoji) => setEditFieldEmoji(() => newEmoji)} 
-                      pickerEmoji={editFieldEmoji}
-                      label={t('configuration.buttonTemplateEmoji')}
-                      />
-                      <FieldColorPick
-                        name="buttonTemplateColor"
-                        classNameInput="squared"
-                        validationError={errors.buttonTemplateColor}
-                        setValue={(name, value) => setEditFieldCssColor(value)}
-                        label={t('configuration.buttonTemplateColor')}
-                        actionName={t('configuration.buttonTemplateColor')}
-                        value={editFieldCssColor}
-                      />
-                     
-                      {editFieldCustomTypes && 
-                      <>
-                        <label className="form__label">
-                        {t('configuration.customFields')}:
-                          </label>
-                          <p className="form__explain">
-                            {t('configuration.customFieldsExplain')}
-                          </p>
-                          <AddCustomFields
-                            customFields={editFieldCustomTypes}
-                            setCustomFields={setEditFieldCustomTypes}
-                          />
-                      </>
-                      }
-                      <Btn
-                        btnType={BtnType.corporative}
-                        iconLink={<IoSaveOutline />}
-                        iconLeft={IconType.circle}
-                        contentAlignment={ContentAlignment.center}
-                        onClick={() => saveEdit(val)}
-                      />
-                    </div>
-                  </Picker>
+                className="form__list-item--button-type-field"
+                style={buttonColorStyle(val.cssColor)}>
+                {editingValue?.id == idx &&
+                  <EditButtonTemplate cancelEdit={cancelEdit} setEditing={setEditing} editingValue={editingValue} errors={errors} saveEdit={saveEdit} remove={remove} defaultValue={val} />
                 }
-                {editFieldIdx != idx && 
-                    <>
-                    <Btn
-                      btnType={BtnType.filterEmoji}
-                      iconLeft={IconType.svg}
-                      contentAlignment={ContentAlignment.left}
-                      caption={val.caption}
-                      iconLink={val.icon}
-                      color={val.cssColor}
-                    />
-                    <div className='form__list-item__actions'>
-                      <Btn
-                        btnType={BtnType.iconActions}
-                        iconLink={<IoPencilOutline />}
-                        iconLeft={IconType.circle}
-                        contentAlignment={ContentAlignment.center}
-                        onClick={() => edit(val, idx)}
-                      />
-                      {!val.hide && 
-                        <Btn
-                          btnType={BtnType.iconActions}
-                          iconLink={<IoTrashBinOutline />}
-                          iconLeft={IconType.circle}
-                          contentAlignment={ContentAlignment.center}
-                          onClick={() => {
-                            hideIdx(idx, val)
-                        }}
-                        />
-                      }
-                      {val.hide && 
-                        <Btn
-                          btnType={BtnType.smallCircle}
-                          iconLink={<IoPowerOutline />}
-                          iconLeft={IconType.circle}
-                          contentAlignment={ContentAlignment.center}
-                          onClick={() => {
-                            showIdx(idx, val)
-                          }}
-                        />
-                      }
-                    </div>
 
-                    
-                    </>
-                } 
-                
+                <Btn
+                  btnType={BtnType.filterEmoji}
+                  iconLeft={IconType.svg}
+                  contentAlignment={ContentAlignment.left}
+                  caption={val.caption}
+                  iconLink={val.icon}
+                  color={val.cssColor}
+                  onClick={() => openToEdit(val, idx)}
+                />
+
+
+                <div className='form__list-item__actions'>
+                  {val?.customFields && val.customFields.map((field,idx) => { return <span className='btn-circle__icon' key={idx}>{CustomFieldIcon[field.type]}</span> })}
+
+                  <Btn
+                    btnType={BtnType.iconActions}
+                    iconLink={<IoPencilOutline />}
+                    iconLeft={IconType.circle}
+                    contentAlignment={ContentAlignment.center}
+                    onClick={() => openToEdit(val, idx)}
+                  />
+                </div>
               </div>
             ))}
         </div>
@@ -316,4 +220,102 @@ function ButtonTemplateForm({ label, explain, append, buttonTemplates }) {
       </PickerField>
       
   );
+}
+
+function EditButtonTemplate({cancelEdit, setEditing, editingValue, errors, saveEdit, remove, defaultValue}) {
+  const selectedNetwork = useSelectedNetwork()
+
+  const [showConfirmation, setShowConfirmation] = useState(false) 
+  const removeIdx = () => {
+    const buttonCount = selectedNetwork.buttonTypesCount.find((elem) => elem.type == editingValue.name)?.count
+
+    if(buttonCount > 0){
+      setShowConfirmation(() => true)
+    }else{
+      remove(editingValue.id)
+      cancelEdit()
+    }
+  }
+
+  const onDeleteConfirm = () => {
+    store.emit(new DeleteButtonsType(editingValue.name, () => {
+      remove(editingValue.id)
+      cancelEdit()
+    }))
+    setShowConfirmation(() => false)
+  }
+
+  const onDeleteCancel = () => {
+    setShowConfirmation(() => false)
+    cancelEdit()
+  }
+
+  return (
+    <Picker closeAction={cancelEdit} headerText={t('configuration.setType')}>
+      <div className="form__button-type-section">
+        <FieldText
+          name="buttonTemplate.name"
+          label={t('configuration.buttonTemplateName')}
+          className="field-text"
+          onChange={(e) => setEditing({ caption: e.target.value })}
+          defaultValue={editingValue.caption}
+        />
+        <EmojiPicker
+          updateEmoji={(newEmoji) => setEditing({ icon: newEmoji })}
+          pickerEmoji={editingValue.icon}
+          label={t('configuration.buttonTemplateEmoji')}
+        />
+        <FieldColorPick
+          name="buttonTemplateColor"
+          classNameInput="squared"
+          validationError={errors.buttonTemplateColor}
+          setValue={(name, value) => setEditing({ cssColor: value })}
+          label={t('configuration.buttonTemplateColor')}
+          actionName={t('configuration.buttonTemplateColor')}
+          value={editingValue.cssColor}
+        />
+
+        {editingValue?.customFields &&
+          <>
+            <label className="form__label">
+              {t('configuration.customFields')}:
+            </label>
+            <p className="form__explain">
+              {t('configuration.customFieldsExplain')}
+            </p>
+            <AddCustomFields
+              customFields={editingValue.customFields}
+              setCustomFields={(customFields) => setEditing({ customFields: customFields })}
+            />
+          </>
+        }
+        <div className='form__field--multiinput'>
+          <Btn
+            btnType={BtnType.submit}
+            iconLeft={IconType.svg}
+            caption={t('common.save')}
+            contentAlignment={ContentAlignment.center}
+            onClick={() => saveEdit(defaultValue)}
+          />
+          <Btn
+            btnType={BtnType.splitIcon}
+            iconLeft={IconType.svg}
+            caption={t('common.delete')}
+            contentAlignment={ContentAlignment.center}
+            onClick={() => removeIdx()}
+          />
+        </div>
+      </div>
+      {showConfirmation && 
+        <PickerConfirmation onCancel={onDeleteCancel} onConfirmation={onDeleteConfirm} title={t('customFields.confirmDeleteLabel')}>
+          <div className='form__field'>
+            {/* <div className="form__label"> {t('customFields.confirmDeleteLabel')}</div> */}
+           <div className="form__explain"> {t('customFields.confirmDeleteExplain')}</div>
+          </div>
+          
+        </PickerConfirmation>
+      }
+    </Picker>
+      
+  )
 }

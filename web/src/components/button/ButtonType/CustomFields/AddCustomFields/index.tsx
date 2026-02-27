@@ -1,8 +1,6 @@
 import { FieldCheckCard } from 'elements/Fields/FieldCheckCard';
-import { FieldCheckbox } from 'elements/Fields/FieldCheckbox';
 import t from 'i18n';
-import { useForm } from 'react-hook-form';
-import { IoAccessibility, IoCalendar, IoCash } from 'react-icons/io5';
+import { IoCalendar, IoCash } from 'react-icons/io5';
 import _ from 'lodash';
 
 export function AddCustomFields({ customFields, setCustomFields }) {
@@ -18,7 +16,7 @@ export function AddCustomFields({ customFields, setCustomFields }) {
         <>
           <FieldCheckCard
             name="priceField"
-            image={<IoCash />}
+            image={CustomFieldIcon['price']}
             explain={t('configuration.priceFieldAddLabel')}
             text={t('configuration.priceFieldAdd')}
             onChanged={(value) => {
@@ -36,7 +34,7 @@ export function AddCustomFields({ customFields, setCustomFields }) {
           />
           <FieldCheckCard
             name="eventField"
-            image={<IoCalendar />}
+            image={CustomFieldIcon['event']}
             explain={t('configuration.dateFieldAddLabel')}
             // defaultValue={watch('eventField')}
             text={t('eventType.eventFieldAdd')}
@@ -58,3 +56,8 @@ export function AddCustomFields({ customFields, setCustomFields }) {
     </>
   );
 }
+
+export const CustomFieldIcon = {
+  'price': <IoCash/>,
+  'event': <IoCalendar/>,
+};
