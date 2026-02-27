@@ -210,7 +210,8 @@ export class MailService {
     return this.networkService.findDefaultNetwork().then((network) => {
       let template = `welcome/${locale}`
       const fs = require('fs');
-      if(!fs.existsSync(`${template}.hbs`)){
+      const templateFilename = `${__dirname}/templates/${template}.hbs`;
+      if(!fs.existsSync(templateFilename)){
         console.log(`${template} not found, changing to 'en'`)
         template = `welcome/en`
       }
