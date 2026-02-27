@@ -286,7 +286,7 @@ function NetworkForm({
               }}
               validationError={errors.exploreSettings}
               onChange={(exploreSettings) => {
-                setValue('exploreSettings', exploreSettings, { shouldDirty: true });
+                setValue('exploreSettings', exploreSettings);
               }}
               value={watch('exploreSettings')}
               markerColor={watch('backgroundColor')}

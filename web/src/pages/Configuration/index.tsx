@@ -65,6 +65,9 @@ function Configuration() {
     );
   }, []);
 
+  const _setValue = (name, value) => {
+    setValue(name, value, { shouldDirty: true });
+  }
   useWarnIfUnsavedChanges(isDirty && !submitting, () => {
     return confirm(t('common.unsavedChanges'))
   })
@@ -178,7 +181,7 @@ function Configuration() {
               handleSubmit={handleSubmit}
               onSubmit={onSubmit}
               register={register}
-              setValue={setValue}
+              setValue={_setValue}
               setFocus={setFocus}
               watch={watch}
               isSubmitting={isSubmitting}
