@@ -54,21 +54,18 @@ export function InviteForm() {
   const [loading, setLoading] = useState(true)
   
   useEffect(() => {
-    const loginCode = code ? code : invitationCode
+    const loginCode = code ? code : null
     if(loginCode)
     {
       const onLoggingInSuccess = () => {
         store.emit(new SetMainPopup(MainPopupPage.HIDE))
         router.push(`/HomeInfo`)
       }
-      // store.emit(new Login(code, code, onLoggingInSuccess, () => {}))
       store.emit(new LoginQR(loginCode, null, onLoggingInSuccess, (err) => { 
         if(err == 'login-incorrect')
         {
           setLoading(false)
           dconsole.log('tryin to login, failed, its ok, qr code is not registered yet')
-          store.emit(new SetMainPopup(MainPopupPage.HIDE))
-          alertService.warn(t('user.loginError'))
         }else{
           dconsole.error(err)
         }

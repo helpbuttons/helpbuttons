@@ -183,7 +183,7 @@ export function SignupAsGuestForm() {
 
   const requestNewGuestCode = () => {
     store.emit(new RequestGuestInvite((code) => {
-      setCode(code)
+      setCode(() => code)
       const link = getInvitationLink(code);
       setInvitationLink(getShareLink(link))
       QRCode.toDataURL(getShareLink(link), function (err, dataUrl) {
