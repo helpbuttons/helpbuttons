@@ -21,12 +21,13 @@ import { GlobalState, store, useGlobalStore } from 'state';
 import { RecenterExplore } from 'state/Explore';
 import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
 import { useEffect, useState } from 'react';
-import { ShowDesktopOnly, ShowMobileOnly } from 'elements/SizeOnly';
+import { ShowMobileOnly } from 'elements/SizeOnly';
 import router from 'next/router';
+import { ClienteSideRendering } from 'pages/_app';
 
 export default NavBottom;
 
-function NavBottom({ sessionUser }) {
+function NavBottom({ sessionUser, hideNavBottom=false }) {
   const activities = useGlobalStore((state: GlobalState) => state.activities.buttons)
   const pageName = useGlobalStore((state: GlobalState) => state.homeInfo.pageName)
   
@@ -51,7 +52,7 @@ function NavBottom({ sessionUser }) {
   }, [activities]);
   return (
     <>
-      <nav id="bottom-nav" className="nav-bottom">
+      <nav id="bottom-nav" className={hideNavBottom ? "nav-bottom nav-bottom--hide" : " nav-bottom"}>
         <NavLink
           href="/HomeInfo"
           className={`nav-bottom__link ${isCurrent(
@@ -215,4 +216,17 @@ function NavBottom({ sessionUser }) {
       </nav>
     </>
   );
+}
+
+export function NavBottomMobile({ sessionUser }) {
+  const hideNavBottom = useGlobalStore(
+    (state: GlobalState) => state.homeInfo.hideNavBottom,
+  );
+  return (
+    <ShowMobileOnly>
+      <ClienteSideRendering>
+          <NavBottom sessionUser={sessionUser} hideNavBottom={hideNavBottom}/>
+      </ClienteSideRendering>
+    </ShowMobileOnly>
+  )
 }

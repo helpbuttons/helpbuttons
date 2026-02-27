@@ -1,8 +1,9 @@
 import React from "react";
-import NextLink from "next/link";
 import { IoClose } from "react-icons/io5";
 
 import { useEffect, useRef } from "react";
+import Btn, { BtnType, ContentAlignment, IconType } from "elements/Btn";
+import t from "i18n";
 
 const getEffectiveZIndex = (element: HTMLElement | null): number => {
   while (element) {
@@ -85,4 +86,29 @@ export function PickerSelector({ onHandleChange, label, value }) {
       </button>
     </>
   );
+}
+
+
+export function PickerConfirmation({ children = null, title, onCancel, onConfirmation }) {
+  return (
+    <Picker closeAction={onCancel} headerText={title}>
+      {children}
+      <div className="form__field--multiinput">
+        <Btn
+          btnType={BtnType.submit}
+          iconLeft={IconType.svg}
+          caption={t('common.confirm')}
+          contentAlignment={ContentAlignment.center}
+          onClick={onConfirmation}
+        />
+        <Btn
+          btnType={BtnType.splitIcon}
+          iconLeft={IconType.svg}
+          caption={t('common.cancel')}
+          contentAlignment={ContentAlignment.center}
+          onClick={onCancel}
+        />
+      </div>
+    </Picker>
+  )
 }

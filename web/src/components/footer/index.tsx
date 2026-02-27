@@ -6,6 +6,12 @@ import { GlobalState, store, useStore } from "state";
 
 export default function Footer() {
 
+  const sessionUser = useStore(
+    store,
+    (state: GlobalState) => state.sessionUser,
+    false,
+  );
+
   const selectedNetwork = useStore(
     store,
     (state: GlobalState) => state.networks.selectedNetwork,
@@ -50,29 +56,30 @@ export default function Footer() {
           </a>
         </li>
       </ul>
+      {sessionUser &&
       <ul className="footer__actions">
-        {/* <li className="footer__link-header">
+        <li className="footer__link-header">
           <a href="/" className="footer__link--item">
             {t('footer.assistance')}
           </a>
         </li>
         <li className="footer__link">
-          <a href="/admins" className="footer__link--item">
+          <a href="/Activity" className="footer__link--item">
             {t('footer.adminSupport')}
           </a>
         </li>
         <li className="footer__link">
-          <a href="/admins" className="footer__link--item">
+          <a href="/Activity" className="footer__link--item">
             {t('footer.securitySupport')}
-       
           </a>
         </li>
         <li className="footer__link">
-          <a href="/admins" className="footer__link--item">
+          <a href="/Faqs?chapter=contact" className="footer__link--item">
             {t('footer.sendAProblem')}
           </a>
-        </li> */}
+        </li>
       </ul>
+      }
       <ul className="footer__contact">
         <li className="footer__link-header">
           <span className="footer__link--item">
@@ -80,7 +87,7 @@ export default function Footer() {
           </span>
         </li>
         <li className="footer__link">
-          <a href="/Faqs?chapter=whats" className="footer__link--item">
+          <a href="https://helpbuttons.org" className="footer__link--item">
             {t('footer.whatsHelpbuttons')}
           </a>
         </li>

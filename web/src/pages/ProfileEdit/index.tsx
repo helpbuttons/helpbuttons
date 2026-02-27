@@ -341,7 +341,7 @@ export default function ProfileEdit() {
                         <Btn
                           btnType={BtnType.submit}
                           contentAlignment={ContentAlignment.center}
-                          caption={t('common.publish')}
+                          caption={t('common.save')}
                           isSubmitting={isSubmitting}
                           submit={true}
                         />

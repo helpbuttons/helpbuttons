@@ -59,6 +59,7 @@ import { ButtonPin, ButtonUnpin, FindFollowers } from 'state/Button';
 import { SetDraftButton } from 'state/Activity';
 import { useToggle } from 'shared/custom.hooks';
 import { useIsMobile } from 'elements/SizeOnly';
+import { ButtonDelete, updateCurrentButton } from 'state/Explore';
 
 export default function CardButton({ button, buttonTypes, toggleShowReplyFirstPost }) {
   const buttonType = useButtonType(button, buttonTypes);
@@ -68,6 +69,11 @@ export default function CardButton({ button, buttonTypes, toggleShowReplyFirstPo
       {button && buttonType && (
         <>
           {/* <CardButtonOptions /> */}
+                    <ImageGallery
+            images={button?.images.map((image) => {
+              return { src: image, alt: button.description };
+            })}
+          />
           <div
             className="card-button card-button__file"
             style={buttonColorStyle(buttonType.cssColor)}
@@ -86,11 +92,7 @@ export default function CardButton({ button, buttonTypes, toggleShowReplyFirstPo
                 toggleShowReplyFirstPost={toggleShowReplyFirstPost}
               />
             </div>
-          <ImageGallery
-            images={button?.images.map((image) => {
-              return { src: image, alt: button.description };
-            })}
-          />
+
           <CardButtonFollowerSection
             button={button}
           />
@@ -258,6 +260,23 @@ function CardButtonSubmenu({ button }) {
       return;
     }
   };
+  const deleteButton = (buttonId) => {
+    store.emit(
+      new ButtonDelete(
+        buttonId,
+        () => {
+          alertService.success(t('common.deleteSuccess', [buttonId]));
+          
+          store.emit(new updateCurrentButton(null))
+          store.emit(new SetMainPopup(MainPopupPage.HIDE))
+        },
+        (errorMessage) => {
+          console.error(errorMessage)
+          alertService.error(errorMessage.caption);
+        },
+      ),
+    );
+  }
   return (
     <CardSubmenu>
       <CardSubmenuOption
@@ -279,9 +298,7 @@ function CardButtonSubmenu({ button }) {
             label={t('button.edit')}
           />
           <CardSubmenuOption
-            onClick={() => {
-              router.push(`/ButtonRemove/${button.id}`);
-            }}
+            onClick={() => deleteButton(button.id)}
             label={t('button.delete')}
           />
         </>
@@ -317,7 +334,7 @@ export function CardButtonHeadBig({ button, buttonTypes, toggleShowReplyFirstPos
     (state: GlobalState) => state.sessionUser,
     false,
   );
-  const [showMap, setShowMap] = useState(true);
+  const [showMap, setShowMap] = useState(false);
   const isMobile = useIsMobile()
   useEffect(() => {
     if(!isMobile){
@@ -360,11 +377,9 @@ export function CardButtonHeadBig({ button, buttonTypes, toggleShowReplyFirstPos
             </div>
           </div>
         </div>
-
         <div className="card-button__title">
           {button.title}
         </div>
-
         <div className="card-button__paragraph">
           <TextFormatted text={button.description} />
         </div>
@@ -372,29 +387,28 @@ export function CardButtonHeadBig({ button, buttonTypes, toggleShowReplyFirstPos
         <div className="card-button__hashtags">
           <TagsNav tags={button.tags} />
         </div> */}
-
-        <div className="card-button__bottom-properties">
-          {customFields && customFields.length > 0 && (
-            <div className='card-button__price--button-page'>
-              <CardButtonCustomFields
-                customFields={customFields}
-                button={button}
-              />
+          <div className="card-button__bottom-properties">
+            {customFields && customFields.length > 0 && (
+              <div className='card-button__price--button-page'>
+                <CardButtonCustomFields
+                  customFields={customFields}
+                  button={button}
+                />
+              </div>
+            )}
+            <div
+              className={
+                'card-button__city card-button__everywhere' +
+                (!button.hideAddress
+                  ? ' card-button__city--displayMap'
+                  : ' card-button__city--noMap ')
+              }
+              onClick={() => setShowMap(() => !showMap)}
+            >
+              {<IoLocationOutline/>}
+              {button.address}
             </div>
-          )}
-          <div
-            className={
-              'card-button__city card-button__everywhere' +
-              (!button.hideAddress
-                ? ' card-button__city--displayMap'
-                : ' card-button__city--noMap ')
-            }
-            onClick={() => setShowMap(() => !showMap)}
-          >
-            {<IoLocationOutline/>}
-            {button.address}
           </div>
-        </div>
         {showMap && (
           <MarkerViewMap
             markerPosition={[button.latitude, button.longitude]}

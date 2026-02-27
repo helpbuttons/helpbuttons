@@ -412,7 +412,7 @@ export class ButtonService {
   }
   async delete(buttonId: string) {
     this.cacheManager.del(CacheKeys.FINDH3_CACHE_KEY)
-    return this.findById(buttonId).then((button) => {
+    return this.findById(buttonId, true).then((button) => {
       return this.buttonRepository
         .update(button.id, { deleted: true })
         .then((res) => {
@@ -457,7 +457,8 @@ export class ButtonService {
   async findByOwner(ownerId: string) {
     let buttons: Button[] = await this.buttonRepository.find({
       where: {
-        owner: { id: ownerId, role: Not(Role.blocked) },
+        owner: { id: ownerId, role: Not(Role.blocked)},
+        deleted: false
       },
       relations: ['owner'],
     });
@@ -777,5 +778,9 @@ export class ButtonService {
       return this.userService.findByIds(button.followedBy)
       .then((dd) => {console.log(dd); return dd;})
     })
+  }
+
+  public deleteAllButtonsFromType(type: string) {
+    return this.buttonRepository.update({ type: type }, {deleted: true})
   }
 }

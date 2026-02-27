@@ -4,6 +4,8 @@ $list-container-hide-height: calc($footer-height-mobile - $list-container-height
 $list-order-tabs-bottom: calc($footer-height-mobile + $list-container-height);
 $list-container-hide-nohover-height: calc($footer-height-mobile - $list-container-height + 15px);
 $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-height - 40px);
+$list-content-height-full-screen-mobile: calc(var(--vh) - 220px );
+$list-content-height-mid-screen-mobile: calc(var(--vh) );
 
 
 ///shouldd be the posts list
@@ -125,7 +127,7 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
   display: flex;
   justify-content: center;
   flex-direction: column;
-  height: 300px;
+  height: auto;
   width: 100%;
   margin: auto;
   align-items: center;
@@ -228,6 +230,22 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
 }
 
 @media #{$breakpoints-medium} {
+
+  .list__empty-message{
+
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    height: 300px;
+    width: 100%;
+    margin: auto;
+    align-items: center;
+    padding: $padding-big;
+    font-size: $font-size-small;
+    grid-column: 1 / -1; 
+
+  }
+
   .list__show-map-button--hideList {
     bottom: 40px;
   }

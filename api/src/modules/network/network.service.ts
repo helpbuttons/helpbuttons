@@ -237,6 +237,8 @@ export class NetworkService {
       ethicsPolicy: updateDto.ethicsPolicy,
       contactEmail: updateDto.contactEmail
     };
+
+    /** Dont need to check for orphans no more... ! */
     const buttonTemplatesNew = network.buttonTemplates.filter((btnTemplate) => !btnTemplate.hide).map((btnTemplate) => btnTemplate.name)
 
     const buttonTemplateActive = await this.entityManager.query(`select count(id), type from button group by type;`)
@@ -246,8 +248,9 @@ export class NetworkService {
     })
 
     if (orphanButtonTemplates.length > 0) {
-      const undeletedButtonTemplates = orphanButtonTemplates.map((btnTemplate) => btnTemplate.type)
-      throw new ValidationException({ buttonTemplates: 'cant delete button template ' + JSON.stringify(undeletedButtonTemplates) });
+      await orphanButtonTemplates.map(async (btnTemplate) => {
+        await this.entityManager.query(`update button set deleted = true where type = $1`,[btnTemplate.type])
+      } )
     }
 
     await this.cacheManager.del('defaultNetwork');

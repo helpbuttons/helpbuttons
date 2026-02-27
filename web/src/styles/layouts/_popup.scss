@@ -154,7 +154,7 @@ $popup-max-height-large: 720px;
   border-radius: 0 0 $border-radius-semicircle $border-radius-semicircle;//REVISE
   display: flex;
   flex-direction: column;
-
+  overscroll-behavior: contain;
 }
 
 .popup__section {

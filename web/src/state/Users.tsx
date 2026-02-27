@@ -21,6 +21,7 @@ import { activitiesInitialState } from './Activity';
 import dconsole from 'shared/debugger';
 import { SetMainPopupCurrentButton, SetMainPopupCurrentProfile } from './HomeInfo';
 import { updateCurrentButton } from './Explore';
+import { Button } from 'shared/entities/button.entity';
 
 export class AddUserToKnownUsers implements UpdateEvent {
   public constructor(private newUser: IUser) {}
@@ -113,17 +114,27 @@ export class FindUserButtons implements WatchEvent {
   }
 }
 
+export class SaveMyButtons implements UpdateEvent {
+  public constructor(
+    private buttons: Button[],
+  ) {}
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      newState.myButtons = this.buttons;
+    });
+  }
+}
+
 export class FindMyButtons implements WatchEvent {
   public constructor(
-    private onResult,
   ) {}
 
   public watch(state: GlobalState) {
     return UserService.findMyButtons().pipe(
       map((buttonList) => {
-        this.onResult(buttonList);
+        store.emit(new SaveMyButtons(buttonList))
       }),
-      catchError((error) => {this.onResult([]); dconsole.log(error); return  of(undefined)})
+      catchError((error) => {new SaveMyButtons([]); dconsole.log(error); return  of(undefined)})
     )
   }
 }
