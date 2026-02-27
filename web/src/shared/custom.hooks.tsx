@@ -124,3 +124,42 @@ export const usePoolFunc = ({paused, timeMs, func }) => {
   }, []);
   useInterval(increment, timeMs, { paused: paused });
 };
+
+export const useScrollDirection = (ref) => {
+
+  const lastScrollTopRef = useRef<number>(0);
+  const [isScrollingUp, setIsScrollingUp] = useState(true);
+
+  // Detect scroll direction
+  useEffect(() => {
+    
+    if (!ref) return;
+    const refContent = ref.current;
+    const handleScroll = () => {
+      const currentScrollTop = refContent.scrollTop;
+      const scrollHeight = refContent.scrollHeight;
+      const clientHeight = refContent.clientHeight;
+      
+      if (currentScrollTop <= 0) {
+        return; 
+      }
+      
+      if (currentScrollTop + clientHeight >= scrollHeight) {
+        return; 
+      }
+      
+      const _isScrollingUp = currentScrollTop < lastScrollTopRef.current;
+      setIsScrollingUp(() => _isScrollingUp);
+      
+      lastScrollTopRef.current = currentScrollTop;
+    };
+
+    refContent.addEventListener('scroll', handleScroll);
+
+    return () => {
+      refContent.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  return isScrollingUp
+}

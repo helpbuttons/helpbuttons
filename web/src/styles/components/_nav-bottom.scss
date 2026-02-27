@@ -28,7 +28,16 @@ $nav-bottom-border: 32px;
   justify-content: space-around;
   border-top: $border-style-basic;
   height: $nav-bottom-height;
+  transition: $transition-default;
 }
+
+.nav-bottom--hide {
+  transition: $transition-default;
+
+  bottom: -$nav-bottom-height;
+}
+
+
 
 .nav-bottom--repo {
   @extend .nav-bottom;

@@ -1,7 +1,7 @@
 import '../styles/app.scss';
 import { useState, useEffect, useRef } from 'react';
-import router, { Router, useRouter } from 'next/router';
-import NavBottom from 'components/nav/NavBottom'; //just for mobile
+import { useRouter } from 'next/router';
+import { NavBottomMobile } from 'components/nav/NavBottom'; //just for mobile
 import Alert from 'components/overlay/Alert';
 import { appWithTranslation } from 'next-i18next';
 import { GlobalState, store } from 'state/';
@@ -308,13 +308,7 @@ function MyApp({ Component, pageProps }) {
                 </ShowDesktopOnly>
                 {authorized && <Component {...pageProps} />}
                 {!authorized && <><Loading /></>}
-                <ShowMobileOnly>
-                  <ClienteSideRendering>
-                    <NavBottom
-                      sessionUser={sessionUser}
-                    />
-                  </ClienteSideRendering>
-                </ShowMobileOnly>
+                <NavBottomMobile sessionUser={sessionUser}/>
                 <MainPopup/>
               </div>
             </div>

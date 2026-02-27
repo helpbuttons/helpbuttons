@@ -127,7 +127,7 @@ $list-content-height-mid-screen-mobile: calc(var(--vh) );
   display: flex;
   justify-content: center;
   flex-direction: column;
-  height: 300px;
+  height: auto;
   width: 100%;
   margin: auto;
   align-items: center;
@@ -230,6 +230,22 @@ $list-content-height-mid-screen-mobile: calc(var(--vh) );
 }
 
 @media #{$breakpoints-medium} {
+
+  .list__empty-message{
+
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    height: 300px;
+    width: 100%;
+    margin: auto;
+    align-items: center;
+    padding: $padding-big;
+    font-size: $font-size-small;
+    grid-column: 1 / -1; 
+
+  }
+
   .list__show-map-button--hideList {
     bottom: 40px;
   }
