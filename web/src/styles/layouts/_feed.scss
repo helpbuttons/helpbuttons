@@ -82,6 +82,7 @@ $feed-new-message-radius: $border-radius-circle;
 
 }
 
+
 .feed-section__center{
 
   position: absolute;
@@ -363,22 +364,22 @@ $feed-new-message-radius: $border-radius-circle;
 
   display: flex;
   flex-direction: column;
-  width: 33vw;
+  width: 43vw;
 
 }
-  .feed-section__center {
+.feed-section__center {
 
   position: relative;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: 33vw;
+  width: 43vw;
   border-left: $border-style-basic;
   border-right: $border-style-basic;
   height: calc(100% - $nav-bottom-height);
   
 
-  }
+}
 
 
   .feed__board-container {
@@ -432,6 +433,12 @@ $feed-new-message-radius: $border-radius-circle;
     }
   }
 
+  .feed-section__left{
+
+    width: 33vw;
+
+  }
+
   .feed-section--messages {
     max-width: $grid-max-width;
     margin: auto;
@@ -448,8 +455,10 @@ $feed-new-message-radius: $border-radius-circle;
 
    height: 100%;
    z-index: $z-index-02;
-
+   width: 33vw;
   }
+
+
 
 
 
