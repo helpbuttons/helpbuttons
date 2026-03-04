@@ -20,6 +20,8 @@ import {
   IoBalloonOutline,
   IoBanOutline,
   IoCheckmarkCircleOutline,
+  IoHammerOutline,
+  IoLogoSteam,
   IoPersonOutline,
   IoQrCodeOutline,
 } from 'react-icons/io5';
@@ -72,6 +74,16 @@ export default function Moderation() {
                 caption={t('moderation.buttonsList')}
               />
             </Link>
+            <hr></hr>
+
+            <Link href="#" onClick={() => setMode(ModerationMode.APPROVED)}>
+              <Btn
+                iconLeft={IconType.svg}
+                iconLink={<IoCheckmarkCircleOutline />}
+                caption={t('moderation.buttonsApproved')}
+              />
+            </Link>
+            <hr></hr>
             <Link href="/Profile/Invites">
                 <Btn
                   iconLeft={IconType.svg}
@@ -79,13 +91,7 @@ export default function Moderation() {
                   caption={t('invite.title')}
                 />
             </Link>
-            {/* <Link href="#" onClick={() => setMode(ModerationMode.APPROVED)}>
-              <Btn
-                iconLeft={IconType.svg}
-                iconLink={<IoHammerOutline />}
-                caption={t('moderation.buttonsApproved')}
-              />
-            </Link> */}
+            <hr></hr>
             <Link href="#" onClick={() => setMode(ModerationMode.COMMUNICATION)}>
               <Btn
                 iconLeft={IconType.svg}
@@ -98,7 +104,7 @@ export default function Moderation() {
 
           {mode == ModerationMode.USERS && <ModerationUsersList />}
           {mode == ModerationMode.APPROVAL && <ModerationHelpButtonsList />}
-          {/* {mode == ModerationMode.APPROVED && <AprovedButtonsList />} */}
+          {mode == ModerationMode.APPROVED && <AprovedButtonsList />}
           {mode == ModerationMode.COMMUNICATION && <NewAdminCommunication />}
 
         </div>
