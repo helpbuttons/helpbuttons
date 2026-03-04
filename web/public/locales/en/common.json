@@ -214,13 +214,14 @@
     "revokeEndorse": "Unfortunately your 'verified' badge has been removed",
     "roleupdate": "Your role has been updated to '{0}'",
     "newSignup": "New user '{0}' signed up",
-    "notice": "Notice",
-    "sent": "Message sent!",
+    "notice": "",
+    "sent": "sent",
     "writingDraft": "Writing private message",
     "draft": "Draft",
     "pickOne": "Select one chat",
     "newbuttonHomeinfo": "New _helpbutton_ ",
-    "title": "Messages & Alerts"
+    "title": "Messages & Alerts",
+    "comment": "Comment"
   },
   "common": {
     "notfound": "No {0} found. Sorry. 🤔",
@@ -580,9 +581,9 @@
     "ethicsPolicyPlaceHolder": "Write basic ethics. What are the values behind your networks' purpose and users' actions.",
     "ethicsPolicyLabel": "Ethics",
     "contactEmailLabel": "Contact data",
-    "FAQs": "Complementary info",
-    "contactEmailPlaceHolder": "Write your network's contact here"
-
+    "FAQs": "Add your legal information",
+    "contactEmailPlaceHolder": "Write your network's contact here",
+    "privacySettings": "Set your privacy prefrences"
 
   },
   "configure": {
@@ -758,8 +759,8 @@
   {
     "create": "Create new group chat for the {0}",
     "creating": "After sending the first message to this group, other users will be able to participate on this group chat",
-    "admin": "administrators",
-    "community": "commmunity",
+    "admin": "Admins chat",
+    "community": "Commmunity chat",
     "admin_community": "Admin & Community",
     "you": "You"
   }

@@ -34,15 +34,17 @@ export default function PostMessage({ post }) {
         <div className="card-notification__text">
           <div className="card-notification__header">
             <div className="card-notification__info">
-              {' '}
+             
               <div className="card-notification__name">
                 {post.author.name}
-              </div>{' '}
+                <div className="card-notification__date card-notification__date--nflex">
+                <span>{readableTimeLeftToDate(post.created_at)}</span>
+              </div>
+              </div>
+              
               {/* @{post.author.username} */}
             </div>
-            <div className="card-notification__date card-notification__date--nflex">
-              <span>{readableTimeLeftToDate(post.created_at)}</span>
-            </div>
+
           </div>
           <h2 className="card-notification__title"></h2>
           <div className="card-notification__paragraph">

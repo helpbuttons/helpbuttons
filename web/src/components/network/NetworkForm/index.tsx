@@ -133,7 +133,21 @@ function NetworkForm({
               setFocus={setFocus}
               {...register('slogan', { required: true })}
             />            
-            <>
+            
+            <FieldLanguagePick onChange={(value) => {setValue('locale',value); setLocale(value)}} defaultValue={watch('locale')}/>
+
+            {/* https://github.com/helpbuttons/helpbuttons/issues/290 */}
+            {/* <FieldPrivacy
+              name="privacy"
+              setValue={setValue}
+              textPrivate={t('configuration.privacySetPrivate')}
+              textPublic={t('configuration.privacySetPublic')}
+              {...register('privacy', { required: true })}
+            /> */}
+
+           </Accordion>
+          <Accordion collapsed={hasErrors('privacySettings')} title={t('configuration.privacySettings')}>
+           <>
               <FieldCheckbox
                 name='inviteOnly'
                 label={t('invite.inviteOnlyLabel')}
@@ -160,19 +174,8 @@ function NetworkForm({
                 onChanged={(value) => setValue('allowGuestCreation', value)}
               />
             </>
-            <FieldLanguagePick onChange={(value) => {setValue('locale',value); setLocale(value)}} defaultValue={watch('locale')}/>
-
-            {/* https://github.com/helpbuttons/helpbuttons/issues/290 */}
-            {/* <FieldPrivacy
-              name="privacy"
-              setValue={setValue}
-              textPrivate={t('configuration.privacySetPrivate')}
-              textPublic={t('configuration.privacySetPublic')}
-              {...register('privacy', { required: true })}
-            /> */}
-
            </Accordion>
-         
+
            <Accordion collapsed={hasErrors('appearance')} title={t('configuration.customizeAppearance')}>
            <>
              <FieldText

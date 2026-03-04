@@ -66,8 +66,13 @@ export function ActivityDetailConversation({ selectedActivity, closeConversation
   }, [buttonsActivities])
 
   const sendNewMessage = (message, buttonId, consumerId) => {
-    store.emit(new SendNewMessage(message, buttonId, consumerId, () => { loadButtonActivities(); alertService.success(t('activities.sent')) }))
+    store.emit(new SendNewMessage(message, buttonId, consumerId, () => { 
+      loadButtonActivities(); 
+      // alertService.success(t('activities.sent')) 
+    }))
   }
+
+  const lastBtnActivity = buttonActivities.length > 0 ? buttonActivities[0] : -1
 
   if (!selectedButton || !selectedActivity) {
     return (<ShowMobileOnly><Loading /></ShowMobileOnly>)
@@ -80,7 +85,7 @@ export function ActivityDetailConversation({ selectedActivity, closeConversation
   return (
     <>
       <ActivityDetailHeader button={selectedButton} selectedActivity={selectedActivity} closeConversation={closeConversation} />
-      <ActivityDetailList buttonActivities={buttonActivities} setButtonActivities={setButtonActivities} buttonId={selectedButton.id} consumerId={selectedActivity.consumerId} selectedActivity={selectedActivity}/>
+      <ActivityDetailList buttonActivities={buttonActivities} setButtonActivities={setButtonActivities} buttonId={selectedButton.id} consumerId={selectedActivity.consumerId} selectedActivity={selectedActivity} lastButtonActivityId={lastBtnActivity.id}/>
       {!selectedActivity?.disableChat && <MessageForm sendNewMessage={sendNewMessage} buttonId={selectedButton.id} consumerId={selectedActivity.consumerId} />}
     </>
   )
@@ -185,9 +190,9 @@ function MessageForm({ sendNewMessage, buttonId, consumerId }) {
     </form>
   )
 }
-function ActivityDetailCard({ activity }) {
+function ActivityDetailCard({ activity, isLast = false }) {
   if (activity.eventName == ActivityEventName.Message) {
-    return <ActivityDetailMessage activity={activity} />
+    return <ActivityDetailMessage activity={activity} isLast={isLast} />
   }
 
   if (activity.messageId) { //eventName == ActivityEventName.NewPostComment){
@@ -253,7 +258,7 @@ function ActivityDetailCard({ activity }) {
     <>
       <div className="chat__notice">
         {activity.message}
-      </div >
+      </div>
       <div className="message__hour message__hour--me">
         {readableTimeLeftToDate(activity.createdAt)}
       </div>
@@ -261,7 +266,7 @@ function ActivityDetailCard({ activity }) {
   )
 }
 
-export function ActivityDetailMessage({ activity }) {
+export function ActivityDetailMessage({ activity, isLast = false }) {
   if (activity.from) {
     return (
       <>
@@ -292,10 +297,9 @@ export function ActivityDetailMessage({ activity }) {
     return (<>
 
       <div className="message__hour message__hour--me">
-        {activity?.last && t('activity.sent') } - {readableTimeLeftToDate(activity.createdAt)}
+      {isLast ? t('activities.sent') : readableTimeLeftToDate(activity.createdAt)}
       </div>
       <div className="message message--me">
-
         <div className="message__content">
           {activity.message}
         </div>
@@ -306,7 +310,7 @@ export function ActivityDetailMessage({ activity }) {
   }
 
 }
-function ActivityDetailList({ buttonActivities, setButtonActivities, buttonId, consumerId, selectedActivity }) {
+function ActivityDetailList({ buttonActivities, setButtonActivities, buttonId, consumerId, selectedActivity, lastButtonActivityId }) {
   const [page, setPage] = useState(1)
   const { endDivLoadMoreTrigger, noMoreToLoad, scrollIsLoading } = useScroll(
     ({ setNoMoreToLoad, setScrollIsLoading }) => {
@@ -327,7 +331,7 @@ function ActivityDetailList({ buttonActivities, setButtonActivities, buttonId, c
   return (
     <div className="chat__messages">
       {buttonActivities && <>
-        {buttonActivities.map((activity, idx) => <ActivityDetailCard activity={activity} key={idx} />)}
+        {buttonActivities.map((activity, idx) => <ActivityDetailCard activity={activity} key={idx} isLast={lastButtonActivityId == activity.id} />)}
         </>
       }
 
