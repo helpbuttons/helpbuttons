@@ -132,8 +132,9 @@ export default function HexagonExploreMap({
     }
   }, [hoverButtonList, hexagonClicked, hexagonsMedianCenters, currentButton, exploreSettings.zoom])
   
-  const filterButtonType = (btnTypeName) => {
-    store.emit(new ListOnlyButtonType(btnTypeName))
+  const filterButtonType = (hexagonSelected, btnTypeName) => {
+    
+    store.emit(new ListOnlyButtonType(hexagonSelected, btnTypeName))
   }
 
   return (
@@ -380,7 +381,7 @@ function MapSelectedHexagon({ hexagonClickedFeatures, buttonTypes, filterButtonT
                 cursor: 'pointer',
               }}
               key={btnType.name}
-              onClick={() => filterButtonType(btnType.name)}
+              onClick={() => filterButtonType(hexagonClickedFeatures.hexagon, btnType.name)}
             >
               <div
                 className="pigeon-map__hex-info"
