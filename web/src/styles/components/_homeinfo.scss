@@ -40,7 +40,10 @@ $info-content-head-margin-mobile: 70px;
   background-position: center;
   background-size: cover;
   overflow: auto;
-  // background-image:var(--network-jumbo)
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain; 
+  
+  touch-action: manipulation;
 
 }
 
@@ -279,11 +282,7 @@ $info-content-head-margin-mobile: 70px;
   justify-content:space-around;
   align-items: flex-start;
 
-  -webkit-overflow-scrolling: touch; // Smooth momentum on iOS
-  overscroll-behavior: contain; // Prevent scroll propagation to parents (keeps background stable)
-  
-  // For drag-and-drop: Restrict touch to taps/drags, no panning
-  touch-action: manipulation;
+
 
 }
 

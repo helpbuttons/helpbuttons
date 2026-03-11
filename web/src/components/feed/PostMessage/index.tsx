@@ -39,10 +39,9 @@ export default function PostMessage({ post }) {
                 {post.author.name}
                 <div className="card-notification__date card-notification__date--nflex">
                 <span>{readableTimeLeftToDate(post.created_at)}</span>
-              </div>
+                </div>
               </div>
               
-              {/* @{post.author.username} */}
             </div>
 
           </div>

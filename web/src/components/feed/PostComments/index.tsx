@@ -231,18 +231,19 @@ export function Comment({ comment, sessionUser }) {
                 </span>{' '}
                 {/* @{comment.author.username} */}
               </p>
+               <div className="message__hour">
+                {readableTimeLeftToDate(comment.created_at)}{' '}
+                {comment.privacy == PrivacyType.PRIVATE && (
+                  <span style={{ color: 'red' }}>private</span>
+                )}
+              </div>
             </div>
           </div>
           <div className="message__content">
             {formatMessage(comment.message, comment.mentions)}
           </div>
 
-          <div className="message__hour">
-            {readableTimeLeftToDate(comment.created_at)},{' '}
-            {comment.privacy == PrivacyType.PRIVATE && (
-              <span style={{ color: 'red' }}>private</span>
-            )}
-          </div>
+
 
           <div className="message__avatar">
           <Link href="#" onClick={onClick}>
@@ -258,7 +259,6 @@ export function Comment({ comment, sessionUser }) {
       }
       {isAuthor &&
         <div className="message message--others">
-
           <div className="message__header">
             <div className="message__user-name-container">
               <p className="message__author">
@@ -267,18 +267,19 @@ export function Comment({ comment, sessionUser }) {
                 </span>{' '}
                 {/* @{comment.author.username} */}
               </p>
+              <div className="message__hour">
+                {readableTimeLeftToDate(comment.created_at)}{' '}
+                {comment.privacy == PrivacyType.PRIVATE && (
+                  <span style={{ color: 'red' }}>private</span>
+                )}
+              </div>
             </div>
           </div>
           <div className="message__content">
             {formatMessage(comment.message, comment.mentions)}
           </div>
 
-          <div className="message__hour">
-            {readableTimeLeftToDate(comment.created_at)},{' '}
-            {comment.privacy == PrivacyType.PRIVATE && (
-              <span style={{ color: 'red' }}>private</span>
-            )}
-          </div>
+
           <div className="message__avatar">
           <Link href="#" onClick={onClick}>
             <ImageWrapper

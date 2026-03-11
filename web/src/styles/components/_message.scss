@@ -35,11 +35,15 @@ $message-you-margin-left: $margin-xbig;
     }
 }
 
+.message__hour::before {
+  content: '·';
+  padding: $padding-small;
+}
+
 .message__hour {
 
     font-size: $font-size-xsmall;
     color: $color-gray;
-    padding-left: $padding-big;
 
 }
 
@@ -95,6 +99,7 @@ $message-you-margin-left: $margin-xbig;
 .message__user-name-container {
 
       // width: calc(100% - 80px);
+          display: flex;
 
 }
 
