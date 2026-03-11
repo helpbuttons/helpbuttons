@@ -4,6 +4,7 @@ import { GlobalState, store, useGlobalStore } from 'state';
 import {
   ExploreViewMode,
   HoverButtonList,
+  ListOnlyButtonType,
   RecenterExplore,
   UpdateExploreSettings,
   UpdateExploreViewMode,
@@ -132,7 +133,7 @@ export default function HexagonExploreMap({
   }, [hoverButtonList, hexagonClicked, hexagonsMedianCenters, currentButton, exploreSettings.zoom])
   
   const filterButtonType = (btnTypeName) => {
-    store.emit(new UpdateFiltersToFilterButtonType(btnTypeName))
+    store.emit(new ListOnlyButtonType(btnTypeName))
   }
 
   return (

@@ -652,3 +652,13 @@ export class UpdateListButton implements UpdateEvent {
     });
   }
 }
+
+export class ListOnlyButtonType implements UpdateEvent {
+  public constructor(private btnType) { }
+
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      newState.explore.map.listButtons = state.explore.map.boundsFilteredButtons.filter((btn) => btn.type == this.btnType)
+    });
+  }
+}
