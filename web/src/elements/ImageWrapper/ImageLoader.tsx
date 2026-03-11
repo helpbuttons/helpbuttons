@@ -19,7 +19,7 @@ export const ImageLoader = ({ src, alt, ...props }) => {
         {...props}
         style={{ ...props.style, visibility }}
         onError={() => setReveal(true)}
-        onLoadingComplete={() => setReveal(true)}
+        onLoad={() => setReveal(true)}
       />
     </>
   );
