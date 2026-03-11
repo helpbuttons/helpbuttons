@@ -38,6 +38,8 @@
   "dependencies": {
     "@faker-js/faker": "^7.6.0",
     "@fastify/helmet": "^13.0.0",
+    "@fedify/fedify": "^2.0.5",
+    "@fedify/nestjs": "^2.0.5",
     "@nestjs-modules/mailer": "^1.8.1",
     "@nestjs/axios": "^3.0.0",
     "@nestjs/bull": "^10.0.1",
@@ -112,5 +114,7 @@
     "tsconfig-paths": "^3.10.1",
     "typescript": "^4.3.5"
   },
-  "resolutions": { "string-width": "4.2.3" }
+  "resolutions": {
+    "string-width": "4.2.3"
+  }
 }
