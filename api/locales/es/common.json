@@ -53,7 +53,6 @@
     "inviteToNetwork": "Compartir",
     "inviteCopied": "Link copied to clipboard",
     "keyLocations": "Lugares Clave"
-
   },
   "share": {
     "showSharePopup": "Comparte esta aplicación",
@@ -69,14 +68,13 @@
     "share": "Compartir",
     "invitePeople": "Invitar personas",
     "advancedInviteOptions": "Invitaciones para imprimir",
-    "shareContent":"Compartir el contenido de la app",
+    "shareContent": "Compartir el contenido de la app",
     "invitePeopleExplain": "Copia y comparte este link para añadir a otros a tu red",
     "optionRss": "Suscríbete a RSS",
     "copyLink": "Copiar enlace",
     "printInvites": "Invitaciones en PDF",
     "codeCopied": "Código copiado",
     "copyCode": "Copiar código"
-
   },
   "feed": {
     "write": "Escribir mensaje",
@@ -120,7 +118,10 @@
     "reloadConfig": "Recargar configuración",
     "publishTitle": "Crear {0}",
     "deleteSuccess": "Finalizado con éxito",
-    "registeredRequired": "Registro requerido"
+    "registeredRequired": "Registro requerido",
+    "cancel": "Cancelar",
+    "delete": "Borrar",
+    "show": "Mostrar"
   },
   "configuration": {
     "config": "Opciones de configuración",
@@ -198,7 +199,11 @@
     "ethicsPolicyLabel": "Política de Ética",
     "contactEmailLabel": "Contacto de tu red",
     "FAQs": "Información complementaria",
-    "contactEmailPlaceHolder": "Escribe un contacto para tu red"
+    "contactEmailPlaceHolder": "Escribe un contacto para tu red",
+    "privacySettings": "Establece tus preferencias de privacidad",
+    "allowGuestCreationExplain": "Cuando permites registros anónimos, es importante recordar que tu red será más vulnerable a spam.",
+    "privacyPolicyPlaceHolder": "Escribe una política de privacidad básica, dónde estás almacenando la información de tus usuarios, qué tipo de datos estás recogiendo y qué haces con ellos.",
+    "ethicsPolicyPlaceHolder": "Escribe unos principios éticos. Cuáles son los valores detrás de la red y la acción de sus usuarios."
   },
   "activities": {
     "messages": "Mensajes",
@@ -244,7 +249,8 @@
     "deleted": "Eliminación de _helpbutton_",
     "newcommentOwn": "Escribiste un comentario {0}",
     "newmention": "Fuiste mencionado/a en una conversación. {0}: '{1}'",
-    "newmentionOwn": "Publicaste un comentario. '{0}'"
+    "newmentionOwn": "Publicaste un comentario. '{0}'",
+    "title": "Mensajes y avisos"
   },
   "activitiesWithSubject": {
     "newbutton": "{0} creó _helpbutton_ en {1}",
@@ -348,21 +354,25 @@
     "endorse": "Verificar",
     "explainPublishAsGuest": "Paso 1 de 3: Genera tu código de invitado.",
     "explainUseGuestCode": "Guarda este código, así podrás comprobar tus publicaciones en el futuro.",
-    "emailRecovery":"Email de recuperación",
-    "emailRecoveryExplain":"Si ya tienes cuenta, entra pulsando un enlace que mandaremos a tu correo.",
+    "emailRecovery": "Email de recuperación",
+    "emailRecoveryExplain": "Si ya tienes cuenta, entra pulsando un enlace que mandaremos a tu correo.",
     "generateCode": "Generar nuevo código de invitado",
     "signupAsGuest": "Participar como invitado",
     "signupGuestDetails": "Continuar con ingreso",
     "optionalFields": "Campos opcionales",
     "explainGuestDetails": "Último paso: Completa tu ingreso.",
     "emptyList": "Cuando publiques, podrás ver tus _helpbuttons_ en esta sección.",
-    "timesFollowed":"Seguido",
-    "commentsAmount":"Comentado",
+    "timesFollowed": "Seguido",
+    "commentsAmount": "Comentado",
     "loginNotFound": "Usuario o contraseña erróneos",
-     "iHaveCode":"Tengo código de invitado",
-    "guestCode":"Código de invitado",
-    "guestCodePlaceHolder":"Escribe tu código aquí",
-    "askForNewCode":"No tengo mi información de invitado"
+    "iHaveCode": "Tengo código de invitado",
+    "guestCode": "Código de invitado",
+    "guestCodePlaceHolder": "Escribe tu código aquí",
+    "askForNewCode": "No tengo mi información de invitado",
+    "showCookiesBanner": "Por favor pulsa para aceptar la política de cookies",
+    "emailOrUsername": "Email o nombre de usuario",
+    "inviteLogin": "Entrar",
+    "showWassap": "Mostrar link de Whatsapp"
   },
   "configure": {
     "browsePins": "Mapa con pins de ubicación",
@@ -491,7 +501,9 @@
     "proposeAddress": "Añadir o editar nuevo lugar en {0}",
     "locationPlaceholder": "Escribe un lugar o dirección",
     "selectPlace": "Pulsa el lugar en el mapa y guarda",
-    "showMoreTags": "más etiquetas"
+    "showMoreTags": "más etiquetas",
+    "expiredLabel": "Expirado",
+    "followers": "Seguido por {0} usuarios"
   },
   "calendarOnce": {
     "label": "Una vez",
@@ -586,7 +598,6 @@
     "afterStart": "Por favor selecciona una fecha/hora posterior a {0}",
     "beforeEnd": "Por favor selecciona una fecha/hora anterior a {0}",
     "changeToMultipleDates": "Presiona para seleccionar varios días"
-
   },
   "faqs": {
     "title": "Preguntas frecuentes",
@@ -636,19 +647,18 @@
     "inviteOnlyLabel": "Privacidad de la red",
     "inviteOnlyExplain": "Si habilitas esto, los usuarios solo podrán registrarse y publicar con un código QR.",
     "inviteOnly": "Sólo permitir el registro con un código QR",
-
-
     "generateQr": "Obtener QR",
     "registered": "QR usado",
-    "scanCodeLabel":"Escribe tu código QR",
+    "scanCodeLabel": "Escribe tu código QR",
     "scanCodeExplain": "Escribe tu código numérico si no puedes escanear",
-    "scanPlaceHolder":"Escribe tu link completo de invitado o tu código alfanumérico"
+    "scanPlaceHolder": "Escribe tu link completo de invitado o tu código alfanumérico"
   },
   "customFields": {
     "priceLabel": "Precio ({0})",
     "consult": "A consultar",
     "free": "Gratis",
-    "priceExplain": "Especifica un valor. Usa 0 si es gratis o seleciona Precio a Consultar si es variable."
+    "priceExplain": "Especifica un valor. Usa 0 si es gratis o seleciona Precio a Consultar si es variable.",
+    "confirmDeleteLabel": "Borrar tipo de _helpbutton_ "
   },
   "email": {
     "loginTokenContent": "Bienvenido a {0}",
@@ -727,7 +737,7 @@
   "seo": {
     "embbed": ""
   },
-   "footer": {
+  "footer": {
     "whatIsNetwork": "Saber más",
     "create": "Crea tu _helpbutton_",
     "explore": "Explorar _helpbuttons_",
@@ -741,5 +751,9 @@
     "otherNetworks": "Ver otras redes",
     "developers": "Desarrolladores",
     "ethicCode": "Principios éticos"
+  },
+  "groupChat": {
+    "admin": "Chat de administradores",
+    "create": "Crear nuevo chat de comunidad para {0}"
   }
 }
