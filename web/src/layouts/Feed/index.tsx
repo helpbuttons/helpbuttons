@@ -38,7 +38,7 @@ import { ButtonOwnerPhone, CardButtonHeadActions, sendCurrentButtonMessage } fro
 import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
 import router from 'next/router';
 
-export default function Feed({ button,showReplyFirstPost, toggleShowReplyFirstPost  }: { button: Button, showReplyFirstPost: boolean, toggleShowReplyFirstPost: () => void }) {
+export default function Feed({ button,showReplyFirstPost, toggleShowReplyFirstPost, hideSendPrivateMessage = false  }) {
   const [posts, setPosts] = useState(null);
   const [showNewPostForm, toggleShowNewPostForm] = useToggle(false);
   const [isPrivateMessage, setPrivateMessage] = useToggle(false);
@@ -80,7 +80,7 @@ export default function Feed({ button,showReplyFirstPost, toggleShowReplyFirstPo
         <ButtonOwnerPhone user={button.owner} button={button}/>
 
         <>
-          {sessionUser && (
+          {(sessionUser && !hideSendPrivateMessage) && (
             <CardButtonHeadActions
               button={button}
               isButtonOwner={isButtonOwner}

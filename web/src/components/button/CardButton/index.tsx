@@ -61,7 +61,7 @@ import { useToggle } from 'shared/custom.hooks';
 import { useIsMobile } from 'elements/SizeOnly';
 import { ButtonDelete, updateCurrentButton } from 'state/Explore';
 
-export default function CardButton({ button, buttonTypes, toggleShowReplyFirstPost }) {
+export default function CardButton({ button, buttonTypes, toggleShowReplyFirstPost,            hideSendPrivateMessage = false}) {
   const buttonType = useButtonType(button, buttonTypes);
   return (
     <>
@@ -90,6 +90,7 @@ export default function CardButton({ button, buttonTypes, toggleShowReplyFirstPo
                 button={button}
                 buttonTypes={buttonTypes}
                 toggleShowReplyFirstPost={toggleShowReplyFirstPost}
+                hideSendPrivateMessage={hideSendPrivateMessage}
               />
             </div>
 
@@ -327,7 +328,7 @@ function SendMessageButton({toggleShowReplyFirstPost})
         }}
         />
 }
-export function CardButtonHeadBig({ button, buttonTypes, toggleShowReplyFirstPost }) {
+export function CardButtonHeadBig({ button, buttonTypes, toggleShowReplyFirstPost, hideSendPrivateMessage = false}) {
   const { cssColor, caption, customFields, icon } = useButtonType(button, buttonTypes)
   const sessionUser = useRef(
     store,
@@ -348,7 +349,7 @@ export function CardButtonHeadBig({ button, buttonTypes, toggleShowReplyFirstPos
           button={button}
           sessionUser={sessionUser}
         />
-        {sessionUser && !isButtonOwner(sessionUser, button) && <SendMessageButton toggleShowReplyFirstPost={toggleShowReplyFirstPost} sessionUser={sessionUser}/>}
+        {!hideSendPrivateMessage && sessionUser && !isButtonOwner(sessionUser, button) && <SendMessageButton toggleShowReplyFirstPost={toggleShowReplyFirstPost} sessionUser={sessionUser}/>}
         
         <CardButtonSubmenu button={button} />
       </div>

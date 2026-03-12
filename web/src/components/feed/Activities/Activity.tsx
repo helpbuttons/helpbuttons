@@ -194,7 +194,7 @@ export default function ActivitiesUser() {
           }
 
           <div className="feed-section__right">
-            {(sideBarButton && selectedActivity?.buttonId == sideBarButton.id) && <ButtonShow button={sideBarButton} />}
+            {(sideBarButton && selectedActivity?.buttonId == sideBarButton.id) && <ButtonShow button={sideBarButton} hideSendPrivateMessage={true}/>}
           </div>
         </div>
 

@@ -11,7 +11,7 @@ import { useSwipeable } from 'react-swipeable';
 import Footer from 'components/footer';
 
 
-export function ButtonShow({button}) {
+export function ButtonShow({button, hideSendPrivateMessage = false}) {
   const handlers = useSwipeable({
     onSwiped: (eventData) => {
       // if(eventData.dir == "Left")
@@ -38,12 +38,14 @@ export function ButtonShow({button}) {
             buttonTypes={buttonTypes}
             showReplyFirstPost={showReplyFirstPost}
             toggleShowReplyFirstPost={toggleShowReplyFirstPost}
+            hideSendPrivateMessage={hideSendPrivateMessage}
           />
           <Feed 
             button={button}
             showReplyFirstPost={showReplyFirstPost}
             isprivateMessage={isPrivateMessage}
             toggleShowReplyFirstPost={toggleShowReplyFirstPost}
+            hideSendPrivateMessage={hideSendPrivateMessage}
           />
           <Footer />
         </>
