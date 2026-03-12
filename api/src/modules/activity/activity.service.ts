@@ -464,7 +464,7 @@ export class ActivityService {
     try{
     const isOwner = activity.to.id == userId;
     const isButtonOwner = activity?.button?.owner?.id == userId
-    const disableChat = (activity?.button && (activity.to.id == activity.button.owner.id || activity.from.id == activity.button.owner.id)) ? false : true;
+    const disableChat = (userId == activity?.button?.owner.id && activity?.consumer?.id == userId) ? true : false;
     const read = (activity?.from?.id == userId) ? true : activity.read;
     if(activity.from == null)
     {
