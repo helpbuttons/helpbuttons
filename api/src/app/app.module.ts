@@ -82,7 +82,7 @@ import { FederationModule } from '@src/modules/federation/federation.module';
     FedifyModule.forRoot({
       kv: new MemoryKvStore(),
       queue: new InProcessMessageQueue(),
-      origin: process.env.FEDERATION_ORIGIN || 'http://localhost:3000',
+      origin: process.env.FEDERATION_ORIGIN || 'http://localhost:3001',
     }),
     FederationModule,
     SetupModule,
@@ -106,7 +106,8 @@ export class AppModule implements NestModule {
         return {
           request: req,
           response: res,
-          url: req.url
+          // url: req.url
+          url: new URL(req.url, process.env.FEDERATION_ORIGIN || 'http://localhost:3001'),
           // url: new URL(req.url, `${req.protocol}://${req. get('host')}`),
         };
       },
