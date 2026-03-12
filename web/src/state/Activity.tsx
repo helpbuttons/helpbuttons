@@ -107,7 +107,7 @@ function uniqActivities(arr1, arr2)
   return _.uniqWith([
     ...arr1,
     ...arr2,
-  ],  (a,b) => {return a.buttonId == b.buttonId && a.consumerId == b.consumerId})
+  ],  (a,b) => {return a?.buttonId == b?.buttonId && a?.consumerId == b?.consumerId})
 }
 
 export function uniqById(arr1, arr2)
