@@ -497,33 +497,6 @@ hr {
     bottom: 2%;
   }
 
-  .homeinfo-card__controls--openable {
-
-    position: absolute;
-    right: -60px;
-    
-  }
-
-  .homeinfo-card__controls--openable::before {
-
-    content: "";
-    width: 6px;
-    position: absolute;
-    height: 10px;
-    top: 30%;
-    left: -5px;
-    border-bottom: $border-style-basic;
-    background: transparent;
-    z-index: 100000;
-
-  }
-
-  .homeinfo-card__controls--openable-right {
-
-    position: absolute;
-    right: -60px;
-    
-  }
 
   .homeinfo__container {
     margin-bottom: 0;
@@ -555,6 +528,13 @@ hr {
 
   }
 
+
+ }
+
+ @media #{$breakpoints-xxlarge} { 
+
+
+
   .homeinfo-card--network-description {
 
     position: fixed;
@@ -579,27 +559,12 @@ hr {
 
   }
 
-  .homeinfo__description--openable {
-
-    overflow-y: auto;
-    overflow-x: hidden;
-    height: 85%;
-
-  }
-
-  .homeinfo-card--opened {
-
-    left: 0px;
-    z-index: $z-index-02;
-
-  }
 
   .homeinfo-card--activity {
 
     position: fixed;
     left: -390px;
     top: 40%;
-
     border-radius: 0  $border-radius-semicircle  $border-radius-semicircle 0;
     width: 400px;
     height: 60%;
@@ -610,13 +575,59 @@ hr {
 
   }
 
-   .homeinfo-card--opened-right {
+
+  .homeinfo-card__controls--openable {
+
+    position: absolute;
+    right: -60px;
+    
+  }
+
+  .homeinfo-card__controls--openable::before {
+
+    content: "";
+    width: 6px;
+    position: absolute;
+    height: 10px;
+    top: 30%;
+    left: -5px;
+    border-bottom: $border-style-basic;
+    background: transparent;
+    z-index: 100000;
+
+  }
+
+  .homeinfo-card__controls--openable-right {
+
+    position: absolute;
+    right: -60px;
+    
+  }
+
+
+  .homeinfo__description--openable {
+
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 85%;
+
+  }
+
+
+  .homeinfo-card--opened {
+
+    left: 0px;
+    z-index: $z-index-02;
+
+  }
+
+
+  .homeinfo-card--opened-right {
 
     max-width: 40%;
     left: 0;
     z-index: $z-index-02;
 
   }
-
 
  }

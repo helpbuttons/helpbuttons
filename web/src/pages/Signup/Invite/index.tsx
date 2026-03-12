@@ -89,7 +89,7 @@ export function InviteForm() {
             store.emit(new SetMainPopup(MainPopupPage.HIDE))
           },
           () => {
-            alertService.error('Error, invitation code not valid')
+            alertService.error(t('user.inviteLoginError'))
           },
         ),
       );

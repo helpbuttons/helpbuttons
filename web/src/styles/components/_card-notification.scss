@@ -95,8 +95,13 @@ $card-notification-delete-size: 100px;
 
 .card-notification__content {
   display: flex;
-  padding: $padding-big;
+  padding: $padding-big $padding-huge;
   position: relative;
+
+}
+
+.card-notification__content--home-activity {
+  padding: $padding-medium;
 }
 
 .card-notification__avatar {
