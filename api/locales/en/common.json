@@ -48,7 +48,7 @@
     "share": "Share options",
     "notificationsPermission": "Allow notifications",
     "featured": "Featured",
-    "powered": "2025 - Powered by",
+    "powered": "2026 - Powered by",
     "keyLocations": "Key Spots",
     "inviteToNetwork": "Share",
     "inviteCopied": "Link copied to clipboard"
@@ -72,6 +72,7 @@
     "advancedInviteOptions": "Printable PDF invitations",
     "printInvites":"Printable pdf invitations",
     "linkCopied": "{0} copied to clipboard",
+    "codeCopied": "Copied on clipboard",
     "copyCode": "Copy code"
 
   },
@@ -163,12 +164,12 @@
     "smtpUrl": "Smtp url",
     "createAdminTitle": "Create administrator account",
     "welcomeMessage": "Welcome to your _helpbuttons_ instance",
-    "createAdmin": "First step, is create an admin",
+    "createAdmin": "Let's create your Network. First step: Create your admin account.",
     "configureNetwork": "Customize your site's appearance, topics, post types, and alerts. Add prices, dates, and other modular features to your posts.",
     "welcomeMessageLong": "Next you´ll see your collaborative network description. Create your first network with the options in the next step.",
     "finish": "Finish setup",
     "configureInstanceDescription": "Wizard to help on configuring your network",
-    "configureInstanceTitle": "Setup the last details of your network",
+    "configureInstanceTitle": "Setup your network",
     "test": "test",
     "needLogo": "Before selecting a place for your network, please upload a logo",
     "needPlace": "Please select the area of your network",
@@ -209,16 +210,18 @@
     "deletebutton": "{0} was deleted",
     "expiredEventType": "_helpbutton_ ended",
     "expiredEventTitle": "'{0}' has passed its end date, it won't show no more on the public list.",
-    "endorsed": "You have been endorsed by the administration, now you have a 'trusted' badge on your profile",
-    "revokeEndorse": "Unfortunately you're 'trusted' badge has been removed",
+    "endorsed": "You have been endorsed by the administration, now you have a 'verified' badge on your profile",
+    "revokeEndorse": "Unfortunately your 'verified' badge has been removed",
     "roleupdate": "Your role has been updated to '{0}'",
     "newSignup": "New user '{0}' signed up",
-    "notice": "Notice",
-    "sent": "Message sent!",
+    "notice": "",
+    "sent": "sent",
     "writingDraft": "Writing private message",
     "draft": "Draft",
     "pickOne": "Select one chat",
-    "newbuttonHomeinfo": "New _helpbutton_ "
+    "newbuttonHomeinfo": "New _helpbutton_ ",
+    "title": "Messages & Alerts",
+    "comment": "Comment"
   },
   "common": {
     "notfound": "No {0} found. Sorry. 🤔",
@@ -241,7 +244,12 @@
     "notFoundMessage": "Page not found or deleted",
     "options": "Options",
     "edit": "Edit",
-    "show": "Show"
+    "show": "Show",
+    "registeredRequired": "You need to register",
+    "delete": "Delete",
+    "confirm": "Confirm",
+    "cancel": "Cancel",
+    "unsavedChanges": "Warning! You have unsaved changes."
   },
   "button": {
     "title": "_helpbutton_ view",
@@ -313,8 +321,9 @@
     "selectPlace": "Select place on map and save",
     "sendPrivateMessage": "Send private message to {0}",
     "expiredLabel": "Expired",
-    "followers": "Suscribed by {0} users.",
-    "showMoreTags": "more tags"
+    "followers": "Suscribed by {0} users",
+    "showMoreTags": "more tags",
+    "nofollowers": "no one is following yet"
   },
   "user": {
     "login": "Write your credentials",
@@ -323,15 +332,17 @@
     "profileView": "Your profile",
     "otherProfileView": "User",
     "email": "Email",
-    "emailExplain": "This is your login email and where you'll receive notifications",
+    "emailOrUsername": "Email or username",
+    "emailOrUsernamePlaceholder": "i.e. mine@mail.com or mary136",
+    "emailExplain": "Here you'll receive notifications",
     "emailPlaceHolder": "email@example.tld",
     "username": "Username",
     "usernameWillBe": "Your username will be ",
     "usernameExplain": "The username is what will identify you in this network and others",
-    "usernameCreateExplain": "Create your username. The username is your alias used to identify you.",
+    "usernameCreateExplain": "Modify your username. The username is your alias used to identify you.",
     "usernamePlaceHolder": "Type a unique name",
     "password": "Password",
-    "passwordExplain": "Create your password, 8 characters minimum.",
+    "passwordExplain": "Create your password, 8 chars minimum.",
     "pickLanguageLabel": "Pick your language",
     "pickLanguageExplain": "The app menus will be translated to the language you choose",
     "passwordPlaceHolder": "Type your password here",
@@ -371,7 +382,7 @@
     "receiveNotificationsExplain": "Specify if you want to receive emails with the messages sent to you or relevant activity of the topics and publications that you follow",
     "textReceiveNotifications": "Receive mail notifications",
     "loginSucess": "Login successfuly",
-    "loginSucessLink": "Login successfuly, <a href='/ProfileEdit'> here you can change password</a> or go to Profile > Edit Profile > Security ",
+    "loginSucessLink": "Login successfuly, please <a href='/ProfileEdit'>change your password</a>",
     "unsubscribed": "You will no longer receive this kind of emails",
     "showButtonsProfileLabel": "_helpbuttons_ on my profile page",
     "showButtonsProfileExplain": "Mark if you want to show a list of what you publish in your public profile",
@@ -410,15 +421,15 @@
     "deletedAccount": "Your data was deleted sucessfuly!",
     "pleaseAcceptCookies": "You have to accept the usage of cookies if you wish to signup or login",
     "showCookiesBanner": "Please click here to accept cookies",
-    "endorse": "Endorse",
-    "revokeEndorse": "Withdraw endorsement",
-    "endorsed": "Trusted",
+    "endorse": "Verify",
+    "revokeEndorse": "Withdraw verification",
+    "endorsed": "Verified",
     "signupAsGuest": "Participate as guest",
     "signupGuestDetails": "Proceed with guest details",
-    "explainPublishAsGuest": "To signup as guest, please generate a new login code. You can use it for logging in to check your _helpbuttons_ in the future.",
+    "explainPublishAsGuest": "Step 1/3: Generate a new guest code.",
     "generateCode": "Generate new guest code",
-    "explainUseGuestCode": "Please store this code, it is your only way to keep track of your publications",
-    "explainGuestDetails": "We need some details to complete your signup",
+    "explainUseGuestCode": "Store this code, so you can enter again in the future.",
+    "explainGuestDetails": "Last step: Complete your access.",
     "editUsername": "Edit username",
     "optionalFields": "Optional fields",
     "emailRecovery":"Recovery email address",
@@ -428,8 +439,8 @@
     "iHaveCode":"I have a guest code",
     "guestCode":"Guest code",
     "guestCodePlaceHolder":"Write the code here",
-    "askForNewCode":"I don't have my guest info"
-
+    "askForNewCode":"I don't have my guest info",
+    "inviteLogin": "Enter"
   },
   "picker": {
     "headerText": "Choose a location"
@@ -485,7 +496,7 @@
     "public": "This comment is public, everyone will see it.",
     "placeholderWrite": "Write a message",
     "posted": "Comment posted",
-    "sendPublic": "Answer",
+    "sendPublic": "Comment post",
     "sendPrivate": "Answer privately",
     "send": "Send",
     "makePublic": "Show message in public"
@@ -541,7 +552,7 @@
     "adminUsers": "These are your Network's Administrator. To edit visit their profiles",
     "contactAdmin": "Contact the administrator",
     "customFields": "Custom fields",
-    "customFieldsExplain": "These are extra fields that you can add to your _helpbuttons_ so they accomplish different tasks. Add date if you want to haddle events, or price if you want the users to be able to sell products.",
+    "customFieldsExplain": "These are extra fields that you can add to your _helpbuttons_ so they accomplish different tasks. Add date if you want to handle events, or price if you want the users to be able to sell products.",
     "priceFieldAdd": "Add price",
     "priceFieldAddLabel": "Display a price so user can buy/sell in their _helpbuttons_",
     "dateFieldAddLabel": "Display a date so the _helpbutton_ type behaves like an event and users can search by calendar",
@@ -566,11 +577,13 @@
     "keyLocationsExplain": "Key spots that will be highlighted in your network. They will appear in the main menus and map for easy access",
     "addLocationKey": "Add Location",
     "privacyPolicyLabel": "Privacy policy",
+    "privacyPolicyPlaceHolder": "Write basic privacy policy, like where are your storing your users' data, what type of data are you using and what for. ",
+    "ethicsPolicyPlaceHolder": "Write basic ethics. What are the values behind your networks' purpose and users' actions.",
     "ethicsPolicyLabel": "Ethics",
     "contactEmailLabel": "Contact data",
-    "FAQs": "Complementary info",
-    "contactEmailPlaceHolder": "Write your network's contact here"
-
+    "FAQs": "Add your legal information",
+    "contactEmailPlaceHolder": "Write your network's contact here",
+    "privacySettings": "Set your privacy prefrences"
 
   },
   "configure": {
@@ -620,13 +633,16 @@
     "inviteOnlyNetwork": "You can only signup in this network with an invitation",
     "generate": "Generate new invitation",
     "copied": "Invitation link copied to clipboard {0}",
-    "title": "QR invites",
+    "title": "Invites",
     "description": "Invite people, manage and share links with other people to allow them to access your network",
     "inviteOnlyLabel": "Network privacy",
     "inviteOnlyExplain": "If you enable this, users will only be able to register and publish if they use a QR code. They will still see the _helpbuttons_.",
     "inviteOnly": "Only allow signup with an QR code",
     "generateQr": "Get QR",
-    "registered": "Qr code already registered"
+    "registered": "Qr code already registered",
+    "scanCodeLabel":"Type your code",
+    "scanCodeExplain": "You can type your QR code if you can't scan the QR",
+    "scanPlaceHolder":"Type your full invite link or your alfanumerical code"
   },
   "invitation": {
     "card": "Anonimous login individual card",
@@ -637,9 +653,12 @@
   },
   "customFields": {
     "priceLabel": "Price ({0})",
-    "priceExplain": "Specify a value. Use 0 if it's free or select Price to consult if it's not exactly defined.",
-    "consult": "Price to consult",
-    "free": "Free"
+    "priceExplain": "Specify a value. Use 0 if it's free or select Price on request if it's not exactly defined.",
+    "consult": "On request",
+    "free": "Free",
+    "confirmDeleteLabel": "Delete _helpbutton_ type",
+    "confirmDeleteExplain": "Are you sure you want to delete this button type? This operation will delete all buttons"
+
   },
   "email": {
     "loginTokenContent": "Welcome to {0}",
@@ -667,7 +686,7 @@
     "notFoundMessage": "Page not found"
   },
   "moderation": {
-    "description": "Here you can review the users of your network, and the buttons!",
+    "description": "Here you can review the users and _helpbuttons_ of your network",
     "verified": "Verified",
     "revoke": "Revoke administrator rights",
     "activate": "Activate",
@@ -677,7 +696,7 @@
     "actions": "Actions",
     "role": "Role",
     "usersList": "Users",
-    "buttonsList": "_helpbuttons_ approval list",
+    "buttonsList": "_helpbuttons_ waiting list",
     "confirm": "Confirm",
     "preview": "Preview",
     "emptyButtonList": "No _helpbuttons_ to be approved",
@@ -692,7 +711,8 @@
     "adminCommunicationExplain": "Messages that you share here will be send to all admins or all users of the network",
     "created_at": "Date",
     "edit": "Edit",
-    "awaitingApprovalLabel": "Awaiting approval"
+    "awaitingApprovalLabel": "Awaiting approval",
+    "buttonsApproved": "All published _helpbuttons_ "
   },
   "roles": {
     "blocked": "blocked",
@@ -740,8 +760,8 @@
   {
     "create": "Create new group chat for the {0}",
     "creating": "After sending the first message to this group, other users will be able to participate on this group chat",
-    "admin": "administrators",
-    "community": "commmunity",
+    "admin": "Admins chat",
+    "community": "Commmunity chat",
     "admin_community": "Admin & Community",
     "you": "You"
   }
