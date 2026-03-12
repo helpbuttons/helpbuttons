@@ -89,7 +89,10 @@
     "error": "Arazo bat izan da",
     "reloadConfig": "Berriro kargatu konfigurazioa",
     "publishTitle": "Sortu {0}",
-    "deleteSuccess": "Arrakastaz amaituta"
+    "deleteSuccess": "Arrakastaz amaituta",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "show": "Show"
   },
   "configuration": {
     "config": "Konfigurazio aukerak",
@@ -160,7 +163,13 @@
     "locationKeys": "Key Spots",
     "requiredLocation": "Please pickup a place in the map for your network",
     "keyLocationsExplain": "Key spots that will be highlighted in your network. They will appear in the main menus and map for easy access",
-    "addLocationKey": "Add Location"
+    "addLocationKey": "Add Location",
+    "privacySettings": "Set your privacy prefrences",
+    "allowGuestCreationExplain": "When allowing anonymous signups, is important to remmember that your network will be easier exposed to spam",
+    "FAQs": "Add your legal information",
+    "privacyPolicyPlaceHolder": "Write basic privacy policy, like where are your storing your users' data, what type of data are you using and what for. ",
+    "ethicsPolicyPlaceHolder": "Write basic ethics. What are the values behind your networks' purpose and users' actions.",
+    "contactEmailPlaceHolder": "Write your network's contact here"
   },
   "activities": {
     "allNotifications": "Aldaketa guztiak",
@@ -189,7 +198,10 @@
     "expiredEventType": "_helpbutton_ amaituta",
     "expiredEventTitle": "'{0}' amaiera-data {1} egunean gainditu du, ez da jendaurrean gehiago erakutsiko.",
     "notifications": "Notifications",
-    "messages": "Messages"
+    "messages": "Messages",
+    "sent": "sent",
+    "draft": "Draft",
+    "title": "Messages & Alerts"
   },
   "activitiesWithSubject": {
     "newbutton": "{0}ek _helpbutton_ argitaratu du {1}",
@@ -290,7 +302,19 @@
     "endorse": "Endorse",
     "explainPublishAsGuest": "Signup as anonymous, please generate a new code, that you can use it for logging in to check your _helpbuttons_",
     "explainUseGuestCode": "Please store this code, it is your only way to keep track of your publications",
-    "editUsername": "Edit username"
+    "editUsername": "Edit username",
+    "showCookiesBanner": "Please click here to accept cookies",
+    "emailOrUsername": "Email or username",
+    "signupAsGuest": "Participate as guest",
+    "commentsAmount": "Commented",
+    "emptyList": "Your own _helpbuttons_ could be seen in this spot.",
+    "emailRecovery": "Recovery email address",
+    "loginSucessLink": "Login successfuly, please <a href='/ProfileEdit'>change your password</a>",
+    "generateCode": "Generate new guest code",
+    "iHaveCode": "I have a guest code",
+    "explainGuestDetails": "Last step: Complete your access.",
+    "inviteLogin": "Enter",
+    "showWassap": "Enable Whatsapp link"
   },
   "configure": {
     "browsePins": "Mapa kokapen pinen bidez",
@@ -415,7 +439,9 @@
     "publishComment": "Publish comment",
     "sendPrivateMessage": "Send private message to {0}",
     "proposeAddress": "Add a missing place in {0}",
-    "locationPlaceholder": "Write a place or address"
+    "locationPlaceholder": "Write a place or address",
+    "expiredLabel": "Expired",
+    "followers": "Suscribed by {0} users"
   },
   "calendarOnce": {
     "label": "Behin",
@@ -530,7 +556,8 @@
     "cookieAccept": "Accept",
     "cookiesQuestion": "Cookies policy",
     "cookiesPolicy": "Cookie Policy",
-    "cookieReject": "Reject"
+    "cookieReject": "Reject",
+    "cookiesDescription": "This site, uses cookies to provide a secure and personalized experience. Below is a description of specific cookies we use: 1. ACCESS_TOKEN (access_token): This cookie securely stores your access token, allowing you to stay logged in during your session without needing to re-authenticate. Type: Essential Duration: Session-based 2. TOKEN_TYPE (token_type): Used to identify the type of access token you are using, ensuring proper authentication and security. Type: Essential Duration: Session-based 3. NETWORK_SELECTED (network_id): Stores information about the selected network you are using on our platform, helping provide a customized experience based on your selection. Type: Functionality Duration: Session-based 4. EXPLORE_SETTINGS (explore_settings): Saves your preferences and settings in the explore feature, making your browsing experience more consistent and tailored. Type: Functionality Duration: Persistent 5. HAS_PERMISSION_NOTIFICATIONS (has_permission_notifications): Tracks whether you have given permission for notifications, allowing us to show or hide notifications based on your preference. Type: Preference Duration: Persistent You can manage your cookie settings through your browser's preferences. "
   },
   "invite": {
     "never": "Inoiz ez",
@@ -550,13 +577,15 @@
     "inviteOnlyExplain": "Hau aktibatzen baduzu, erabiltzaileak QR kodearekin soilik erregistratu eta argitaratu ahal izango dute.",
     "inviteOnly": "Erregistroa QR kodearekin soilik baimendu",
     "generateQr": "QR",
-    "registered": "QR erabilia"
+    "registered": "QR erabilia",
+    "scanCodeExplain": "You can type your QR code if you can't scan the QR"
   },
   "customFields": {
     "priceLabel": "Prezioa ({0})",
     "consult": "Kontsultatu prezioa",
     "free": "Doan",
-    "priceExplain": "Specify a value. Use 0 if it's free or select Price to consult if it's not exactly defined."
+    "priceExplain": "Specify a value. Use 0 if it's free or select Price to consult if it's not exactly defined.",
+    "confirmDeleteLabel": "Delete _helpbutton_ type"
   },
   "email": {
     "loginTokenContent": "Ongi etorri {0}-ra",
@@ -642,7 +671,13 @@
     "shareTypeLabel": "Sharing types",
     "explainInvitations": "Generate individual invitation cards for your community",
     "invitePeople": "Invite people",
-    "advancedInviteOptions": "Printable PDF invitations"
+    "advancedInviteOptions": "Printable PDF invitations",
+    "invitePeopleExplain": "Copy and share this link to add others to the network",
+    "shareContent": "Share app's content",
+    "optionRss": "Suscribe to Rss feed",
+    "copyLink": "Copy link",
+    "codeCopied": "Copied on clipboard",
+    "copyCode": "Copy code"
   },
   "places": {
     "addNew": "",
@@ -654,5 +689,17 @@
   },
   "roles": {
     "administrator": "administrator"
+  },
+  "footer": {
+    "whatIsNetwork": "Know more",
+    "explore": "Explore _helpbuttons_",
+    "assistance": "Assistance",
+    "securitySupport": "Alert of a safety problem",
+    "whatsHelpbuttons": "What's Helpbuttons",
+    "otherNetworks": "See other networks"
+  },
+  "groupChat": {
+    "admin": "Admins chat",
+    "create": "Create new group chat for the {0}"
   }
 }

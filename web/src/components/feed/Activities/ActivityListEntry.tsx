@@ -21,7 +21,7 @@ export function ActivityListEntryCard({ activity, selected = false, onClick }) {
 
 export function ActivityListEntryCardInner({ image, createdAt, type, read, premessage, message, footer, title }) {
     return (
-        <div className="card-notification__content">
+        <div className="card-notification__content card-notification__content--home-activity">
             <div className="card-notification__avatar">
                 <div className="avatar-medium">
                     <ImageWrapper

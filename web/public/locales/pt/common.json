@@ -90,7 +90,9 @@
     "reloadConfig": "Recarregar configuração",
     "publishTitle": "Criar {0}",
     "deleteSuccess": "Finalizado com sucesso",
-    "show": "Mostrar"
+    "show": "Mostrar",
+    "cancel": "Cancel",
+    "delete": "Delete"
   },
   "configuration": {
     "config": "Opções de configuração",
@@ -163,7 +165,11 @@
     "keyLocationsExplain": "Os pontos importantes serão destacados. Eles irão aparecer nos menus e no mapa",
     "addLocationKey": "Adicionar localização",
     "FAQs": "Informação complementar",
-    "contactEmailPlaceHolder": "Escreve aqui o contato da sua rede"
+    "contactEmailPlaceHolder": "Escreve aqui o contato da sua rede",
+    "privacySettings": "Set your privacy prefrences",
+    "allowGuestCreationExplain": "When allowing anonymous signups, is important to remmember that your network will be easier exposed to spam",
+    "privacyPolicyPlaceHolder": "Write basic privacy policy, like where are your storing your users' data, what type of data are you using and what for. ",
+    "ethicsPolicyPlaceHolder": "Write basic ethics. What are the values behind your networks' purpose and users' actions."
   },
   "activities": {
     "allNotifications": "Todas as atualizações",
@@ -195,7 +201,8 @@
     "messages": "Mensagens",
     "pickOne": "Selecciona uma conversa",
     "draft": "Rascunho",
-    "sent": "Messagem enviada!"
+    "sent": "Messagem enviada!",
+    "title": "Messages & Alerts"
   },
   "activitiesWithSubject": {
     "newbutton": "{0} publicou um _helpbutton_ em {1}",
@@ -305,7 +312,11 @@
     "showWassap": "Ativar link para whatsapp",
     "emptyList": "_helpbuttons_ podem ser vistos neste sítio.",
     "commentsAmount": "Comentado",
-    "loginNotFound": "Utilizador ou senha não encontrado"
+    "loginNotFound": "Utilizador ou senha não encontrado",
+    "showCookiesBanner": "Please click here to accept cookies",
+    "emailOrUsername": "Email or username",
+    "signupAsGuest": "Participate as guest",
+    "inviteLogin": "Enter"
   },
   "configure": {
     "browsePins": "Mapa com pinos de localização",
@@ -432,7 +443,8 @@
     "sendPrivateMessage": "Enviar mensagem privada para {0}",
     "proposeAddress": "Adicionar endereço em falta {0}",
     "locationPlaceholder": "Escrever sítio ou morada",
-    "expiredLabel": "Expirado"
+    "expiredLabel": "Expirado",
+    "followers": "Suscribed by {0} users"
   },
   "calendarOnce": {
     "label": "Uma vez",
@@ -569,13 +581,15 @@
     "inviteOnlyExplain": "Se você ativar isso, os utilizadors só poderão se registrar e publicar com um código QR.",
     "inviteOnly": "Permitir registo apenas com um código QR",
     "generateQr": "QR",
-    "registered": "QR usado"
+    "registered": "QR usado",
+    "scanCodeExplain": "You can type your QR code if you can't scan the QR"
   },
   "customFields": {
     "priceLabel": "Preço ({0})",
     "consult": "Preço a consultar",
     "free": "Grátis",
-    "priceExplain": "Especifique um valor. Use 0 se for gratuito ou selecione Preço para consultar se não estiver exatamente definido."
+    "priceExplain": "Especifique um valor. Use 0 se for gratuito ou selecione Preço para consultar se não estiver exatamente definido.",
+    "confirmDeleteLabel": "Delete _helpbutton_ type"
   },
   "email": {
     "loginTokenContent": "Bem-vindo(a) ao {0}",
@@ -666,8 +680,8 @@
     "shareContent": "Partilhar conteúdos da app",
     "optionRss": "Subscrever rss",
     "copyLink": "Copiar link",
-    "invitePeopleExplain": "Copia este link e partilha com outros para se juntarem à rede"
-
+    "invitePeopleExplain": "Copia este link e partilha com outros para se juntarem à rede",
+    "codeCopied": "Copied on clipboard"
   },
   "places": {
     "addNew": "",
@@ -694,6 +708,8 @@
     "whatsHelpbuttons": "O que é o helpbuttons.org?",
     "otherNetworks": "Ver outras redes",
     "explore": "Explorar _helpbuttons_",
-    "whatIsNetwork": "Saber mais..."
+    "whatIsNetwork": "Saber mais...",
+    "assistance": "Assistance",
+    "securitySupport": "Alert of a safety problem"
   }
 }
