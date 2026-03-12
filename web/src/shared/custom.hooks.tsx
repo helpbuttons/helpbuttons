@@ -134,7 +134,7 @@ export const useScrollDirection = (ref) => {
   // Detect scroll direction
   useEffect(() => {
     
-    if (!ref) return;
+    if (!ref?.current) return;
     const refContent = ref.current;
     const handleScroll = () => {
       const currentScrollTop = refContent.scrollTop;

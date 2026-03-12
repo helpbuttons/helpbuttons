@@ -50,7 +50,7 @@ $btn-font-size-medium: $font-size-medium;
   border-right: 1px solid $color-gray-border;
   text-overflow: ellipsis;
   overflow: hidden;
-  min-width: fit-content;
+  min-width: 0;
 
 
 }
@@ -60,6 +60,7 @@ $btn-font-size-medium: $font-size-medium;
 
   @extend .btn-menu-white;
   border: 1px solid $color-gray-border;
+
 
 }
 
@@ -311,6 +312,8 @@ $btn-font-size-medium: $font-size-medium;
   text-overflow: ellipsis;
   overflow: hidden;
   line-height: 1.2rem;
+  display: flex;
+  flex-wrap: wrap;
   max-height: 2.4rem;
 
 }

@@ -180,10 +180,12 @@ export function ImageGallery({ images }) {
           </div>
         }
         {(!showSingleImage && images )&& (
+            
+
             <div className="card-button__picture"
-              onTouchStart={handleTouchStart}
-              onTouchMove={handleTouchMove}
-              onTouchEnd={handleTouchEnd}
+              onTouchStart={images.length > 1 ? handleTouchStart : null}
+              onTouchMove={images.length > 1 ? handleTouchMove : null}
+              onTouchEnd={images.length > 1 ? handleTouchEnd : null}
             >
             {images.length > 1 && (
               <div className="card-button__picture-nav">

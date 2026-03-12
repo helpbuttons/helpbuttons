@@ -9,7 +9,7 @@ const { exec } = require('child_process');
 var _ = require('lodash');
 const fs = require('fs')
 
-const translatioFile = (locale) => {
+const translationFile = (locale) => {
   return `../public/locales/${locale}/common.json`;
 };
 
@@ -17,17 +17,18 @@ const saveTranslatioFile = (locale, data) => {
   return fs.writeFileSync(`../public/locales/${locale}/common.json`, JSON.stringify(data, null, 2));
 };
 
-const allLocales = ['en', 'es', 'cat', 'eu', 'pt'];
+// const allLocales = ['en', 'es', 'cat', 'eu', 'pt'];
 
-const syncTranslations = (foundTranslations) => {
+const syncTranslations = (language, foundTranslations) => {
   let allTranslations = [];
-  
-  allTranslations = allLocales.map((locale) => {
-    return {locale: locale, translations: require(translatioFile(locale))};
+  let toSaveTranslations = [];
+
+  allTranslations = ["en", language].map((locale) => {
+    return {locale: locale, translations: require(translationFile(locale))};
   });
   const englishTranslations = allTranslations.find((elem) => elem.locale == 'en').translations
   foundTranslations.map((foundTranslation) => {
-    allTranslations = allTranslations.map(({locale, translations}) => {
+    toSaveTranslations = allTranslations.map(({locale, translations}) => {
       if(!_.get(translations, foundTranslation))
       {
         console.log(`Adding new ${foundTranslation} to ${locale}`)
@@ -38,7 +39,7 @@ const syncTranslations = (foundTranslations) => {
     })
   });
 
-  allTranslations.forEach(({locale, translations}) => {
+  toSaveTranslations.forEach(({locale, translations}) => {
     // only save en language, so that weblate updates if index is not found
       console.log(`saving ${locale}`)
       saveTranslatioFile(locale,translations)
@@ -46,7 +47,7 @@ const syncTranslations = (foundTranslations) => {
   })
 };
 
-const getTranslations = () => {
+const getTranslations = (language) => {
   exec(
     `grep -ro -E "t\\('[a-zA-Z]*\.[a-zA-Z]*" ../src/ | cut -f 2 -d:`,
     (error, stdout, stderr) => {
@@ -62,12 +63,12 @@ const getTranslations = () => {
         return false;
       })
 
-      syncTranslations(searchingTranslations);
+      syncTranslations(language, searchingTranslations);
       if (error !== null) {
         console.log(`exec error: ${error}`);
       }
     },
   );
 };
-
-getTranslations();
+const language = process?.argv[2]
+getTranslations(language);
