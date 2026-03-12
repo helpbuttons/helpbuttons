@@ -536,6 +536,7 @@ export class ResetExploreSettings implements UpdateEvent {
   public update(state: GlobalState) {
     return produce(state, (newState) => {
       newState.explore.settings = { ...state.explore.settings, ...this.newExploreSettings, ...{ forceRefetch: true } };
+      newState.explore.currentButton = null;
     })
   }
 }

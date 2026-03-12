@@ -7,6 +7,7 @@ import produce from 'immer';
 import dconsole from 'shared/debugger';
 import { ButtonEntry } from 'shared/dtos/button.dto';
 import { UpdateListButton } from './Explore';
+import { FindLatestActivities } from './Activity';
 
 export class FollowButton implements WatchEvent, UpdateEvent {
   public constructor(
@@ -16,7 +17,12 @@ export class FollowButton implements WatchEvent, UpdateEvent {
   ) { }
   public watch(state: GlobalState) {
     return ButtonService.follow(this.buttonId).pipe(
-      map((data) => {this.onSuccess();       store.emit(new UpdateListButton(this.buttonId, { isFollowing: true, followCount: state.explore.currentButton.followCount + 1 })) }),
+      map((data) => {
+        this.onSuccess();
+        store.emit(new UpdateListButton(this.buttonId, { isFollowing: true, followCount: state.explore.currentButton.followCount + 1 })) 
+        store.emit(new FindLatestActivities())
+      }),
+        
       catchError((error) => handleError(this.onError, error)),
     );
   }
@@ -24,10 +30,6 @@ export class FollowButton implements WatchEvent, UpdateEvent {
   public update(state: GlobalState) {
     return produce(state, (newState) => {
       newState.explore.currentButton.isFollowing = true
-      if(state.homeInfo.mainPopupButton)
-      {
-        newState.homeInfo.mainPopupButton.isFollowing = true;
-      }
     });
   }
 }
@@ -48,10 +50,6 @@ export class UnfollowButton implements WatchEvent, UpdateEvent {
   public update(state: GlobalState) {
     return produce(state, (newState) => {
       newState.explore.currentButton.isFollowing = false;
-      if(state.homeInfo.mainPopupButton)
-      {
-        newState.homeInfo.mainPopupButton.isFollowing = false;
-      }
     });
   }
 }

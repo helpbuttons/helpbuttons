@@ -14,7 +14,7 @@ import { ButtonShow } from "components/button/ButtonShow";
 import { FindAndSetMainPopupCurrentButton, SetMainPopupCurrentButton } from "state/HomeInfo";
 import ActivityGroup, { ActivityGroupChat } from "./ActivityGroup";
 import { FindLatestActivities, SetDraftButton } from "state/Activity";
-import { FindButton } from "state/Explore";
+import { FindButton, updateCurrentButton } from "state/Explore";
 
 export default function ActivitiesUser() {
   const buttonTypes = useButtonTypes()
@@ -35,7 +35,7 @@ export default function ActivitiesUser() {
     (state: GlobalState) => state.activities.draftButton,
   );
   const sideBarButton = useSideBarButton(selectedActivity, draft)
-
+  const currentButton = useGlobalStore((state: GlobalState) => state.explore.currentButton)
   useEffect(() => {
     if(draftButton)
       {
@@ -144,7 +144,7 @@ export default function ActivitiesUser() {
           }
 
           <div className="feed-section__right">
-            {sideBarButton && <ButtonShow button={sideBarButton} hideSendPrivateMessage={true} hideFooter={true}/>}
+            {sideBarButton && <ButtonShow button={currentButton} hideSendPrivateMessage={true} hideFooter={true}/>}
           </div>
         </div>
 
@@ -154,7 +154,7 @@ export default function ActivitiesUser() {
     <div className="feed__container">
       <div className="feed-section--messages">
 
-        {!selectedActivity && !selectedGroupMessageType && !sideBarButton && !draft &&
+        {!selectedActivity && !selectedGroupMessageType && !draft &&
           <div className="feed-section__left">
             <PopupHeader>{t('activities.title')}</PopupHeader>
             <div className="feed-section__filters">
@@ -206,18 +206,25 @@ const updateFilters = (buttonTypes, activities) => {
 
 const useSideBarButton = (selectedActivity, isDraft) => {
   const draftButton = useGlobalStore((state: GlobalState) => state.activities.draftButton);
+  const currentButton = useGlobalStore((state: GlobalState) => state.explore.currentButton);
   
-  const [sideBarButton, setSideBarButton] = useState(null);
+  const [sideBarButton, setSideBarButton] = useState(false);
 
   useEffect(() => {
-    if (selectedActivity?.buttonId && selectedActivity?.buttonId != sideBarButton?.id){
+    if (selectedActivity?.buttonId && selectedActivity?.buttonId != currentButton?.id){
         store.emit(new FindButton(selectedActivity.buttonId, (button) => {
-          setSideBarButton(() => button)
+          setSideBarButton(() => true)
+          store.emit(new updateCurrentButton(button))
         }))
-    }else  if(draftButton){
-      setSideBarButton(() => draftButton)
+    }else if(draftButton){
+      // setSideBarButton(() => draftButton)
+      store.emit(new FindButton(draftButton.id, (button) => {
+        setSideBarButton(() => true)
+        store.emit(new updateCurrentButton(button))
+      }))
     }else if(!(selectedActivity?.buttonId)){
       setSideBarButton(() => null)
+      store.emit(new updateCurrentButton(null))
     }
   }, [selectedActivity, draftButton])
 
