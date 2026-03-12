@@ -245,8 +245,8 @@ export class ActivityService {
   @OnEvent(ActivityEventName.Endorsed)
   @OnEvent(ActivityEventName.RoleUpdate)
   async onRoleUpdated(payload: any) {
-    const { user } = payload.data;
-    this.newActivity(null, user.id, null, { id: user.id }, payload, false, false)
+    const { user, sessionUser } = payload.data;
+    this.newActivity(null, user.id, sessionUser, { id: user.id }, payload, false, false)
   }
 
   public sendMessage(fromId, consumerId, buttonId, message) {
@@ -465,7 +465,11 @@ export class ActivityService {
     const isOwner = activity.to.id == userId;
     const isButtonOwner = activity?.button?.owner?.id == userId
     const disableChat = (activity?.button && (activity.to.id == activity.button.owner.id || activity.from.id == activity.button.owner.id)) ? false : true;
-    const read = (activity.from.id == userId) ? true : activity.read;
+    const read = (activity?.from?.id == userId) ? true : activity.read;
+    if(activity.from == null)
+    {
+      console.log(`activity as from null: ${activity.id}`)
+    }
     let activityOut = {
       id: activity.id,
       eventName: activity.eventName,
