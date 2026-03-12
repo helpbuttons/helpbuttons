@@ -72,18 +72,16 @@ export function ActivityGroupChat({ groupType, close }) {
   useEffect(() => {
     let latestMessageFromPoll = null
     if(groupType == GroupMessageType.admin){
-      if(!activities.admin){
-        return;
+      if(activities.admin){
+        latestMessageFromPoll = activities.admin.createdAt;
       }
-      latestMessageFromPoll = activities.admin.createdAt;
-    }
-    if(groupType == GroupMessageType.community){
-      if(!activities.community){
-        return;
-      }
-      latestMessageFromPoll = activities.community.createdAt;
     }
 
+    if(groupType == GroupMessageType.community){
+      if(activities.community){
+        latestMessageFromPoll = activities.community.createdAt;
+      }
+    }
     if(messages?.length > 0)
     {
       const latestMessage = messages[0].createdAt
@@ -92,6 +90,10 @@ export function ActivityGroupChat({ groupType, close }) {
           setMessages((prev) => uniqById( _msgs, prev))
         })
       }
+    }else{
+      loadMessages(0, (_msgs) => {
+        setMessages((prev) => uniqById( _msgs, prev))
+      })
     }
     
   }, [activities])
@@ -216,6 +218,7 @@ function ActivityGroupMessageForm({ sendNewMessage, groupType }) {
           classNameInput={"form__input"}
           onInputKeyDown={inputKeyDown}
           multiInput={true}
+          autoFocus={true}
         />
       </div>
       <div className="chat__new-message__send">

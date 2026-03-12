@@ -173,6 +173,7 @@ function MessageForm({ sendNewMessage, buttonId, consumerId }) {
           classNameInput={"form__input"}
           onInputKeyDown={inputKeyDown}
           multiInput={true}
+          autoFocus={true}
         />
       </div>
       <div className="chat__new-message__send">

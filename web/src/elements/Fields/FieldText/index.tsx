@@ -19,6 +19,7 @@ interface IFieldText {
     onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
     onFocus?: (e: React.FocusEvent<HTMLInputElement>) => void;
     onInputKeyDown?:(e: React.KeyboardEventHandler<HTMLInputElement>) => void;
+    autoFocus?: boolean;
 }
 
 const FieldText = React.forwardRef<HTMLInputElement, IFieldText>(
@@ -39,6 +40,7 @@ const FieldText = React.forwardRef<HTMLInputElement, IFieldText>(
         defaultValue,
         children,
         onInputKeyDown,
+        autoFocus = false
       },
       ref: ForwardedRef<HTMLInputElement>
     ) => {
@@ -75,6 +77,7 @@ const FieldText = React.forwardRef<HTMLInputElement, IFieldText>(
             onInput={onInput}
             onFocus={onFocus}
             onKeyDown={onInputKeyDown}
+            autoFocus={autoFocus}
           />
           <div className="form__input-subtitle">
               {maxLength > 0 && (
