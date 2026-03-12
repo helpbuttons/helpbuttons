@@ -154,58 +154,54 @@ export class ButtonService {
       isCustomAddress: createDto.isCustomAddress
     };
 
-    await getManager().transaction(
-      async (transactionalEntityManager) => {
-        if (Array.isArray(button.tags)) {
-          await this.tagService
-            .addTags('button', button.id, button.tags)
-            .catch((err) => {
-              console.log(
-                `Error adding tags ${JSON.stringify(
-                  button.tags,
-                )} to button ${button.id}`,
-              );
-              throw new HttpException(
-                { message: err.message },
-                HttpStatus.BAD_REQUEST,
-              );
-            });
-        }
-
-        if (createDto.images?.length > 0) {
-          await Promise.all(
-            createDto.images.map(async (image) => {
-              if (isImageData(image)) {
-                try {
-                  const newImage = await this.storageService.newImage64(
-                    image,
-                  );
-                  if (newImage) {
-                    button.images.push(newImage);
-                  }
-                } catch (err) {
-                  throw new CustomHttpException(
-                    ErrorName.InvalidMimetype,
-                  );
-                }
-              } else if (isImageUrl(image)) {
-                if(image)
-                {
-                  button.images.push(image);
-                }
-              } else {
-                console.error('no image data, or image url?');
-                console.log(image);
-              }
-            }),
+    if (Array.isArray(button.tags)) {
+      await this.tagService
+        .addTags('button', button.id, button.tags)
+        .catch((err) => {
+          console.log(
+            `Error adding tags ${JSON.stringify(
+              button.tags,
+            )} to button ${button.id}`,
           );
-        }
-        if (button.images.length > 0) {
-          button.image = button.images[0];
-        }
-        await this.buttonRepository.insert([button]);
-      },
-    );
+          throw new HttpException(
+            { message: err.message },
+            HttpStatus.BAD_REQUEST,
+          );
+        });
+    }
+
+    if (createDto.images?.length > 0) {
+      await Promise.all(
+        createDto.images.map(async (image) => {
+          if (isImageData(image)) {
+            try {
+              const newImage = await this.storageService.newImage64(
+                image,
+              );
+              if (newImage) {
+                button.images.push(newImage);
+              }
+            } catch (err) {
+              throw new CustomHttpException(
+                ErrorName.InvalidMimetype,
+              );
+            }
+          } else if (isImageUrl(image)) {
+            if(image)
+            {
+              button.images.push(image);
+            }
+          } else {
+            console.error('no image data, or image url?');
+            console.log(image);
+          }
+        }),
+      );
+    }
+    if (button.images.length > 0) {
+      button.image = button.images[0];
+    }
+    await this.buttonRepository.insert([button]);
 
     return await button;
   }

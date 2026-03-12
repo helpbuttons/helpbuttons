@@ -250,51 +250,47 @@ export class NetworkService {
     }
 
     await this.cacheManager.del('defaultNetwork');
-    await getManager().transaction(
-      async (transactionalEntityManager) => {
-        if (Array.isArray(updateDto.tags)) {
-          await this.tagService
-            .addTags('network', network.id, updateDto.tags)
-            .catch((err) => {
-              throw new HttpException(
-                { message: err.message },
-                HttpStatus.BAD_REQUEST,
-              );
-            });
-        }
+    if (Array.isArray(updateDto.tags)) {
+      await this.tagService
+        .addTags('network', network.id, updateDto.tags)
+        .catch((err) => {
+          throw new HttpException(
+            { message: err.message },
+            HttpStatus.BAD_REQUEST,
+          );
+        });
+    }
 
-        if (isImageData(updateDto.logo)) {
-          try {
-            network.logo = await this.storageService.newImage64(
-              updateDto.logo,
-            );
-            if (defaultNetwork.logo != network.logo) {
-              await this.storageService.delete(defaultNetwork.logo)
-            }
-          } catch (err) {
-            throw new ValidationException({ logo: err.message });
-          }
-        }
-
-        if (isImageData(updateDto.jumbo)) {
-          try {
-            network.jumbo = await this.storageService.newImage64(
-              updateDto.jumbo,
-            );
-            if (defaultNetwork.jumbo != network.jumbo) {
-              await this.storageService.delete(defaultNetwork.jumbo)
-            }
-          } catch (err) {
-            throw new ValidationException({ jumbo: err.message });
-          }
-        }
-        await this.networkRepository.update(
-          defaultNetwork.id,
-          removeUndefined(network),
+    if (isImageData(updateDto.logo)) {
+      try {
+        network.logo = await this.storageService.newImage64(
+          updateDto.logo,
         );
-        await this.userService.setAdminLocale(updateDto.locale)
-      },
+        if (defaultNetwork.logo != network.logo) {
+          await this.storageService.delete(defaultNetwork.logo)
+        }
+      } catch (err) {
+        throw new ValidationException({ logo: err.message });
+      }
+    }
+
+    if (isImageData(updateDto.jumbo)) {
+      try {
+        network.jumbo = await this.storageService.newImage64(
+          updateDto.jumbo,
+        );
+        if (defaultNetwork.jumbo != network.jumbo) {
+          await this.storageService.delete(defaultNetwork.jumbo)
+        }
+      } catch (err) {
+        throw new ValidationException({ jumbo: err.message });
+      }
+    }
+    await this.networkRepository.update(
+      defaultNetwork.id,
+      removeUndefined(network),
     );
+    await this.userService.setAdminLocale(updateDto.locale)
 
     return network;
   }
