@@ -79,43 +79,39 @@ export class NetworkService {
       ethicsPolicy: createDto.ethicsPolicy,
       contactEmail: createDto.contactEmail
     };
-    // await getManager().transaction(
-      // async (transactionalEntityManager) => {
-        if (Array.isArray(createDto.tags)) {
-          await this.tagService
-            .addTags('network', network.id, createDto.tags)
-            .catch((err) => {
-              throw new HttpException(
-                { message: err.message },
-                HttpStatus.BAD_REQUEST,
-              );
-            });
-        }
-
-        try {
-          network.logo = await this.storageService.newImage64(
-            createDto.logo,
+    if (Array.isArray(createDto.tags)) {
+      await this.tagService
+        .addTags('network', network.id, createDto.tags)
+        .catch((err) => {
+          throw new HttpException(
+            { message: err.message },
+            HttpStatus.BAD_REQUEST,
           );
-        } catch (err) {
-          console.log(err)
-          throw new ValidationException({ logo: err.message });
-        }
+        });
+    }
 
-        try {
-          network.jumbo = await this.storageService.newImage64(
-            createDto.jumbo,
-          );
-        } catch (err) {
-          console.log(`errorjumboooooror: ${err.message}`);
-          throw new ValidationException({ jumbo: err.message });
-        }
-        console.log(
-          `network.logo ${network.logo} jumbo ${network.jumbo}`,
-        );
-        await this.networkRepository.insert([network]);
-        await this.userService.setAdminLocale(createDto.locale)
-      // },
-    // );
+    try {
+      network.logo = await this.storageService.newImage64(
+        createDto.logo,
+      );
+    } catch (err) {
+      console.log(err)
+      throw new ValidationException({ logo: err.message });
+    }
+
+    try {
+      network.jumbo = await this.storageService.newImage64(
+        createDto.jumbo,
+      );
+    } catch (err) {
+      console.log(`errorjumboooooror: ${err.message}`);
+      throw new ValidationException({ jumbo: err.message });
+    }
+    console.log(
+      `network.logo ${network.logo} jumbo ${network.jumbo}`,
+    );
+    await this.networkRepository.insert([network]);
+    await this.userService.setAdminLocale(createDto.locale)
 
     return network;
   }
