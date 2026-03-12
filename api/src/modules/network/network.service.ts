@@ -79,8 +79,8 @@ export class NetworkService {
       ethicsPolicy: createDto.ethicsPolicy,
       contactEmail: createDto.contactEmail
     };
-    await getManager().transaction(
-      async (transactionalEntityManager) => {
+    // await getManager().transaction(
+      // async (transactionalEntityManager) => {
         if (Array.isArray(createDto.tags)) {
           await this.tagService
             .addTags('network', network.id, createDto.tags)
@@ -114,8 +114,8 @@ export class NetworkService {
         );
         await this.networkRepository.insert([network]);
         await this.userService.setAdminLocale(createDto.locale)
-      },
-    );
+      // },
+    // );
 
     return network;
   }
