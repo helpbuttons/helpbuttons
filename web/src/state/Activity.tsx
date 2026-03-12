@@ -223,14 +223,10 @@ export class ActivityMarkAsRead implements WatchEvent, UpdateEvent {
 }
 
 export class SetDraftButton implements UpdateEvent{
-  public constructor() {}
+  public constructor(private button) {}
   public update(state: GlobalState) {
     return produce(state, (newState) => {
-      if(state?.homeInfo?.mainPopupButton){
-        newState.activities.draftButton = state.homeInfo.mainPopupButton
-      }else{
-        newState.activities.draftButton = state.explore.currentButton
-      }
+      newState.activities.draftButton = this.button
     })
   }
 }

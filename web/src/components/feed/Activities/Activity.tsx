@@ -4,7 +4,7 @@ import _ from 'lodash';
 import {  GlobalState, store, useGlobalStore} from "state";
 import { ActivityButton } from "components/feed/Activities/ActivityButton";
 import ActivityList from "components/feed/Activities/ActivityList";
-import { useIsMobile } from "elements/SizeOnly";
+import { ShowDesktopOnly, ShowMobileOnly, useIsMobile } from "elements/SizeOnly";
 import { Dropdown, DropdownLine } from "elements/Dropdown/Dropdown";
 import PopupHeader from "components/popup/PopupHeader";
 import { useRouter } from "next/router";
@@ -13,7 +13,8 @@ import { IoChatboxOutline } from "react-icons/io5";
 import { ButtonShow } from "components/button/ButtonShow";
 import { FindAndSetMainPopupCurrentButton, SetMainPopupCurrentButton } from "state/HomeInfo";
 import ActivityGroup, { ActivityGroupChat } from "./ActivityGroup";
-import { FindLatestActivities } from "state/Activity";
+import { FindLatestActivities, SetDraftButton } from "state/Activity";
+import { FindButton } from "state/Explore";
 
 export default function ActivitiesUser() {
   const buttonTypes = useButtonTypes()
@@ -27,25 +28,21 @@ export default function ActivitiesUser() {
   const filterButtons = updateFilters(buttonTypes, userButtonActivities)
   const isMobile = useIsMobile()
 
-  const sideBarButton = useSideBarButton()
   const router = useRouter()
   const {draft} = router.query;
   
   const draftButton = useGlobalStore(
     (state: GlobalState) => state.activities.draftButton,
   );
+  const sideBarButton = useSideBarButton(selectedActivity, draft)
+
   useEffect(() => {
-    if(!draftButton && draft){
-      const { draft, ...routerQuery } = router.query;
-      router.replace({
-        query: { ...routerQuery },
-      });
-    }
     if(draftButton)
       {
         const _draftActivity = userButtonActivities.find((_activity) => _activity.buttonId == draftButton.id)
         
         if(_draftActivity){
+          console.log(_draftActivity)
           setSelectedActivity(() => _draftActivity) 
           const { draft, ...routerQuery } = router.query;
               router.replace({
@@ -68,14 +65,9 @@ export default function ActivitiesUser() {
     if(selectedActivity)
     {
       setSelectedGroupMessageType(() => null)
-    }
-    if (selectedActivity && !isMobile) {
-      console.log(selectedActivity)
-      store.emit(new FindAndSetMainPopupCurrentButton(selectedActivity.buttonId))
-    }
-    if(!selectedActivity)
-    {
-      store.emit(new SetMainPopupCurrentButton(null))
+      if(draftButton){
+        store.emit(new SetDraftButton(null))
+      }
     }
   }, [selectedActivity])
 
@@ -84,12 +76,7 @@ export default function ActivitiesUser() {
       setSelectedActivity(() => null)
     }
   }, [selectedGroupMessageType])
-  useEffect(() => {
-    if(selectedGroupMessageType)
-    {
-      setSelectedActivity(() => null)
-    }
-  }, [selectedGroupMessageType])
+
   useEffect(() => {
     setFilteredUserActivities(() => {
       if(localFilters)
@@ -109,7 +96,6 @@ export default function ActivitiesUser() {
   useEffect(() => {
     store.emit(new FindLatestActivities())
     setSelectedGroupMessageType(() => null)
-    setSelectedActivity(() => null)
   }, [])
   const setButtonType = (type) => {
     setLocalFilters(() => {return {buttonType: type}})
@@ -118,45 +104,9 @@ export default function ActivitiesUser() {
   const closeConversation = () => {
     setSelectedActivity(() => null)
   }
-  if (isMobile) {
-    return (<div className="feed__container">
-      <div className="feed-section--messages">
-
-        {!selectedActivity && !selectedGroupMessageType && !sideBarButton && !draft &&
-          <div className="feed-section__left">
-            <PopupHeader>{t('activities.title')}</PopupHeader>
-            <div className="feed-section__filters">
-              <DropdownLine options={filterButtons} onChange={setButtonType} name="activityType" />
-            </div>
-            <div className="feed-section__left__header">
-              <div className="feed-section__filters--desktop">
-                <Dropdown options={filterButtons} onChange={setButtonType} />
-              </div>
-            </div>
-            <div className="feed-section--activity-content">
-              <ActivityGroup groupMessageType={selectedGroupMessageType} setGroupMessageType={setSelectedGroupMessageType} />
-              {/* <div>{t('activities.buttons')}</div> */}
-              <ActivityList selectedActivity={selectedActivity} activities={filteredUserActivities} setSelectedActivity={setSelectedActivity} isDrafting={draft} />
-            </div>
-          </div>
-        }
-        {((selectedActivity && !sideBarButton) || draft) &&
-          <div className="feed-section__center">
-            <ActivityButton setSelectedActivity={setSelectedActivity} closeConversation={closeConversation} selectedActivity={selectedActivity} isDrafting={draft} />
-            <div className="feed-section__center__chat"></div>
-          </div>
-        }
-        {selectedGroupMessageType &&
-          <div className="feed-section__center">
-            <ActivityGroupChat groupType={selectedGroupMessageType} close={() => setSelectedGroupMessageType(() => null)} />
-          </div>
-        }
-      </div>
-    </div>
-    )
-  } else {
-    return (
-      <div className="feed__container">
+  return <>
+    <ShowDesktopOnly>
+    <div className="feed__container">
         <div className="feed-section--messages">
           <div className="feed-section__left">
             <PopupHeader>{t('activities.title')}</PopupHeader>
@@ -194,13 +144,49 @@ export default function ActivitiesUser() {
           }
 
           <div className="feed-section__right">
-            {(sideBarButton && selectedActivity?.buttonId == sideBarButton.id) && <ButtonShow button={sideBarButton} hideSendPrivateMessage={true}/>}
+            {sideBarButton && <ButtonShow button={sideBarButton} hideSendPrivateMessage={true} hideFooter={true}/>}
           </div>
         </div>
 
       </div>
-    );
-  }
+    </ShowDesktopOnly>
+    <ShowMobileOnly>
+    <div className="feed__container">
+      <div className="feed-section--messages">
+
+        {!selectedActivity && !selectedGroupMessageType && !sideBarButton && !draft &&
+          <div className="feed-section__left">
+            <PopupHeader>{t('activities.title')}</PopupHeader>
+            <div className="feed-section__filters">
+              <DropdownLine options={filterButtons} onChange={setButtonType} name="activityType" />
+            </div>
+            <div className="feed-section__left__header">
+              <div className="feed-section__filters--desktop">
+                <Dropdown options={filterButtons} onChange={setButtonType} />
+              </div>
+            </div>
+            <div className="feed-section--activity-content">
+              <ActivityGroup groupMessageType={selectedGroupMessageType} setGroupMessageType={setSelectedGroupMessageType} />
+              {/* <div>{t('activities.buttons')}</div> */}
+              <ActivityList selectedActivity={selectedActivity} activities={filteredUserActivities} setSelectedActivity={setSelectedActivity} isDrafting={draft} />
+            </div>
+          </div>
+        }
+        {((selectedActivity) || draft) &&
+          <div className="feed-section__center">
+            <ActivityButton setSelectedActivity={setSelectedActivity} closeConversation={closeConversation} selectedActivity={selectedActivity} isDrafting={draft} />
+            <div className="feed-section__center__chat"></div>
+          </div>
+        }
+        {selectedGroupMessageType &&
+          <div className="feed-section__center">
+            <ActivityGroupChat groupType={selectedGroupMessageType} close={() => setSelectedGroupMessageType(() => null)} />
+          </div>
+        }
+      </div>
+    </div>
+    </ShowMobileOnly>
+  </>
 }
 
 
@@ -218,17 +204,22 @@ const updateFilters = (buttonTypes, activities) => {
   return filterButtons;
 }
 
-const useSideBarButton = () => {
-  const mainPopupButton = useGlobalStore((state: GlobalState) => state.homeInfo.mainPopupButton)
-  const isMobile = useIsMobile()
-
+const useSideBarButton = (selectedActivity, isDraft) => {
+  const draftButton = useGlobalStore((state: GlobalState) => state.activities.draftButton);
+  
   const [sideBarButton, setSideBarButton] = useState(null);
+
   useEffect(() => {
-    if (!mainPopupButton || isMobile) {
-      return;
+    if (selectedActivity?.buttonId && selectedActivity?.buttonId != sideBarButton?.id){
+        store.emit(new FindButton(selectedActivity.buttonId, (button) => {
+          setSideBarButton(() => button)
+        }))
+    }else  if(draftButton){
+      setSideBarButton(() => draftButton)
+    }else if(!(selectedActivity?.buttonId)){
+      setSideBarButton(() => null)
     }
-    setSideBarButton(() => mainPopupButton)
-    store.emit(new SetMainPopupCurrentButton(null))
-  }, [mainPopupButton])
+  }, [selectedActivity, draftButton])
+
   return sideBarButton
 }

@@ -316,7 +316,7 @@ function CardButtonSubmenu({ button }) {
   );
 }
 
-function SendMessageButton({toggleShowReplyFirstPost})
+function SendMessageButton({button})
 {
   return <Btn
           btnType={BtnType.smallCircle}
@@ -324,7 +324,7 @@ function SendMessageButton({toggleShowReplyFirstPost})
           iconLeft={IconType.circle}
           iconLink={<IoMailOutline />}
           onClick={()=> {
-            sendCurrentButtonMessage()
+            sendCurrentButtonMessage(button)
         }}
         />
 }
@@ -349,7 +349,7 @@ export function CardButtonHeadBig({ button, buttonTypes, toggleShowReplyFirstPos
           button={button}
           sessionUser={sessionUser}
         />
-        {!hideSendPrivateMessage && sessionUser && !isButtonOwner(sessionUser, button) && <SendMessageButton toggleShowReplyFirstPost={toggleShowReplyFirstPost} sessionUser={sessionUser}/>}
+        {!hideSendPrivateMessage && sessionUser && !isButtonOwner(sessionUser, button) && <SendMessageButton button={button}/>}
         
         <CardButtonSubmenu button={button} />
       </div>
@@ -715,8 +715,8 @@ function isButtonOwner(sessionUser, button) {
 }
 
 
-export const sendCurrentButtonMessage = () => {
-  store.emit(new SetDraftButton())
+export const sendCurrentButtonMessage = (button) => {
+  store.emit(new SetDraftButton(button))
   store.emit(new SetMainPopup(MainPopupPage.HIDE))
   router.push(`/Activity?draft=true`)
 }

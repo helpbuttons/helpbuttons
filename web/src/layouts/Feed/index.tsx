@@ -85,7 +85,7 @@ export default function Feed({ button,showReplyFirstPost, toggleShowReplyFirstPo
               button={button}
               isButtonOwner={isButtonOwner}
               action={() => {
-                sendCurrentButtonMessage()
+                sendCurrentButtonMessage(button)
               } }
             />
           )}
