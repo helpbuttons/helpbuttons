@@ -415,6 +415,31 @@ $btn-font-size-medium: $font-size-medium;
 
 }
 
+.btn__hint {
+
+  font-size: $font-size-xsmall;
+  padding: 0 $padding-xsmall;
+  background-color: transparent;
+  color: $color-text-over-corporative;
+  border-radius: $border-radius-circle;
+  font-weight: $font-weight-bolder;
+
+  &::after {
+    content: "";
+ 
+      display: flex;
+      position: absolute;
+      margin: auto;
+      width: 0;
+      height: 0;
+      top: 35px;
+      right: 155px;
+      border-top: $padding-small solid transparent;
+      border-bottom: $padding-small solid transparent;
+      border-left: $padding-small solid $color-corporative;
+
+  }
+}
 
 
 //DISABLED BUTTONS
