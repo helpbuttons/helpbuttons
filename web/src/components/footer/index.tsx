@@ -57,7 +57,7 @@ export default function Footer() {
         </li>
       </ul>
       {sessionUser &&
-      <ul className="footer__actions">
+      <ul className="footer__actions footer__links">
         <li className="footer__link-header">
           <a href="/" className="footer__link--item">
             {t('footer.assistance')}
