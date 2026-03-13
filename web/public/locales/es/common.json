@@ -754,6 +754,10 @@
   },
   "groupChat": {
     "admin": "Chat de administradores",
-    "create": "Crear nuevo chat de comunidad para {0}"
+    "create": "Crear nuevo chat de comunidad para {0}",
+    "creating": "Manda un mensaje en este grupo para que otros usuarios puedan ver este chat grupal",
+    "community": "Chat de comunidad",
+    "admin_community": "Admin & comunidad",
+    "you": "Tú"
   }
 }
