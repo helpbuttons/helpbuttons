@@ -593,6 +593,19 @@ export class ActivityService {
           footer: "",
           message: translate(locale, 'activities.endorsed'),
         }}
+      case ActivityEventName.RoleUpdate:
+        {
+          const {role} = activity.data
+          return {
+          ...activityOut,
+          title: "",
+          from: "",
+          image: "",
+          buttonType: "",
+          type: translate(locale, 'activities.notice'),
+          footer: "",
+          message: translate(locale, 'activities.roleupdate', [role]),
+        }}
       default:
         return {
           ...activityOut,
