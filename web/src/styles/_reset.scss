@@ -158,12 +158,17 @@ body,
 
 }
 
+.feed-section--activity-content {
+
+    height: calc(var(--vh) - $footer-height-mobile) !important;
+
+}
+
 .popup,
 .filters__wrapper,
 .feed-section__center--mobile
 {
-  height: calc(var(--vh) ) !important;
-  /* Add other styles as needed */
+  height: var(--vh) !important;
 }
 
 ol,

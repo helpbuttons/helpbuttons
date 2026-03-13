@@ -130,16 +130,14 @@ $feed-new-message-radius: $border-radius-circle;
 
 .feed-section__filters {
 
-
   width: 100%;
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: 10px 0;
   overflow-x: auto;
   overflow-y: hidden;
-  height: 69px;
   gap: $padding-small;
+
 
 }
 
@@ -151,7 +149,6 @@ $feed-new-message-radius: $border-radius-circle;
 
 .feed-section--activity-content{
 
-  height: 100vh;
   overflow-y: auto;
   padding-bottom: calc($footer-height-mobile + 100px);
   background-color: $color-ligth-gray;

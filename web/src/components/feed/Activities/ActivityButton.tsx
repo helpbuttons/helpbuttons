@@ -1,4 +1,4 @@
-import Loading from "components/loading"
+import Loading, { LoadingWrapper } from "components/loading"
 import Btn, { BtnType, ContentAlignment, IconType } from "elements/Btn"
 import FieldText from "elements/Fields/FieldText"
 import ImageWrapper, { ImageType } from "elements/ImageWrapper"
@@ -75,7 +75,7 @@ export function ActivityDetailConversation({ selectedActivity, closeConversation
   const lastBtnActivity = buttonActivities.length > 0 ? buttonActivities[0] : -1
 
   if (!selectedButton || !selectedActivity) {
-    return (<ShowMobileOnly><Loading /></ShowMobileOnly>)
+    return (<LoadingWrapper />)
   }
 
   if (!selectedActivity.activityFrom) {

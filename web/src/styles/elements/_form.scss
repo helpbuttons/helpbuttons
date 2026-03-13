@@ -51,6 +51,11 @@ padding-bottom: $margin-medium;
     text-transform: uppercase;
   }
 
+  &:empty {
+
+    display: none;
+  }
+
 }
 
 
@@ -66,6 +71,13 @@ padding-bottom: $margin-medium;
   &:first-letter {
     text-transform: uppercase;
   }
+
+  &:empty {
+
+    display: none;
+
+  }
+
 }
 
 
