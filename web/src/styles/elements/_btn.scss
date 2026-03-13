@@ -417,9 +417,12 @@ $btn-font-size-medium: $font-size-medium;
 
 .btn__hint {
 
+  position: relative;
   font-size: $font-size-xsmall;
   padding: 0 $padding-xsmall;
   background-color: transparent;
+  margin-bottom: 0;
+  align-items: flex-start;
   color: $color-text-over-corporative;
   border-radius: $border-radius-circle;
   font-weight: $font-weight-bolder;
@@ -432,8 +435,10 @@ $btn-font-size-medium: $font-size-medium;
       margin: auto;
       width: 0;
       height: 0;
-      top: 35px;
-      right: 155px;
+      right: -5px;
+      top: 8px;
+      align-items: flex-start;
+      justify-content: flex-start;
       border-top: $padding-small solid transparent;
       border-bottom: $padding-small solid transparent;
       border-left: $padding-small solid $color-corporative;
