@@ -31,7 +31,13 @@ $radion-label-min-width-mobile: 100px;
 }
 
 .radio--row {
-flex-flow: row nowrap;
+    flex-flow: row nowrap;
+    display: flex;
+    flex-wrap: nowrap;
+    gap: $padding-small;
+    padding-left: $padding-small;
+    margin-bottom: 0;
+
 } 
 //label div for enclosing all radio button elements
 .radio__label {

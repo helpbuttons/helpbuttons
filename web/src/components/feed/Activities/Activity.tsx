@@ -109,7 +109,11 @@ export default function ActivitiesUser() {
     <div className="feed__container">
         <div className="feed-section--messages">
           <div className="feed-section__left">
-            <PopupHeader>{t('activities.title')}</PopupHeader>
+             <div className="chat__header">
+                <header className="chat__header-content">
+                  {t('activities.title')}
+                </header>
+            </div>
             <div className="feed-section__left__header">
               <div className="feed-section__filters--desktop">
                 <Dropdown options={filterButtons} onChange={setButtonType} />
@@ -156,7 +160,16 @@ export default function ActivitiesUser() {
 
         {!selectedActivity && !selectedGroupMessageType && !draft &&
           <div className="feed-section__left">
-            <PopupHeader>{t('activities.title')}</PopupHeader>
+            <div className="popup__header">
+                <header className="popup__header-content">
+                  <div className="popup__header-center">
+                    <h1 className="popup__header-title">
+                      {t('activities.title')}
+
+                    </h1>
+                  </div>
+                </header>
+            </div>
             <div className="feed-section__filters">
               <DropdownLine options={filterButtons} onChange={setButtonType} name="activityType" />
             </div>

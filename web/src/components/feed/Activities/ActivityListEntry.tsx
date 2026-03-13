@@ -33,8 +33,8 @@ export function ActivityListEntryCardInner({ image, createdAt, type, read, preme
             </div>
             <div className="card-notification__text">
                 <div className="card-notification__header">
-                    <div className="card-notification__info">
-                        {createdAt && <><div className="">{readableTimeLeftToDate(createdAt)}</div>&nbsp;-&nbsp;</>}<div className=""> {type}</div>
+                    <div className="card-notification__info-top">
+                        {createdAt && <><div className="card-notification__info-top__element">{readableTimeLeftToDate(createdAt)}</div>&nbsp;·&nbsp;</>}<div className="card-notification__info-top__element">{type}</div>
                     </div>
 
                 </div>

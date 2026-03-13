@@ -72,7 +72,7 @@ export const DropdownLine = React.forwardRef(
   ({ name, onChange, onBlur, validationError, label, explain, options }, ref) => {
 
   return (
-    <FieldRadio label={label} explain={explain} validationError={null}>
+    <FieldRadio row={true} label={label} explain={explain} validationError={null}>
           {options.map((option, idx) => {
             return (
               <FieldRadioOption
