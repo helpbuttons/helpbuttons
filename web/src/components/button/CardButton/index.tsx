@@ -654,7 +654,7 @@ function FollowButtonHeart({ button, sessionUser }) {
   if (!button.isFollowing) {
     return (
       <>
-        <span className='btn__hint'>{t('button.follow')}</span>
+        <span onClick={() => followButton(button.id)} className='btn__hint'>{t('button.follow')}</span>
         <Btn
           btnType={BtnType.smallCircle}
           contentAlignment={ContentAlignment.center}
