@@ -653,13 +653,17 @@ function FollowButtonHeart({ button, sessionUser }) {
 
   if (!button.isFollowing) {
     return (
-      <Btn
-        btnType={BtnType.smallCircle}
-        contentAlignment={ContentAlignment.center}
-        iconLink={<IoNotificationsOutline />}
-        iconLeft={IconType.circle}
-        onClick={() => followButton(button.id)}
-      />
+      <>
+        <span className='btn__hint'>{t('button.follow')}</span>
+        <Btn
+          btnType={BtnType.smallCircle}
+          contentAlignment={ContentAlignment.center}
+          iconLink={<IoNotificationsOutline />}
+          iconLeft={IconType.circle}
+          onClick={() => followButton(button.id)}
+        />
+      </>
+      
     );
   }
 
