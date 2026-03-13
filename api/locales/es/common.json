@@ -222,7 +222,7 @@
     "markedAsRead": "Marcado como leído",
     "newcommentSubject": "Alguien ha comentado en tu _helpbutton_ '{0}'",
     "newfollow": "'{0}' está ahora siguiendo tu _helpbutton_ '{1}'",
-    "newfollowing": "estás ahora siguiendo: _helpbutton_ '{0}'",
+    "newfollowing": "ahora estás siguiendo su _helpbutton_",
     "newfollowed": "Sigue tu _helpbutton_",
     "newbuttonType": "Nuevo _helpbutton_",
     "newcommentType": "Comentario",

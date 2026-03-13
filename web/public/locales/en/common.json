@@ -213,14 +213,15 @@
     "revokeEndorse": "Unfortunately your 'verified' badge has been removed",
     "roleupdate": "Your role has been updated to '{0}'",
     "newSignup": "New user '{0}' signed up",
-    "notice": "",
+    "notice": "Notice",
     "sent": "sent",
     "writingDraft": "Writing private message",
     "draft": "Draft",
     "pickOne": "Select one chat",
     "newbuttonHomeinfo": "New _helpbutton_ ",
     "title": "Messages & Alerts",
-    "comment": "Comment"
+    "comment": "Comment",
+    "message": "Message"
   },
   "common": {
     "notfound": "No {0} found. Sorry. 🤔",
@@ -440,7 +441,8 @@
     "guestCodePlaceHolder": "Write the code here",
     "askForNewCode": "I don't have my guest info",
     "inviteLogin": "Enter",
-    "inviteLoginError": "Wrong code or missing fields"
+    "inviteLoginError": "Wrong code or missing fields",
+    "roleChange":"And admin changed your role"
   },
   "picker": {
     "headerText": "Choose a location"
