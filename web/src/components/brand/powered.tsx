@@ -6,7 +6,7 @@ export function PoweredBy() {
   return (
     <>
       {t('homeinfo.powered')}{' '}
-      <a href="https://helpbuttons.org">Helpbuttons</a>
+      <a href="https://helpbuttons.org">Helpbuttons</a>{' '}
     </>
   );
 }
@@ -18,9 +18,9 @@ export function PoweredExtra() {
   return (
     <>
       <PoweredBy/>
-      <a href={`https://github.com/helpbuttons/helpbuttons/releases/tag/${metadata.version}`}>{metadata.version}</a> - 
-      <a href="https://helpbuttons.org/faqs">{t('menu.faqs')}</a> -
-      <a href={`/api`}>API</a> - 
+      <a href={`https://github.com/helpbuttons/helpbuttons/releases/tag/${metadata.version}`}>{metadata.version}</a> {" · "}
+      <a href="https://helpbuttons.org/faqs">{t('menu.faqs')}</a> {" · "}
+      <a href={`/api`}>API</a> {" · "}
       <License/>
     </>
   );
@@ -29,7 +29,7 @@ export function PoweredExtra() {
 function License() {
   return (
     <a href="https://github.com/helpbuttons/helpbuttons/blob/main/LICENSE">
-      GNU AGPL v3.0
+      Mozilla Public License v2.0
     </a>
   );
 }
