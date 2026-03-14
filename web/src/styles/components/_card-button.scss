@@ -205,7 +205,8 @@ $card-button-border-height: $border-general-height;
   justify-content: flex-start;
   vertical-align: baseline;
   background-color: $color-white;
-  
+  gap: $padding-small;
+
   border-top: 1px dashed $color-ligth-gray;
   border-radius: 0 0 $border-radius-circle $border-radius-circle;
 
@@ -1041,13 +1042,6 @@ $card-button-border-height: $border-general-height;
 
     gap: $padding-huge;
 
-  }
-
-  .card-button__actions {
-
-    // flex-direction: row;
-    gap: $padding-small;
-    
   }
 
   .card-button__phone-section {
