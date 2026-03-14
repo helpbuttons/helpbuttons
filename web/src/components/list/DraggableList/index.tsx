@@ -1,4 +1,4 @@
-import { useState, MouseEvent, TouchEvent, useEffect } from 'react';
+import { useState, MouseEvent, TouchEvent, useEffect, useRef } from 'react';
 import { ExploreViewMode } from 'state/Explore';
 
 interface DraggableProps {
@@ -11,6 +11,8 @@ interface DraggableProps {
   isListOpen?: boolean; // New prop for isListOpen
   setListOpen: any;
   isListFullScreen?: boolean; // New prop for full screen
+  onDragPos?: (y: number, transitioning: boolean) => void;  // ← add this
+
 }
 
 const DraggableList: React.FC<DraggableProps> = ({
@@ -23,6 +25,7 @@ const DraggableList: React.FC<DraggableProps> = ({
   isListOpen,
   setListOpen,
   isListFullScreen,
+  onDragPos,
 }) => {
   // Set initial position using `initialPos` or default values
   const getFullScreenListHeight = () => 124;
@@ -34,6 +37,8 @@ const DraggableList: React.FC<DraggableProps> = ({
   const getClosedListHeight = () => window.innerHeight - 110;
   const getOpenListHeight = () => window.innerHeight - 345;
 
+  const [transitioning, setTransitioning] = useState<boolean>(false);
+
   const functionHandler = (data: number) => {
     if (data < getOpenListHeight()) {
       onFullScreen(true, true);
@@ -42,18 +47,26 @@ const DraggableList: React.FC<DraggableProps> = ({
     }
   };
 
-  // Update position based on viewMode initially
   useEffect(() => {
-    let initialY = 124; // Default to 68px for LIST mode
-    if (viewMode === ExploreViewMode.MAP) {
-      initialY = getClosedListHeight(); // Adjust for MAP mode
-    } else if (viewMode === ExploreViewMode.BOTH) {
-      initialY = getOpenListHeight(); // Adjust for BOTH mode
-    } else if (viewMode === ExploreViewMode.LIST) {
-      initialY = 124; // Adjust for LIST mode
-    }
-    setPos(() => {return { x: 0, y: initialY }});
+    let initialY = getFullScreenListHeight();
+    if (viewMode === ExploreViewMode.MAP)  initialY = getClosedListHeight();
+    if (viewMode === ExploreViewMode.BOTH) initialY = getOpenListHeight();
+    snapTo(initialY);
   }, [viewMode]);
+
+  useEffect(() => {
+    setTransitioning(true);           // ← same here
+    if (isListOpen && !isListFullScreen) {
+      setPos((prev) => ({ ...prev, y: getOpenListHeight() }));
+      setDragging(true);
+    } else if (isListFullScreen) {
+      setPos((prev) => ({ ...prev, y: 124 }));
+      setDragging(true);
+    } else {
+      setPos((prev) => ({ ...prev, y: getClosedListHeight() }));
+      setDragging(false);
+    }
+  }, [isListOpen, isListFullScreen]);;
 
   // Handle resizing the window and adjusting position
   useEffect(() => {
@@ -83,21 +96,17 @@ const DraggableList: React.FC<DraggableProps> = ({
     if (pos.y === getClosedListHeight()) {
       setListOpen(() => false);
     }
-  }, [pos]);
+  }, [pos]);  
 
-  useEffect(() => {
+    useEffect(() => {
     if (isListOpen && !isListFullScreen) {
-      const targetY = getOpenListHeight();
-      setPos((prevPos) => ({ ...prevPos, y: targetY }));
+      snapTo(getOpenListHeight());
       setDragging(true);
-    }
-    else if (isListFullScreen) {
-      const targetY = 124;
-      setPos((prevPos) => ({ ...prevPos, y: targetY }));
+    } else if (isListFullScreen) {
+      snapTo(getFullScreenListHeight());
       setDragging(true);
     } else {
-      const targetY = getClosedListHeight();
-      setPos((prevPos) => ({ ...prevPos, y: targetY }));
+      snapTo(getClosedListHeight());
       setDragging(false);
     }
   }, [isListOpen, isListFullScreen]);
@@ -141,21 +150,43 @@ const DraggableList: React.FC<DraggableProps> = ({
 
   // SHARED FUNCTIONS
   const startDragging = (x: number, y: number) => {
+    setTransitioning(false);
     const Xpos = { x: x - (pos.x || 0), y: y - (pos.y || 0) };
     setDragging(true);
     setRel(Xpos);
   };
 
+  const bottomRef = useRef<HTMLDivElement>(null);
+
+  const handleDragPos = (y: number, transitioning: boolean) => {
+    if (!bottomRef.current) return;
+    // height of index__content-bottom = window height minus where the draggable top is
+    const h = window.innerHeight - y;
+    bottomRef.current.style.transition = transitioning
+      ? 'height 0.35s cubic-bezier(0.32, 0.72, 0, 1)'
+      : 'none';
+    bottomRef.current.style.height = `${h}px`;
+  };
+
   const moveElement = (x: number, y: number) => {
     const newPos = { x: x - rel.x, y: y - rel.y };
     if (newPos.y < getFullScreenListHeight()) newPos.y = getFullScreenListHeight();
-    if (newPos.y > getClosedListHeight()) newPos.y = getClosedListHeight();
+    if (newPos.y > getClosedListHeight())     newPos.y = getClosedListHeight();
     functionHandler(newPos.y);
     setPos(newPos);
+    onDragPos?.(newPos.y, false);   // ← live drag, no transition
+  };
+
+  const snapTo = (newY: number) => {
+    setTransitioning(true);
+    onDragPos?.(newY, true);        // ← snap, with transition
+    requestAnimationFrame(() => {
+      setPos((prev) => ({ ...prev, y: newY }));
+    });
   };
 
   const endDragging = (y: number) => {
-    let newY = y - (pos.y || 0);
+    let newY: number;
     if (pos.y < getOpenListHeight()) {
       newY = getFullScreenListHeight();
     } else if (pos.y > window.innerHeight - 200) {
@@ -167,10 +198,7 @@ const DraggableList: React.FC<DraggableProps> = ({
     }
     functionHandler(newY);
     setDragging(false);
-    setPos((prevPos) => ({
-      ...prevPos,
-      y: newY,
-    }));
+    snapTo(newY);
   };
 
   return (
@@ -179,9 +207,12 @@ const DraggableList: React.FC<DraggableProps> = ({
       style={{
         ...style,
         position: 'absolute',
-        top: pos.y + 'px',
+        top: `${pos.y}px`,
         touchAction: 'none',
         cursor: dragging ? 'grabbing' : 'grab',
+        transition: transitioning
+          ? 'top 0.35s cubic-bezier(0.32, 0.72, 0, 1)'
+          : 'none',
       }}
       onScroll={onScroll}
       onMouseDown={onMouseDown}
@@ -190,6 +221,9 @@ const DraggableList: React.FC<DraggableProps> = ({
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
+      onTransitionEnd={() => setTransitioning(false)}
+      onDragPos={handleDragPos}
+
       draggable
     >
       {children}

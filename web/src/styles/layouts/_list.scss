@@ -5,7 +5,7 @@ $list-order-tabs-bottom: calc($footer-height-mobile + $list-container-height);
 $list-container-hide-nohover-height: calc($footer-height-mobile - $list-container-height + 15px);
 $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-height - 40px);
 $list-content-height-full-screen-mobile: calc(var(--vh) - 220px );
-$list-content-height-mid-screen-mobile: calc(var(--vh) );
+$list-content-height-mid-screen-mobile: calc(345px - $list-drag-tab-height);
 
 
 ///shouldd be the posts list

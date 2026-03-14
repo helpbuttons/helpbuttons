@@ -1,5 +1,5 @@
 //EXPLORE MAP
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 //components
 import {
@@ -80,6 +80,17 @@ function HoneyComb({ selectedNetwork }) {
   const [showMap, toggleShowMap] = useToggle(true);
   const [isListOpen, setListOpen] = useState<boolean>(true);
 
+  const bottomRef = useRef<HTMLDivElement>(null); 
+
+  const handleDragPos = (y: number, transitioning: boolean) => {
+    if (!bottomRef.current) return;
+    const h = window.innerHeight - y;
+    bottomRef.current.style.transition = transitioning
+      ? 'height 0.35s cubic-bezier(0.32, 0.72, 0, 1)'
+      : 'none';
+    bottomRef.current.style.height = `${h}px`;
+  };
+
   useExploreSettings({
     exploreSettings,
     router,
@@ -114,6 +125,7 @@ function HoneyComb({ selectedNetwork }) {
              setListOpen={setListOpen}
              toggleShowMap={toggleShowMap}
              toggleShowLeftColumn={toggleShowLeftColumn}
+             onDragPos={null}
             />
           </ExploreContainerLeftColumn>
           <ExploreHexagonMap toggleShowLeftColumn={toggleShowLeftColumn} exploreSettings={exploreSettings} selectedNetwork={selectedNetwork}/>
@@ -137,26 +149,22 @@ function HoneyComb({ selectedNetwork }) {
           </ExploreContainerLeftColumn>
           <ExploreHexagonMap toggleShowLeftColumn={toggleShowLeftColumn} exploreSettings={exploreSettings} selectedNetwork={selectedNetwork}/>
           <div
-          className={
-            'index__content-bottom ' +
-            (showMap ? '' : 'index__content-bottom') +
-            (isListOpen
-              ? ' index__content-bottom--mid-screen'
-              : '') +
-            (showLeftColumn ? '' : ' index__content-bottom--hide') +
-            (currentButton
-              ? ' index__content-bottom--noscroll'
-              : '')
-          }
-        >
+            ref={bottomRef}
+            className={
+              'index__content-bottom ' +
+              (showLeftColumn ? '' : ' index__content-bottom--hide') +
+              (currentButton ? ' index__content-bottom--noscroll' : '')
+            }
+          >
           <ExploreContainerList
-             listButtons={listButtons}
-             showLeftColumn={showLeftColumn}
-             showMap={showMap}
-             isListOpen={isListOpen}
-             setListOpen={setListOpen}
-             toggleShowMap={toggleShowMap}
-             toggleShowLeftColumn={toggleShowLeftColumn}
+            listButtons={listButtons}
+            showLeftColumn={showLeftColumn}
+            showMap={showMap}
+            isListOpen={isListOpen}
+            setListOpen={setListOpen}
+            toggleShowMap={toggleShowMap}
+            toggleShowLeftColumn={toggleShowLeftColumn}
+            onDragPos={handleDragPos} 
           />
         </div>
         </ExploreContainer>
@@ -506,7 +514,7 @@ function ExploreContainerLeftColumn(props) {
     >{children}</div>)
 }
 
-function ExploreContainerList({listButtons, showLeftColumn, showMap, isListOpen, setListOpen, toggleShowMap, toggleShowLeftColumn})
+function ExploreContainerList({listButtons, showLeftColumn, showMap, isListOpen, setListOpen, toggleShowMap, toggleShowLeftColumn, onDragPos})
 {
   return <List
             buttons={listButtons}
@@ -516,6 +524,8 @@ function ExploreContainerList({listButtons, showLeftColumn, showMap, isListOpen,
             setListOpen={setListOpen}
             toggleShowMap={toggleShowMap}
             onLeftColumnToggle={toggleShowLeftColumn}
+            onDragPos={onDragPos} 
+
           />
 }
 
