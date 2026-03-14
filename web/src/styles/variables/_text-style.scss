@@ -39,6 +39,7 @@ $text-line-height-xxsmall: 0.7rem;
 }
 
 .paragraph {
+  display: block;
   font-size: $text-font-size-small;
   font-weight: $text-font-weight-regular;
   line-height: $text-line-height-small;
@@ -52,6 +53,11 @@ $text-line-height-xxsmall: 0.7rem;
       border-bottom: 0;
     }
   }
+
+  &:first-letter {
+    text-transform: uppercase;
+  }
+
 }
 
 .link {

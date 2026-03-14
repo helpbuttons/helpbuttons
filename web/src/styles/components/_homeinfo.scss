@@ -216,7 +216,6 @@ $info-content-head-margin-mobile: 70px;
   font-size: $font-size-xhuge;
   line-height: $text-line-height-medium;
   font-weight: $font-weight-bolder;
-  display: flex;
   border-radius: $border-radius-basic;
   // background-color: $color-dark-gray;
   padding: $padding-big;
@@ -229,10 +228,9 @@ $info-content-head-margin-mobile: 70px;
   // overflow-wrap:normal;
   max-width: 100%; /* Adjust as needed */
 
+  display: block;
   &:first-letter {
-
     text-transform: uppercase;
-
   }
 
 }
@@ -242,6 +240,10 @@ $info-content-head-margin-mobile: 70px;
   font-size: $font-size-huge;
   font-weight: $font-weight-bolder;
   line-height: $text-line-height-medium;
+  display: block;
+  &:first-letter {
+    text-transform: uppercase;
+  }
 }
 
 .homeinfo__network-title-card--buttons {

@@ -44,6 +44,10 @@ $search-map-height: 0; // Altura del header
 .search-map__name{
   font-weight: $font-weight-regular;
   color: $color-text-over-corporative;
+  display: block;
+  &:first-letter {
+    text-transform: uppercase;
+  }
 }
 
 @media #{$breakpoints-xlarge} {
