@@ -54,7 +54,7 @@ export function formatMessage(text) {
     if (aRef == null) return;
     aRef.current.innerHTML = content;
   }, [aRef, content]);
-  return <span ref={aRef} />;
+  return <span className='paragraph' ref={aRef} />;
 }
 
 function linkify(text) {

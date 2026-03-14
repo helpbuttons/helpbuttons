@@ -257,11 +257,11 @@ function ActivityDetailCard({ activity, isLast = false }) {
   }
   return (
     <>
+      <div className="chat__time-passed">
+        {readableTimeLeftToDate(activity.createdAt)}
+      </div>
       <div className="chat__notice">
         {activity.message}
-      </div>
-      <div className="message__hour message__hour--me">
-        {readableTimeLeftToDate(activity.createdAt)}
       </div>
     </>
   )
