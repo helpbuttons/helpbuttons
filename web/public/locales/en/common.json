@@ -221,7 +221,8 @@
     "newbuttonHomeinfo": "New _helpbutton_ ",
     "title": "Messages & Alerts",
     "comment": "Comment",
-    "message": "Message"
+    "message": "Message",
+    "all": "all"
   },
   "common": {
     "notfound": "No {0} found. Sorry. 🤔",

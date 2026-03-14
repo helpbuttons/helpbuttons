@@ -48,7 +48,7 @@
     "notificationsPermission": "Permitir notificaciones",
     "share": "Compartir esta app",
     "featured": "Destacados",
-    "powered": "Impulsado por",
+    "powered": "Creado con ",
     "install": "Instala {0} y recibe notificaciones:",
     "inviteToNetwork": "Compartir",
     "inviteCopied": "Link copied to clipboard",
@@ -121,7 +121,8 @@
     "registeredRequired": "Registro requerido",
     "cancel": "Cancelar",
     "delete": "Borrar",
-    "show": "Mostrar"
+    "show": "Mostrar",
+    "confirm": "Confirmar"
   },
   "configuration": {
     "config": "Opciones de configuración",
@@ -196,14 +197,14 @@
     "keyLocationsExplain": "Lugares de tu red que se mostrarán resaltados. Aparecerán en los menús principales y mapas para fácil acceso.",
     "addLocationKey": "Add Location",
     "privacyPolicyLabel": "Política de privacidad",
-    "ethicsPolicyLabel": "Política de Ética",
+    "ethicsPolicyLabel": "Política de ética",
     "contactEmailLabel": "Contacto de tu red",
     "FAQs": "Información complementaria",
     "contactEmailPlaceHolder": "Escribe un contacto para tu red",
     "privacySettings": "Establece tus preferencias de privacidad",
     "allowGuestCreationExplain": "Cuando permites registros anónimos, es importante recordar que tu red será más vulnerable a spam.",
-    "privacyPolicyPlaceHolder": "Escribe una política de privacidad básica, dónde estás almacenando la información de tus usuarios, qué tipo de datos estás recogiendo y qué haces con ellos.",
-    "ethicsPolicyPlaceHolder": "Escribe unos principios éticos. Cuáles son los valores detrás de la red y la acción de sus usuarios."
+    "privacyPolicyPlaceHolder": "Escribe una política de privacidad básica: Dónde estás almacenando la información de tus usuarios, qué tipo de datos estás recogiendo y qué haces con ellos.",
+    "ethicsPolicyPlaceHolder": "Escribe unos principios éticos: Cuáles son los valores detrás de la red y la acción de sus usuarios."
   },
   "activities": {
     "messages": "Mensajes",
@@ -222,7 +223,7 @@
     "markedAsRead": "Marcado como leído",
     "newcommentSubject": "Alguien ha comentado en tu _helpbutton_ '{0}'",
     "newfollow": "'{0}' está ahora siguiendo tu _helpbutton_ '{1}'",
-    "newfollowing": "ahora estás siguiendo su _helpbutton_",
+    "newfollowing": "Ahora estás siguiendo su _helpbutton_",
     "newfollowed": "Sigue tu _helpbutton_",
     "newbuttonType": "Nuevo _helpbutton_",
     "newcommentType": "Comentario",
@@ -250,7 +251,8 @@
     "newcommentOwn": "Escribiste un comentario {0}",
     "newmention": "Fuiste mencionado/a en una conversación. {0}: '{1}'",
     "newmentionOwn": "Publicaste un comentario. '{0}'",
-    "title": "Mensajes y avisos"
+    "title": "Mensajes y avisos",
+    "all": "Todo"
   },
   "activitiesWithSubject": {
     "newbutton": "{0} creó _helpbutton_ en {1}",
@@ -658,7 +660,8 @@
     "consult": "A consultar",
     "free": "Gratis",
     "priceExplain": "Especifica un valor. Usa 0 si es gratis o seleciona Precio a Consultar si es variable.",
-    "confirmDeleteLabel": "Borrar tipo de _helpbutton_ "
+    "confirmDeleteLabel": "Borrar tipo de _helpbutton_ ",
+    "confirmDeleteExplain": "¿Seguro que quieres borrar este tipo y sus _helpbuttons_? Esto no puede deshacerse."
   },
   "email": {
     "loginTokenContent": "Bienvenido a {0}",
@@ -696,7 +699,7 @@
     "role": "Rol",
     "usersList": "Usuarios",
     "emptyButtonList": "No hay _helpbuttons_ para ser aprobados",
-    "buttonsList": "Lista de aprobación de _helpbuttons_",
+    "buttonsList": "Lista de _helpbuttons_ pendientes de aprobar",
     "emptyUsersList": "Sin usuarios",
     "requireApproval": "Permitir publicación solo con moderación",
     "requireApprovalLabel": "Moderación de la red",
@@ -710,7 +713,9 @@
     "adminCommunicationLabel": "Comunicaciones de administradores",
     "adminCommunicationExplain": "Mensajes que envíes a través de este formulario serán notificados a todos los usuarios de la Red.",
     "edit": "Editar",
-    "preview": "Previsualización"
+    "preview": "Previsualización",
+    "awaitingApprovalLabel": "Pendientes de aprobación",
+    "buttonsApproved": "Lista de _helpbuttons_ publicados"
   },
   "roles": {
     "blocked": "bloqueado",
@@ -753,10 +758,10 @@
     "ethicCode": "Principios éticos"
   },
   "groupChat": {
-    "admin": "Chat de administradores",
+    "admin": "Foro de administradores",
     "create": "Crear nuevo chat de comunidad para {0}",
     "creating": "Manda un mensaje en este grupo para que otros usuarios puedan ver este chat grupal",
-    "community": "Chat de comunidad",
+    "community": "Foro de comunidad",
     "admin_community": "Admin & comunidad",
     "you": "Tú"
   }
