@@ -11,20 +11,12 @@
 
   justify-content: flex-start ;
   gap: $padding-big;
+  position: relative;
+  padding-bottom: $nav-bottom-height;
   
 
 }
 
-.footer__wrapper::after {
-
-  content: "";
-  position: absolute;
-  height: 100px;
-  background-color: white;
-  top: 0;
-  
-
-}
 
 .footer__main {
 

@@ -29,8 +29,13 @@
 }
 
 .chat__header-title {
-
+    font-size: $font-size-medium;
     a { font-weight: $font-weight-bolder; }
+}
+
+.chat__header-subtitle{
+    font-size: $font-size-small;
+    color: $color-ligth-gray;
 }
 
 .chat__header-title,
@@ -51,6 +56,7 @@
     background-color: $color-white;
     padding: $padding-medium;
     min-height: 50px;
+    font-size: $font-size-title;
 
 
 }
@@ -86,6 +92,7 @@
     font-weight: $font-weight-bold;
     color: $color-dark-gray;
     padding-bottom: $padding-big;
+    font-size: $font-size-small;
     
     &:first-letter {
       text-transform: uppercase;
