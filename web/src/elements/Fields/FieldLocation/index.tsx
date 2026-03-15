@@ -127,7 +127,7 @@ export default function FieldLocation({
         longitude={markerPosition[1]}
         address={markerAddress}
         label={label}
-      /> : t('button.whereLabel')
+      /> : t('button.whereButtonLabel')
     }
     headerText={t('picker.headerText')}
     explain={t('button.whereExplain')}

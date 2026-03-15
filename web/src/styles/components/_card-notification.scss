@@ -424,6 +424,10 @@ $card-notification-delete-size: 100px;
   border: 1px solid $color-gray-border;
 }
 
+.card-notification--selected {
+ background-color: $color-ligth-gray;
+}
+
 .card-notification--unread{
   font-weight: $font-weight-bolder;
 }

@@ -446,7 +446,7 @@
     "descriptionLabel": "Descripción",
     "tagsLabel": "Palabras clave",
     "tagsExplain": "Opcionalmente, escribe y pulsa enter para cada palabra clave que quieras añadir",
-    "imagesLabel": "Sube las imágenes que quieras",
+    "imagesLabel": "Añade las imágenes que quieras",
     "imagesExplain": "Imágenes que selecciones se mostrarán en tu _helpbutton_",
     "imagesText": "Elegir imágenes",
     "whenLabel": "Cuándo",
@@ -461,7 +461,8 @@
     "share": "Compartir",
     "titleExplain": "Pequeño título para saber sobre qué es tu _helpbutton_",
     "titleLabel": "Título",
-    "whereLabel": "Elige lugar",
+    "whereButtonLabel": "Elige lugar",
+    "whereLabel": "Dónde",
     "whereExplain": "Lugar en el que se sitúa tu _helpbutton_",
     "pickButtonTemplateColor": "Elige color para tu tipo de _helpbutton_",
     "unknownPlace": "Sitio desconocido",
@@ -599,7 +600,9 @@
     "recurringExplain": "Selecciona días de inicio y final, días de la semana y la hora para tus eventos",
     "afterStart": "Por favor selecciona una fecha/hora posterior a {0}",
     "beforeEnd": "Por favor selecciona una fecha/hora anterior a {0}",
-    "changeToMultipleDates": "Presiona para seleccionar varios días"
+    "changeToMultipleDates": "Presiona para seleccionar varios días",
+    "everyMonth":"Cada mes",
+    "everyWeek":"Cada semana"
   },
   "faqs": {
     "title": "Preguntas frecuentes",
