@@ -75,7 +75,6 @@ export interface ExploreMapState {
   pinnedButtons: Button[];
   boundsFilteredButtons: Button[];
   cachedHexagons: any[];
-  loading: boolean;
   initialized: boolean;
   showAdvancedFilters: boolean;
   showInstructions: boolean;
@@ -90,7 +89,6 @@ export const exploreInitial = {
     pinnedButtons: null,
     boundsFilteredButtons: [],
     cachedHexagons: [],
-    loading: true,
     initialized: false,
     showAdvancedFilters: false,
     showInstructions: true,
@@ -99,7 +97,7 @@ export const exploreInitial = {
   settings: exploreSettingsDefault,
 };
 
-export class FindButtons implements WatchEvent, UpdateEvent {
+export class FindButtons implements WatchEvent {
   public constructor(
     private resolution: number,
     private hexagons: string[],
@@ -115,11 +113,6 @@ export class FindButtons implements WatchEvent, UpdateEvent {
       }),
       catchError((error) => handleError(this.onError, error)),
     );
-  }
-  public update(state: GlobalState) {
-    return produce(state, (newState) => {
-      newState.explore.map.loading = true;
-    });
   }
 }
 
@@ -440,7 +433,6 @@ export class UpdateBoundsFilteredButtons implements UpdateEvent, WatchEvent {
       newState.explore.map.boundsFilteredButtons =
         buttonsInBounds;
       newState.explore.map.listButtons = listButtonsFilteredByHexagon(state.explore.settings.hexagonClicked, buttonsInBounds)
-      newState.explore.map.loading = false;
       newState.explore.map.initialized = true;
     });
   }
@@ -451,15 +443,6 @@ export class ResetButtonTypeClicked implements UpdateEvent {
   public update(state: GlobalState) {
     return produce(state, (newState) => {
       newState.explore.map.buttonTypeClicked = false;
-    });
-  }
-}
-export class UpdateExploreUpdating implements UpdateEvent {
-  public constructor() { }
-
-  public update(state: GlobalState) {
-    return produce(state, (newState) => {
-      newState.explore.map.loading = true;
     });
   }
 }

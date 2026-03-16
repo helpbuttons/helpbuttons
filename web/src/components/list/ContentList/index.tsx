@@ -20,14 +20,11 @@ export function ButtonList({ buttons,
   buttonTypes,
   showMap = false,
   linkType = null }) {
-  const isLoadingButtons = useGlobalStore(
-    (state: GlobalState) => state.explore.map.loading,
-  );
   const filtered = isFiltering();
 
   if (!buttons ||
     buttons?.length < 1) {
-    return (<ButtonsListEmpty isLoadingButtons={isLoadingButtons} buttons={buttons} filtered={filtered}/>)
+    return (<ButtonsListEmpty buttons={buttons} filtered={filtered}/>)
   }
 
   return (<ContentList buttons={buttons} buttonTypes={buttonTypes} showMap={showMap} linkType={linkType}/>)
@@ -72,14 +69,12 @@ export default function ContentList({
   );
 }
 
-export function ButtonsListEmpty({isLoadingButtons, buttons, filtered, isProfileList=false}){
+export function ButtonsListEmpty({buttons, filtered, isProfileList=false}){
 
   if (buttons?.length < 1) {
     return (
       <>
         <div className="list__empty-message">
-          {isLoadingButtons && <LoadingWrapper />}
-          {!isLoadingButtons && (
             <>
               <div className='list__empty-message--img'><IoCloudyOutline/></div>
               <div className="list__empty-message--prev">
@@ -89,7 +84,6 @@ export function ButtonsListEmpty({isLoadingButtons, buttons, filtered, isProfile
                 {isProfileList ? (t('user.emptyList')) : (t('explore.emptyList'))}
               </div>
             </>
-          )}
           <div className="list__empty-message--button">
             {filtered && (
               <Btn

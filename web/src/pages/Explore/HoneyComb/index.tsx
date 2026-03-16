@@ -7,7 +7,6 @@ import {
   FindButtons,
   UpdateBoundsFilteredButtons,
   UpdateCachedHexagons,
-  UpdateExploreUpdating,
   UpdateExploreSettings,
   ExploreSettings,
   UpdateHexagonClicked,
@@ -338,7 +337,6 @@ function useHexagonMap({
         cachedH3Hexes,
       );
       if (hexesToFetch.length > 0) {
-        store.emit(new UpdateExploreUpdating());
         store.emit(
           new FindButtons(
             debounceHexagonsToFetch.resolution,
@@ -367,7 +365,6 @@ function useHexagonMap({
     if (exploreSettings.loading) {
       return;
     }
-    store.emit(new UpdateExploreUpdating());
     const boundsButtons = cachedH3Hexes.current.filter(
       (cachedHex) => {
         return debounceHexagonsToFetch.hexagons.find(
