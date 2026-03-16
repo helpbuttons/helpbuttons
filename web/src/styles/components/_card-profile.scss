@@ -336,7 +336,7 @@ $avatar-margin: $padding-big;
   }
 
    .card-profile__button-list {
-      flex:1;
+    flex:1;
     display: grid; 
 
     grid-template-columns: 1fr 1fr;
@@ -484,15 +484,18 @@ $avatar-margin: $padding-big;
 
   .card-profile__button-list {
 
-    flex:1;
-    display: grid; 
+    // display: flex; 
     margin-top: 0;
     padding: $padding-xsmall;
     padding-top: $padding-big;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+
+    // grid-template-columns: 1fr 1fr;
     overflow-y: unset;
     align-content: start; 
     height: auto;
+    // display: flex;
+    // flex-wrap: wrap;
     
   }
 

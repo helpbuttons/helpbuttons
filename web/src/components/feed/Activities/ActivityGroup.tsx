@@ -13,6 +13,7 @@ import { FindGroupMessages, FindLatestActivities, SendNewGroupMessage, uniqById 
 import { useScroll } from "shared/helpers/scroll.helper";
 import { ActivityDetailMessage } from "./ActivityButton";
 import { ActivitiesPageSize } from "shared/dtos/activity.dto";
+import { ShowMobileOnly } from "elements/SizeOnly";
 
 export default function ActivityGroup({ setGroupMessageType, groupMessageType }) {
   const sessionUser = useGlobalStore(
@@ -154,15 +155,17 @@ function ActivityGroupChatDetailHeader({ closeConversation, groupType }) {
   return (
     <div className="chat__header">
       <header className="chat__header-content">
-        <div className="chat__header-left">
-          <div className="btn-circle__icon">
-            {closeConversation &&
-              <a href="#" onClick={() => { closeConversation() }}>
-                <IoArrowBack />
-              </a>
-            }
+          <div className="chat__header-left">
+            <ShowMobileOnly>
+              <div className="btn-circle__icon btn-circle--big-icon">
+                {closeConversation &&
+                  <a href="#" onClick={() => { closeConversation() }}>
+                    <IoArrowBack />
+                  </a>
+                }
+              </div>
+           </ShowMobileOnly>
           </div>
-        </div>
         <div className="chat__header-center">
           <h1 className="chat__header-title">
             {t(`groupChat.${groupType}`)}

@@ -93,11 +93,11 @@ export default function PickerEventTypeRecurrentForm({
           options={[
             {
               value: RRule.WEEKLY,
-              name: 'Every week',
+              name: t('eventType.everyWeek'),
             },
             {
               value: RRule.MONTHLY,
-              name: 'Every month',
+              name: t('eventType.everyMonth'),
             },
           ]}
           onChange={(value) => {

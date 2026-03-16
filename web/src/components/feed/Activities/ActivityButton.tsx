@@ -354,13 +354,16 @@ function ActivityDetailHeader({ closeConversation, button, selectedActivity }) {
     <div className="chat__header">
       <header className="chat__header-content">
         <div className="chat__header-left">
-          <div className="btn-circle__icon">
-            {closeConversation &&
-              <a href="#" onClick={() => { closeConversation() }}>
-                <IoArrowBack />
-              </a>
-            }
-          </div>
+          <ShowMobileOnly>
+            <div className="btn-circle__icon btn-circle--big-icon">
+              {closeConversation &&
+                <a href="#" onClick={() => { closeConversation() }}>
+                  <IoArrowBack />
+                </a>
+              }
+            </div>
+         </ShowMobileOnly>
+
         </div>
         <div className="chat__header-center">
           <h1 className="chat__header-title">

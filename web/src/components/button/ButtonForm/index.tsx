@@ -175,7 +175,7 @@ export default function ButtonForm({
                       validationError={errors.images} />
                     <div className="form__btn-search">
                       <FieldLocation
-                        label={t('button.whereLabel')}
+                        label={t('button.whereButtonLabel')}
                         setLatitude={(lat) => setValue('latitude', lat)}
                         setLongitude={(lng) => setValue('longitude', lng)}
                         markerPosition={[watch('latitude'), watch('longitude')]}

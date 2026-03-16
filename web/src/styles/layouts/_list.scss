@@ -295,9 +295,9 @@ $list-content-height-mid-screen-mobile: calc(var(--vh) );
   }
 
   .list__element {
-    width: 100%;
     flex-basis: 30%;
-    
+      flex: 0 1 50%;  // ← replaces width: 100%
+
     min-width: $card-button-list-width;
   }
 
