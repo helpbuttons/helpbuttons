@@ -2,6 +2,7 @@ import Loading, { LoadingWrapper } from "components/loading"
 import Btn, { BtnType, ContentAlignment, IconType } from "elements/Btn"
 import FieldText from "elements/Fields/FieldText"
 import ImageWrapper, { ImageType } from "elements/ImageWrapper"
+import { formatMessage } from "elements/Message"
 import { ShowMobileOnly } from "elements/SizeOnly"
 import t from "i18n"
 import router from "next/router"
@@ -285,7 +286,7 @@ export function ActivityDetailMessage({ activity, isLast = false }) {
             </div>
           </div>
           <div className="message__content">
-            {activity.message}
+            {formatMessage(activity.message)}
           </div>
         </div>
 
