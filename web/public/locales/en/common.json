@@ -325,7 +325,8 @@
     "followers": "Suscribed by {0} users",
     "showMoreTags": "more tags",
     "nofollowers": "no one is following yet",
-    "copyAlert": "Copied"
+    "copyAlert": "Copied",
+        "whereButtonLabel": "Elige lugar"
   },
   "user": {
     "login": "Write your credentials",
