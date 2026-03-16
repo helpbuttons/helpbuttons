@@ -12,6 +12,7 @@ import PickerField from 'components/picker/PickerField';
 import { useGeoReverse } from './location.helpers';
 import { IoLocationOutline } from 'react-icons/io5';
 import LocationSearchBar from 'elements/LocationSearchBar';
+import { markerFocusZoom } from 'components/map/Map/Map.consts';
 
 export default function FieldLocation({
   validationError,
@@ -34,8 +35,7 @@ export default function FieldLocation({
   isLocationKey = false,
 }) {
   const [pickedPosition, setPickedPosition] = useState(markerPosition)
-
-  const [zoom, setZoom] = useState(selectedNetwork.exploreSettings.zoom);
+  const [zoom, setZoom] = useState(markerPosition ? markerFocusZoom : selectedNetwork.exploreSettings.zoom );
   const [showPopup, setShowPopup] = useState(false);
   const [isLoading, setIsLoading] = useState(false)
   const [pickedAddress, setPickedAddress] = useState(markerAddress)
