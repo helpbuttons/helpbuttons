@@ -191,3 +191,23 @@ export const useWarnIfUnsavedChanges = (unsavedChanges: boolean, callback: () =>
     }
   }, [unsavedChanges])
 }
+
+export const useOnPageExit = (onPageExit) => {
+  useEffect(() => {
+    const routeChangeStart = () => {
+      onPageExit()
+    }
+    Router.events.on("routeChangeStart", routeChangeStart)
+  
+    const beforeUnload = (e: BeforeUnloadEvent) => {
+      e.preventDefault();
+      return false;
+    }
+    window.addEventListener('beforeunload', beforeUnload);
+  
+    return () => {
+      window.removeEventListener('beforeunload', beforeUnload);
+      Router.events.off("routeChangeStart", routeChangeStart)
+    }
+  }, [])
+}

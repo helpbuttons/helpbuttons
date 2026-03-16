@@ -6,9 +6,10 @@ import { ClienteSideRendering } from "pages/_app";
 import { useEffect } from "react";
 import { setMetadata } from "services/ServerProps";
 import { GlobalState, store, useGlobalStore } from "state";
-import { RecenterExplore } from "state/Explore";
 import HoneyComb from "./HoneyComb";
 import { useSelectedNetwork } from "state/Networks";
+import { SetHideNavBottom } from "state/HomeInfo";
+import { useOnPageExit } from "shared/custom.hooks";
 
 export default function Explore(props) {
   
@@ -43,6 +44,9 @@ function useParams(router)
 
 export const ExplorePage = () => {
   const selectedNetwork = useGlobalStore((state: GlobalState) => state.networks.selectedNetwork);
+
+  useOnPageExit(() => store.emit(new SetHideNavBottom(false)))
+
   return (
       <>
           <ClienteSideRendering>
