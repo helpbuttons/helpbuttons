@@ -283,7 +283,7 @@ function CardButtonSubmenu({ button }) {
       <CardSubmenuOption
         onClick={() => {
           navigator.clipboard.writeText(linkButton);
-          alertService.info(`${linkButton}`);
+          alertService.info(t("button.copyAlert"));
         }}
         label={t('button.copy')}
       />

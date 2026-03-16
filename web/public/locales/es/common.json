@@ -506,7 +506,8 @@
     "selectPlace": "Pulsa el lugar en el mapa y guarda",
     "showMoreTags": "más etiquetas",
     "expiredLabel": "Expirado",
-    "followers": "Seguido por {0} usuarios"
+    "followers": "Seguido por {0} usuarios",
+    "copyAlert": "Enlace copiado"
   },
   "calendarOnce": {
     "label": "Una vez",
