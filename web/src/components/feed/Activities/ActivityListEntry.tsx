@@ -25,7 +25,7 @@ export function ActivityListEntryCardInner({ image, createdAt, type, read, preme
             <div className="card-notification__avatar">
                 <div className="avatar-medium">
                     <ImageWrapper
-                        imageType={ImageType.avatar}
+                        imageType={ImageType.avatarBig}
                         src={image}
                         alt="image"
                     />

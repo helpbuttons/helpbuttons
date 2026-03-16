@@ -484,18 +484,13 @@ $avatar-margin: $padding-big;
 
   .card-profile__button-list {
 
-    // display: flex; 
     margin-top: 0;
     padding: $padding-xsmall;
     padding-top: $padding-big;
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-
-    // grid-template-columns: 1fr 1fr;
     overflow-y: unset;
     align-content: start; 
     height: auto;
-    // display: flex;
-    // flex-wrap: wrap;
     
   }
 

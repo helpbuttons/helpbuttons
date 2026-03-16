@@ -296,8 +296,7 @@ $list-content-height-mid-screen-mobile: calc(var(--vh) );
 
   .list__element {
     flex-basis: 30%;
-      flex: 0 1 50%;  // ← replaces width: 100%
-
+    flex: 0 1 50%; 
     min-width: $card-button-list-width;
   }
 
