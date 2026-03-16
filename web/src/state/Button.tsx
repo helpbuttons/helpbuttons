@@ -199,7 +199,10 @@ export class ButtonUnpin implements WatchEvent, UpdateEvent {
   public update(state: GlobalState) {
     return produce(state, (newState) => {
       newState.explore.currentButton.pin = false;
-      newState.explore.map.pinnedButtons = state.explore.map.pinnedButtons.filter((button) => button.id != state.explore.currentButton.id)
+      if(state.explore.map.pinnedButtons.length > 0)
+      {
+        newState.explore.map.pinnedButtons = state.explore.map.pinnedButtons.filter((button) => button.id != state.explore.currentButton.id)
+      }
     });
   }
 }
