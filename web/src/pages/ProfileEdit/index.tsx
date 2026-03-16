@@ -198,7 +198,7 @@ export default function ProfileEdit() {
                     classNameInput="squared"
                     placeholder={t('user.emailPlaceHolder')}
                     validationError={errors.email}
-                    {...register('email', { required: true })}
+                    {...register('email')}
                   ></FieldText>  
 
                   <FieldText
