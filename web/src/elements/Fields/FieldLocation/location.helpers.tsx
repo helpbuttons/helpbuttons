@@ -85,7 +85,7 @@ export const formatedCoords = (place) => {
 }
 
 export const isPointInBounds = (point, bounds) => {
-  if(point[0] <= bounds.ne[0] && point[0] >= bounds.sw[0] && point[1] <= bounds.ne[1] && point[1] >= bounds.sw[1])
+  if(point[0] <= bounds?.ne[0] && point[0] >= bounds?.sw[0] && point[1] <= bounds?.ne[1] && point[1] >= bounds?.sw[1])
   {
     return true;
   }
