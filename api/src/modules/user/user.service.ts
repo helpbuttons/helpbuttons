@@ -104,7 +104,7 @@ COALESCE(
       };
     });
   }
-  findByUsername(username: string, includeCounts = false) {
+  findByUsername(username: string, includeCounts = false): Promise<User> {
     return this.userRepository
       .findOne({
         where: { username: `${username}` },

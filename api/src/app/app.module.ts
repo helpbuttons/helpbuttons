@@ -1,7 +1,9 @@
 import {
+  Inject,
   MiddlewareConsumer,
   Module,
   NestModule,
+  RequestMethod,
 } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { MulterModule } from '@nestjs/platform-express';
@@ -33,6 +35,10 @@ import { CommandModule } from 'nestjs-command';
 import { ButtonCron } from '@src/modules/button/button.cron';
 import { SetupModule } from '@src/modules/setup/setup.module';
 import { DeletemeModule } from '@src/modules/deleteme/deleteme.module';
+import { FEDIFY_FEDERATION, FedifyModule, integrateFederation } from '@fedify/nestjs';
+import { Federation, InProcessMessageQueue, MemoryKvStore } from '@fedify/fedify';
+import * as express from 'express';
+import { FederationModule } from '@src/modules/federation/federation.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -73,6 +79,12 @@ import { DeletemeModule } from '@src/modules/deleteme/deleteme.module';
         backoff: 1000*10,
       }
     }),
+    FedifyModule.forRoot({
+      kv: new MemoryKvStore(),
+      queue: new InProcessMessageQueue(),
+      origin: process.env.FEDERATION_ORIGIN || 'http://localhost:3001',
+    }),
+    FederationModule,
     SetupModule,
     DeletemeModule
   ],
@@ -83,8 +95,30 @@ import { DeletemeModule } from '@src/modules/deleteme/deleteme.module';
   ],
 })
 export class AppModule implements NestModule {
+  constructor(
+    @Inject(FEDIFY_FEDERATION) private federation: Federation<unknown>,
+  ) { }
+  
   configure(consumer: MiddlewareConsumer): void {
+    const fedifyMiddleware = integrateFederation(
+      this.federation,
+      async (req, res) => {
+        return {
+          request: req,
+          response: res,
+          // url: req.url
+          url: new URL(req.url, process.env.FEDERATION_ORIGIN || 'http://localhost:3001'),
+          // url: new URL(req.url, `${req.protocol}://${req. get('host')}`),
+        };
+      },
+    );
+  
+    // Fedify middleware requires the raw request body for HTTP signature verification
+    // so we apply `express.raw()` before `fedifyMiddleware` to preserve the body.
+    consumer.apply(
+      express.raw({ type: '*/*' }),
+      fedifyMiddleware,
+    ).forRoutes({ path: '*', method: RequestMethod.ALL})
     consumer.apply(AppLogger).forRoutes('*');
   }
 }
-
