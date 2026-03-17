@@ -11,8 +11,7 @@ export function setLocale(_locale) {
   locale = _locale;
 }
 export function getShareLink(link) {
-  const locale = (getLocale() == 'en' )? '' : `/${getLocale()}`
-  return `${getUrlOrigin()}${locale}${link}`;
+  return `${getUrlOrigin()}${link}`;
 }
 export function getHostname() {
   return window.location.hostname;
