@@ -34,6 +34,11 @@ $index-content-left--distance: $grid-column-max-width;
   // max-height: 100%;
   overflow: hidden;
   width: 100%;
+  &div {
+      transition: $transition-default-slow;
+
+
+  }
 }
 
 .index__content-left {
@@ -44,15 +49,14 @@ $index-content-left--distance: $grid-column-max-width;
 
 .index__content-bottom {
 
-  transition: height 0.5s linear; /* Specify the transition property and duration */
-  transition: $transition-default-slow;
-  height: 60px;
+  height: $nav-bottom-height;
 
 }
 
 .index__content-bottom--mid-screen {
 
-  height: calc($list-content-height-mid-screen-mobile + $nav-bottom-height) ;
+  // height: $list-content-height-mid-screen-mobile;
+  // min-height:  $list-content-height-mid-screen-mobile;
 
 }
 

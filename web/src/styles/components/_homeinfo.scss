@@ -42,8 +42,10 @@ $info-content-head-margin-mobile: 70px;
   overflow: auto;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior: contain; 
-  
   touch-action: manipulation;
+  overscroll-behavior: contain;
+   overscroll-behavior: none;
+  -webkit-overflow-scrolling: auto; /* disables momentum scroll on iOS */
 
 }
 

@@ -210,6 +210,7 @@ function HomeInfoInfoCard({ selectedNetwork }) {
                   </ShowMobileOnly>
                     {t('homeinfo.knowMore',[selectedNetwork.name])}
                 </h3>
+                <ShowDesktopOnly>
                 <div className="homeinfo-card__controls homeinfo-card__controls--openable">
                   <Btn
                     btnType={BtnType.circle}
@@ -218,6 +219,8 @@ function HomeInfoInfoCard({ selectedNetwork }) {
                     contentAlignment={ContentAlignment.center}
                   />
                 </div>
+              </ShowDesktopOnly>
+
         </div>
         <div className="homeinfo__description homeinfo__description--openable">
           <TextFormatted text={selectedNetwork.description} />

@@ -35,6 +35,7 @@ function List({
   showMap,
   isListOpen,
   setListOpen,
+  onDragPos,
   toggleShowMap = (e) => {},
 }) {
   const filters = useStore(
@@ -136,6 +137,8 @@ function List({
               isListFullScreen={isListFullScreen}
               setListOpen={setListOpen}
               viewMode={viewMode}
+              onDragPos={onDragPos} 
+              onScroll={undefined}
             >
               <div
                 className={
