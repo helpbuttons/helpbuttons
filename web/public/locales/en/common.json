@@ -326,7 +326,8 @@
     "showMoreTags": "more tags",
     "nofollowers": "no one is following yet",
     "copyAlert": "Copied",
-    "whereButtonLabel": "Choose place"
+    "whereButtonLabel": "Choose place",
+    "pickPosition": "Please pick a position on the map"
   },
   "user": {
     "login": "Write your credentials",
