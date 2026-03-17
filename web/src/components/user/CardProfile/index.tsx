@@ -22,7 +22,7 @@ export default function CardProfile({ user, showAdminOptions = false, showProfil
     <div className='card-profile__wrapper'>
         <div className="card-profile__container-avatar-content">
 
-              {showAdminOptions && 
+              {(showAdminOptions && user.id != sessionUser.id) && 
 
                 <ProfileAdminOptions user={user} />
 
