@@ -13,6 +13,7 @@ import { useGeoReverse } from './location.helpers';
 import { IoLocationOutline } from 'react-icons/io5';
 import LocationSearchBar from 'elements/LocationSearchBar';
 import { markerFocusZoom } from 'components/map/Map/Map.consts';
+import { alertService } from 'services/Alert';
 
 export default function FieldLocation({
   validationError,
@@ -46,24 +47,24 @@ export default function FieldLocation({
     setPickedPosition(() => markerPosition)
     setShowPopup(() => false)
   }
-  const closeAndSave = () => {
-    if (!isCustomAddress && hideAddress) {
-      getLatLngAddress(pickedPosition, true, (place) => {
+  useEffect(() => {
+    if(!isCustomAddress){
+      getLatLngAddress(pickedPosition, hideAddress, (place) => {
         const address = place.formatted;
-        setMarkerAddress(address)
-        setLatitude(pickedPosition[0])
-        setLongitude(pickedPosition[1])
-        setShowPopup(() => false)
+        setPickedAddress(() => address)
       },
         (error) => {
           const address = t('button.unknownPlace')
-          setMarkerAddress(address)
+          setPickedAddress(address)
           setLatitude(pickedPosition[0])
           setLongitude(pickedPosition[1])
           setShowPopup(() => false)
         }
       );
-    } else if (isLocationKey) {
+    }
+  }, [hideAddress])
+  const closeAndSave = () => {
+    if (isLocationKey) {
       onCloseAndSave({ address: pickedAddress, latitude: Number(pickedPosition[0]), longitude: Number(pickedPosition[1]) }, () => {
         setShowPopup(() => false)
         setPickedAddress(() => null)
@@ -71,6 +72,15 @@ export default function FieldLocation({
         setZoom(() => selectedNetwork.exploreSettings.zoom)
       })
     } else {
+      if(!pickedAddress || pickedAddress.length < 1){
+        console.log('error no address defined')
+        return;
+      }
+      if(pickedPosition[0] == null)
+      {
+        alertService.warn(t('button.pickPosition'))
+        return;
+      }
       setMarkerAddress(pickedAddress)
       setLatitude(pickedPosition[0])
       setLongitude(pickedPosition[1])
@@ -98,7 +108,7 @@ export default function FieldLocation({
 
     setIsLoading(() => true)
     if (latLng[0] && latLng[1]) {
-      getLatLngAddress(latLng, false, (place) => {
+      getLatLngAddress(latLng, hideAddress, (place) => {
         setPickedAddress(() => place.formatted)
         setIsLoading(() => false)
       },

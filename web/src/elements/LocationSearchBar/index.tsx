@@ -118,7 +118,7 @@ export default function LocationSearchBar({
                     <SearchResultsList handleAddressPicked={handleAddressPicked} results={results} hideAddress={hideAddress} />
                 }
                 {(showAddCustomButton && (results && results.length < 1) && isCustomAddress !== null) &&
-                    <SearchCustomAddress handleClick={() => { setIsCustomAddress(() => true); toggleShowAddCustomButton(() => false) }} />
+                    <SetCustomAddress handleClick={() => { setIsCustomAddress(() => true); toggleShowAddCustomButton(() => false) }} />
                 }
 
                 
@@ -238,6 +238,12 @@ function FieldCustomAddress({ isCustomAddress, setIsCustomAddress, setPickedAddr
         setInput(value)
     }
 
+    useEffect(() => {
+        if(isCustomAddress)
+        {
+            setPickedAddress(() => input)
+        }
+    }, [isCustomAddress])
     return (<>
     
         {isCustomAddress &&
@@ -269,7 +275,7 @@ function FieldCustomAddress({ isCustomAddress, setIsCustomAddress, setPickedAddr
     
 )
 }
-export function SearchCustomAddress({ handleClick }) {
+export function SetCustomAddress({ handleClick }) {
     const selectedNetworkName = useSelectedNetwork().name
     return (<div className="dropdown__dropdown-option-wrapper--add-location">
         <hr />
