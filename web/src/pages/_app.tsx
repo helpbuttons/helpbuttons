@@ -370,7 +370,7 @@ export const useIsSetup = (path) => {
       SetupSteps.SETUP_LOGIN
     ];
   
-    if (setupPaths.includes(path) || path.startsWith('/LoginClick')) {
+    if (path && (setupPaths.includes(path) || path.startsWith('/LoginClick'))) {
       setIsSetup(() => true);
     } else {
       setIsSetup(() => false);
