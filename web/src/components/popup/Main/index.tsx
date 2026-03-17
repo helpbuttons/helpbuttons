@@ -127,7 +127,7 @@ function useReplaceUrl(mainPopupUserProfile, mainPopupButton, popupPage, current
 
   useEffect(() => {
     if (mainPopupButton) {
-      replaceUrl(`/Show/${currentButton.id}`);
+      replaceUrl(`/Show/${currentButton?.id}`);
     }
   }, [mainPopupButton])
 
