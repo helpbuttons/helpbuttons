@@ -1,4 +1,5 @@
 /** @type {import('next').NextConfig} */
+const { destination } = require('@turf/turf');
 const { i18n } = require('./next-i18next.config');
 
 module.exports = {
@@ -26,6 +27,14 @@ module.exports = {
       {
         source: '/rss',
         destination: `${process.env.API_URL}/buttons/rss`,
+      },
+      {
+        source: '/.well-known/:path*',
+        destination: `${process.env.API_URL}/.well-known/:path*`
+      },
+      {
+        source: '/u/:path*',
+        destination: `${process.env.API_URL}/u/:path*`
       }
     ];
   },

@@ -82,7 +82,7 @@ import { FederationModule } from '@src/modules/federation/federation.module';
     FedifyModule.forRoot({
       kv: new MemoryKvStore(),
       queue: new InProcessMessageQueue(),
-      origin: process.env.FEDERATION_ORIGIN || 'http://localhost:3001',
+      origin: process.env.WEB_URL,
     }),
     FederationModule,
     SetupModule,
@@ -106,15 +106,11 @@ export class AppModule implements NestModule {
         return {
           request: req,
           response: res,
-          // url: req.url
-          url: new URL(req.url, process.env.FEDERATION_ORIGIN || 'http://localhost:3001'),
-          // url: new URL(req.url, `${req.protocol}://${req. get('host')}`),
+          url: new URL(req.url, process.env.WEB_URL ),
         };
       },
     );
-  
-    // Fedify middleware requires the raw request body for HTTP signature verification
-    // so we apply `express.raw()` before `fedifyMiddleware` to preserve the body.
+    
     consumer.apply(
       express.raw({ type: '*/*' }),
       fedifyMiddleware,

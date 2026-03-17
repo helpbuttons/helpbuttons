@@ -121,4 +121,8 @@ export class StorageService {
     }
     return Promise.resolve([]);
   }
+
+  async findFileType(imgpath){
+    return await this.imageFilesRepository.findOne({where: {name: imgpath}}).then((image) => image.mimetype)
+  }
 }
