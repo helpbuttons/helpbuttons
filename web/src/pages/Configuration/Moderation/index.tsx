@@ -130,6 +130,7 @@ function ModerationUsersList() {
         newRole,
         () => {
           alertService.info(t('common.done'));
+          updateUsersList();
         },
         () => {
           alertService.error(t('common.error'));
@@ -143,16 +144,18 @@ function ModerationUsersList() {
   const [page, setPage] = useState(0);
   const [searchString, setSearchString] = useState('')
 
-  useEffect(() => {
+  const updateUsersList = () => {
     store.emit(
       new ModerationList(page, (usersList) =>
         {
           setPageUsers(usersList)
           setUsers(usersList)
         }
-        
       ),
     );
+  }
+  useEffect(() => {
+    updateUsersList();
   }, [page]);
 
   useFilterItems(setUsers, pageUsers, searchString, (searchStr, item) => stringContains(item.email, searchString) || stringContains(item.name,searchString))
@@ -183,7 +186,7 @@ function ModerationUsersList() {
             </TableHeader>
             <TableBody>
               {users.map((user, idx) => (
-                <TableLine idx={idx}>
+                <TableLine key={idx}>
                   <TableLineCell>
                     <Link href="#" onClick={() => openProfile(user.username)}>{user.email}</Link>
                   </TableLineCell>

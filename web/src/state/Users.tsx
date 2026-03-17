@@ -45,13 +45,6 @@ export class UpdateRole implements WatchEvent {
   public watch(state: GlobalState) {
     return UserService.updateRole(this.userId,this.newRole).pipe(
       map((data) => {
-        store.emit(new SetMainPopupCurrentProfile(data))
-        if(this.newRole == Role.blocked)
-        {
-          store.emit(new updateCurrentButton(null))
-          store.emit(new SetMainPopupCurrentButton(null))
-        }
-        
         this.onSuccess(true)
       }),
       catchError((error) => {  
