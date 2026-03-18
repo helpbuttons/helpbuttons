@@ -185,7 +185,7 @@ export default function ButtonForm({
                         setHideAddress={(value) => setValue('hideAddress', value)}
                         hideAddress={watch('hideAddress')}
                         markerAddress={watch('address')}
-                        markerImage={image}
+                        markerImage={image?.data_url}
                         markerCaption={watch('title')}
                         markerColor={markerColor}
                         selectedNetwork={selectedNetwork}

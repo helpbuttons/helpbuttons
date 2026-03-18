@@ -21,7 +21,6 @@ import {
 import { GlobalState, store } from 'state';
 import { useEffect, useRef, useState } from 'react';
 import { alertService } from 'services/Alert';
-import { Button } from 'shared/entities/button.entity';
 import {
   CreateNewCommentReply,
   CreateNewPost,
@@ -32,7 +31,6 @@ import {
 import { isAdmin } from 'state/Users';
 import { useStore } from 'state';
 import MessageNew from 'components/feed/MessageNew';
-import { PrivacyType } from 'shared/types/privacy.enum';
 import { useToggle } from 'shared/custom.hooks';
 import { ButtonOwnerPhone, CardButtonHeadActions, sendCurrentButtonMessage } from 'components/button/CardButton';
 import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
@@ -434,17 +432,11 @@ export function Compose({ referer, onCreate, onCancel }) {
         </div>
         <MessageNew
           isComment={true}
-          privateMessage={referer?.privateMessage}
           onCreate={(message, images) => {
-            let privacy = PrivacyType.PUBLIC;
-            if (referer?.privateMessage) {
-              privacy = PrivacyType.PRIVATE;
-            }
             store.emit(
               new CreateNewCommentReply(
                 referer.post,
                 referer.comment,
-                privacy,
                 { message, images },
                 () => {
                   alertService.info(t('comment.posted'));
@@ -478,16 +470,10 @@ export function Compose({ referer, onCreate, onCancel }) {
         </div>
         <MessageNew
           isComment={true}
-          privateMessage={referer?.privateMessage}
           onCreate={(message, images) => {
-            let privacy = PrivacyType.PUBLIC;
-            if (referer?.privateMessage) {
-              privacy = PrivacyType.PRIVATE;
-            }
             store.emit(
               new CreateNewPostComment(
                 referer.post,
-                privacy,
                 { message, images },
                 () => {
                   alertService.info(t('comment.posted'));

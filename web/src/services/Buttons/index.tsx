@@ -1,12 +1,8 @@
 import { Observable, of } from "rxjs";
-import { ajax } from "rxjs/ajax";
-
-import { httpService } from "services/HttpService";
+import { HttpService, httpService } from "services/HttpService";
 import getConfig from "next/config";
-import { UtilsService } from "services/Utils";
 import { Button } from "shared/entities/button.entity";
 import { UpdateButtonDto } from "shared/dtos/button.dto";
-import { Bounds } from "pigeon-maps";
 const { publicRuntimeConfig } = getConfig();
 const baseUrl = `${publicRuntimeConfig.apiUrl}`;
 
@@ -16,11 +12,13 @@ export class ButtonService {
     data: Button,
     networkId: string
   ): Observable<any> {
-    return httpService.post("buttons/new?networkId=" + networkId, data);
+    const formData = HttpService.toFormData(data, ['images']);
+    return httpService.post("buttons/new?networkId=" + networkId, formData);
   }
 
   public static update(buttonId: string, data: UpdateButtonDto): Observable<any> {
-    return httpService.post("buttons/update/" + buttonId, data);
+    const formData = HttpService.toFormData(data, ['images']);
+    return httpService.post("buttons/update/" + buttonId, formData);
   }
 
   public static findJson(optionsJson: string): Observable<Button[]> {
