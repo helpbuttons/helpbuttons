@@ -12,18 +12,11 @@ import {
   Header,
 } from '@nestjs/common';
 
-import { FilesInterceptor } from '@nestjs/platform-express';
-import { diskStorage } from 'multer';
-
 import { ApiTags } from '@nestjs/swagger';
 
 import { ButtonEntry, ButtonView, CreateButtonDto, UpdateButtonDto } from './button.dto';
 import { ButtonService } from './button.service';
-// import { FilterButtonsOrmDto } from '../dto/requests/filter-buttons-orm.dto';
-import {
-  editFileName,
-  imageFileFilter,
-} from '../storage/storage.utils';
+import { FileUploadInterceptor, videoImageFilter } from '@src/shared/decorators/file-upload.decorator';
 import { CurrentUser } from '@src/shared/decorator/current-user';
 import { User } from '../user/user.entity';
 import {
@@ -55,22 +48,17 @@ export class ButtonController {
   @OnlyRegistered()
   @Post('new')
   @UseInterceptors(
-    FilesInterceptor('images[]', 4, {
-      storage: diskStorage({
-        destination: process.env.UPLOADS_PATH,
-        filename: editFileName,
-      }),
-      fileFilter: imageFileFilter,
-    }),
+    FileUploadInterceptor('images[]', 10, videoImageFilter)
   )
   create(
     @Query('networkId') networkId: string,
-    @UploadedFiles() images,
-    @Body() createDto: CreateButtonDto,
+    @UploadedFiles() images : Express.Multer.File[],
+    @Body() body: any,
     @CurrentUser() user: User,
   ) {
+    const createButtonDto : CreateButtonDto = JSON.parse(body.data);
     return this.buttonService.create(
-      createDto,
+      createButtonDto,
       networkId,
       images,
       user,
@@ -102,24 +90,33 @@ export class ButtonController {
   @AllowGuest()
   @AllowIfNetworkIsPublic()
   @Get('findById/:buttonId')
-  async findOne(@Param('buttonId') buttonId: string, @CurrentUser() user: User){
+  async findOne(
+    @Param('buttonId') buttonId: string,
+    @CurrentUser() user: User,
+  ){
     return this.buttonService.findById(buttonId, true, user)
   }
 
   @OnlyRegistered()
   @Post('update/:buttonId')
+  @UseInterceptors(
+    FileUploadInterceptor('images[]', 10, videoImageFilter)
+  )
   async update(
     @Param('buttonId') buttonId: string,
-    @Body() updateDto: UpdateButtonDto,
+    @Body() body: any,
     @CurrentUser() user: User,
+    @UploadedFiles() images : Express.Multer.File[],
   ) {
+    const updateDto : UpdateButtonDto = JSON.parse(body.data);
+
     return await this.buttonService
       .isOwner(user, buttonId, true)
       .then((isOwner) => {
         if (!isOwner) {
           throw new CustomHttpException(ErrorName.NoOwnerShip);
         }
-        return this.buttonService.update(buttonId, updateDto, user);
+        return this.buttonService.update(buttonId, updateDto, images, user);
       });
   }
 

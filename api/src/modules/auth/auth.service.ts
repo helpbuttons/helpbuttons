@@ -86,7 +86,7 @@ export class AuthService {
         );
       });
   }
-  async signup(signupUserDto: SignupRequestDto): Promise<UserOutDto> {
+  async signup(signupUserDto: SignupRequestDto, avatar: Express.Multer.File): Promise<UserOutDto> {
     let emailVerified = false;
     let userRole = Role.registered;
     const userCount = await this.userService.userCount();
@@ -146,13 +146,7 @@ export class AuthService {
       );
     }
     if (signupUserDto.avatar) {
-      try {
-        newUserDto.avatar = await this.storageService.newImage64(
-          signupUserDto.avatar,
-        );
-      } catch (err) {
-        throw new CustomHttpException(ErrorName.InvalidMimetype);
-      }
+      newUserDto.avatar = this.storageService.uploadAndConvertImage(avatar)
     }
     return this.createUser(newUserDto, signupUserDto).
       then((newUser) => {
@@ -277,7 +271,7 @@ export class AuthService {
     return this.userService.findById(userId, true);
   }
 
-  async update(data: UserUpdateDto, currentUser) {
+  async update(currentUser, data: UserUpdateDto, avatar: Express.Multer.File) {
     let newUser = {
       avatar: null,
       email: data.email,
@@ -296,17 +290,7 @@ export class AuthService {
     };
 
     if (isImageData(data.avatar)) {
-      try {
-        newUser.avatar = await this.storageService.newImage64(
-          data.avatar,
-        );
-        if(currentUser.avatar != newUser.avatar)
-        {
-          this.storageService.delete(currentUser.avatar)
-        }
-      } catch (err) {
-        throw new CustomHttpException(ErrorName.InvalidMimetype);
-      }
+      newUser.avatar = this.storageService.uploadAndConvertImage(avatar)
     }else if(data.avatar){
       newUser.avatar = data.avatar;
     }

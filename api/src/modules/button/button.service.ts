@@ -77,7 +77,7 @@ export class ButtonService {
   async create(
     createDto: CreateButtonDto,
     networkId: string,
-    images: File[],
+    mediaFiles: Express.Multer.File[],
     user: User,
   ) {
     const network = await this.networkService.findOne(networkId);
@@ -169,38 +169,13 @@ export class ButtonService {
           );
         });
     }
-
-    if (createDto.images?.length > 0) {
-      await Promise.all(
-        createDto.images.map(async (image) => {
-          if (isImageData(image)) {
-            try {
-              const newImage = await this.storageService.newImage64(
-                image,
-              );
-              if (newImage) {
-                button.images.push(newImage);
-              }
-            } catch (err) {
-              throw new CustomHttpException(
-                ErrorName.InvalidMimetype,
-              );
-            }
-          } else if (isImageUrl(image)) {
-            if(image)
-            {
-              button.images.push(image);
-            }
-          } else {
-            console.error('no image data, or image url?');
-            console.log(image);
-          }
-        }),
-      );
+    if (mediaFiles.length > 0) {
+      button.images = (await this.storageService.uploadMultipleImages(mediaFiles)).map((uploadResult) => uploadResult.name)
+      if (button.images.length > 0) {
+        button.image = button.images[0];
+      }
     }
-    if (button.images.length > 0) {
-      button.image = button.images[0];
-    }
+    
     await this.buttonRepository.insert([button]);
 
     return await button;
@@ -228,6 +203,7 @@ export class ButtonService {
   async update(
     id: string,
     updateDto: UpdateButtonDto,
+    mediaFiles: Express.Multer.File[],
     currentUser: User,
   ) {
     const currentButton = await this.findById(id, true);
@@ -262,38 +238,26 @@ export class ButtonService {
       await this.tagService.updateTags('button', id, button.tags);
     }
 
-    if (updateDto.images?.length > 0) {
-      await Promise.all(
-        updateDto.images.map(async (image) => {
-          if (isImageData(image)) {
-            try {
-              const newImage = await this.storageService.newImage64(
-                image,
-              );
-              if (newImage) {
-                button.images.push(newImage);
-              }
-            } catch (err) {
-              throw new CustomHttpException(
-                ErrorName.InvalidMimetype,
-              );
-            }
-          } else if (isImageUrl(image)) {
-            if(image)
-            {
-              button.images.push(image);
-            }
-          } else {
-            console.error('no image data, or image url?');
-            console.log(image);
+    if (updateDto.images?.length > 0 || mediaFiles.length > 0) {
+      button.images = [];
+      
+      // Keep existing image URLs/paths
+      if (updateDto.images?.length > 0) {
+        updateDto.images.forEach((image) => {
+          if (image && typeof image === 'string') {
+            button.images.push(image);
           }
-        }),
-      );
-    }
-    if (button.images.length > 0) {
-      button.image = button.images[0];
-    }else{
-      button.image = null;
+        });
+      }
+      
+      // Add new uploaded files
+      if (mediaFiles.length > 0) {
+        const newImages = (await this.storageService.uploadMultipleImages(mediaFiles)).map((uploadResult) => uploadResult.name);
+        button.images = [...button.images, ...newImages];
+        if (button.images.length > 0) {
+          button.image = button.images[0];
+        }
+      }
     }
 
     this.buttonRepository

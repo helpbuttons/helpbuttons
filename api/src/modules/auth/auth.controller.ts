@@ -8,6 +8,7 @@ import {
   UseGuards,
   HttpException,
   UnauthorizedException,
+  UploadedFile,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { CurrentUser } from '@src/shared/decorator/current-user';
@@ -44,8 +45,11 @@ export class AuthController {
 
   @AllowGuest()
   @Post('signup')
-  async signup(@Body() signupUserDto: SignupRequestDto) {
-    return this.authService.signup(signupUserDto).then((newUser) => {
+  async signup(
+    @Body() signupUserDto: SignupRequestDto,
+    @UploadedFile() avatar : Express.Multer.File,
+  ) {
+    return this.authService.signup(signupUserDto, avatar).then((newUser) => {
       if (typeof newUser === typeof undefined) {
         throw new HttpException('could not create token', HttpStatus.BAD_GATEWAY)
       }
@@ -89,7 +93,11 @@ export class AuthController {
 
   @OnlyRegistered()
   @Post('update')
-  async update(@Body() data: UserUpdateDto, @CurrentUser() user: User) {
-    return await this.authService.update(data, user);
+  async update(
+    @Body() data: UserUpdateDto,
+    @CurrentUser() user: User,
+    @UploadedFile() avatar : Express.Multer.File,
+  ) {
+    return await this.authService.update(user, data, avatar);
   }
 }
