@@ -222,8 +222,6 @@ const DraggableList: React.FC<DraggableProps> = ({
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
       onTransitionEnd={() => setTransitioning(false)}
-      onDragPos={handleDragPos}
-
       draggable
     >
       {children}
