@@ -15,9 +15,11 @@ export const FieldImageUpload = React.forwardRef(({ name, text, label, explain, 
 
   const [image, setImage] = useState(null)
   const onChange = (imageList, addUpdateIndex) => {
-    setImage(imageList[0].data_url)
+    // Store the entire item object so we can access the File later
+    // Item structure: { file: File, data_url: string, ... }
     if (imageList.length > 0) {
-      setValue(name, imageList[0].data_url)
+      setImage(imageList[0])
+      setValue(name, imageList[0]) // Store full object with file property
     }
   };
 
@@ -65,7 +67,7 @@ export const FieldImageUpload = React.forwardRef(({ name, text, label, explain, 
                     <div className='form__image-upload-preview--file'>
                         <div className='form__image-upload-preview--image'>
                           <ImageContainer
-                            src={image}
+                            src={image?.data_url || image}
                             imageType={ImageType.preview}
                             alt={alt}
                             width={width}

@@ -40,9 +40,8 @@ export default function FieldImageUploads({
 
   const updateValues = (imagesList) => {
     const imageListData = imagesList.map((item) => {
-      if (item.data_url) {
-        return item.data_url;
-      }
+      // Store the entire item object so we can access the File later
+      // Item structure: { file: File, data_url: string, ... }
       return item;
     });
     setValue(imageListData);

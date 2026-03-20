@@ -3,7 +3,6 @@ import {
   Inject,
   forwardRef,
   Injectable,
-  UseInterceptors,
 } from '@nestjs/common';
 import { HttpStatus } from '@src/shared/types/http-status.enum';
 
@@ -20,7 +19,6 @@ import {
   UpdateNetworkDto,
 } from './network.dto';
 import { Network } from './network.entity';
-import { getManager } from 'typeorm';
 import { StorageService } from '../storage/storage.service';
 import { ValidationException } from '@src/shared/middlewares/errors/validation-filter.middleware';
 import { UserService } from '../user/user.service';
@@ -28,9 +26,6 @@ import { isImageData } from '@src/shared/helpers/imageIsFile';
 import { removeUndefined } from '@src/shared/helpers/removeUndefined';
 import {
   CACHE_MANAGER,
-  CacheInterceptor,
-  CacheKey,
-  CacheTTL,
 } from '@nestjs/cache-manager';
 import { updateNomeclature } from '@src/shared/helpers/i18n.helper';
 import { getConfig } from '@src/shared/helpers/config.helper';
@@ -53,7 +48,7 @@ export class NetworkService {
     @Inject(CACHE_MANAGER) private cacheManager: Cache
   ) { }
 
-  async create(createDto: CreateNetworkDto) {
+  async create(createDto: CreateNetworkDto, logo: Express.Multer.File, jumbo: Express.Multer.File) {
     const network = {
       id: uuid(),
       description: createDto.description,
@@ -89,27 +84,9 @@ export class NetworkService {
           );
         });
     }
+    network.logo = await this.storageService.uploadAndConvertImage(logo).then((val) => val.name);
+    network.jumbo = await this.storageService.uploadAndConvertImage(jumbo).then((val) => val.name);
 
-    try {
-      network.logo = await this.storageService.newImage64(
-        createDto.logo,
-      );
-    } catch (err) {
-      console.log(err)
-      throw new ValidationException({ logo: err.message });
-    }
-
-    try {
-      network.jumbo = await this.storageService.newImage64(
-        createDto.jumbo,
-      );
-    } catch (err) {
-      console.log(`errorjumboooooror: ${err.message}`);
-      throw new ValidationException({ jumbo: err.message });
-    }
-    console.log(
-      `network.logo ${network.logo} jumbo ${network.jumbo}`,
-    );
     await this.networkRepository.insert([network]);
     await this.userService.setAdminLocale(createDto.locale)
 
@@ -205,7 +182,7 @@ export class NetworkService {
     return this.findDefaultNetwork();
   }
 
-  async update(updateDto: UpdateNetworkDto) {
+  async update(updateDto: UpdateNetworkDto, logo, jumbo) {
     const defaultNetwork = await this.findDefaultNetwork();
 
     const network = {
@@ -261,31 +238,15 @@ export class NetworkService {
         });
     }
 
-    if (isImageData(updateDto.logo)) {
-      try {
-        network.logo = await this.storageService.newImage64(
-          updateDto.logo,
-        );
-        if (defaultNetwork.logo != network.logo) {
-          await this.storageService.delete(defaultNetwork.logo)
-        }
-      } catch (err) {
-        throw new ValidationException({ logo: err.message });
-      }
+    if (defaultNetwork.logo != network.logo) {
+      await this.storageService.delete(defaultNetwork.logo)
+      network.logo = await this.storageService.uploadAndConvertImage(logo).then((val) => val.name);
+    }
+    
+    if (defaultNetwork.jumbo != network.jumbo) {
+      network.jumbo = await this.storageService.uploadAndConvertImage(jumbo).then((val) => val.name);
     }
 
-    if (isImageData(updateDto.jumbo)) {
-      try {
-        network.jumbo = await this.storageService.newImage64(
-          updateDto.jumbo,
-        );
-        if (defaultNetwork.jumbo != network.jumbo) {
-          await this.storageService.delete(defaultNetwork.jumbo)
-        }
-      } catch (err) {
-        throw new ValidationException({ jumbo: err.message });
-      }
-    }
     await this.networkRepository.update(
       defaultNetwork.id,
       removeUndefined(network),

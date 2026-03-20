@@ -60,13 +60,12 @@ export class LoadPosts implements WatchEvent {
 export class CreateNewPostComment implements WatchEvent, UpdateEvent {
   public constructor(
     private postId: string,
-    private privacy: PrivacyType,
     private message,
     private onSuccess,
     private onError,
   ) {}
   public watch(state: GlobalState) {
-    return PostService.newComment(this.postId, this.privacy, this.message).pipe(
+    return PostService.newComment(this.postId, this.message).pipe(
       map((data) => this.onSuccess()),
       catchError((error) => handleError(this.onError, error)),
     );
@@ -85,13 +84,12 @@ export class CreateNewCommentReply implements WatchEvent, UpdateEvent {
   public constructor(
     private postId: string,
     private commentId: string,
-    private privacy: PrivacyType,
     private message,
     private onSuccess,
     private onError,
   ) {}
   public watch(state: GlobalState) {
-    return PostService.newCommentReply(this.postId, this.commentId, this.privacy, this.message).pipe(
+    return PostService.newCommentReply(this.postId, this.commentId, this.message).pipe(
       map((data) => this.onSuccess(data)),
       catchError((error) => handleError(this.onError, error)),
     );

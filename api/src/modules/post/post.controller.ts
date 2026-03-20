@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Patch, Post, UploadedFiles, UseInterceptors } from "@nestjs/common";
 import { ApiTags } from "@nestjs/swagger";
 import { CurrentUser } from "@src/shared/decorator/current-user";
 import { AllowGuest, OnlyRegistered } from "@src/shared/decorator/roles.decorator";
@@ -14,6 +14,7 @@ import { notifyUser } from "@src/app/app.event";
 import { EventEmitter2 } from "@nestjs/event-emitter";
 import { Role } from "@src/shared/types/roles";
 import { PrivacyType } from "@src/shared/types/privacy.enum";
+import { FileUploadInterceptor, imageFileFilter } from "@src/shared/decorators/file-upload.decorator";
 
 @ApiTags('post')
 @Controller('post')
@@ -27,17 +28,23 @@ export class PostController {
 
     @OnlyRegistered()
     @Post('new/:buttonId')
+    @UseInterceptors(
+      FileUploadInterceptor('images[]', 10, imageFileFilter)
+    )
     async new(
-      @Body() data: MessageDto,
+      @Body() body: any,
       @Param('buttonId') buttonId: string,
       @CurrentUser() user: User,
+      @UploadedFiles() images: Express.Multer.File[],
     ){
       return await this.buttonService.isOwner(user, buttonId).then(
         (isOwner) => {
           if(!isOwner){
             throw new CustomHttpException(ErrorName.NoOwnerShip)
           }
-          return this.postService.new(data.message, data.images, buttonId, user).then((post) => {
+          const postData : MessageDto = JSON.parse(body.data);
+          
+          return this.postService.new(postData.message, images, buttonId, user).then((post) => {
               notifyUser(this.eventEmitter,ActivityEventName.NewPost,{post})
           })
         }
@@ -45,14 +52,19 @@ export class PostController {
     }
 
     @OnlyRegistered()
-    @Post('new/comment/:privacy/:postId')
+    @Post('new/comment/:postId')
+    @UseInterceptors(
+      FileUploadInterceptor('images[]', 10, imageFileFilter)
+    )
     async newComment(
-      @Body() data: MessageDto,
-      @Param('privacy') privacy: PrivacyType,
+      @Body() body: any,
       @Param('postId') postId: string,
       @CurrentUser() user: User,
+      @UploadedFiles() images: Express.Multer.File[],
     ){
-      return await this.commentService.new(data.message,data.images, postId, user, privacy).then((comment) => {
+      const commentData : MessageDto = JSON.parse(body.data);
+
+      return await this.commentService.new(commentData.message,images, postId, user).then((comment) => {
         notifyUser(this.eventEmitter,ActivityEventName.NewPostComment, {comment})
       return comment;  
       })
@@ -60,37 +72,23 @@ export class PostController {
 
 
     @OnlyRegistered()
-    @Post('new/comment/:privacy/:postId/:commentParentId')
+    @Post('new/comment/:postId/:commentParentId')
+    @UseInterceptors(
+      FileUploadInterceptor('images[]', 10, imageFileFilter)
+    )
     async newCommentReply(
-      @Body() data: MessageDto,
-      @Param('privacy') privacy: PrivacyType,
+      @Body() body: any,
       @Param('postId') postId: string,
       @Param('commentParentId') commentParentId: string,
       @CurrentUser() user: User,
+      @UploadedFiles() images: Express.Multer.File[],
+
     ){
-      return await this.commentService.newReply(data.message,data.images, postId, commentParentId, user, privacy).then((comment) => {
+      const commentData : MessageDto = JSON.parse(body.data);
+      return await this.commentService.newReply(commentData.message,images, postId, commentParentId, user).then((comment) => {
         notifyUser(this.eventEmitter,ActivityEventName.NewPostComment, {comment})
       return comment;  
       })
-    }
-
-
-    @OnlyRegistered()
-    @Post('update')
-    async update(
-      @Param('postId') postId: string,
-      @Body() message: MessageDto,
-      @Param('buttonId') buttonId: string,
-      @CurrentUser() user: User,
-    ){
-      return await this.buttonService.isOwner(user, buttonId).then(
-        (isOwner) => {
-          if(!isOwner){
-            throw new CustomHttpException(ErrorName.NoOwnerShip)
-          }
-        }
-      )
-     
     }
     
 
@@ -111,21 +109,6 @@ export class PostController {
         })
         
     }
-
-    // @OnlyRegistered()
-    // @Patch('update/message/:messageId/:message')
-    // async updateMessage(
-    //   @Param('messageId') messageId: string,
-    //   @Body() message: MessageDto,
-    //   @CurrentUser() user: User,
-    //   ) {
-    //     // if(!this.buttonService.isOwner(user, buttonId)){
-    //     //   throw new CustomHttpException(ErrorName.NoOwnerShip)
-    //     // }
-    //     console.log(`update message implement me... ${messageId} - ${message}`)
-    //     // const response = this.postService.delete(postId);
-    //     // return response;
-    // }
 
     @OnlyRegistered()
     @Delete('comment/delete/:commentId')

@@ -5,13 +5,15 @@ import {
     Body,
     Param,
     Res,
+    UseInterceptors,
+    UploadedFiles,
   } from '@nestjs/common';
   import { ApiTags } from '@nestjs/swagger';
-import { AllowGuest, OnlyAdmin } from '@src/shared/decorator/roles.decorator';
+  import { AllowGuest, OnlyAdmin } from '@src/shared/decorator/roles.decorator';
+  import { FileFieldsUploadInterceptor, videoImageFilter } from '@src/shared/decorators/file-upload.decorator';
   
   import { CreateNetworkDto, UpdateNetworkDto } from './network.dto';
   import { NetworkService } from './network.service';
-  // import { FilterNetworksOrmDto } from '../dto/requests/filter-networks-orm.dto';
   
   @ApiTags('networks')
   @Controller('networks')
@@ -20,9 +22,23 @@ import { AllowGuest, OnlyAdmin } from '@src/shared/decorator/roles.decorator';
     
     @OnlyAdmin()
     @Post('new')
-    async create(@Body() createDto: CreateNetworkDto
+    @UseInterceptors(
+      FileFieldsUploadInterceptor(
+        [
+          { name: 'logo', maxCount: 1 },
+          { name: 'jumbo', maxCount: 1 },
+        ],
+        videoImageFilter
+      )
+    )
+    async create(
+      @Body() body: any,
+      @UploadedFiles() files: { logo?: Express.Multer.File[]; jumbo?: Express.Multer.File[] },
     ){
-      return await this.networkService.create(createDto);
+      // Parse the JSON data field
+      const createDto = JSON.parse(body.data);
+      
+      return await this.networkService.create(createDto, files.logo[0], files.jumbo[0]);
     }
 
     @AllowGuest()
@@ -39,10 +55,22 @@ import { AllowGuest, OnlyAdmin } from '@src/shared/decorator/roles.decorator';
     
     @OnlyAdmin()
     @Post('update')
+    @UseInterceptors(
+      FileFieldsUploadInterceptor(
+        [
+          { name: 'logo', maxCount: 1 },
+          { name: 'jumbo', maxCount: 1 },
+        ],
+        videoImageFilter
+      )
+    )
     async update(
-      @Body() updateNetworkDto: UpdateNetworkDto,
+      @Body() body: any,
+      @UploadedFiles() files: { logo?: Express.Multer.File[]; jumbo?: Express.Multer.File[] },
     ) {
-      return await this.networkService.update(updateNetworkDto);
+      // Parse the JSON data field
+      const updateDto = JSON.parse(body.data);
+      return await this.networkService.update(updateDto, files.logo[0], files.jumbo[0]);
     }
   
 
