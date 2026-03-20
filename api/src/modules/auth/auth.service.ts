@@ -289,8 +289,8 @@ export class AuthService {
       showWassap: data.showWassap
     };
 
-    if (isImageData(data.avatar)) {
-      newUser.avatar = this.storageService.uploadAndConvertImage(avatar)
+    if (avatar) {
+      newUser.avatar = (await this.storageService.uploadAndConvertImage(avatar)).name
     }else if(data.avatar){
       newUser.avatar = data.avatar;
     }

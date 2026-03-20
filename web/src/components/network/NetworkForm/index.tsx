@@ -5,7 +5,6 @@ import Btn, {
 } from 'elements/Btn';
 
 import FieldAreaMap from 'elements/Fields/FieldAreaMap';
-import { FieldImageUpload } from 'elements/Fields/FieldImageUpload';
 import FieldTags from 'elements/Fields/FieldTags';
 import FieldText from 'elements/Fields/FieldText';
 import { FieldTextArea } from 'elements/Fields/FieldTextArea';
@@ -23,6 +22,7 @@ import { FieldCheckbox } from 'elements/Fields/FieldCheckbox';
 import { FieldLanguagePick } from 'elements/Fields/FieldLanguagePick';
 import FieldButtonTemplates from 'components/button/ButtonType/FieldButtonTemplates';
 import { FieldKeySpots } from 'components/map/LocationKey';
+import FieldImageUpload from 'elements/Fields/FieldImageUpload';
 
 export default NetworkForm;
 
@@ -228,20 +228,20 @@ function NetworkForm({
               </div>
             </div>
 
-            <FieldImageUpload
+             <FieldImageUpload
               name="logo"
+              defaultImage={watch('logo')}
               label={t('configuration.logo')}
               text={t('configuration.logo')}
               width={200}
               height={200}
               subtitle="400x400px"
               setValue={setValue}
-              validationError={errors.logo}
-              control={control}
-              {...register('logo', { required: true })}
-            />
+              validationError={errors.logo} 
+              />
             <FieldImageUpload
               name="jumbo"
+              defaultImage={watch('jumbo')}
               label={t('configuration.jumbo')}
               text={t('configuration.jumbo')}
               subtitle="1500x1500px"
@@ -249,8 +249,6 @@ function NetworkForm({
               width={750}
               height={250}
               validationError={errors.jumbo}
-              control={control}
-              {...register('jumbo', { required: true })}
             />
 
           </Accordion>

@@ -9,6 +9,8 @@ import {
   HttpException,
   UnauthorizedException,
   UploadedFile,
+  UseInterceptors,
+  UploadedFiles,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { CurrentUser } from '@src/shared/decorator/current-user';
@@ -23,6 +25,8 @@ import { LocalAuthGuard } from './guards/local-auth.guard';
 import { notifyUser } from '@src/app/app.event';
 import { ActivityEventName } from '@src/shared/types/activity.list';
 import { EventEmitter2 } from '@nestjs/event-emitter';
+import { imageFileFilter } from '../storage/storage.utils';
+import { FileFieldsUploadInterceptor } from '@src/shared/decorators/file-upload.decorator';
 
 @ApiTags('User')
 @Controller('users')
@@ -93,11 +97,20 @@ export class AuthController {
 
   @OnlyRegistered()
   @Post('update')
+  @UseInterceptors(
+    FileFieldsUploadInterceptor(
+      [
+        { name: 'avatar', maxCount: 1 },
+      ],
+      imageFileFilter
+    )
+  )
   async update(
-    @Body() data: UserUpdateDto,
+    @Body() body: any,
     @CurrentUser() user: User,
-    @UploadedFile() avatar : Express.Multer.File,
+    @UploadedFiles() files: {avatar?: Express.Multer.File[]},
   ) {
-    return await this.authService.update(user, data, avatar);
+    const data : UserUpdateDto = JSON.parse(body.data);
+    return await this.authService.update(user, data, files?.avatar[0]);
   }
 }
