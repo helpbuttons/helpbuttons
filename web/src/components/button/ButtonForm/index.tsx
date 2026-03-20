@@ -14,9 +14,9 @@ import t from 'i18n';
 import Loading, { LoadabledComponent } from 'components/loading';
 import { useButtonTypes } from 'shared/buttonTypes';
 import FieldCustomFields from '../ButtonType/CustomFields/FieldCustomFields';
-import FieldImageUploads from 'elements/Fields/FieldImagesUpload';
 import { alertService } from 'services/Alert';
 import { CookiesState } from 'state/HomeInfo';
+import FieldImageUploads from 'elements/Fields/FieldImageUploads';
 
 export default function ButtonForm({
   onSubmit,
@@ -171,7 +171,7 @@ export default function ButtonForm({
                       label={t('button.imagesLabel')}
                       explain={t('button.imagesExplain')}
                       maxNumber={5}
-                      setValue={(images) => setValue('images', images)}
+                      setValue={setValue}
                       validationError={errors.images} />
                     <div className="form__btn-search">
                       <FieldLocation
@@ -185,7 +185,7 @@ export default function ButtonForm({
                         setHideAddress={(value) => setValue('hideAddress', value)}
                         hideAddress={watch('hideAddress')}
                         markerAddress={watch('address')}
-                        markerImage={image?.data_url}
+                        markerImage={image?.thumbnail}
                         markerCaption={watch('title')}
                         markerColor={markerColor}
                         selectedNetwork={selectedNetwork}

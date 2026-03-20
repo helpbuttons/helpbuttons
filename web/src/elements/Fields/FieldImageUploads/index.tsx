@@ -1,14 +1,16 @@
+import Loading from 'components/loading';
 import Btn, { BtnType, IconType } from 'elements/Btn';
 import { ImageContainer, ImageType } from 'elements/ImageWrapper';
-import { useEffect, useState } from 'react';
+import { useRef, useState } from 'react';
 import { IoClose, IoCloudUpload } from 'react-icons/io5';
 import ImageUploading from 'react-images-uploading';
+import { createThumbnail } from 'shared/helpers/images.helper';
 
 export default function FieldImageUploads({
   name,
-  label,
+  label = null,
   text,
-  explain,
+  explain = null,
   maxNumber,
   setValue,
   validationError,
@@ -17,27 +19,23 @@ export default function FieldImageUploads({
   height = 100,
 }) {
   const [images, setImages] = useState(defaultImages);
+  const [isLoading, setIsLoading] = useState(false)
 
-  const onChange = (imageList, addUpdateIndex) => {
-    if (imageList.length > 0) {
-      setImages(() => imageList);
-      updateValues(imageList);
-    }
-  };
-
-  const updateValues = (imagesList) => {
-    const imageListData = imagesList.map((item) => {
-      // Store the entire item object so we can access the File later
-      // Item structure: { file: File, data_url: string, ... }
-      return item;
-    });
-    setValue(imageListData);
-  };
-  const onRemoveImage = (index) => {
-    let z = JSON.parse(JSON.stringify(images));
-    z.splice(index, 1);
-    setImages(() => z);
-    updateValues(z);
+  const onChange = async (imageList, addUpdateIndex) => {
+    setIsLoading(() => true)
+    const imageListData = await Promise.all(imageList.map(async (item, idx) => {
+      if(!item.file){
+        return item;
+      }
+      const thumb = await createThumbnail(item.file)
+      return {
+        file: item.file,
+        thumbnail: thumb
+      };
+    }));
+    setImages(() => imageListData);
+    setValue(name, imageListData);
+    setIsLoading(() => false)
   };
 
   return (
@@ -69,13 +67,13 @@ export default function FieldImageUploads({
                   onImageUpload();
                 }}
               />
-              {imageList.length > 0 && (
+              {images.length > 0 && (
                   <ul className="form__image-upload-preview--wrap">
-                    {imageList.map((item, index) => (
+                    {images.map((item, index) => (
                         <div key={index} className="form__image-upload-preview--file">
                           <div className="form__image-upload-preview--image">
                             <ImageContainer
-                              src={item.data_url ? item.data_url : item}
+                              src={item?.thumbnail || item}
                               imageType={ImageType.preview}
                               alt="..."
                               width={width}
@@ -92,13 +90,14 @@ export default function FieldImageUploads({
                             }
                             onClick={(e) => {
                               e.preventDefault();
-                              onRemoveImage(index);
+                              onImageRemove(index)
                             }}
                           />
                         </div>
                     ))}
                   </ul>
               )}
+              {isLoading && <Loading/>}
             </div>
           )}
         </ImageUploading>

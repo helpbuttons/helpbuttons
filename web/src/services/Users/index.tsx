@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { IUser, ICurrentUser } from "./network.type";
-import { httpService } from "services/HttpService";
+import { HttpService, httpService } from "services/HttpService";
 import { SignupQRRequestDto, SignupRequestDto } from 'shared/dtos/auth.dto';
 import { User } from 'shared/entities/user.entity';
 import { Logout } from 'state/Profile';
@@ -54,7 +54,8 @@ export class UserService {
   }
 
   public static update(data: UserUpdateDto): Observable<any> {
-    return httpService.post<UserUpdateDto>("users/update", data);
+    const formData = HttpService.toFormData(data, ['avatar']);
+    return httpService.post<UserUpdateDto>("users/update", formData);
   }
 
   public static requestNewLoginToken(email:string): Observable<ICurrentUser | undefined> {

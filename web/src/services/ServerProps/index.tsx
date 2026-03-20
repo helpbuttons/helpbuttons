@@ -1,6 +1,7 @@
 import dconsole from 'shared/debugger';
 import { Button } from 'shared/entities/button.entity';
-import { makeImageUrl, setLocale } from 'shared/sys.helper';
+import { makeImageUrl } from 'shared/helpers/images.helper';
+import { setLocale } from 'shared/sys.helper';
 import { HttpStatus } from 'shared/types/http-status.enum';
 export class ServerPropsService {
   public static async general(subtitle, ctx) {

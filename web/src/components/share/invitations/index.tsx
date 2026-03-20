@@ -11,7 +11,7 @@ import {
 import Btn, { BtnType, IconType } from 'elements/Btn';
 import { IoAdd } from 'react-icons/io5';
 import { PdfIframe, usePdfGenerateBlob } from '../pdf';
-import { getShareLink, makeImageUrl } from 'shared/sys.helper';
+import { getShareLink } from 'shared/sys.helper';
 import QRCode from 'qrcode';
 import Loading from 'components/loading';
 import { CreateInvite } from 'state/Profile';

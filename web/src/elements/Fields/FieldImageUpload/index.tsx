@@ -1,106 +1,120 @@
+import Loading from 'components/loading';
+import Btn, { BtnType, IconType } from 'elements/Btn';
 import { ImageContainer, ImageType } from 'elements/ImageWrapper';
-import React from 'react';
 import { useEffect, useState } from 'react';
-import { useWatch } from 'react-hook-form';
+import { IoClose, IoCloudUpload } from 'react-icons/io5';
 import ImageUploading from 'react-images-uploading';
+import { createThumbnail } from 'shared/helpers/images.helper';
 
-import Btn, { BtnType, ContentAlignment, IconType } from 'elements/Btn';
-import { IoChevronBackOutline } from "react-icons/io5";
-import { IoClose } from 'react-icons/io5';
+export default function FieldImageUpload({
+  name,
+  label,
+  text,
+  explain = null,
+  subtitle = null,
+  setValue,
+  validationError,
+  defaultImage = null,
+  width = 100,
+  height = 100,
+  alt = "",
+}) {
+  const [image, setImage] = useState(defaultImage);
+  const [isLoading, setIsLoading] = useState(false)
 
-import FieldError from '../FieldError';
-import t from 'i18n';
-
-export const FieldImageUpload = React.forwardRef(({ name, text, label, explain, subtitle, width = 100, height = 100, alt = "", validationError, control, setValue }, ref) => {
-
-  const [image, setImage] = useState(null)
-  const onChange = (imageList, addUpdateIndex) => {
-    // Store the entire item object so we can access the File later
-    // Item structure: { file: File, data_url: string, ... }
-    if (imageList.length > 0) {
-      setImage(imageList[0])
-      setValue(name, imageList[0]) // Store full object with file property
+  const onChange = async (imageList, addUpdateIndex) => {
+    setIsLoading(() => true)
+    if(imageList.length > 0) {
+      const _image = {
+        file: imageList[0].file,
+        thumbnail: await createThumbnail(imageList[0].file)
+      }
+      setImage(() => _image);
+      setValue(name, _image);
+    }else{
+      setImage(() => null);
+      setValue(name, null);
     }
+    
+    setIsLoading(() => false)
   };
-
-  const value = useWatch({ control, name: name });
-
-  useEffect(() => {
-    if (value) {
-      setImage(value);
-    }
-  }, [value])
   return (
     <>
       <div className="form__field">
-        <label className='form__label'>{label}</label>
-        <p className='form__explain'>{explain}</p>
+      {label && <label className="form__label">{label}</label>}
+      {explain && 
+          <p className="form__explain">{explain}</p>
+      }
+      
         <ImageUploading
-          value={image}
+          value={image ? [image] : []}
           onChange={onChange}
           maxNumber={1}
           dataURLKey="data_url"
         >
-          {({ onImageUpload, onImageRemove }) => (
-            // write your building UI
-            <div className="form__image-upload-wrapper">
-              <label
+          {(
+            { onImageUpload, onImageRemove, imageList }, // write your building UI
+          ) => (
+            <div className="form__image-upload__image-wrapper">
+              <Btn
+                btnType={BtnType.fileUpload}
+                iconLink={<IoCloudUpload />}
+                iconLeft={IconType.svg}
                 htmlFor="files"
-                className="btn"
+                caption={text}
                 onClick={(e) => {
-                  setImage(null);
                   e.preventDefault();
+                  if(imageList.length > 0) {
+                    onImageRemove(0)
+                  }
                   onImageUpload();
                 }}
-              >
-                {text}
-              </label>
-              <div className="form__input-subtitle">
-                      <div className="form__input-subtitle-side">
-                        <label className="form__input-subtitle--text">
-                          {subtitle}
-                        </label>
-                      </div>
-              </div>
-              <div className='form__image-upload-preview--wrap'>
-                {image && (
-                    <div className='form__image-upload-preview--file'>
-                        <div className='form__image-upload-preview--image'>
-                          <ImageContainer
-                            src={image?.data_url || image}
-                            imageType={ImageType.preview}
-                            alt={alt}
-                            width={width}
-                            height={height}
+              />
+              {subtitle && (
+                <div className="form__input-subtitle">
+                  <div className="form__input-subtitle-side">
+                    <label className="form__input-subtitle--text">
+                      {subtitle}
+                    </label>
+                  </div>
+                </div>
+              )}
+              {image && (
+                  <div className="form__image-upload-preview--wrap">
+                      <div className="form__image-upload-preview--file">
+                          <div className="form__image-upload-preview--image">
+                            <ImageContainer
+                              src={image?.thumbnail || image}
+                              imageType={ImageType.preview}
+                              alt={alt}
+                              width={width}
+                              height={height}
+                            />
+                          </div>
+
+                          <Btn
+                            btnType={BtnType.circle}
+                            iconLink={<IoClose />}
+                            iconLeft={IconType.svg}
+                            extraClass={
+                              'form__image-upload--remove-icon'
+                            }
+                            onClick={(e) => {
+                              e.preventDefault();
+                              onImageRemove(0);
+                            }}
                           />
-                        </div>
-
-                        <Btn
-                          btnType={BtnType.circle}
-                          iconLink={<IoClose/>}
-                          iconLeft={IconType.svg}
-                          extraClass={"form__image-upload--remove-icon"}
-                          onClick={(e) => {
-                            e.preventDefault();
-                            onImageRemove(0);
-                          }}
-                        />
-
-                    </div>
-                )}
-              </div>
+                      </div>
+                  </div>
+              )}
+              {isLoading && <Loading/>}
             </div>
           )}
         </ImageUploading>
-        {validationError &&
-          <FieldError validationError={validationError} />
-        }
       </div>
+      {validationError && (
+        <span style={{ color: 'red' }}>{validationError}</span>
+      )}
     </>
   );
-});
-// export default function FieldImageUpload({ name, label, width = 100, height = 100, alt = "", validationError, control, setValue}) {
-
-//   return (<></>)
-
-// }
+}

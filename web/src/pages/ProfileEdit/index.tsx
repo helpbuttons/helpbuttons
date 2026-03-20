@@ -23,7 +23,6 @@ import FieldText from 'elements/Fields/FieldText';
 import { alertService } from 'services/Alert';
 import { User } from 'shared/entities/user.entity';
 import { useRef } from 'store/Store';
-import { FieldImageUpload } from 'elements/Fields/FieldImageUpload';
 import FieldPassword from 'elements/Fields/FieldPassword';
 import { findError, getHostname, locale, readableDistance, setLocale } from 'shared/sys.helper';
 import { UserUpdateDto } from 'shared/dtos/user.dto';
@@ -32,14 +31,14 @@ import t from 'i18n';
 import { FieldLanguagePick } from 'elements/Fields/FieldLanguagePick';
 import { FieldCheckbox } from 'elements/Fields/FieldCheckbox';
 import Accordion from 'elements/Accordion';
-import DropDownSearchLocation from 'elements/DropDownSearchLocation';
 import FieldTags from 'elements/Fields/FieldTags';
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 import { Role } from 'shared/types/roles';
 import { IoTrashBinOutline } from 'react-icons/io5';
-import LocationSearchBar, { LocationSearchBarSimple } from 'elements/LocationSearchBar';
+import { LocationSearchBarSimple } from 'elements/LocationSearchBar';
 import { useNetworkCenter } from 'state/Networks';
+import FieldImageUpload from 'elements/Fields/FieldImageUpload';
 
 export default function ProfileEdit() {
   const {
@@ -52,16 +51,7 @@ export default function ProfileEdit() {
     watch,
     setFocus,
     formState: { errors, isSubmitting },
-  } = useForm({defaultValues: {
-    locale: 'en',
-    receiveNotifications: true,
-    showButtons: false,
-    tags: [],
-    address: '',
-    center: {coordinates: null},
-    radius: 0,
-    publishPhone: false,
-  }});
+  } = useForm();
   const [errorMsg, setErrorMsg] = useState(undefined);
   const [setNewPassword, setSetNewPassword] = useState(false);
   const [_locale, set_Locale] = useState(locale)
@@ -164,19 +154,15 @@ export default function ProfileEdit() {
                     validationError={errors.name}
                     {...register('name', { required: true })}
                   ></FieldText>
-                  <FieldImageUpload
-                    name="avatar"
+                   <FieldImageUpload
+                    defaultImage={sessionUser.avatar}
+                    name='avatar'
                     text={t('user.avatar')}
                     label={t('user.avatarLabel')}
                     explain={t('user.avatarExplain')}
-                    control={control}
                     width={150}
-                    height={150}
-                    subtitle={'150x150px'}
-                    validationError={errors.avatar}
-                    setValue={setValue}
-                    {...register('avatar')}
-                  />
+                    validationError={errors.avatar} 
+                    setValue={setValue} />
                    <FieldTextArea
                     name="description"
                     label={t('user.description')}
