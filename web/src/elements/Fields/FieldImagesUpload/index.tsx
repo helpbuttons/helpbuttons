@@ -1,7 +1,7 @@
 import Loading from 'components/loading';
 import Btn, { BtnType, IconType } from 'elements/Btn';
 import { ImageContainer, ImageType } from 'elements/ImageWrapper';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { IoClose, IoCloudUpload } from 'react-icons/io5';
 import ImageUploading from 'react-images-uploading';
 import { createThumbnail } from 'shared/helpers/images.helper';
@@ -25,26 +25,16 @@ export default function FieldImageUploads({
     if(imageList.length > images.length) {
       setIsLoading(() => true)
     }
-    const _images = await Promise.all(imageList.map(async (_img, idx) => {
-      if(images[idx]?.thumbnail){
-        return images[idx]
-      }
-      const thumbnail = await createThumbnail(_img.file)
-      return {thumbnail: thumbnail}
-    }))
-    
-    setImages(() => _images);
-    updateValues(_images);
-    setIsLoading(() => false)
-  };
-
-  const updateValues = (imagesList) => {
-    const imageListData = imagesList.map((item) => {
-      // Store the entire item object so we can access the File later
-      // Item structure: { file: File, data_url: string, ... }
-      return item;
-    });
+    const imageListData = await Promise.all(imageList.map(async (item, idx) => {
+      const thumb = await createThumbnail(item.file)
+      return {
+        file: item.file,
+        thumbnail: thumb
+      };
+    }));
+    setImages(() => imageListData);
     setValue(imageListData);
+    setIsLoading(() => false)
   };
 
   return (
