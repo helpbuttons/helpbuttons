@@ -16,7 +16,7 @@ import {
   Svg,
   Path,
 } from '@react-pdf/renderer';
-import { getShareLink, makeImageUrl } from 'shared/sys.helper';
+import { makeImageUrl } from 'shared/helpers/images.helper';
 import { useButtonTypes } from 'shared/buttonTypes';
 import AdvancedFilters from 'components/search/AdvancedFilters';
 import {
@@ -38,6 +38,7 @@ import Loading from 'components/loading';
 import { FilterByDays } from 'components/search/AdvancedFilters/filter-by-days';
 import Popup from 'components/popup/Popup';
 import { PdfIframe, usePdfGenerateBlob } from '../pdf';
+import { getShareLink } from 'shared/sys.helper';
 
 export default function ShareBulletinForm() {
   const [bulletinButtons, setBulletinButtons] = useState(null);

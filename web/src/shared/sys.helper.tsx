@@ -47,28 +47,6 @@ export function getLocale() {
   return locale;
 }
 
-export function makeImageUrl(image, localUrl = false) {
-  if(localUrl)
-  {
-    return image
-  }
-  const { publicRuntimeConfig } = getConfig()
-
-  if (!image) {
-    return `${publicRuntimeConfig.apiUrl}/networks/logo/192`;
-  }
-  const regex = /^data\:image/gm;
-  const matches = image.match(regex);
-  if (!matches) {
-    const regexHref = /^(http|https)/gm;
-    if (image.match(regexHref)) {
-      return image;
-    }
-    return `${publicRuntimeConfig.apiUrl}${image}`;
-  }
-  return image;
-}
-
 export function isRoleAllowed(role: Role, path): boolean {
   if (pagesRolesCheck(path, role)) {
     return true;
