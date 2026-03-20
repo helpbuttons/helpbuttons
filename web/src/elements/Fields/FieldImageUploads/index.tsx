@@ -8,9 +8,9 @@ import { createThumbnail } from 'shared/helpers/images.helper';
 
 export default function FieldImageUploads({
   name,
-  label,
+  label = null,
   text,
-  explain,
+  explain = null,
   maxNumber,
   setValue,
   validationError,
@@ -22,10 +22,11 @@ export default function FieldImageUploads({
   const [isLoading, setIsLoading] = useState(false)
 
   const onChange = async (imageList, addUpdateIndex) => {
-    if(imageList.length > images.length) {
-      setIsLoading(() => true)
-    }
+    setIsLoading(() => true)
     const imageListData = await Promise.all(imageList.map(async (item, idx) => {
+      if(!item.file){
+        return item;
+      }
       const thumb = await createThumbnail(item.file)
       return {
         file: item.file,
@@ -33,7 +34,7 @@ export default function FieldImageUploads({
       };
     }));
     setImages(() => imageListData);
-    setValue(imageListData);
+    setValue(name, imageListData);
     setIsLoading(() => false)
   };
 

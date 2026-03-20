@@ -1,7 +1,7 @@
 import Loading from 'components/loading';
 import Btn, { BtnType, ContentAlignment, IconType } from 'elements/Btn';
 import { FieldCheckbox } from 'elements/Fields/FieldCheckbox';
-import FieldImageUploads from 'elements/Fields/FieldImagesUpload';
+import FieldImageUploads from 'elements/Fields/FieldImageUploads';
 import { FieldTextArea } from 'elements/Fields/FieldTextArea';
 import Form from 'elements/Form';
 import t from 'i18n';
@@ -101,7 +101,7 @@ export default function MessageNew({
               name='images'
               text={t('button.imagesText')} 
               maxNumber={5}
-              setValue={(images) => setValue('images', images)}
+              setValue={setValue}
               validationError={null}
             />
           </div>
