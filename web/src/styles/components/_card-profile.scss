@@ -31,11 +31,13 @@ $avatar-margin: $padding-big;
   margin-top: $margin-xsmall;
 
   color: $color-gray;
+  padding-top: $padding-medium;
 
 }
 
 .card-profile__description:empty{
   margin:0;
+  display: none;
 }
 
 
@@ -310,6 +312,12 @@ $avatar-margin: $padding-big;
 
  }
 
+ .card-profile__role:empty {
+
+  display: none;
+
+ }
+
  .card-profile__button-list-wrapper {
   overflow: hidden;
    margin-bottom: $margin-big;
@@ -402,6 +410,7 @@ $avatar-margin: $padding-big;
 
  .card-profile__role {
   padding: $padding-huge 0;
+  padding-bottom: 0;
 
  }
 
