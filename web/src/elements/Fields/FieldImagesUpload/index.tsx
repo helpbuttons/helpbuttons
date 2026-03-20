@@ -30,8 +30,9 @@ export default function FieldImageUploads({
         return images[idx]
       }
       const thumbnail = await createThumbnail(_img.file)
-      return {..._img, thumbnail: thumbnail}
+      return {thumbnail: thumbnail}
     }))
+    
     setImages(() => _images);
     updateValues(_images);
     setIsLoading(() => false)
