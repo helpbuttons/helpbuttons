@@ -23,6 +23,8 @@ import {
 import * as sharp from 'sharp';
 import * as fs from 'fs';
 import * as path from 'path';
+import { CustomHttpException } from '@src/shared/middlewares/errors/custom-http-exception.middleware';
+import { ErrorName } from '@src/shared/types/error.list';
 
 export interface UploadResult {
   id: string;
@@ -58,8 +60,8 @@ export class StorageService {
   ): Promise<UploadResult> {
     // Validate mimetype
     if (!this.validateImageMimetype(file.mimetype)) {
-      throw new UnsupportedMediaTypeException(
-        `Invalid image type. Allowed: ${ALLOWED_IMAGE_EXTENSIONS.join(', ')}`
+      throw new CustomHttpException(
+        ErrorName.InvalidMimetype,
       );
     }
     // Generate unique filename with converted extension
@@ -76,7 +78,7 @@ export class StorageService {
         // Disk storage: copy file from path
         await fs.promises.copyFile(file.path, tempPath);
       } else {
-        throw new Error('No file data available');
+        throw new BadRequestException('No file data available');
       }
 
       // Convert to web standard format
