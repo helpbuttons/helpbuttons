@@ -37,8 +37,10 @@ import {
     ){
       // Parse the JSON data field
       const createDto = JSON.parse(body.data);
-      
-      return await this.networkService.create(createDto, files.logo[0], files.jumbo[0]);
+      const logo = files?.logo?.length > 0 ? files.logo[0] : null;
+      const jumbo = files?.jumbo?.length > 0 ? files.jumbo[0] : null;
+
+      return await this.networkService.create(createDto, logo, jumbo);
     }
 
     @AllowGuest()
