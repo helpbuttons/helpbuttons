@@ -15,7 +15,6 @@ import { SetupSteps } from '../shared/setupSteps';
 
 import { Role } from 'shared/types/roles';
 import {
-  getLocaleFromUrl,
   isRoleAllowed,
   locale,
   setLocale,
@@ -37,6 +36,7 @@ import { MainPopupPage, SetMainPopup, SetPageName } from 'state/HomeInfo';
 import { localStorageService, LocalStorageVars } from 'services/LocalStorage';
 import { usePoolFindNewActivities } from 'state/Activity';
 import { ResetFilters } from 'state/Explore';
+import getEnvConfig from 'next/config';
 
 export default appWithTranslation(MyApp);
 
@@ -234,7 +234,7 @@ function MyApp({ Component, pageProps }) {
     }
   }, [selectedNetwork]);
 
-  useWhichLocale({ sessionLocale: sessionUser?.locale, networkLocale: selectedNetwork.locale });
+  useWhichLocale({ sessionLocale: sessionUser?.locale});
 
   const searchParams = useSearchParams();
 
@@ -335,26 +335,13 @@ function ActivityPool({ sessionUser }) {
 }
 
 
-const useWhichLocale = ({ sessionLocale, networkLocale }) => {
-
-  const [_locale, set_Locale] = useState('en');
-
+const useWhichLocale = ({ sessionLocale }) => {
+  const { publicRuntimeConfig } = getEnvConfig();
+  const defaultLocale = publicRuntimeConfig?.defaultLocale || 'en';
+  
   useEffect(() => {
-    const localeFromUrl = getLocaleFromUrl();
-    if (localeFromUrl) {
-      setLocale(localeFromUrl);
-    } else if (sessionLocale && networkLocale) {
-      setLocale(sessionLocale);
-    } else if (networkLocale) {
-      setLocale(networkLocale);
-    }
-    set_Locale((prevLocale) => {
-      if (locale !== prevLocale && prevLocale && locale) {
-        return locale;
-      }
-      return locale;
-    });
-  }, [networkLocale, sessionLocale]);
+    setLocale(sessionLocale || defaultLocale)
+  }, [sessionLocale]);
   return;
 }
 
