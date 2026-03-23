@@ -111,6 +111,7 @@ export class AuthController {
     @UploadedFiles() files: {avatar?: Express.Multer.File[]},
   ) {
     const data : UserUpdateDto = JSON.parse(body.data);
-    return await this.authService.update(user, data, files?.avatar[0]);
+    const avatar = files?.avatar?.length > 0 ? files.avatar[0] : null;
+    return await this.authService.update(user, data, avatar);
   }
 }
