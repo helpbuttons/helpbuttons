@@ -48,7 +48,7 @@ export default function FieldLocation({
     setShowPopup(() => false)
   }
   useEffect(() => {
-    if(!isCustomAddress){
+    if(!isCustomAddress && pickedPosition[0] != null){
       getLatLngAddress(pickedPosition, hideAddress, (place) => {
         const address = place.formatted;
         setPickedAddress(() => address)
