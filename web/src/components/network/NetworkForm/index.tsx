@@ -12,7 +12,7 @@ import Form from 'elements/Form';
 
 import t, { updateNomeclature } from 'i18n';
 import { useRouter } from 'next/router';
-import { findError, getUrlOrigin, setLocale } from 'shared/sys.helper';
+import { findError, getUrlOrigin } from 'shared/sys.helper';
 // name, description, logo, background image, button template, color pallete, colors
 
 import { FieldColorPick } from 'elements/Fields/FieldColorPick';
@@ -134,8 +134,6 @@ function NetworkForm({
               {...register('slogan', { required: true })}
             />            
             
-            <FieldLanguagePick onChange={(value) => {setValue('locale',value); setLocale(value)}} defaultValue={watch('locale')}/>
-
             {/* https://github.com/helpbuttons/helpbuttons/issues/290 */}
             {/* <FieldPrivacy
               name="privacy"

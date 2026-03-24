@@ -8,7 +8,8 @@ module.exports = {
     debug: `${process.env.DEBUG}`,
     description: `${process.env?.description ? process.env.description : ''}`,
     title: `${process.env?.title ? process.env.title : ''}`,
-    adminemail: `${process.env?.adminemail ? process.env.adminemail : ''}`
+    adminemail: `${process.env?.adminemail ? process.env.adminemail : ''}`,
+    defaultLocale: `${process.env?.DEFAULT_LOCALE ? process.env.DEFAULT_LOCALE : 'en'}`
   },
   typescript: {
     ignoreBuildErrors: true,

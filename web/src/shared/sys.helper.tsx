@@ -1,14 +1,13 @@
 import { pathToRegexp } from 'path-to-regexp';
 import { allowedPathsPerRole } from './pagesRoles';
 import { Role } from './types/roles';
-import getConfig from 'next/config';
-import { localesFiles } from 'i18n/availableLocales';
 
 export const logoImageUri = '/network/logo/'; // [16, 32, 48, 72, 96, 144, 168, 180, 192]
 export let locale = 'en';
 
 export function setLocale(_locale) {
   locale = _locale;
+  setLocaleCookie(_locale)
 }
 export function getShareLink(link) {
   return `${getUrlOrigin()}${link}`;
@@ -25,26 +24,26 @@ export function getHref() {
   return window.location.href;
 }
 
-export function getLocaleFromUrl()
-{
+export function getLocaleFromCookie(): string | null {
   try {
-    const splitHref = getHref().split('/');
-
-    const availableLocales = localesFiles.map(({ locale }) => locale);
-
-    if (
-      splitHref &&
-      splitHref.length > 2 &&
-      availableLocales.includes(splitHref[3])
-    ) {
-      return splitHref[3];
-    }
+    const match = document.cookie.match(/locale=([^;]+)/);
+    return match ? match[1] : locale;
   } catch (err) {
-    return null;
+    return locale;
+  }
+}
+
+export function setLocaleCookie(locale: string, days = 365): void {
+  try {
+    const expires = new Date();
+    expires.setTime(expires.getTime() + days * 24 * 60 * 60 * 1000);
+    document.cookie = `locale=${locale};expires=${expires.toUTCString()};path=/`;
+  } catch (err) {
+    // console.log(err)
   }
 }
 export function getLocale() {
-  return locale;
+  return getLocaleFromCookie()
 }
 
 export function isRoleAllowed(role: Role, path): boolean {
