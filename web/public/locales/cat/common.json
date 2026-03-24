@@ -144,7 +144,7 @@
     "customFieldsExplain": "Aquests són camps extres que pots afegir als teus _helpbuttons_ per adaptar-se a les diferents tasques. Afegeix una data si vols que serveixin per gestionar esdeveniments, o un preu si vols que els usuaris venguin productes.",
     "priceFieldAddLabel": "Mostra un preu al teu tipus de _helpbutton_ perquè els usuaris puguin comprar o vendre",
     "dateFieldAddLabel": "Mostra una data al teu tipus de _helpbutton_ perquè es comporti com un esdeveniment i es pugui cercar per calendari",
-    "addType": "+ Crear tipus de _helpbutton_ amb els camps superiors",
+    "addType": "Crear tipus de _helpbutton_ amb els camps superiors",
     "currencyLabel": "Divisa",
     "setType": "Set _helpbutton_ type properties",
     "buttonTemplatePlaceHolder": "Write your _helpbutton_ type name here",
@@ -608,7 +608,9 @@
     "description": "Here you can review the users of your network, and the buttons!",
     "adminCommunicationLabel": "Administrator communications",
     "edit": "Edit",
-    "preview": "Preview"
+    "preview": "Preview",
+    "view": "Ver"
+
   },
   "role": {
     "blocked": "desactivat",

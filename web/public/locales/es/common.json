@@ -177,7 +177,7 @@
     "customFieldsExplain": "Estos son campos extra que puedes añadir a tus _helpbuttons_ para adaptarse a las diferentes tareas. Añade una fecha si quieres qu sirvan para gestionar eventos, o un precio si quieres que los usuarios vendan productos.",
     "priceFieldAddLabel": "Muestra un precio en tu tipo de _helpbutton_ para que los usuarios puedan comprar o vender",
     "dateFieldAddLabel": "Muestra una fecha en tu tipo de _helpbutton_ para que se comporte como un evento y se pueda buscar por calendario",
-    "addType": "+ Crear tipo de _helpbutton_",
+    "addType": "Crear tipo de _helpbutton_",
     "currencyLabel": "Divisa",
     "setType": "Configuración de propiedades de _helpbutton_ ",
     "buttonTemplatePlaceHolder": "Escribe aquí el nombre de tu tipo de _helpbutton_",
@@ -719,7 +719,8 @@
     "edit": "Editar",
     "preview": "Previsualización",
     "awaitingApprovalLabel": "Pendientes de aprobación",
-    "buttonsApproved": "Lista de _helpbuttons_ publicados"
+    "buttonsApproved": "Lista de _helpbuttons_ publicados",
+    "view": "Ver"
   },
   "roles": {
     "blocked": "bloqueado",
