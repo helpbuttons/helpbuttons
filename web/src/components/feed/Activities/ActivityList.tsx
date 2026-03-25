@@ -28,11 +28,11 @@ export default function ActivityList({ setSelectedActivity, selectedActivity, ac
         if([ActivityEventName.Endorsed, ActivityEventName.RoleUpdate, ActivityEventName.EndorseRevoked].indexOf(activity.eventName) !== -1){
             return;
         }
-        setSelectedActivity(() => activity) 
         if(!activity.read)
         {
             store.emit(new ActivityMarkAsRead(activity.id))
         }
+        router.push(`/Activity/${activity.id}`);
     }
     return (<>
         {scrollIsLoading && <Loading />}

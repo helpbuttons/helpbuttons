@@ -720,7 +720,6 @@ function isButtonOwner(sessionUser, button) {
 
 
 export const sendCurrentButtonMessage = (button) => {
-  store.emit(new SetDraftButton(button))
   store.emit(new SetMainPopup(MainPopupPage.HIDE))
-  router.push(`/Activity?draft=true`)
+  router.push(`/Activity/draft/${button.id}`)
 }

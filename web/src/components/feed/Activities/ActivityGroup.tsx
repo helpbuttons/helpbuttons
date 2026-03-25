@@ -14,8 +14,9 @@ import { useScroll } from "shared/helpers/scroll.helper";
 import { ActivityDetailMessage } from "./ActivityButton";
 import { ActivitiesPageSize } from "shared/dtos/activity.dto";
 import { ShowMobileOnly } from "elements/SizeOnly";
+import router from "next/router";
 
-export default function ActivityGroup({ setGroupMessageType, groupMessageType }) {
+export default function ActivityGroup({ selectedGroupType }) {
   const sessionUser = useGlobalStore(
     (state: GlobalState) => state.sessionUser,
   );
@@ -23,35 +24,33 @@ export default function ActivityGroup({ setGroupMessageType, groupMessageType })
   const isAdmin = sessionUser.role == Role.admin;
   if (isAdmin) {
     return <>
-      {/* <div>{t('groupChat.admin_community')}</div> */}
-      <ActivityGroupMessageEntry creatingNewChat={groupMessageType} setCreatingNewChat={setGroupMessageType} groupType={GroupMessageType.admin} groupMessages={userGroupMessages.admin} />
-      <ActivityGroupMessageEntry creatingNewChat={groupMessageType} setCreatingNewChat={setGroupMessageType} groupType={GroupMessageType.community} groupMessages={userGroupMessages.community} />
+      <ActivityGroupMessageEntry selectedGroupType={selectedGroupType} groupType={GroupMessageType.admin} groupMessages={userGroupMessages.admin} />
+      <ActivityGroupMessageEntry selectedGroupType={selectedGroupType} groupType={GroupMessageType.community} groupMessages={userGroupMessages.community} />
     </>
   }
   if (!userGroupMessages.community && !isAdmin) {
     return <></>
   }
   return (<>
-    {/* <div>{t('groupChat.community')}</div> */}
-    <ActivityGroupMessageEntry creatingNewChat={groupMessageType} setCreatingNewChat={setGroupMessageType} groupType={GroupMessageType.community} groupMessages={userGroupMessages.community} />
+    <ActivityGroupMessageEntry selectedGroupType={selectedGroupType} groupType={GroupMessageType.community} groupMessages={userGroupMessages.community} />
   </>)
 }
 
-function ActivityGroupMessageEntry({ groupMessages, groupType, creatingNewChat, setCreatingNewChat }) {
+function ActivityGroupMessageEntry({ groupMessages, selectedGroupType, groupType }) {
 
   if (!groupMessages) {
-    return <ActivityGroupCreate creatingNewChat={creatingNewChat} groupType={groupType} onClick={() => setCreatingNewChat(() => groupType)} />
+    return <ActivityGroupCreate selectedGroupType={selectedGroupType} groupType={groupType} onClick={() => router.push(`/Activity/${groupType}`)} />
   }
 
-  return <ActivityListEntryCard selected={creatingNewChat == groupType} activity={{ ...groupMessages, type: t(`groupChat.${groupType}`) }} onClick={() => setCreatingNewChat(() => groupType)} />
+  return <ActivityListEntryCard selected={groupType == selectedGroupType} activity={{ ...groupMessages, type: t(`groupChat.${groupType}`) }} onClick={() => router.push(`/Activity/${groupType}`)} />
 }
 
-export function ActivityGroupCreate({ groupType, onClick, creatingNewChat }) {
+export function ActivityGroupCreate({ selectedGroupType, groupType, onClick }) {
   const selectedNetwork = useSelectedNetwork()
 
   return (
     <div className="feed-element">
-      <div className={`card-notification ${creatingNewChat == groupType ? 'card-notification--selected' : ''}`} onClick={onClick}>
+      <div className={`card-notification ${selectedGroupType == groupType ? 'card-notification--selected' : ''}`} onClick={onClick}>
 
         <ActivityListEntryCardInner image={selectedNetwork.logo} createdAt={null} type={t(`groupChat.${groupType}`)} read={false} premessage={null} message={t('groupChat.create', [t(`groupChat.${groupType}`)])} footer="" title="" />
       </div>
