@@ -25,22 +25,22 @@ export default function ActivitiesUser({ activityId =null, draft = false, select
   
   const userButtonActivities = useGlobalStore((state: GlobalState) => state.activities.buttons)
   const filterButtons = updateFilters(buttonTypes, userButtonActivities)
-  const isMobile = useIsMobile()
 
   const router = useRouter()
   
   useEffect(() => {
+    if(selectedActivity?.id == activityId)
+    {
+      return;
+    }
     if (activityId) {
-      const activity = userButtonActivities.find((a) => a.id === activityId);
+      const activity = filteredUserActivities.find((a) => a.id === activityId);
       if (activity) {
         setSelectedActivity(() => activity);
       }
     }
-  }, [activityId]);
+  }, [activityId, filteredUserActivities]);
   
-  const draftButton = useGlobalStore(
-    (state: GlobalState) => state.activities.draftButton,
-  );
   const sideBarButton = useSideBarButton(selectedActivity, draft)
   const currentButton = useGlobalStore((state: GlobalState) => state.explore.currentButton)
  

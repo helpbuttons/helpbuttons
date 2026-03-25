@@ -1,6 +1,5 @@
 import configs from '@src/config/configuration';
 
-export const getUrl = (locale, url) => {
-    const localeUrl = locale == 'en' ? '' : `/${locale}` 
-    return `${configs().WEB_URL}${localeUrl}${url}`
+export const getUrl = (url) => {
+    return `${configs().WEB_URL}${url}`
 };

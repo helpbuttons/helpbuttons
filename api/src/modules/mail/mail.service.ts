@@ -37,7 +37,7 @@ export class MailService {
           locale,
           'email.activateSubject'
         ),
-        link: getUrl(locale, activationUrl),
+        link: activationUrl,
         linkCaption: translate(
           locale,
           'email.activateLinkCaption'
@@ -75,7 +75,7 @@ export class MailService {
           locale,
           'email.loginTokenSubject'
         ),
-        link: getUrl(locale, activationUrl),
+        link: activationUrl,
         linkCaption: translate(
           locale,
           'email.loginTokenLinkCaption'
@@ -172,7 +172,7 @@ export class MailService {
       context: {
         subject: subject,
         content: content,
-        link: link, 
+        link: getUrl(link), 
         linkCaption: linkCaption,
         to: to,
       },
