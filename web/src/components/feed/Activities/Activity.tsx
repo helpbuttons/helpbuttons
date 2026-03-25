@@ -43,18 +43,7 @@ export default function ActivitiesUser({ activityId =null, draft = false, select
   );
   const sideBarButton = useSideBarButton(selectedActivity, draft)
   const currentButton = useGlobalStore((state: GlobalState) => state.explore.currentButton)
-  useEffect(() => {
-    if(draftButton)
-      {
-        const _draftActivity = userButtonActivities.find((_activity) => _activity.buttonId == draftButton.id)
-        
-        if(_draftActivity){
-          setSelectedActivity(() => _draftActivity) 
-        }else{
-          console.log('not found.. new draft')
-        }
-      }
-  }, [draftButton])
+ 
   useEffect(() => {
     if (selectedGroupMessageType) {
       setSelectedActivity(() => null)
