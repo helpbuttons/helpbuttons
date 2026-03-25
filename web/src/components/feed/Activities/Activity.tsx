@@ -16,61 +16,34 @@ import ActivityGroup, { ActivityGroupChat } from "./ActivityGroup";
 import { FindLatestActivities, SetDraftButton } from "state/Activity";
 import { FindButton, updateCurrentButton } from "state/Explore";
 
-export default function ActivitiesUser() {
+export default function ActivitiesUser({ activityId =null, draft = false, selectedGroupMessageType = null }) {
   const buttonTypes = useButtonTypes()
   const [localFilters, setLocalFilters] = useState(null)
 
   const [selectedActivity, setSelectedActivity] = useState(null)
   const [filteredUserActivities, setFilteredUserActivities] = useState([])
-  const [selectedGroupMessageType, setSelectedGroupMessageType] = useState(null)
   
   const userButtonActivities = useGlobalStore((state: GlobalState) => state.activities.buttons)
   const filterButtons = updateFilters(buttonTypes, userButtonActivities)
   const isMobile = useIsMobile()
 
   const router = useRouter()
-  const {draft} = router.query;
+  
+  useEffect(() => {
+    if (activityId) {
+      const activity = userButtonActivities.find((a) => a.id === activityId);
+      if (activity) {
+        setSelectedActivity(() => activity);
+      }
+    }
+  }, [activityId]);
   
   const draftButton = useGlobalStore(
     (state: GlobalState) => state.activities.draftButton,
   );
   const sideBarButton = useSideBarButton(selectedActivity, draft)
   const currentButton = useGlobalStore((state: GlobalState) => state.explore.currentButton)
-  useEffect(() => {
-    if(draftButton)
-      {
-        const _draftActivity = userButtonActivities.find((_activity) => _activity.buttonId == draftButton.id)
-        
-        if(_draftActivity){
-          console.log(_draftActivity)
-          setSelectedActivity(() => _draftActivity) 
-          const { draft, ...routerQuery } = router.query;
-              router.replace({
-                query: { ...routerQuery },
-              });
-        }else{
-          console.log('not found.. new draft')
-        }
-      }
-  }, [draftButton])
-
-  useEffect(() => {
-    if(selectedActivity && draft)
-    {
-      const { draft, ...routerQuery } = router.query;
-      router.replace({
-        query: { ...routerQuery },
-      });
-    }
-    if(selectedActivity)
-    {
-      setSelectedGroupMessageType(() => null)
-      if(draftButton){
-        store.emit(new SetDraftButton(null))
-      }
-    }
-  }, [selectedActivity])
-
+ 
   useEffect(() => {
     if (selectedGroupMessageType) {
       setSelectedActivity(() => null)
@@ -95,14 +68,13 @@ export default function ActivitiesUser() {
 
   useEffect(() => {
     store.emit(new FindLatestActivities())
-    setSelectedGroupMessageType(() => null)
   }, [])
   const setButtonType = (type) => {
     setLocalFilters(() => {return {buttonType: type}})
   }
   
   const closeConversation = () => {
-    setSelectedActivity(() => null)
+    router.push('/Activity')
   }
   return <>
     <ShowDesktopOnly>
@@ -120,7 +92,7 @@ export default function ActivitiesUser() {
               </div>
             </div>
             <div className="feed-section--activity-content">
-              <ActivityGroup groupMessageType={selectedGroupMessageType} setGroupMessageType={setSelectedGroupMessageType}/>
+              <ActivityGroup selectedGroupType={selectedGroupMessageType}/>
               <ActivityList selectedActivity={selectedActivity} activities={filteredUserActivities} setSelectedActivity={setSelectedActivity} isDrafting={draft} />
             </div>
           </div>
@@ -133,7 +105,7 @@ export default function ActivitiesUser() {
           }
           {selectedGroupMessageType &&
             <div className="feed-section__center">
-              <ActivityGroupChat groupType={selectedGroupMessageType} close={() => setSelectedGroupMessageType(() => null)} />
+              <ActivityGroupChat groupType={selectedGroupMessageType} close={closeConversation} />
             </div>
           }
           {(!selectedActivity && !draft && !selectedGroupMessageType) &&
@@ -179,7 +151,7 @@ export default function ActivitiesUser() {
               </div>
             </div>
             <div className="feed-section--activity-content">
-              <ActivityGroup groupMessageType={selectedGroupMessageType} setGroupMessageType={setSelectedGroupMessageType} />
+              <ActivityGroup selectedGroupType={selectedGroupMessageType} />
               {/* <div>{t('activities.buttons')}</div> */}
               <ActivityList selectedActivity={selectedActivity} activities={filteredUserActivities} setSelectedActivity={setSelectedActivity} isDrafting={draft} />
             </div>
@@ -193,7 +165,7 @@ export default function ActivitiesUser() {
         }
         {selectedGroupMessageType &&
           <div className="feed-section__center">
-            <ActivityGroupChat groupType={selectedGroupMessageType} close={() => setSelectedGroupMessageType(() => null)} />
+            <ActivityGroupChat groupType={selectedGroupMessageType} close={closeConversation} />
           </div>
         }
       </div>

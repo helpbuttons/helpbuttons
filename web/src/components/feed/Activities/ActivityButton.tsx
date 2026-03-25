@@ -95,15 +95,12 @@ export function ActivityDetailConversation({ selectedActivity, closeConversation
 export function ActivityDetailDraft({ setSelectedActivity }) {
   const sendNewMessage = (message, buttonId, consumerId) => {
     store.emit(new SendNewMessage(message, buttonId, consumerId, (res) => {
+      
       store.emit(new FindLatestActivities((_activities) => {
         const _draftActivity = _activities.find((_activity) => _activity.buttonId == buttonId)
 
         if (_draftActivity) {
-          setSelectedActivity(() => _draftActivity)
-          const { draft, ...routerQuery } = router.query;
-          router.replace({
-            query: { ...routerQuery },
-          });
+          router.push(`/Activity/${_draftActivity.id}`)
         }
       }))
     }))
