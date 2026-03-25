@@ -85,7 +85,8 @@ export function SignupForm() {
             locale: getLocale(),
             inviteCode: data.inviteCode,
             acceptPrivacyPolicy: data.acceptPrivacyPolicy,
-            qrcode: null
+            qrcode: null,
+            tags: data.tags
           },
           onSuccess,
           onError,
