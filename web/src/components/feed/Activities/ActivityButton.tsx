@@ -1,4 +1,4 @@
-import Loading, { LoadingWrapper } from "components/loading"
+import { LoadingWrapper } from "components/loading"
 import Btn, { BtnType, ContentAlignment, IconType } from "elements/Btn"
 import FieldText from "elements/Fields/FieldText"
 import ImageWrapper, { ImageType } from "elements/ImageWrapper"
@@ -7,8 +7,7 @@ import { ShowMobileOnly } from "elements/SizeOnly"
 import t from "i18n"
 import router from "next/router"
 import { useEffect, useRef, useState } from "react"
-import { IoAdd, IoArrowBack, IoSend } from "react-icons/io5"
-import { alertService } from "services/Alert"
+import { IoArrowBack, IoSend } from "react-icons/io5"
 import { readableTimeLeftToDate } from "shared/date.utils"
 import { ActivitiesPageSize } from "shared/dtos/activity.dto"
 import { useScroll } from "shared/helpers/scroll.helper"
@@ -18,16 +17,15 @@ import { FindActivityDetails, FindLatestActivities, SendNewMessage, SetFocusOnMe
 import { FindButton } from "state/Explore"
 import { FindAndSetMainPopupCurrentButton, FindAndSetMainPopupCurrentProfile } from "state/HomeInfo"
 
-export function ActivityButton({ selectedActivity, setSelectedActivity, closeConversation, isDrafting }) {
+export function ActivityButton({ selectedActivity, setSelectedActivity, closeConversation, isDrafting, selectedButton }) {
   if (isDrafting) {
     return <ActivityDetailDraft setSelectedActivity={setSelectedActivity} />
   }
-  return <ActivityDetailConversation selectedActivity={selectedActivity} closeConversation={closeConversation} />
+  return <ActivityDetailConversation selectedActivity={selectedActivity} selectedButton={selectedButton} closeConversation={closeConversation} />
 }
 
-export function ActivityDetailConversation({ selectedActivity, closeConversation }) {
+export function ActivityDetailConversation({ selectedActivity, closeConversation, selectedButton}) {
   const [buttonActivities, setButtonActivities] = useState([])
-  const [selectedButton, setSelectedButton] = useState(null)
 
   const loadButtonActivities = () => {
     if (!selectedActivity.buttonId) {
@@ -36,12 +34,6 @@ export function ActivityDetailConversation({ selectedActivity, closeConversation
     store.emit(new FindActivityDetails(selectedActivity.buttonId, selectedActivity.consumerId, 0,
       (_activites) => {
         setButtonActivities(() => _activites)
-        if(!selectedButton || selectedButton.id != selectedActivity.buttonId)
-          {
-            store.emit(new FindButton(selectedActivity.buttonId, (button) => {
-              setSelectedButton(() => button)
-            }))
-          }
       }
     ))
   }

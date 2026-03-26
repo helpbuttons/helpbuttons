@@ -92,7 +92,7 @@ export class ActivityService {
     return this.findUsersToNotify(button)
       .then((users) => {
         return users.map((_user) => {
-          return this.newActivity(button, _user, button.owner, _user, payload)
+          return this.newActivity(button, _user, button.owner, _user, payload, true, true)
         })
       })
   }
