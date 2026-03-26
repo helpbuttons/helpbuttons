@@ -14,13 +14,13 @@ Project financed by <a rel="me" href="https://wofreedom.org">Wof!</a>, a nonprof
 [USD/EUR](https://buy.stripe.com/9AQ5kl3CYaIvgRW6ou)
 
 Open your own social network for cooperation, under total control of your community
-https://wofreedom.org/wp-content/uploads/sites/8/2026/03/Captura-de-Pantalla-2026-03-26-a-las-19.40.06-scaled.jpg
+![cover](https://wofreedom.org/wp-content/uploads/sites/8/2026/03/Captura-de-Pantalla-2026-03-26-a-las-19.40.06-scaled.jpg)
 Customize your look and configure your needs 
-https://wofreedom.org/wp-content/uploads/sites/8/2026/03/Captura-de-Pantalla-2026-03-26-a-las-19.39.55-scaled.jpg
+![cover2](https://wofreedom.org/wp-content/uploads/sites/8/2026/03/Captura-de-Pantalla-2026-03-26-a-las-19.39.55-scaled.jpg)
 Search by location, concept or date to cooperate
-https://wofreedom.org/wp-content/uploads/sites/8/2026/03/Captura-de-Pantalla-2026-03-26-a-las-19.38.50-scaled.jpg
+![cover3](https://wofreedom.org/wp-content/uploads/sites/8/2026/03/Captura-de-Pantalla-2026-03-26-a-las-19.38.50-scaled.jpg)
 Connect and manage messages
-https://wofreedom.org/wp-content/uploads/sites/8/2026/03/Captura-de-Pantalla-2026-03-26-a-las-19.39.46-scaled.jpg
+![cover4](https://wofreedom.org/wp-content/uploads/sites/8/2026/03/Captura-de-Pantalla-2026-03-26-a-las-19.39.46-scaled.jpg)
 
 
 
