@@ -1,3 +1,6 @@
+@use '../variables' as *;
+@use "sass:math";
+
 $marker-button-height: 50px;
 $marker-button-height-name: 20px;
 $marker-button-width-change: 25px;
@@ -6,8 +9,6 @@ $marker-button-radius: $border-radius-circle;
 $marker-button-line: 0.2rem;
 $marker-arrow-width: 2px;
 $marker-arrow-height: 5px;
-
-@use "sass:math";
 
 $cycle: 10;
 

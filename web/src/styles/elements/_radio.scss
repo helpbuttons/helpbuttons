@@ -1,3 +1,6 @@
+@use '../variables' as *;
+@use 'btn';
+
 $radio-content-border: $border-lines-width;
 $radio-filter-padding: 3rem;
 $radio-height: $height-btn;

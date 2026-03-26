@@ -1,3 +1,6 @@
+@use '../variables' as *;
+@use '../elements/form';
+
 $header-search-position: 2%;
 $header-search-position-large: $proportional-margin-large;
 $header-search-position-xlarge: $proportional-margin-xlarge;

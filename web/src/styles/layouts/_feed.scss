@@ -1,3 +1,6 @@
+@use '../variables' as *;
+@use 'list';
+
 $feed-border-radius: $border-radius-buttons;
 $feed-color-gray-border: $color-gray-border;
 $feed-post-color: $color-gray;

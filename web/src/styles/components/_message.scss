@@ -1,3 +1,5 @@
+@use '../variables' as *;
+
 $message-border-radius: $border-radius-basic;
 $message-border-radius-semicircle: $border-radius-semicircle;
 $message-max-width: 300px;

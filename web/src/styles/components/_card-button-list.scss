@@ -1,3 +1,6 @@
+@use '../variables' as *;
+@use '../elements/btn';
+
 $card-button-list-background: $color-white;
 $card-button-list-border: 1px solid $color-ligth-gray;
 $card-button-list-box-shadow: $box-shadow-card;
@@ -5,9 +8,6 @@ $card-button-list-busca-background: $color-red;
 $card-button-list-ofrece-background: $color-green;
 $card-button-list-paragraph-color: $color-gray;
 $card-button-list-margin-bottom: $margin-xsmall;
-$card-button-list-width: 400px;
-$card-button-list-feat-width: 300px;
-$card-button-list-height: 225px;
 $card-button-list-image-height: 210px;
 $card-button-list-image-width: 150px;
 $card-button-list-image-large-width: 220px;
@@ -20,7 +20,6 @@ $card-button-list-size-icon-before: 18px;
 
 // convivences
 $card-button-list-whitespace: .5rem;
-$card-button-list-border-height: $border-general-height;
 $card-button-list-status-height: 10px;
 
 .card-button-list {

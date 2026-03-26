@@ -1,3 +1,6 @@
+@use '../variables' as *;
+@use '../elements/btn';
+
 $font-size-hex-unselected: calc($font-size-huge - 5px);
 $map-btns-size-desktop: 40px;
 $map-btns-size-mobile: 30px;

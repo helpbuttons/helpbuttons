@@ -1,3 +1,5 @@
+@use '../variables' as *;
+
 $list-container-height: 300px;
 $list-drag-tab-height: 35px;
 $list-container-hide-height: calc($footer-height-mobile - $list-container-height);

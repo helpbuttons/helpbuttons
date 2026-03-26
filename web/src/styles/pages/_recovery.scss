@@ -1,3 +1,5 @@
+@use '../variables' as *;
+
 .recovery {
   height: calc(100vh - 75px);
   &__header {

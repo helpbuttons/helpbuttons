@@ -1,3 +1,5 @@
+@use '../variables' as *;
+
 $checkbox-circle-content-background: $color-white;
 $checkbox-circle-content-background-hover: $color-black;
 $checkbox-circle-content-border: $border-general-height;

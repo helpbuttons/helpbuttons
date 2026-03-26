@@ -1,3 +1,7 @@
+@use '../variables' as *;
+@use 'card-button-list';
+@use 'card-button-map';
+
 $card-button-background: $color-white;
 $card-button-border: 1px solid $color-ligth-gray;
 $card-button-box-shadow: $box-shadow-card;
@@ -11,7 +15,6 @@ $card-button-situation-background-size: 14px;
 $card-button__submenu-show-width: 120px;
 $card-button__submenu-top-arrow-right: $padding-big;
 $card-button__submenu-show-left: calc( #{$card-button__submenu-show-width} / -2 );
-$card-button-size-icon-before: 20px;
 
 // convivences
 $card-button-whitespace: .5rem;

@@ -1,3 +1,5 @@
+@use '../variables' as *;
+
 ///convention: btn is the naming for regular buttons, to avoid conffusion with Buttons the posts of the app.
 $btn-with-icon-icon-width: $icon-width-medium;
 $btn-with-icon-small-icon-width: $icon-width-small;
@@ -26,7 +28,6 @@ $btn-max-height: 60px;
 $btn-circle-height: 54px;
 $btn-circle-small-height: 35px;
 $btn-circle-big-icon-height: 28px;
-$btn-circle-icon-height: 20px;
 $btn-circle-small-icon-height: 15px;
 
 

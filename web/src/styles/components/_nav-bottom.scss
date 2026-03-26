@@ -1,3 +1,5 @@
+@use '../variables' as *;
+
 $nav-bottom-icon-size: 20px;
 $nav-bottom-icon-size-desktop: 100px;
 $nav-bottom-link-create-size: 58px;
@@ -8,7 +10,6 @@ $nav-bottom-create-message-bottom: 90px ;
 $nav-bottom-create-message-width: 100px;
 $nav-bottom-create-message-left: calc(( #{$nav-bottom--desktop-width} / 2) - (#{$nav-bottom-create-message-width} / 8) ) ;
 $nav-bottom-width: 640px;
-$nav-bottom-height: $footer-height-mobile;
 $nav-bottom-height-desktop: 22rem;
 $nav-bottom-width-desktop: 4rem;
 $nav-bottom-border: 32px;

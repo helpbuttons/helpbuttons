@@ -1,10 +1,9 @@
+@use '../variables' as *;
+
 $hashtag-color: $color-white;
 $hashtag-back-color: $color-gray;
 $hashtag-border-radius: $border-radius-semicircle;
-$hashtag-hover-color: $color-white;
-$hashtag-padding-x: $padding-big;
 $hashtag-margin-x:$margin-xsmall;
-$hashtag-padding-y: $padding-small;
 $hashtag-busca-background: $color-red;
 $hashtag-ofrece-background: $color-green;
 $hashtag-padding-big: $padding-big;
