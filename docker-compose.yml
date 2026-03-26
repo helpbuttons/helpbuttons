@@ -62,8 +62,8 @@ services:
     # - 6379:6379
   
   # for tests only:
-  # mailhog:
-  #   image: mailhog/mailhog
+  # mailpit:
+  #   image: axllent/mailpit
   #   ports:
   #     - "8025:8025"
   #     - "1025:1025"
