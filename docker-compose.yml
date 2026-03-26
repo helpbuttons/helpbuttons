@@ -60,6 +60,16 @@ services:
     #  - external_network
     #ports: 
     # - 6379:6379
+  
+  # for tests only:
+  # mailhog:
+  #   image: mailhog/mailhog
+  #   ports:
+  #     - "8025:8025"
+  #     - "1025:1025"
+  #   networks:
+  #     - internal_network
+  #     - external_network
 
 networks:
   external_network:
