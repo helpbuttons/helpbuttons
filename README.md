@@ -13,8 +13,14 @@ You can install your own tool in your server with this repo or ask us for help a
 Project financed by <a rel="me" href="https://wofreedom.org">Wof!</a>, a nonprofit organization dedicated to promote social cooperation and public debate. If you want to support us, you can donate here: 
 [USD/EUR](https://buy.stripe.com/9AQ5kl3CYaIvgRW6ou)
 
-
-![UX view](https://watchoutfreedom.com/wp-content/uploads/2024/03/Captura-de-Pantalla-2024-03-13-a-las-21.30.09-2048x1124.jpg "UX view")
+Open your own social network for cooperation, under total control of your community
+https://wofreedom.org/wp-content/uploads/sites/8/2026/03/Captura-de-Pantalla-2026-03-26-a-las-19.40.06-scaled.jpg
+Customize your look and configure your needs 
+https://wofreedom.org/wp-content/uploads/sites/8/2026/03/Captura-de-Pantalla-2026-03-26-a-las-19.39.55-scaled.jpg
+Search by location, concept or date to cooperate
+https://wofreedom.org/wp-content/uploads/sites/8/2026/03/Captura-de-Pantalla-2026-03-26-a-las-19.38.50-scaled.jpg
+Connect and manage messages
+https://wofreedom.org/wp-content/uploads/sites/8/2026/03/Captura-de-Pantalla-2026-03-26-a-las-19.39.46-scaled.jpg
 
 
 
