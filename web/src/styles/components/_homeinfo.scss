@@ -559,6 +559,7 @@ hr {
     transition: $transition-default-slow;
 
 
+
     & span {
       max-height: 40px;
       min-height: 0;
@@ -589,6 +590,10 @@ hr {
 
     position: absolute;
     right: -60px;
+    background-color: $color-corporative;
+    height: 100px;
+    border-radius: 0 $border-radius-circle  $border-radius-circle 0;
+    top: 0;
     
   }
 
@@ -610,6 +615,12 @@ hr {
 
     position: absolute;
     right: -60px;
+
+        background-color: $color-corporative;
+
+    height: 100px;
+    border-radius: 0 $border-radius-circle  $border-radius-circle 0;
+    top: 40px;
     
   }
 
