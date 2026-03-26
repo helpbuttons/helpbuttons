@@ -247,7 +247,7 @@
     "newbuttonHomeinfo": "_helpbutton_ reciente",
     "comment": "Comentario",
     "message": "Mensaje",
-    "deleted": "Eliminación de _helpbutton_",
+    "deleted": "Se eliminó _helpbutton_",
     "newcommentOwn": "Escribiste un comentario {0}",
     "newmention": "Fuiste mencionado/a en una conversación. {0}: '{1}'",
     "newmentionOwn": "Publicaste un comentario. '{0}'",
