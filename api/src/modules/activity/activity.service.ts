@@ -19,6 +19,7 @@ import { PostService } from '../post/post.service';
 import { unique } from '@src/shared/helpers/array.helper';
 import { IsNull } from "typeorm"
 import { GroupMessageService } from '../group-message/group-message.service';
+import { getUrl } from '@src/shared/helpers/mail.helper';
 
 @Injectable()
 export class ActivityService {
@@ -137,8 +138,7 @@ export class ActivityService {
   async onNewButton(payload: any) {
     const { button } = payload.data
 
-    return this.newNetworkActivity(button, button.owner, payload)
-    return;
+    this.newNetworkActivity(button, button.owner, payload)
     const _button = payload.data.button
     // check users following the button of this post, and add a new actitivy to the daily outbox
     return this.buttonService
@@ -174,17 +174,15 @@ export class ActivityService {
             .filter((userId) => userId != button.owner.id);
           const usersToNotify =
             await this.userService.findAllByIdsToBeNotified(usersIds);
-
           // notify users following this tag
           await Promise.all(
             usersToNotify.map((user) => {
-              // auto follow button!
+              // auto follow button! because belongs to tag!
               return this.buttonService
                 .follow(button.id, user.id)
                 .then(() => {
                   // add new button to activity of user following interest in their radius!
-                  return this.newActivity(button, user.id, button.owner.id, { id: user.id }, true, false)
-                  // return this.createActivity(user, payload, true);
+                  return this.newActivity(button, user.id, button.owner.id, { id: user.id },  { data: { button: button }, activityEventName: ActivityEventName.NewButton } , true, false)
                 });
             }),
           ).catch((err) => {
@@ -377,7 +375,6 @@ export class ActivityService {
       lastActivityButtonConsumer: setAsLastButtonConsumer,
       lastActivityButtonOwner: setAsLastButtonOwner,
     };
-
     if (setAsLastButtonConsumer) {
       await this.hideActivitiesButtonConsumer(button.id, consumer.id)
     }
@@ -518,8 +515,8 @@ export class ActivityService {
         }
     }
   }
-
-  transformActivity(activity, locale, userId) {
+  
+  public transformActivity(activity, locale, userId) {
     try {
       const isOwner = activity.to.id == userId;
       const isButtonOwner = activity?.button?.owner?.id == userId
@@ -537,7 +534,9 @@ export class ActivityService {
         fromId: activity?.from?.id,
         consumerId: activity.consumer.id,
         activityFrom: isButtonOwner ? activity.consumer : activity?.button?.owner,
-        disableChat: disableChat
+        disableChat: disableChat,
+        link: getUrl('/Explore'),
+        linkCaption: translate(locale, 'activities.view')
       }
 
       switch (activity.eventName) {
@@ -552,6 +551,7 @@ export class ActivityService {
             type: translate(locale, 'activities.notice'),
             footer: `${activity.button.title} - ${activity.button.address}`,
             message: isOwner ? translate(locale, 'activities.newfollowed') : translate(locale, 'activities.newfollowing'),
+            link: getUrl(`/Show/${activity.button.id}`)
           }
         case ActivityEventName.NewPost:
           const { post } = activity.data
@@ -565,7 +565,7 @@ export class ActivityService {
             footer: `${activity.button.title} - ${activity.button.address}`,
             message: translate(locale, 'activities.newpost', [post.message]),
             postId: post.id,
-            // https://dev.helpbuttons.org/Show/a05c07a8797c4b5bb0487e3eafe93d21a2b5
+            link: getUrl(`/Show/${activity.button.id}`)
           }
         case ActivityEventName.DeleteButton:
           return {
@@ -577,6 +577,7 @@ export class ActivityService {
             type: translate(locale, 'activities.notice'),
             footer: `${activity.button.title} - ${activity.button.address}`,
             message: translate(locale, 'activities.deleted'),
+            link: null,
           }
         case ActivityEventName.Message:
           {
@@ -590,6 +591,7 @@ export class ActivityService {
               type: translate(locale, 'activities.message'),
               footer: `${activity.button.title} - ${activity.button.address}`,
               message: message,
+              link: getUrl(`/Activity/${activity.id}`)
             }
           }
         case ActivityEventName.NewPostComment:
@@ -607,6 +609,7 @@ export class ActivityService {
               footer: `${activity.button.title} - ${activity.button.address}`,
               message: commentOwner ? translate(locale, 'activities.newcommentOwn', [comment.message]) : translate(locale, 'activities.newcomment', [comment.author.name, comment.message]),
               messageId: comment.id,
+              link: getUrl(`/Show/${activity.button.id}`)
             }
           }
         case ActivityEventName.NewMention:
@@ -624,12 +627,18 @@ export class ActivityService {
               footer: `${activity.button.title} - ${activity.button.address}`,
               message: commentOwner ? translate(locale, 'activities.newmentionOwn', [comment.message]) :
                 translate(locale, 'activities.newmention', [comment.author.name, comment.message]),
-              messageId: comment.id
+              messageId: comment.id,
+              link: getUrl(`/Show/${activity.button.id}`)
             }
           }
         case ActivityEventName.NewButton:
           {
             const { button } = activity.data
+            let message = translate(locale, 'activities.newButtonInterest', [button.address])
+            if(isButtonOwner)
+            {
+              message = translate(locale, 'activities.newbutton', [button.address])
+            }
             return {
               ...activityOut,
               title: button.title,
@@ -638,7 +647,8 @@ export class ActivityService {
               buttonType: button.type,
               type: translate(locale, 'activities.notice'),
               footer: button.address,
-              message: translate(locale, 'activities.newbutton', [button.address]),
+              message: message,
+              link: getUrl(`/Show/${activity.button.id}`)
             }
           }
         case ActivityEventName.Endorsed:
@@ -652,6 +662,7 @@ export class ActivityService {
               type: translate(locale, 'activities.notice'),
               footer: "",
               message: translate(locale, 'activities.endorsed'),
+              link: null
             }
           }
         case ActivityEventName.RoleUpdate:
@@ -666,6 +677,7 @@ export class ActivityService {
               type: translate(locale, 'activities.notice'),
               footer: "",
               message: translate(locale, 'activities.roleupdate', [role]),
+              link: null
             }
           }
         default:

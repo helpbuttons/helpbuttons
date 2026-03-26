@@ -3,7 +3,9 @@
     <p class='title'>{{subject}}</p>
     {{/if}}
     <p class='thanks'></p>
-    {{content}}
+    {{message}}
     
-    <p><a href='{{link}}'>{{linkCaption}}</a> </p>
-  </div>
+    {{#if link}}
+      <p><a href='{{link}}'>{{linkCaption}}</a> </p>
+    {{/if}}
+</div>
