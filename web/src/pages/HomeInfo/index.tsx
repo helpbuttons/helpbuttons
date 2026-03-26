@@ -15,6 +15,7 @@ import {
   IoArrowBackSharp,
   IoArrowDownSharp,
   IoArrowUpSharp,
+  IoBook,
   IoBookOutline,
   IoDownloadOutline,
   IoEaselSharp,
@@ -182,7 +183,7 @@ function HomeInfoNetworkLogo({ selectedNetwork }) {
 }
 
 
-function HomeInfoInfoCard({ selectedNetwork }) {
+function HomeInfoInfoCard({ selectedNetwork, showTab }) {
   const [showInfo, toggleShowInfo] =
     useToggle(false);
   const [description, setDescription] = useState('...')
@@ -211,13 +212,9 @@ function HomeInfoInfoCard({ selectedNetwork }) {
                     {t('homeinfo.knowMore',[selectedNetwork.name])}
                 </h3>
                 <ShowDesktopOnly>
-                <div className="homeinfo-card__controls homeinfo-card__controls--openable">
-                  <Btn
-                    btnType={BtnType.circle}
-                    iconLink={showInfo ? <IoArrowBackSharp/> : <IoInformation/>}
-                    iconLeft={IconType.circle}
-                    contentAlignment={ContentAlignment.center}
-                  />
+                <div className="homeinfo-card__controls homeinfo-card__controls--openable-right homeinfo-card__controls--openable">
+                  <IoBook/>
+                  
                 </div>
               </ShowDesktopOnly>
 
@@ -297,6 +294,7 @@ function HomeInfoTopHashTags({ selectedNetwork }) {
 function HomeInfoPinnedHashTags({ selectedNetwork }) {
     const [showInfo, toggleShowInfo] =
     useToggle(false);
+    
   return (<>
     {/* HASHTAGS CARD OF NETWORK CONFIGURATION  */}
 
@@ -308,7 +306,7 @@ function HomeInfoPinnedHashTags({ selectedNetwork }) {
                 <IoPulseOutline/>
                 {t('homeinfo.recommendedHashtags')}
               </h3>           
-            <div className="homeinfo-card__controls">
+            <div className="homeinfo-card__controls ">
               <Btn
                 btnType={BtnType.corporative}
                 iconLink={showInfo ? <IoArrowUpSharp/> : <IoArrowDownSharp/>}
@@ -353,13 +351,8 @@ function HomeInfoRecentActivity({ selectedNetwork }) {
       <div className="homeinfo-card__header homeinfo-card__header--openable" onClick={toggleShowInfo}>
           <ShowDesktopOnly>
             <div className="homeinfo-card__controls--openable-right">
-                  <Btn
-                    btnType={BtnType.circle}
-                    iconLink={showInfo ? <IoArrowBackSharp/> : <IoStatsChart/>}
-                    iconLeft={IconType.circle}
-                    contentAlignment={ContentAlignment.center}
-                  />
-                  
+              <IoStatsChart/>
+                 
             </div>
           </ShowDesktopOnly>
 

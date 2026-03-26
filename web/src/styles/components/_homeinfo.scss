@@ -614,13 +614,13 @@ hr {
   .homeinfo-card__controls--openable-right {
 
     position: absolute;
-    right: -60px;
-
-        background-color: $color-corporative;
-
+    right: -50px;
+    background-color: $color-corporative;
+    padding: $padding-big;
     height: 100px;
     border-radius: 0 $border-radius-circle  $border-radius-circle 0;
     top: 40px;
+    padding-top: $margin-small;
     
   }
 
