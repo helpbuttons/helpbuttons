@@ -85,53 +85,6 @@ padding-bottom: $margin-medium;
 
 
 //form de la home
-.form__search {
-
-  color: $color-gray;
-  font-size: $font-size-medium;
-  margin: 0;
-  line-height: 0;
-  width: auto;
-  display: block;
-  padding: $padding-xbig $padding-medium $padding-small $padding-medium;
-  border: 0;
-  // border-radius: 0;
-  transition: $transition-default;
-
-  &:focus {
-  }
-
-  &:hover {
-    background: $color-ligth-gray;
-  }
-
-  & span {
-    display: none;
-  }
-}
-
-
-.form__search--time,
-.form__search--tags,
-.form__search--localization {
-  text-indent: 4px;
-}
-
-
-.form__field {
-  max-width:$form-field-max-width;
-  font-size: $font-size-big;
-  margin-bottom: 24px;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-}
-
-.form__field--multiinput {
-  display: flex;
-  flex-direction: column;
-  gap: $padding-medium;
-}
 
 .form__field--noMargin {
   margin-bottom: 0;
@@ -185,13 +138,6 @@ padding-bottom: $margin-medium;
 .form__field--location-wrapper {
   position: relative;
   min-height: 90px;
-}
-
-.form__field--feed {
-  display: flex;
-  max-width: 100%;
-  padding: .5rem .5rem;
-  font-size: $font-size-big;
 }
 
 .form__field--feed button {
@@ -264,10 +210,6 @@ padding-bottom: $margin-medium;
 }
 
 
-.form__input--edit-address {
-  border: 1px solid $color-corporative;
-}
-
 .form__input--dropdown-search {
 
   @extend .form__input;
@@ -299,96 +241,6 @@ padding-bottom: $margin-medium;
 
 
 //react select plugin styles modification //REVISE
-.form__input--plugin {
-
-  @extend .form__input;
-
-  padding: 0;
-  border: none;
-
-  .css-13cymwt-control {
-
-    height: $form-input-height;
-    padding-left: $form-input-padding;
-
-  }
-
-  .css-1fdsijx-ValueContainer {
-
-    height: $form-input-height;
-    padding: 0;
-
-  }
-
-  .css-t3ipsp-control, .css-hlgwow {
-
-    height: $form-input-height;
-    padding-left: $form-input-padding;
-
-  }
-
-  .css-1nmdiq5-menu {
-
-    position: absolute;
-    z-index: $z-index-06;
-    
-  }
-
-  #react-select-13-listbox {
-
-    z-index: $z-index-06;
-    position: absolute;
-
-  }
-
-}
-
-.form__input-tags {
-
-  @extend .form__input;
-  // padding: $padding-small;
-  & ul {
-    // overflow-x: scroll;
-    // overflow-y: hidden;
-    // white-space: nowrap;
-
-    display: flex;
-    flex-flow: row wrap;
-    padding: .25rem 0 0 0;
-  }
-
-  & li {
-    @extend .hashtag;
-    display: inline-block;
-
-  }
-
-  & .button-counter {
-    display: none;
-  }
-
-  & span {
-    display: none;
-  }
-
-}
-
-.form__input-tags--offer {
-
-  & li {
-    @extend .hashtag--offer;
-  }
-
-}
-
-.form__input-tags--need {
-
-  & li {
-    @extend .hashtag--need;
-  }
-
-}
-
 
 .form__tags-list {
         

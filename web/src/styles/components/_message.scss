@@ -36,12 +36,6 @@ $message-you-margin-left: $margin-xbig;
 }
 
 
-.message--public {
-  
-  background-color: $color-white;
-
-}
-
 .message__hour::before {
   content: '·';
   padding: $padding-small;

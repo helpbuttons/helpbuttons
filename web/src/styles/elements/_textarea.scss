@@ -39,27 +39,6 @@ $textarea-textarea-color-gray: $color-gray;
   }
 }
 
-.emoji-picker{
-  position: relative;
-  right: 15px;
-  float: right;
-  bottom: 30px;
-  margin: auto;
-  font-size: 2.2rem;
-
-  & section {
-
-    width: 100%;
-
-  }
-
-  &:hover {
-
-    cursor: pointer;
-
-  }
-}
-
 
 em-emoji-picker{
   z-index: $z-index-04;

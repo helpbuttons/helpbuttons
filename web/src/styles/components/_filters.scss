@@ -40,23 +40,6 @@ $filters-padding: 10px;
   /* Add other styles as needed */
 }
 
-.filters__actions {
-
-
-  // .btn {
-
-  //   display: flex;
-
-  // }
-
-  // .btn--link {
-
-  //   background-color: transparent;
-
-  // }
-
-}
-
 .filters__content {
 
   position: relative;
@@ -71,14 +54,6 @@ $filters-padding: 10px;
 
 }
 
-.filters__actions--buttons {
-
-  display: flex;
-  flex-direction: row;
-  flex: 1;
-  
-}
-
 .filters__actions--buttons > button:nth-child(1) {
   display: flex;
   justify-content: center;
@@ -88,19 +63,6 @@ $filters-padding: 10px;
 
 .filters__actions--buttons > button:nth-child(2) {
   flex: 5; /* Takes up 3/5 of the width */
-
-}
-
-.filters__orderBy {
-
-  margin-bottom: 0;
-  width: auto;
-
-  select:active {
-
-    background: transparent;
-
-  }
 
 }
 
@@ -167,12 +129,6 @@ $filters-padding: 10px;
     display: flex;
     width: auto;
 
-  }
-
-  .filters__actions {
-
-    position: absolute;
-    
   }
 
 }

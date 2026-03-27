@@ -9,32 +9,3 @@ $icon-position-pixel: -20px;
   width: 100%;
   height: auto;
 }
-
-.icon--white {
-  g,
-  path {
-    fill: $icon-color-white;
-  }
-}
-
-.icon--twitter {
-  height: 20px;
-  width: auto;
-}
-
-.clusterIcon {
-  width: $icon-width-medium;
-  height: $icon-height-medium;
-  border-color: $icon-color-corporative;
-  background-color: $icon-color-corporative;
-  border-radius: 50%;
-  border: 0 solid;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: $icon-font-size;
-  font-weight: bold;
-  left: $icon-position-pixel;
-  position: relative;
-  top: $icon-position-pixel;
-}

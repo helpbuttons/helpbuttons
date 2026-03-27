@@ -45,30 +45,11 @@ $nav-bottom-border: 32px;
   position: relative;
 }
 
-.nav-bottom__button,
 .nav-bottom__link {
   display: flex;
-  flex: 0 1 calc(100%/5);
+  flex-direction: column;
   align-items: center;
-  text-decoration: none;
-  flex-flow: column;
-  color: $color-text-over-corporative;
-  padding: 8px 0 0 0;
-
-  &:hover, :active {
-
-    svg {
-      fill: $color-gray;
-    }
-
-    cursor: pointer;
-    font-weight: $font-weight-bolder;
-
-    .nav-bottom__icon {
-      transition: 0.2s;
-    }
-
-  }
+  justify-content: center;
 }
 
 .nav-bottom__text {
@@ -97,25 +78,6 @@ $nav-bottom-border: 32px;
 
 }
 
-
-.nav-bottom__create-message{
-
-  position: absolute;
-  color: $color-white;
-  display: flex;
-  //left: $nav-bottom-create-message-left;
-  width: 120px;
-  font-size: $font-size-big;
-  font-weight: $font-weight-bold;
-
-  align-items: center;
-  justify-content: center;
-  background: $color-black; // Revise
-  height: $nav-bottom-link-create-size;
-  padding: $padding-small $padding-big;
-  bottom: 75px;
-  border-radius: $border-radius-circle;
-}
 
 .nav-bottom__icon {
   & svg {

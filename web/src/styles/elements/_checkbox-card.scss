@@ -28,36 +28,8 @@ $checkbox-card-color-gray-border: $color-gray-border;
   width: 100%;
 }
 
-.checkbox-card__filter-label {
-  display: block;
-  width: auto;
-}
-
-.checkbox-card__netIcon {
-  width: fit-content;
-}
-
 // specificity beats base .icon (width: 100%) — !important not needed
-.checkbox-card__netIcon_icon {
-  height: fit-content;
-  width: fit-content;
-}
-
 // envelope class for checkbox-cards
-.checkbox-card__container {
-  width: auto;
-  background: none;
-  border: none;
-  padding: 0;
-  height: $checkbox-card-height;
-  display: flex;
-  flex: 0 0 auto;
-
-  &:focus {
-    outline: none;
-  }
-}
-
 .checkbox-card__content {
   background: $checkbox-card-color;
   border: $checkbox-card-content-border solid $color-gray-border;
@@ -74,15 +46,6 @@ $checkbox-card-color-gray-border: $color-gray-border;
   padding: $padding-big;
 }
 
-.checkbox-card__content--bordered {
-  border: 1px solid #e5e5e5;
-  border-radius: $border-radius-basic;
-}
-
-.checkbox-card__content--disabled {
-  background: $color-ligth-gray;
-}
-
 .checkbox-card__content:hover {
   cursor: pointer;
   background: $checkbox-card-color-hover;
@@ -94,40 +57,6 @@ $checkbox-card-color-gray-border: $color-gray-border;
 }
 
 // small filter checkbox-cards in menus and header
-.checkbox-card-filter__container {
-  width: auto;
-  background: none;
-  border: none;
-  padding: 0;
-  height: 100%;
-  display: flex;
-  flex: 0 0 auto;
-
-  &:focus {
-    outline: none;
-  }
-}
-
-.checkbox-card-filter__content {
-  @extend .btn-filter;
-
-  color: $checkbox-card-color-text;
-  transition: background 0.2s;
-}
-
-.checkbox-card-filter__content--bordered {
-  border: 1px solid #e5e5e5;
-  border-radius: $border-radius-basic;
-}
-
-.checkbox-card-filter__content:hover {
-  cursor: pointer;
-}
-
-.checkbox-card__icon {
-  @extend .btn-filter__icon;
-}
-
 .checkbox-card__image {
   width: 60px;
   height: 60px;
@@ -137,11 +66,6 @@ $checkbox-card-color-gray-border: $color-gray-border;
     width: 60px;
     height: 60px;
   }
-}
-
-.checkbox-card__text {
-  @extend .btn-with-icon__text;
-  margin-bottom: 0;
 }
 
 .checkbox-card__checkbox {
@@ -160,27 +84,5 @@ $checkbox-card-color-gray-border: $color-gray-border;
 
   &:checked + .checkbox-card__content::before {
     background-size: 80%;
-  }
-}
-
-.checkbox-card-filter__checkbox {
-  display: none;
-
-  &:checked + .checkbox-card-filter__content {
-    background: $checkbox-card-color-checked;
-    color: $checkbox-card-color-text-checked;
-
-    .icon {
-      fill: $checkbox-card-color-text-checked;
-    }
-  }
-
-  &:checked + .profile-buttons__checkbox-card {
-    background: $checkbox-card-color-checked;
-    color: $checkbox-card-color-text-checked;
-  }
-
-  &:checked + .checkbox-card__content::before {
-    background: transparent;
   }
 }

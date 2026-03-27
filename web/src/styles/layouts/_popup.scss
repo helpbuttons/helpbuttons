@@ -64,22 +64,13 @@ $popup-max-height-large: 720px;
 
 
 //POPUP HEADERS
-.popup__header--trans,
+
 .popup__header {
 
-  width: 100%;
-  padding: $padding-big $padding-medium;
-  position:  relative;
-  border-radius: $border-radius-semicircle $border-radius-semicircle 0 0;
-  height: $popup-header-height-mobile;
-  border-bottom: 1px solid $color-ligth-gray;
+    height: $popup-header-height;
+    min-height: $popup-header-height;
 
 }
-
-.popup__header--trans {
-  background: transparent;
-}
-
 
 .popup__header-center {
   flex: 0 1 calc( 100% - #{$btn-circle-icon-height} * 2 );
@@ -191,52 +182,6 @@ $popup-max-height-large: 720px;
 
 }
 
-.popup__map-input {
-
-  position: absolute;
-  margin-top: $margin-big;
-
-}
-
-.popup__close-container {
-  width: 100%;
-}
-
-.popup__close-overlay {
-
-  height: 100vh;
-  position: fixed;
-  top: 0;
-  z-index: $z-index-base;
-  width: 100%;
-  border: none;
-  background: none;
-  padding: 0;
-
-}
-
-.popup__comments,
-.popup__options-v,
-.popup__options-h {
-  display: flex; // Static components
-}
-
-.popup__comments {
-
-  padding: $popup-comments;
-  overflow-y: auto;
-  max-height: 300px;
-
-}
-
-.popups__comments-item {
-
-  background: $color-ligth-gray;
-  margin: $margin-xsmall 0;
-  padding: $padding-xbig 0;
-
-}
-
 .popup__options-btn {
 
   display: inline-block;
@@ -264,13 +209,6 @@ $popup-max-height-large: 720px;
   &:focus {
     box-shadow: none;
   }
-}
-
-.popup__options-btn--stroked {
-  stroke: $color-corporative;
-  fill: $color-corporative;
-  border-color: $color-black;
-  background-color: $color-black;
 }
 
 .popup__link {
@@ -302,25 +240,6 @@ $popup-max-height-large: 720px;
 
 }
 
-
-.popup__options-btn--icon {
-
-  height: 20px;
-
-}
-
-.popup__options-title {
-
-  display: inline-block;
-  text-align: center;
-  font-size: $font-size-medium;
-  line-height: 1.5rem;
-  width: 100%;
-  vertical-align: middle;
-  height: auto;
-  margin-bottom: $margin-xsmall;
-
-}
 
 
 .popup__options-v {
@@ -372,13 +291,6 @@ $popup-max-height-large: 720px;
 
 }
 
-.popup-paragraph {
-
-  text-align: center;
-  margin-top: $margin-small;
-
-}
-
 @media #{$breakpoints-medium} {
 
   .popup {
@@ -412,12 +324,7 @@ $popup-max-height-large: 720px;
   .popup__content {
     border-radius:  0;
   }
-  .popup__header {
-
-    height: $popup-header-height;
-    min-height: $popup-header-height;
-
-  }
+  
 
   .popup__section {
     padding: $padding-xbig $padding-xbig;

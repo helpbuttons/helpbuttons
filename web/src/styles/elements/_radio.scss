@@ -50,36 +50,8 @@ $radion-label-min-width-mobile: 100px;
   }
 }
 
-.radio__filter-label {
-  display: block;
-  width: auto;
-}
-
-.radio__netIcon {
-  width: fit-content;
-}
-
 // specificity beats base .icon (width: 100%) — !important not needed
-.radio__netIcon_icon {
-  height: fit-content;
-  width: fit-content;
-}
-
 // envelope for radio inputs
-.radio__container {
-  width: auto;
-  background: none;
-  border: none;
-  padding: 0;
-  height: $radio-height;
-  display: flex;
-  flex: 0 0 auto;
-
-  &:focus {
-    outline: none;
-  }
-}
-
 // styled radio content (after input div)
 .radio__content {
   background: $radio-color;
@@ -98,15 +70,6 @@ $radion-label-min-width-mobile: 100px;
   padding: 0 $padding-medium;
 }
 
-.radio__content--bordered {
-  border: 1px solid #e5e5e5;
-  border-radius: $border-radius-basic;
-}
-
-.radio__content--disabled {
-  background: $color-ligth-gray;
-}
-
 .radio__content:hover {
   cursor: pointer;
   background: $radio-color-hover;
@@ -118,36 +81,6 @@ $radion-label-min-width-mobile: 100px;
 }
 
 // small filter radios in menus and header
-.radio-filter__container {
-  width: auto;
-  background: none;
-  border: none;
-  padding: 0;
-  height: 100%;
-  display: flex;
-  flex: 0 0 auto;
-
-  &:focus {
-    outline: none;
-  }
-}
-
-.radio-filter__content {
-  @extend .btn-filter;
-
-  color: $radio-color-text;
-  transition: background 0.2s;
-}
-
-.radio-filter__content--bordered {
-  border: 1px solid #e5e5e5;
-  border-radius: $border-radius-basic;
-}
-
-.radio-filter__content:hover {
-  cursor: pointer;
-}
-
 .radio__icon {
   @extend .btn-filter__icon;
 }
@@ -173,28 +106,6 @@ $radion-label-min-width-mobile: 100px;
 
   &:checked + .radio__content::before {
     background-size: 80%;
-  }
-}
-
-.radio-filter__radio {
-  display: none;
-
-  &:checked + .radio-filter__content {
-    background: $radio-color-checked;
-    color: $radio-color-text-checked;
-
-    .icon {
-      fill: $radio-color-text-checked;
-    }
-  }
-
-  &:checked + .profile-buttons__radio {
-    background: $radio-color-checked;
-    color: $radio-color-text-checked;
-  }
-
-  &:checked + .radio__content::before {
-    background: transparent;
   }
 }
 

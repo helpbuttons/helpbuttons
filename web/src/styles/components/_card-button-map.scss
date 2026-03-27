@@ -47,27 +47,6 @@ $card-button-map-border-height: $border-general-height;
   width: 100%;
 }
 
-.card-button-map--wrapper {
-  .leaflet-popup-content-wrapper {
-    background: transparent;
-    box-shadow: none;
-  }
-  .leaflet-popup-tip-container {
-    display: none;
-  }
-}
-
-.card-button-map--white {
-  background: $color-white;
-}
-
-.card-button-map--exchange-deactivated,
-.card-button-map--offer-deactivated,
-.card-button-map--need-deactivated {
-  opacity: 0.5;
-  background: grey;
-}
-
 .card-button-map__content {
   padding: 1rem;
 }
@@ -80,55 +59,10 @@ $card-button-map-border-height: $border-general-height;
   padding-bottom: $card-button-map-whitespace;
 }
 
-.card-button-map__avatar {
-  flex: 0 1 15%;
-
-  & > button {
-    border: none;
-    background: none;
-    padding: 0;
-  }
-}
-
 .card-button-map__info {
   flex: 0 1 80%;
   width: 0;
   text-align: left;
-}
-
-.card-button-map__submenu {
-  background: transparent url('../../../public/assets/svg/icons/down.svg') center no-repeat;
-  background-size: 100%;
-  height: 100%;
-  position: relative;
-  text-indent: -9999999px;
-  width: 18px;
-}
-
-.card-button-map__submenu-show {
-  background: $color-corporative;
-  color: $color-red;
-  left: $card-button-map__submenu-show-left;
-  position: absolute;
-  width: $card-button-map__submenu-show-width;
-}
-
-.card-button-map__submenu-link {
-  color: $color-black;
-  display: block;
-  font-size: $font-size-medium;
-  font-weight: bold;
-  padding: .25rem .5rem;
-  text-indent: 0;
-}
-
-.card-button-map__map-container {
-  border-radius: $border-radius-basic;
-}
-
-.card-button-map__calification {
-  color: $color-gray;
-  font-size: $font-size-medium;
 }
 
 .card-button-map__status {
@@ -145,50 +79,7 @@ $card-button-map-border-height: $border-general-height;
   color: $color-red;
 }
 
-.card-button-map__name {
-  font-size: $font-size-medium;
-  text-overflow: ellipsis;
-  font-weight: bold;
-  padding-top: .25rem;
-}
-
-.card-button-map__title {
-  color: $color-gray;
-  font-size: $font-size-medium;
-}
-
-.card-button-map__situation {
-  color: $color-gray;
-  display: flex;
-  font-size: $font-size-medium;
-  font-weight: bold;
-  flex-flow: row nowrap;
-  padding: .5rem 0 $card-button-map-whitespace 0;
-}
-
-.card-button-map__local,
-.card-button-map__time {
-  padding-left: 1.5rem;
-}
-
-.card-button-map__local {
-  background: transparent url('../../../public/assets/svg/icons/place.svg') left center no-repeat;
-  background-size: auto $card-button-map-situation-background-size;
-}
-
-.card-button-map__time {
-  background: transparent url('../../../public/assets/svg/icons/time.svg') left center no-repeat;
-  background-size: $card-button-map-situation-background-size;
-  margin-left: 1rem;
-}
-
 .card-button-map__need,
-.card-button-map__offer {
-  display: flex;
-  flex-flow: row wrap;
-  padding: .25rem 0 0 0;
-}
-
 .card-button-map__need {
   .hashtag {
     background: $card-button-map-busca-background;
@@ -198,55 +89,6 @@ $card-button-map-border-height: $border-general-height;
       background: $color-black;
     }
   }
-}
-
-.card-button-map__offer {
-  .hashtag {
-    background: $card-button-map-ofrece-background;
-    font-weight: bold;
-    &:hover {
-      color: $hashtag-hover-color;
-      background: $color-black;
-    }
-  }
-}
-
-.card-button-map__exchange {
-  .hashtag {
-    background: $color-black;
-    font-weight: bold;
-    &:hover {
-      color: $hashtag-hover-color;
-      background: $color-green;
-    }
-  }
-}
-
-.card-button-map__paragraph {
-  word-break: break-word;
-  color: $card-button-map-paragraph-color;
-  font-size: $font-size-medium;
-  white-space: pre-line;
-  text-align: left;
-
-  & p {
-    margin-top: 0;
-  }
-
-  & a {
-    color: var(--network-accent-color);
-    cursor: pointer;
-  }
-}
-
-.card-button-map__phone {
-  word-break: break-word;
-  white-space: nowrap;
-}
-
-.card-button-map__nets {
-  padding: $card-button-map-whitespace 0;
-  display: flex;
 }
 
 .resume {
@@ -298,14 +140,6 @@ $card-button-map-border-height: $border-general-height;
 }
 
 .card-button-map__city,
-.card-button-map__city-list,
-.card-button-map__date {
-  color: $color-black;
-  font-size: $font-size-medium;
-  font-weight: bold;
-  text-align: left;
-}
-
 .card-button-map__date {
   text-indent: -29px;
   padding-left: 1rem;
@@ -319,13 +153,6 @@ $card-button-map-border-height: $border-general-height;
   display: inline-block;
 }
 
-.card-button-map__city-list {
-  cursor: pointer;
-  padding-right: 1rem;
-  text-align: left;
-  display: inline-block;
-}
-
 .card-button-map__everywhere {
   cursor: pointer;
   padding-right: 1rem;
@@ -334,69 +161,11 @@ $card-button-map-border-height: $border-general-height;
   display: inline-block;
 }
 
-.card-button-map__toCity {
-  margin-left: $padding-xbig;
-  text-decoration: underline;
-}
-
-.card-button-map__toCity-list {
-  margin-left: $padding-xbig;
-}
-
-.card-button-map__close-map {
-  position: absolute;
-  z-index: 401;
-  right: 0;
-  padding: .5rem;
-}
-
 .card-button-map__city:before,
-.card-button-map__city-list:before,
-.card-button-map__date:before {
-  background: red;
-  content: '';
-  display: inline-block;
-  height: $card-button-map-size-icon-before;
-  margin-right: .5rem;
-  transform: translateY(.25rem);
-  width: $card-button-map-size-icon-before;
-}
-
 .card-button-map__city:before,
-.card-button-map__city-list:before {
-  background: transparent url('../../../public/assets/svg/icons/icon-map.svg') left center no-repeat;
-  background-size: 100% auto;
-}
-
 .card-button-map__date:before {
   background: transparent url('../../../public/assets/svg/icons/time_black.svg') left center no-repeat;
   background-size: 100% auto;
-}
-
-.card-button-map__avatar-container {
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  overflow: hidden;
-  max-height: 70px;
-  max-width: 70px;
-  height: 70px;
-  width: 70px;
-
-  & .card-avatar {
-    width: auto;
-    height: 100%;
-  }
-}
-
-.card-button-map__map {
-  max-height: 45vh;
-  height: 500px;
-  border-radius: $border-radius-basic;
-
-  & .leaflet-control-container {
-    display: none;
-  }
 }
 
 .card-button-maps {

@@ -69,64 +69,6 @@
   border-color: $color-ligth-gray;
 }
 
-.accordion--content {
-  padding: 1rem;
-}
-
-.accordion--content:last-child {
-  margin-bottom: 1.2rem;
-}
-
-.accordion--title {
-  font-size: $font-size-medium;
-  font-weight: bold;
-  margin-bottom: 1rem;
-  line-height: 1.9rem;
-}
-
-.accordion--paragraph {
-  font-size: $font-size-medium;
-  margin-bottom: 1rem;
-  line-height: 1.4rem;
-}
-
-.accordion--text--with-img {
-  font-size: $font-size-medium;
-  font-weight: bold;
-  margin-bottom: 1rem;
-  line-height: 1.9rem;
-}
-
-.accordion__img {
-  max-width: 200px;
-  margin: 1rem 0rem;
-}
-
-.accordion__img--big {
-  max-width: 600px;
-  width: 100%;
-  margin: 1rem 0rem;
-}
-
-.accordion__list__title {
-  font-size: $font-size-medium;
-  font-weight: bold;
-  margin-bottom: 1rem;
-  line-height: 1.9rem;
-}
-
-.accordion__list__list {
-  font-size: $font-size-medium;
-  margin-bottom: 1rem;
-  line-height: 1.2rem;
-}
-
-.accordion__icon--big {
-  max-width: 300px;
-  width: 100%;
-  margin: 1rem 0rem;
-}
-
 .highlight,h3,h2 {
   font-weight: $font-weight-bold;
 }

@@ -5,11 +5,6 @@
 
 $index-mobile-fixed-z-index: $z-index-05;
 
-.index__mobile-fixed {
-  width: 100%;
-  z-index: $index-mobile-fixed-z-index;
-}
-
 .index__container {
   width: 100vw;
   overflow: hidden;
@@ -39,9 +34,6 @@ $index-mobile-fixed-z-index: $z-index-05;
 
   height: $nav-bottom-height;
 
-}
-
-.index__content-bottom--mid-screen {
 }
 
 .index__content-bottom--hide {

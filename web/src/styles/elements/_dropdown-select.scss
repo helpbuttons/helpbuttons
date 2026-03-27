@@ -74,12 +74,6 @@ $dropdown-max-width: 10rem;
   width: 100%;
 }
 
-.dropdown-select__trigger--filter {
-
- @extend .btn-filter;
-
-}
-
 @media #{$breakpoints-medium} {
 
   .dropdown-select__container {

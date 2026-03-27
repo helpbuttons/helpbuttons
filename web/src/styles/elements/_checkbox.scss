@@ -31,31 +31,8 @@ $checkbox-color-gray-border: $color-gray-border;
   width: auto;
 }
 
-.checkbox__netIcon {
-  width: fit-content;
-}
-
 // specificity beats base .icon (width: 100%) — !important not needed
-.checkbox__netIcon_icon {
-  height: fit-content;
-  width: fit-content;
-}
-
 // envelope class for checkboxes
-.checkbox__container {
-  width: auto;
-  background: none;
-  border: none;
-  padding: 0;
-  height: $checkbox-height;
-  display: flex;
-  flex: 0 0 auto;
-
-  &:focus {
-    outline: none;
-  }
-}
-
 // checkbox styled content
 .checkbox__content {
   @extend .btn-with-icon;
@@ -72,15 +49,6 @@ $checkbox-color-gray-border: $color-gray-border;
   min-width: 150px;
   border-radius: $border-radius-buttons;
   box-sizing: border-box;
-}
-
-.checkbox__content--bordered {
-  border: 1px solid #e5e5e5;
-  border-radius: $border-radius-basic;
-}
-
-.checkbox__content--disabled {
-  background: $color-ligth-gray;
 }
 
 .checkbox__content:hover {
@@ -113,11 +81,6 @@ $checkbox-color-gray-border: $color-gray-border;
 
   color: $checkbox-color-text;
   transition: background 0.2s;
-}
-
-.checkbox-filter__content--bordered {
-  border: 1px solid #e5e5e5;
-  border-radius: $border-radius-basic;
 }
 
 .checkbox-filter__content:hover {

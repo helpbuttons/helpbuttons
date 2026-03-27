@@ -73,22 +73,8 @@ $feed-padding-bottom: $padding-xbig;
   display: none;
 }
 
-.feed-section__left--mobile {
-  flex: 1;
-}
-
 .feed-section__right {
   display: none;
-}
-
-.feed-section__title {
-  padding-bottom: $padding-big;
-  display: flex;
-  justify-content: flex-start;
-  gap: $padding-small;
-  align-items: center;
-  color: $color-dark-gray;
-  font-size: $font-size-xxbig;
 }
 
 .feed-section__filters {
@@ -140,39 +126,12 @@ $feed-padding-bottom: $padding-xbig;
   padding: $padding-medium;
 }
 
-.feed-selector--activity {
-  z-index: $z-index-03;
-  position: relative;
-  top: 0;
-}
-
 .feed__empty-message {
   @extend .list__empty-message;
 }
 
 .feed__empty-message--prev {
   @extend .list__empty-message--prev;
-}
-
-.feed-messages__container {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
-
-.feed-messages__no-messages {
-  font-size: $font-size-medium;
-  font-weight: bold;
-  width: 100%;
-  text-align: center;
-}
-
-.feed-messages__image {
-  width: 40%;
-  margin-top: $feed-margin-big;
 }
 
 .feeds__new-message {
@@ -206,18 +165,6 @@ $feed-padding-bottom: $padding-xbig;
   padding: 0 $feed-padding;
 }
 
-.feeds__button {
-  border-radius: 50%;
-  border: none;
-  background: $feed-color-corporative;
-  width: $feed-button-width;
-}
-
-.feeds__icon {
-  width: $feed-icon-width;
-  fill: $color-black;
-}
-
 .feed__board-container {
   background: $color-ligth-gray;
   display: flex;
@@ -235,10 +182,6 @@ $feed-padding-bottom: $padding-xbig;
   &:hover {
     cursor: pointer;
   }
-}
-
-.feed-element--selected {
-  background-color: red;
 }
 
 

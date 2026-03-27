@@ -12,28 +12,6 @@ $info-content-head-margin-mobile: 70px;
 
 
 
-.homeinfo__selected {
-
-  border: 1px solid $color-black;
-
-
-  margin-top: 0;
-  margin-bottom: 0;
-  border-radius: $border-radius-circle $border-radius-circle 0px 0;
-  background-color: red;
-
-}
-
-.homeinfo__background {
-
-  height: 100%;
-  position: absolute;
-  top: 0;
-  width: 100%;
-  overflow: auto;
-
-}
-
 .homeinfo__container {
 
   padding-top: $info-content-head-margin-mobile;
@@ -242,23 +220,6 @@ $info-content-head-margin-mobile: 70px;
 
 }
 
-.homeinfo__share {
-
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  border-radius: $border-radius-circle;
-  width: auto;
-  background-color: $color-dark-gray;
-  backdrop-filter: blur(5px);
-  height: 3em;
-  -webkit-backdrop-filter: blur(5px);
-  position: relative;
-  margin: $margin-xsmall $margin-xsmall;
-
-}
-
 .homeinfo__sections {
   position: relative;
   z-index: $z-index-base;
@@ -391,16 +352,6 @@ hr {
 
 }
 
-.homeinfo-card__section--attr{
-
-  font-size: $font-size-xsmall;
-  color: $color-med-gray;
-  display: flex;
-  gap: $padding-small;
-  justify-content: flex-end;
-
-}
-
 .homeinfo-card__section--actions {
   display: flex;
   flex-direction: column;
@@ -408,23 +359,6 @@ hr {
   align-items: center;
   flex: 0.4;
 }
-
-.homeinfo__bottom {
-  width: 100%;
-  padding: $padding-big;
-  bottom: $info-nets-field-bottom;
-}
-
-.homeinfo__nets {
-  @extend .form__field;
-
-  margin: auto;
-  max-width: $info-nets-max-width;
-}
-
-.homeinfo__body {
-  position: relative;
- }
 
  .homeinfo-card__controls {
   display: flex;
@@ -481,10 +415,6 @@ hr {
     line-height: $text-line-height-big;
 
   }
-  .homeinfo__bottom {
-    bottom: 2%;
-  }
-
 
   .homeinfo__container {
     margin-bottom: 0;
