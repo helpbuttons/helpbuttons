@@ -76,7 +76,7 @@ $checkbox-color-gray-border: $color-gray-border;
 
 .checkbox__content--bordered {
   border: 1px solid #e5e5e5;
-  border-radius: 5px;
+  border-radius: $border-radius-basic;
 }
 
 .checkbox__content--disabled {
@@ -117,7 +117,7 @@ $checkbox-color-gray-border: $color-gray-border;
 
 .checkbox-filter__content--bordered {
   border: 1px solid #e5e5e5;
-  border-radius: 5px;
+  border-radius: $border-radius-basic;
 }
 
 .checkbox-filter__content:hover {

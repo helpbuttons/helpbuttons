@@ -45,7 +45,7 @@ $button-file__container-max-width: $grid-column-max-width;
 
     max-width: 500px;
     width: 100%;
-    padding: 6px;
+    padding: $padding-small;
 
 }
 
@@ -165,10 +165,10 @@ $button-file__container-max-width: $grid-column-max-width;
     overflow: hidden;
     align-items: center;
     justify-content: center;
-    padding: 15px 6px;
+    padding: $padding-big $padding-small;
     border: 2px solid $color-corporative;
-    border-radius: 5px;
-    margin: 6px 3px 0 3px;
+    border-radius: $border-radius-basic;
+    margin: $padding-small $margin-xxxsmall 0 $margin-xxxsmall;
     .icon {
       width: auto;
       height: 100%;

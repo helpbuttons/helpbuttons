@@ -201,7 +201,7 @@ padding-bottom: $margin-medium;
   //height: 47px;
   border-radius: 50%;
   cursor: pointer;
-  margin-left: 10px;
+  margin-left: $margin-xsmall;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -395,7 +395,7 @@ padding-bottom: $margin-medium;
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  margin: 5px 0;
+  margin: $margin-xxsmall 0;
   // margin-bottom: $margin-big;
   // min-height: 38px;
 

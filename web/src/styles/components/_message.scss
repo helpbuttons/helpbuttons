@@ -70,7 +70,7 @@ $message-you-margin-left: $margin-xbig;
     width: 35px;
     right: -40px;
     bottom: 0;
-    height: 35px;
+    height: $height-filter;
     position: absolute;
     display: flex;
     border-radius: $border-radius-circle;
@@ -149,7 +149,7 @@ $message-you-margin-left: $margin-xbig;
 
     left: -40px;
     bottom: 0;
-    height: 35px;
+    height: $height-filter;
     position: absolute;
     display: flex;
     border-radius: $border-radius-circle;

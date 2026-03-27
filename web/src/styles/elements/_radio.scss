@@ -95,12 +95,12 @@ $radion-label-min-width-mobile: 100px;
   align-items: center;
   display: flex;
   width: 100%;
-  padding: 0 12px;
+  padding: 0 $padding-medium;
 }
 
 .radio__content--bordered {
   border: 1px solid #e5e5e5;
-  border-radius: 5px;
+  border-radius: $border-radius-basic;
 }
 
 .radio__content--disabled {
@@ -141,7 +141,7 @@ $radion-label-min-width-mobile: 100px;
 
 .radio-filter__content--bordered {
   border: 1px solid #e5e5e5;
-  border-radius: 5px;
+  border-radius: $border-radius-basic;
 }
 
 .radio-filter__content:hover {

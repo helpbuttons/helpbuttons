@@ -3,7 +3,7 @@
 .button-share {
   height: calc(100% - 48px);
   overflow-y: auto;
-  margin-top: 48px;
+  margin-top: $margin-xbig;
   border-radius: $border-radius-basic;
   background: $color-corporative;
 }
@@ -113,8 +113,8 @@
   width: 70px;
   padding: 0 $padding-big;
   border: 2px solid $color-black;
-  border-radius: 5px;
-  margin: 6px 3px 0;
+  border-radius: $border-radius-basic;
+  margin: $padding-small $margin-xxxsmall 0;
 
   .icon {
     width: 100%;
@@ -129,8 +129,8 @@
   width: 70px;
   padding: 0 $padding-big;
   border: 2px solid $color-corporative;
-  border-radius: 5px;
-  margin: 6px 3px 0;
+  border-radius: $border-radius-basic;
+  margin: $padding-small $margin-xxxsmall 0;
 
   .icon {
     width: 100%;

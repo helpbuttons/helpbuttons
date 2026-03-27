@@ -154,7 +154,7 @@ $nav-header-new-message-radius: $border-radius-circle;
     border-top: none;
     width: 90%;
     padding-right: 0;
-    height: 70px;
+    height: $header-height-mobile;
 
     background: $color-corporative;
     //JUST TO REMEMBER linear-gradient(0deg, transparent, $color-corporative-transparent 0%) no-repeat;

@@ -310,7 +310,7 @@ $card-button-border-height: $border-general-height;
 }
 
 .card-button__map-container {
-  border-radius: 5px;
+  border-radius: $border-radius-basic;
 }
 
 
@@ -838,12 +838,12 @@ $card-button-border-height: $border-general-height;
 
 
 .card-button__toCity {
-  margin-left: 30px;
+  margin-left: $margin-big;
   text-decoration: underline;
 }
 
 .card-button__toCity-list {
-  margin-left: 30px;
+  margin-left: $margin-big;
 }
 
 .card-button__close-map {
@@ -871,7 +871,7 @@ $card-button-border-height: $border-general-height;
 .card-button__map {
   max-height: 45vh;
   height: 500px;
-  border-radius: 5px;
+  border-radius: $border-radius-basic;
 }
 
 

@@ -59,7 +59,7 @@
       }
   
       &-cell {
-        padding: 12px;
+        padding: $padding-medium;
         font-weight: bold;
         text-align: left; // Align headers with columns
         white-space: nowrap; // Prevent headers from wrapping
@@ -75,7 +75,7 @@
 
   
       &-cell {
-        padding: 12px;
+        padding: $padding-medium;
         border-bottom: 1px solid #D4D4D4; // Border for each cell
         white-space: nowrap; // Prevent cell text from wrapping
       }

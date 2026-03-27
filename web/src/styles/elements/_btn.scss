@@ -324,9 +324,9 @@ $btn-font-size-medium: $font-size-big;
 }
 
 .btn--file-upload {
-  margin: 12px 0;
+  margin: $margin-xsmall 0;
   background: #f0f0f0;
-  padding: 12px 24px;
+  padding: $padding-medium 24px;
   text-align: center;
 }
 
@@ -728,7 +728,7 @@ $btn-font-size-medium: $font-size-big;
 
   .btn-filter {
 
-    margin: 0 5px;
+    margin: 0 $margin-xxsmall;
 
   }
 

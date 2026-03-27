@@ -203,7 +203,7 @@ $card-button-list-status-height: 10px;
 }
 
 .card-button-list__list-container {
-  border-radius: 5px;
+  border-radius: $border-radius-basic;
 }
 
 .card-button-list__calification {
@@ -463,7 +463,7 @@ $card-button-list-status-height: 10px;
 .card-button-list__list {
   max-height: 45vh;
   height: 500px;
-  border-radius: 5px;
+  border-radius: $border-radius-basic;
 }
 
 .card-button-list__geoDate {

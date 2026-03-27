@@ -105,7 +105,7 @@ $marker-arrow-height: 25px;
 .marker-net__text {
 
   & + .marker-net__icon {
-    margin-left: 10px;
+    margin-left: $margin-xsmall;
   }
 
 }
