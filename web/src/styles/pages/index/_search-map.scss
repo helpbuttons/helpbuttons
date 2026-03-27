@@ -4,14 +4,12 @@ $search-map-height: 0; // Altura del header
 
 .search-map__network-title{
 
-  font-size: $font-size-medium;
+  font-size: $font-size-big;
   font-weight: $font-weight-bold;
   text-overflow: ellipsis;
   max-width: 80vw;
   left: 10px;
   top: 10px;
-  // z-index: $z-index-01;
-
 }
 
 .search-map__sign {
@@ -61,7 +59,7 @@ $search-map-height: 0; // Altura del header
     align-items: center;
     height: 100%;
     justify-content: flex-start;
-    font-size: $font-size-title;
+    font-size: $font-size-xbig;
     font-weight: $font-weight-bold;
     color: $color-black;
     text-shadow: none;
@@ -92,10 +90,6 @@ $search-map-height: 0; // Altura del header
     overflow-y: hidden;
     text-overflow: ellipsis;
     max-width: 400px;
-    margin-top: 0 auto;
-
-
-    // margin-bottom: $padding-big;
 
     a {
 
@@ -105,7 +99,6 @@ $search-map-height: 0; // Altura del header
       -webkit-box-orient: vertical;
       text-overflow: ellipsis;
       overflow: hidden;
-      text-overflow: ellipsis;
       word-wrap: break-word;
       max-height: 2.4em;
       line-height: 1.2em;

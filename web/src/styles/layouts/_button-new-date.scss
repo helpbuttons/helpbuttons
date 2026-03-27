@@ -3,93 +3,95 @@
 .button-new-date {
   width: 100%;
 
+  button:active {
+    background: $color-corporative;
+  }
+}
+
+.button-new-date__body {
+  &:focus {
+    outline: none;
+  }
+}
+
+.button-new-date__body--small-height {
+  .button-new-location__text {
+    font-size: $font-size-medium;
+    margin-bottom: 2rem;
+  }
+}
+
+.button-new-date__week-days {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin: $margin-small 0;
+
+  button {
+    background: transparent;
+    border: 1px solid $color-gray;
+    padding: $padding-medium 30px;
+    border-radius: $border-radius-semicircle;
+    width: 13%;
+    height: 30px;
+  }
+
+  .selected {
+    background: $color-corporative;
+  }
 
   button:active {
     background: $color-corporative;
   }
+}
 
-  &__body {
+.button-new-date__radio-icons {
+  width: 100%;
+  height: 100%;
+}
 
-    &:focus {
-      outline: none;
-    }
-    &--small-height {
-      & .button-new-location__text {
-        font-size: $font-size-general;
-        margin-bottom: 2rem;
-      }
-    }
-  }
+.button-new-date__radio-icons--filled {
+  fill: white;
+}
 
-  .button-new-date__week-days {//revise
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    margin: $margin-small 0;
+.button-new-date__radio-buttons {
+  background: white;
+  background-size: 40px;
+  color: $color-black;
+  align-items: center;
+  border: 4px;
+  display: flex;
+  font-size: $font-size-medium;
+  padding: 1.5rem 2rem;
+  position: relative;
+  transition: background .2s;
+  width: 100%;
+}
 
-    button {
-      background: transparent;
-      border: none;
-      border: 1px solid $color-gray;
-      padding: $padding-medium 30px;
-      border-radius: $border-radius-semicircle;
-      width: 13%;
-      height: 30px;
-    }
+.button-new-date__radio-buttons--filled {
+  background: $color-black url("../../../public/assets/svg/icons/check-blue.svg") 95% center no-repeat;
+  padding-right: 3.125rem;
+  background-size: 40px;
+  color: #fff;
+}
 
-    .selected {
-      background: $color-corporative;
-    }
+.button-new-date__buttons {
+  margin: 1rem auto 0;
+}
 
-    button:active {
-      background: $color-corporative;
-    }
-  }
+.button-new-date__pickers-modal {
+  z-index: 1002;
+  overflow: visible;
+}
 
-  &__radio-icons {
-    width: 100%;
-    height: 100%;
-    &--filled {
-      fill: white;
-    }
-  }
+.button-new-date__pickers-modal-content {
+  max-width: 350px;
+  width: 100%;
+  overflow-y: visible;
+  max-height: 90vh;
+  overflow-x: hidden;
+}
 
-  &__radio-buttons {
-    background: white;
-    background-size: 40px;
-    color: $color-black;
-    align-items: center;
-    border: 4px;
-    display: flex;
-    font-size: $font-size-general;
-    padding: 1.5rem 2rem;
-    position: relative;
-    transition: background .2s;
-    width: 100%;
-    &--filled {
-      background: $color-black url("../../../public/assets/svg/icons/check-blue.svg") 95% center no-repeat;
-      padding-right: 3.125rem;
-      background-size: 40px;
-      color: #fff;
-    }
-  }
-  &__buttons {
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 1rem;
-  }
-  &__pickers-modal {
-    z-index: 1002;
-    overflow: visible;
-    &-content {
-      max-width: 350px;
-      width: 100%;
-      overflow-y: visible !important;
-      max-height: 90vh;
-      overflow-x: hidden;
-    }
-  }
-  &__button-outline {
-    outline: none !important;
-  }
+.button-new-date__button-outline {
+  outline: none;
 }

@@ -3,40 +3,32 @@
 $checkbox-circle-content-background: $color-white;
 $checkbox-circle-content-background-hover: $color-black;
 $checkbox-circle-content-border: $border-general-height;
-$checkbox-circle-width: 100%;
 $checkbox-circle-color-white: $color-white;
 $checkbox-circle-color-black: $color-black;
 $checkbox-circle-color-corporative: $color-corporative;
 
-
 .checkbox-circle {
-  width: $checkbox-circle-width;
+  width: 100%;
   background: none;
   border: none;
   padding: 0;
-  justify-content:  space-around;
+  justify-content: space-around;
 
   &:focus {
     outline: none;
   }
-  &__userTag{
-    flex: 0.2;
-    justify-content:  space-around;
-    align-items: center;
-
-    width: auto !important;
-  }
 }
 
-
-.checkbox-circle__label {
-  display: block;
-  width: $checkbox-circle-width;
+.checkbox-circle__userTag {
+  flex: 0.2;
+  justify-content: space-around;
+  align-items: center;
+  width: auto;
 }
 
 .checkbox-circle__label {
   display: block;
-  width: $checkbox-circle-width;
+  width: 100%;
 }
 
 .checkbox-circle__content {
@@ -44,19 +36,21 @@ $checkbox-circle-color-corporative: $color-corporative;
   background: $checkbox-circle-content-background;
   border: $checkbox-circle-content-border;
   display: flex;
-  font-size: $font-size-general;
-  padding:  1.5rem 2rem;
+  font-size: $font-size-medium;
+  padding: 1.5rem 2rem;
   position: relative;
   transition: background .2s;
   height: 53px;
   width: fit-content;
-  &--small {
-    padding: 15px 10px;
-  }
-  &--bordered {
-    border: 1px solid #e5e5e5;
-    border-radius: 50%;
-  }
+}
+
+.checkbox-circle__content--small {
+  padding: $padding-big $padding-medium;
+}
+
+.checkbox-circle__content--bordered {
+  border: 1px solid #e5e5e5;
+  border-radius: 50%;
 }
 
 .checkbox-circle__content:hover {
@@ -73,8 +67,8 @@ $checkbox-circle-color-corporative: $color-corporative;
   .icon {
     fill: red;
     height: auto;
-    transition: transition .2s;
-    width: $checkbox-circle-width;
+    transition: transform .2s;
+    width: 100%;
   }
 }
 
@@ -85,6 +79,7 @@ $checkbox-circle-color-corporative: $color-corporative;
   height: 30px;
   min-height: 30px;
 }
+
 .checkbox-circle__checkbox {
   display: none;
 
@@ -104,7 +99,7 @@ $checkbox-circle-color-corporative: $color-corporative;
   }
 
   &:checked + .checkbox-circle__content::before {
-    background: transparent image-url('../../../public/assets/svg/icons/check.svg') center no-repeat;
+    background: transparent url('../../../public/assets/svg/icons/check.svg') center no-repeat;
     background-size: 80%;
   }
 }

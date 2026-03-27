@@ -161,13 +161,13 @@ $info-content-head-margin: calc( $footer-height-mobile + $padding-medium + $padd
   
       .card__header-title {
   
-        font-size: $font-size-title;
-        line-height: $font-size-title;
+        font-size: $font-size-xbig;
+        line-height: $font-size-xbig;
 
         &.network-title {
   
-          font-size: $font-size-huge;
-          line-height: $font-size-huge;
+          font-size: $font-size-xxbig;
+          line-height: $font-size-xxbig;
           word-wrap: break-word;
           display: flex;
           border-radius: $border-radius-basic;

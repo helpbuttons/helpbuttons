@@ -1,7 +1,7 @@
 @use '../variables' as *;
 @use '../elements/btn';
 
-$font-size-hex-unselected: calc($font-size-huge - 5px);
+$font-size-hex-unselected: calc($font-size-xxbig - 5px);
 $map-btns-size-desktop: 40px;
 $map-btns-size-mobile: 30px;
 
@@ -179,7 +179,7 @@ to {
 
 .pigeon-map__emoji{
 
-    font-size: $font-size-title;
+    font-size: $font-size-xbig;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -286,8 +286,7 @@ to {
 
 .pigeon-map__hex-element--selected {
 
-    background: white;
-    padding: $padding-medium;
+    background: $color-white;
     padding: $padding-small;
     padding-left: $padding-medium;
     border-radius: $border-radius-basic;
@@ -345,7 +344,7 @@ to {
 
 .pigeon-map__hex-info--text {
 
-    font-size: $font-size-title;
+    font-size: $font-size-xbig;
     font-weight: $font-weight-bold;
     color: $color-dark-gray;
     cursor: pointer;

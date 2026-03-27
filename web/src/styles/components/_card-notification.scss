@@ -97,7 +97,7 @@ $card-notification-delete-size: 100px;
 
 .card-notification__content {
   display: flex;
-  padding: $padding-big $padding-huge;
+  padding: $padding-big $padding-xbig;
   position: relative;
 
 }
@@ -347,7 +347,7 @@ $card-notification-delete-size: 100px;
 
 .card-notification__title {
   color: $color-dark-gray;
-  font-size: $font-size-general;
+  font-size: $font-size-medium;
   padding: 0;
   text-align: left;
   hyphens: auto;
@@ -371,7 +371,7 @@ $card-notification-delete-size: 100px;
   display: inline-block;
   color: $color-dark-gray;
   font-weight: $font-weight-bolder;
-  font-size: $font-size-general;
+  font-size: $font-size-medium;
   display: flex;
   line-height: $line-height-regular;
   padding-bottom: $padding-medium;

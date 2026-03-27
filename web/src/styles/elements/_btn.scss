@@ -32,7 +32,7 @@ $btn-circle-small-icon-height: 15px;
 
 
 $btn-border-radius-semicircle: $border-radius-semicircle;
-$btn-font-size-medium: $font-size-medium;
+$btn-font-size-medium: $font-size-big;
 
 
 //btn style used at the end of poopups and pickers
@@ -46,7 +46,7 @@ $btn-font-size-medium: $font-size-medium;
   height: $btn-height;
   width: 100%;
   white-space: nowrap;
-  font-size: $font-size-general;
+  font-size: $font-size-medium;
   border-top: 1px solid $color-gray-border;
   border-right: 1px solid $color-gray-border;
   text-overflow: ellipsis;
@@ -150,7 +150,7 @@ $btn-font-size-medium: $font-size-medium;
 
   .btn-with-icon__icon{
 
-    font-size: $font-size-title;
+    font-size: $font-size-xbig;
     margin: 0px $margin-xsmall 0px $margin-xxsmall;
 
 
@@ -162,7 +162,7 @@ $btn-font-size-medium: $font-size-medium;
 
 .btn-with-icon__emoji{
 
-  font-size: $font-size-huge;
+  font-size: $font-size-xxbig;
 
 }
 
@@ -306,7 +306,7 @@ $btn-font-size-medium: $font-size-medium;
 
 .btn-with-icon__text {
 
-  font-size: $font-size-general;
+  font-size: $font-size-medium;
   text-align: left;
   -webkit-line-clamp: 2;
   line-clamp: 2;
@@ -395,7 +395,7 @@ $btn-font-size-medium: $font-size-medium;
 
   align-items: center;
   vertical-align: middle;
-  font-size: $font-size-general;
+  font-size: $font-size-medium;
 
 }
 

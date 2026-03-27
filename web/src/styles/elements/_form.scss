@@ -5,7 +5,7 @@
 $form-input-width: 100%;
 $form-field-max-width: 100%;
 $form-input-padding: $padding-big;
-$form-input-font-size: $font-size-medium;
+$form-input-font-size: $font-size-big;
 $form-input-border-radius: $border-general-height;
 
 .form {
@@ -38,7 +38,7 @@ $form-input-border-radius: $border-general-height;
 .form__section-title {
 
 font-weight: $font-weight-bold;
-font-size: $font-size-title;
+font-size: $font-size-xbig;
 padding-bottom: $margin-medium;
 
 }
@@ -47,7 +47,7 @@ padding-bottom: $margin-medium;
   z-index: $z-index-base;
   top: 7px;
   left: 24px;
-  font-size: $font-size-general;
+  font-size: $font-size-medium;
   font-weight: bold;
 
   &:first-letter {
@@ -88,12 +88,12 @@ padding-bottom: $margin-medium;
 .form__search {
 
   color: $color-gray;
-  font-size: $font-size-general;
+  font-size: $font-size-medium;
   margin: 0;
   line-height: 0;
   width: auto;
   display: block;
-  padding: $padding-huge $padding-medium $padding-small $padding-medium;
+  padding: $padding-xbig $padding-medium $padding-small $padding-medium;
   border: 0;
   // border-radius: 0;
   transition: $transition-default;
@@ -120,7 +120,7 @@ padding-bottom: $margin-medium;
 
 .form__field {
   max-width:$form-field-max-width;
-  font-size: $font-size-medium;
+  font-size: $font-size-big;
   margin-bottom: 24px;
   position: relative;
   display: flex;
@@ -159,10 +159,8 @@ padding-bottom: $margin-medium;
   display: flex;
   flex-direction: row;
   width: 100%;
-  display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-direction: row;
   min-height: 60px;
   // background-color: $color-white;
   // padding: $padding-small 0;
@@ -193,7 +191,7 @@ padding-bottom: $margin-medium;
   display: flex;
   max-width: 100%;
   padding: .5rem .5rem;
-  font-size: $font-size-medium;
+  font-size: $font-size-big;
 }
 
 .form__field--feed button {
@@ -236,7 +234,7 @@ padding-bottom: $margin-medium;
   box-sizing: border-box;
   color: $color-black;
   padding: $padding-big $padding-big;
-  font-size: $font-size-general;
+  font-size: $font-size-medium;
   height: $form-input-height;
   text-overflow: ellipsis;
 
@@ -546,14 +544,12 @@ width: 100%;
 }
 
 .form__options-v {
-
   flex-flow: column nowrap;
   justify-content: center;
-  margin: $margin-small auto !important;
+  margin: $margin-small auto;
 
   .form__options-btn {
-    margin: $margin-small auto !important;
-
+    margin: $margin-small auto;
   }
 }
 
@@ -580,9 +576,8 @@ width: 100%;
 
 
 .form__options-btn {
-
-  margin: 0 $margin-small !important;
-  width: 80% !important;
+  margin: 0 $margin-small;
+  width: 80%;
 
   &:focus {
     background: $color-corporative;
@@ -671,10 +666,9 @@ width: 100%;
 
   position: relative;
   height: auto;
-  display: block;
-  margin: $margin-xsmall 0;
   display: flex;
   flex-wrap: wrap;
+  margin: $margin-xsmall 0;
   gap: $padding-big;
 
 }
@@ -716,11 +710,9 @@ width: 100%;
 
   @extend .btn-circle;
 
-  position: absolute !important;
+  position: absolute;
   margin: auto;
   width: 20px;
-  bottom: 0;
-  right: 0;
   bottom: -20px;
   right: -20px;
   
@@ -815,7 +807,7 @@ width: 100%;
 
     // flex-direction: row;
     background-color: $color-white;
-    padding: $padding-huge;
+    padding: $padding-xbig;
     flex: 0 40%;
     border-radius: $border-radius-circle;
     height: auto;
@@ -825,7 +817,7 @@ width: 100%;
 
   .form__inputs-types-wrapper {
     background-color: $color-white;
-    padding: $padding-huge;
+    padding: $padding-xbig;
     flex: 0 60%;
      border-radius: $border-radius-circle;
      overflow: hidden;

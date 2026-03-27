@@ -113,7 +113,7 @@ $button-file__container-max-width: $grid-column-max-width;
       &--text {
         padding-right: $padding-medium;
         justify-content: flex-end;
-        font-size: $font-size-general;
+        font-size: $font-size-medium;
       }
 
 }
@@ -122,7 +122,6 @@ $button-file__container-max-width: $grid-column-max-width;
       display: flex;
       justify-content: center;
       align-items: center;
-      // max-width: 100%;
       width: 100%;
       &--layer-top {
         z-index: 52;

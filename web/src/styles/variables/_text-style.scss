@@ -5,11 +5,11 @@ $text-color-black: $color-black;
 $text-font-weight-light: $font-weight-light;
 $text-font-weight-bold: $font-weight-bold;
 $text-font-weight-regular: $font-weight-regular;
-$text-font-size-giant: 4rem;
+$text-font-size-xxbig: 4rem;
 $text-font-size-big: 3rem;
 $text-font-size-medium: 2rem;
 $text-font-size-small: 1rem;
-$text-line-height-giant: 4.5rem;
+$text-line-height-xxbig: 4.5rem;
 $text-line-height-big: 3.5rem;
 $text-line-height-medium: 2.5rem;
 $text-line-height-small: 1.5rem;
@@ -24,9 +24,9 @@ $text-line-height-xxsmall: 0.7rem;
 }
 
 .title__h1 {
-  font-size: $text-font-size-giant;
+  font-size: $text-font-size-xxbig;
   font-weight: $text-font-weight-light;
-  line-height: $text-line-height-giant;
+  line-height: $text-line-height-xxbig;
 }
 
 .title__h2 {

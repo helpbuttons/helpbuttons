@@ -8,7 +8,6 @@ $card-button-box-shadow: $box-shadow-card;
 $card-button-ofrece-background: $color-green;
 $card-button-paragraph-color: $color-gray;
 $card-button-margin-bottom: 1rem;
-$card-button-margin-bottom: 1rem;
 $card-button-avatar-height: 40px;
 $card-button-picture-max-height: 500px;
 $card-button-situation-background-size: 14px;
@@ -61,14 +60,14 @@ $card-button-border-height: $border-general-height;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: $font-size-title;
+  font-size: $font-size-xbig;
   font-weight: $font-weight-bolder;
   transform: rotate(45);
 
 }
 
 .card-button__full-content{
-  padding: $padding-huge $padding-huge;
+  padding: $padding-xbig $padding-xbig;
   padding-bottom: 0;
 }
 
@@ -84,8 +83,8 @@ $card-button-border-height: $border-general-height;
   display: flex;
   position: absolute;
   align-items: center;
-  padding-top: $padding-huge;
-  padding-right: $padding-huge;
+  padding-top: $padding-xbig;
+  padding-right: $padding-xbig;
   gap: $padding-small;
   right: 0;
 }
@@ -103,7 +102,7 @@ $card-button-border-height: $border-general-height;
   flex-flow: row nowrap;
   align-items: flex-start;
   gap: $padding-big;
-  padding:  $padding-medium $padding-huge;
+  padding:  $padding-medium $padding-xbig;
   justify-content: space-between;
   border-top: $border-style-light;
   max-width: $grid-max-width;
@@ -202,7 +201,7 @@ $card-button-border-height: $border-general-height;
 
 .card-button__actions {
 
-  padding: $padding-huge;
+  padding: $padding-xbig;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -304,24 +303,24 @@ $card-button-border-height: $border-general-height;
 .card-button__submenu-link {
   color: $color-black;
   display: block;
-  font-size: $font-size-general;
+  font-size: $font-size-medium;
   font-weight: bold;
   padding: .25rem .5rem;
   text-indent: 0;
 }
 
 .card-button__map-container {
-  border-radius: 5px !important;
+  border-radius: 5px;
 }
 
 
 .card-button__calification {
   color: $color-gray;
-  font-size: $font-size-general;
+  font-size: $font-size-medium;
 }
 
 .card-button__status {
-  font-size: $font-size-general;
+  font-size: $font-size-medium;
   font-weight: bold;
   text-transform: capitalize;
   max-width: 300px;
@@ -352,7 +351,7 @@ $card-button-border-height: $border-general-height;
 
 .card-button__emoji{
 
-  font-size: $font-size-title;
+  font-size: $font-size-xbig;
   margin-right: $padding-small;
 
 }
@@ -362,7 +361,7 @@ $card-button-border-height: $border-general-height;
 }
 
 .card-button__name {
-  font-size: $font-size-general;
+  font-size: $font-size-medium;
   text-overflow: ellipsis;
   //overflow-x: hidden;
   margin-bottom: $padding-small;
@@ -402,7 +401,7 @@ $card-button-border-height: $border-general-height;
 .card-button__title {
   font-weight: $font-weight-bold;
   color: $color-black;
-  font-size: $font-size-huge;
+  font-size: $font-size-xxbig;
   padding: $padding-big 0 $padding-xsmall 0;
 
   display: flex;
@@ -518,7 +517,7 @@ $card-button-border-height: $border-general-height;
 .card-button__paragraph {
   word-break: break-word;
   color: $card-button-paragraph-color;
-  font-size: $font-size-general;
+  font-size: $font-size-medium;
   white-space: pre-line;
   padding-bottom: $padding-big;
   text-align: left;
@@ -581,7 +580,7 @@ $card-button-border-height: $border-general-height;
 
   & .card-button__price {
 
-    font-size: $font-size-title;
+    font-size: $font-size-xbig;
     position: relative;
     top: auto;
     right: auto;
@@ -593,7 +592,7 @@ $card-button-border-height: $border-general-height;
 .resume {
   word-break: break-word;
   color: $card-button-paragraph-color;
-  font-size: $font-size-general;
+  font-size: $font-size-medium;
   line-height: $text-line-height-small;
   padding: $padding-small 0;
   text-align: left;
@@ -698,9 +697,7 @@ $card-button-border-height: $border-general-height;
   height: 100%;
   overflow-y: auto;
   color: white;
-  padding: 10px;
-  padding-bottom: 10px;
-  padding-right: 10px;
+  padding: $padding-medium;
 
   & > a {
     color: white;
@@ -726,18 +723,18 @@ $card-button-border-height: $border-general-height;
 .card-button__trigger {
   position: absolute;
   right: 0;
-  padding-right: 15px;
-  &-button {
-    text-align: left;
-    background: none;
-    border: none;
-    color: white;
-  }
+  padding-right: $padding-big;
+}
 
+.card-button__trigger-button {
+  text-align: left;
+  background: none;
+  border: none;
+  color: white;
 }
 
 .card-button__trigger-options {
-  height: 35px;
+  height: $height-filter;
   border-radius: 1px;
   width: 100%;
   line-height: $text-line-height-xsmall;
@@ -745,32 +742,34 @@ $card-button-border-height: $border-general-height;
   padding: 25px;
   display: flex;
   justify-content: flex-start;
-  font-size: $font-size-general;
+  font-size: $font-size-medium;
 
   &:hover {
     background-color: #ACACAC;
     color: $color-black;
     cursor: pointer;
   }
+
   &:focus {
     outline: none;
   }
-  &-input {
-    line-height: 25px;
-    margin : 5px 0;
-    border-radius: 10px;
-    padding-left: 25px;
-    border: none;
-    padding-right: 5px;
-    border-radius: 2px;
-    -webkit-appearance: none;
-    outline: none;
-  &--email {
-    padding-left: 4px;
-    width: 100%;
-    margin-left: -4px;
-  }
-  }
+}
+
+.card-button__trigger-options-input {
+  line-height: 25px;
+  margin: $padding-small 0;
+  border-radius: 2px;
+  padding-left: 25px;
+  padding-right: $padding-small;
+  border: none;
+  -webkit-appearance: none;
+  outline: none;
+}
+
+.card-button__trigger-options-input--email {
+  padding-left: $padding-xsmall;
+  width: 100%;
+  margin-left: -4px;
 }
 
 .card-button__city-list,
@@ -953,7 +952,7 @@ $card-button-border-height: $border-general-height;
 
 .card-button__followers {
 
-  padding: $padding-big $padding-huge;
+  padding: $padding-big $padding-xbig;
   border-top: $border-style-light;
   padding-bottom: $padding-medium;
   background: $color-white;
@@ -1020,7 +1019,7 @@ $card-button-border-height: $border-general-height;
 
   .card-button__picture-nav--zoom {
 
-    padding: 0 $padding-huge;
+    padding: 0 $padding-xbig;
 
   }
 
@@ -1037,13 +1036,13 @@ $card-button-border-height: $border-general-height;
   .card-button__author,
   .card-button__actions {
 
-    padding: $padding-huge;
+    padding: $padding-xbig;
 
   }
 
   .card-button__author {
 
-    gap: $padding-huge;
+    gap: $padding-xbig;
 
   }
 

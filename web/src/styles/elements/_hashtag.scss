@@ -1,76 +1,62 @@
 @use '../variables' as *;
 
-$hashtag-color: $color-white;
-$hashtag-back-color: $color-gray;
-$hashtag-border-radius: $border-radius-semicircle;
-$hashtag-margin-x:$margin-xsmall;
+$hashtag-margin-x: $margin-xsmall;
 $hashtag-busca-background: $color-red;
 $hashtag-ofrece-background: $color-green;
-$hashtag-padding-big: $padding-big;
 $hashtag-padding-xsmall: $padding-xsmall;
 $hashtag-color-corporative: $color-corporative;
 $hashtag-color-white: $color-white;
 $hashtag-color-black: $color-black;
 $hashtag-color-gray: $color-gray;
-$hashtag-color-l-gray: $color-med-gray;
 
 .hashtag {
-
   display: flex;
   vertical-align: middle;
   align-items: center;
   width: fit-content;
   border-radius: $border-radius-semicircle;
-  padding: 0.1rem $padding-medium 0.1rem $padding-medium;
-
-  font-size: $font-size-general;
-  // line-height: 1rem;
+  padding: 0.1rem $padding-medium;
+  font-size: 0.9rem;
   border: 2px solid $hashtag-color-gray;
   text-decoration: none;
   margin: 0 $hashtag-margin-x $hashtag-margin-x 0;
   text-transform: capitalize;
-  font-size: 0.9rem;
   color: $color-dark-gray;
   background-color: transparent;
   word-break: keep-all;
   hyphens: none;
 
-  &--yellow {
-    background-color: $hashtag-color-corporative;
-    color: $hashtag-color-black;
-    border: none;
-  }
-
-
-
-  &--yellow-home {
-    background-color: $hashtag-color-black;
-    color: $hashtag-color-corporative
-  }
-  &--need {
-    background-color: $hashtag-busca-background;
-  }
-  &--offer {
-    background-color: $hashtag-ofrece-background;
-  }
-  &--white {
-    background-color: $hashtag-color-white;
-    color: $hashtag-color-black;
-    &:hover {
-      background-color: $hashtag-color-gray;
-      color: $hashtag-color-white;
-    }
-  }
-
-
-
-  & svg {
-    // height: 10px;
-    // width: 10px;
-
+  svg {
     background-color: transparent;
-    // padding: $hashtag-padding-xsmall;
-    // border-radius: $hashtag-border-radius;
+  }
+}
+
+.hashtag--yellow {
+  background-color: $hashtag-color-corporative;
+  color: $hashtag-color-black;
+  border: none;
+}
+
+.hashtag--yellow-home {
+  background-color: $hashtag-color-black;
+  color: $hashtag-color-corporative;
+}
+
+.hashtag--need {
+  background-color: $hashtag-busca-background;
+}
+
+.hashtag--offer {
+  background-color: $hashtag-ofrece-background;
+}
+
+.hashtag--white {
+  background-color: $hashtag-color-white;
+  color: $hashtag-color-black;
+
+  &:hover {
+    background-color: $hashtag-color-gray;
+    color: $hashtag-color-white;
   }
 }
 
@@ -78,7 +64,6 @@ $hashtag-color-l-gray: $color-med-gray;
   background-color: var(--network-accent-color);
   color: $color-white;
   border: none;
-
 }
 
 .hashtag--badge {
@@ -89,28 +74,22 @@ $hashtag-color-l-gray: $color-med-gray;
 }
 
 .hashtag--with-icon {
-
   display: flex;
   vertical-align: middle;
   justify-content: flex-start;
   gap: $hashtag-padding-xsmall;
-  padding-left: $hashtag-padding-xsmall;
   align-items: center;
   width: auto;
-  border-radius: 24px;
+  border-radius: $border-radius-semicircle;
   padding: 0.3rem 1rem 0.3rem 0.4rem;
 
-  & svg {
+  svg {
     height: 15px;
     width: 15px;
-
     background-color: transparent;
     padding: 0;
   }
-  
 }
-
-
 
 .hashtag--green-home {
   background: $hashtag-ofrece-background;
@@ -127,13 +106,10 @@ $hashtag-color-l-gray: $color-med-gray;
   pointer-events: none;
 }
 
-
 .hashtag--suggestion {
-  
-    position: relative;
-    margin-top: 10px;
-    background-color: $color-dark-gray;
-    color: $color-ligth-gray;
-    border-color: $color-dark-gray;
-
+  position: relative;
+  margin-top: $padding-medium;
+  background-color: $color-dark-gray;
+  color: $color-ligth-gray;
+  border-color: $color-dark-gray;
 }

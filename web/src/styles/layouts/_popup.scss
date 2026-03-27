@@ -113,7 +113,7 @@ $popup-max-height-large: 720px;
 
 .popup__header-title  {
 
-  font-size: $font-size-general;
+  font-size: $font-size-medium;
   font-weight: $font-weight-bold;
   color: $color-dark-gray;
   letter-spacing: 2px;
@@ -144,7 +144,7 @@ $popup-max-height-large: 720px;
 
 .popup__paragraph {
 
-  font-size: $font-size-general;
+  font-size: $font-size-medium;
   line-height: 1.5rem;
   margin-bottom: $margin-small;
 }
@@ -244,7 +244,7 @@ $popup-max-height-large: 720px;
   height: $popup-options-height;
 
   text-align: center;
-  font-size: $font-size-general;
+  font-size: $font-size-medium;
   line-height: $popup-options-height;
   width: 100%;
   vertical-align: middle;
@@ -253,12 +253,6 @@ $popup-max-height-large: 720px;
 
   &:focus {
     background: $color-corporative;
-  }
-  &--stroked {
-    stroke: $color-corporative;
-    fill: $color-corporative;
-    border-color: $color-black;
-    background-color: $color-black;
   }
   &:hover {
     fill: $color-corporative;
@@ -270,6 +264,13 @@ $popup-max-height-large: 720px;
   &:focus {
     box-shadow: none;
   }
+}
+
+.popup__options-btn--stroked {
+  stroke: $color-corporative;
+  fill: $color-corporative;
+  border-color: $color-black;
+  background-color: $color-black;
 }
 
 .popup__link {
@@ -312,7 +313,7 @@ $popup-max-height-large: 720px;
 
   display: inline-block;
   text-align: center;
-  font-size: $font-size-general;
+  font-size: $font-size-medium;
   line-height: 1.5rem;
   width: 100%;
   vertical-align: middle;
@@ -419,7 +420,7 @@ $popup-max-height-large: 720px;
   }
 
   .popup__section {
-    padding: $padding-huge $padding-huge;
+    padding: $padding-xbig $padding-xbig;
   }
 
 

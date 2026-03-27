@@ -36,7 +36,6 @@ $info-content-head-margin-mobile: 70px;
 
 .homeinfo__container {
 
-  // background-color: $color-white;
   padding-top: $info-content-head-margin-mobile;
   width:100%;
   z-index: $z-index-02;
@@ -46,10 +45,8 @@ $info-content-head-margin-mobile: 70px;
   background-size: cover;
   overflow: auto;
   -webkit-overflow-scrolling: touch;
-  overscroll-behavior: contain; 
+  overscroll-behavior: none;
   touch-action: manipulation;
-  overscroll-behavior: contain;
-   overscroll-behavior: none;
   -webkit-overflow-scrolling: auto; /* disables momentum scroll on iOS */
 
 }
@@ -58,15 +55,12 @@ $info-content-head-margin-mobile: 70px;
 
   margin: auto;
   font-family: inherit;
-  padding: 0 0 ;
-  // min-width: fit-content;
+  padding: 0;
   background-color: transparent;
   width: 100%;
   height: auto;
   overflow: auto;
   box-sizing: border-box;
-  // margin-top: $margin-small;
-  // margin-bottom: $info-content-mobile-bottom-padding;
 
  }
 
@@ -147,17 +141,15 @@ $info-content-head-margin-mobile: 70px;
   height: 100%;
   border-radius: 0;
   top: 0;
-  align-items: center;
   width: 100%;
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
   align-items: center;
-  margin: 0 ;
+  margin: 0;
   min-height: 20rem;
   flex-basis: 100%;
   padding: $padding-big;
-  border-radius: 0;
 
 }
 
@@ -189,7 +181,6 @@ $info-content-head-margin-mobile: 70px;
 }
 
 .homeinfo__network-title {
-
   padding: $padding-big;
   display: flex;
   flex-direction: column;
@@ -198,11 +189,7 @@ $info-content-head-margin-mobile: 70px;
   text-align: center;
   border-radius: $border-radius-semicircle;
   width: auto;
-  // border: $border-style-basic;
   background-color: transparent;
-  // backdrop-filter: blur(5px);
-  // -webkit-backdrop-filter: blur(5px);
-  padding: 15px;
   position: relative;
   margin: auto;
   top: 0;
@@ -220,20 +207,16 @@ $info-content-head-margin-mobile: 70px;
 
 .homeinfo__network-title-text {
 
-  font-size: $font-size-xhuge;
+  font-size: $font-size-xxxbig;
   line-height: $text-line-height-medium;
   font-weight: $font-weight-bolder;
   border-radius: $border-radius-basic;
-  // background-color: $color-dark-gray;
   padding: $padding-big;
   color: $color-white;
   max-width: 100%;
   align-self: center;
   justify-content: center;
-  // word-wrap:normal;
-  word-break:keep-all;
-  // overflow-wrap:normal;
-  max-width: 100%; /* Adjust as needed */
+  word-break: keep-all;
 
   display: block;
   &:first-letter {
@@ -244,7 +227,7 @@ $info-content-head-margin-mobile: 70px;
 
 .homeinfo-card__header-title--slogan {
 
-  font-size: $font-size-huge;
+  font-size: $font-size-xxbig;
   font-weight: $font-weight-bolder;
   line-height: $text-line-height-medium;
   display: block;
@@ -256,7 +239,6 @@ $info-content-head-margin-mobile: 70px;
 .homeinfo__network-title-card--buttons {
 
   margin-top: $margin-small;
-  // width: fit-content;
 
 }
 
@@ -323,16 +305,13 @@ $info-content-head-margin-mobile: 70px;
 }
 
 .homeinfo-card__header--openable:hover {
- 
   cursor: pointer;
   text-decoration: underline;
-  // padding-bottom: $padding-big;
-
 }
 
 .homeinfo-card__header-title {
   font-weight: $font-weight-bold;
-  font-size: $font-size-medium;
+  font-size: $font-size-big;
   color: $color-gray;
   display: flex;
   flex-direction: row;
@@ -355,7 +334,7 @@ hr {
   padding: $padding-medium 0;
   word-wrap: break-word;
   display: inline-block;
-  font-size: $font-size-general;
+  font-size: $font-size-medium;
   width: 98%;
   max-width: 98%;
 
@@ -498,7 +477,7 @@ hr {
 
 
   .homeinfo__network-title-text {
-    font-size: $font-size-xhuge;
+    font-size: $font-size-xxxbig;
     line-height: $text-line-height-big;
 
   }
@@ -513,7 +492,7 @@ hr {
   }
 
   .homeinfo__content {
-    padding-bottom: 0px;
+    padding-bottom: 0;
     min-width: fit-content;
 
   } 
@@ -522,7 +501,6 @@ hr {
     display: flex;
     flex-wrap: wrap;
     gap: $margin-small;
-    // margin-top: -150px;
     padding: $padding-small;
     padding-bottom: 48px;
     padding-top: $margin-xxbig;
@@ -533,7 +511,7 @@ hr {
   .homeinfo-card {
     margin: 0;
     margin-bottom: $margin-xsmall;
-        padding: $padding-huge;
+        padding: $padding-xbig;
 
   }
 
@@ -552,7 +530,7 @@ hr {
     width: 300px;
     height: 60%;
     border: $border-style-basic;
-    padding: $padding-huge;
+    padding: $padding-xbig;
     max-height: 60%;
     min-height: 0;
     text-overflow: ellipsis;

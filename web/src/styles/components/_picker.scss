@@ -62,7 +62,7 @@ $picker-comments-item-padding: 25px;
 
   width: 100% !important;
   height: 100px !important;
-  margin-bottom: $padding-huge;
+  margin-bottom: $padding-xbig;
 
 }
 
@@ -103,7 +103,7 @@ $picker-comments-item-padding: 25px;
 //picker HEADERS
 .picker__header {
   width: 100%;
-  font-size: $font-size-medium;
+  font-size: $font-size-big;
   font-weight: $font-weight-regular;
   text-align: center;
 }
@@ -158,7 +158,7 @@ $picker-comments-item-padding: 25px;
 }
 
 .picker__header-title  {
-  font-size: $font-size-general;
+  font-size: $font-size-medium;
 
   font-weight: $font-weight-bold;
   color: $color-dark-gray;
@@ -198,7 +198,7 @@ $picker-comments-item-padding: 25px;
 // contents
 .picker__paragraph {
 
-  font-size: $font-size-general;
+  font-size: $font-size-medium;
   line-height: 1.5rem;
   padding: $picker-paragraph-padding;
 }
@@ -319,7 +319,7 @@ $picker-comments-item-padding: 25px;
 }
 
 .picker__option-btn--txt{
-  font-size: $font-size-general;
+  font-size: $font-size-medium;
 }
 
 .picker__map {
@@ -329,9 +329,9 @@ $picker-comments-item-padding: 25px;
   height: auto;
   width: auto;
   display: flex;
-  margin-bottom: $padding-huge ;
+  margin-bottom: $padding-xbig ;
 
-  // padding-bottom: $padding-huge ;
+  // padding-bottom: $padding-xbig ;
   min-height: 250px;
 
   .pigeon-zoom-buttons {
@@ -405,7 +405,7 @@ $picker-comments-item-padding: 25px;
   }
 
   .picker__content {
-    padding: $padding-huge $padding-huge;
+    padding: $padding-xbig $padding-xbig;
   }
 
   .picker__content--nopadding {
