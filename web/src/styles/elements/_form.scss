@@ -44,11 +44,14 @@ padding-bottom: $margin-medium;
 }
 
 .form__label {
+  display: block;
   z-index: $z-index-base;
   top: 7px;
   left: 24px;
   font-size: $font-size-medium;
   font-weight: bold;
+  margin-bottom: $margin-xsmall;
+
 
   &:first-letter {
     text-transform: uppercase;
@@ -85,6 +88,11 @@ padding-bottom: $margin-medium;
 
 
 //form de la home
+
+.form__field {
+  width: 100%;
+  margin-bottom: $margin-small;
+}
 
 .form__field--noMargin {
   margin-bottom: 0;
@@ -164,8 +172,7 @@ padding-bottom: $margin-medium;
 }
 
 
-.form__explain,
-.form__label {
+.form__explain {
 
   margin-bottom: $margin-xsmall;
 
