@@ -5,27 +5,21 @@ $feed-border-radius: $border-radius-buttons;
 $feed-color-gray-border: $color-gray-border;
 $feed-post-color: $color-gray;
 $feed-padding-card: $padding-small;
-$feed-padding: $padding-big;
-$feed-padding-top: 5.5rem;
-$feed-height: 58px;
+$feed-padding: $padding-medium;
 $feed-selector-height: 5.3rem;
 $feed-color-corporative: $color-corporative;
 $feed-margin-big: $margin-big;
 $feed-icon-width: 20px;
 $feed-button-width: 47px;
-$feed-padding: $padding-medium;
-$feed-padding-bottom: $padding-huge;
-$feed-new-message-radius: $border-radius-circle;
+$feed-padding-bottom: $padding-xbig;
 
 .feed-line {
-
-  // display: none;
-  position: relative; 
+  position: relative;
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: $padding-huge;
+  padding: $padding-xbig;
   align-items: center;
   font-weight: $font-weight-bold;
   color: $color-gray;
@@ -33,61 +27,35 @@ $feed-new-message-radius: $border-radius-circle;
   margin: auto;
   max-width: $grid-max-width--mobile;
   gap: $margin-small;
-
-
 }
 
 .feed-section {
-
   padding-bottom: $padding-small;
   min-width: 0;
   width: 100%;
-
 }
 
 .feed-section--activity {
-
   height: 100%;
-  // overflow-y: scroll  ;
-  // @extend .popup__content;
-  // padding-top: $feed-selector-height;
-  // padding-bottom: calc($footer-height-mobile + $padding-small*4);
-
 }
 
-
 .feed-section--messages {
-
   display: flex;
   flex-direction: row;
   justify-content: stretch;
   height: 100%;
-
 }
-
 
 .feed-section__left__header {
-
-  padding: $padding-small $padding-big  $padding-small $padding-big;
+  padding: $padding-small $padding-big;
   border-bottom: $border-style-basic;
-
 }
-
-// .feed-section__center {
-
-//   display: none;
-
-// }
 
 .feed-section__left {
-
   width: 100%;
-
 }
 
-
-.feed-section__center{
-
+.feed-section__center {
   position: absolute;
   display: flex;
   flex-direction: column;
@@ -95,11 +63,9 @@ $feed-new-message-radius: $border-radius-circle;
   width: 100%;
   height: 100%;
   z-index: $z-index-04;
-
-} 
+}
 
 .feed-section__center--no-select {
-
   display: none;
 }
 
@@ -107,32 +73,11 @@ $feed-new-message-radius: $border-radius-circle;
   display: none;
 }
 
-.feed-section__left--mobile {
-
-  flex: 1;
-
-}
-
 .feed-section__right {
-
   display: none;
-
-}
-
-.feed-section__title {
-
-  padding-bottom: $padding-big;
-  display: flex;
-  justify-content: flex-start;
-  gap: $padding-small;
-  align-items: center;
-  color: $color-dark-gray;
-  font-size: $font-size-huge;
-
 }
 
 .feed-section__filters {
-
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -140,23 +85,17 @@ $feed-new-message-radius: $border-radius-circle;
   overflow-x: auto;
   overflow-y: hidden;
   gap: $padding-small;
-
-
 }
 
 .feed-section__filters--desktop {
-
   display: none;
-
 }
 
-.feed-section--activity-content{
-
+.feed-section--activity-content {
   overflow-y: auto;
   padding-bottom: calc($footer-height-mobile + 100px);
   background-color: $color-ligth-gray;
   border-radius: $border-radius-basic;
-
 }
 
 .feed-selector {
@@ -167,244 +106,148 @@ $feed-new-message-radius: $border-radius-circle;
 }
 
 .feed-selector--list-toggle {
-
   display: flex;
   flex-direction: row;
-  padding-bottom: 0;
   height: auto;
   padding: 0;
   background-color: $color-ligth-gray;
-
 }
 
 .feed-selector__toggle-button {
-
   width: 100%;
   display: flex;
   justify-content: flex-end;
   align-items: center;
-
 }
 
 .feed-selector__notif-circle {
   margin-top: $padding-medium;
   margin-right: $padding-medium;
   padding: $padding-medium;
-  
 }
-
-.feed-selector--activity {
-  z-index: $z-index-03;
-  position: relative;
-  top: 0;
-}
-
 
 .feed__empty-message {
-
   @extend .list__empty-message;
-
 }
 
-.feed__empty-message--prev{
-
+.feed__empty-message--prev {
   @extend .list__empty-message--prev;
-
-}
-
-.feed-messages {
-  &__container {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-  }
-  &__no-messages {
-    font-size: $font-size-general;
-    font-weight: bold;
-    width: 100%;
-    text-align: center;
-  }
-  &__image {
-    width: 40%;
-    margin-top: $feed-margin-big;
-  }
 }
 
 .feeds__new-message {
-
   width: 100%;
-  display: block;
-  // background-color: $color-white;
   padding: $feed-padding;
   padding-top: 0;
   display: flex;
   flex-direction: column;
 
   .dropdown-select__trigger {
-
     max-width: 20%;
     margin: $margin-xsmall;
-
   }
 
   button {
-
     margin: $margin-xsmall 0;
     margin-left: auto;
-
-    // float: right;
   }
-
 }
 
 .feeds__new-message-message {
-
   display: block;
 
   .form__field {
-
     margin: 0;
-
   }
-
 }
 
 .feeds__new-message-input {
-  
   border: 1px solid $feed-color-gray-border;
   padding: 0 $feed-padding;
-
 }
 
-
-.feeds__button {
-  border-radius: 50%;
-  border: none;
-
-  background: $feed-color-corporative !important;
-  width: $feed-button-width;
-}
-
-.feeds__icon {
-  width: $feed-icon-width !important;
-  fill: black !important;
-}
-
-.feed__board-container{
-
+.feed__board-container {
   background: $color-ligth-gray;
   display: flex;
   flex-direction: column;
-  padding-bottom: $padding-huge;
+  padding-bottom: $padding-xbig;
 }
 
-.feed-element{
-  padding: $feed-padding-card $feed-padding-card 0 $feed-padding-card;
+.feed-element {
+  padding: $feed-padding-card $feed-padding-card 0;
   color: $feed-post-color;
   border-radius: $feed-border-radius;
   max-width: 700px;
   margin: auto;
 
   &:hover {
-
     cursor: pointer;
-
   }
-  
 }
 
-.feed-element--selected {
-
-  background-color: red;
-
-}
 
 @media #{$breakpoints-medium} {
 
   .feed-section__filters {
-
     display: none;
-
   }
 
   .feed-section__filters--desktop {
-
     width: 100%;
     display: flex;
     flex-direction: row;
     align-items: center;
-    padding: 10px 0;
+    padding: $padding-medium 0;
     overflow-x: auto;
     overflow-y: hidden;
-    height: 69px;
+    height: $header-height-desktop;
     gap: $padding-small;
-
   }
 
   .feed-section__right {
-
-  display: flex;
-  width: 33vw;
-  overflow: auto;
-
+    display: flex;
+    width: 33vw;
+    overflow: auto;
   }
 
+  .feed-section--messages {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    height: 100%;
+  }
 
-.feed-section--messages {
+  .feed-section__left {
+    display: flex;
+    flex-direction: column;
+    width: 43vw;
+  }
 
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  height: 100%;
-
-}
-
-.feed-section__left{
-
-  display: flex;
-  flex-direction: column;
-  width: 43vw;
-
-}
-.feed-section__center {
-
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 43vw;
-  border-left: $border-style-basic;
-  border-right: $border-style-basic;
-  height: calc(100% - $nav-bottom-height);
-  
-
-}
-
+  .feed-section__center {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 43vw;
+    border-left: $border-style-basic;
+    border-right: $border-style-basic;
+    height: calc(100% - $nav-bottom-height);
+  }
 
   .feed__board-container {
-
     padding-bottom: $feed-padding-bottom;
   }
 
   .feed-section {
-
     padding-bottom: $padding-small;
     max-width: $grid-max-width;
     margin: auto;
-
   }
 
   .feed-section__center--no-select {
-
     display: block;
   }
 
-
   .feed-section__center__chat-no-select {
-
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -414,31 +257,18 @@ $feed-new-message-radius: $border-radius-circle;
     color: $color-gray;
     height: 100%;
 
-    & svg {
-
+    svg {
       width: 50px;
       height: 50px;
     }
-
   }
 
 }
 
 @media #{$breakpoints-xlarge} {
 
-  // .feed-element{
-
-  //   .card-notification__content {
-
-  //     padding:  $padding-big $padding-huge;
-
-  //   }
-  // }
-
-  .feed-section__left{
-
+  .feed-section__left {
     width: 30dvw;
-
   }
 
   .feed-section--messages {
@@ -447,21 +277,13 @@ $feed-new-message-radius: $border-radius-circle;
   }
 
   .feed__board-container {
-
-   padding-bottom: $feed-padding-bottom;
-
+    padding-bottom: $feed-padding-bottom;
   }
-
 
   .feed-section__center {
-
-   height: 100%;
-   z-index: $z-index-02;
-   width: 45dvw;
+    height: 100%;
+    z-index: $z-index-02;
+    width: 45dvw;
   }
-
-
-
-
 
 }

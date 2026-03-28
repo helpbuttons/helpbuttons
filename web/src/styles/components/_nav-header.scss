@@ -64,12 +64,6 @@ $nav-header-new-message-radius: $border-radius-circle;
   border-top:  none;
 }
 
-.nav-header--hide {
-
-  transition: $transition-default ;
-  top: -$nav-header-height;
-}
-
 .nav-header__content-message {
   flex-grow:1;
   display: flex;
@@ -80,19 +74,6 @@ $nav-header-new-message-radius: $border-radius-circle;
   border-radius: $nav-header-border-radius;
   border: 1px solid $nav-header-color-gray-border;
   padding: 0 $nav-header-padding;
-}
-
-.nav-header__button {
-  border-radius: 50%;
-  border: none;
-
-  background: $nav-header-color-corporative !important;
-  width: $nav-header-button-width;
-}
-
-.nav-header__icon {
-  width: $nav-header-icon-width !important;
-  fill: black !important;
 }
 
 .nav-header__filters {
@@ -125,7 +106,7 @@ $nav-header-new-message-radius: $border-radius-circle;
   .nav-header__container {
     z-index: $z-index-02;
     background-color: $color-corporative;
-    padding: 0 $padding-huge;
+    padding: 0 $padding-xbig;
     display: flex;
     justify-content: flex-start;
     box-shadow: none;
@@ -154,7 +135,7 @@ $nav-header-new-message-radius: $border-radius-circle;
     border-top: none;
     width: 90%;
     padding-right: 0;
-    height: 70px;
+    height: $header-height-mobile;
 
     background: $color-corporative;
     //JUST TO REMEMBER linear-gradient(0deg, transparent, $color-corporative-transparent 0%) no-repeat;

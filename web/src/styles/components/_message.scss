@@ -36,12 +36,6 @@ $message-you-margin-left: $margin-xbig;
 }
 
 
-.message--public {
-  
-  background-color: $color-white;
-
-}
-
 .message__hour::before {
   content: '·';
   padding: $padding-small;
@@ -70,7 +64,7 @@ $message-you-margin-left: $margin-xbig;
     width: 35px;
     right: -40px;
     bottom: 0;
-    height: 35px;
+    height: $height-filter;
     position: absolute;
     display: flex;
     border-radius: $border-radius-circle;
@@ -119,7 +113,7 @@ $message-you-margin-left: $margin-xbig;
 
 .message__content {
 
-  font-size: $font-size-general;
+  font-size: $font-size-medium;
   margin-bottom: 0;
 
 }
@@ -149,7 +143,7 @@ $message-you-margin-left: $margin-xbig;
 
     left: -40px;
     bottom: 0;
-    height: 35px;
+    height: $height-filter;
     position: absolute;
     display: flex;
     border-radius: $border-radius-circle;

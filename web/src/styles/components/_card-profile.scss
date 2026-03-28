@@ -10,7 +10,7 @@ $avatar-margin: $padding-big;
 
 
 .card-profile__data {
-  font-size: $font-size-general;
+  font-size: $font-size-medium;
   height: auto;
   display: flex;
   flex-direction: column;
@@ -27,7 +27,7 @@ $avatar-margin: $padding-big;
 }
 
 .card-profile__description {
-  font-size: $font-size-general;
+  font-size: $font-size-medium;
   font-weight: $font-weight-regular;
   margin: $margin-small 0;
   margin-top: $margin-xsmall;
@@ -105,55 +105,6 @@ $avatar-margin: $padding-big;
   padding-right: $padding-medium;
 }
 
-.card-profile__icon {
-
-  justify-content: center;
-  align-items: center;
-
-}
-
-.card-profile__location {
-  color: $color-gray;
-  text-align: center;
-  font-size: font-size-medium;
-  .icon {
-    width: 25px;
-    height: 25px;
-    fill: $color-gray;
-  }
-}
-
-.card-profile__interests {
-  font-size: font-size-medium;
-  margin-right: 5px;
-  color: $color-gray;
-}
-
-.card-profile__toggle-button {
-  background-color: transparent;
-  border: 2px solid $color-corporative;
-  width: 150px;
-  height: 150px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  .icon {
-    width: 50%;
-    height: 50%;
-    fill: $color-corporative;
-  }
-  & svg {
-    position: initial;
-    fill: $color-corporative;
-  }
-  &--corporative-bg {
-    background-color: $color-corporative;
-    .icon {
-      fill: $color-black;
-    }
-  }
-}
-
 .card-profile__container {
 
   // display: flex;
@@ -185,6 +136,7 @@ $avatar-margin: $padding-big;
   flex: auto;
   overflow: auto;
   gap: $padding-small;
+  margin-top: $padding-big;
 
   & a {
     width: max-content;
@@ -200,25 +152,6 @@ $avatar-margin: $padding-big;
   min-width: $avatar-width;
 }
 
-.card-profile__avatar-container--img {
-  height: auto;
-  width: auto;
-  object-fit: scale-down;
-}
-
-.card-profile__avatar-container--icon {
-  object-fit: scale-down;
-}
-
-.card-profile__avatar-container--name {
-  word-wrap: break-word;
-  font-size: $font-size-medium;
-  color: $color-black;
-  text-align: center;
-  font-weight: $font-weight-bold;
-  margin: $margin-small;
-}
-
 //revise
 .card-profile__container-avatar-content {
   display: flex;
@@ -227,7 +160,7 @@ $avatar-margin: $padding-big;
 }
 
 .card-profile__avatar-container-name {
-  font-size: $font-size-title;
+  font-size: $font-size-xbig;
   font-weight: $font-weight-bold;
   color: $color-black;
   display: flex;
@@ -253,7 +186,7 @@ $avatar-margin: $padding-big;
 }
 
 .grid-one__column-mid-element {
-  font-size: font-size-medium;
+  font-size: $font-size-medium;
   font-weight: lighter;
   margin-bottom: 0.5rem;
 }
@@ -274,15 +207,6 @@ $avatar-margin: $padding-big;
 
   }
 
-
-}
-
-.card-profile__icon {
-  svg {
-
-    height: 20px;
-
-  }
 
 }
 
@@ -375,27 +299,24 @@ $avatar-margin: $padding-big;
   }
 
   .card-profile__wrapper {
-      background: white;
-      padding: 30px;
-      flex: 0; 
-      height: min-content;
-      border-radius: $border-radius-circle  ;
-      min-width: calc(100% - $list-width-desktop);
-      min-width: $grid-desktop-double-column-left-width;
-
+    background: $color-white;
+    padding: $padding-xbig;
+    flex: 0;
+    height: min-content;
+    border-radius: $border-radius-circle;
+    min-width: calc(100% - $list-width-desktop);
+    min-width: $grid-desktop-double-column-left-width;
   }
 
-   .card-profile__button-list-wrapper {
-      flex: 1;
-      background: white;
-      padding: 30px;
-      border-radius: 30px;
-
-      overflow: hidden;
-      height: $grid-desktop-double-column-height;
-      min-height: 500px;
-      margin-bottom: 0;
-
+  .card-profile__button-list-wrapper {
+    flex: 1;
+    background: $color-white;
+    padding: $padding-xbig;
+    border-radius: 30px;
+    overflow: hidden;
+    height: $grid-desktop-double-column-height;
+    min-height: 500px;
+    margin-bottom: 0;
   }
 
   
@@ -411,52 +332,11 @@ $avatar-margin: $padding-big;
   }
 
  .card-profile__role {
-  padding: $padding-huge 0;
+  padding: $padding-xbig 0;
   padding-bottom: 0;
 
  }
 
-  .card-profile__location {
-    color: $color-gray;
-    text-align: center;
-    font-size: font-size-medium;
-    .icon {
-      width: 25px;
-      height: 25px;
-      fill: $color-gray;
-    }
-  }
-
-  .card-profile__interests {
-    font-size: font-size-medium;
-    margin-right: 5px;
-    color: $color-gray;
-  }
-
-  .card-profile__toggle-button {
-    background-color: transparent;
-    border: 2px solid $color-corporative;
-    width: 150px;
-    height: 150px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    .icon {
-      width: 50%;
-      height: 50%;
-      fill: $color-corporative;
-    }
-    & svg {
-      position: initial;
-      fill: $color-corporative;
-    }
-    &--corporative-bg {
-      background-color: $color-corporative;
-      .icon {
-        fill: $color-black;
-      }
-    }
-  }
 
   .card-profile__avatar-container {
     display: flex;
@@ -464,25 +344,6 @@ $avatar-margin: $padding-big;
     overflow: hidden;
     max-width: $avatar-container-max-width;
     height: 100%;
-  }
-
-  .card-profile__avatar-container--img {
-    height: auto;
-    width: auto;
-    object-fit: scale-down;
-  }
-
-  .card-profile__avatar-container--icon {
-    object-fit: scale-down;
-  }
-
-  .card-profile__avatar-container--name {
-    word-wrap: break-word;
-    font-size: $font-size-medium;
-    color: $color-black;
-    text-align: center;
-    font-weight: $font-weight-bold;
-    margin: $margin-small;
   }
 
   .card-profile__button-list-content {

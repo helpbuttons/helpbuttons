@@ -11,7 +11,7 @@ $dropdown-max-width: 30rem;
 
   text-align: left;
   overflow-x: hidden;
-  font-size: $font-size-general;
+  font-size: $font-size-medium;
   height: $form-input-height;
   padding: 0 $padding-big;
   width: 100%;
@@ -43,28 +43,6 @@ $dropdown-max-width: 30rem;
   line-height: auto;
 }
 
-.dropdown__friend-net {
-
-  max-width: 100% !important;
-
-}
-
-.dropdown__userTag {
-
-  flex: 0.8;
-  max-width: 100% !important;
-  margin-right: 2rem;
-
-}
-
-.dropdown__icon {
-
-  min-width: 25px;
-  height: 25px;
-  margin: 5px;
-
-}
-
 
 
 $dropdown-bck: $color-white;
@@ -75,18 +53,13 @@ $dropdown-bck: $color-white;
   padding: 0 $padding-big;
   color: $color-black;
   transition: all 0.2s ease-in-out;
-  font-size: $font-size-general;
-  width: auto;
+  font-size: $font-size-medium;
+  width: 100%;
   border: transparent;
-
   border-radius: $border-radius-basic;
   background-position-x: 10%;
-
-  outline: $border-style-basic;
   height: $form-input-height;
-  border-right:  $padding-big solid transparent;
-
-  width: 100%;
+  border-right: $padding-big solid transparent;
   background: $dropdown-bck;
   padding-right: 1rem;
   outline: $border-style-basic;
@@ -120,7 +93,7 @@ $dropdown-bck: $color-white;
   font-weight: $font-weight-bold;
   background-color: $color-white;
   transition: all 0.2s ease-in-out;
-  font-size: $font-size-general;
+  font-size: $font-size-medium;
   background-repeat: no-repeat;
   border: $border-style-basic;
 
@@ -167,7 +140,7 @@ $dropdown-bck: $color-white;
   display: block;
   font-size: $font-size-small;
   width: 100%;
-  background: white;
+  background: $color-white;
   border: unset;
   border-radius: 0; 
   padding: $padding-medium;
@@ -179,45 +152,6 @@ $dropdown-bck: $color-white;
 
 
 }
-.dropdown__dropdown-option-active {
-  background-color: $color-ligth-gray;
-}
-
-.dropdown__dropdown-no-result {
-
-  display: block;
-  font-size: $font-size-small;
-  width: 100%;
-  background: white;
-  border: unset;
-  border-radius: 0; 
-  padding: $padding-medium;
-
-}
-
-.dropdown__create-new-button {
-
-  padding: 0 $padding-big;//Revise: de 16px a 18px
-  height: $form-input-height;
-
-  & button {
-    color: var(--network-accent-color);
-    border: none;
-    background: transparent;
-    height: 100%;
-    &:hover {
-      color: var(--network-accent-color);
-      text-decoration: underline;
-    }
-  }
-
-  & span:hover {
-    cursor: pointer;
-    color: white;
-  }
-
-}
-
 .dropdown__dropdown-option-wrapper--add-location {
   background-color: $color-white;
   border-radius: $border-radius-basic $border-radius-basic 0 0;

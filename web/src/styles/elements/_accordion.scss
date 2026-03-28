@@ -32,7 +32,7 @@
 /* Style the accordion panel. Note: hidden by default */
 .panel {
 
-  padding: $padding-huge;
+  padding: $padding-xbig;
 
   background-color: $color-ligth-gray;
   height: auto;
@@ -53,9 +53,9 @@
 .accordion--toggle {
   background: #e0e0e0;
   border: #e5e5e5 1px solid;
-  border-radius: 42px;
+  border-radius: $border-radius-buttons;
   color: black;
-  font-size: $font-size-medium;
+  font-size: $font-size-big;
   font-weight: bold;
   height: 3.125rem;
   padding-left: 1rem;
@@ -67,64 +67,6 @@
 
 .accordion--toggle--grey-bordered {
   border-color: $color-ligth-gray;
-}
-
-.accordion--content {
-  padding: 1rem;
-}
-
-.accordion--content:last-child {
-  margin-bottom: 1.2rem;
-}
-
-.accordion--title {
-  font-size: $font-size-general;
-  font-weight: bold;
-  margin-bottom: 1rem;
-  line-height: 1.9rem;
-}
-
-.accordion--paragraph {
-  font-size: $font-size-general;
-  margin-bottom: 1rem;
-  line-height: 1.4rem;
-}
-
-.accordion--text--with-img {
-  font-size: $font-size-general;
-  font-weight: bold;
-  margin-bottom: 1rem;
-  line-height: 1.9rem;
-}
-
-.accordion__img {
-  max-width: 200px;
-  margin: 1rem 0rem;
-}
-
-.accordion__img--big {
-  max-width: 600px;
-  width: 100%;
-  margin: 1rem 0rem;
-}
-
-.accordion__list__title {
-  font-size: $font-size-general;
-  font-weight: bold;
-  margin-bottom: 1rem;
-  line-height: 1.9rem;
-}
-
-.accordion__list__list {
-  font-size: $font-size-general;
-  margin-bottom: 1rem;
-  line-height: 1.2rem;
-}
-
-.accordion__icon--big {
-  max-width: 300px;
-  width: 100%;
-  margin: 1rem 0rem;
 }
 
 .highlight,h3,h2 {
