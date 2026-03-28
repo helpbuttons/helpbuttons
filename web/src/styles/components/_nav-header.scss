@@ -1,8 +1,8 @@
+@use '../variables' as *;
+
 $nav-header-border-radius: $border-radius-buttons;
 $nav-header-color-gray-border: $color-gray-border;
 $nav-header-padding: $padding-big;
-$nav-header-height: $header-height-mobile;
-$nav-header-height-desktop: $header-height-desktop;
 $filters-bar-height-mobile: auto;
 $filters-bar-height-desktop: 45px;
 $nav-header-color-corporative: $color-corporative;

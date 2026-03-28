@@ -1,3 +1,6 @@
+@use '../variables' as *;
+@use 'btn';
+
 $dropdown-dropdown-border-radius: $border-radius-basic;
 $padding-dropdown-options-top: 200px;
 $dropdown-height: $form-input-height;

@@ -1,4 +1,7 @@
-$form-input-height: 54px;
+@use '../variables' as *;
+@use 'hashtag';
+@use 'btn';
+
 $form-input-width: 100%;
 $form-field-max-width: 100%;
 $form-input-padding: $padding-big;
@@ -715,8 +718,6 @@ width: 100%;
 
   position: absolute !important;
   margin: auto;
-  height: 20px;
-  padding: $padding-small;
   width: 20px;
   bottom: 0;
   right: 0;

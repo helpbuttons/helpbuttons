@@ -1,3 +1,6 @@
+@use '../variables' as *;
+@use 'btn';
+
 $checkbox-card-content-border: $border-lines-width;
 $checkbox-card-card-filter-padding: 3rem;
 $checkbox-card-height: 100px;

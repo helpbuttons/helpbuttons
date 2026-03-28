@@ -1,3 +1,5 @@
+@use '../variables' as *;
+
 $button-file-modal-height: calc(var(--vh, 1vh) * 100);
 $button-file__container-max-width: $grid-column-max-width;
 

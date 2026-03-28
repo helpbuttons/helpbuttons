@@ -1,4 +1,6 @@
-$checkbox-content-border: $border-lines-width;
+@use '../variables' as *;
+@use 'btn';
+
 $checkbox-filter-padding: 3rem;
 $checkbox-height: $height-btn;
 $checkbox-medium-height: 40px;

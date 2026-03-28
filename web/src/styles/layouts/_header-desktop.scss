@@ -1,3 +1,5 @@
+@use '../variables' as *;
+
 .header-desktop {
   z-index: $z-index-02; // Revise
   position: relative;
