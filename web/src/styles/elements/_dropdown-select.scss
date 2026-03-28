@@ -54,9 +54,13 @@ $dropdown-max-width: 10rem;
 .dropdown-select__container {
   position: relative;
   display: inline-block;
-  width: auto;
+  width: 100%;
   min-width: 100px;
-  // max-width: 200px;
+}
+
+.dropdown-select__container:has(.dropdown__dropdown-trigger--list) {
+  width: auto;
+  min-width: unset;
 }
 
 .dropdown-select__icon {
