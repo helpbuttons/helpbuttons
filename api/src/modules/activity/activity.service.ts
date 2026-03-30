@@ -278,7 +278,7 @@ export class ActivityService {
                       to: activity.to.email,
                       content: translate(locale, 'activities.newMessageContent', [fromName, _activity.message, publicationTitle]),
                       subject: translate(locale, 'activities.newMessageSubject', [fromName]),
-                      link: `/Activity/${activity.id}${loginParams}`,
+                      link: this.addLoginParams(getUrl(`/Activity/button/${_activity.buttonId}`), loginParams),
                       linkCaption: translate(locale, 'activities.replyToMessage'),
                     });
                     break;
@@ -287,7 +287,7 @@ export class ActivityService {
                       to: activity.to.email,
                       content: translate(locale, 'activities.newPostCommentContent', [fromName, _activity.message, publicationTitle]),
                       subject: translate(locale, 'activities.newPostCommentSubject', [fromName]),
-                      link: `/Show/${activity.button.id}${loginParams}`,
+                      link: this.addLoginParams(getUrl(`/Activity/button/${_activity.buttonId}`), loginParams),
                       linkCaption: translate(locale, 'activities.replyToMessage'),
                     })
                     break;
@@ -296,7 +296,7 @@ export class ActivityService {
                       to: activity.to.email,
                       content: translate(locale, 'activities.newMentionContent', [fromName, _activity.message, publicationTitle]),
                       subject: translate(locale, 'activities.newMentionSubject', [fromName]),
-                      link: `/Show/${activity.button.id}${loginParams}`,
+                      link: this.addLoginParams(getUrl(`/Activity/button/${_activity.buttonId}`), loginParams),
                       linkCaption: translate(locale, 'activities.replyToMessage'),
                     })
                     break;
@@ -731,5 +731,14 @@ export class ActivityService {
         })
       })
 
+  }
+
+  public addLoginParams(link, loginParams){
+    if(!link)
+    {
+      return null
+    }
+    
+    return  `${link}${loginParams}`
   }
 }

@@ -16,6 +16,7 @@ import { getUrl } from '@src/shared/helpers/mail.helper';
 import { NetworkService } from '../network/network.service';
 import { ActivityService } from './activity.service';
 import { ActivityDtoOut } from './activity.dto';
+import { MailActivity } from '../mail/mail.interface';
 
 const outboxConditions = `created_at between now() - INTERVAL '2 day' AND now()`;
 @Injectable()
@@ -48,9 +49,10 @@ export class ActivityCron {
               relations: ['button.owner', 'to', 'from', 'consumer'],
               order: { created_at: 'DESC' },
             })
-              .then((activities) => {
+              .then(async (activities) => {
+                const loginParams = await this.userService.getUserLoginParams(user.id)
                 return activities.map((activity) => {
-                  return this.transformActivityOutbox(activity, user.locale, user.id);
+                  return this.transformActivityOutbox(activity, user.locale, user.id, loginParams);
                 })
               })
               .then((activities) => {
@@ -61,12 +63,25 @@ export class ActivityCron {
     )
   }
 
-  public transformActivityOutbox(activity, locale, userId) {
+
+  public transformActivityOutbox(activity, locale, userId, loginParams): MailActivity {
     let activityOut = this.activityService.transformActivity(activity, locale, userId)
-    if(activity.eventName == ActivityEventName.Message) {
-        activityOut = {...activityOut, message: translate(locale, 'activities.newMessageOutbox', [activityOut.activityFrom.name, activityOut.message])}
+    console.log(activityOut)
+    if (activity.eventName == ActivityEventName.Message) {
+      return {
+        content: translate(locale, 'activities.newMessageOutbox', [activityOut.activityFrom.name, activityOut.message]),
+        link: this.activityService.addLoginParams(getUrl(`/Activity/button/${activityOut.buttonId}`), loginParams),
+        linkCaption: activityOut.linkCaption
+      }
     }
-    return activityOut;
+    
+    const link = activityOut.link ? this.activityService.addLoginParams(getUrl(`/Activity/button/${activityOut.buttonId}`), loginParams) : null
+
+    return {
+      content: activityOut.message,
+      link,
+      linkCaption: activityOut.linkCaption
+    }
   }
   public findUsersWithPendingNotifications() {
     return this.entityManager.query(
@@ -90,7 +105,7 @@ export class ActivityCron {
       .getMany();
   }
 
-  sendDailyUserOutbox(user, outbox: ActivityDtoOut[]) {
+  sendDailyUserOutbox(user, outbox: MailActivity[]) {
 
       return this.networkService
         .findDefaultNetwork()
@@ -105,6 +120,5 @@ export class ActivityCron {
             ]),
           });
         });
-    // });
   }
 }
