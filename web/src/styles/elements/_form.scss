@@ -1,8 +1,11 @@
-$form-input-height: 54px;
+@use '../variables' as *;
+@use 'hashtag';
+@use 'btn';
+
 $form-input-width: 100%;
 $form-field-max-width: 100%;
 $form-input-padding: $padding-big;
-$form-input-font-size: $font-size-medium;
+$form-input-font-size: $font-size-big;
 $form-input-border-radius: $border-general-height;
 
 .form {
@@ -35,17 +38,20 @@ $form-input-border-radius: $border-general-height;
 .form__section-title {
 
 font-weight: $font-weight-bold;
-font-size: $font-size-title;
+font-size: $font-size-xbig;
 padding-bottom: $margin-medium;
 
 }
 
 .form__label {
+  display: block;
   z-index: $z-index-base;
   top: 7px;
   left: 24px;
-  font-size: $font-size-general;
+  font-size: $font-size-medium;
   font-weight: bold;
+  margin-bottom: $margin-xsmall;
+
 
   &:first-letter {
     text-transform: uppercase;
@@ -82,52 +88,10 @@ padding-bottom: $margin-medium;
 
 
 //form de la home
-.form__search {
-
-  color: $color-gray;
-  font-size: $font-size-general;
-  margin: 0;
-  line-height: 0;
-  width: auto;
-  display: block;
-  padding: $padding-huge $padding-medium $padding-small $padding-medium;
-  border: 0;
-  // border-radius: 0;
-  transition: $transition-default;
-
-  &:focus {
-  }
-
-  &:hover {
-    background: $color-ligth-gray;
-  }
-
-  & span {
-    display: none;
-  }
-}
-
-
-.form__search--time,
-.form__search--tags,
-.form__search--localization {
-  text-indent: 4px;
-}
-
 
 .form__field {
-  max-width:$form-field-max-width;
-  font-size: $font-size-medium;
-  margin-bottom: 24px;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-}
-
-.form__field--multiinput {
-  display: flex;
-  flex-direction: column;
-  gap: $padding-medium;
+  width: 100%;
+  margin-bottom: $margin-small;
 }
 
 .form__field--noMargin {
@@ -156,10 +120,8 @@ padding-bottom: $margin-medium;
   display: flex;
   flex-direction: row;
   width: 100%;
-  display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-direction: row;
   min-height: 60px;
   // background-color: $color-white;
   // padding: $padding-small 0;
@@ -186,13 +148,6 @@ padding-bottom: $margin-medium;
   min-height: 90px;
 }
 
-.form__field--feed {
-  display: flex;
-  max-width: 100%;
-  padding: .5rem .5rem;
-  font-size: $font-size-medium;
-}
-
 .form__field--feed button {
   background: $color-corporative;
   border: none;
@@ -200,7 +155,7 @@ padding-bottom: $margin-medium;
   //height: 47px;
   border-radius: 50%;
   cursor: pointer;
-  margin-left: 10px;
+  margin-left: $margin-xsmall;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -217,8 +172,7 @@ padding-bottom: $margin-medium;
 }
 
 
-.form__explain,
-.form__label {
+.form__explain {
 
   margin-bottom: $margin-xsmall;
 
@@ -233,7 +187,7 @@ padding-bottom: $margin-medium;
   box-sizing: border-box;
   color: $color-black;
   padding: $padding-big $padding-big;
-  font-size: $font-size-general;
+  font-size: $font-size-medium;
   height: $form-input-height;
   text-overflow: ellipsis;
 
@@ -262,10 +216,6 @@ padding-bottom: $margin-medium;
   margin: $margin-xsmall 0;
 }
 
-
-.form__input--edit-address {
-  border: 1px solid $color-corporative;
-}
 
 .form__input--dropdown-search {
 
@@ -298,103 +248,13 @@ padding-bottom: $margin-medium;
 
 
 //react select plugin styles modification //REVISE
-.form__input--plugin {
-
-  @extend .form__input;
-
-  padding: 0;
-  border: none;
-
-  .css-13cymwt-control {
-
-    height: $form-input-height;
-    padding-left: $form-input-padding;
-
-  }
-
-  .css-1fdsijx-ValueContainer {
-
-    height: $form-input-height;
-    padding: 0;
-
-  }
-
-  .css-t3ipsp-control, .css-hlgwow {
-
-    height: $form-input-height;
-    padding-left: $form-input-padding;
-
-  }
-
-  .css-1nmdiq5-menu {
-
-    position: absolute;
-    z-index: $z-index-06;
-    
-  }
-
-  #react-select-13-listbox {
-
-    z-index: $z-index-06;
-    position: absolute;
-
-  }
-
-}
-
-.form__input-tags {
-
-  @extend .form__input;
-  // padding: $padding-small;
-  & ul {
-    // overflow-x: scroll;
-    // overflow-y: hidden;
-    // white-space: nowrap;
-
-    display: flex;
-    flex-flow: row wrap;
-    padding: .25rem 0 0 0;
-  }
-
-  & li {
-    @extend .hashtag;
-    display: inline-block;
-
-  }
-
-  & .button-counter {
-    display: none;
-  }
-
-  & span {
-    display: none;
-  }
-
-}
-
-.form__input-tags--offer {
-
-  & li {
-    @extend .hashtag--offer;
-  }
-
-}
-
-.form__input-tags--need {
-
-  & li {
-    @extend .hashtag--need;
-  }
-
-}
-
 
 .form__tags-list {
         
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  margin: 5px 0;
+  margin: $margin-xxsmall 0;
   // margin-bottom: $margin-big;
   // min-height: 38px;
 
@@ -543,14 +403,12 @@ width: 100%;
 }
 
 .form__options-v {
-
   flex-flow: column nowrap;
   justify-content: center;
-  margin: $margin-small auto !important;
+  margin: $margin-small auto;
 
   .form__options-btn {
-    margin: $margin-small auto !important;
-
+    margin: $margin-small auto;
   }
 }
 
@@ -577,9 +435,8 @@ width: 100%;
 
 
 .form__options-btn {
-
-  margin: 0 $margin-small !important;
-  width: 80% !important;
+  margin: 0 $margin-small;
+  width: 80%;
 
   &:focus {
     background: $color-corporative;
@@ -668,10 +525,9 @@ width: 100%;
 
   position: relative;
   height: auto;
-  display: block;
-  margin: $margin-xsmall 0;
   display: flex;
   flex-wrap: wrap;
+  margin: $margin-xsmall 0;
   gap: $padding-big;
 
 }
@@ -713,13 +569,9 @@ width: 100%;
 
   @extend .btn-circle;
 
-  position: absolute !important;
+  position: absolute;
   margin: auto;
-  height: 20px;
-  padding: $padding-small;
   width: 20px;
-  bottom: 0;
-  right: 0;
   bottom: -20px;
   right: -20px;
   
@@ -814,7 +666,7 @@ width: 100%;
 
     // flex-direction: row;
     background-color: $color-white;
-    padding: $padding-huge;
+    padding: $padding-xbig;
     flex: 0 40%;
     border-radius: $border-radius-circle;
     height: auto;
@@ -824,7 +676,7 @@ width: 100%;
 
   .form__inputs-types-wrapper {
     background-color: $color-white;
-    padding: $padding-huge;
+    padding: $padding-xbig;
     flex: 0 60%;
      border-radius: $border-radius-circle;
      overflow: hidden;

@@ -1,3 +1,6 @@
+@use '../variables' as *;
+@use 'btn';
+
 $dropdown-dropdown-border-radius: $border-radius-basic;
 $padding-dropdown-options-top: 200px;
 $dropdown-height: $form-input-height;
@@ -11,7 +14,7 @@ $dropdown-max-width: 10rem;
 .dropdown-select__trigger {
 
   text-align: left;
-  font-size: $font-size-general;
+  font-size: $font-size-medium;
   
   overflow-x: hidden;
   height: $form-input-height;
@@ -51,9 +54,13 @@ $dropdown-max-width: 10rem;
 .dropdown-select__container {
   position: relative;
   display: inline-block;
-  width: auto;
+  width: 100%;
   min-width: 100px;
-  // max-width: 200px;
+}
+
+.dropdown-select__container:has(.dropdown__dropdown-trigger--list) {
+  width: auto;
+  min-width: unset;
 }
 
 .dropdown-select__icon {
@@ -69,12 +76,6 @@ $dropdown-max-width: 10rem;
 .dropdown-select-with-icon {
   padding-left: 35px;
   width: 100%;
-}
-
-.dropdown-select__trigger--filter {
-
- @extend .btn-filter;
-
 }
 
 @media #{$breakpoints-medium} {

@@ -1,3 +1,5 @@
+@use '../variables' as *;
+
 $card-button-map-background: $color-white;
 $card-button-map-border: 1px solid $color-ligth-gray;
 $card-button-map-box-shadow: none;
@@ -25,16 +27,18 @@ $card-button-map-border-height: $border-general-height;
   position: relative;
   margin: auto;
   margin-bottom: $card-button-map-margin-bottom;
-  border-radius: 0 0 $border-radius-basic  $border-radius-basic;
+  border-radius: 0 0 $border-radius-basic $border-radius-basic;
+  overflow: hidden;
+
   p {
     margin-bottom: 0;
   }
-  overflow:hidden;
 }
 
-.card-button-map:after{
-  content: '';
+.card-button-map:after {
+  background: var(--button-color);
   border-radius: 0;
+  content: '';
   display: inline-block;
   height: $card-button-map-border-height;
   left: 0;
@@ -42,34 +46,6 @@ $card-button-map-border-height: $border-general-height;
   top: 0;
   width: 100%;
 }
-
-.card-button-map:after {
-  background:  var(--button-color);
-}
-
-.card-button-map--wrapper {
-  .leaflet-popup-content-wrapper{
-    background: transparent;
-    box-shadow: none;
-  }
-  .leaflet-popup-tip-container {
-    display: none;
-  }
-}
-
-.card-button-map--white {
-  background: $color-white;
-}
-
-.card-button-map {
-  &--exchange-deactivated,
-  &--offer-deactivated,
-  &--need-deactivated {
-    opacity: 0.5;
-    background: grey;
-  }
-}
-
 
 .card-button-map__content {
   padding: 1rem;
@@ -83,115 +59,27 @@ $card-button-map-border-height: $border-general-height;
   padding-bottom: $card-button-map-whitespace;
 }
 
-.card-button-map__avatar {
-  flex: 0 1 15%;
-  & > button {
-    border: none;
-    background: none;
-    padding: 0;
-  }
-}
-
 .card-button-map__info {
   flex: 0 1 80%;
-  width: 0rem;
+  width: 0;
   text-align: left;
-}
-
-.card-button-map__submenu {
-  background: transparent url('../../../public/assets/svg/icons/down.svg') center no-repeat;
-  background-size: 100%;
-  height: 100%;
-  position: relative;
-  text-indent: -9999999px;
-  width: 18px;
-}
-
-.card-button-map__submenu-show {
-  background: $color-corporative;
-  color: $color-red;
-  left: $card-button-map__submenu-show-left;
-  position: absolute;
-  width: $card-button-map__submenu-show-width;
-}
-
-
-.card-button-map__submenu-link {
-  color: $color-black;
-  display: block;
-  font-size: $font-size-general;
-  font-weight: bold;
-  padding: .25rem .5rem;
-  text-indent: 0;
-}
-
-.card-button-map__map-container {
-  border-radius: 5px !important;
-}
-
-
-.card-button-map__calification {
-  color: $color-gray;
-  font-size: $font-size-general;
 }
 
 .card-button-map__status {
   color: $color-gray;
-  font-size: $font-size-general;
+  font-size: $font-size-medium;
   font-weight: bold;
-  &--offer {
-    color: $color-green;
-  }
-  &--need {
-    color: $color-red;
-  }
 }
 
-.card-button-map__name {
-  font-size: $font-size-general;
-  text-overflow: ellipsis;
-  //overflow-x: hidden;
-  font-weight: bold;
-  padding-top: .25rem;
+.card-button-map__status--offer {
+  color: $color-green;
 }
 
-.card-button-map__title {
-  color: $color-gray;
-  font-size: $font-size-general;
-}
-
-.card-button-map__situation {
-  color: $color-gray;
-  display: flex;
-  font-size: $font-size-general;
-  font-weight: bold;
-  flex-flow: row nowrap;
-  padding: .5rem 0 $card-button-map-whitespace 0;
-}
-
-.card-button-map__local,
-.card-button-map__time {
-  padding-left: 1.5rem;
-}
-
-.card-button-map__local {
-  background: transparent url('../../../public/assets/svg/icons/place.svg') left center no-repeat;
-  background-size: auto $card-button-map-situation-background-size;
-}
-
-.card-button-map__time {
-  background: transparent url('../../../public/assets/svg/icons/time.svg') left center no-repeat;
-  background-size: $card-button-map-situation-background-size;
-  margin-left: 1rem;
+.card-button-map__status--need {
+  color: $color-red;
 }
 
 .card-button-map__need,
-.card-button-map__offer {
-  display: flex;
-  flex-flow: row wrap;
-  padding: .25rem 0 0 0;
-}
-
 .card-button-map__need {
   .hashtag {
     background: $card-button-map-busca-background;
@@ -203,61 +91,10 @@ $card-button-map-border-height: $border-general-height;
   }
 }
 
-.card-button-map__offer {
-  .hashtag {
-    background: $card-button-map-ofrece-background;
-    font-weight: bold;
-    &:hover {
-      color: $hashtag-hover-color;
-      background: $color-black;
-    }
-  }
-}
-
-.card-button-map__exchange {
-  .hashtag {
-    background: $color-black;
-    font-weight: bold;
-    &:hover {
-      color: $hashtag-hover-color;
-      background: $color-green;
-    }
-  }
-}
-
-
-.card-button-map__paragraph {
-  word-break: break-word;
-  color: $card-button-map-paragraph-color;
-  font-size: $font-size-general;
-  white-space: pre-line;
-  text-align: left;
-
-  & p {
-    margin-top: 0;//Revise
-  }
-
-  & a {
-    color: var(--network-accent-color);
-    cursor: pointer;
-  }
-}
-
-.card-button-map__phone {
-  word-break: break-word;
-  white-space: nowrap;
-}
-
-.card-button-map__nets{
-  padding: $card-button-map-whitespace 0;
-  display: flex;
-
-}
-
 .resume {
   word-break: break-word;
   color: $card-button-map-paragraph-color;
-  font-size: $font-size-general;
+  font-size: $font-size-medium;
   line-height: $text-line-height-small;
   padding: $padding-small 0;
   text-align: left;
@@ -265,11 +102,9 @@ $card-button-map-border-height: $border-general-height;
 
 .card-button-map__picture {
   position: relative;
-
 }
 
 .card-button-map__picture-container {
-
   width: auto;
   max-height: $card-button-map-image-height;
   height: $card-button-map-image-height;
@@ -279,12 +114,9 @@ $card-button-map-border-height: $border-general-height;
   display: flex;
   justify-content: center;
   position: relative;
-
 }
 
-
 .card-button-map__nav {
-
   width: 100%;
   height: inherit;
   position: absolute;
@@ -293,13 +125,10 @@ $card-button-map-border-height: $border-general-height;
   justify-content: space-between;
   align-items: center;
   padding: 0 $padding-small;
-
 }
 
 .card-button-map__nav .arrow {
-
   @extend .btn-circle--small !optional;
-
 }
 
 .card-button-map__nav .arrow--left {
@@ -310,16 +139,7 @@ $card-button-map-border-height: $border-general-height;
   @extend .card-button-map__nav;
 }
 
-
 .card-button-map__city,
-.card-button-map__city-list,
-.card-button-map__date {
-  color: black;
-  font-size: $font-size-general;
-  font-weight: bold;
-  text-align: left;
-}
-
 .card-button-map__date {
   text-indent: -29px;
   padding-left: 1rem;
@@ -333,13 +153,6 @@ $card-button-map-border-height: $border-general-height;
   display: inline-block;
 }
 
-.card-button-map__city-list {
-  cursor: pointer;
-  padding-right: 1rem;
-  text-align: left;
-  display: inline-block;
-}
-
 .card-button-map__everywhere {
   cursor: pointer;
   padding-right: 1rem;
@@ -348,71 +161,13 @@ $card-button-map-border-height: $border-general-height;
   display: inline-block;
 }
 
-.card-button-map__toCity {
-  margin-left: 30px;
-  text-decoration: underline;
-}
-
-.card-button-map__toCity-list {
-  margin-left: 30px;
-}
-
-.card-button-map__close-map {
-  position: absolute;
-  z-index: 401;
-  right: 0;
-  padding: .5rem;
-}
-
 .card-button-map__city:before,
-.card-button-map__city-list:before,
-.card-button-map__date:before {
-  background: red;
-  content: '';
-  display: inline-block;
-  height: $card-button-map-size-icon-before;
-  margin-right: .5rem;
-  transform: translateY(.25rem);
-  width: $card-button-map-size-icon-before;
-}
-
 .card-button-map__city:before,
-.card-button-map__city-list:before {
-  background: transparent url('../../../public/assets/svg/icons/icon-map.svg') left center no-repeat;
-  background-size: 100% auto;
-}
-
 .card-button-map__date:before {
   background: transparent url('../../../public/assets/svg/icons/time_black.svg') left center no-repeat;
   background-size: 100% auto;
 }
 
-.card-button-map__avatar-container {
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  overflow: hidden;
-  max-height: 70px;
-  max-width: 70px;
-  height: 70px;
-  width: 70px;
-  & .card-avatar {
-    width: auto;
-    height: 100%;
-  }
-}
-
-.card-button-map__map {
-  max-height: 45vh;
-  height: 500px;
-  border-radius: 5px;
-  & .leaflet-control-container {
-    display: none;
-  }
-}
-
-
-//revise nueva clase
 .card-button-maps {
   display: flex;
   flex-direction: column;

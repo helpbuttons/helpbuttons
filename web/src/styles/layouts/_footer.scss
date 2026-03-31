@@ -1,8 +1,10 @@
+@use '../variables' as *;
+
 .footer__wrapper {
 
   border-radius: $border-radius-circle $border-radius-circle 0 0 ;
 
-  padding: $padding-huge ;
+  padding: $padding-xbig ;
   background-color: $color-white;
   display: flex;
   flex-direction: column;

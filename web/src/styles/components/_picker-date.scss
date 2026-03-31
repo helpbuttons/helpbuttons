@@ -1,9 +1,11 @@
+@use '../variables' as *;
+
 $picker-date-height: 40px;
 
 .picker-date__selected {
   display: flex;
   align-items: center;
-  font-size: $font-size-general;
+  font-size: $font-size-medium;
   border: 0;
   width: 60%;
   margin: $margin-small auto;
@@ -57,7 +59,7 @@ $picker-date-height: 40px;
   border-radius: $border-radius-circle;
   border: $border-lines-width solid $color-gray;
   height: $picker-date-height;
-  font-size: $font-size-general;
+  font-size: $font-size-medium;
   align-items: center;
   display: flex;
 
@@ -72,7 +74,7 @@ $picker-date-height: 40px;
 
 
 .picker-date__points {
-  font-size: $font-size-general;
+  font-size: $font-size-medium;
 }
 
 .picker-date__dropdown-content-gray {
@@ -153,7 +155,7 @@ $picker-date-height: 40px;
 }
 
 .react-calendar__month-view__weekdays__weekday:first-letter {
-  font-size: $font-size-general;
+  font-size: $font-size-medium;
 }
 
 // .react-calendar__tile--hasActive {
@@ -225,7 +227,7 @@ $picker-date-height: 40px;
     align-items: center;
     flex-wrap: wrap;
     max-width: 100%;
-    font-size: $font-size-general;
+    font-size: $font-size-medium;
     margin: 2px;
     font-weight: $font-weight-bolder;
 
@@ -275,7 +277,7 @@ $picker-date-height: 40px;
 
   .react-calendar__month-view__weekdays__weekday {
 
-    font-size: $font-size-general;
+    font-size: $font-size-medium;
 
   }
 

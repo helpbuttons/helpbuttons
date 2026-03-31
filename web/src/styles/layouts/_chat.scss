@@ -1,3 +1,4 @@
+@use '../variables' as *;
 
 ///Separate this in components, elements and layouts
 
@@ -29,7 +30,7 @@
 }
 
 .chat__header-title {
-    font-size: $font-size-medium;
+    font-size: $font-size-big;
     a { font-weight: $font-weight-bolder; }
 }
 
@@ -56,7 +57,7 @@
     background-color: $color-white;
     padding: $padding-medium;
     min-height: 50px;
-    font-size: $font-size-title;
+    font-size: $font-size-xbig;
 
 
 }

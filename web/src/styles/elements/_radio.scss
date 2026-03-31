@@ -1,7 +1,8 @@
+@use '../variables' as *;
+@use 'btn';
+
 $radio-content-border: $border-lines-width;
-$radio-filter-padding: 3rem;
 $radio-height: $height-btn;
-$radio-medium-height: 40px;
 $radio-border-radius: $border-radius-circle;
 $radio-color: $color-white;
 $radio-color-text: $color-black;
@@ -13,9 +14,8 @@ $radio-color-gray-border: $color-gray-border;
 $radion-label-min-width: 235px;
 $radion-label-min-width-mobile: 100px;
 
-//frame div for erasing any style and warrantee 100% space FOR all radio buttons
+// frame div — resets style and provides full space for radio buttons
 .radio {
-
   width: 100%;
   background: none;
   flex-flow: row wrap;
@@ -31,131 +31,56 @@ $radion-label-min-width-mobile: 100px;
 }
 
 .radio--row {
-    flex-flow: row nowrap;
-    display: flex;
-    flex-wrap: nowrap;
-    gap: $padding-small;
-    padding-left: $padding-small;
-    margin-bottom: 0;
+  flex-flow: row nowrap;
+  display: flex;
+  flex-wrap: nowrap;
+  gap: $padding-small;
+  padding-left: $padding-small;
+  margin-bottom: 0;
+}
 
-} 
-//label div for enclosing all radio button elements
+// label div enclosing all radio button elements
 .radio__label {
-    flex: 0 0 auto;          /* Prevents buttons from growing or shrinking */
-    min-width: $radion-label-min-width-mobile; /* Ensures buttons have a minimum width */
+  flex: 0 0 auto;
+  min-width: $radion-label-min-width-mobile;
 
   .radio__content {
     margin-top: $margin-xxsmall;
-    gap: $padding-medium; 
+    gap: $padding-medium;
   }
 }
 
-// (same but for filters, smaller buttons)
-.radio__filter-label {
-  display: block;
-  width: auto;
-}
-
-//CHANGE: PROVISIONAL CLASS NAME FOR ICON , STUDY CHANGES
-.radio__netIcon {
-  width: fit-content;
-
-  &_icon {
-    height: fit-content !important;
-    width: fit-content !important;
-  }
-}
-
-//envelope class for radios input
-.radio__container {
-  width: auto;
-  background: none;
-  border: none;
-  padding: 0;
-  height: $radio-height;
-  display: flex;
-  flex: 0 0 auto;
-
-  // flex: 1;
-  &:focus {
-    outline: none;
-  }
-}
-
-//class that includes radio STYLED content after input div
+// specificity beats base .icon (width: 100%) — !important not needed
+// envelope for radio inputs
+// styled radio content (after input div)
 .radio__content {
-
   background: $radio-color;
   border: $radio-content-border solid $color-gray-border;
-  font-size: $font-size-medium;
+  font-size: $font-size-big;
   position: relative;
   height: $radio-height;
   transition: background 0.2s;
   color: $radio-color-text;
   min-width: 150px;
-  border-radius: 42px;
+  border-radius: $border-radius-buttons;
   box-sizing: border-box;
-
   align-items: center;
   display: flex;
-  position: relative;
   width: 100%;
-  padding: 0 12px;
+  padding: 0 $padding-medium;
 }
 
-.radio__content--bordered {
-  border: 1px solid #e5e5e5;
-  border-radius: 5px;
-}
-
-.radio__content--disabled {
-  //revise
-  background: $color-ligth-gray;
-}
-
-//radio elements FOR FILTERS - SMALL radioES IN MENUS AND HEADER - EXTENDED FROM btn-FILTER
-.radio-filter__container {
-  width: auto;
-  background: none;
-  border: none;
-  padding: 0;
-  height: 100%;
-  display: flex;
-  flex: 0 0 auto;
-
-  // flex: 1;
-  &:focus {
-    outline: none;
-  }
-}
-
-.radio-filter__content {
-  @extend .btn-filter;
-
-  color: $radio-color-text;
-  transition: background 0.2s;
-
-  &--bordered {
-    border: 1px solid #e5e5e5;
-    border-radius: 5px;
-  }
-}
-
-.radio-filter__content:hover {
-  cursor: pointer;
-}
-
-///-- REST OF radio
 .radio__content:hover {
   cursor: pointer;
   background: $radio-color-hover;
-  color: $radio-color-text-hover !important;
+  color: $radio-color-text-hover;
 
-  & svg {
+  svg {
     fill: $radio-color-text-hover;
   }
 }
 
+// small filter radios in menus and header
 .radio__icon {
   @extend .btn-filter__icon;
 }
@@ -164,8 +89,6 @@ $radion-label-min-width-mobile: 100px;
   @extend .btn-with-icon__text;
   margin-bottom: 0;
 }
-
-///CLASS FOR radio input ITSELF AND MODIFIED INNER CONTENT FOR DIFFERENT STATES
 
 .radio__radio {
   display: none;
@@ -176,7 +99,7 @@ $radion-label-min-width-mobile: 100px;
     color: $radio-color-text-checked;
     min-width: 150px;
 
-    & svg {
+    svg {
       fill: $radio-color-text-hover;
     }
   }
@@ -186,36 +109,10 @@ $radion-label-min-width-mobile: 100px;
   }
 }
 
-///CLASS FOR radio input -FILTER ITSELF AND MODIFIED INNER CONTENT FOR DIFFERENT STATES
-.radio-filter__radio {
-  display: none;
-
-  &:checked + .radio-filter__content {
-    background: $radio-color-checked;
-    color: $radio-color-text-checked;
-
-    .icon {
-      fill: $radio-color-text-checked;
-    }
-  }
-
-  &:checked + .profile-buttons__radio {
-    background: $radio-color-checked;
-    color: $radio-color-text-checked;
-  }
-
-  &:checked + .radio__content::before {
-    background: transparent;
-  }
-}
-
 @media #{$breakpoints-medium} {
 
-  .radio__label{
-
-    min-width: $radion-label-min-width; /* Ensures buttons have a minimum width */
-
+  .radio__label {
+    min-width: $radion-label-min-width;
   }
-
 
 }

@@ -1,11 +1,7 @@
+@use '../variables' as *;
+
 .publish-button {
     padding: 0;
-
-    .publish-button-first {
-
-        // padding: 1rem;
-
-    }
 
     .publish-button-scd{
         border-top: 1px solid $color-gray-border;
@@ -16,7 +12,7 @@
         display: flex;
         justify-content: flex-start;
         align-items: center;
-        margin: 5px 0;
+        margin: $padding-small 0;
 
         .tags__list {
             display: flex;
@@ -32,15 +28,14 @@
 
 .publish__submit {  
     margin: $margin-big 0;
-    margin-bottom: $margin-big;
 
     .create_btn {
         width: 100%;
         background-color: $color-gray-btn;
         color: $color-white;
-        height: 54px;
+        height: $height-btn;
         font-weight: bold;
-        font-size: $font-size-general;
+        font-size: $font-size-medium;
         border-radius: $border-radius-circle;
     }
 
@@ -50,13 +45,11 @@
 
     .publish-button {
         display: flex;
-        gap: $padding-huge;
-        padding: $padding-huge;
+        gap: $padding-xbig;
+        padding: $padding-xbig;
         max-width: $grid-max-width;
         margin: auto;
-
         overflow: auto;
-        margin: auto;
         height: calc(100% - $nav-header-height);
 
     }

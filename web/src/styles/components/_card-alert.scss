@@ -1,3 +1,5 @@
+@use '../variables' as *;
+
 $card-alert-padding: $padding-big;
 $card-alert-margin: $margin-big;
 $card-alert-text-margin: $margin-xsmall;
@@ -91,7 +93,7 @@ $card-alert-icon-size: 30px;
 
 .card-alert__title {
 
-  font-size: $font-size-general;
+  font-size: $font-size-medium;
   font-weight: bold;
   margin: auto 0;
   height: 100%;
@@ -107,16 +109,6 @@ $card-alert-icon-size: 30px;
 
 }
 
-
-.card-alert__btn-options {
-
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  gap: $padding-small;
-
-
-}
 
 
 

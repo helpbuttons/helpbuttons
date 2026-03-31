@@ -1,5 +1,7 @@
+@use '../variables' as *;
+
 $label-color: $color-black;
-$label-font-size: $font-size-general;
+$label-font-size: $font-size-medium;
 $label-margin: 1rem;
 $label-letter-spacing: 2px;
 $label-padding-bottom: .5rem;

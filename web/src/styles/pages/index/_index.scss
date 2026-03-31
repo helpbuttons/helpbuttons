@@ -1,37 +1,20 @@
+@use '../../variables' as *;
+
 // TODO: refactor styles, use REM properly, maybe split this styles in other
 // blocks in other style files too, ex: aside-info
 
 $index-mobile-fixed-z-index: $z-index-05;
-$index-content-left--distance: $grid-column-max-width;
-
-.index__mobile-fixed {
-  width: 100%;
-  z-index: $index-mobile-fixed-z-index;
-}
 
 .index__container {
   width: 100vw;
   overflow: hidden;
 }
 
-// .index__content {
-
-//   width: 100vw;
-//   overflow: hidden;
-//   display: flex;
-//   justify-content: flex-end;
-//   align-items: flex-end;
-
-// }
-
-
 .index__explore-container {
   display: flex;
   flex-direction: column;
-  justify-content:baseline;
+  justify-content: baseline;
   align-items: stretch;
-  // height: 100%;
-  // max-height: 100%;
   overflow: hidden;
   width: 100%;
   &div {
@@ -53,17 +36,7 @@ $index-content-left--distance: $grid-column-max-width;
 
 }
 
-.index__content-bottom--mid-screen {
-
-  // height: $list-content-height-mid-screen-mobile;
-  // min-height:  $list-content-height-mid-screen-mobile;
-
-}
-
 .index__content-bottom--hide {
-
-  // margin-bottom: calc($list-container-hide-height);
-  
 }
 
 .index__content-bottom--noscroll {
@@ -75,9 +48,6 @@ $index-content-left--distance: $grid-column-max-width;
 @media (hover: none) {
 
   .index__content-bottom--hide {
-
-    // margin-bottom: calc($list-container-hide-nohover-height);
-    
   }
 
 }
@@ -98,7 +68,6 @@ $index-content-left--distance: $grid-column-max-width;
     transition: $transition-default-slow;
     min-width: $index-content-left--distance;
     box-shadow: $box-shadow-divs;
-    // border-right: $popup-soptions-border-top;
   }
 
   .index__content-left--hide {

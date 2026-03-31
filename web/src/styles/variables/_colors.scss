@@ -1,3 +1,6 @@
+@use 'sass:color';
+@use 'sass:math';
+
 // Part of the pitcher github.com/gruncho/stylestree
 //
 // http://chir.ag/projects/name-that-color/
@@ -40,7 +43,7 @@ $color-dark-blue: #2F80ED; //blue de figma
 
 // Function to check brightness of a color and return white or black font color
 @function get-readable-font-color($background-color) {
-    $brightness: ((red($background-color) * 0.299) + (green($background-color) * 0.587) + (blue($background-color) * 0.114)) / 255;
+    $brightness: math.div((color.red($background-color) * 0.299) + (color.green($background-color) * 0.587) + (color.blue($background-color) * 0.114), 255);
     @if $brightness > 0.5 {
       @return $color-black; // dark font for lighter background
     } @else {

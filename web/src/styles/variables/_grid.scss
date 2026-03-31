@@ -1,3 +1,6 @@
+@use 'paddings' as *;
+@use 'margins' as *;
+
 $grid-padding-mobile: 20px;
 $grid-height-svg-forms: 30%;
 $gutter: 12px;
