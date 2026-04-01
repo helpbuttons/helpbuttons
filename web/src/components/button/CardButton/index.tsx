@@ -19,7 +19,6 @@ import router from 'next/router';
 import { useEffect, useState } from 'react';
 import {
   getShareLink,
-  makeImageUrl,
   readableDistance,
 } from 'shared/sys.helper';
 import {
@@ -595,6 +594,7 @@ export function CardButtonAuthorSection({ button }) {
 }
 
 export function CardButtonFollowerSection({ button }) {
+  const sessionUser = useGlobalStore((state: GlobalState) => state.sessionUser);
   const [showFollowers, toggleShowFollowers] = useToggle(false)
   const [followers, setFollowers] = useState([])
   useEffect(() => {
@@ -616,7 +616,7 @@ export function CardButtonFollowerSection({ button }) {
                       </Link>          
                   </div>
                   <div className='card-button__followers-row'>
-                    {(showFollowers && button.followCount > 0) && <>{followers.map((follower, idx) => 
+                    {sessionUser && (showFollowers && button.followCount > 0) && <>{followers.map((follower, idx) => 
                         <Follower user={follower} key={idx}/>
                     )}</>}
                   </div>
