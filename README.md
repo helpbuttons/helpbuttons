@@ -1,4 +1,8 @@
-For developers, open [CONTRIBUTING.md](/CONTRIBUTING.md) 
+
+This repository has been moved to
+
+[gitlab.com/helpbuttons/helpbuttons](https://gitlab.com/helpbuttons/helpbuttons)
+
 
 ![HB cover](/web/public/assets/images/hb_landscape_02_small.jpg?raw=true "hb cover")
 
