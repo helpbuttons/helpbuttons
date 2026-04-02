@@ -202,6 +202,8 @@ $card-button-border-height: $border-general-height;
   flex-grow: 1;
   justify-content: flex-end;
   gap: $padding-xsmall;
+  font-weight: $font-weight-bolder;
+  align-items: flex-start;
 }
 
 
@@ -349,12 +351,10 @@ $card-button-border-height: $border-general-height;
   white-space: pre-line;
   padding-bottom: $padding-big;
   text-align: left;
-  // height: 3rem;
-  // overflow: hidden;
   flex-grow: 1;
   display: block;
   margin: $margin-xxsmall 0  $margin-xxsmall 0;
-
+  color: $color-gray;
   & p {
     margin-top: 0;
     line-height: 1.5rem;
@@ -579,11 +579,19 @@ $card-button-border-height: $border-general-height;
 }
 
 .card-button__city {
-  font-size: $font-size-small;
+  display: flex;
+  font-size: $font-size-medium;
   cursor: pointer;
   text-align: left;
-
   text-overflow: ellipsis;
+  justify-content: center;
+  align-items: center;
+  gap: $padding-small;
+
+  & svg{
+    height: 20px;
+    width: 20px;
+  }
 }
 
 .card-button__city--displayMap {
@@ -600,17 +608,29 @@ $card-button-border-height: $border-general-height;
 }
 
 
+.card-button__date {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: $padding-small;
 
+  & svg{
+    height: 20px;
+    width: 20px;
+  }
+}
 
 .card-button__bottom-properties {
 
   display: flex;
   flex-direction: column;
-  justify-content: baseline;
   flex-wrap: wrap;
   gap: $margin-xsmall;
-  align-items: flex-start;
   overflow: visible;
+  font-weight: $font-weight-bolder;
+  align-items: flex-start;
+  justify-content: center;
 
 }
 

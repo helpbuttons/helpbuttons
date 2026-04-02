@@ -84,8 +84,13 @@ export class NetworkService {
           );
         });
     }
-    network.logo = await this.storageService.uploadAndConvertImage(logo).then((val) => val.name);
-    network.jumbo = await this.storageService.uploadAndConvertImage(jumbo).then((val) => val.name);
+    if(logo){
+      network.logo = await this.storageService.uploadAndConvertImage(logo).then((val) => val.name);
+    }
+    
+    if(jumbo){
+      network.jumbo = await this.storageService.uploadAndConvertImage(jumbo).then((val) => val.name);
+    }
 
     await this.networkRepository.insert([network]);
     await this.userService.setAdminLocale(createDto.locale)
@@ -191,8 +196,8 @@ export class NetworkService {
       slogan: updateDto.slogan,
       tags: this.tagService.formatTags(updateDto.tags),
       privacy: updateDto.privacy,
-      logo: null,
-      jumbo: null,
+      logo: updateDto.logo,
+      jumbo: updateDto.jumbo,
       name: updateDto.name,
       exploreSettings: updateDto.exploreSettings,
       backgroundColor: updateDto.backgroundColor,
@@ -238,12 +243,11 @@ export class NetworkService {
         });
     }
 
-    if (defaultNetwork.logo != network.logo) {
-      await this.storageService.delete(defaultNetwork.logo)
+    if (logo && defaultNetwork.logo != logo) {
       network.logo = await this.storageService.uploadAndConvertImage(logo).then((val) => val.name);
     }
     
-    if (defaultNetwork.jumbo != network.jumbo) {
+    if (jumbo && defaultNetwork.jumbo != jumbo) {
       network.jumbo = await this.storageService.uploadAndConvertImage(jumbo).then((val) => val.name);
     }
 

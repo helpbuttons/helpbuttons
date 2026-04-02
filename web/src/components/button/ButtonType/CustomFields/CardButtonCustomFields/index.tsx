@@ -47,14 +47,16 @@ export function CardButtonCustomFields({ customFields, button }) {
         field = (
             <div className='card-button__date'>
               <IoTimeOutline/>
-              <ShowDate
-                eventStart={button.eventStart}
-                eventEnd={button.eventEnd}
-                eventType={button.eventType}
-                title={button.title}
-                eventData={button.eventData}
-                hideRecurrentDates={true}
-              />
+              <div>
+                <ShowDate
+                  eventStart={button.eventStart}
+                  eventEnd={button.eventEnd}
+                  eventType={button.eventType}
+                  title={button.title}
+                  eventData={button.eventData}
+                  hideRecurrentDates={true}
+                />
+              </div>
             </div>
             
         );

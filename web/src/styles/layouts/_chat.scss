@@ -122,3 +122,27 @@
     }
 
 }
+
+
+.chat__header-button {
+  background-color: transparent;
+  border-style: none;
+  color: $color-dark-gray;
+
+  cursor: pointer;
+  &:active,
+  &:focus {
+    outline: none;
+  }
+
+  .chat__header-button__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    // max-height: 30px;
+    & svg {
+        height: 25px;
+        width: 25px;
+    }
+  }
+}

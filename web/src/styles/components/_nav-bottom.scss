@@ -25,7 +25,7 @@ $nav-bottom-border: 32px;
   flex: 1 1 0px;
   width: 100%;
   z-index: $z-index-03;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-around;
   border-top: $border-style-basic;
   height: $nav-bottom-height;
@@ -80,6 +80,7 @@ $nav-bottom-border: 32px;
 
 
 .nav-bottom__icon {
+  display: flex;
   & svg {
     fill: $color-text-over-corporative;
     height: $nav-bottom-icon-size;
@@ -138,21 +139,6 @@ $nav-bottom-border: 32px;
 
   }
 
-
-  .nav-bottom__icon {
-
-    position: relative;
-
-  }
-
-  .nav-bottom__icon {
-    & svg {
-      
-      height: 20px;
-
-    }
-  }
-
   .nav-bottom__text {
     line-height: 15px;
     font-size: $font-size-small;
@@ -169,6 +155,10 @@ $nav-bottom-border: 32px;
   }
 
   .nav-bottom__icon {
+
+    position: relative;
+    padding-bottom: $padding-xsmall;
+
     .icon {
       height: $nav-bottom-icon-size-desktop;
       width: $nav-bottom-icon-size-desktop;
@@ -177,6 +167,7 @@ $nav-bottom-border: 32px;
     svg {
 
       background-color: transparent;
+      height: 20px;
 
     }
   }

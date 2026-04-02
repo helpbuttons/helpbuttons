@@ -19,7 +19,6 @@ import router from 'next/router';
 import { useEffect, useState } from 'react';
 import {
   getShareLink,
-  makeImageUrl,
   readableDistance,
 } from 'shared/sys.helper';
 import {
@@ -183,13 +182,15 @@ export function CardButtonHeadMedium({ button, buttonType }) {
             />
           )}
           
-        <div className="card-button__city card-button__everywhere ">
+        <div className="card-button__city ">
           {/* show post count and follow count {button.followCount} | {button.postsCount} */}
           <IoLocationOutline/>
-          {button.address}{' '}
-          {button?.distance && (
-            <> - {readableDistance(button?.distance)}</>
-          )}
+          <div>
+            {button.address}{' '}
+            {button?.distance && (
+              <> - {readableDistance(button?.distance)}</>
+            )}
+          </div>
         </div>
       </div>
     </div>
@@ -399,7 +400,7 @@ export function CardButtonHeadBig({ button, buttonTypes, toggleShowReplyFirstPos
             )}
             <div
               className={
-                'card-button__city card-button__everywhere' +
+                'card-button__city ' +
                 (!button.hideAddress
                   ? ' card-button__city--displayMap'
                   : ' card-button__city--noMap ')
@@ -595,6 +596,7 @@ export function CardButtonAuthorSection({ button }) {
 }
 
 export function CardButtonFollowerSection({ button }) {
+  const sessionUser = useGlobalStore((state: GlobalState) => state.sessionUser);
   const [showFollowers, toggleShowFollowers] = useToggle(false)
   const [followers, setFollowers] = useState([])
   useEffect(() => {
@@ -616,7 +618,7 @@ export function CardButtonFollowerSection({ button }) {
                       </Link>          
                   </div>
                   <div className='card-button__followers-row'>
-                    {(showFollowers && button.followCount > 0) && <>{followers.map((follower, idx) => 
+                    {sessionUser && (showFollowers && button.followCount > 0) && <>{followers.map((follower, idx) => 
                         <Follower user={follower} key={idx}/>
                     )}</>}
                   </div>
