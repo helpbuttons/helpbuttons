@@ -55,9 +55,9 @@ export class ActivityController {
     return await this.activityService.findNetworkActivity(locale)
   }
 
-  // @Get('triggerNotifications')
-  // async triggerNotifications()
-  // {
-  //   return await this.activityCron.triggerNotifications()
-  // }
+  @Get('triggerNotifications')
+  async triggerNotifications()
+  {
+    return await this.activityCron.triggerNotifications()
+  }
 }

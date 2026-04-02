@@ -187,10 +187,10 @@
     "my": "My activity",
     "interests": "My interests activity",
     "newbutton": "You created a _helpbutton_ in '{0}'",
-    "newbuttoninterest": "There are _helpbuttons_ about topics that you follow {0}",
+    "newButtonInterest": "There is a new _helpbutton_ posted on a topic you follow in '{0}'",
     "newbuttonType": "New _helpbutton_",
     "newcommentType": "Comment",
-    "newprivatecommentType": "Private message",
+    "newMessageOutbox": "{0} sent you a message: '{1}'",
     "newfollowType": "New Suscription",
     "creatorUpdate": "_helpbutton_ updated",
     "deleted": "_helpbutton_ deleted",
@@ -221,7 +221,16 @@
     "newbuttonHomeinfo": "New _helpbutton_ ",
     "title": "Messages & Alerts",
     "comment": "Comment",
-    "message": "Message"
+    "message": "Message",
+    "all": "all",
+    "newMessageSubject": "{0} sent you a new message",
+    "newMessageContent": "{0} wrote {1}. on the _helpbutton_ '{2}'",
+    "newPostCommentSubject": "{0} commented on a _helpbutton_",
+    "newPostCommentContent": "{0} wrote a new comment {1}. on the _helpbutton_ '{2}'",
+    "newMentionSubject": "{0} mentioned you on a _helpbutton_",
+    "newMentionContent": "{0} mentioned you {1}. on the _helpbutton_ '{2}'",
+    "replyToMessage": "Reply to message",
+    "view": "View"
   },
   "common": {
     "notfound": "No {0} found. Sorry. 🤔",
@@ -284,12 +293,12 @@
     "unknownPlace": "Unknown Place",
     "locationPlaceholder": "Write a place or address",
     "hideAddress": "Hide exact location",
-    "follow": "Follow",
-    "unfollow": "following!",
-    "followAlert": "Followed",
-    "unfollowAlert": "Unfollowed",
-    "unfollowAlertError": "Unfollow Error",
-    "followAlertError": "Follow error",
+    "follow": "Suscribe",
+    "unfollow": "Suscribed!",
+    "followAlert": "Suscribed",
+    "unfollowAlert": "Unsuscribed",
+    "unfollowAlertError": "Unsuscribe Error",
+    "followAlertError": "Suscribe error",
     "showPhone": "Show phone",
     "isExpiringEventMail": "Due end of event date, your button is going to be erased in 3 days, please visit the link and change the date if you want to keep it alive. If there's no new activity it will be erased in 3 days.",
     "isExpiringEventMailSubject": "Your _helpbutton_ has passed its due date",
@@ -323,7 +332,10 @@
     "expiredLabel": "Expired",
     "followers": "Suscribed by {0} users",
     "showMoreTags": "more tags",
-    "nofollowers": "no one is following yet"
+    "nofollowers": "no one is following yet",
+    "copyAlert": "Copied",
+    "whereButtonLabel": "Choose place",
+    "pickPosition": "Please pick a position on the map"
   },
   "user": {
     "login": "Write your credentials",
@@ -441,7 +453,8 @@
     "guestCodePlaceHolder": "Write the code here",
     "askForNewCode": "I don't have my guest info",
     "inviteLogin": "Enter",
-    "inviteLoginError": "Wrong code or missing fields"
+    "inviteLoginError": "Wrong code or missing fields",
+    "roleChange":"And admin changed your role"
   },
   "picker": {
     "headerText": "Choose a location"
@@ -461,7 +474,9 @@
     "recurringExplain": "Select starting and finish dates, days of the week and time",
     "afterStart": "Please select a time/date after {0}",
     "beforeEnd": "Please select a time/date before {0}",
-    "changeToMultipleDates": "Press here to select several days"
+    "changeToMultipleDates": "Press here to select several days",
+    "everyMonth":"Each month",
+    "everyWeek":"Each week"
   },
   "validation": {
     "fieldRequired": "{0} is required.",

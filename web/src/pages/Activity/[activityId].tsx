@@ -13,5 +13,5 @@ export default function ActivityPage() {
 
   }, [router.query.activityId])
   
-  return <ActivitiesUser activityId={activityId} />;
+  return <>{activityId && <ActivitiesUser activityId={activityId} />}</>;
 }

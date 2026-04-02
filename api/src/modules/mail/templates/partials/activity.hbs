@@ -5,5 +5,7 @@
     <p class='thanks'></p>
     {{content}}
     
-    <p><a href='{{link}}'>{{linkCaption}}</a> </p>
-  </div>
+    {{#if link}}
+      <p><a href='{{link}}'>{{linkCaption}}</a> </p>
+    {{/if}}
+</div>

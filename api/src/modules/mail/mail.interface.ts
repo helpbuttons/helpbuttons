@@ -6,3 +6,10 @@ export interface MailJob {
     template: string;
     context: any;
   }
+
+export interface MailActivity {
+  subject?: string,
+  content: string,
+  link: string,
+  linkCaption: string;
+}
