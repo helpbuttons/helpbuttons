@@ -163,6 +163,7 @@ function Configuration() {
               );
             }
           } else {
+            alertService.warn(`Error: ${JSON.stringify(err)}`)
             dconsole.error(err);
           }
           setSubmitting(() => false)

@@ -233,7 +233,7 @@ export class UpdateNetwork implements WatchEvent {
           this.onError(err)
         } else {
           this.onError(err)
-          throw error;
+          // throw error;
         }
         return of(undefined);
       })

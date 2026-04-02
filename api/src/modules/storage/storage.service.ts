@@ -49,6 +49,21 @@ export class StorageService {
   ) {}
 
   /**
+   * Check if the upload directory is writable
+   * @returns Promise<boolean> true if writable, false otherwise
+   */
+  async isUploadDirWritable(): Promise<boolean> {
+    try {
+      await fs.promises.access(uploadDir, fs.constants.W_OK);
+      return true;
+    } catch (error) {
+      throw new CustomHttpException(
+        ErrorName.UploadNotWritable,
+      );
+    }
+  }
+
+  /**
    * Upload and convert image to web standard format
    * Endpoint: POST /files/upload/image
    * Accepts: .jpg, .jpeg, .png, .gif, .webp, .heic, .heif, .avif
@@ -58,6 +73,8 @@ export class StorageService {
     file: Express.Multer.File,
     options: ImageConvertOptions = {}
   ): Promise<UploadResult> {
+    await this.isUploadDirWritable()
+
     // Validate mimetype
     if (!this.validateImageMimetype(file.mimetype)) {
       throw new CustomHttpException(
@@ -125,6 +142,8 @@ export class StorageService {
    * Videos: .webm, .mp4, .m4v, .mov
    */
   async uploadMedia(file: Express.Multer.File): Promise<UploadResult> {
+    await this.isUploadDirWritable()
+
     const ext = getFileExtension(file.originalname);
     const isImage = ALLOWED_IMAGE_EXTENSIONS.includes(ext);
     const isVideo = ALLOWED_VIDEO_EXTENSIONS.includes(ext);
