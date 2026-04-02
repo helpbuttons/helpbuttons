@@ -37,7 +37,7 @@ export class MailService {
           locale,
           'email.activateSubject'
         ),
-        link: getUrl(locale, activationUrl),
+        link: activationUrl,
         linkCaption: translate(
           locale,
           'email.activateLinkCaption'
@@ -75,7 +75,7 @@ export class MailService {
           locale,
           'email.loginTokenSubject'
         ),
-        link: getUrl(locale, activationUrl),
+        link: activationUrl,
         linkCaption: translate(
           locale,
           'email.loginTokenLinkCaption'
@@ -116,17 +116,21 @@ export class MailService {
     this.networkService
       .findDefaultNetwork()
       .then((network) => {
-        return {name: network.name, logo: configs().WEB_URL + '/api' + network.logo}
+        return {
+          name: network.name,
+          logo: configs().WEB_URL + '/api' + network.logo,
+          jumbo: network.jumbo ? configs().WEB_URL + '/api' + network.jumbo : '',
+        }
       })
       .catch((err) => {
         console.log(err)
         console.log('catched, is it in setup?')
-        return {name: 'continue the setup of your network...', logo: 'no'}
+        return {name: 'continue the setup of your network...', logo: 'no', jumbo: ''}
       })
-      .then(({name, logo}) => {
+      .then(({name, logo, jumbo}) => {
         let from  = configs().from
           from = name + configs().from.slice(configs().from.indexOf('<'))
-        
+
 
         if(!configs().smtpHost)
         {
@@ -141,7 +145,7 @@ export class MailService {
             from: from,
             subject: subject,
             template,
-            context: {...context, url: configs().WEB_URL, to: to, logo},
+            context: {...context, url: configs().WEB_URL, to: to, logo, jumbo},
             headers: {'Message-ID': `<${uuid()}@${configs().hostName}>`}
           })
           .then((mail) => {
@@ -172,7 +176,7 @@ export class MailService {
       context: {
         subject: subject,
         content: content,
-        link: link, 
+        link: getUrl(link), 
         linkCaption: linkCaption,
         to: to,
       },

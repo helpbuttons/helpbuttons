@@ -31,7 +31,7 @@ import { randomBytes } from 'crypto'
 import MetadataSEOFromStore, { MetadataSEO } from 'components/seo';
 import dconsole from 'shared/debugger';
 import Head from 'next/head';
-import CookiesBanner from 'components/home/CookiesBanner';
+import CookiesBanner, { handleAcceptCookies } from 'components/home/CookiesBanner';
 import { MainPopupPage, SetMainPopup, SetPageName } from 'state/HomeInfo';
 import { localStorageService, LocalStorageVars } from 'services/LocalStorage';
 import { usePoolFindNewActivities } from 'state/Activity';
@@ -196,7 +196,7 @@ function MyApp({ Component, pageProps }) {
       console.log('not allowd')
       store.emit(new ResetFilters()) // TODO: bug when using router.back
       store.emit(new SetMainPopup(MainPopupPage.LOGIN))
-      router.back()
+      // router.back()
       return;
     }
     setAuthorized(() => isAllowed);
@@ -253,6 +253,7 @@ function MyApp({ Component, pageProps }) {
       const onError = (err) => {
         alertService.error(t('login.error'));
       };
+      handleAcceptCookies()
       store.emit(new LoginToken(loginToken, onSuccess, onError));
     } else if (loginToken) {
       triedToLogin.current = true;

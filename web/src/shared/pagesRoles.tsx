@@ -37,6 +37,7 @@ export const allowedPathsPerRole =
             '/Activity/:activityId',
             '/Activity/draft/:buttonId',
             '/Activity/admin',
+            '/Activity/button/:buttonId',
             '/Activity/community',
             '/ProfileEdit',
             '/ButtonEdit/:id',

@@ -14,6 +14,9 @@ import translate, {
 import { UserService } from '../user/user.service';
 import { getUrl } from '@src/shared/helpers/mail.helper';
 import { NetworkService } from '../network/network.service';
+import { ActivityService } from './activity.service';
+import { ActivityDtoOut } from './activity.dto';
+import { MailActivity } from '../mail/mail.interface';
 
 const outboxConditions = `created_at between now() - INTERVAL '2 day' AND now()`;
 @Injectable()
@@ -26,6 +29,7 @@ export class ActivityCron {
     @InjectEntityManager()
     private readonly entityManager: EntityManager,
     private readonly networkService: NetworkService,
+    private readonly activityService: ActivityService,
   ) {}
 
   @Cron('27 18 * * *', {
@@ -35,18 +39,53 @@ export class ActivityCron {
     const usersWithPendingNotifications =
       await this.findUsersWithPendingNotifications();
     await Promise.all(
-      usersWithPendingNotifications.map((user) => {
-        return this.getUserOutBox(user.id).then((outboxUser) => {
-          return this.sendDailyUserOutbox(user.id, outboxUser);
-        });
-      }),
-    );
-    await this.setAsSent()
+      usersWithPendingNotifications.map((userNotif) => {
+        return this.userService.findById(userNotif.id)
+          .then((user) => {
+            return this.activityRepository.find({
+              where: [
+                { consumer: { id: user.id }, outbox: true },
+              ],
+              relations: ['button.owner', 'to', 'from', 'consumer'],
+              order: { created_at: 'DESC' },
+            })
+              .then(async (activities) => {
+                const loginParams = await this.userService.getUserLoginParams(user.id)
+                return activities.map((activity) => {
+                  return this.transformActivityOutbox(activity, user.locale, user.id, loginParams);
+                })
+              })
+              .then((activities) => {
+                this.sendDailyUserOutbox(user, activities);
+              })
+          })
+    })
+    )
   }
 
+
+  public transformActivityOutbox(activity, locale, userId, loginParams): MailActivity {
+    let activityOut = this.activityService.transformActivity(activity, locale, userId)
+    console.log(activityOut)
+    if (activity.eventName == ActivityEventName.Message) {
+      return {
+        content: translate(locale, 'activities.newMessageOutbox', [activityOut.activityFrom.name, activityOut.message]),
+        link: this.activityService.addLoginParams(getUrl(`/Activity/button/${activityOut.buttonId}`), loginParams),
+        linkCaption: activityOut.linkCaption
+      }
+    }
+    
+    const link = activityOut.link ? this.activityService.addLoginParams(getUrl(`/Activity/button/${activityOut.buttonId}`), loginParams) : null
+
+    return {
+      content: activityOut.message,
+      link,
+      linkCaption: activityOut.linkCaption
+    }
+  }
   public findUsersWithPendingNotifications() {
     return this.entityManager.query(
-      `select "ownerId" as id, count(id) as numberActivities from activity where outbox = true AND ${outboxConditions} group by "ownerId"`,
+      `select "consumerId" as id, count(id) as numberActivities from activity where outbox = true AND ${outboxConditions} group by "consumerId"`,
     );
   }
 
@@ -60,71 +99,26 @@ export class ActivityCron {
     return this.activityRepository
       .createQueryBuilder('activity')
       .where(
-        `outbox = true AND ${outboxConditions} AND "ownerId" = :ownerId`,
-        { ownerId: userId },
+        `outbox = true AND ${outboxConditions} AND "consumerId" = :consumerId`,
+        { consumerId: userId },
       )
       .getMany();
   }
 
-  sendDailyUserOutbox(userId, outbox: Activity[]) {
-    return this.userService.findById(userId).then((user) => {
-      const activitiesToSend = outbox.map((activity) => {
-        // switch (activity.eventName) {
-        //   case ActivityEventName.NewPost: {
-        //     const post = getPostActivity(activity.data);
-        //     const button = post.button;
-        //     const author = post.author;
-        //     return {
-        //       content: translate(user.locale, 'activities.newpost', [
-        //         post.message,
-        //         button.title,
-        //         author.username,
-        //       ]),
-        //       link: getUrl(user.locale, `/ButtonFile/${button.id}`),
-        //       linkCaption: translate(
-        //         user.locale,
-        //         'email.buttonLinkCaption',
-        //       ),
-        //     };
+  sendDailyUserOutbox(user, outbox: MailActivity[]) {
 
-        //     // add to email to send...
-        //     break;
-        //   }
-        //   case ActivityEventName.NewButton: {
-        //     const button = getButtonActivity(activity.data);
-        //     const interests = user.tags.filter(x => button.tags.includes(x));
-
-        //     return {
-        //       content: translate(
-        //         user.locale,
-        //         'activities.newbuttoninterest',
-        //         [interests.join(',')],
-        //       ),
-        //       link: getUrl(user.locale, `/ButtonFile/${button.id}`),
-        //       linkCaption: translate(
-        //         user.locale,
-        //         'email.buttonLinkCaption',
-        //       ),
-        //     };
-        //     break;
-        //   }
-        //   default:
-        //     return null;
-        // }
-      });
       return this.networkService
         .findDefaultNetwork()
         .then((network) => {
           return this.mailService.sendDailyOutbox({
-            activities: activitiesToSend,
+            activities: outbox,
             to: user.email,
             subject: translate(user.locale, 'email.dailyOutBox', [
-              activitiesToSend.length.toString(),
+              outbox.length.toString(),
               network.name,
               readableDate(user.locale),
             ]),
           });
         });
-    });
   }
 }

@@ -6,12 +6,7 @@
     <div class='wrapper'>
       <p class='title'>{{subject}}</p>
       {{#list activities}}
-      <div class='container'>
-          <p class='thanks'></p>
-          {{content}}
-      
-          <p><a href='{{link}}'>{{linkCaption}}</a> </p>
-      </div>
+      {{> activity}}
       {{/list }}
     </div>
   {{> footer}} <!-- Include the footer partial here -->
