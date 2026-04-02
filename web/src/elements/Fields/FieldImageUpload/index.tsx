@@ -1,10 +1,14 @@
 import Loading from 'components/loading';
 import Btn, { BtnType, IconType } from 'elements/Btn';
 import { ImageContainer, ImageType } from 'elements/ImageWrapper';
+import t from 'i18n';
+import getConfig from 'next/config';
 import { useEffect, useState } from 'react';
 import { IoClose, IoCloudUpload } from 'react-icons/io5';
 import ImageUploading from 'react-images-uploading';
+import { alertService } from 'services/Alert';
 import { createThumbnail } from 'shared/helpers/images.helper';
+import { allowedImageExtensions, allowedImageTypes, fileFilter, parseSizeToBytes } from 'shared/types/files';
 
 export default function FieldImageUpload({
   name,
@@ -19,25 +23,49 @@ export default function FieldImageUpload({
   height = 100,
   alt = "",
 }) {
+  const { publicRuntimeConfig } = getConfig();
+  const  maxUploadSizeBytes = parseSizeToBytes(publicRuntimeConfig.maxUploadSize);
   const [image, setImage] = useState(defaultImage);
   const [isLoading, setIsLoading] = useState(false)
 
   const onChange = async (imageList, addUpdateIndex) => {
     setIsLoading(() => true)
     if(imageList.length > 0) {
+      if(imageList[0].file.size > maxUploadSizeBytes){
+        alertService.warn(t('validation.maxUpload', [publicRuntimeConfig.maxUploadSize]))  
+        setIsLoading(() => false)
+
+        return;
+      }
+      if(allowedImageTypes.indexOf(imageList[0].file.type) < 0){
+        alertService.warn(t('validation.invalidMimeType', [allowedImageTypes.join(',')]))
+        setIsLoading(() => false)
+        return;
+      }
+
+      if(!fileFilter(imageList[0].file.name, allowedImageExtensions)){
+        alertService.warn('file extension not allowed')
+        alertService.warn(t('validation.supportFiles', [allowedImageExtensions.join(',')]))
+        setIsLoading(() => false)
+
+        return;
+      }
+      
       const _image = {
         file: imageList[0].file,
         thumbnail: await createThumbnail(imageList[0].file)
       }
       setImage(() => _image);
       setValue(name, _image);
-    }else{
+    }
+    else{
       setImage(() => null);
       setValue(name, null);
     }
     
     setIsLoading(() => false)
   };
+  
   return (
     <>
       <div className="form__field">
@@ -70,6 +98,7 @@ export default function FieldImageUpload({
                   onImageUpload();
                 }}
               />
+              
               {subtitle && (
                 <div className="form__input-subtitle">
                   <div className="form__input-subtitle-side">
@@ -118,3 +147,5 @@ export default function FieldImageUpload({
     </>
   );
 }
+
+

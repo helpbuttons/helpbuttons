@@ -485,7 +485,7 @@
     "register": "You need to be registered to use this functionality",
     "ownership": "You don't have ownership of this",
     "currentPass": "The current password you type is not correct",
-    "supportFiles": "We don't support this files yet please upload a jpeg or png",
+    "supportFiles": "We don't support this files yet please upload {0}",
     "internalServer": "Unspecified internal server error",
     "emailRegistered": "Email already registered",
     "userRegistered": "Username already registered",
@@ -494,7 +494,8 @@
     "inviteOnly": "Invite only network",
     "address": "Error getting address",
     "dates": "Invalid dates, the end date time should not be before the start",
-    "invalidMimeType": "Invalid mime type"
+    "invalidMimeType": "We don't support filetype please upload {0}",
+    "maxUpload": "Maximum upload is {0}"
   },
   "post": {
     "comment": "comment",

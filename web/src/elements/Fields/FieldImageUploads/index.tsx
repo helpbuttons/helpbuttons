@@ -1,10 +1,14 @@
 import Loading from 'components/loading';
 import Btn, { BtnType, IconType } from 'elements/Btn';
 import { ImageContainer, ImageType } from 'elements/ImageWrapper';
+import t from 'i18n';
 import { useRef, useState } from 'react';
 import { IoClose, IoCloudUpload } from 'react-icons/io5';
 import ImageUploading from 'react-images-uploading';
+import { alertService } from 'services/Alert';
 import { createThumbnail } from 'shared/helpers/images.helper';
+import getConfig from 'next/config';
+import { allowedImageExtensions, allowedImageTypes, fileFilter, parseSizeToBytes } from 'shared/types/files';
 
 export default function FieldImageUploads({
   name,
@@ -20,10 +24,29 @@ export default function FieldImageUploads({
 }) {
   const [images, setImages] = useState(defaultImages);
   const [isLoading, setIsLoading] = useState(false)
+  const { publicRuntimeConfig } = getConfig();
+  const  maxUploadSizeBytes = parseSizeToBytes(publicRuntimeConfig.maxUploadSize);
 
   const onChange = async (imageList, addUpdateIndex) => {
     setIsLoading(() => true)
-    const imageListData = await Promise.all(imageList.map(async (item, idx) => {
+    const imageListData = await Promise.all(imageList.filter((_image) => {
+      if(_image.file.size > maxUploadSizeBytes){
+        alertService.warn(t('validation.maxUpload', [publicRuntimeConfig.maxUploadSize]))  
+        return false;
+      }
+      if(allowedImageTypes.indexOf(_image.file.type) < 0){
+        alertService.warn(t('validation.invalidMimeType', [allowedImageTypes.join(',')]))
+        return false;
+      }
+
+      if(!fileFilter(_image.file.name, allowedImageExtensions)){
+        alertService.warn('file extension not allowed')
+        alertService.warn(t('validation.supportFiles', [allowedImageExtensions.join(',')]))
+        return false;
+      }
+      return true;
+    }).map(async (item, idx) => {
+      
       if(!item.file){
         return item;
       }

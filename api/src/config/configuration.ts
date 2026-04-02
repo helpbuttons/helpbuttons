@@ -19,6 +19,7 @@ let configs = {
   GEOCODE_LIMIT_COUNTRIES: process.env?.GEOCODE_LIMIT_COUNTRIES ? process.env.GEOCODE_LIMIT_COUNTRIES : '',
   GEOCODE_HOST: process.env?.GEOCODE_HOST ? process.env.GEOCODE_HOST : 'https://api.geocode.earth/',
   GEO_SIMULATE : process.env?.GEO_SIMULATE ? true : false,
+  maxUploadSize: process.env?.MAX_UPLOAD_SIZE ? process.env.MAX_UPLOAD_SIZE : '10M',
 }
 
 if (fs.existsSync(`${__dirname}/../../config/config.json`)) {
