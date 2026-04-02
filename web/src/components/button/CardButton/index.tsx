@@ -182,13 +182,15 @@ export function CardButtonHeadMedium({ button, buttonType }) {
             />
           )}
           
-        <div className="card-button__city card-button__everywhere ">
+        <div className="card-button__city ">
           {/* show post count and follow count {button.followCount} | {button.postsCount} */}
           <IoLocationOutline/>
-          {button.address}{' '}
-          {button?.distance && (
-            <> - {readableDistance(button?.distance)}</>
-          )}
+          <div>
+            {button.address}{' '}
+            {button?.distance && (
+              <> - {readableDistance(button?.distance)}</>
+            )}
+          </div>
         </div>
       </div>
     </div>
@@ -398,7 +400,7 @@ export function CardButtonHeadBig({ button, buttonTypes, toggleShowReplyFirstPos
             )}
             <div
               className={
-                'card-button__city card-button__everywhere' +
+                'card-button__city ' +
                 (!button.hideAddress
                   ? ' card-button__city--displayMap'
                   : ' card-button__city--noMap ')
