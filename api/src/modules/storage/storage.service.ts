@@ -11,20 +11,29 @@ import { ImageFile } from './image-file.entity';
 import { 
   getFilesRoute, 
   uploadDir,
-  ALLOWED_IMAGE_TYPES,
-  ALLOWED_IMAGE_EXTENSIONS,
-  ALLOWED_VIDEO_TYPES,
-  ALLOWED_VIDEO_EXTENSIONS,
-  IMAGE_OUTPUT_FORMAT,
-  IMAGE_OUTPUT_QUALITY,
-  IMAGE_MAX_DIMENSION,
-  getFileExtension,
 } from './storage.utils';
+import {
+  allowedImageTypes,
+  allowedImageExtensions,
+  allowedVideoTypes,
+  allowedVideoExtensions,
+  imageOutputFormat,
+  imageOutputQuality,
+  imageMaxDimension,
+  getFileExtension,
+  parseSizeToBytes,
+} from '@src/shared/types/files';
 import * as sharp from 'sharp';
 import * as fs from 'fs';
 import * as path from 'path';
 import { CustomHttpException } from '@src/shared/middlewares/errors/custom-http-exception.middleware';
 import { ErrorName } from '@src/shared/types/error.list';
+import configs from '@src/config/configuration';
+
+const getMaxUploadSizeBytes = (): number => {
+  const sizeString = configs().maxUploadSize;
+  return parseSizeToBytes(sizeString);
+};
 
 export interface UploadResult {
   id: string;
@@ -49,6 +58,21 @@ export class StorageService {
   ) {}
 
   /**
+   * Check if the upload directory is writable
+   * @returns Promise<boolean> true if writable, false otherwise
+   */
+  async isUploadDirWritable(): Promise<boolean> {
+    try {
+      await fs.promises.access(uploadDir, fs.constants.W_OK);
+      return true;
+    } catch (error) {
+      throw new CustomHttpException(
+        ErrorName.UploadNotWritable,
+      );
+    }
+  }
+
+  /**
    * Upload and convert image to web standard format
    * Endpoint: POST /files/upload/image
    * Accepts: .jpg, .jpeg, .png, .gif, .webp, .heic, .heif, .avif
@@ -58,6 +82,14 @@ export class StorageService {
     file: Express.Multer.File,
     options: ImageConvertOptions = {}
   ): Promise<UploadResult> {
+    await this.isUploadDirWritable()
+
+    // Validate file size against MAX_UPLOAD_SIZE
+    const maxSizeBytes = getMaxUploadSizeBytes();
+    if (maxSizeBytes > 0 && file.size > maxSizeBytes) {
+      throw new BadRequestException(`File size exceeds maximum allowed size of ${configs().maxUploadSize}`);
+    }
+
     // Validate mimetype
     if (!this.validateImageMimetype(file.mimetype)) {
       throw new CustomHttpException(
@@ -65,7 +97,7 @@ export class StorageService {
       );
     }
     // Generate unique filename with converted extension
-    const outputFormat = options.format || IMAGE_OUTPUT_FORMAT;
+    const outputFormat = options.format || imageOutputFormat;
     const newFilename = `${uuid()}.${outputFormat}`;
     const tempPath = path.join(uploadDir, `temp_${newFilename}`);
 
@@ -125,26 +157,35 @@ export class StorageService {
    * Videos: .webm, .mp4, .m4v, .mov
    */
   async uploadMedia(file: Express.Multer.File): Promise<UploadResult> {
+    await this.isUploadDirWritable()
+
+
+    // Validate file size against MAX_UPLOAD_SIZE
+    const maxSizeBytes = getMaxUploadSizeBytes();
+    if (maxSizeBytes > 0 && file.size > maxSizeBytes) {
+      throw new BadRequestException(`File size exceeds maximum allowed size of ${configs().maxUploadSize}`);
+    }
+
     const ext = getFileExtension(file.originalname);
-    const isImage = ALLOWED_IMAGE_EXTENSIONS.includes(ext);
-    const isVideo = ALLOWED_VIDEO_EXTENSIONS.includes(ext);
+    const isImage = allowedImageExtensions.includes(ext);
+    const isVideo = allowedVideoExtensions.includes(ext);
 
     if (!isImage && !isVideo) {
       throw new UnsupportedMediaTypeException(
-        `Invalid file type. Allowed images: ${ALLOWED_IMAGE_EXTENSIONS.join(', ')}. Allowed videos: ${ALLOWED_VIDEO_EXTENSIONS.join(', ')}`
+        `Invalid file type. Allowed images: ${allowedImageExtensions.join(', ')}. Allowed videos: ${allowedVideoExtensions.join(', ')}`
       );
     }
 
     // Validate mimetype matches extension
     if (isImage && !this.validateImageMimetype(file.mimetype)) {
       throw new UnsupportedMediaTypeException(
-        `Invalid image mimetype. Allowed: ${ALLOWED_IMAGE_TYPES.join(', ')}`
+        `Invalid image mimetype. Allowed: ${allowedImageTypes.join(', ')}`
       );
     }
 
     if (isVideo && !this.validateVideoMimetype(file.mimetype)) {
       throw new UnsupportedMediaTypeException(
-        `Invalid video mimetype. Allowed: ${ALLOWED_VIDEO_TYPES.join(', ')}`
+        `Invalid video mimetype. Allowed: ${allowedVideoTypes.join(', ')}`
       );
     }
 
@@ -219,14 +260,14 @@ export class StorageService {
    * Validate if mimetype is allowed for images
    */
   private validateImageMimetype(mimetype: string): boolean {
-    return ALLOWED_IMAGE_TYPES.includes(mimetype);
+    return allowedImageTypes.includes(mimetype);
   }
 
   /**
    * Validate if mimetype is allowed for videos
    */
   private validateVideoMimetype(mimetype: string): boolean {
-    return ALLOWED_VIDEO_TYPES.includes(mimetype);
+    return allowedVideoTypes.includes(mimetype);
   }
 
   /**
@@ -238,9 +279,9 @@ export class StorageService {
     outputFilename: string,
     options: ImageConvertOptions = {}
   ): Promise<string> {
-    const format = options.format || IMAGE_OUTPUT_FORMAT;
-    const quality = options.quality || IMAGE_OUTPUT_QUALITY;
-    const maxDim = options.maxDimension || IMAGE_MAX_DIMENSION;
+    const format = options.format || imageOutputFormat;
+    const quality = options.quality || imageOutputQuality;
+    const maxDim = options.maxDimension || imageMaxDimension;
 
     let pipeline = sharp(inputPath);
     
@@ -312,3 +353,4 @@ export class StorageService {
     }
   }
 }
+

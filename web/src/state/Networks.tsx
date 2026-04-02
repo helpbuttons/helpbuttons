@@ -15,6 +15,7 @@ import { useGlobalStore } from 'state';
 import { useEffect, useRef, useState } from 'react';
 import { getLocale } from 'shared/sys.helper';
 import { ButtonService } from 'services/Buttons';
+import { handleError } from './helper';
 // import router from 'next/router';
 
 export interface NetworksState {
@@ -220,23 +221,7 @@ export class UpdateNetwork implements WatchEvent {
       map((networkData) => {
         this.onSuccess(networkData.response);
       }),
-      catchError((error) => {
-        if (!error.response) {
-          this.onError(error, this.network);
-          throw error
-        }
-        let err = error.response;
-
-        if (isHttpError(err) && err.statusCode === 401) { // Unauthorized
-          this.onError("unauthorized", this.network);
-        } else if (err.statusCode === HttpStatus.BAD_REQUEST && err.message === "validation-error" && err.validationErrors) {
-          this.onError(err)
-        } else {
-          this.onError(err)
-          throw error;
-        }
-        return of(undefined);
-      })
+      catchError((error) => handleError(this.onError, error))
     );
   }
 }

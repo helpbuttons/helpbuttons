@@ -66,7 +66,6 @@ export class ActivityCron {
               })
               .then((activities) => {
                 this.logger.log(`Sending email to ${user.email} with ${activities.length} activities`)
-
                 this.sendDailyUserOutbox(user, activities);
               })
           })
