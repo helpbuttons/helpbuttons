@@ -1,6 +1,6 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { MailService } from '../mail/mail.service';
-import { Cron } from '@nestjs/schedule';
+import { Cron, CronExpression } from '@nestjs/schedule';
 import {
   InjectEntityManager,
   InjectRepository,
@@ -15,12 +15,13 @@ import { UserService } from '../user/user.service';
 import { getUrl } from '@src/shared/helpers/mail.helper';
 import { NetworkService } from '../network/network.service';
 import { ActivityService } from './activity.service';
-import { ActivityDtoOut } from './activity.dto';
 import { MailActivity } from '../mail/mail.interface';
 
-const outboxConditions = `created_at between now() - INTERVAL '2 day' AND now()`;
+const outboxConditions = `created_at between now() - INTERVAL '1 day' AND now()`;
 @Injectable()
 export class ActivityCron {
+  private readonly logger = new Logger('TASKS');
+
   constructor(
     private readonly mailService: MailService,
     private readonly userService: UserService,
@@ -32,10 +33,9 @@ export class ActivityCron {
     private readonly activityService: ActivityService,
   ) {}
 
-  @Cron('27 18 * * *', {
-    name: 'notifications',
-  })
+  @Cron(CronExpression.EVERY_DAY_AT_5PM)
   async triggerNotifications() {
+    this.logger.log('Starting to notify all outboxes')
     const usersWithPendingNotifications =
       await this.findUsersWithPendingNotifications();
     await Promise.all(
@@ -51,11 +51,21 @@ export class ActivityCron {
             })
               .then(async (activities) => {
                 const loginParams = await this.userService.getUserLoginParams(user.id)
-                return activities.map((activity) => {
+                return activities
+                  .filter((_activ) => {
+                    // @ts-ignore
+                    if([ActivityEventName.Message, ActivityEventName.NewPostComment].indexOf(_activ.eventName) > -1)
+                    {
+                      return false;
+                    }
+                    return true;
+                  })
+                  .map((activity) => {
                   return this.transformActivityOutbox(activity, user.locale, user.id, loginParams);
                 })
               })
               .then((activities) => {
+                this.logger.log(`Sending email to ${user.email} with ${activities.length} activities`)
                 this.sendDailyUserOutbox(user, activities);
               })
           })
@@ -66,7 +76,6 @@ export class ActivityCron {
 
   public transformActivityOutbox(activity, locale, userId, loginParams): MailActivity {
     let activityOut = this.activityService.transformActivity(activity, locale, userId)
-    console.log(activityOut)
     if (activity.eventName == ActivityEventName.Message) {
       return {
         content: translate(locale, 'activities.newMessageOutbox', [activityOut.activityFrom.name, activityOut.message]),
