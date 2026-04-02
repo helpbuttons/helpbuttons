@@ -82,6 +82,14 @@ export class StorageService {
     file: Express.Multer.File,
     options: ImageConvertOptions = {}
   ): Promise<UploadResult> {
+    await this.isUploadDirWritable()
+
+    // Validate file size against MAX_UPLOAD_SIZE
+    const maxSizeBytes = getMaxUploadSizeBytes();
+    if (maxSizeBytes > 0 && file.size > maxSizeBytes) {
+      throw new BadRequestException(`File size exceeds maximum allowed size of ${configs().maxUploadSize}`);
+    }
+
     // Validate mimetype
     if (!this.validateImageMimetype(file.mimetype)) {
       throw new CustomHttpException(
@@ -149,6 +157,15 @@ export class StorageService {
    * Videos: .webm, .mp4, .m4v, .mov
    */
   async uploadMedia(file: Express.Multer.File): Promise<UploadResult> {
+    await this.isUploadDirWritable()
+
+
+    // Validate file size against MAX_UPLOAD_SIZE
+    const maxSizeBytes = getMaxUploadSizeBytes();
+    if (maxSizeBytes > 0 && file.size > maxSizeBytes) {
+      throw new BadRequestException(`File size exceeds maximum allowed size of ${configs().maxUploadSize}`);
+    }
+
     const ext = getFileExtension(file.originalname);
     const isImage = allowedImageExtensions.includes(ext);
     const isVideo = allowedVideoExtensions.includes(ext);
