@@ -159,7 +159,7 @@ export default function ActivitiesUser({ activityId =null, draft = false, select
         }
         {((selectedActivity) || draft) &&
           <div className="feed-section__center">
-            <ActivityButton setSelectedActivity={setSelectedActivity} closeConversation={closeConversation} selectedActivity={selectedActivity} isDrafting={draft} selectedButton={sideBarButton} />
+            <ActivityButton setSelectedActivity={setSelectedActivity} closeConversation={closeConversation} selectedActivity={selectedActivity} isDrafting={draft} selectedButton={sideBarButton ? currentButton : null} />
             <div className="feed-section__center__chat"></div>
           </div>
         }
