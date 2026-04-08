@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const { i18n } = require('./next-i18next.config');
+const { makeEnvPublic } = require('next-runtime-env');
 
 module.exports = {
   reactStrictMode: true,
@@ -9,8 +10,6 @@ module.exports = {
     description: `${process.env?.description ? process.env.description : ''}`,
     title: `${process.env?.title ? process.env.title : ''}`,
     adminemail: `${process.env?.adminemail ? process.env.adminemail : ''}`,
-    defaultLocale: `${process.env?.DEFAULT_LOCALE ? process.env.DEFAULT_LOCALE : 'en'}`,
-    maxUploadSize: process.env?.MAX_UPLOAD_SIZE ? process.env.MAX_UPLOAD_SIZE : '10M',
   },
   typescript: {
     ignoreBuildErrors: true,
@@ -40,3 +39,5 @@ module.exports = {
     includePaths: [__dirname + '/styles'],
   },
 };
+
+makeEnvPublic(['DEFAULT_LOCALE']);

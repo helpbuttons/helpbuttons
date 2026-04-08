@@ -26,24 +26,27 @@ export function getHref() {
 
 export function getLocaleFromCookie(): string | null {
   try {
+    console.log(document.cookie)
     const match = document.cookie.match(/locale=([^;]+)/);
-    return match ? match[1] : locale;
+    return match ? match[1] : null;
   } catch (err) {
-    return locale;
+    console.log(err)
+    return null;
   }
 }
-
 export function setLocaleCookie(locale: string, days = 365): void {
   try {
+    console.log('setting locale cookie: ' + locale)
     const expires = new Date();
     expires.setTime(expires.getTime() + days * 24 * 60 * 60 * 1000);
     document.cookie = `locale=${locale};expires=${expires.toUTCString()};path=/`;
   } catch (err) {
-    // console.log(err)
+    console.log(err)
   }
 }
+
 export function getLocale() {
-  return getLocaleFromCookie()
+  return locale
 }
 
 export function isRoleAllowed(role: Role, path): boolean {

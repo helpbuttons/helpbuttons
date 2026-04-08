@@ -6,19 +6,14 @@ import Document, {
   NextScript,
   DocumentInitialProps
 } from 'next/document';
-import getEnvConfig from 'next/config';
+import { getLocaleFromCookie } from 'shared/sys.helper';
 
 class MyDocument extends Document {
 
   static async getInitialProps(ctx: DocumentContext): Promise<DocumentInitialProps & { locale: string }> {
     const initialProps = await Document.getInitialProps(ctx);
 
-    const cookieLocale = ctx.req?.headers?.cookie?.match(/locale=([^;]+)/)?.[1];
-    
-    const { publicRuntimeConfig } = getEnvConfig();
-    const defaultLocale = publicRuntimeConfig?.defaultLocale || 'en';
-    
-    const lang = cookieLocale || defaultLocale;
+    const lang = ctx.req?.headers?.cookie?.match(/locale=([^;]+)/)?.[1];
 
     return {
       ...initialProps,
