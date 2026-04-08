@@ -36,7 +36,7 @@ export default function FieldLocation({
   isLocationKey = false,
 }) {
   const [pickedPosition, setPickedPosition] = useState(markerPosition)
-  const [zoom, setZoom] = useState(markerPosition ? markerFocusZoom : selectedNetwork.exploreSettings.zoom );
+  const [zoom, setZoom] = useState((markerPosition && markerPosition[0]) ? markerFocusZoom : selectedNetwork.exploreSettings.zoom );
   const [showPopup, setShowPopup] = useState(false);
   const [isLoading, setIsLoading] = useState(false)
   const [pickedAddress, setPickedAddress] = useState(markerAddress)
