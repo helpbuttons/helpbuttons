@@ -1,6 +1,5 @@
 /** @type {import('next').NextConfig} */
 const { i18n } = require('./next-i18next.config');
-const { makeEnvPublic } = require('next-runtime-env');
 
 module.exports = {
   reactStrictMode: true,
@@ -39,5 +38,3 @@ module.exports = {
     includePaths: [__dirname + '/styles'],
   },
 };
-
-makeEnvPublic(['DEFAULT_LOCALE']);
