@@ -693,6 +693,7 @@ export class ActivityService {
           }
       }
     } catch (err) {
+      console.log(activity)
       console.log(err)
     }
   }
