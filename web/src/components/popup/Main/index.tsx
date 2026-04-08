@@ -106,7 +106,7 @@ export default function MainPopup() {
       {mainPopupButton && (pageName != 'Activity' || isMobile) && (
         <Picker
           headerText={null}
-          closeAction={() => { store.emit(new SetMainPopupCurrentButton(null)); closePopup() }}
+          closeAction={() => {if(pageName != 'Activity') {store.emit(new SetMainPopupCurrentButton(null));} closePopup() }}
           extraClass={'picker__content--nopadding'}
         >
           <ButtonShow button={currentButton} />
