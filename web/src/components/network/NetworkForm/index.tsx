@@ -40,6 +40,7 @@ function NetworkForm({
   setFocus,
   description,
   showClose = true,
+  isSetup = false,
 }) {
   const router = useRouter();
 
@@ -86,6 +87,12 @@ function NetworkForm({
     }
     return findError(chapter.fields, errors);
   };
+  const onLanguageSelection = (value) => {
+    setValue('locale', value); 
+    if (isSetup) { 
+      setLocale(value) 
+    }
+  }
   return (
     <>
       <Form
@@ -134,7 +141,7 @@ function NetworkForm({
               {...register('slogan', { required: true })}
             />            
             
-            <FieldLanguagePick onChange={(value) => {setValue('locale',value); setLocale(value)}} defaultValue={watch('locale')}/>
+            <FieldLanguagePick onChange={onLanguageSelection} defaultValue={watch('locale')}/>
             {/* https://github.com/helpbuttons/helpbuttons/issues/290 */}
             {/* <FieldPrivacy
               name="privacy"
