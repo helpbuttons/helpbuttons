@@ -7,7 +7,7 @@ import { Network } from 'shared/entities/network.entity';
 import { useStore } from 'state';
 import { IoTimeOutline } from 'react-icons/io5';
 
-export function CardButtonCustomFields({ customFields, button }) {
+export function CardButtonCustomFields({ customFields, button, isList = false }) {
   const selectedNetwork: Network = useStore(
     store,
     (state: GlobalState) => state.networks.selectedNetwork,
@@ -45,7 +45,7 @@ export function CardButtonCustomFields({ customFields, button }) {
 
       if (type == 'event') {
         field = (
-            <div className='card-button__date'>
+            <div className={isList ? "card-button-list__date" : "card-button__date"}>
               <IoTimeOutline/>
               <div>
                 <ShowDate

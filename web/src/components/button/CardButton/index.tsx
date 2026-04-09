@@ -179,13 +179,14 @@ export function CardButtonHeadMedium({ button, buttonType }) {
             <CardButtonCustomFields
               customFields={buttonType.customFields}
               button={button}
+              isList={true}
             />
           )}
           
-        <div className="card-button__city ">
+        <div className="card-button-list__city ">
           {/* show post count and follow count {button.followCount} | {button.postsCount} */}
           <IoLocationOutline/>
-          <div className="card-button__city__name ">
+          <div className="card-button-list__city__name ">
             {button.address}{' '}
             {button?.distance && (
               <> - {readableDistance(button?.distance)}</>
