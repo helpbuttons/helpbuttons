@@ -168,6 +168,12 @@ $card-button-list-status-height: 10px;
   box-sizing: border-box;
   display: block;
 
+    overflow: hidden;
+   display: -webkit-box;
+   -webkit-line-clamp: 2; /* number of lines to show */
+           line-clamp: 2; 
+   -webkit-box-orient: vertical;
+   
   &:first-letter {
     text-transform: uppercase;
   }
