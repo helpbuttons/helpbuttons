@@ -252,7 +252,6 @@ export class UpdateButton implements WatchEvent {
       tap((data) => {
         store.emit(new updateCurrentButton(data))
         // store.emit(new ForceRefetch()) // in the future, should just edit on the list of buttons!
-        store.emit(new StoreFindButtons([data]))
         this.onSuccess(data);
       }),
       catchError((error) => handleError(this.onError, error)),
@@ -286,6 +285,9 @@ export class updateCurrentButton implements UpdateEvent {
   public update(state: GlobalState) {
     return produce(state, (newState) => {
       newState.explore.currentButton = this.button;
+      if(this.button != null){
+        store.emit(new StoreFindButtons([this.button]))
+      }
     });
   }
 }
