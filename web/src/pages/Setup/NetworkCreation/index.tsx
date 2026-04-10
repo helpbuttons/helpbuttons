@@ -180,6 +180,7 @@ function NetworkCreation() {
             linkFwd="/Setup/NetworkCreation"
             showClose={false}
             description={t('setup.configureInstanceDescription')}
+            isSetup={true}
           />
         </Popup>
       )}

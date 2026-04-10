@@ -26,7 +26,7 @@ import { LocationKeyIcon } from './MarkerButton';
 import t from 'i18n';
 import { circleGeoJSON } from 'shared/geo.utils';
 import { getCenter } from 'geolib';
-import { isMobile, useIsMobile } from 'elements/SizeOnly';
+import { useIsMobile } from 'elements/SizeOnly';
 
 export default function HexagonExploreMap({
   h3TypeDensityHexes,

@@ -195,7 +195,7 @@ export class ButtonFound implements UpdateEvent {
   }
 }
 
-export class ButtonDelete implements WatchEvent, UpdateEvent {
+export class ButtonDelete implements WatchEvent {
   public constructor(
     private buttonId: string,
     private onSuccess,
@@ -205,18 +205,32 @@ export class ButtonDelete implements WatchEvent, UpdateEvent {
   public watch(state: GlobalState) {
     return ButtonService.delete(this.buttonId).pipe(
       map((res) => {
+        store.emit(new ButtonDeleteUpdate(this.buttonId))
         store.emit(new updateCurrentButton(null))
         this.onSuccess();
       }),
       catchError((error) => handleError(this.onError, error)),
     );
-  }
+  }  
+}
 
+export class ButtonDeleteUpdate implements UpdateEvent {
+  public constructor(private buttonId: string) { }
   public update(state: GlobalState) {
     return produce(state, (newState) => {
-      newState.explore.settings.forceRefetch = true;
-      // delete button from explore and from users buttons
       newState.myButtons = state.myButtons.filter((btn) => btn.id != this.buttonId)
+      newState.explore.settings.forceRefetch = true;
+      newState.explore.map.boundsFilteredButtons = state.explore.map.boundsFilteredButtons.filter((btn) => btn.id != this.buttonId)
+      newState.explore.map.listButtons = state.explore.map.listButtons.filter((btn) => btn.id != this.buttonId)
+      newState.explore.map.cachedHexagons = state.explore.map.cachedHexagons.map((hexagon) => {
+        const filteredButtons = hexagon.buttons ? hexagon.buttons.filter((btn) => btn.id != this.buttonId) : []
+        return {
+          ...hexagon,
+          buttons: filteredButtons,
+          count: filteredButtons.length
+        }
+      })
+
     });
   }
 }

@@ -157,9 +157,9 @@ export default function ActivitiesUser({ activityId =null, draft = false, select
             </div>
           </div>
         }
-        {((selectedActivity) || draft) &&
+        {(selectedActivity || draft) &&
           <div className="feed-section__center">
-            <ActivityButton setSelectedActivity={setSelectedActivity} closeConversation={closeConversation} selectedActivity={selectedActivity} isDrafting={draft} selectedButton={sideBarButton} />
+            <ActivityButton setSelectedActivity={setSelectedActivity} closeConversation={closeConversation} selectedActivity={selectedActivity} isDrafting={draft} selectedButton={sideBarButton ? currentButton : null} />
             <div className="feed-section__center__chat"></div>
           </div>
         }
@@ -198,20 +198,19 @@ const useSideBarButton = (selectedActivity, isDraft) => {
   useEffect(() => {
     if (selectedActivity?.buttonId && selectedActivity?.buttonId != currentButton?.id){
         store.emit(new FindButton(selectedActivity.buttonId, (button) => {
-          setSideBarButton(() => true)
           store.emit(new updateCurrentButton(button))
         }))
     }else if(draftButton){
-      // setSideBarButton(() => draftButton)
       store.emit(new FindButton(draftButton.id, (button) => {
-        setSideBarButton(() => true)
         store.emit(new updateCurrentButton(button))
       }))
     }else if(!(selectedActivity?.buttonId)){
-      setSideBarButton(() => null)
       store.emit(new updateCurrentButton(null))
     }
   }, [selectedActivity, draftButton])
 
+  useEffect(() => {
+    setSideBarButton(() => !!currentButton)
+  }, [currentButton])
   return sideBarButton
 }

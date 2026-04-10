@@ -578,6 +578,7 @@ export class ActivityService {
             footer: `${activity.button.title} - ${activity.button.address}`,
             message: translate(locale, 'activities.deleted'),
             link: null,
+            disableChat: true,
           }
         case ActivityEventName.Message:
           {
@@ -693,6 +694,7 @@ export class ActivityService {
           }
       }
     } catch (err) {
+      console.log(activity)
       console.log(err)
     }
   }
