@@ -86,7 +86,7 @@ export const exploreInitial = {
   map: {
     filters: defaultFilters,
     listButtons: [], // if hexagon clicked, can be different from boundsButtons
-    pinnedButtons: null,
+    pinnedButtons: [],
     boundsFilteredButtons: [],
     cachedHexagons: [],
     initialized: false,
