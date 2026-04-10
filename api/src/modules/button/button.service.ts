@@ -98,25 +98,13 @@ export class ButtonService {
     const buttonTemplate = buttonTemplates.find(
       (btnTemplate) => btnTemplate.name == createDto.type,
     );
-
+    let eventData = {}
     if (buttonTemplate?.customFields) {
       const isEvent = buttonTemplate?.customFields.find(
         (customField) => customField.type == 'event',
       );
       if (isEvent) {
-        if (
-          !createDto.eventEnd ||
-          !createDto.eventStart ||
-          !createDto.eventType
-        ) {
-          throw new CustomHttpException(ErrorName.invalidDates);
-        }
-        if (
-          new Date(createDto.eventEnd).getTime() <
-          new Date(createDto.eventStart).getTime()
-        ) {
-          throw new CustomHttpException(ErrorName.invalidDates);
-        }
+        eventData = this.validateEventFields(createDto.eventStart, createDto.eventEnd, createDto.eventType)
       }
     }
     let awaitingApproval = false;
@@ -145,9 +133,7 @@ export class ButtonService {
         `h3_lat_lng_to_cell(POINT(${createDto.longitude}, ${createDto.latitude}), ${maxResolution})`,
       hideAddress: createDto.hideAddress,
       price: createDto.price,
-      eventStart: createDto.eventStart,
-      eventEnd: createDto.eventEnd,
-      eventType: createDto.eventType,
+      ...eventData,
       hasPhone,
       eventData: createDto.eventData,
       awaitingApproval,
@@ -206,6 +192,7 @@ export class ButtonService {
     mediaFiles: Express.Multer.File[],
     currentUser: User,
   ) {
+    const network = await this.networkService.findDefaultNetwork();
     const currentButton = await this.findById(id, true);
     this.cacheManager.del(CacheKeys.FINDH3_CACHE_KEY)
     let location = {};
@@ -223,10 +210,26 @@ export class ButtonService {
     if (currentButton.owner.phone) {
       hasPhone = true;
     }
-    const button: Partial<Button> = {
+    let eventData = {}
+
+    const buttonTemplates = network.buttonTemplates;
+    const buttonTemplate = buttonTemplates.find(
+      (btnTemplate) => btnTemplate.name == updateDto.type,
+    );
+    if (buttonTemplate?.customFields) {
+      const isEvent = buttonTemplate?.customFields.find(
+        (customField) => customField.type == 'event',
+      );
+      if (isEvent) {
+        eventData = this.validateEventFields(updateDto.eventStart, updateDto.eventEnd, updateDto.eventType)
+      }
+    }
+
+    let button: Partial<Button> = {
       ...updateDto,
       ...location,
       ...hexagon,
+      ...eventData,
       hasPhone,
       images: [],
       id,
@@ -742,5 +745,35 @@ export class ButtonService {
 
   public deleteAllButtonsFromType(type: string) {
     return this.buttonRepository.update({ type: type }, {deleted: true})
+  }
+
+  validateEventFields(eventStart, eventEnd, eventType) {
+
+        if (
+          !eventEnd ||
+          !eventStart ||
+          !eventType
+        ) {
+          throw new CustomHttpException(ErrorName.invalidDates);
+        }
+        if (
+          new Date(eventEnd).getTime() <
+          new Date(eventStart).getTime()
+        ) {
+          // adding one day to event Start, plus the hour set on end time
+          const eventNewEndDate = new Date(eventStart);
+          const eventEndDate = new Date(eventEnd);
+          eventNewEndDate.setDate(eventNewEndDate.getDate() + 1);
+          eventNewEndDate.setHours(
+            eventEndDate.getHours(),
+            eventEndDate.getMinutes(),
+            eventEndDate.getSeconds(),
+            eventEndDate.getMilliseconds()
+          );
+          eventEnd = eventNewEndDate;
+        }
+
+    console.log({eventStart, eventEnd})
+    return {eventStart, eventEnd, eventType}
   }
 }
