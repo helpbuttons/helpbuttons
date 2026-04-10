@@ -198,20 +198,19 @@ const useSideBarButton = (selectedActivity, isDraft) => {
   useEffect(() => {
     if (selectedActivity?.buttonId && selectedActivity?.buttonId != currentButton?.id){
         store.emit(new FindButton(selectedActivity.buttonId, (button) => {
-          setSideBarButton(() => true)
           store.emit(new updateCurrentButton(button))
         }))
     }else if(draftButton){
-      // setSideBarButton(() => draftButton)
       store.emit(new FindButton(draftButton.id, (button) => {
-        setSideBarButton(() => true)
         store.emit(new updateCurrentButton(button))
       }))
     }else if(!(selectedActivity?.buttonId)){
-      setSideBarButton(() => null)
       store.emit(new updateCurrentButton(null))
     }
   }, [selectedActivity, draftButton])
 
+  useEffect(() => {
+    setSideBarButton(() => !!currentButton)
+  }, [currentButton])
   return sideBarButton
 }

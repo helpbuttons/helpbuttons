@@ -306,12 +306,6 @@ function useHexagonMap({
       fetchBounds(exploreSettings.bounds, exploreSettings.zoom);
     }
   }, [cachedHexagons]);
-  useEffect(() => {
-    if(forceRefetch)
-    {
-      cachedH3Hexes.current = []
-    }
-  }, [forceRefetch])
   const calculateNonCachedHexagons = (
     debounceHexagonsToFetch,
     cachedH3Hexes,
@@ -339,6 +333,10 @@ function useHexagonMap({
   };
 
   useEffect(() => {
+
+    if(forceRefetch){
+      cachedH3Hexes.current = []
+    }
     if (debounceHexagonsToFetch.hexagons.length > 0) {
       const hexesToFetch = calculateNonCachedHexagons(
         debounceHexagonsToFetch,
@@ -367,7 +365,7 @@ function useHexagonMap({
         updateDensityMap();
       }
     }
-  }, [debounceHexagonsToFetch]);
+  }, [debounceHexagonsToFetch, forceRefetch]);
 
   function updateDensityMap() {
     if (exploreSettings.loading) {
