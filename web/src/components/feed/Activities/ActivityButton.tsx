@@ -67,19 +67,16 @@ export function ActivityDetailConversation({ selectedActivity, closeConversation
 
   const lastBtnActivity = buttonActivities.length > 0 ? buttonActivities[0] : -1
 
-  if (!selectedButton || !selectedActivity) {
-    return (<LoadingWrapper />)
-  }
 
   if (!selectedActivity.activityFrom) {
-    return (<>?</>)
+    return (<></>)
   }
 
   return (
     <>
       <ActivityDetailHeader button={selectedButton} selectedActivity={selectedActivity} closeConversation={closeConversation} />
-      <ActivityDetailList buttonActivities={buttonActivities} setButtonActivities={setButtonActivities} buttonId={selectedButton.id} consumerId={selectedActivity.consumerId} selectedActivity={selectedActivity} lastButtonActivityId={lastBtnActivity.id}/>
-      {!selectedActivity?.disableChat && <MessageForm sendNewMessage={sendNewMessage} buttonId={selectedButton.id} consumerId={selectedActivity.consumerId} />}
+      <ActivityDetailList buttonActivities={buttonActivities} setButtonActivities={setButtonActivities} buttonId={selectedActivity?.buttonId} consumerId={selectedActivity.consumerId} selectedActivity={selectedActivity} lastButtonActivityId={lastBtnActivity.id}/>
+      {(!lastBtnActivity?.disableChat && selectedButton?.id)&& <MessageForm sendNewMessage={sendNewMessage} buttonId={selectedButton.id} consumerId={selectedActivity.consumerId} />}
     </>
   )
 }
@@ -360,7 +357,7 @@ function ActivityDetailHeader({ closeConversation, button, selectedActivity }) {
             <a href="#" onClick={() => showUser(selectedActivity.activityFrom.username)}>{selectedActivity.activityFrom.name}</a>
           </h1>
           <h2 className="chat__header-subtitle">
-            <a href="#" onClick={() => showButton(selectedActivity.buttonId)}>{button.title}</a>
+            <a href="#" onClick={() => showButton(selectedActivity.buttonId)}>{button?.title}</a>
           </h2>
         </div>
         <div className="chat__header-right">

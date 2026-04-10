@@ -44,17 +44,15 @@ export class ActivityController {
   
   @OnlyRegistered()
   @Post('sendMessage/:buttonId/:consumerId')
-  async sendMessage(@CurrentUser() user: User, @Body() message: MessageDto, @Param('buttonId') buttonId: string,  @Param('consumerId') consumerId: string){
-    return this.activityService.sendMessage(user.id, consumerId, buttonId, message.message)
-    .then((insertresult) => {
-      return this.buttonService.follow(buttonId, user.id).then((button) => {
-        return this.userService.follow(buttonId, user.id)
+  async sendMessage(@CurrentUser() user: User, @Body() message: MessageDto, @Param('buttonId') buttonId: string, @Param('consumerId') consumerId: string) {
+    return this.buttonService.follow(buttonId, user.id).then((button) => {
+      return this.userService.follow(buttonId, user.id)
         .then((user) => {
-          if(button){
-            notifyUser(this.eventEmitter,ActivityEventName.NewFollowingButton,{button, user})
+          if (button) {
+            notifyUser(this.eventEmitter, ActivityEventName.NewFollowingButton, { button, user })
           }
         })
-      })
+        .then(() => this.activityService.sendMessage(user.id, consumerId, buttonId, message.message))
     })
   }
 
