@@ -375,6 +375,7 @@ export class ActivityService {
       lastActivityButtonConsumer: setAsLastButtonConsumer,
       lastActivityButtonOwner: setAsLastButtonOwner,
     };
+        
     if (setAsLastButtonConsumer) {
       await this.hideActivitiesButtonConsumer(button.id, consumer.id)
     }
@@ -541,7 +542,6 @@ export class ActivityService {
 
       switch (activity.eventName) {
         case ActivityEventName.NewFollowingButton:
-
           return {
             ...activityOut,
             title: isButtonOwner ? activity.from.name : activity.button.owner.name,
@@ -694,8 +694,29 @@ export class ActivityService {
           }
       }
     } catch (err) {
-      console.log(activity)
+      // console.log(activity)
+      console.log(activity.id)
       console.log(err)
+    }
+    return {
+        id: activity.id,
+        eventName: activity.eventName,
+        read: false,
+        createdAt: activity.created_at,
+        buttonId: activity?.button?.id,
+        fromId: activity?.from?.id,
+        consumerId: activity.consumer.id,
+        activityFrom: false,
+        disableChat: true,
+        link: getUrl('/Explore'),
+        linkCaption: 'errror',
+        title: "",
+        from: "",
+        image: "",
+        buttonType: "",
+        type: "",
+        footer: "",
+        message: activity.eventName
     }
   }
 
