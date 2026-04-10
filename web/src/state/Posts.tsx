@@ -75,7 +75,8 @@ export class CreateNewPostComment implements WatchEvent, UpdateEvent {
     return produce(state, (newState) => {
       newState.explore.currentButton.isFollowing = true
       dconsole.log('[CreateNewPostComment]')
-      newState.explore.settings.forceRefetch = true;
+      // newState.explore.settings.forceRefetch = true;
+      // store.emit(new ForceRefetch()) // in the future, should just edit on the list of buttons!
     });
   }
 }
@@ -99,7 +100,7 @@ export class CreateNewCommentReply implements WatchEvent, UpdateEvent {
     return produce(state, (newState) => {
       newState.explore.currentButton.isFollowing = true
       dconsole.log('[CreateNewCommentReply]')
-      newState.explore.settings.forceRefetch = true;
+      // newState.explore.settings.forceRefetch = true;
     });
   }
 }

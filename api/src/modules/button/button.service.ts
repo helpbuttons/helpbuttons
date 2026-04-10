@@ -281,7 +281,7 @@ export class ButtonService {
       if (isExpired) {
         throw new CustomHttpException(ErrorName.expiredDates);
       }
-      return this.buttonRepository.save([button]);
+      return this.buttonRepository.save([button]).then((btn) => {console.log(button); return this.findById(button.id)})
     });
   }
 

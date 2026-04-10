@@ -46,10 +46,11 @@ import {
 import PopupButtonFile from 'components/popup/PopupButtonFile';
 import { ButtonShow } from 'components/button/ButtonShow';
 import { showMarkersZoom } from 'components/map/Map/Map.consts';
-import { applyFiltersHex } from 'components/search/AdvancedFilters/filters.type';
+import { applyFilters, applyFiltersHex } from 'components/search/AdvancedFilters/filters.type';
 import { Button } from 'shared/entities/button.entity';
 import { replaceUrl } from 'components/uri/builder';
 import { ListKeyLocation } from 'state/Geo';
+import { cellToParent } from 'h3-js';
 
 
 function HoneyComb({ selectedNetwork }) {
@@ -286,7 +287,7 @@ function useHexagonMap({
   boundsFilteredButtons,
   cachedHexagons,
   buttonTypes,
-  forceRefetch,
+  cachedButtons
 }) {
 
   
@@ -333,77 +334,52 @@ function useHexagonMap({
   };
 
   useEffect(() => {
-
-    if(forceRefetch){
-      cachedH3Hexes.current = []
-    }
-    if (debounceHexagonsToFetch.hexagons.length > 0) {
-      const hexesToFetch = calculateNonCachedHexagons(
-        debounceHexagonsToFetch,
-        cachedH3Hexes,
-      );
-      if (hexesToFetch.length > 0) {
-        store.emit(
-          new FindButtons(
-            debounceHexagonsToFetch.resolution,
-            hexesToFetch,
-            (buttons) => {
-              const newDensityMapHexagons = calculateDensityMap(
-                buttons,
-                debounceHexagonsToFetch.resolution,
-                hexesToFetch,
-              );
-              recalculateCacheH3Hexes(newDensityMapHexagons);
-              updateDensityMap();
-            },
-            (error) => {
-              console.error(error);
-            },
-          ),
+    if (debounceHexagonsToFetch.init) {
+      if (debounceHexagonsToFetch.hexagons.length > 0) {
+        const hexesToFetch = calculateNonCachedHexagons(
+          debounceHexagonsToFetch,
+          cachedH3Hexes,
         );
-      } else {
-        updateDensityMap();
+        if (hexesToFetch.length > 0) {
+          store.emit(
+            new FindButtons(
+              debounceHexagonsToFetch.resolution,
+              hexesToFetch,
+              (buttons) => { }, (error) => console.log(error)))
+        }
       }
     }
-  }, [debounceHexagonsToFetch, forceRefetch]);
+  }, [debounceHexagonsToFetch])
 
-  function updateDensityMap() {
-    if (exploreSettings.loading) {
-      return;
-    }
-    const boundsButtons = cachedH3Hexes.current.filter(
-      (cachedHex) => {
-        return debounceHexagonsToFetch.hexagons.find(
-          (hexagon) => hexagon == cachedHex.hexagon,
-        );
-      },
-    );
-    const { filteredButtons, filteredHexagons } = applyFiltersHex(
+  useEffect(() => {
+
+    const boundCachedButtons = cachedButtons.filter((_btn) => debounceHexagonsToFetch.hexagons.indexOf(cellToParent(_btn.hexagon, debounceHexagonsToFetch.resolution)) > -1)
+    const { filteredButtons } = applyFilters(
       filters,
-      boundsButtons,
+      boundCachedButtons,
       buttonTypes,
     );
 
     const orderedFilteredButtons = orderBy(
       filteredButtons,
       filters.orderBy,
-      exploreSettings.center,
+      exploreSettings?.center,
     );
-
-    seth3TypeDensityHexes(() => {
-      return filteredHexagons;
-    });
     store.emit(
       new UpdateBoundsFilteredButtons(orderedFilteredButtons),
     );
-  }
 
-  useEffect(() => {
-    if(hexagonsToFetch.init)
-    {
-      updateDensityMap();
-    }
-  }, [filters]);
+    const filteredHexagons = calculateDensityMap(
+      filteredButtons,
+      debounceHexagonsToFetch.resolution,
+      debounceHexagonsToFetch.hexagons,
+    );
+    seth3TypeDensityHexes(() => {
+      return filteredHexagons;
+    });
+
+    recalculateCacheH3Hexes(filteredHexagons);
+  }, [cachedButtons, filters, debounceHexagonsToFetch.resolution])
 
   const handleBoundsChange = (bounds, center: Point, zoom) => {
     if (bounds) {
@@ -485,7 +461,7 @@ export const orderBy = (buttons, orderBy, center) => {
   if (orderBy == ButtonsOrderBy.EVENT_DATE) {
     return orderByEventDate(buttons);
   }
-  return buttons;
+  return orderByCreated(buttons);
 };
 
 
@@ -539,7 +515,7 @@ function ExploreHexagonMap({toggleShowLeftColumn, exploreSettings, selectedNetwo
     boundsFilteredButtons: boundsFilteredButtons,
     cachedHexagons: exploreMapState.cachedHexagons,
     buttonTypes: selectedNetwork?.buttonTemplates,
-    forceRefetch: exploreSettings.forceRefetch
+    cachedButtons: exploreSettings.cachedButtons
   });
   const [countFilteredButtons, setCountFilteredButtons] = useState(0)
 

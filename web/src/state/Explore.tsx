@@ -51,7 +51,7 @@ export interface ExploreSettings {
   hoverButton: Button;
   viewMode: ExploreViewMode;
   urlUpdated: boolean;
-  forceRefetch: boolean;
+  cachedButtons: Button[];
 }
 
 export const exploreSettingsDefault: ExploreSettings = {
@@ -66,7 +66,7 @@ export const exploreSettingsDefault: ExploreSettings = {
   hoverButton: null,
   viewMode: ExploreViewMode.LIST,
   urlUpdated: false,
-  forceRefetch: true,
+  cachedButtons: [],
 };
 export interface ExploreMapState {
   filters: ButtonFilters;
@@ -106,15 +106,30 @@ export class FindButtons implements WatchEvent {
   ) { }
 
   public watch(state: GlobalState) {
+    // add cache
     return ButtonService.find(this.resolution, this.hexagons).pipe(
       map((buttons) => {
         store.emit(new UpdateTagsList(buttons))
-        return this.onSuccess(buttons)
+        store.emit(new StoreFindButtons(buttons))
+        this.onSuccess(buttons)
       }),
       catchError((error) => handleError(this.onError, error)),
     );
   }
 }
+export class StoreFindButtons implements UpdateEvent {
+  public constructor(
+    private buttons: Button[],
+  ) { }
+
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      const allButtons = _.uniqBy([...this.buttons, ...state.explore.settings.cachedButtons], (_btn) => _btn.id);
+      newState.explore.settings.cachedButtons = allButtons
+    });
+  }
+}
+
 
 export class UpdateTagsList implements UpdateEvent {
   public constructor(
@@ -219,23 +234,13 @@ export class ButtonDeleteUpdate implements UpdateEvent {
   public update(state: GlobalState) {
     return produce(state, (newState) => {
       newState.myButtons = state.myButtons.filter((btn) => btn.id != this.buttonId)
-      newState.explore.settings.forceRefetch = true;
-      newState.explore.map.boundsFilteredButtons = state.explore.map.boundsFilteredButtons.filter((btn) => btn.id != this.buttonId)
-      newState.explore.map.listButtons = state.explore.map.listButtons.filter((btn) => btn.id != this.buttonId)
-      newState.explore.map.cachedHexagons = state.explore.map.cachedHexagons.map((hexagon) => {
-        const filteredButtons = hexagon.buttons ? hexagon.buttons.filter((btn) => btn.id != this.buttonId) : []
-        return {
-          ...hexagon,
-          buttons: filteredButtons,
-          count: filteredButtons.length
-        }
-      })
+      newState.explore.settings.cachedButtons = state.explore.settings.cachedButtons.filter((_btn) => _btn.id != this.buttonId)
 
     });
   }
 }
 
-export class UpdateButton implements WatchEvent, UpdateEvent {
+export class UpdateButton implements WatchEvent {
   public constructor(
     private buttonId: string,
     private button: UpdateButtonDto,
@@ -245,20 +250,15 @@ export class UpdateButton implements WatchEvent, UpdateEvent {
   public watch(state: GlobalState) {
     return ButtonService.update(this.buttonId, this.button).pipe(
       tap((data) => {
-        store.emit(new updateCurrentButton(data[0]))
-        this.onSuccess(data[0]);
+        store.emit(new updateCurrentButton(data))
+        // store.emit(new ForceRefetch()) // in the future, should just edit on the list of buttons!
+        store.emit(new StoreFindButtons([data]))
+        this.onSuccess(data);
       }),
       catchError((error) => handleError(this.onError, error)),
     );
   }
-
-  public update(state: GlobalState) {
-    return produce(state, (newState) => {
-      newState.explore.settings.forceRefetch = true;
-    });
-  }
 }
-
 export class NextCurrentButton implements UpdateEvent {
   public update(state: GlobalState) {
     return produce(state, (newState) => {
@@ -438,9 +438,7 @@ export class UpdateBoundsFilteredButtons implements UpdateEvent, WatchEvent {
   }
 
   public update(state: GlobalState) {
-    return produce(state, (newState) => {
-      newState.explore.settings.forceRefetch = false;
-      
+    return produce(state, (newState) => {      
       //needed to calculate, cause some points go oout of bounds, cause hexagons parts are out.
       const buttonsInBounds = this.boundsFilteredButtons.filter((btn) => isPointInBounds([btn.latitude, btn.longitude], state.explore.settings.bounds))
 
@@ -526,13 +524,16 @@ export class ClearCachedHexagons implements UpdateEvent {
   }
 }
 
-export class ResetExploreSettings implements UpdateEvent {
+export class ResetExploreSettings implements WatchEvent, UpdateEvent {
   public constructor(
     private newExploreSettings: Partial<ExploreSettings>,
   ) { }
+  public watch(state: GlobalState) {
+    store.emit(new ForceRefetch())
+  }
   public update(state: GlobalState) {
     return produce(state, (newState) => {
-      newState.explore.settings = { ...state.explore.settings, ...this.newExploreSettings, ...{ forceRefetch: true } };
+      newState.explore.settings = { ...state.explore.settings, ...this.newExploreSettings };
       newState.explore.currentButton = null;
     })
   }
@@ -657,6 +658,18 @@ export class ListOnlyButtonType implements UpdateEvent {
   public update(state: GlobalState) {
     return produce(state, (newState) => {
       newState.explore.map.listButtons = listButtonsFilteredByHexagon(this.hexagon, state.explore.map.boundsFilteredButtons).filter((btn) => btn.type == this.btnType)
+    });
+  }
+}
+
+
+export class ForceRefetch implements UpdateEvent {
+  public constructor() { }
+
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      newState.explore.settings.cachedButtons = []
+      newState.explore.map.cachedHexagons = []
     });
   }
 }
