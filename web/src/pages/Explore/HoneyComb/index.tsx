@@ -469,7 +469,7 @@ const orderByClosestToCenter = (center, buttons) => {
 };
 
 export const orderByCreated = (buttons) => {
-  return buttons.sort((a,b) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime());
+  return buttons.sort((a,b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
 };
 
 export const orderBy = (buttons, orderBy, center) => {
