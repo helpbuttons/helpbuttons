@@ -45,20 +45,19 @@ import Btn, {
   IconType,
 } from 'elements/Btn';
 import { FixedAlert } from 'components/overlay/Alert';
-import { maxZoom, showHexagonsZoom, showMarkersZoom } from 'components/map/Map/Map.consts';
+import { maxZoom, showHexagonsZoom } from 'components/map/Map/Map.consts';
 import { Button } from 'shared/entities/button.entity';
 import MarkerViewMap from 'components/map/Map/MarkerSelectorMap';
-import { TagsNav } from 'elements/Fields/FieldTags';
 import { ImageGallery } from 'elements/ImageGallery';
 import Loading from 'components/loading';
 import { FindAndSetMainPopupCurrentProfile, MainPopupPage, SetMainPopup, SetMainPopupCurrentProfile } from 'state/HomeInfo';
 import React from 'react';
-import dconsole from 'shared/debugger';
 import { ButtonPin, ButtonUnpin, FindFollowers } from 'state/Button';
-import { SetDraftButton } from 'state/Activity';
 import { useToggle } from 'shared/custom.hooks';
 import { useIsMobile } from 'elements/SizeOnly';
 import { ButtonDelete, updateCurrentButton } from 'state/Explore';
+import { Network } from 'shared/entities/network.entity';
+import { useSelectedNetwork } from 'state/Networks';
 
 export default function CardButton({ button, buttonTypes, toggleShowReplyFirstPost,            hideSendPrivateMessage = false}) {
   const buttonType = useButtonType(button, buttonTypes);
@@ -118,7 +117,7 @@ function CardButtonState({expired, awaitingApproval})
 }
 // card button list on explore
 export function CardButtonHeadMedium({ button, buttonType }) {
-
+  const selectedNetwork: Network = useSelectedNetwork()
   return (
     <div className="card-button__content card-button__content--small">
       <CardButtonState expired={button.expired} awaitingApproval={button.awaitingApproval}/>
@@ -179,6 +178,7 @@ export function CardButtonHeadMedium({ button, buttonType }) {
             <CardButtonCustomFields
               customFields={buttonType.customFields}
               button={button}
+              selectedNetwork={selectedNetwork}
             />
           )}
           
@@ -336,6 +336,7 @@ export function CardButtonHeadBig({ button, buttonTypes, toggleShowReplyFirstPos
     (state: GlobalState) => state.sessionUser,
     false,
   );
+  const selectedNetwork: Network = useSelectedNetwork()
   const [showMap, setShowMap] = useState(false);
   const isMobile = useIsMobile()
   useEffect(() => {
@@ -395,6 +396,7 @@ export function CardButtonHeadBig({ button, buttonTypes, toggleShowReplyFirstPos
                 <CardButtonCustomFields
                   customFields={customFields}
                   button={button}
+                  selectedNetwork={selectedNetwork}
                 />
               </div>
             )}

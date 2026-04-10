@@ -9,12 +9,13 @@ import { useState, forwardRef, useEffect, useRef } from 'react';
 import { FieldColorPick } from 'elements/Fields/FieldColorPick';
 import { tagify } from 'shared/sys.helper';
 import { buttonColorStyle } from 'shared/buttonTypes';
-import { AddCustomFields, CustomFieldIcon } from '../CustomFields/AddCustomFields';
+import { AddCustomFields } from '../CustomFields/AddCustomFields';
 import { EmojiPicker } from 'components/emoji';
 import { Picker, PickerConfirmation } from 'components/picker/Picker';
 import PickerField from 'components/picker/PickerField';
 import { DeleteButtonsType, useSelectedNetwork } from 'state/Networks';
 import { store } from 'state';
+import { customTemplateIcon } from 'components/templates';
 
 
 const FieldButtonTemplates = forwardRef(
@@ -101,7 +102,7 @@ const FieldButtonTemplates = forwardRef(
 
 
                 <div className='form__list-item__actions'>
-                  {val?.customFields && val.customFields.map((field,idx) => { return <span className='btn-circle__icon' key={idx}>{CustomFieldIcon[field.type]}</span> })}
+                  {val?.customFields && val.customFields.map((field,idx) => { return <span className='btn-circle__icon' key={idx}>{customTemplateIcon(field.type)}</span> })}
 
                   <Btn
                     btnType={BtnType.iconActions}
@@ -204,8 +205,10 @@ function ButtonTemplateForm({ label, explain, append, buttonTemplates }) {
         </p>
         {customFields && 
           <AddCustomFields
-            customFields={customFields}
-            setCustomFields={(_customFields) => setValue('customFields', _customFields)}
+            selectedCustomTemplates={customFields}
+            setSelectedCustomTemplates={(_customFields) => setValue('customFields', _customFields)}
+            setEditing={null}
+            editingValue={watch}
           />
         }
         <Btn
@@ -284,8 +287,11 @@ function EditButtonTemplate({cancelEdit, setEditing, editingValue, errors, saveE
               {t('configuration.customFieldsExplain')}
             </p>
             <AddCustomFields
-              customFields={editingValue.customFields}
-              setCustomFields={(customFields) => setEditing({ customFields: customFields })}
+              selectedCustomTemplates={editingValue.customFields}
+              setSelectedCustomTemplates={(customFields) => setEditing({ customFields: customFields })}
+              setEditing={setEditing}
+              editingValue={editingValue}
+              saveEdit={saveEdit}
             />
           </>
         }

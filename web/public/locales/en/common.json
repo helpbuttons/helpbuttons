@@ -465,7 +465,6 @@
     "calendarHeaderText": "Choose date & hour",
     "from": "From... ",
     "until": "Until... ",
-    "eventFieldAdd": "Add date",
     "once": "Once",
     "multipleDates": "Multiple Dates",
     "recurring": "Recurring Dates",
@@ -570,9 +569,6 @@
     "contactAdmin": "Contact the administrator",
     "customFields": "Custom fields",
     "customFieldsExplain": "These are extra fields that you can add to your _helpbuttons_ so they accomplish different tasks. Add date if you want to handle events, or price if you want the users to be able to sell products.",
-    "priceFieldAdd": "Add price",
-    "priceFieldAddLabel": "Display a price so user can buy/sell in their _helpbuttons_",
-    "dateFieldAddLabel": "Display a date so the _helpbutton_ type behaves like an event and users can search by calendar",
     "currencyLabel": "Currency",
     "moderationList": "Moderation",
     "createSupportButton": "Create your network's support button",
@@ -777,5 +773,13 @@
     "community": "Commmunity chat",
     "admin_community": "Admin & Community",
     "you": "You"
+  },
+  "customTemplates": {
+    "schedulerExplain": "Every X time you will have to reactivate your button",
+    "schedulerText": "Add scheduler",
+    "priceExplain": "Display a price so user can buy/sell in their _helpbuttons_",
+    "priceText":  "Add price",
+    "eventExplain": "Display a date so the _helpbutton_ type behaves like an event and users can search by calendar",
+    "eventText": "Add date"
   }
 }
