@@ -55,7 +55,6 @@
     .container a {
       color: #0066cc;
       text-decoration: none;
-      border-bottom: 1px solid #0066cc;
       transition: border-color 0.3s;
     }
 
@@ -85,6 +84,75 @@
     }
     .breaklines {
       white-space: pre-wrap;
+    }
+
+    /* Activity item */
+    .activity-group {
+      margin-bottom: 16px;
+      text-align: left;
+    }
+
+    .activity-label {
+      display: inline-block;
+      background-color: #f5d800;
+      color: #000;
+      font-weight: bold;
+      font-size: 14px;
+      padding: 6px 18px;
+      border-radius: 20px;
+      margin: 0 0 8px 0;
+    }
+
+    .activity-card-link {
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      border-bottom: none;
+    }
+
+    .activity-card-link:hover .activity-card {
+      box-shadow: 6px 6px 14px rgba(0, 0, 0, 0.18);
+    }
+
+    .activity-card-link:hover {
+      cursor: pointer;
+    }
+
+    .activity-card {
+      background-color: #fff;
+      border-radius: 12px;
+      box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.12);
+      padding: 14px 16px;
+    }
+
+    .activity-type {
+      color: #00a8a8;
+      font-size: 13px;
+      margin: 0 0 4px 0;
+    }
+
+    .activity-title {
+      font-size: 16px;
+      font-weight: bold;
+      color: #111;
+      margin: 0 0 4px 0;
+      text-transform: uppercase;
+    }
+
+    .activity-description {
+      font-size: 13px;
+      color: #555;
+      margin: 0 0 10px 0;
+    }
+
+    .activity-meta {
+      font-size: 13px;
+      color: #333;
+      margin: 4px 0 0 0;
+    }
+
+    .activity-address {
+      text-decoration: underline;
     }
 
     /* Email header: jumbo + logo */

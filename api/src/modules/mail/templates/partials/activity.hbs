@@ -1,12 +1,24 @@
-<div class='container'>
-
-    <p style="background-color: yellow; color: black;">{{content}}</p>
-    
-    <a href="{{link}}">
-      <div>
-        <p>{{type}}</p>
-        <p>{{title}}</p>
-        <p>{{address}}</p>
-      </div>
-    </a>
+<div class="activity-group">
+  <p class="activity-label">{{content}}</p>
+  {{#if link}}
+  <a href="{{link}}" class="activity-card-link">
+    <div class="activity-card">
+      <p class="activity-type">{{type}}</p>
+      <p class="activity-title">{{title}}</p>
+      {{#if linkCaption}}
+      <p class="activity-description">{{linkCaption}}</p>
+      {{/if}}
+      <p class="activity-meta">📍 <span class="activity-address">{{address}}</span></p>
+    </div>
+  </a>
+  {{else}}
+  <div class="activity-card">
+    <p class="activity-type">{{type}}</p>
+    <p class="activity-title">{{title}}</p>
+    {{#if linkCaption}}
+    <p class="activity-description">{{linkCaption}}</p>
+    {{/if}}
+    <p class="activity-meta">📍 <span class="activity-address">{{address}}</span></p>
+  </div>
+  {{/if}}
 </div>
