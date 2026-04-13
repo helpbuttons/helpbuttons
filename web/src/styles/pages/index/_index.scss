@@ -36,6 +36,12 @@ $index-mobile-fixed-z-index: $z-index-05;
 
 }
 
+.explore__map-wrapper {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
 .index__content-bottom--hide {
 }
 
