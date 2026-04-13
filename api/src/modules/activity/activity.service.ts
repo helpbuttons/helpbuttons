@@ -533,7 +533,7 @@ export class ActivityService {
   
   public transformActivity(activity, locale, userId) {
     try {
-      const isOwner = activity.to.id == userId;
+      const isOwner = activity?.to?.id == userId;
       const isButtonOwner = activity?.button?.owner?.id == userId
       const disableChat = (userId == activity?.button?.owner.id && activity?.consumer?.id == userId) ? true : false;
       const read = (activity?.from?.id == userId) ? true : activity.read;
@@ -547,7 +547,7 @@ export class ActivityService {
         createdAt: activity.created_at,
         buttonId: activity?.button?.id,
         fromId: activity?.from?.id,
-        consumerId: activity.consumer.id,
+        consumerId: activity?.consumer?.id,
         activityFrom: isButtonOwner ? activity.consumer : activity?.button?.owner,
         disableChat: disableChat,
         link: getUrl('/Explore'),
