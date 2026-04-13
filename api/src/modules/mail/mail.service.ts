@@ -159,7 +159,36 @@ export class MailService {
           });
       })
   }
-
+  sendActivity({
+    to,
+    content,
+    subject,
+    link,
+    linkCaption,
+    title, 
+    address,
+    type,
+    networkName
+  }){
+    return this.sendMail({
+      to: to,
+      cc: null,
+      bcc: null,
+      subject: subject,
+      template: 'mail',
+      context: {
+        subject: subject,
+        content: content,
+        link: getUrl(link), 
+        linkCaption: linkCaption,
+        to: to,
+        title,
+        address,
+        type,
+        networkName
+      },
+    });
+  }
   sendWithLink({
     to,
     content,
@@ -186,7 +215,9 @@ export class MailService {
   sendDailyOutbox({
     activities,
     to,
-    subject
+    subject,
+    date,
+    networkName
   })
   {
     return this.sendMail({
@@ -197,7 +228,9 @@ export class MailService {
       template: 'daily-outbox',
       context: {
           activities,
-          subject
+          subject,
+          networkName,
+          date
       },
     });
   }

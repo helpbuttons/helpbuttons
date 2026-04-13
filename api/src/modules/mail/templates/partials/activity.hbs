@@ -1,11 +1,12 @@
 <div class='container'>
-    {{#if subject}}
-    <p class='title'>{{subject}}</p>
-    {{/if}}
-    <p class='thanks'></p>
-    {{content}}
+
+    <p style="background-color: yellow; color: black;">{{content}}</p>
     
-    {{#if link}}
-      <p><a href='{{link}}'>{{linkCaption}}</a> </p>
-    {{/if}}
+    <a href="{{link}}">
+      <div>
+        <p>{{type}}</p>
+        <p>{{title}}</p>
+        <p>{{address}}</p>
+      </div>
+    </a>
 </div>
