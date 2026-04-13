@@ -124,8 +124,9 @@ $dropdown-bck: $color-white;
 
     width: 100%;
     margin-top: 0;
-    max-height: 150px;
+    max-height: 90vh;
     overflow-y: auto;
+    border-bottom: $border-style-basic;
     position: relative;
     border-radius: 0 0 $border-radius-basic $border-radius-basic;
     border-top: none;
