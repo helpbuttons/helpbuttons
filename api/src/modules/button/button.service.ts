@@ -773,7 +773,15 @@ export class ButtonService {
           eventEnd = eventNewEndDate;
         }
 
-    console.log({eventStart, eventEnd})
     return {eventStart, eventEnd, eventType}
+  }
+
+  validateSchedulerFields(createdAt, eventEnd, customTemplateValues)
+  {
+    // const expirationDate = 
+    // if(eventEnd){
+      // check if eventEnd is bigger than probable expiration date.. and return instead
+    // }
+    // expirationDate
   }
 }
