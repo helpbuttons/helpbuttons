@@ -77,6 +77,14 @@
       margin: auto;
       margin-bottom: 30px;
     }
+    .network-name {
+      text-align: center;
+      font-size: 22px;
+      font-weight: bold;
+      color: #111;
+      margin: 8px 0 4px 0;
+    }
+
     .image-header img{
       background-size: cover;
       height: auto;
@@ -93,7 +101,8 @@
     }
 
     .activity-label {
-      display: inline-block;
+      display: block;
+      width: fit-content;
       background-color: #f5d800;
       color: #000;
       font-weight: bold;
@@ -101,6 +110,11 @@
       padding: 6px 18px;
       border-radius: 20px;
       margin: 0 0 8px 0;
+      text-transform: lowercase;
+    }
+
+    .activity-label::first-letter {
+      text-transform: uppercase;
     }
 
     .activity-card-link {
