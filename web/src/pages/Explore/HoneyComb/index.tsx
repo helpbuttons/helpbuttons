@@ -84,7 +84,9 @@ function HoneyComb({ selectedNetwork }) {
 
   const handleDragPos = (y: number, transitioning: boolean) => {
     if (!bottomRef.current) return;
-    const h = window.innerHeight - y;
+    const listOrder = bottomRef.current.querySelector('.list__order') as HTMLElement;
+    const listOrderHeight = listOrder?.offsetHeight ?? 0;
+    const h = Math.max(0, window.innerHeight - y - listOrderHeight);
     bottomRef.current.style.transition = transitioning
       ? 'height 0.35s cubic-bezier(0.32, 0.72, 0, 1)'
       : 'none';
@@ -147,7 +149,9 @@ function HoneyComb({ selectedNetwork }) {
               </PopupButtonFile>
             )}
           </ExploreContainerLeftColumn>
-          <ExploreHexagonMap toggleShowLeftColumn={toggleShowLeftColumn} exploreSettings={exploreSettings} selectedNetwork={selectedNetwork}/>
+          <div className="explore__map-wrapper">
+            <ExploreHexagonMap toggleShowLeftColumn={toggleShowLeftColumn} exploreSettings={exploreSettings} selectedNetwork={selectedNetwork}/>
+          </div>
           <div
             ref={bottomRef}
             className={
