@@ -53,7 +53,6 @@
 
     /* Link Styles */
     .container a {
-      color: #0066cc;
       text-decoration: none;
       transition: border-color 0.3s;
     }
@@ -99,22 +98,48 @@
       margin-bottom: 16px;
       text-align: left;
     }
+    
 
     .activity-label {
       display: block;
       width: fit-content;
-      background-color: #f5d800;
-      color: #000;
+      background-color: #282828;
+      color: #fcfcfc !important;
       font-weight: bold;
       font-size: 14px;
       padding: 6px 18px;
       border-radius: 20px;
-      margin: 0 0 8px 0;
-      text-transform: lowercase;
+      margin: 10px auto 12px auto;
+      text-decoration: none;
     }
 
     .activity-label::first-letter {
       text-transform: uppercase;
+    }
+
+    .activity-label-p {
+      display: block;
+      width: auto;
+      text-align: left;
+      background-color: #d8d8d8;
+      color: #000 !important;
+      font-weight: bold;
+      font-size: 14px;
+      padding: 6px 18px;
+      border-radius: 3px;
+      margin: 8px auto 10px auto;
+      text-decoration: none;
+
+    }
+
+    .activity-label-p a {
+
+      text-decoration: none;
+      color: #000 !important;
+
+    }
+    .activity-label-p a::first-letter {
+      text-transform: uppercase !important;
     }
 
     .activity-card-link {
@@ -140,7 +165,7 @@
     }
 
     .activity-type {
-      color: #00a8a8;
+      color: #434343;
       font-size: 13px;
       margin: 0 0 4px 0;
     }
@@ -212,6 +237,11 @@
       border: 3px solid #fff;
       background-color: #fff;
       display: block;
+    }
+
+    .date {
+      color: #555;
+      font-size: 11px ;
     }
   </style>
 </head>
