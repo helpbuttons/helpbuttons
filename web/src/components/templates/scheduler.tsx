@@ -63,7 +63,7 @@ export function ConfigurationFormScheduler({ setEditing, editingValue
         }
         )
     }
-    const customFieldValues = editingValue.customFields.find((custom) => custom.type == schedulerTemplate.name)
+    const customFieldValues = editingValue?.customFields ? editingValue.customFields.find((custom) => custom.type == schedulerTemplate.name) : []
     return <>
         <FieldText label={t('customTemplates.schedulerLabelAdminForm')} defaultValue={customFieldValues?.value} name={"value"} onChange={(event) => saveValue(event.target.value)} explain={t('customTemplates.schedulerExplainAdminForm')} />
         <Dropdown defaultSelected={customFieldValues?.unity} options={scheduleUnityOptions} onChange={(value) => saveUnity(value)} />
