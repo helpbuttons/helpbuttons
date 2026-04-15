@@ -53,9 +53,7 @@
 
     /* Link Styles */
     .container a {
-      color: #0066cc;
       text-decoration: none;
-      border-bottom: 1px solid #0066cc;
       transition: border-color 0.3s;
     }
 
@@ -79,7 +77,15 @@
       margin: auto;
       margin-bottom: 30px;
     }
-    .email-header img{
+    .network-name {
+      text-align: center;
+      font-size: 22px;
+      font-weight: bold;
+      color: #111;
+      margin: 8px 0 4px 0;
+    }
+
+    .image-header img{
       background-size: cover;
       height: auto;
       width: 100%;
@@ -89,5 +95,155 @@
       white-space: pre-wrap;
     }
 
+    /* Activity item */
+    .activity-group {
+      margin-bottom: 16px;
+      text-align: left;
+    }
+    
+
+    .activity-label {
+      display: block;
+      width: fit-content;
+      background-color: #282828;
+      color: #fcfcfc !important;
+      font-weight: bold;
+      font-size: 14px;
+      padding: 6px 18px;
+      border-radius: 20px;
+      margin: 10px auto 12px auto;
+      text-decoration: none;
+    }
+
+    .activity-label::first-letter {
+      text-transform: uppercase;
+    }
+
+    .activity-label-p {
+      display: block;
+      width: auto;
+      text-align: left;
+      background-color: #d8d8d8;
+      color: #000 !important;
+      font-weight: bold;
+      font-size: 14px;
+      padding: 6px 18px;
+      border-radius: 3px;
+      margin: 8px auto 10px auto;
+      text-decoration: none;
+
+    }
+
+    .activity-label-p a {
+
+      text-decoration: none;
+      color: #000 !important;
+
+    }
+    .activity-label-p a::first-letter {
+      text-transform: uppercase !important;
+    }
+
+    .activity-card-link {
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      border-bottom: none;
+    }
+
+    .activity-card-link:hover .activity-card {
+      box-shadow: 6px 6px 14px rgba(0, 0, 0, 0.18);
+    }
+
+    .activity-card-link:hover {
+      cursor: pointer;
+    }
+
+    .activity-card {
+      background-color: #fff;
+      border-radius: 12px;
+      box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.12);
+      padding: 14px 16px;
+    }
+
+    .activity-type {
+      color: #434343;
+      font-size: 13px;
+      margin: 0 0 4px 0;
+    }
+
+    .activity-title {
+      font-size: 16px;
+      font-weight: bold;
+      color: #111;
+      margin: 0 0 4px 0;
+      text-transform: uppercase;
+    }
+
+    .activity-description {
+      font-size: 13px;
+      color: #555;
+      margin: 0 0 10px 0;
+    }
+
+    .activity-meta {
+      font-size: 13px;
+      color: #333;
+      margin: 4px 0 0 0;
+    }
+
+    .activity-address {
+      text-decoration: underline;
+    }
+
+    /* Email header: jumbo + logo */
+    .email-header {
+      position: relative;
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto 20px auto;
+      overflow: hidden;
+      background-color: #eee;
+    }
+
+    .email-header__jumbo {
+      display: block;
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .email-header__logo {
+      text-align: center;
+      padding: 20px 0;
+    }
+
+    .email-header__logo--over-jumbo {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+    }
+
+    .email-header__logo-img {
+      width: 80px;
+      height: 80px;
+      border-radius: 40px;
+      object-fit: cover;
+      border: 3px solid #fff;
+      background-color: #fff;
+      display: block;
+    }
+
+    .date {
+      color: #555;
+      font-size: 11px ;
+    }
   </style>
 </head>
