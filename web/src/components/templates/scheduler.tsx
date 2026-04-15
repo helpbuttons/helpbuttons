@@ -4,6 +4,8 @@ import { CustomTemplate } from ".";
 import FieldError from "elements/Fields/FieldError";
 import FieldText from "elements/Fields/FieldText";
 import { Dropdown } from "elements/Dropdown/Dropdown";
+import { calculateExpiringDate, SchedulerUnity } from "shared/types/scheduler.type";
+import { readableDateTime, readableTimeLeftToDate } from "shared/date.utils";
 
 export const schedulerTemplate: CustomTemplate = {
     icon: <IoSync />,
@@ -15,33 +17,28 @@ export const schedulerTemplate: CustomTemplate = {
     fieldView: FieldSchedulerView
 }
 
-export function FieldSchedulerView({}){
-    return <></>
+export function FieldSchedulerView({button}){
+    return <>{button.expirationDate ? `${t('customTemplates.willExpire')} ${readableTimeLeftToDate(button?.expirationDate)}` : ''}</>
 }
 
-export function FieldScheduler({
-    value,
-    unity,
-    validationError
-}) {
+export function FieldScheduler({ customFields }) {
+    const customField = customFields.find((_cstm) => _cstm.type == schedulerTemplate.name)
+    const expirationDate = calculateExpiringDate(customField.unity, parseInt(customField.value))
     return <>
-    <label className="form__label">
-      {t('customFields.priceLabel', [unity])}
-    </label>
-    <p className="form__explain">
-        {t('customFields.priceExplain')}
-      </p>
-    
-    <FieldError validationError={validationError} />
-  </>
+            <label className="form__label">{t('customTemplates.schedulerLabelForm')}</label>
+            <p className="form__explain">
+                {t('customTemplates.schedulerExplainForm')}
+            </p>
+            <div>{readableDateTime(expirationDate)}</div>
+           </>
 }
 export function ConfigurationFormScheduler({ setEditing, editingValue
 }) {
     const scheduleUnityOptions = [
         {value: '', name: ''},
-        { value: 'h', name: 'hour' },
-        { value: 'd', name: 'day' },
-        { value: 'm', name: 'month' },
+        { value: SchedulerUnity.HOUR, name: t('customTemplates.hour') },
+        { value: SchedulerUnity.DAY, name: t('customTemplates.day') },
+        { value: SchedulerUnity.MONTH, name: t('customTemplates.month') },
     ]
     
     const saveUnity = (value) => {
@@ -59,7 +56,6 @@ export function ConfigurationFormScheduler({ setEditing, editingValue
         setEditing({
             customFields: editingValue.customFields.map((_field, idx) => {
                 if (_field.type == schedulerTemplate.name) {
-                    // console.log(_field)
                     return { ..._field, value: value }
                 }
                 return _field
@@ -69,7 +65,7 @@ export function ConfigurationFormScheduler({ setEditing, editingValue
     }
     const customFieldValues = editingValue.customFields.find((custom) => custom.type == schedulerTemplate.name)
     return <>
-        <FieldText label={"Expire buttons after"} defaultValue={customFieldValues?.value} name={"value"} onChange={(event) => saveValue(event.target.value)} />
+        <FieldText label={t('customTemplates.schedulerLabelAdminForm')} defaultValue={customFieldValues?.value} name={"value"} onChange={(event) => saveValue(event.target.value)} explain={t('customTemplates.schedulerExplainAdminForm')} />
         <Dropdown defaultSelected={customFieldValues?.unity} options={scheduleUnityOptions} onChange={(value) => saveUnity(value)} />
     </>
 }

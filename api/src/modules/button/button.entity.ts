@@ -150,5 +150,5 @@ export class Button extends BaseEntity {
 
   @Expose()
   @Column({type: 'timestamp'})
-  expirationDate: Date;
+  expirationDate?: Date;
 }

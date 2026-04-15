@@ -55,6 +55,7 @@ import {
 import { Cache } from 'cache-manager';
 import { CacheKeys } from '@src/shared/types/cache.keys';
 import { cellToLatLng, cellToParent } from 'h3-js';
+import { calculateExpiringDate } from '@src/shared/types/scheduler.type';
 
 @Injectable()
 export class ButtonService {
@@ -98,15 +99,8 @@ export class ButtonService {
     const buttonTemplate = buttonTemplates.find(
       (btnTemplate) => btnTemplate.name == createDto.type,
     );
-    let eventData = {}
-    if (buttonTemplate?.customFields) {
-      const isEvent = buttonTemplate?.customFields.find(
-        (customField) => customField.type == 'event',
-      );
-      if (isEvent) {
-        eventData = this.validateEventFields(createDto.eventStart, createDto.eventEnd, createDto.eventType)
-      }
-    }
+    const customData = this.saveCustomFields(network.buttonTemplates, createDto)
+
     let awaitingApproval = false;
     if (network.requireApproval && user.role != Role.admin) {
       awaitingApproval = true;
@@ -133,7 +127,7 @@ export class ButtonService {
         `h3_lat_lng_to_cell(POINT(${createDto.longitude}, ${createDto.latitude}), ${maxResolution})`,
       hideAddress: createDto.hideAddress,
       price: createDto.price,
-      ...eventData,
+      ...customData,
       hasPhone,
       eventData: createDto.eventData,
       awaitingApproval,
@@ -210,26 +204,14 @@ export class ButtonService {
     if (currentButton.owner.phone) {
       hasPhone = true;
     }
-    let eventData = {}
-
-    const buttonTemplates = network.buttonTemplates;
-    const buttonTemplate = buttonTemplates.find(
-      (btnTemplate) => btnTemplate.name == updateDto.type,
-    );
-    if (buttonTemplate?.customFields) {
-      const isEvent = buttonTemplate?.customFields.find(
-        (customField) => customField.type == 'event',
-      );
-      if (isEvent) {
-        eventData = this.validateEventFields(updateDto.eventStart, updateDto.eventEnd, updateDto.eventType)
-      }
-    }
-
+    
+    const customData = this.saveCustomFields(network.buttonTemplates, updateDto)
+    
     let button: Partial<Button> = {
       ...updateDto,
       ...location,
       ...hexagon,
-      ...eventData,
+      ...customData,
       hasPhone,
       images: [],
       id,
@@ -773,15 +755,31 @@ export class ButtonService {
           eventEnd = eventNewEndDate;
         }
 
-    return {eventStart, eventEnd, eventType}
+    return {eventStart, eventEnd, eventType, expirationDate: eventEnd}
   }
 
-  validateSchedulerFields(createdAt, eventEnd, customTemplateValues)
+  saveCustomFields(buttonTemplates, dto)
   {
-    // const expirationDate = 
-    // if(eventEnd){
-      // check if eventEnd is bigger than probable expiration date.. and return instead
-    // }
-    // expirationDate
+    let eventData = {}
+    const buttonTemplate = buttonTemplates.find(
+      (btnTemplate) => btnTemplate.name == dto.type,
+    );
+    if (buttonTemplate?.customFields) {
+      const isEvent = buttonTemplate?.customFields.find(
+        (customField) => customField.type == 'event',
+      );
+      if (isEvent) {
+        eventData = this.validateEventFields(dto.eventStart, dto.eventEnd, dto.eventType)
+      }
+
+      const isScheduled = buttonTemplate?.customFields.find(
+        (customField) => customField.type == 'scheduler',
+      );
+      if(isScheduled)
+      {
+        eventData = {expirationDate: calculateExpiringDate(isScheduled.unity, parseInt(isScheduled.value))}
+      }
+    }
+    return eventData;
   }
 }

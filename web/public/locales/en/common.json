@@ -780,6 +780,13 @@
     "priceExplain": "Display a price so user can buy/sell in their _helpbuttons_",
     "priceText":  "Add price",
     "eventExplain": "Display a date so the _helpbutton_ type behaves like an event and users can search by calendar",
-    "eventText": "Add date"
+    "eventText": "Add date",
+    "schedulerLabelForm": "Expiring at",
+    "schedulerExplainForm": "This _helpbutton_ type automatic expires at this date",
+    "schedulerExplainAdminForm": "If you add this to a _helpbutton_ type, all the _helpbuttons_ of this type will expire automatically",
+    "schedulerLabelAdminForm": "Choose how long until the _helpbuttons_ expire",
+    "month": "Month",
+    "hour": "Hour",
+    "day": "day"
   }
 }
