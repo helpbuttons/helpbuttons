@@ -39,7 +39,6 @@ export default function HexagonExploreMap({
   const [centerBounds, setCenterBounds] = useState<Point>(null);
   const [geoJsonFeatures, setGeoJsonFeatures] = useState([])
   const [resolution, setResolution] = useState(0)
-  const maxButtonsHexagon = useRef(1)
 
   const currentButton = useGlobalStore((state: GlobalState) => state.explore.currentButton)
 
@@ -94,9 +93,6 @@ export default function HexagonExploreMap({
 
   useEffect(() => {
     setGeoJsonFeatures(() => convertH3DensityToFeatures(h3TypeDensityHexes).filter((hex) => hex.properties.count > 0));
-    maxButtonsHexagon.current = h3TypeDensityHexes.reduce((accumulator, currentValue) => {
-      return Math.max(accumulator, currentValue.count);
-    }, 1);
   }, [h3TypeDensityHexes]);
 
   useEffect(() => {

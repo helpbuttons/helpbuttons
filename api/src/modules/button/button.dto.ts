@@ -187,6 +187,9 @@ export class ButtonEntry implements Partial<Button> {
   
   @Expose()
   expirationDate?: Date;
+
+  @Expose()
+  created_at?: Date;
 }
 
 

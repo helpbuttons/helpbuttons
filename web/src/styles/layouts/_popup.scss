@@ -260,6 +260,7 @@ $popup-max-height-large: 720px;
 
 .popup__options-h {
 
+  display: flex;
   flex-flow: row nowrap;
   // flex-wrap: wrap;
   justify-content: space-between;

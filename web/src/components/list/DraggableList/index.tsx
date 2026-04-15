@@ -39,6 +39,11 @@ const DraggableList: React.FC<DraggableProps> = ({
 
   const [transitioning, setTransitioning] = useState<boolean>(false);
 
+  // Tracks whether the current drag was started by the user (not programmatic)
+  const isUserDragRef = useRef(false);
+  // Captures pos.y at drag start for direction detection
+  const dragStartPosRef = useRef<number>(0);
+
   const functionHandler = (data: number) => {
     if (data < getOpenListHeight()) {
       onFullScreen(true, true);
@@ -96,7 +101,7 @@ const DraggableList: React.FC<DraggableProps> = ({
     if (pos.y === getClosedListHeight()) {
       setListOpen(() => false);
     }
-  }, [pos]);  
+  }, [pos]);
 
     useEffect(() => {
     if (isListOpen && !isListFullScreen) {
@@ -111,6 +116,25 @@ const DraggableList: React.FC<DraggableProps> = ({
     }
   }, [isListOpen, isListFullScreen]);
 
+  // Snap logic runs here after dragging stops so pos.y is the committed (fresh) value.
+  useEffect(() => {
+    if (!dragging && isUserDragRef.current) {
+      isUserDragRef.current = false;
+      const draggedDown = pos.y > dragStartPosRef.current;
+      let newY: number;
+      if (pos.y < getOpenListHeight()) {
+        newY = getFullScreenListHeight();
+      } else if (draggedDown || pos.y >= getClosedListHeight() - 50) {
+        // Dragged toward bottom, or landed very close to/at the bottom → stay closed
+        newY = getClosedListHeight();
+      } else {
+        newY = getOpenListHeight();
+      }
+      functionHandler(newY);
+      snapTo(newY);
+    }
+  }, [dragging]);
+
   // MOUSE EVENTS
   const onMouseDown = (e: MouseEvent<HTMLDivElement>) => {
     if (e.button !== 0) return;
@@ -119,7 +143,7 @@ const DraggableList: React.FC<DraggableProps> = ({
   };
 
   const onMouseUp = (e: MouseEvent<HTMLDivElement>) => {
-    endDragging(e.pageY);
+    endDragging();
     e.stopPropagation();
     e.preventDefault();
   };
@@ -144,13 +168,14 @@ const DraggableList: React.FC<DraggableProps> = ({
   };
 
   const handleTouchEnd = (e: TouchEvent<HTMLDivElement>) => {
-    const touch = e.changedTouches[0];
-    endDragging(touch.pageY);
+    endDragging();
   };
 
   // SHARED FUNCTIONS
   const startDragging = (x: number, y: number) => {
     setTransitioning(false);
+    isUserDragRef.current = true;
+    dragStartPosRef.current = pos.y;
     const Xpos = { x: x - (pos.x || 0), y: y - (pos.y || 0) };
     setDragging(true);
     setRel(Xpos);
@@ -185,20 +210,9 @@ const DraggableList: React.FC<DraggableProps> = ({
     });
   };
 
-  const endDragging = (y: number) => {
-    let newY: number;
-    if (pos.y < getOpenListHeight()) {
-      newY = getFullScreenListHeight();
-    } else if (pos.y > window.innerHeight - 200) {
-      newY = getClosedListHeight();
-    } else if (pos.y > getClosedListHeight()) {
-      newY = getClosedListHeight();
-    } else {
-      newY = getOpenListHeight();
-    }
-    functionHandler(newY);
+  // endDragging only stops the drag; snap logic is in the useEffect above.
+  const endDragging = () => {
     setDragging(false);
-    snapTo(newY);
   };
 
   return (

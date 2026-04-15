@@ -1,7 +1,7 @@
 ///Btn is the project convention for tradittional buttons, in order to avoidd confussion with app's buttons
 import React from "react";
-import Spinner from "elements/Spinner";
 import router from "next/router";
+import Loading from "components/loading";
 
 export enum BtnType {
     corporative,
@@ -183,7 +183,7 @@ export default function Btn({
         <button {...attr} onClick={onClick} disabled={disabled} className={className + ' ' + extraClass} 
         style={{'borderColor': borderColor} as React.CSSProperties}  
         >
-            {isSubmitting && <Spinner />}
+            {isSubmitting && <Loading />}
             <BtnIcon icon={iconLeft} iconLink={iconLink} 
             style={
                 {

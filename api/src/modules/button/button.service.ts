@@ -266,7 +266,7 @@ export class ButtonService {
       if (isExpired) {
         throw new CustomHttpException(ErrorName.expiredDates);
       }
-      return this.buttonRepository.save([button]);
+      return this.buttonRepository.save([button]).then((btn) => {console.log(button); return this.findById(button.id)})
     });
   }
 
@@ -411,13 +411,17 @@ export class ButtonService {
   }
 
   async follow(buttonId: string, userId: string) {
-    const button = await this.findById(buttonId);
-    const index = button.followedBy.indexOf(userId);
-    if (index < 0 && button.owner.id != userId) {
-      button.followedBy.push(userId);
-      return await this.buttonRepository.save(button);
-    }
-    return null;
+    return this.findById(buttonId)
+    .then((button) => {
+      const index = button.followedBy.indexOf(userId);
+      if (index < 0 && button.owner.id != userId) {
+        button.followedBy.push(userId);
+        return this.buttonRepository.save(button)
+        .then((_btn) => {
+          return button
+        })
+      }
+    })
   }
 
   async unfollow(buttonId: string, userId: string) {

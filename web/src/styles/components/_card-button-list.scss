@@ -158,7 +158,7 @@ $card-button-list-status-height: 10px;
   font-size: $font-size-medium;
   line-height: auto;
   margin-bottom: 0;
-  font-weight: $font-weight-bold;
+  font-weight: $font-weight-bolder;
   color: $color-black;
   margin: $padding-small 0;
   max-height: 50px;
@@ -167,6 +167,12 @@ $card-button-list-status-height: 10px;
   word-break: break-word;
   box-sizing: border-box;
   display: block;
+
+    overflow: hidden;
+   display: -webkit-box;
+   -webkit-line-clamp: 2; /* number of lines to show */
+           line-clamp: 2; 
+   -webkit-box-orient: vertical;
 
   &:first-letter {
     text-transform: uppercase;
@@ -251,15 +257,55 @@ $card-button-list-status-height: 10px;
   }
 }
 
-.card-button-list__city,
+
 .card-button-list__city {
+  display: flex;
+  font-size: $font-size-medium;
   cursor: pointer;
-  padding-right: 1rem;
-  text-decoration: underline;
   text-align: left;
-  display: inline-block;
+  text-overflow: ellipsis;
+  justify-content: center;
+  align-items: center;
+  gap: $padding-small;
+  line-height: $text-line-height-xsmall;
+    font-weight: $font-weight-bold;
+
+
+    & svg{
+      height: 20px;
+      min-width: 20px;
+    }
 }
 
+.card-button-list__city__name {
+   overflow: hidden;
+   display: -webkit-box;
+   -webkit-line-clamp: 2; 
+    line-clamp: 2; 
+   -webkit-box-orient: vertical;
+}
+
+.card-button-list__date {
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: $padding-small;
+  line-height: $text-line-height-xsmall;
+  overflow: hidden;
+  -webkit-line-clamp: 2;
+  line-clamp: 2; 
+  -webkit-box-orient: vertical;
+  font-weight: $font-weight-bold;
+
+
+  & svg{
+    height: 20px;
+    min-width: 20px;
+  }
+
+}
 .card-button-list__everywhere {
   cursor: pointer;
   padding-right: 1rem;
