@@ -56,6 +56,7 @@ import { Cache } from 'cache-manager';
 import { CacheKeys } from '@src/shared/types/cache.keys';
 import { cellToLatLng, cellToParent } from 'h3-js';
 import { calculateExpiringDate } from '@src/shared/types/scheduler.type';
+import { CustomFields } from '@src/shared/types/customFields.type';
 
 @Injectable()
 export class ButtonService {
@@ -535,7 +536,7 @@ export class ButtonService {
 
   isEventExpired(button: Partial<Button>) {
     return this.networkService
-      .getButtonTypesWithEventField()
+      .getButtonTypesWith([CustomFields.Event])
       .then((btnTemplateEvents) => {
         // if its a button type with an event field
         if (btnTemplateEvents.indexOf(button.type) > -1) {
@@ -770,14 +771,14 @@ export class ButtonService {
     );
     if (buttonTemplate?.customFields) {
       const isEvent = buttonTemplate?.customFields.find(
-        (customField) => customField.type == 'event',
+        (customField) => customField.type == CustomFields.Event,
       );
       if (isEvent) {
         eventData = this.validateEventFields(dto.eventStart, dto.eventEnd, dto.eventType)
       }
 
       const isScheduled = buttonTemplate?.customFields.find(
-        (customField) => customField.type == 'scheduler',
+        (customField) => customField.type == CustomFields.Scheduler,
       );
       if(isScheduled)
       {

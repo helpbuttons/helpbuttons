@@ -7,12 +7,13 @@ import { InputNumber } from "elements/Fields/FieldNumber";
 import FieldError from "elements/Fields/FieldError";
 import { useSelectedNetwork } from "state/Networks";
 import { formatCurrency } from "shared/currency.utils";
+import { CustomFields } from "shared/types/customFields.type";
 
 export const priceTemplate : CustomTemplate = {
     icon: <IoCash/>,
     explain: t('customTemplates.priceExplain'),
     text: t('customTemplates.priceText'),
-    name: 'price',
+    name: CustomFields.Price,
     templateField: FieldPrice,
     configurationForm: null,
     fieldView: FieldPriceView,

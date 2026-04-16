@@ -2,12 +2,13 @@ import t from "i18n";
 import { IoCalendar, IoTimeOutline } from "react-icons/io5";
 import { CustomTemplate } from ".";
 import FieldDate, { ShowDate } from "elements/Fields/FieldDate";
+import { CustomFields } from "shared/types/customFields.type";
 
 export const eventTemplate : CustomTemplate = {
     icon: <IoCalendar/>,
     explain: t('customTemplates.eventExplain'),
     text: t('customTemplates.eventText'),
-    name: 'event',
+    name: CustomFields.Event,
     templateField: FieldEvent,
     configurationForm: null,
     fieldView: FieldEventView,

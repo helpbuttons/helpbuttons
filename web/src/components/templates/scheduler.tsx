@@ -6,12 +6,13 @@ import FieldText from "elements/Fields/FieldText";
 import { Dropdown } from "elements/Dropdown/Dropdown";
 import { calculateExpiringDate, SchedulerUnity } from "shared/types/scheduler.type";
 import { readableDateTime, readableTimeLeftToDate } from "shared/date.utils";
+import { CustomFields } from "shared/types/customFields.type";
 
 export const schedulerTemplate: CustomTemplate = {
     icon: <IoSync />,
     explain: t('customTemplates.schedulerExplain'),
     text: t('customTemplates.schedulerText'),
-    name: 'scheduler',
+    name: CustomFields.Scheduler,
     configurationForm: ConfigurationFormScheduler,
     templateField: FieldScheduler,
     fieldView: FieldSchedulerView
