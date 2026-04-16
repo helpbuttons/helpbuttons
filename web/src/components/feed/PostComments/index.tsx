@@ -20,7 +20,7 @@ import {
 import { readableTimeLeftToDate } from 'shared/date.utils';
 import ImageWrapper, { ImageType } from 'elements/ImageWrapper';
 import { PrivacyType } from 'shared/types/privacy.enum';
-import { formatMessage } from 'elements/Message';
+import { FormatMessage } from 'elements/Message';
 import { uniqueArray } from 'shared/sys.helper';
 import { Compose } from 'layouts/Feed';
 import { useEffect, useRef, useState } from 'react';
@@ -240,7 +240,7 @@ export function Comment({ comment, sessionUser }) {
             </div>
           </div>
           <div className="message__content">
-            {formatMessage(comment.message, comment.mentions)}
+            <FormatMessage text={comment.message}/>
           </div>
 
 
@@ -276,7 +276,7 @@ export function Comment({ comment, sessionUser }) {
             </div>
           </div>
           <div className="message__content">
-            {formatMessage(comment.message, comment.mentions)}
+            <FormatMessage text={comment.message}/>
           </div>
 
 

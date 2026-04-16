@@ -28,10 +28,10 @@ export function TextFormatted({
   return (
     <>
       {!isLongText || isExpanded ? (
-        <>{formatMessage(text)}</>
+        <FormatMessage text={text} />
       ) : (
         <div>
-          {formatMessage(text.slice(0, maxChars))}
+          <FormatMessage text={text.slice(0, maxChars)} />
           {text.length > maxChars ? '...' : ''}
           {(showExpandButton && isLongText) && (
             <Btn
@@ -47,13 +47,14 @@ export function TextFormatted({
   );
 }
 
-export function formatMessage(text) {
-  const aRef = useRef();
+export function FormatMessage({ text }) {
+  const aRef = useRef<HTMLSpanElement>(null);
   const content = linkify(text);
   useEffect(() => {
-    if (aRef == null) return;
-    aRef.current.innerHTML = content;
-  }, [aRef, content]);
+    if (aRef.current) {
+      aRef.current.innerHTML = content;
+    }
+  }, [content]);
   return <span className='paragraph' ref={aRef} />;
 }
 
