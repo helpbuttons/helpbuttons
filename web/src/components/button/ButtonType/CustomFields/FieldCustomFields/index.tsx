@@ -14,7 +14,7 @@ props) {
       }
 
       return (
-        <div key={key}>
+        <div className="form__field" key={key}>
           <FieldComponent {...props} {...fieldProps} />
         </div>
       );
