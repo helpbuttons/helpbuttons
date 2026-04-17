@@ -453,12 +453,6 @@ export class ButtonService {
   }
     
 
-  @OnEvent(ActivityEventName.NewPost)
-  async updateDate(payload: any) {
-    const buttonId = payload.data.post.button.id;
-    await this.updateModifiedDate(buttonId);
-  }
-
   @OnEvent(ActivityEventName.NewPostComment)
   async autoFollowButton(payload: any) {
     switch (payload.activityEventName) {
@@ -468,12 +462,23 @@ export class ButtonService {
         this.follow(buttonId, userId);
         break;
     }
-    const buttonId = payload.data.comment.post.button.id;
-    await this.updateModifiedDate(buttonId);
   }
 
-  renew(button: Button, user: User) {
-    return this.updateModifiedDate(button.id)
+  async renew(dto: Button) {
+    const network = await this.networkService.findDefaultNetwork();
+    const buttonTemplate = network.buttonTemplates.find(
+      (btnTemplate) => btnTemplate.name == dto.type,
+    );
+    const isScheduled = buttonTemplate?.customFields.find(
+      (customField) => customField.type == CustomFields.Scheduler,
+    );
+    if(isScheduled)
+    {
+      // @ts-ignore
+      const updateButton = {id: dto.id, expired: false, expirationDate: calculateExpiringDate(isScheduled.unity, parseInt(isScheduled.value))}
+      return this.buttonRepository.save([updateButton]).then((btn) => {return true})
+    }
+    return false ;
   }
 
   updateModifiedDate(buttonId: string) {

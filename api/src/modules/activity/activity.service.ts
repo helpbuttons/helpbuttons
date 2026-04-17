@@ -203,29 +203,17 @@ export class ActivityService {
 
   @OnEvent(ActivityEventName.RenewButton)
   async onRenewButton(payload: any) {
-    console.log('doing nothing for now');
-    // https://github.com/helpbuttons/helpbuttons/issues/703
-    // deactivating this email
-    // {
-    //   const owner = payload.data.owner;
-    //   const button = payload.data.button;
-    //   return this.userService.getUserLoginParams(owner.id).then(
-    //     (loginParams) => {
-    //   this.mailService.sendWithLink({
-    //         to: owner.email,
-    //         content: translate(owner.locale, 'button.renewMail', [button.title]),
-    //         subject: translate(owner.locale, 'button.renewMailSubject'),
-    //         link: getUrl(
-    //           owner.locale,
-    //           `/ButtonFile/${button.id}${loginParams}`,
-    //         ),
-    //         linkCaption: translate(
-    //           owner.locale,
-    //           'email.buttonLinkCaption',
-    //         ),
-    //       })
-    //     })
-    // }
+    const { button, owner } = payload.data;
+    return this.findUsersToNotify(button)
+      .then((users) => {
+        if (users.length < 1) {
+          this.newActivity(button, owner, owner, { id: owner.id }, payload, false, true, false)
+          return;
+        }
+        return users.map((_user, idx) => {
+          return this.newActivity(button, _user, owner, _user, payload, true, true)
+        })
+      })
   }
   @OnEvent(ActivityEventName.ExpiredButton)
   async onExpiredButton(payload: any) {
@@ -233,7 +221,7 @@ export class ActivityService {
     return this.findUsersToNotify(button)
       .then((users) => {
         return users.map((_user) => {
-          return this.newActivity(button, _user, button.owner, _user, payload)
+          return this.newActivity(button, _user, button.ownerId, _user, payload)
         })
       })
   }
@@ -721,6 +709,19 @@ export class ActivityService {
               message: translate(locale, 'activities.roleupdate', [role]),
               link: null
             }
+          }
+        case ActivityEventName.RenewButton:
+          return {
+            ...activityOut,
+            title: activity?.from?.name,
+            from: "",
+            image: activity.button.image,
+            buttonType: activity.button.type,
+            type: translate(locale, 'activities.notice'),
+            footer: `${activity.button.title} - ${activity.button.address}`,
+            message: translate(locale, 'customTemplates.schedulerRenewd'),
+            link: null,
+            disableChat: false,
           }
         case ActivityEventName.SchedulerExpiredButton:
           return {

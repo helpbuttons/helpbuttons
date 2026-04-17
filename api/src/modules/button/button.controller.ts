@@ -204,17 +204,13 @@ export class ButtonController {
       // return ;
       return this.buttonService.findById(buttonId, true)
       .then((button) => {
-        return this.buttonService.renew(button, user)
-        .then((button) => {
-          notifyUser(this.eventEmitter,ActivityEventName.RenewButton,{button, owner: user})
+        return this.buttonService.renew(button)
+        .then((renewd) => {
+          if(renewd)
+          {
+            notifyUser(this.eventEmitter,ActivityEventName.RenewButton,{button, owner: user})
           return button;
-        }).then((button) => {
-          return this.postService.renewButtonPost(user, button)
-          .then((post) => {
-            // notifyUser(this.eventEmitter,ActivityEventName.NewPost,{post})
-            
-            return post;  
-          })
+          }
         })
       })
     });

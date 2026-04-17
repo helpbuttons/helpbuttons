@@ -454,7 +454,7 @@ function ExpiringAlert({
   return (
     <FixedAlert
       alertType={AlertType.Success}
-      message={`${t('button.isExpiringLink')} <a href="/ButtonRenew/${button.id
+      message={`${t('button.expired')} <a href="/ButtonRenew/${button.id
         }">${t('button.renewLink')}</a>`}
     />
   );
