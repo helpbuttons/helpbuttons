@@ -50,17 +50,13 @@ export class ButtonCron {
       AND ("eventEnd" < now() - INTERVAL '1 days'
       OR "expirationDate" < now())`;
     const eventsAndScheduledExpired = await this.entityManager.query(q);
-    console.log(eventsAndScheduledExpired)
     await Promise.all(
       eventsAndScheduledExpired.map((button) => {
         const customFields = expiringButtonTemplatesCustomFields.find((_elm) => _elm.name == button.type)
-        console.log(customFields)
         if(customFields.customFields.indexOf(CustomFields.Scheduler) > -1){
-          console.log('check scheduler')
           return this.buttonService.checkAndSetExpiredScheduler(button);
         }
         if(customFields.customFields.indexOf(CustomFields.Event) > -1){
-          console.log('check event')
           return this.buttonService.checkAndSetExpiredEvent(button);
         }
       }),

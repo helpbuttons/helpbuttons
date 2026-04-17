@@ -20,9 +20,11 @@ import { unique } from '@src/shared/helpers/array.helper';
 import { IsNull } from "typeorm"
 import { GroupMessageService } from '../group-message/group-message.service';
 import { getUrl } from '@src/shared/helpers/mail.helper';
+import { SourceCodeLogger } from '@src/shared/helpers/source-code-logger.helper';
 
 @Injectable()
 export class ActivityService {
+  private logger = new SourceCodeLogger('Activity')
   constructor(
     @InjectRepository(Activity)
     private readonly activityRepository: Repository<Activity>,
@@ -249,7 +251,7 @@ export class ActivityService {
         }
         this.newActivity(button, button.ownerId,  button.ownerId ,{id: button.ownerId}, payload, false, false, true)
         return users.map((_user, idx) => {
-          return this.newActivity(button, _user, button.owner, _user, payload, true, true)
+          return this.newActivity(button, _user, button.ownerId, _user, payload, true, true)
         })
       })
   }
@@ -283,7 +285,6 @@ export class ActivityService {
 
   private notifyByEmail(insertResult) {
     const activityId = insertResult.identifiers[0].id
-    console.log('should send mail....')
     return this.activityRepository.findOne({ where: { id: activityId }, relations: ['button.owner', 'to', 'from', 'consumer'] })
       .then((activity) => {
         const toId = activity.to.id;
@@ -408,7 +409,13 @@ export class ActivityService {
       lastActivityButtonConsumer: setAsLastButtonConsumer,
       lastActivityButtonOwner: setAsLastButtonOwner,
     };
-        
+       
+    if(!from){
+      this.logger.warn(payload.activityEventName)
+      this.logger.warn(from)
+      console.trace()
+      return;
+    }
     if (setAsLastButtonConsumer) {
       await this.hideActivitiesButtonConsumer(button.id, consumer.id)
     }
@@ -557,7 +564,8 @@ export class ActivityService {
       const disableChat = (userId == activity?.button?.owner.id && activity?.consumer?.id == userId) ? true : false;
       const read = (activity?.from?.id == userId) ? true : activity.read;
       if (activity.from == null) {
-        console.log(`activity as from null: ${activity.id}`)
+        console.log(activity)
+        this.logger.warn(`activity as from null: ${activity.eventName} ${activity.id}`)
       }
       let activityOut = {
         id: activity.id,
