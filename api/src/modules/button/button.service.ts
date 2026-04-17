@@ -177,8 +177,7 @@ export class ButtonService {
         HttpStatus.NOT_FOUND,
       );
     }
-    return await this.checkAndSetExpired(button).then((btn) => this.transformButton(btn, currentUser));
-    // return this.transformButton(button, currentUser)
+    return this.transformButton(button, currentUser);
   }
 
   async update(
@@ -263,12 +262,7 @@ export class ButtonService {
         }
       });
 
-    return this.isEventExpired(button).then((isExpired) => {
-      if (isExpired) {
-        throw new CustomHttpException(ErrorName.expiredDates);
-      }
-      return this.buttonRepository.save([button]).then((btn) => {console.log(button); return this.findById(button.id)})
-    });
+      return this.buttonRepository.save([button]).then((btn) => {return this.findById(button.id)})
   }
 
   @UseInterceptors(CacheInterceptor)
@@ -315,21 +309,13 @@ export class ButtonService {
               });
             });
         })
-        .then((buttons) => {
-          return Promise.all(
-            buttons.map(async (button) => {
-              return this.checkAndSetExpired(button);
-            }),
-          )
-            .then((btns) => {
-              return btns.filter((btn) => !btn.expired);
-            })
-            .then((btns) => {
-              return btns.map((btn) => 
-                this.transformButton(btn, currentUser)
-              );
-            });
-          // return Promise.all(btns)
+        .then((btns) => {
+          return btns.filter((btn) => !btn.expired);
+        })
+        .then((btns) => {
+          return btns.map((btn) => 
+            this.transformButton(btn, currentUser)
+          );
         });
     } catch (err) {
       console.log(err);
@@ -460,11 +446,12 @@ export class ButtonService {
       owner: { role: Not(Role.blocked) },
       deleted: false,
     };
-    if (includeExpired) {
-      return blocked;
+    if (!includeExpired) {
+      return { expired: false, ...blocked };
     }
-    return { expired: false, ...blocked };
+    return blocked;
   }
+    
 
   @OnEvent(ActivityEventName.NewPost)
   async updateDate(payload: any) {
@@ -486,67 +473,45 @@ export class ButtonService {
   }
 
   renew(button: Button, user: User) {
-    return this.isEventExpired(button).then(async (isExpired) => {
-      if (isExpired) {
-        throw new CustomHttpException(ErrorName.expiredDates);
-      } else {
-        return this.updateModifiedDate(button.id).then(() => {
-          return button;
-        });
-      }
-    });
+    return this.updateModifiedDate(button.id)
   }
 
   updateModifiedDate(buttonId: string) {
     return this.entityManager.query(`UPDATE button SET updated_at = CURRENT_TIMESTAMP, deleted = false, expired = false WHERE id = $1`, [buttonId]);
   }
 
-  checkAndSetExpired(button: Button) {
-    if (button.expired) {
-      return Promise.resolve(button);
-    }
-    return this.isEventExpired(button).then(async (isExpired) => {
-      if (isExpired) {
-        await this.setExpired(button.id);
+  checkAndSetExpiredEvent(button: Button) {
+    const now = new Date();
+    if (new Date(button.eventEnd) < now) {
+      return this.setExpired(button.id)
+      .then(() => {
         notifyUser(
           this.eventEmitter,
           ActivityEventName.ExpiredButton,
           { button },
         );
         return { ...button, expired: true };
-      }
-      return button;
-    });
-    // deactivating to expire buttons after 3 months...
-    // https://github.com/helpbuttons/helpbuttons/issues/703
-    /*.then(async (button) => {
-      var expiredUpdatesDate = new Date();
-      expiredUpdatesDate.setMonth(expiredUpdatesDate.getMonth() - 3);
-      if (button.updated_at < expiredUpdatesDate) {
-        const now = new Date();
-        if (button.updated_at < now) {
-          await this.setExpired(button.id)
-          await this.notifyOwnerExpiredButton(button)
-          return {...button, expired: true};
-        }
-      }
-      return button;
-    });*/
+      })
+    }
+    return Promise.resolve(button)
   }
 
-  isEventExpired(button: Partial<Button>) {
-    return this.networkService
-      .getButtonTypesWith([CustomFields.Event])
-      .then((btnTemplateEvents) => {
-        // if its a button type with an event field
-        if (btnTemplateEvents.indexOf(button.type) > -1) {
-          const now = new Date();
-          if (new Date(button.eventEnd) < now) {
-            return true;
-          }
-        }
-        return false;
-      });
+  async checkAndSetExpiredScheduler(button)
+  {
+
+    const now = new Date();
+    if (new Date(button.expirationDate) < now) {
+      return this.setExpired(button.id)
+      .then(() => {
+        notifyUser(
+          this.eventEmitter,
+          ActivityEventName.SchedulerExpiredButton,
+          { button },
+        );
+        return { ...button, expired: true };
+      })
+    }
+    return Promise.resolve(button)
   }
 
   setExpired(buttonId: string) {
@@ -610,7 +575,7 @@ export class ButtonService {
       order: { created_at: 'DESC' },
       where: {
         awaitingApproval: true,
-        ...this.expiredBlockedConditions(),
+        ...this.expiredBlockedConditions(true),
       },
     });
   }
@@ -650,7 +615,6 @@ export class ButtonService {
         },
         relations: ['owner']
       })
-      .then((buttons) => this.filterExpired(buttons));
   }
 
   embbed(page: number, take: number) {
@@ -665,17 +629,6 @@ export class ButtonService {
           updated_at: 'DESC',
         },
       })
-      .then((buttons) => this.filterExpired(buttons));
-  }
-
-  filterExpired(buttons) {
-    return Promise.all(
-      buttons.map(async (button) => {
-        return this.checkAndSetExpired(button);
-      }),
-    ).then((btns) => {
-      return btns.filter((btn) => !btn.expired);
-    });
   }
 
   public rss() {
@@ -689,7 +642,6 @@ export class ButtonService {
           updated_at: 'DESC',
         },
       })
-      .then((buttons) => this.filterExpired(buttons))
       .then(async (buttons) => {
         const network: Network =
           await this.networkService.findDefaultNetwork();

@@ -34,6 +34,7 @@ import { PostService } from '../post/post.service';
 import { plainToInstance } from 'class-transformer';
 import { Button } from './button.entity';
 import { UserService } from '../user/user.service';
+import { ButtonCron } from './button.cron';
 
 @ApiTags('buttons')
 @Controller('buttons')
@@ -42,6 +43,7 @@ export class ButtonController {
     private readonly buttonService: ButtonService,
     private readonly postService: PostService,
     private readonly userService: UserService,
+    private readonly buttonCron: ButtonCron,
     private eventEmitter: EventEmitter2
     ) {}
 
@@ -209,7 +211,7 @@ export class ButtonController {
         }).then((button) => {
           return this.postService.renewButtonPost(user, button)
           .then((post) => {
-            notifyUser(this.eventEmitter,ActivityEventName.NewPost,{post})
+            // notifyUser(this.eventEmitter,ActivityEventName.NewPost,{post})
             
             return post;  
           })
@@ -301,5 +303,12 @@ export class ButtonController {
   @Get('deleteType/:type')
   deleteType(@Param('type') type: string) {
     return this.buttonService.deleteAllButtonsFromType(type)
+  }
+
+
+  @Get('triggerCron')
+  async triggerCron()
+  {
+    return await this.buttonCron.clearEventButtons()
   }
 }

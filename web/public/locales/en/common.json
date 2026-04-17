@@ -335,7 +335,8 @@
     "nofollowers": "no one is following yet",
     "copyAlert": "Copied",
     "whereButtonLabel": "Choose place",
-    "pickPosition": "Please pick a position on the map"
+    "pickPosition": "Please pick a position on the map",
+    "expired": "_helpbutton_ expired, it is no more posted on the map"
   },
   "user": {
     "login": "Write your credentials",
@@ -787,6 +788,8 @@
     "schedulerLabelAdminForm": "Choose how long until the _helpbuttons_ expire",
     "month": "Month",
     "hour": "Hour",
-    "day": "day"
+    "day": "day",
+    "schedulerExpiredMailSubject": "Your _helpbutton_ expired",
+    "schedulerExpired": "The _helpbutton_ expired"
   }
 }
