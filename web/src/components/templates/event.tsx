@@ -14,8 +14,8 @@ export const eventTemplate : CustomTemplate = {
     fieldView: FieldEventView,
 }
 
-export function FieldEventView({button}) {
-    return <div className='card-button__date'>
+export function FieldEventView({button, isList}) {
+    return <div className={isList ? 'card-button-list__date' : 'card-button__date'}>
             <IoTimeOutline/>
             <div>
             <ShowDate

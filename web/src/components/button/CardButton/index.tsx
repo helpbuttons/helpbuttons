@@ -179,6 +179,7 @@ export function CardButtonHeadMedium({ button, buttonType }) {
               customFields={buttonType.customFields}
               button={button}
               selectedNetwork={selectedNetwork}
+              isList={true}
             />
           )}
           
@@ -397,6 +398,7 @@ export function CardButtonHeadBig({ button, buttonTypes, toggleShowReplyFirstPos
                   customFields={customFields}
                   button={button}
                   selectedNetwork={selectedNetwork}
+                  isList={false}
                 />
               </div>
             )}

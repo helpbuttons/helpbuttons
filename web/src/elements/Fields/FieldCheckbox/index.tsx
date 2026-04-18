@@ -14,6 +14,8 @@ export const FieldCheckbox = React.forwardRef(({
     defaultValue = false,
     textOn = null,
     validationError = false,
+    multiInput = false,
+
   }, ref) => {
     const [checked, setChecked] = useState(defaultValue)
 
@@ -25,7 +27,7 @@ export const FieldCheckbox = React.forwardRef(({
       
     }
     return (
-    <div className="form__field">
+    <div className={"form__field " + (multiInput ? "form__field--noMargin" : "") }>
      {label && <label className="form__label">{label}</label>}
      {explain && <p className="form__explain">{explain}</p>}
 
