@@ -312,12 +312,11 @@ $card-button-border-height: $border-general-height;
   font-size: $font-size-xxbig;
   padding: $padding-big 0 $padding-xsmall 0;
 
-  display: flex;
+  display: block;
   flex-direction: row;
   align-items:flex-start;
   word-wrap: break-word;
   line-height: 1.3em;
-
 
   word-break: break-word;
 }
