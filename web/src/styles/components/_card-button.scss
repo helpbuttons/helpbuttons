@@ -404,7 +404,11 @@ $card-button-border-height: $border-general-height;
   display: flex;
 }
 
-.card-button__price--button-page {
+.card-button__custom-fields-container--button-page {
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 
   & .card-button__price {
 
@@ -629,7 +633,7 @@ $card-button-border-height: $border-general-height;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  gap: $margin-xsmall;
+  gap: $padding-xsmall;
   overflow: visible;
   font-weight: $font-weight-bolder;
   align-items: flex-start;
@@ -723,13 +727,14 @@ $card-button-border-height: $border-general-height;
 
   .card-button__bottom-properties {
     display: flex;
-    flex-direction: row;
+    // flex-direction: row;
     justify-content: flex-start;
-    align-items: baseline;
+    // align-items: flex-end;
     flex-wrap: wrap;
     overflow: visible;
-    gap: $margin-small;
+    // gap: $margin-small;
     margin-bottom: $margin-small;
+
   }
 
   .card-button__head-actions {

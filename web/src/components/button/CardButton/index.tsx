@@ -392,7 +392,7 @@ export function CardButtonHeadBig({ button, buttonTypes, toggleShowReplyFirstPos
         </div> */}
           <div className="card-button__bottom-properties">
             {customFields && customFields.length > 0 && (
-              <div className='card-button__price--button-page'>
+              <div className='card-button__custom-fields-container card-button__custom-fields-container--button-page'>
                 <CardButtonCustomFields
                   customFields={customFields}
                   button={button}

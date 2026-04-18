@@ -782,8 +782,8 @@
     "priceText":  "Add price",
     "eventExplain": "Display a date so the _helpbutton_ type behaves like an event and users can search by calendar",
     "eventText": "Add date",
-    "schedulerLabelForm": "Expiring at",
-    "schedulerExplainForm": "This _helpbutton_ will remain active till this date. You can renew it in the future.",
+    "schedulerLabelForm": "Expires in {0} hours.",
+    "schedulerExplainForm": "This _helpbutton_ needs to be renewed every {0} hours. Save it to renew.",
     "schedulerExplainAdminForm": "If you add this to a _helpbutton_ type, all the _helpbuttons_ of this type will expire automatically",
     "schedulerLabelAdminForm": "Choose how long until the _helpbuttons_ expire",
     "month": "Month",
@@ -791,6 +791,7 @@
     "day": "day",
     "schedulerExpiredMailSubject": "Your _helpbutton_ expired",
     "schedulerExpired": "The _helpbutton_ expired",
-    "schedulerRenewd": "_helpbutton_ has been renewed"
+    "schedulerRenewd": "_helpbutton_ has been renewed",
+    "willExpire":"Needs renovation by user "
   }
 }

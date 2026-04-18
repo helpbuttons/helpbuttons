@@ -7,6 +7,7 @@ import { Dropdown } from "elements/Dropdown/Dropdown";
 import { calculateExpiringDate, SchedulerUnity } from "shared/types/scheduler.type";
 import { readableDateTime, readableTimeLeftToDate } from "shared/date.utils";
 import { CustomFields } from "shared/types/customFields.type";
+import Btn, { BtnType, ContentAlignment, IconType } from "elements/Btn";
 
 export const schedulerTemplate: CustomTemplate = {
     icon: <IoSync />,
@@ -19,7 +20,7 @@ export const schedulerTemplate: CustomTemplate = {
 }
 
 export function FieldSchedulerView({button}){
-    return <>{button.expirationDate ? `${t('customTemplates.willExpire')} ${readableTimeLeftToDate(button?.expirationDate)}` : ''}</>
+    return <div className="card-button__date"><IoSync />{button.expirationDate ? `${t('customTemplates.willExpire')} ${readableTimeLeftToDate(button?.expirationDate)}` : ''}</div>
 }
 
 export function FieldScheduler({ customFields }) {
@@ -30,7 +31,16 @@ export function FieldScheduler({ customFields }) {
             <p className="form__explain">
                 {t('customTemplates.schedulerExplainForm')}
             </p>
-            <div>{readableDateTime(expirationDate)}</div>
+            <div><span>Expired</span> {readableDateTime(expirationDate)}</div>
+            
+                    <Btn
+                              btnType={BtnType.filterEmoji}
+                              iconLeft={IconType.svg}
+                              contentAlignment={ContentAlignment.left}
+                              caption={"Renew"}
+                              iconLink={<IoSync/>}
+                              onClick={null}
+                    />
            </>
 }
 export function ConfigurationFormScheduler({ setEditing, editingValue
