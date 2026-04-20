@@ -209,7 +209,7 @@ export class ButtonController {
           if(renewd)
           {
             notifyUser(this.eventEmitter,ActivityEventName.RenewButton,{button, owner: user})
-          return button;
+            return this.buttonService.findById(buttonId)
           }
         })
       })

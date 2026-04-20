@@ -55,7 +55,7 @@ import React from 'react';
 import { ButtonPin, ButtonUnpin, FindFollowers } from 'state/Button';
 import { useToggle } from 'shared/custom.hooks';
 import { useIsMobile } from 'elements/SizeOnly';
-import { ButtonDelete, updateCurrentButton } from 'state/Explore';
+import { ButtonDelete, ButtonRenew, updateCurrentButton } from 'state/Explore';
 import { Network } from 'shared/entities/network.entity';
 import { useSelectedNetwork } from 'state/Networks';
 
@@ -363,8 +363,7 @@ export function CardButtonHeadBig({ button, buttonTypes, toggleShowReplyFirstPos
       {button.awaitingApproval && (
         <FixedAlert
           alertType={AlertType.Info}
-          message={t('moderation.awaitingApproval')}
-        />
+        >{t('moderation.awaitingApproval')}</FixedAlert>
       )}
       <div className="card-button__content card-button__full-content ">
         <div className="card-button__header">
@@ -438,6 +437,20 @@ function ExpiringAlert({
   button: Button;
   isOwner: boolean;
 }) {
+  const renewButton = (id) => {
+    store.emit(
+      new ButtonRenew(
+        id,
+        () => {
+          alertService.success(t('button.renewSuccess'));
+        },
+        (error) => {
+          alertService.error(error.caption);
+        },
+      ),
+    );
+  }
+  
   if (!isOwner) {
     return;
   }
@@ -449,16 +462,13 @@ function ExpiringAlert({
     return (
       <FixedAlert
         alertType={AlertType.Info}
-        message={`${t('button.endDatesExpired')}`}
-      />
+      >{t('button.endDatesExpired')}</FixedAlert>
     );
   }
   return (
     <FixedAlert
       alertType={AlertType.Success}
-      message={`${t('button.expired')} <a href="/ButtonRenew/${button.id
-        }">${t('button.renewLink')}</a>`}
-    />
+    >{t('button.expired')} <a href="#" onClick={() => {renewButton(button.id)}}>{t('button.renewLink')}</a></FixedAlert>
   );
 }
 

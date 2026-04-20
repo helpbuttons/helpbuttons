@@ -588,6 +588,7 @@ export class ButtonRenew implements WatchEvent {
   public watch(state: GlobalState) {
     return ButtonService.renew(this.buttonId).pipe(
       map((data) => {
+        store.emit(new updateCurrentButton(data))
         this.onSuccess(data);
       }),
       catchError((error) => handleError(this.onError, error)),

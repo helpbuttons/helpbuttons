@@ -1,12 +1,12 @@
 import t from "i18n";
 import { IoSync } from "react-icons/io5";
 import { CustomTemplate } from ".";
-import FieldError from "elements/Fields/FieldError";
 import FieldText from "elements/Fields/FieldText";
 import { Dropdown } from "elements/Dropdown/Dropdown";
-import { calculateExpiringDate, SchedulerUnity } from "shared/types/scheduler.type";
-import { readableDateTime, readableTimeLeftToDate } from "shared/date.utils";
+import { calculateExpiringDate, calculateRewnedDate, schedulerPeriodicy, SchedulerUnity } from "shared/types/scheduler.type";
+import { readableTimeLeftToDate } from "shared/date.utils";
 import { CustomFields } from "shared/types/customFields.type";
+import { useButtonTypes } from "shared/buttonTypes";
 
 export const schedulerTemplate: CustomTemplate = {
     icon: <IoSync />,
@@ -19,18 +19,25 @@ export const schedulerTemplate: CustomTemplate = {
 }
 
 export function FieldSchedulerView({button, isList}){
-    return <div className={isList ? 'card-button-list__date' : 'card-button__date'}><IoSync />{button.expirationDate ? `${t('customTemplates.willExpire')} ${readableTimeLeftToDate(button?.expirationDate)}` : ''}</div>
+    const buttonTypes = useButtonTypes();
+    const customFields = buttonTypes.find((_type) => _type.name == button.type)?.customFields.find((t) => t.type == CustomFields.Scheduler)
+
+    const renewdate = customFields?.unity ? calculateRewnedDate(customFields.unity, customFields.value, new Date(button.expirationDate)) : new Date()
+    return <div className={isList ? 'card-button-list__date' : 'card-button__date'}>
+            <IoSync />{button.expirationDate ? `${t('customTemplates.renewed')} ${readableTimeLeftToDate(renewdate)}` : ''}
+           </div>
 }
 
 export function FieldScheduler({ customFields }) {
     const customField = customFields.find((_cstm) => _cstm.type == schedulerTemplate.name)
     const expirationDate = calculateExpiringDate(customField.unity, parseInt(customField.value))
+
+    const periodicy = schedulerPeriodicy(customField.unity, customField.value)
     return <>
-            <label className="form__label">{t('customTemplates.schedulerLabelForm')}</label>
+            <label className="form__label">{t('customTemplates.schedulerLabelForm', [ readableTimeLeftToDate(expirationDate)])}</label>
             <p className="form__explain">
-                {t('customTemplates.schedulerExplainForm')}
+                {t('customTemplates.schedulerExplainForm', [periodicy])}
             </p>
-            {/* <div>{readableDateTime(expirationDate)}</div> */}
            </>
 }
 export function ConfigurationFormScheduler({ setEditing, editingValue
