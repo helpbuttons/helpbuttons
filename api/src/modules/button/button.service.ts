@@ -486,19 +486,6 @@ export class ButtonService {
     await this.updateModifiedDate(buttonId);
   }
 
-  @OnEvent(ActivityEventName.NewPostComment)
-  async autoFollowButton(payload: any) {
-    switch (payload.activityEventName) {
-      case ActivityEventName.NewPostComment:
-        const buttonId = payload.data.comment.button.id;
-        const userId = payload.data.comment.author.id;
-        this.follow(buttonId, userId);
-        break;
-    }
-    const buttonId = payload.data.comment.post.button.id;
-    await this.updateModifiedDate(buttonId);
-  }
-
   renew(button: Button, user: User) {
     return this.isEventExpired(button).then(async (isExpired) => {
       if (isExpired) {

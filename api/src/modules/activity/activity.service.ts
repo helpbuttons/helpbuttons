@@ -177,13 +177,7 @@ export class ActivityService {
           // notify users following this tag
           await Promise.all(
             usersToNotify.map((user) => {
-              // auto follow button! because belongs to tag!
-              return this.buttonService
-                .follow(button.id, user.id)
-                .then(() => {
-                  // add new button to activity of user following interest in their radius!
-                  return this.newActivity(button, user.id, button.owner.id, { id: user.id },  { data: { button: button }, activityEventName: ActivityEventName.NewButton } , true, false)
-                });
+                return this.newActivity(button, user.id, button.owner.id, { id: user.id },  { data: { button: button }, activityEventName: ActivityEventName.NewButton } , true, false)
             }),
           ).catch((err) => {
             console.log(payload);
