@@ -51,6 +51,7 @@ import { Button } from 'shared/entities/button.entity';
 import { replaceUrl } from 'components/uri/builder';
 import { ListKeyLocation } from 'state/Geo';
 import { cellToParent } from 'h3-js';
+import { CustomFields } from 'shared/types/customFields.type';
 
 
 function HoneyComb({ selectedNetwork }) {
@@ -220,7 +221,7 @@ function useExploreSettings({
         );
         if (btnType?.customFields) {
           const btnTypeEvents = btnType.customFields.find(
-            (customField) => customField.type == 'event',
+            (customField) => customField.type == CustomFields.Event,
           );
           if (btnTypeEvents) {
             newFilters = {

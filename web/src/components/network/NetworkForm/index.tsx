@@ -23,6 +23,7 @@ import { FieldLanguagePick } from 'elements/Fields/FieldLanguagePick';
 import FieldButtonTemplates from 'components/button/ButtonType/FieldButtonTemplates';
 import { FieldKeySpots } from 'components/map/LocationKey';
 import FieldImageUpload from 'elements/Fields/FieldImageUpload';
+import { CustomFields } from 'shared/types/customFields.type';
 
 export default NetworkForm;
 
@@ -62,7 +63,7 @@ function NetworkForm({
         if(!btnTemplate.customFields){
           return false;
         }
-        return btnTemplate.customFields.find((customField) => customField.type == 'price')
+        return btnTemplate.customFields.find((customField) => customField.type == CustomFields.Price)
         })
       if(needsCurrency)
       {

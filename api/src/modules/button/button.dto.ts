@@ -184,6 +184,9 @@ export class ButtonEntry implements Partial<Button> {
   
   @Expose()
   isFollowing: boolean;
+  
+  @Expose()
+  expirationDate?: Date;
 
   @Expose()
   created_at?: Date;

@@ -264,7 +264,7 @@ export class NetworkService {
     return getConfig();
   }
 
-  getButtonTypesWithEventField() {
+  getButtonTypesWith(customFields) {
     return this.findButtonTypes()
       .then((buttonTemplates) => {
         return buttonTemplates
@@ -274,7 +274,7 @@ export class NetworkService {
             }
             const buttonTemplatesEvents =
               buttonTemplate.customFields.filter((customField) => {
-                return customField.type == 'event';
+                return customFields.indexOf(customField.type) > -1
               });
             if (buttonTemplatesEvents.length > 0) {
               return true;

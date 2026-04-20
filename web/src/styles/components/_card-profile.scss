@@ -19,11 +19,16 @@ $avatar-margin: $padding-big;
 
 .card-profile__name {
 
-  display: flex;
+  display: block;
   flex-direction: row;
   flex-wrap: wrap;
   margin-right: $margin-xsmall;
 
+}
+
+.card-button__name::first-letter {
+
+  text-transform: uppercase;
 }
 
 .card-profile__description {

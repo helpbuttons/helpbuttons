@@ -25,6 +25,7 @@ import _ from 'lodash';
 import { nextElement, previousElement } from 'shared/sys.helper';
 import { ButtonEntry } from 'shared/dtos/button.dto';
 import { isPointInBounds } from 'elements/Fields/FieldLocation/location.helpers';
+import { CustomFields } from 'shared/types/customFields.type';
 
 
 export enum ExploreViewMode {
@@ -393,7 +394,7 @@ export class UpdateFiltersToFilterButtonType implements UpdateEvent {
 
         if (btnType?.customFields) {
           const btnTypeEvents = btnType.customFields.find(
-            (customField) => customField.type == 'event',
+            (customField) => customField.type == CustomFields.Event,
           );
           if (btnTypeEvents) {
             newFilters.orderBy = ButtonsOrderBy.EVENT_DATE;
@@ -587,6 +588,7 @@ export class ButtonRenew implements WatchEvent {
   public watch(state: GlobalState) {
     return ButtonService.renew(this.buttonId).pipe(
       map((data) => {
+        store.emit(new updateCurrentButton(data))
         this.onSuccess(data);
       }),
       catchError((error) => handleError(this.onError, error)),
