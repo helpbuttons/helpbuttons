@@ -1,5 +1,5 @@
 import t from "i18n";
-import { IoSync } from "react-icons/io5";
+import { IoSync, IoTimeOutline } from "react-icons/io5";
 import { CustomTemplate } from ".";
 import FieldText from "elements/Fields/FieldText";
 import { Dropdown } from "elements/Dropdown/Dropdown";
@@ -18,16 +18,45 @@ export const schedulerTemplate: CustomTemplate = {
     fieldView: FieldSchedulerView
 }
 
-export function FieldSchedulerView({button, isList}){
-    const buttonTypes = useButtonTypes();
-    const customFields = buttonTypes.find((_type) => _type.name == button.type)?.customFields.find((t) => t.type == CustomFields.Scheduler)
+export function FieldSchedulerView({button, isList, isButtonOwner}){
 
-    const renewdate = customFields?.unity ? calculateRewnedDate(customFields.unity, customFields.value, new Date(button.expirationDate)) : new Date()
     return <div className={isList ? 'card-button-list__date' : 'card-button__date'}>
-            <IoSync />{button.expirationDate ? `${t('customTemplates.renewed')} ${readableTimeLeftToDate(renewdate)}` : ''}
+        {isButtonOwner && <FieldSchedulerViewOwner expirationDate={button.expirationDate} type={button.type}/> }
+        {!isButtonOwner && <FieldSchedulerViewUser expirationDate={button.expirationDate} type={button.type}/>}
+        
            </div>
 }
 
+
+export function FieldSchedulerViewUser({expirationDate,type}) {
+    const now = new Date()
+
+    const buttonTypes = useButtonTypes();
+    const customFields = buttonTypes.find((_type) => _type.name == type)?.customFields.find((t) => t.type == CustomFields.Scheduler)
+
+    const renewdate = customFields?.unity ? calculateRewnedDate(customFields.unity, customFields.value, new Date(expirationDate)) : null
+    return <>{expirationDate &&
+        (new Date(expirationDate) > now) ? <>
+        <IoSync />
+        {t('customTemplates.renewed')} {readableTimeLeftToDate(renewdate)}
+                            </> : 
+                            <>{t('expired')}</>
+        }
+        </>
+}
+
+export function FieldSchedulerViewOwner({expirationDate, type}) {
+    const now = new Date()
+    return <>{expirationDate &&
+            (new Date(expirationDate) > now) ? <>
+            <IoTimeOutline />
+
+            {t('customTemplates.willExpire')} {readableTimeLeftToDate(expirationDate)}
+                            </> : 
+                            <> {t('expired')}</>
+    }
+                            </>
+}
 export function FieldScheduler({ customFields }) {
     const customField = customFields.find((_cstm) => _cstm.type == schedulerTemplate.name)
     const expirationDate = calculateExpiringDate(customField.unity, parseInt(customField.value))

@@ -118,6 +118,7 @@ function CardButtonState({expired, awaitingApproval})
 // card button list on explore
 export function CardButtonHeadMedium({ button, buttonType }) {
   const selectedNetwork: Network = useSelectedNetwork()
+  const sessionUser = useGlobalStore((state: GlobalState) => state.sessionUser)
   return (
     <div className="card-button__content card-button__content--small">
       <CardButtonState expired={button.expired} awaitingApproval={button.awaitingApproval}/>
@@ -180,6 +181,7 @@ export function CardButtonHeadMedium({ button, buttonType }) {
               button={button}
               selectedNetwork={selectedNetwork}
               isList={true}
+              isButtonOwner={button.owner.id == sessionUser.id}
             />
           )}
           
@@ -356,7 +358,7 @@ export function CardButtonHeadBig({ button, buttonTypes, toggleShowReplyFirstPos
         
         <CardButtonSubmenu button={button} />
       </div>
-      <ExpiringAlert
+      <SchdulerExpiringAlert
         button={button}
         isOwner={isButtonOwner(sessionUser, button)}
       />
@@ -398,6 +400,7 @@ export function CardButtonHeadBig({ button, buttonTypes, toggleShowReplyFirstPos
                   button={button}
                   selectedNetwork={selectedNetwork}
                   isList={false}
+                  isButtonOwner={button.owner.id == sessionUser.id}
                 />
               </div>
             )}
@@ -430,7 +433,7 @@ export function CardButtonHeadBig({ button, buttonTypes, toggleShowReplyFirstPos
   );
 }
 
-function ExpiringAlert({
+function SchdulerExpiringAlert({
   button,
   isOwner = false,
 }: {

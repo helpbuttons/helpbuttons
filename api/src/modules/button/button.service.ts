@@ -171,6 +171,8 @@ export class ButtonService {
       where: { id, ...this.expiredBlockedConditions(includeExpired) },
       relations: ['owner'],
     });
+
+    await this.checkAndSetExpiredScheduler(button);
     if (!button) {
       throw new HttpException(
         'button-not-found',
@@ -492,7 +494,6 @@ export class ButtonService {
 
   async checkAndSetExpiredScheduler(button)
   {
-
     const now = new Date();
     if (new Date(button.expirationDate) < now) {
       return this.setExpired(button.id)
