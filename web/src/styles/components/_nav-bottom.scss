@@ -30,6 +30,7 @@ $nav-bottom-border: 32px;
   border-top: $border-style-basic;
   height: $nav-bottom-height;
   transition: $transition-default;
+  color: $color-text-over-corporative;
 }
 
 .nav-bottom--hide {
@@ -56,6 +57,7 @@ $nav-bottom-border: 32px;
   font-size: 12px;
   text-decoration: none;
   inline-size: max-content;
+  color: $color-text-over-corporative;
 }
 
 .nav-bottom__link--current{
@@ -81,12 +83,14 @@ $nav-bottom-border: 32px;
 
 .nav-bottom__icon {
   display: flex;
+
   & svg {
     fill: $color-text-over-corporative;
     height: $nav-bottom-icon-size;
     width: $nav-bottom-icon-size;
     padding: 3px;
     padding-bottom: 0;
+     color: $color-text-over-corporative;
   }
 }
 

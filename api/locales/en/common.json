@@ -335,7 +335,8 @@
     "nofollowers": "no one is following yet",
     "copyAlert": "Copied",
     "whereButtonLabel": "Choose place",
-    "pickPosition": "Please pick a position on the map"
+    "pickPosition": "Please pick a position on the map",
+    "expired": "_helpbutton_ expired, it is no more posted on the map"
   },
   "user": {
     "login": "Write your credentials",
@@ -393,8 +394,8 @@
     "receiveNotifications": "Email notifications",
     "receiveNotificationsExplain": "Specify if you want to receive emails with the messages sent to you or relevant activity of the topics and publications that you follow",
     "textReceiveNotifications": "Receive mail notifications",
-    "loginSucess": "Login successfuly",
-    "loginSucessLink": "Login successfuly, please <a href='/ProfileEdit'>change your password</a>",
+    "loginSucess": "Login successful",
+    "loginSucessLink": "Login successful, please <a href='/ProfileEdit'>change your password</a>",
     "unsubscribed": "You will no longer receive this kind of emails",
     "showButtonsProfileLabel": "_helpbuttons_ on my profile page",
     "showButtonsProfileExplain": "Mark if you want to show a list of what you publish in your public profile",
@@ -454,7 +455,7 @@
     "askForNewCode": "I don't have my guest info",
     "inviteLogin": "Enter",
     "inviteLoginError": "Wrong code or missing fields",
-    "roleChange":"And admin changed your role"
+    "roleChange": "An admin changed your role"
   },
   "picker": {
     "headerText": "Choose a location"
@@ -465,7 +466,6 @@
     "calendarHeaderText": "Choose date & hour",
     "from": "From... ",
     "until": "Until... ",
-    "eventFieldAdd": "Add date",
     "once": "Once",
     "multipleDates": "Multiple Dates",
     "recurring": "Recurring Dates",
@@ -475,8 +475,8 @@
     "afterStart": "Please select a time/date after {0}",
     "beforeEnd": "Please select a time/date before {0}",
     "changeToMultipleDates": "Press here to select several days",
-    "everyMonth":"Each month",
-    "everyWeek":"Each week"
+    "everyMonth": "Each month",
+    "everyWeek": "Each week"
   },
   "validation": {
     "fieldRequired": "{0} is required.",
@@ -520,7 +520,7 @@
   },
   "configuration": {
     "config": "Advanced options",
-    "title": "Network and Administrator settings",
+    "title": "Network settings",
     "description": "Here you can modify different settings of your network. If it's your first time, you need to add at least a name, description, avatar image, background image and location to complete the setup.",
     "namePlaceHolder": "Network of permaculture farmers from Vilanova",
     "sloganLabel": "Network's welcome phrase",
@@ -570,9 +570,6 @@
     "contactAdmin": "Contact the administrator",
     "customFields": "Custom fields",
     "customFieldsExplain": "These are extra fields that you can add to your _helpbuttons_ so they accomplish different tasks. Add date if you want to handle events, or price if you want the users to be able to sell products.",
-    "priceFieldAdd": "Add price",
-    "priceFieldAddLabel": "Display a price so user can buy/sell in their _helpbuttons_",
-    "dateFieldAddLabel": "Display a date so the _helpbutton_ type behaves like an event and users can search by calendar",
     "currencyLabel": "Currency",
     "moderationList": "Moderation",
     "createSupportButton": "Create your network's support button",
@@ -777,5 +774,23 @@
     "community": "Commmunity chat",
     "admin_community": "Admin & Community",
     "you": "You"
+  },
+  "customTemplates": {
+    "schedulerExplain": "Every X time you will have to reactivate your button",
+    "schedulerText": "Add scheduler",
+    "priceExplain": "Display a price so user can buy/sell in their _helpbuttons_",
+    "priceText":  "Add price",
+    "eventExplain": "Display a date so the _helpbutton_ type behaves like an event and users can search by calendar",
+    "eventText": "Add date",
+    "schedulerLabelForm": "Expiring at",
+    "schedulerExplainForm": "This _helpbutton_ will remain active till this date. You can renew it in the future.",
+    "schedulerExplainAdminForm": "If you add this to a _helpbutton_ type, all the _helpbuttons_ of this type will expire automatically",
+    "schedulerLabelAdminForm": "Choose how long until the _helpbuttons_ expire",
+    "month": "Month",
+    "hour": "Hour",
+    "day": "day",
+    "schedulerExpiredMailSubject": "Your _helpbutton_ expired",
+    "schedulerExpired": "The _helpbutton_ expired",
+    "schedulerRenewd": "_helpbutton_ has been renewed"
   }
 }
