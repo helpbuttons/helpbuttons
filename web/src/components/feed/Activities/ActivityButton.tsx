@@ -2,7 +2,7 @@ import { LoadingWrapper } from "components/loading"
 import Btn, { BtnType, ContentAlignment, IconType } from "elements/Btn"
 import FieldText from "elements/Fields/FieldText"
 import ImageWrapper, { ImageType } from "elements/ImageWrapper"
-import { formatMessage } from "elements/Message"
+import { FormatMessage } from "elements/Message"
 import { ShowMobileOnly } from "elements/SizeOnly"
 import t from "i18n"
 import router from "next/router"
@@ -255,7 +255,7 @@ function ActivityDetailCard({ activity, isLast = false }) {
 }
 
 export function ActivityDetailMessage({ activity, isLast = false }) {
-  if (activity.from) {
+  if (activity?.from) {
     return (
       <>
         <div className="message__hour">
@@ -272,7 +272,7 @@ export function ActivityDetailMessage({ activity, isLast = false }) {
             </div>
           </div>
           <div className="message__content">
-            {formatMessage(activity.message)}
+            <FormatMessage text={activity.message} />
           </div>
         </div>
 
@@ -283,7 +283,6 @@ export function ActivityDetailMessage({ activity, isLast = false }) {
 
   } else {
     return (<>
-
       <div className="message__hour message__hour--me">
       {isLast ? t('activities.sent') : readableTimeLeftToDate(activity.createdAt)}
       </div>
@@ -292,8 +291,6 @@ export function ActivityDetailMessage({ activity, isLast = false }) {
           {activity.message}
         </div>
       </div>
-
-
     </>)
   }
 

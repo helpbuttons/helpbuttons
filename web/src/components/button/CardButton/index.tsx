@@ -31,7 +31,7 @@ import { useRef } from 'store/Store';
 import { GlobalState, store, useGlobalStore } from 'state';
 import Link from 'next/link';
 import { GetPhone, isAdmin } from 'state/Users';
-import { TextFormatted, formatMessage } from 'elements/Message';
+import { TextFormatted } from 'elements/Message';
 import { CardButtonCustomFields } from '../ButtonType/CustomFields/CardButtonCustomFields';
 import {
   CardSubmenu,

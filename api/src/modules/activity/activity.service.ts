@@ -184,13 +184,7 @@ export class ActivityService {
           // notify users following this tag
           await Promise.all(
             usersToNotify.map((user) => {
-              // auto follow button! because belongs to tag!
-              return this.buttonService
-                .follow(button.id, user.id)
-                .then(() => {
-                  // add new button to activity of user following interest in their radius!
-                  return this.newActivity(button, user.id, button.owner.id, { id: user.id },  { data: { button: button }, activityEventName: ActivityEventName.NewButton } , true, false)
-                });
+                return this.newActivity(button, user.id, button.owner.id, { id: user.id },  { data: { button: button }, activityEventName: ActivityEventName.NewButton } , true, false)
             }),
           ).catch((err) => {
             console.log(payload);
@@ -271,8 +265,12 @@ export class ActivityService {
       })
   }
 
-  private notifyByEmail(insertResult) {
+  private async notifyByEmail(insertResult) {
     const activityId = insertResult.identifiers[0].id
+    console.log('should send mail....')
+    const network = await this.networkService.findDefaultNetwork()
+    const btnTypes = await this.networkService.findButtonTypes()
+
     return this.activityRepository.findOne({ where: { id: activityId }, relations: ['button.owner', 'to', 'from', 'consumer'] })
       .then((activity) => {
         const toId = activity.to.id;
@@ -283,16 +281,25 @@ export class ActivityService {
             const fromName: string = activity?.from?.name;
             const publicationTitle: string = activity.button.title
             const locale = activity.to.locale
-            this.userService.getUserLoginParams(toId)
+            return this.userService.getUserLoginParams(toId)
               .then((loginParams) => {
+                const btnType = btnTypes.find((btnType) => btnType.name == activity.button.type)
+                const btnTypeCaption = `${btnType.icon} ${btnType?.caption}`
+                const extra = {
+                  title: activity.button.title,
+                  address: activity.button.address,
+                  type: btnTypeCaption,
+                  networkName: network.name
+                }
                 switch(activity.eventName){
                   case ActivityEventName.Message:
-                    this.mailService.sendWithLink({
+                    this.mailService.sendActivity({
                       to: activity.to.email,
-                      content: translate(locale, 'activities.newMessageContent', [fromName, _activity.message, publicationTitle]),
+                      content: translate(locale, 'activities.newMessageContent', [fromName, _activity.message]),
                       subject: translate(locale, 'activities.newMessageSubject', [fromName]),
                       link: this.addLoginParams(getUrl(`/Activity/button/${_activity.buttonId}`), loginParams),
                       linkCaption: translate(locale, 'activities.replyToMessage'),
+                      ...extra
                     });
                     break;
                   case ActivityEventName.NewPostComment:
@@ -302,6 +309,7 @@ export class ActivityService {
                       subject: translate(locale, 'activities.newPostCommentSubject', [fromName]),
                       link: this.addLoginParams(getUrl(`/Activity/button/${_activity.buttonId}`), loginParams),
                       linkCaption: translate(locale, 'activities.replyToMessage'),
+                      ...extra
                     })
                     break;
                   case ActivityEventName.NewMention:
@@ -311,6 +319,7 @@ export class ActivityService {
                       subject: translate(locale, 'activities.newMentionSubject', [fromName]),
                       link: this.addLoginParams(getUrl(`/Activity/button/${_activity.buttonId}`), loginParams),
                       linkCaption: translate(locale, 'activities.replyToMessage'),
+                      ...extra
                     })
                     break;
                   case ActivityEventName.SchedulerExpiredButton:
@@ -547,7 +556,7 @@ export class ActivityService {
   
   public transformActivity(activity, locale, userId) {
     try {
-      const isOwner = activity.to.id == userId;
+      const isOwner = activity?.to?.id == userId;
       const isButtonOwner = activity?.button?.owner?.id == userId
       const disableChat = (userId == activity?.button?.owner.id && activity?.consumer?.id == userId) ? true : false;
       const read = (activity?.from?.id == userId) ? true : activity.read;
@@ -562,7 +571,7 @@ export class ActivityService {
         createdAt: activity.created_at,
         buttonId: activity?.button?.id,
         fromId: activity?.from?.id,
-        consumerId: activity.consumer.id,
+        consumerId: activity?.consumer?.id,
         activityFrom: isButtonOwner ? activity.consumer : activity?.button?.owner,
         disableChat: disableChat,
         link: getUrl('/Explore'),

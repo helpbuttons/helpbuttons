@@ -453,17 +453,6 @@ export class ButtonService {
   }
     
 
-  @OnEvent(ActivityEventName.NewPostComment)
-  async autoFollowButton(payload: any) {
-    switch (payload.activityEventName) {
-      case ActivityEventName.NewPostComment:
-        const buttonId = payload.data.comment.button.id;
-        const userId = payload.data.comment.author.id;
-        this.follow(buttonId, userId);
-        break;
-    }
-  }
-
   async renew(dto: Button) {
     const network = await this.networkService.findDefaultNetwork();
     const buttonTemplate = network.buttonTemplates.find(

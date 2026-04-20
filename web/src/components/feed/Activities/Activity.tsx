@@ -15,6 +15,8 @@ import { FindAndSetMainPopupCurrentButton, SetMainPopupCurrentButton } from "sta
 import ActivityGroup, { ActivityGroupChat } from "./ActivityGroup";
 import { FindLatestActivities, SetDraftButton } from "state/Activity";
 import { FindButton, updateCurrentButton } from "state/Explore";
+import { ErrorName } from "shared/types/error.list";
+import { alertService } from "services/Alert";
 
 export default function ActivitiesUser({ activityId =null, draft = false, selectedGroupMessageType = null }) {
   const buttonTypes = useButtonTypes()
@@ -197,8 +199,16 @@ const useSideBarButton = (selectedActivity, isDraft) => {
 
   useEffect(() => {
     if (selectedActivity?.buttonId && selectedActivity?.buttonId != currentButton?.id){
+
         store.emit(new FindButton(selectedActivity.buttonId, (button) => {
           store.emit(new updateCurrentButton(button))
+        }, 
+        (error) => {
+          if (error.errorName == ErrorName.ButtonNotFound) {
+            store.emit(new updateCurrentButton(null))
+          } else {
+            alertService.error(error.caption);
+          }
         }))
     }else if(draftButton){
       store.emit(new FindButton(draftButton.id, (button) => {
