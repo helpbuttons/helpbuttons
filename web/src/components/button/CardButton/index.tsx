@@ -400,7 +400,7 @@ export function CardButtonHeadBig({ button, buttonTypes, toggleShowReplyFirstPos
                   button={button}
                   selectedNetwork={selectedNetwork}
                   isList={false}
-                  isButtonOwner={button.owner.id == sessionUser.id}
+                  isButtonOwner={button.owner.id == sessionUser?.id}
                 />
               </div>
             )}
@@ -477,7 +477,6 @@ function SchdulerExpiringAlert({
 
 export function ButtonOwnerPhone({ user, button }) {
   const [phone, setPhone] = useState(null);
-  const sessionUser = useGlobalStore((state: GlobalState) => state.sessionUser);
 
   const showPhone = () => {
     store.emit(
