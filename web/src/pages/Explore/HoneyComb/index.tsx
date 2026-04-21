@@ -350,20 +350,28 @@ function useHexagonMap({
             new FindButtons(
               debounceHexagonsToFetch.resolution,
               hexesToFetch,
-              (buttons) => { }, (error) => console.log(error)))
+              (buttons) => {
+
+              }, (error) => console.log(error)))
         }
       }
     }
   }, [debounceHexagonsToFetch])
 
   useEffect(() => {
-
+    
     const boundCachedButtons = cachedButtons.filter((_btn) => {
       if(getResolution(_btn.hexagon) < debounceHexagonsToFetch.resolution){
         return false;
       }
       return debounceHexagonsToFetch.hexagons.indexOf(cellToParent(_btn.hexagon, debounceHexagonsToFetch.resolution)) > -1
     })
+
+    if(cachedButtons.length < 1)
+    {
+      return;
+    }
+
     const { filteredButtons } = applyFilters(
       filters,
       boundCachedButtons,
@@ -378,9 +386,12 @@ function useHexagonMap({
     store.emit(
       new UpdateBoundsFilteredButtons(orderedFilteredButtons),
     );
+  }, [cachedButtons, filters, debounceHexagonsToFetch.resolution])
 
+  const listButtons : Button[] = useGlobalStore((state: GlobalState) => state.explore.map.listButtons);
+  useEffect(() => {
     const filteredHexagons = calculateDensityMap(
-      filteredButtons,
+      listButtons,
       debounceHexagonsToFetch.resolution,
       debounceHexagonsToFetch.hexagons,
     );
@@ -389,7 +400,7 @@ function useHexagonMap({
     });
 
     recalculateCacheH3Hexes(filteredHexagons);
-  }, [cachedButtons, filters, debounceHexagonsToFetch.resolution])
+  }, [listButtons])
 
   const handleBoundsChange = (bounds, center: Point, zoom) => {
     if (bounds) {
