@@ -172,7 +172,6 @@ export class ButtonService {
       relations: ['owner'],
     });
 
-    await this.checkAndSetExpiredScheduler(button);
     if (!button) {
       throw new HttpException(
         'button-not-found',
