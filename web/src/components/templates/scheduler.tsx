@@ -40,7 +40,7 @@ export function FieldSchedulerViewUser({expirationDate,type}) {
         <IoSync />
         {t('customTemplates.renewed')} {readableTimeLeftToDate(renewdate)}
                             </> : 
-                            <>{t('expired')}</>
+                            <><IoSync />{t('button.expiredLabel')}</>
         }
         </>
 }
@@ -53,7 +53,7 @@ export function FieldSchedulerViewOwner({expirationDate, type}) {
 
             {t('customTemplates.willExpire')} {readableTimeLeftToDate(expirationDate)}
                             </> : 
-                            <> {t('expired')}</>
+                            <><IoSync />{t('button.expiredLabel')}</>
     }
                             </>
 }
