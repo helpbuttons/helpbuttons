@@ -50,7 +50,7 @@ import { applyFilters, applyFiltersHex } from 'components/search/AdvancedFilters
 import { Button } from 'shared/entities/button.entity';
 import { replaceUrl } from 'components/uri/builder';
 import { ListKeyLocation } from 'state/Geo';
-import { cellToParent } from 'h3-js';
+import { cellToParent, getResolution } from 'h3-js';
 import { CustomFields } from 'shared/types/customFields.type';
 
 
@@ -358,7 +358,12 @@ function useHexagonMap({
 
   useEffect(() => {
 
-    const boundCachedButtons = cachedButtons.filter((_btn) => debounceHexagonsToFetch.hexagons.indexOf(cellToParent(_btn.hexagon, debounceHexagonsToFetch.resolution)) > -1)
+    const boundCachedButtons = cachedButtons.filter((_btn) => {
+      if(getResolution(_btn.hexagon) < debounceHexagonsToFetch.resolution){
+        return false;
+      }
+      return debounceHexagonsToFetch.hexagons.indexOf(cellToParent(_btn.hexagon, debounceHexagonsToFetch.resolution)) > -1
+    })
     const { filteredButtons } = applyFilters(
       filters,
       boundCachedButtons,

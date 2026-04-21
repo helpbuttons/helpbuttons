@@ -181,7 +181,7 @@ export function CardButtonHeadMedium({ button, buttonType }) {
               button={button}
               selectedNetwork={selectedNetwork}
               isList={true}
-              isButtonOwner={button.owner.id == sessionUser.id}
+              isButtonOwner={button.owner.id == sessionUser?.id}
             />
           )}
           
