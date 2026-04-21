@@ -106,10 +106,9 @@ export class ButtonService {
     if (network.requireApproval && user.role != Role.admin) {
       awaitingApproval = true;
     }
-    
-    const slug = this.newButtonId(createDto.title);
+
     const button = {
-      id: slug,
+      id: await this.getNewSlug(createDto.title),
       type: createDto.type,
       description: createDto.description,
       latitude: createDto.latitude,
@@ -164,19 +163,19 @@ export class ButtonService {
     return await button;
   }
 
-  async newButtonId(title){
+
+  async getNewSlug (title) {
     const slugify = require('slugify')
     let slug = slugify(title);
-    
+
     const checkIfExists = async (newId) => {
-      try{
+      try {
         const found = await this.findById(newId)
-        if(found){
+        if (found) {
           return true;
         }
-      }catch(exception){
-        if(exception.response == 'button-not-found')
-        {
+      } catch (exception) {
+        if (exception.response == 'button-not-found') {
           return false;
         }
         console.log(exception)
@@ -186,18 +185,18 @@ export class ButtonService {
     let append = '';
 
     let buttonIdExists = await checkIfExists(slug)
-    while(buttonIdExists){
+    while (buttonIdExists) {
       slug = slugify(title + append);
       append = append + '_'
       buttonIdExists = await checkIfExists(slug)
-      if(append.length > 10){
+      if (append.length > 10) {
         slug = uuid()
         break;
       }
     }
+    return slug;
   }
-  
-
+ 
   async findById(
     id: string,
     includeExpired: boolean = false,
