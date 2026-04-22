@@ -385,7 +385,7 @@ function useHexagonMap({
   const hexagonClicked : Button[] = useGlobalStore((state: GlobalState) => state.explore.settings.hexagonClicked);
   const listButtons : Button[] = useGlobalStore((state: GlobalState) => state.explore.map.listButtons);
 
-  useEffect(() => {
+  const recalculateButtonsToShow = () => {
     if(debounceHexagonsToFetch.resolution < 1){
       return;
     }
@@ -411,11 +411,20 @@ function useHexagonMap({
     
     store.emit(new UpdateButtonList(orderedFilteredButtons))
     recalculateCacheH3Hexes(filteredHexagons);
+  }
+  useEffect(() => {
+    recalculateButtonsToShow()
+    
   }, [boundsFilteredButtons, filters])
 
   useEffect(() => {
-    const newListButtons = listButtonsFilteredByHexagon(hexagonClicked, listButtons)
-    store.emit(new UpdateButtonList(newListButtons))
+    if(hexagonClicked){
+      const newListButtons = listButtonsFilteredByHexagon(hexagonClicked, listButtons)
+      store.emit(new UpdateButtonList(newListButtons))
+    }else{
+      recalculateButtonsToShow()
+    }
+    
   }, [hexagonClicked])
 
   const handleBoundsChange = (bounds, center: Point, zoom) => {
