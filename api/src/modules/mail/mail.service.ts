@@ -179,7 +179,7 @@ export class MailService {
       context: {
         subject: subject,
         content: content,
-        link: getUrl(link), 
+        link: link, 
         linkCaption: linkCaption,
         to: to,
         title,

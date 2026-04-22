@@ -55,6 +55,8 @@ import {
 import { Cache } from 'cache-manager';
 import { CacheKeys } from '@src/shared/types/cache.keys';
 import { cellToLatLng, cellToParent } from 'h3-js';
+import { calculateExpiringDate } from '@src/shared/types/scheduler.type';
+import { CustomFields } from '@src/shared/types/customFields.type';
 
 @Injectable()
 export class ButtonService {
@@ -98,33 +100,15 @@ export class ButtonService {
     const buttonTemplate = buttonTemplates.find(
       (btnTemplate) => btnTemplate.name == createDto.type,
     );
+    const customData = this.saveCustomFields(network.buttonTemplates, createDto)
 
-    if (buttonTemplate?.customFields) {
-      const isEvent = buttonTemplate?.customFields.find(
-        (customField) => customField.type == 'event',
-      );
-      if (isEvent) {
-        if (
-          !createDto.eventEnd ||
-          !createDto.eventStart ||
-          !createDto.eventType
-        ) {
-          throw new CustomHttpException(ErrorName.invalidDates);
-        }
-        if (
-          new Date(createDto.eventEnd).getTime() <
-          new Date(createDto.eventStart).getTime()
-        ) {
-          throw new CustomHttpException(ErrorName.invalidDates);
-        }
-      }
-    }
     let awaitingApproval = false;
     if (network.requireApproval && user.role != Role.admin) {
       awaitingApproval = true;
     }
+
     const button = {
-      id: uuid(),
+      id: await this.getNewSlug(createDto.title),
       type: createDto.type,
       description: createDto.description,
       latitude: createDto.latitude,
@@ -145,9 +129,7 @@ export class ButtonService {
         `h3_lat_lng_to_cell(POINT(${createDto.longitude}, ${createDto.latitude}), ${maxResolution})`,
       hideAddress: createDto.hideAddress,
       price: createDto.price,
-      eventStart: createDto.eventStart,
-      eventEnd: createDto.eventEnd,
-      eventType: createDto.eventType,
+      ...customData,
       hasPhone,
       eventData: createDto.eventData,
       awaitingApproval,
@@ -181,6 +163,40 @@ export class ButtonService {
     return await button;
   }
 
+
+  async getNewSlug (title) {
+    const slugify = require('slugify')
+    let slug = slugify(title);
+
+    const checkIfExists = async (newId) => {
+      try {
+        const found = await this.findById(newId)
+        if (found) {
+          return true;
+        }
+      } catch (exception) {
+        if (exception.response == 'button-not-found') {
+          return false;
+        }
+        console.log(exception)
+      }
+      return false;
+    }
+    let append = '';
+
+    let buttonIdExists = await checkIfExists(slug)
+    while (buttonIdExists) {
+      slug = slugify(title + append);
+      append = append + '_'
+      buttonIdExists = await checkIfExists(slug)
+      if (append.length > 10) {
+        slug = uuid()
+        break;
+      }
+    }
+    return slug;
+  }
+ 
   async findById(
     id: string,
     includeExpired: boolean = false,
@@ -190,14 +206,14 @@ export class ButtonService {
       where: { id, ...this.expiredBlockedConditions(includeExpired) },
       relations: ['owner'],
     });
+
     if (!button) {
       throw new HttpException(
         'button-not-found',
         HttpStatus.NOT_FOUND,
       );
     }
-    return await this.checkAndSetExpired(button).then((btn) => this.transformButton(btn, currentUser));
-    // return this.transformButton(button, currentUser)
+    return this.transformButton(button, currentUser);
   }
 
   async update(
@@ -206,6 +222,7 @@ export class ButtonService {
     mediaFiles: Express.Multer.File[],
     currentUser: User,
   ) {
+    const network = await this.networkService.findDefaultNetwork();
     const currentButton = await this.findById(id, true);
     this.cacheManager.del(CacheKeys.FINDH3_CACHE_KEY)
     let location = {};
@@ -223,10 +240,14 @@ export class ButtonService {
     if (currentButton.owner.phone) {
       hasPhone = true;
     }
-    const button: Partial<Button> = {
+    
+    const customData = this.saveCustomFields(network.buttonTemplates, updateDto)
+    
+    let button: Partial<Button> = {
       ...updateDto,
       ...location,
       ...hexagon,
+      ...customData,
       hasPhone,
       images: [],
       id,
@@ -277,12 +298,7 @@ export class ButtonService {
         }
       });
 
-    return this.isEventExpired(button).then((isExpired) => {
-      if (isExpired) {
-        throw new CustomHttpException(ErrorName.expiredDates);
-      }
-      return this.buttonRepository.save([button]).then((btn) => {console.log(button); return this.findById(button.id)})
-    });
+      return this.buttonRepository.save([button]).then((btn) => {return this.findById(button.id)})
   }
 
   @UseInterceptors(CacheInterceptor)
@@ -329,21 +345,13 @@ export class ButtonService {
               });
             });
         })
-        .then((buttons) => {
-          return Promise.all(
-            buttons.map(async (button) => {
-              return this.checkAndSetExpired(button);
-            }),
-          )
-            .then((btns) => {
-              return btns.filter((btn) => !btn.expired);
-            })
-            .then((btns) => {
-              return btns.map((btn) => 
-                this.transformButton(btn, currentUser)
-              );
-            });
-          // return Promise.all(btns)
+        .then((btns) => {
+          return btns.filter((btn) => !btn.expired);
+        })
+        .then((btns) => {
+          return btns.map((btn) => 
+            this.transformButton(btn, currentUser)
+          );
         });
     } catch (err) {
       console.log(err);
@@ -474,93 +482,65 @@ export class ButtonService {
       owner: { role: Not(Role.blocked) },
       deleted: false,
     };
-    if (includeExpired) {
-      return blocked;
+    if (!includeExpired) {
+      return { expired: false, ...blocked };
     }
-    return { expired: false, ...blocked };
+    return blocked;
   }
+    
 
-  @OnEvent(ActivityEventName.NewPost)
-  async updateDate(payload: any) {
-    const buttonId = payload.data.post.button.id;
-    await this.updateModifiedDate(buttonId);
-  }
-
-  @OnEvent(ActivityEventName.NewPostComment)
-  async autoFollowButton(payload: any) {
-    switch (payload.activityEventName) {
-      case ActivityEventName.NewPostComment:
-        const buttonId = payload.data.comment.button.id;
-        const userId = payload.data.comment.author.id;
-        this.follow(buttonId, userId);
-        break;
+  async renew(dto: Button) {
+    const network = await this.networkService.findDefaultNetwork();
+    const buttonTemplate = network.buttonTemplates.find(
+      (btnTemplate) => btnTemplate.name == dto.type,
+    );
+    const isScheduled = buttonTemplate?.customFields.find(
+      (customField) => customField.type == CustomFields.Scheduler,
+    );
+    if(isScheduled)
+    {
+      // @ts-ignore
+      const updateButton = {id: dto.id, expired: false, expirationDate: calculateExpiringDate(isScheduled.unity, parseInt(isScheduled.value))}
+      return this.buttonRepository.save([updateButton]).then((btn) => {return true})
     }
-    const buttonId = payload.data.comment.post.button.id;
-    await this.updateModifiedDate(buttonId);
-  }
-
-  renew(button: Button, user: User) {
-    return this.isEventExpired(button).then(async (isExpired) => {
-      if (isExpired) {
-        throw new CustomHttpException(ErrorName.expiredDates);
-      } else {
-        return this.updateModifiedDate(button.id).then(() => {
-          return button;
-        });
-      }
-    });
+    return false ;
   }
 
   updateModifiedDate(buttonId: string) {
     return this.entityManager.query(`UPDATE button SET updated_at = CURRENT_TIMESTAMP, deleted = false, expired = false WHERE id = $1`, [buttonId]);
   }
 
-  checkAndSetExpired(button: Button) {
-    if (button.expired) {
-      return Promise.resolve(button);
-    }
-    return this.isEventExpired(button).then(async (isExpired) => {
-      if (isExpired) {
-        await this.setExpired(button.id);
+  checkAndSetExpiredEvent(button: Button) {
+    const now = new Date();
+    if (new Date(button.eventEnd) < now) {
+      return this.setExpired(button.id)
+      .then(() => {
         notifyUser(
           this.eventEmitter,
           ActivityEventName.ExpiredButton,
           { button },
         );
         return { ...button, expired: true };
-      }
-      return button;
-    });
-    // deactivating to expire buttons after 3 months...
-    // https://github.com/helpbuttons/helpbuttons/issues/703
-    /*.then(async (button) => {
-      var expiredUpdatesDate = new Date();
-      expiredUpdatesDate.setMonth(expiredUpdatesDate.getMonth() - 3);
-      if (button.updated_at < expiredUpdatesDate) {
-        const now = new Date();
-        if (button.updated_at < now) {
-          await this.setExpired(button.id)
-          await this.notifyOwnerExpiredButton(button)
-          return {...button, expired: true};
-        }
-      }
-      return button;
-    });*/
+      })
+    }
+    return Promise.resolve(button)
   }
 
-  isEventExpired(button: Partial<Button>) {
-    return this.networkService
-      .getButtonTypesWithEventField()
-      .then((btnTemplateEvents) => {
-        // if its a button type with an event field
-        if (btnTemplateEvents.indexOf(button.type) > -1) {
-          const now = new Date();
-          if (new Date(button.eventEnd) < now) {
-            return true;
-          }
-        }
-        return false;
-      });
+  async checkAndSetExpiredScheduler(button)
+  {
+    const now = new Date();
+    if (new Date(button.expirationDate) < now) {
+      return this.setExpired(button.id)
+      .then(() => {
+        notifyUser(
+          this.eventEmitter,
+          ActivityEventName.SchedulerExpiredButton,
+          { button },
+        );
+        return { ...button, expired: true };
+      })
+    }
+    return Promise.resolve(button)
   }
 
   setExpired(buttonId: string) {
@@ -624,7 +604,7 @@ export class ButtonService {
       order: { created_at: 'DESC' },
       where: {
         awaitingApproval: true,
-        ...this.expiredBlockedConditions(),
+        ...this.expiredBlockedConditions(true),
       },
     });
   }
@@ -664,7 +644,6 @@ export class ButtonService {
         },
         relations: ['owner']
       })
-      .then((buttons) => this.filterExpired(buttons));
   }
 
   embbed(page: number, take: number) {
@@ -679,17 +658,6 @@ export class ButtonService {
           updated_at: 'DESC',
         },
       })
-      .then((buttons) => this.filterExpired(buttons));
-  }
-
-  filterExpired(buttons) {
-    return Promise.all(
-      buttons.map(async (button) => {
-        return this.checkAndSetExpired(button);
-      }),
-    ).then((btns) => {
-      return btns.filter((btn) => !btn.expired);
-    });
   }
 
   public rss() {
@@ -703,7 +671,6 @@ export class ButtonService {
           updated_at: 'DESC',
         },
       })
-      .then((buttons) => this.filterExpired(buttons))
       .then(async (buttons) => {
         const network: Network =
           await this.networkService.findDefaultNetwork();
@@ -746,5 +713,59 @@ export class ButtonService {
 
   public deleteAllButtonsFromType(type: string) {
     return this.buttonRepository.update({ type: type }, {deleted: true})
+  }
+
+  validateEventFields(eventStart, eventEnd, eventType) {
+
+        if (
+          !eventEnd ||
+          !eventStart ||
+          !eventType
+        ) {
+          throw new CustomHttpException(ErrorName.invalidDates);
+        }
+        if (
+          new Date(eventEnd).getTime() <
+          new Date(eventStart).getTime()
+        ) {
+          // adding one day to event Start, plus the hour set on end time
+          const eventNewEndDate = new Date(eventStart);
+          const eventEndDate = new Date(eventEnd);
+          eventNewEndDate.setDate(eventNewEndDate.getDate() + 1);
+          eventNewEndDate.setHours(
+            eventEndDate.getHours(),
+            eventEndDate.getMinutes(),
+            eventEndDate.getSeconds(),
+            eventEndDate.getMilliseconds()
+          );
+          eventEnd = eventNewEndDate;
+        }
+
+    return {eventStart, eventEnd, eventType, expirationDate: eventEnd}
+  }
+
+  saveCustomFields(buttonTemplates, dto)
+  {
+    let eventData = {}
+    const buttonTemplate = buttonTemplates.find(
+      (btnTemplate) => btnTemplate.name == dto.type,
+    );
+    if (buttonTemplate?.customFields) {
+      const isEvent = buttonTemplate?.customFields.find(
+        (customField) => customField.type == CustomFields.Event,
+      );
+      if (isEvent) {
+        eventData = this.validateEventFields(dto.eventStart, dto.eventEnd, dto.eventType)
+      }
+
+      const isScheduled = buttonTemplate?.customFields.find(
+        (customField) => customField.type == CustomFields.Scheduler,
+      );
+      if(isScheduled)
+      {
+        eventData = {expirationDate: calculateExpiringDate(isScheduled.unity, parseInt(isScheduled.value))}
+      }
+    }
+    return eventData;
   }
 }

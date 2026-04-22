@@ -178,7 +178,8 @@ function FieldLocationSearch({ isCustomAddress = false, placeholder, setResults,
     const findAddressFromPosition = (latLng, hideAddress) => {
         setIsLoading(() => true)
         getLatLngAddress(latLng, hideAddress, (place) => {
-            setResults(() => [place])
+            const coordinatesPlace = {formatted: getCoordinatesDMS(`${latLng[0]}, ${latLng[1]}`), geometry: {lat: latLng[0], lng: latLng[1]}}
+            setResults(() => [place,coordinatesPlace])
             setIsLoading(() => false)
         },
             (error) => {

@@ -6,6 +6,7 @@ import { dbToRRule } from 'components/picker/PickerEventType/recurrent';
 import produce from 'immer';
 import { Button } from 'shared/entities/button.entity';
 import dconsole from 'shared/debugger';
+import { ButtonEntry } from 'shared/dtos/button.dto';
 
 export class FindMonthCalendar implements WatchEvent {
   public constructor(
@@ -95,7 +96,7 @@ export class FindBulletinButtons implements WatchEvent {
 }
 
 export class UpdateButtonList implements UpdateEvent {
-  public constructor(private buttons: Button[]) { }
+  public constructor(private buttons: ButtonEntry[]) { }
   public update(state: GlobalState) {
     return produce(state, (newState) => {
       dconsole.log('[UpdateButtonList]')

@@ -115,7 +115,7 @@ export default function HexagonExploreMap({
   useEffect(() => {
     if (!hoverButtonList && !hexagonClicked && !currentButton) {
       setHexagonClickedFeatures(() => null)
-    } else if (hexagonClicked) {
+    } else if (hexagonClicked && !currentButton) {
       setHexagonClickedFeatures(() => hexagonsMedianCenters.find((feature) => feature.hexagon == hexagonClicked))
     } else if(currentButton) {
       const highLightHexagon = cellToZoom(currentButton.hexagon, exploreSettings.zoom)

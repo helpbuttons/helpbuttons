@@ -1,63 +1,38 @@
 import { FieldCheckCard } from 'elements/Fields/FieldCheckCard';
-import t from 'i18n';
-import { IoCalendar, IoCash } from 'react-icons/io5';
 import _ from 'lodash';
+import { customTemplates } from 'components/templates';
 
-export function AddCustomFields({ customFields, setCustomFields }) {
-  const hasPrice = customFields.find(
-    (customField) => customField.type == 'price',
-  );
-  const hasEvent = customFields.find(
-    (customField) => customField.type == 'event',
-  );
-  return (
-    <>
-      {customFields && (
-        <>
-          <FieldCheckCard
-            name="priceField"
-            image={CustomFieldIcon['price']}
-            explain={t('configuration.priceFieldAddLabel')}
-            text={t('configuration.priceFieldAdd')}
-            onChanged={(value) => {
-              if (value) {
-                setCustomFields(
-                  _.uniq([...customFields, { type: 'price' }]),
-                );
-              } else {
-                setCustomFields(
-                  customFields.filter((elem) => elem.type != 'price'),
-                );
-              }
-            }}
-            defaultValue={hasPrice}
-          />
-          <FieldCheckCard
-            name="eventField"
-            image={CustomFieldIcon['event']}
-            explain={t('configuration.dateFieldAddLabel')}
-            // defaultValue={watch('eventField')}
-            text={t('eventType.eventFieldAdd')}
-            onChanged={(value) => {
-              if (value) {
-                setCustomFields(
-                  _.uniq([...customFields, { type: 'event' }]),
-                );
-              } else {
-                setCustomFields(
-                  customFields.filter((elem) => elem.type != 'event'),
-                );
-              }
-            }}
-            defaultValue={hasEvent}
-          />
-        </>
-      )}
-    </>
-  );
+
+
+export function AddCustomFields({ selectedCustomTemplates, setSelectedCustomTemplates, setEditing, editingValue, saveEdit }) {
+  
+  return <>{customTemplates
+            .map((template) => {
+              const isSelected = selectedCustomTemplates?.find((_template) => {return _template.type == template.name})
+              const FormConfiguration = template.configurationForm;
+              return <>
+              <FieldCheckCard
+                name={`${template.name}Field`}
+                image={template.icon}
+                explain={template.explain}
+                text={template.text}
+                onChanged={(value) => {
+                  if (value) {
+                    setSelectedCustomTemplates(
+                      _.uniq([...selectedCustomTemplates, { type: template.name }]),
+                    );
+                  } else {
+                    setSelectedCustomTemplates(
+                      selectedCustomTemplates.filter((elem) => elem.type != template.name),
+                    );
+                  }
+                }}
+                defaultValue={isSelected}
+              />
+              {(isSelected && FormConfiguration) && <FormConfiguration editingValue={editingValue} setEditing={setEditing} saveEdit={saveEdit}/>}
+              </>
+            }
+          )}
+          </>
+  
 }
-
-export const CustomFieldIcon = {
-  'price': <IoCash/>,
-  'event': <IoCalendar/>,
-};

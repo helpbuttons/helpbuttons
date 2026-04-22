@@ -6,7 +6,7 @@ import {
 } from '@nestjs/typeorm';
 import { uuid } from '@src/shared/helpers/uuid.helper';
 import { ActivityEventName } from '@src/shared/types/activity.list';
-import { EntityManager, In, Not, Repository } from 'typeorm';
+import { EntityManager, Repository } from 'typeorm';
 import { Activity } from './activity.entity';
 
 import { UserService } from '../user/user.service';
@@ -20,9 +20,11 @@ import { unique } from '@src/shared/helpers/array.helper';
 import { IsNull } from "typeorm"
 import { GroupMessageService } from '../group-message/group-message.service';
 import { getUrl } from '@src/shared/helpers/mail.helper';
+import { SourceCodeLogger } from '@src/shared/helpers/source-code-logger.helper';
 
 @Injectable()
 export class ActivityService {
+  private logger = new SourceCodeLogger('Activity')
   constructor(
     @InjectRepository(Activity)
     private readonly activityRepository: Repository<Activity>,
@@ -62,6 +64,11 @@ export class ActivityService {
   }
 
   findUsersToNotify(button) {
+    if(!button.followedBy){
+      console.error('button doesnt have followedBy')
+      console.trace()
+      return Promise.resolve([])
+    }
     return this.userService.findAllByIdsToBeNotified(button.followedBy);
   }
 
@@ -177,13 +184,7 @@ export class ActivityService {
           // notify users following this tag
           await Promise.all(
             usersToNotify.map((user) => {
-              // auto follow button! because belongs to tag!
-              return this.buttonService
-                .follow(button.id, user.id)
-                .then(() => {
-                  // add new button to activity of user following interest in their radius!
-                  return this.newActivity(button, user.id, button.owner.id, { id: user.id },  { data: { button: button }, activityEventName: ActivityEventName.NewButton } , true, false)
-                });
+                return this.newActivity(button, user.id, button.owner.id, { id: user.id },  { data: { button: button }, activityEventName: ActivityEventName.NewButton } , true, false)
             }),
           ).catch((err) => {
             console.log(payload);
@@ -196,38 +197,45 @@ export class ActivityService {
 
   @OnEvent(ActivityEventName.RenewButton)
   async onRenewButton(payload: any) {
-    console.log('doing nothing for now');
-    // https://github.com/helpbuttons/helpbuttons/issues/703
-    // deactivating this email
-    // {
-    //   const owner = payload.data.owner;
-    //   const button = payload.data.button;
-    //   return this.userService.getUserLoginParams(owner.id).then(
-    //     (loginParams) => {
-    //   this.mailService.sendWithLink({
-    //         to: owner.email,
-    //         content: translate(owner.locale, 'button.renewMail', [button.title]),
-    //         subject: translate(owner.locale, 'button.renewMailSubject'),
-    //         link: getUrl(
-    //           owner.locale,
-    //           `/ButtonFile/${button.id}${loginParams}`,
-    //         ),
-    //         linkCaption: translate(
-    //           owner.locale,
-    //           'email.buttonLinkCaption',
-    //         ),
-    //       })
-    //     })
-    // }
+    const { button, owner } = payload.data;
+    return this.findUsersToNotify(button)
+      .then((users) => {
+        if (users.length < 1) {
+          this.newActivity(button, owner, owner, { id: owner.id }, payload, false, true, false)
+          return;
+        }
+        return users.map((_user, idx) => {
+          return this.newActivity(button, _user, owner, _user, payload, true, true)
+        })
+      })
   }
   @OnEvent(ActivityEventName.ExpiredButton)
   async onExpiredButton(payload: any) {
     const { button } = payload.data;
+    return this.findUsersToNotify(button)
+      .then((users) => {
+        return users.map((_user) => {
+          return this.newActivity(button, _user, button.ownerId, _user, payload)
+        })
+      })
+  }
 
-    // delete from home info
-    // await this.createActivity(button.owner, payload, false);
-    console.log('TODO')
+  @OnEvent(ActivityEventName.SchedulerExpiredButton)
+  async onSchedulerExpired(payload: any)
+  {
+    const { button } = payload.data;
 
+    return this.findUsersToNotify(button)
+      .then((users) => {
+        if(users.length < 1){
+          this.newActivity(button, button.ownerId,  button.ownerId ,{id: button.ownerId}, payload, false, true, true)
+          return;
+        }
+        this.newActivity(button, button.ownerId,  button.ownerId ,{id: button.ownerId}, payload, false, false, true)
+        return users.map((_user, idx) => {
+          return this.newActivity(button, _user, button.ownerId, _user, payload, true, true)
+        })
+      })
   }
 
   @OnEvent(ActivityEventName.EndorseRevoked)
@@ -270,7 +278,7 @@ export class ActivityService {
           .then((user) => {
             const _activity = this.transformActivity(activity, user.locale, toId);
             const isButtonOwner = activity?.button?.owner?.id == toId
-            const fromName: string = activity.from.name;
+            const fromName: string = activity?.from?.name;
             const publicationTitle: string = activity.button.title
             const locale = activity.to.locale
             return this.userService.getUserLoginParams(toId)
@@ -313,6 +321,15 @@ export class ActivityService {
                       linkCaption: translate(locale, 'activities.replyToMessage'),
                       ...extra
                     })
+                    break;
+                  case ActivityEventName.SchedulerExpiredButton:
+                    this.mailService.sendWithLink({
+                      to: activity.to.email,
+                      content: translate(locale, 'customTemplates.schedulerExpired'),
+                      subject: translate(locale, 'customTemplates.schedulerExpiredMailSubject'),
+                      link: this.addLoginParams(getUrl(`/Activity/button/${_activity.buttonId}`), loginParams),
+                      linkCaption: translate(locale, 'activities.view'), 
+                    });
                     break;
                 }
               })
@@ -389,7 +406,13 @@ export class ActivityService {
       lastActivityButtonConsumer: setAsLastButtonConsumer,
       lastActivityButtonOwner: setAsLastButtonOwner,
     };
-        
+       
+    if(!from){
+      this.logger.warn(payload.activityEventName)
+      this.logger.warn(from)
+      console.trace()
+      return;
+    }
     if (setAsLastButtonConsumer) {
       await this.hideActivitiesButtonConsumer(button.id, consumer.id)
     }
@@ -538,7 +561,8 @@ export class ActivityService {
       const disableChat = (userId == activity?.button?.owner.id && activity?.consumer?.id == userId) ? true : false;
       const read = (activity?.from?.id == userId) ? true : activity.read;
       if (activity.from == null) {
-        console.log(`activity as from null: ${activity.id}`)
+        console.log(activity)
+        this.logger.warn(`activity as from null: ${activity.eventName} ${activity.id}`)
       }
       let activityOut = {
         id: activity.id,
@@ -694,6 +718,32 @@ export class ActivityService {
               message: translate(locale, 'activities.roleupdate', [role]),
               link: null
             }
+          }
+        case ActivityEventName.RenewButton:
+          return {
+            ...activityOut,
+            title: activity?.from?.name,
+            from: "",
+            image: activity.button.image,
+            buttonType: activity.button.type,
+            type: translate(locale, 'activities.notice'),
+            footer: `${activity.button.title} - ${activity.button.address}`,
+            message: translate(locale, 'customTemplates.schedulerRenewd'),
+            link: null,
+            disableChat: false,
+          }
+        case ActivityEventName.SchedulerExpiredButton:
+          return {
+            ...activityOut,
+            title: activity?.from?.name,
+            from: "",
+            image: activity.button.image,
+            buttonType: activity.button.type,
+            type: translate(locale, 'activities.notice'),
+            footer: `${activity.button.title} - ${activity.button.address}`,
+            message: translate(locale, 'customTemplates.schedulerExpired'),
+            link: null,
+            disableChat: false,
           }
         default:
           return {

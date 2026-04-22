@@ -312,12 +312,11 @@ $card-button-border-height: $border-general-height;
   font-size: $font-size-xxbig;
   padding: $padding-big 0 $padding-xsmall 0;
 
-  display: flex;
+  display: block;
   flex-direction: row;
   align-items:flex-start;
   word-wrap: break-word;
   line-height: 1.3em;
-
 
   word-break: break-word;
 }
@@ -404,7 +403,12 @@ $card-button-border-height: $border-general-height;
   display: flex;
 }
 
-.card-button__price--button-page {
+.card-button__custom-fields-container--button-page {
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: $padding-medium;
 
   & .card-button__price {
 
@@ -586,12 +590,12 @@ $card-button-border-height: $border-general-height;
   text-overflow: ellipsis;
   justify-content: center;
   align-items: center;
-  gap: $padding-small;
+  gap: $padding-medium;
 
 
   & svg{
-    height: 20px;
-    min-width: 20px;
+    height: 26px;
+    min-width: 26px;
   }
 }
 
@@ -616,11 +620,11 @@ $card-button-border-height: $border-general-height;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  gap: $padding-small;
+  gap: $padding-medium;
 
   & svg{
-    height: 20px;
-    min-width: 20px;
+    height: 26px;
+    min-width: 26px;
   }
 }
 
@@ -629,7 +633,7 @@ $card-button-border-height: $border-general-height;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  gap: $margin-xsmall;
+  gap: $padding-medium;
   overflow: visible;
   font-weight: $font-weight-bolder;
   align-items: flex-start;
@@ -723,13 +727,14 @@ $card-button-border-height: $border-general-height;
 
   .card-button__bottom-properties {
     display: flex;
-    flex-direction: row;
+    // flex-direction: row;
     justify-content: flex-start;
-    align-items: baseline;
+    // align-items: flex-end;
     flex-wrap: wrap;
     overflow: visible;
-    gap: $margin-small;
+    // gap: $margin-small;
     margin-bottom: $margin-small;
+
   }
 
   .card-button__head-actions {

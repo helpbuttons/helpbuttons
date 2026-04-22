@@ -10,6 +10,7 @@ import HoneyComb from "./HoneyComb";
 import { useSelectedNetwork } from "state/Networks";
 import { SetHideNavBottom } from "state/HomeInfo";
 import { useOnPageExit } from "shared/custom.hooks";
+import { ResetFilters } from "state/Explore";
 
 export default function Explore(props) {
   
@@ -30,6 +31,7 @@ function useParams(router)
     if(exploreSettings?.center)
     {
       // load on last coordinates naviagated...!
+      store.emit(new ResetFilters())
       router.push(`/Explore/${exploreSettings.zoom}/${exploreSettings.center[0]}/${exploreSettings.center[1]}`, undefined, { shallow: true });
     }else{
       // load from coordinates of network
