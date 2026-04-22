@@ -52,7 +52,7 @@ export interface ExploreSettings {
   hoverButton: Button;
   viewMode: ExploreViewMode;
   urlUpdated: boolean;
-  cachedButtons: Button[];
+  cachedButtons: ButtonEntry[];
 }
 
 export const exploreSettingsDefault: ExploreSettings = {
@@ -72,9 +72,9 @@ export const exploreSettingsDefault: ExploreSettings = {
 export interface ExploreMapState {
   filters: ButtonFilters;
   buttonTypeClicked: boolean; // this is used to jump to center of network if no buttons are found
-  listButtons: Button[]; // if hexagon clicked, can be different from boundsButtons
-  pinnedButtons: Button[];
-  boundsFilteredButtons: Button[];
+  listButtons: ButtonEntry[]; // if hexagon clicked, can be different from boundsButtons
+  pinnedButtons: ButtonEntry[];
+  boundsFilteredButtons: ButtonEntry[];
   cachedHexagons: any[];
   initialized: boolean;
   showAdvancedFilters: boolean;
@@ -120,7 +120,7 @@ export class FindButtons implements WatchEvent {
 }
 export class StoreFindButtons implements UpdateEvent {
   public constructor(
-    private buttons: Button[],
+    private buttons: ButtonEntry[],
   ) { }
 
   public update(state: GlobalState) {
@@ -202,7 +202,7 @@ export class FindButton implements WatchEvent {
 }
 
 export class ButtonFound implements UpdateEvent {
-  public constructor(private button: Button) { }
+  public constructor(private button: ButtonEntry) { }
 
   public update(state: GlobalState) {
     return produce(state, (newState) => {
@@ -282,7 +282,7 @@ export class PreviousCurrentButton implements UpdateEvent {
 }
 
 export class updateCurrentButton implements UpdateEvent {
-  public constructor(private button: Button) { }
+  public constructor(private button: ButtonEntry) { }
   public update(state: GlobalState) {
     return produce(state, (newState) => {
       newState.explore.currentButton = this.button;
@@ -330,7 +330,8 @@ export class ResetFilters implements UpdateEvent {
   public update(state: GlobalState) {
     return produce(state, (newState) => {
       newState.explore.settings.hexagonClicked = null;
-      newState.explore.map.listButtons = state.explore.map.boundsFilteredButtons
+      // newState.explore.map.listButtons = state.explore.map.boundsFilteredButtons
+      newState.explore.map.listButtons = []
       newState.explore.map.filters = defaultFilters;
     });
   }
@@ -407,7 +408,7 @@ export class UpdateFiltersToFilterButtonType implements UpdateEvent {
 }
 
 export class UpdateBoundsFilteredButtons implements UpdateEvent, WatchEvent {
-  public constructor(private boundsFilteredButtons: Button[]) { }
+  public constructor(private boundsFilteredButtons: ButtonEntry[]) { }
 
   public watch(state: GlobalState) {
 
@@ -447,7 +448,7 @@ export class UpdateBoundsFilteredButtons implements UpdateEvent, WatchEvent {
 
       newState.explore.map.boundsFilteredButtons =
         buttonsInBounds;
-      newState.explore.map.listButtons = listButtonsFilteredByHexagon(state.explore.settings.hexagonClicked, buttonsInBounds)
+      // newState.explore.map.listButtons = listButtonsFilteredByHexagon(state.explore.settings.hexagonClicked, buttonsInBounds)
       newState.explore.map.initialized = true;
     });
   }
@@ -470,14 +471,15 @@ export class UpdateHexagonClicked implements UpdateEvent {
       newState.explore.settings.hexagonClicked = this.hexagonClicked;
       if (this.hexagonClicked) {
         newState.explore.map.showInstructions = false;
-        newState.explore.map.listButtons = listButtonsFilteredByHexagon(this.hexagonClicked, state.explore.map.boundsFilteredButtons)
+        // newState.explore.map.listButtons = listButtonsFilteredByHexagon(this.hexagonClicked, state.explore.map.boundsFilteredButtons)
         newState.explore.currentButton = null
         if (state.explore.settings.viewMode == ExploreViewMode.MAP) {
           newState.explore.settings.viewMode = ExploreViewMode.BOTH
         }
-      } else {
-        newState.explore.map.listButtons = state.explore.map.boundsFilteredButtons
-      }
+      } 
+      // else {
+      //   newState.explore.map.listButtons = state.explore.map.boundsFilteredButtons
+      // }
     });
   }
 }
@@ -496,7 +498,7 @@ export class HoverButtonList implements UpdateEvent {
   }
 }
 
-function listButtonsFilteredByHexagon(hexagonClicked, boundsFilteredButtons) {
+export function listButtonsFilteredByHexagon(hexagonClicked, boundsFilteredButtons) {
   const resolutionRequested = getResolution(hexagonClicked);
   if (hexagonClicked) {
     return boundsFilteredButtons.filter(
@@ -631,30 +633,30 @@ export class UpdateExploreViewMode implements UpdateEvent {
 }
 
 
-export class UpdateListButton implements UpdateEvent {
-  public constructor(
-    private buttonId: string,
-    private attrs,
-  ) { }
-  public update(state: GlobalState) {
-    return produce(state, (newState) => {
-      newState.explore.map.boundsFilteredButtons = []
-      state.explore.map.boundsFilteredButtons.map((entry) => {
-        if (entry.id == this.buttonId) {
-          return { ...entry, ...this.attrs }
-        }
-        return entry
-      })
+// export class UpdateListButton implements UpdateEvent {
+//   public constructor(
+//     private buttonId: string,
+//     private attrs,
+//   ) { }
+//   public update(state: GlobalState) {
+//     return produce(state, (newState) => {
+//       newState.explore.map.boundsFilteredButtons = []
+//       state.explore.map.boundsFilteredButtons.map((entry) => {
+//         if (entry.id == this.buttonId) {
+//           return { ...entry, ...this.attrs }
+//         }
+//         return entry
+//       })
 
-      newState.explore.map.listButtons = state.explore.map.listButtons.map((entry) => {
-        if (entry.id == this.buttonId) {
-          return { ...entry, ...this.attrs }
-        }
-        return entry
-      })
-    });
-  }
-}
+//       newState.explore.map.listButtons = state.explore.map.listButtons.map((entry) => {
+//         if (entry.id == this.buttonId) {
+//           return { ...entry, ...this.attrs }
+//         }
+//         return entry
+//       })
+//     });
+//   }
+// }
 
 export class ListOnlyButtonType implements UpdateEvent {
   public constructor(private hexagon, private btnType) { }

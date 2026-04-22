@@ -12,6 +12,7 @@ import {
   UpdateHexagonClicked,
   updateCurrentButton,
   UpdateFilters,
+  listButtonsFilteredByHexagon,
 } from 'state/Explore';
 import NavHeader from 'components/nav/NavHeader'; //just for mobile
 import { useStore } from 'state';
@@ -52,6 +53,7 @@ import { replaceUrl } from 'components/uri/builder';
 import { ListKeyLocation } from 'state/Geo';
 import { cellToParent, getResolution } from 'h3-js';
 import { CustomFields } from 'shared/types/customFields.type';
+import { UpdateButtonList } from 'state/Button';
 
 
 function HoneyComb({ selectedNetwork }) {
@@ -297,7 +299,7 @@ function useHexagonMap({
 
   
   const [hexagonsToFetch, setHexagonsToFetch] = useState({
-    resolution: 1,
+    resolution: -1,
     hexagons: [],
     init: false,
   });
@@ -360,21 +362,36 @@ function useHexagonMap({
 
   useEffect(() => {
     
+    if(debounceHexagonsToFetch.resolution < 1){
+      return;
+    }
     const boundCachedButtons = cachedButtons.filter((_btn) => {
       if(getResolution(_btn.hexagon) < debounceHexagonsToFetch.resolution){
         return false;
       }
       return debounceHexagonsToFetch.hexagons.indexOf(cellToParent(_btn.hexagon, debounceHexagonsToFetch.resolution)) > -1
     })
-
-    if(cachedButtons.length < 1)
+    if(boundCachedButtons.length < 1)
     {
       return;
     }
+    
+    store.emit(
+      new UpdateBoundsFilteredButtons(boundCachedButtons),
+    );
+  }, [cachedButtons, filters, debounceHexagonsToFetch.resolution])
 
+
+  const hexagonClicked : Button[] = useGlobalStore((state: GlobalState) => state.explore.settings.hexagonClicked);
+  const listButtons : Button[] = useGlobalStore((state: GlobalState) => state.explore.map.listButtons);
+
+  useEffect(() => {
+    if(debounceHexagonsToFetch.resolution < 1){
+      return;
+    }
     const { filteredButtons } = applyFilters(
       filters,
-      boundCachedButtons,
+      boundsFilteredButtons,
       buttonTypes,
     );
 
@@ -383,24 +400,23 @@ function useHexagonMap({
       filters.orderBy,
       exploreSettings?.center,
     );
-    store.emit(
-      new UpdateBoundsFilteredButtons(orderedFilteredButtons),
-    );
-  }, [cachedButtons, filters, debounceHexagonsToFetch.resolution])
-
-  const listButtons : Button[] = useGlobalStore((state: GlobalState) => state.explore.map.listButtons);
-  useEffect(() => {
     const filteredHexagons = calculateDensityMap(
-      listButtons,
-      debounceHexagonsToFetch.resolution,
-      debounceHexagonsToFetch.hexagons,
+      orderedFilteredButtons,
+      hexagonsToFetch.resolution,
+      hexagonsToFetch.hexagons,
     );
     seth3TypeDensityHexes(() => {
       return filteredHexagons;
     });
-
+    
+    store.emit(new UpdateButtonList(orderedFilteredButtons))
     recalculateCacheH3Hexes(filteredHexagons);
-  }, [listButtons])
+  }, [boundsFilteredButtons, filters])
+
+  useEffect(() => {
+    const newListButtons = listButtonsFilteredByHexagon(hexagonClicked, listButtons)
+    store.emit(new UpdateButtonList(newListButtons))
+  }, [hexagonClicked])
 
   const handleBoundsChange = (bounds, center: Point, zoom) => {
     if (bounds) {

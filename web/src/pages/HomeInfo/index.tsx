@@ -50,6 +50,7 @@ import Footer from 'components/footer';
 import { ActivityListEntryCard } from 'components/feed/Activities/ActivityListEntry';
 import { ActivityEventName } from 'shared/types/activity.list';
 import { SetFocusOnPost } from 'state/Activity';
+import { ResetFilters } from 'state/Explore';
 
 export default function HomeInfo({ metadata }) {
 
@@ -71,6 +72,10 @@ export default function HomeInfo({ metadata }) {
     (state: GlobalState) => state.sessionUser,
   );
   useMetadataTitle(t('menu.home'));
+
+  useEffect(() => {
+    store.emit(new ResetFilters())
+  }, [])
 
   const scrollToContact = useRef();
   return (
