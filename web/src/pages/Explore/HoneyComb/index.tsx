@@ -389,11 +389,6 @@ function useHexagonMap({
     if(debounceHexagonsToFetch.resolution < 1){
       return;
     }
-    if(hexagonClicked){
-      const newListButtons = listButtonsFilteredByHexagon(hexagonClicked, boundsFilteredButtons)
-      store.emit(new UpdateButtonList(newListButtons))
-      return;
-    }
     const { filteredButtons } = applyFilters(
       filters,
       boundsFilteredButtons,
@@ -413,9 +408,15 @@ function useHexagonMap({
     seth3TypeDensityHexes(() => {
       return filteredHexagons;
     });
-    
-    store.emit(new UpdateButtonList(orderedFilteredButtons))
     recalculateCacheH3Hexes(filteredHexagons);
+    
+    if(hexagonClicked){
+      const newListButtons = listButtonsFilteredByHexagon(hexagonClicked, orderedFilteredButtons)
+      store.emit(new UpdateButtonList(newListButtons))
+      return;
+    }
+
+    store.emit(new UpdateButtonList(orderedFilteredButtons))
   }, [boundsFilteredButtons, filters, hexagonClicked])
 
   const handleBoundsChange = (bounds, center: Point, zoom) => {
