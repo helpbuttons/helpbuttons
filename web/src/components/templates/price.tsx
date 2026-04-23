@@ -70,7 +70,7 @@ export function FieldPrice({
           </p>
         <FieldCheckbox
           name="consultPrice"
-          multiInput={true}
+          multiInput={false}
           defaultValue={price < 0}
           text={t('customFields.consult')}
           onChanged={(value) => {
