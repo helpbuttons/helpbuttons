@@ -41,6 +41,10 @@ font-weight: $font-weight-bold;
 font-size: $font-size-xbig;
 padding-bottom: $margin-medium;
 
+&::first-letter {
+  text-transform: capitalize;
+}
+
 }
 
 .form__label {
