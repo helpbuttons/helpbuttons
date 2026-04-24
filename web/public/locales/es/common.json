@@ -535,7 +535,8 @@
     "invalidForm": "Error al validar el formulario",
     "inviteOnly": "Acceso sólo con invitación",
     "address": "Error al obtener la dirección",
-    "dates": "Fechas inválidas"
+    "dates": "Fechas inválidas",
+    "supportFiles": "We don't support this files yet please upload {0}"
   },
   "invitation": {
     "card": "Tarjeta anónima de id individual",
@@ -770,5 +771,16 @@
     "community": "Foro de comunidad",
     "admin_community": "Admin & comunidad",
     "you": "Tú"
+  },
+  "customTemplates": {
+    "eventText": "Añadir fecha",
+    "schedulerExplain": "El usuario tendrá que renovar tu _helpbuttons_ cada cierto tiempo.",
+    "renewed": "Renovado",
+    "willExpire": "Expira ",
+    "schedulerLabelForm": "Expira {0}.",
+    "hour": "Hora",
+    "month": "Mes",
+    "schedulerExplainAdminForm": "Si añades esto a un tipo de _helpbutton_ , expirarán y se ocultarán automáticamente cada cierto tiempo, teniendo que renovarse por el creador/a.",
+    "priceText": "Añadir precio"
   }
 }
