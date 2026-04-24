@@ -101,7 +101,7 @@ export default function ProfileEdit() {
   const onSuccess = () => {
     
     store.emit(new FetchUserData((userData) => {
-      setLocale( userData.locale )
+      // setLocale( userData.locale )
       router.push({ pathname: '/Profile' });
     }, onError));
     ;

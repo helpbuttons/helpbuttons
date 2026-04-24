@@ -507,7 +507,8 @@
     "showMoreTags": "más etiquetas",
     "expiredLabel": "Expirado",
     "followers": "Seguido por {0} usuarios",
-    "copyAlert": "Enlace copiado"
+    "copyAlert": "Enlace copiado",
+    "pickPosition": "Please pick a position on the map"
   },
   "calendarOnce": {
     "label": "Una vez",
@@ -602,8 +603,8 @@
     "afterStart": "Por favor selecciona una fecha/hora posterior a {0}",
     "beforeEnd": "Por favor selecciona una fecha/hora anterior a {0}",
     "changeToMultipleDates": "Presiona para seleccionar varios días",
-    "everyMonth":"Cada mes",
-    "everyWeek":"Cada semana"
+    "everyMonth": "Cada mes",
+    "everyWeek": "Cada semana"
   },
   "faqs": {
     "title": "Preguntas frecuentes",

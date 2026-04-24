@@ -1,11 +1,18 @@
-<div class='container'>
-    {{#if subject}}
-    <p class='title'>{{subject}}</p>
-    {{/if}}
-    <p class='thanks'></p>
-    {{content}}
-    
-    {{#if link}}
-      <p><a href='{{link}}'>{{linkCaption}}</a> </p>
-    {{/if}}
+<div class="activity-group">
+  <p class="activity-label-p"><a href='{{link}}'>{{content}}</a>       
+
+  </p>
+  {{#if link}}
+  <a href='{{link}}' class="activity-card-link">
+    <div class="activity-card">
+      <p class="activity-type">{{type}}</p>
+      <p class="activity-title">{{title}}</p>
+      <p class="activity-meta">📍 <span class="activity-address">{{address}}</span></p>
+    </div>
+  </a>
+
+  {{/if}}
+      {{#if link}}
+        <a class="activity-label" href='{{link}}'>{{linkCaption}}</a>
+      {{/if}}
 </div>

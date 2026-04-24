@@ -13,12 +13,21 @@ import { User } from '../user/user.entity';
 import { ActivityService } from './activity.service';
 import { ActivityCron } from './activity.cron';
 import { Activities, ActivityDtoOut, MessageDto } from './activity.dto';
+import { ButtonService } from '../button/button.service';
+import { UserService } from '../user/user.service';
+import { EventEmitter2 } from '@nestjs/event-emitter';
+import { ActivityEventName } from '@src/shared/types/activity.list';
+import { notifyUser } from '@src/app/app.event';
 
 @ApiTags('activity')
 @Controller('activity')
 export class ActivityController {
-  constructor(private readonly activityService: ActivityService,
-    private readonly activityCron: ActivityCron
+  constructor(
+    private readonly activityService: ActivityService,
+    private readonly buttonService: ButtonService,
+    private readonly userService: UserService,
+    private readonly activityCron: ActivityCron,
+    private eventEmitter: EventEmitter2
     ) {}
   
   @OnlyRegistered()
@@ -35,8 +44,8 @@ export class ActivityController {
   
   @OnlyRegistered()
   @Post('sendMessage/:buttonId/:consumerId')
-  async sendMessage(@CurrentUser() user: User, @Body() message: MessageDto, @Param('buttonId') buttonId: string,  @Param('consumerId') consumerId: string){
-    return this.activityService.sendMessage(user.id, consumerId, buttonId, message.message)
+  async sendMessage(@CurrentUser() user: User, @Body() message: MessageDto, @Param('buttonId') buttonId: string, @Param('consumerId') consumerId: string) {
+      return this.activityService.sendMessage(user.id, consumerId, buttonId, message.message)
   }
 
   @OnlyRegistered()

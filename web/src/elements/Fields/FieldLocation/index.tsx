@@ -9,11 +9,12 @@ import t from 'i18n';
 import { roundCoord } from 'shared/honeycomb.utils';
 import { FieldCheckbox } from '../FieldCheckbox';
 import PickerField from 'components/picker/PickerField';
-import { useGeoReverse } from './location.helpers';
+import { getCoordinatesDMS, useGeoReverse } from './location.helpers';
 import { IoLocationOutline } from 'react-icons/io5';
 import LocationSearchBar from 'elements/LocationSearchBar';
 import { markerFocusZoom } from 'components/map/Map/Map.consts';
 import { alertService } from 'services/Alert';
+import { getDistance } from 'geolib';
 
 export default function FieldLocation({
   validationError,
@@ -36,7 +37,7 @@ export default function FieldLocation({
   isLocationKey = false,
 }) {
   const [pickedPosition, setPickedPosition] = useState(markerPosition)
-  const [zoom, setZoom] = useState(markerPosition ? markerFocusZoom : selectedNetwork.exploreSettings.zoom );
+  const [zoom, setZoom] = useState((markerPosition && markerPosition[0]) ? markerFocusZoom : selectedNetwork.exploreSettings.zoom );
   const [showPopup, setShowPopup] = useState(false);
   const [isLoading, setIsLoading] = useState(false)
   const [pickedAddress, setPickedAddress] = useState(markerAddress)
@@ -109,6 +110,16 @@ export default function FieldLocation({
     setIsLoading(() => true)
     if (latLng[0] && latLng[1]) {
       getLatLngAddress(latLng, hideAddress, (place) => {
+        const distance = getDistance(
+          { latitude: place.geometry.lat, longitude: place.geometry.lng },
+          { latitude: latLng[0], longitude: latLng[1] },
+        );
+        if(distance > 200) { // if the point found is more than 600meters, better to set as unknown place!
+          setPickedAddress(() => t('button.unknownPlace', [], true))
+          
+          setIsLoading(() => false)
+          return;
+        }
         setPickedAddress(() => place.formatted)
         setIsLoading(() => false)
       },
@@ -200,8 +211,9 @@ export function LocationCoordinates({
           {address && <span>{address}</span>}
           {(latitude && longitude) && (
             <span>
-              {' '}
-              ({roundCoord(latitude)},{roundCoord(longitude)})
+              &nbsp; - {
+                getCoordinatesDMS(`${latitude}, ${longitude}`)
+              }
             </span>
           )}
           {/* (radius: ${radius} km) */}

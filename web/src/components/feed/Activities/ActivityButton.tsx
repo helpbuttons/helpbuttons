@@ -2,7 +2,7 @@ import { LoadingWrapper } from "components/loading"
 import Btn, { BtnType, ContentAlignment, IconType } from "elements/Btn"
 import FieldText from "elements/Fields/FieldText"
 import ImageWrapper, { ImageType } from "elements/ImageWrapper"
-import { formatMessage } from "elements/Message"
+import { FormatMessage } from "elements/Message"
 import { ShowMobileOnly } from "elements/SizeOnly"
 import t from "i18n"
 import router from "next/router"
@@ -67,19 +67,16 @@ export function ActivityDetailConversation({ selectedActivity, closeConversation
 
   const lastBtnActivity = buttonActivities.length > 0 ? buttonActivities[0] : -1
 
-  if (!selectedButton || !selectedActivity) {
-    return (<LoadingWrapper />)
-  }
 
   if (!selectedActivity.activityFrom) {
-    return (<>?</>)
+    return (<></>)
   }
 
   return (
     <>
       <ActivityDetailHeader button={selectedButton} selectedActivity={selectedActivity} closeConversation={closeConversation} />
-      <ActivityDetailList buttonActivities={buttonActivities} setButtonActivities={setButtonActivities} buttonId={selectedButton.id} consumerId={selectedActivity.consumerId} selectedActivity={selectedActivity} lastButtonActivityId={lastBtnActivity.id}/>
-      {!selectedActivity?.disableChat && <MessageForm sendNewMessage={sendNewMessage} buttonId={selectedButton.id} consumerId={selectedActivity.consumerId} />}
+      <ActivityDetailList buttonActivities={buttonActivities} setButtonActivities={setButtonActivities} buttonId={selectedActivity?.buttonId} consumerId={selectedActivity.consumerId} selectedActivity={selectedActivity} lastButtonActivityId={lastBtnActivity.id}/>
+      {(!lastBtnActivity?.disableChat && selectedButton?.id)&& <MessageForm sendNewMessage={sendNewMessage} buttonId={selectedButton.id} consumerId={selectedActivity.consumerId} />}
     </>
   )
 }
@@ -258,7 +255,7 @@ function ActivityDetailCard({ activity, isLast = false }) {
 }
 
 export function ActivityDetailMessage({ activity, isLast = false }) {
-  if (activity.from) {
+  if (activity?.from) {
     return (
       <>
         <div className="message__hour">
@@ -275,7 +272,7 @@ export function ActivityDetailMessage({ activity, isLast = false }) {
             </div>
           </div>
           <div className="message__content">
-            {formatMessage(activity.message)}
+            <FormatMessage text={activity.message} />
           </div>
         </div>
 
@@ -286,7 +283,6 @@ export function ActivityDetailMessage({ activity, isLast = false }) {
 
   } else {
     return (<>
-
       <div className="message__hour message__hour--me">
       {isLast ? t('activities.sent') : readableTimeLeftToDate(activity.createdAt)}
       </div>
@@ -295,8 +291,6 @@ export function ActivityDetailMessage({ activity, isLast = false }) {
           {activity.message}
         </div>
       </div>
-
-
     </>)
   }
 
@@ -360,7 +354,7 @@ function ActivityDetailHeader({ closeConversation, button, selectedActivity }) {
             <a href="#" onClick={() => showUser(selectedActivity.activityFrom.username)}>{selectedActivity.activityFrom.name}</a>
           </h1>
           <h2 className="chat__header-subtitle">
-            <a href="#" onClick={() => showButton(selectedActivity.buttonId)}>{button.title}</a>
+            <a href="#" onClick={() => showButton(selectedActivity.buttonId)}>{button?.title}</a>
           </h2>
         </div>
         <div className="chat__header-right">

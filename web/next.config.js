@@ -9,8 +9,6 @@ module.exports = {
     description: `${process.env?.description ? process.env.description : ''}`,
     title: `${process.env?.title ? process.env.title : ''}`,
     adminemail: `${process.env?.adminemail ? process.env.adminemail : ''}`,
-    defaultLocale: `${process.env?.DEFAULT_LOCALE ? process.env.DEFAULT_LOCALE : 'en'}`,
-    maxUploadSize: process.env?.MAX_UPLOAD_SIZE ? process.env.MAX_UPLOAD_SIZE : '10M',
   },
   typescript: {
     ignoreBuildErrors: true,

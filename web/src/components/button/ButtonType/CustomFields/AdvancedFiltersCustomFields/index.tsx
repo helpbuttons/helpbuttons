@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react';
 import { ButtonsOrderBy } from 'components/search/AdvancedFilters';
 import CalendarHb from 'components/calendar';
 import { dbToRRule } from 'components/picker/PickerEventType/recurrent';
+import { CustomFields } from 'shared/types/customFields.type';
 
 export function AdvancedFiltersCustomFields({
   buttonTypes,
@@ -32,7 +33,7 @@ export function AdvancedFiltersCustomFields({
     {customFields &&
     customFields.map((customField, key) => {
       let field = <></>;
-      if (customField == 'price') {
+      if (customField == CustomFields.Price) {
         field = (
           <>
             <FieldText
@@ -50,7 +51,7 @@ export function AdvancedFiltersCustomFields({
           </>
         );
       }
-      if (customField == 'event') {
+      if (customField == CustomFields.Event) {
         field = (
           <>
           <div className="form__field">
@@ -85,7 +86,7 @@ export const applyCustomFieldsFilters = (
           return false;
         }
         return btnType.customFields.filter(
-          (cstmField) => cstmField.type == 'price',
+          (cstmField) => cstmField.type == CustomFields.Price,
         );
       })
       .map((btnTpe) => btnTpe.name);
@@ -133,7 +134,7 @@ export const applyCustomFieldsFilters = (
           return false;
         }
         return btnType.customFields.filter(
-          (cstmField) => cstmField.type == 'event',
+          (cstmField) => cstmField.type == CustomFields.Event,
         );
       })
       .map((btnTpe) => btnTpe.name);
@@ -201,14 +202,14 @@ export const getCustomDropDownOrderBy = (dropdownOptions, buttonTypes, selectedB
 {
   const _customFields = getCustomFields(buttonTypes, selectedButtonTypes)
   _customFields.map((customField) => {
-    if(customField == 'price') {
+    if(customField == CustomFields.Price) {
       dropdownOptions.push({
         value: ButtonsOrderBy.PRICE,
         name: t('buttonFilters.byPrice'),
       })
     }
 
-    if(customField == 'event') {
+    if(customField == CustomFields.Event) {
       dropdownOptions.push({
       value: ButtonsOrderBy.EVENT_DATE,
       name: t('buttonFilters.byEventDate'),

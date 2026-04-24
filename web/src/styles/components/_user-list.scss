@@ -25,11 +25,9 @@
 
 .form-list__table-body-row {
 
-  // display: flex;
+  display: table-row;
+  width: 100%;
 
-  flex-direction: row;
-  justify-content: space-between;
-  
   padding: $padding-small;
 
 }
@@ -57,6 +55,9 @@
     }
   
     &-body {
+      display: table-row-group;
+      width: 100%;
+
       &-row {
         &:nth-child(even) {
           background-color: #fafafa; // Zebra striping for rows

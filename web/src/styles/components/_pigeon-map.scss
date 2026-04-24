@@ -188,6 +188,7 @@ to {
     animation: scaleEmoji .25s;
     transform: scale(1.3);
     box-shadow: $box-shadow-card;
+    border-radius: $border-radius-circle;
 
     &:hover {
         transition: $transition-default;

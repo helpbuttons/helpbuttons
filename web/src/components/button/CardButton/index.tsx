@@ -31,7 +31,7 @@ import { useRef } from 'store/Store';
 import { GlobalState, store, useGlobalStore } from 'state';
 import Link from 'next/link';
 import { GetPhone, isAdmin } from 'state/Users';
-import { TextFormatted, formatMessage } from 'elements/Message';
+import { TextFormatted } from 'elements/Message';
 import { CardButtonCustomFields } from '../ButtonType/CustomFields/CardButtonCustomFields';
 import {
   CardSubmenu,
@@ -45,20 +45,19 @@ import Btn, {
   IconType,
 } from 'elements/Btn';
 import { FixedAlert } from 'components/overlay/Alert';
-import { maxZoom, showHexagonsZoom, showMarkersZoom } from 'components/map/Map/Map.consts';
+import { maxZoom, showHexagonsZoom } from 'components/map/Map/Map.consts';
 import { Button } from 'shared/entities/button.entity';
 import MarkerViewMap from 'components/map/Map/MarkerSelectorMap';
-import { TagsNav } from 'elements/Fields/FieldTags';
 import { ImageGallery } from 'elements/ImageGallery';
 import Loading from 'components/loading';
 import { FindAndSetMainPopupCurrentProfile, MainPopupPage, SetMainPopup, SetMainPopupCurrentProfile } from 'state/HomeInfo';
 import React from 'react';
-import dconsole from 'shared/debugger';
 import { ButtonPin, ButtonUnpin, FindFollowers } from 'state/Button';
-import { SetDraftButton } from 'state/Activity';
 import { useToggle } from 'shared/custom.hooks';
 import { useIsMobile } from 'elements/SizeOnly';
-import { ButtonDelete, updateCurrentButton } from 'state/Explore';
+import { ButtonDelete, ButtonRenew, updateCurrentButton } from 'state/Explore';
+import { Network } from 'shared/entities/network.entity';
+import { useSelectedNetwork } from 'state/Networks';
 
 export default function CardButton({ button, buttonTypes, toggleShowReplyFirstPost,            hideSendPrivateMessage = false}) {
   const buttonType = useButtonType(button, buttonTypes);
@@ -118,7 +117,8 @@ function CardButtonState({expired, awaitingApproval})
 }
 // card button list on explore
 export function CardButtonHeadMedium({ button, buttonType }) {
-
+  const selectedNetwork: Network = useSelectedNetwork()
+  const sessionUser = useGlobalStore((state: GlobalState) => state.sessionUser)
   return (
     <div className="card-button__content card-button__content--small">
       <CardButtonState expired={button.expired} awaitingApproval={button.awaitingApproval}/>
@@ -179,13 +179,16 @@ export function CardButtonHeadMedium({ button, buttonType }) {
             <CardButtonCustomFields
               customFields={buttonType.customFields}
               button={button}
+              selectedNetwork={selectedNetwork}
+              isList={true}
+              isButtonOwner={button.owner.id == sessionUser?.id}
             />
           )}
           
-        <div className="card-button__city ">
+        <div className="card-button-list__city ">
           {/* show post count and follow count {button.followCount} | {button.postsCount} */}
           <IoLocationOutline/>
-          <div>
+          <div className="card-button-list__city__name ">
             {button.address}{' '}
             {button?.distance && (
               <> - {readableDistance(button?.distance)}</>
@@ -336,6 +339,7 @@ export function CardButtonHeadBig({ button, buttonTypes, toggleShowReplyFirstPos
     (state: GlobalState) => state.sessionUser,
     false,
   );
+  const selectedNetwork: Network = useSelectedNetwork()
   const [showMap, setShowMap] = useState(false);
   const isMobile = useIsMobile()
   useEffect(() => {
@@ -354,15 +358,14 @@ export function CardButtonHeadBig({ button, buttonTypes, toggleShowReplyFirstPos
         
         <CardButtonSubmenu button={button} />
       </div>
-      <ExpiringAlert
+      <SchdulerExpiringAlert
         button={button}
         isOwner={isButtonOwner(sessionUser, button)}
       />
       {button.awaitingApproval && (
         <FixedAlert
           alertType={AlertType.Info}
-          message={t('moderation.awaitingApproval')}
-        />
+        >{t('moderation.awaitingApproval')}</FixedAlert>
       )}
       <div className="card-button__content card-button__full-content ">
         <div className="card-button__header">
@@ -391,10 +394,13 @@ export function CardButtonHeadBig({ button, buttonTypes, toggleShowReplyFirstPos
         </div> */}
           <div className="card-button__bottom-properties">
             {customFields && customFields.length > 0 && (
-              <div className='card-button__price--button-page'>
+              <div className='card-button__custom-fields-container card-button__custom-fields-container--button-page'>
                 <CardButtonCustomFields
                   customFields={customFields}
                   button={button}
+                  selectedNetwork={selectedNetwork}
+                  isList={false}
+                  isButtonOwner={button.owner.id == sessionUser?.id}
                 />
               </div>
             )}
@@ -427,13 +433,27 @@ export function CardButtonHeadBig({ button, buttonTypes, toggleShowReplyFirstPos
   );
 }
 
-function ExpiringAlert({
+function SchdulerExpiringAlert({
   button,
   isOwner = false,
 }: {
   button: Button;
   isOwner: boolean;
 }) {
+  const renewButton = (id) => {
+    store.emit(
+      new ButtonRenew(
+        id,
+        () => {
+          alertService.success(t('button.renewSuccess'));
+        },
+        (error) => {
+          alertService.error(error.caption);
+        },
+      ),
+    );
+  }
+  
   if (!isOwner) {
     return;
   }
@@ -445,22 +465,18 @@ function ExpiringAlert({
     return (
       <FixedAlert
         alertType={AlertType.Info}
-        message={`${t('button.endDatesExpired')}`}
-      />
+      >{t('button.endDatesExpired')}</FixedAlert>
     );
   }
   return (
     <FixedAlert
       alertType={AlertType.Success}
-      message={`${t('button.isExpiringLink')} <a href="/ButtonRenew/${button.id
-        }">${t('button.renewLink')}</a>`}
-    />
+    >{t('button.expired')} <a href="#" onClick={() => {renewButton(button.id)}}>{t('button.renewLink')}</a></FixedAlert>
   );
 }
 
 export function ButtonOwnerPhone({ user, button }) {
   const [phone, setPhone] = useState(null);
-  const sessionUser = useGlobalStore((state: GlobalState) => state.sessionUser);
 
   const showPhone = () => {
     store.emit(

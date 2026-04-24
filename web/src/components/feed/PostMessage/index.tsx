@@ -1,6 +1,6 @@
 import { ImageGallery } from 'elements/ImageGallery';
 import ImageWrapper, { ImageType } from 'elements/ImageWrapper';
-import { formatMessage } from 'elements/Message';
+import { FormatMessage } from 'elements/Message';
 import Link from 'next/link';
 import { readableTimeLeftToDate } from 'shared/date.utils';
 import { useFocusOn } from 'shared/helpers/scroll.helper';
@@ -47,7 +47,7 @@ export default function PostMessage({ post }) {
           </div>
           <h2 className="card-notification__title"></h2>
           <div className="card-notification__paragraph">
-           {formatMessage(post.message)}
+            <FormatMessage text={post.message}/>
           </div>
           <ImageGallery images={post?.images.map((image) => {return {src: image, alt: post.message} })} />
         </div>

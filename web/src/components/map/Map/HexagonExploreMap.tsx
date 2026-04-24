@@ -26,7 +26,7 @@ import { LocationKeyIcon } from './MarkerButton';
 import t from 'i18n';
 import { circleGeoJSON } from 'shared/geo.utils';
 import { getCenter } from 'geolib';
-import { isMobile, useIsMobile } from 'elements/SizeOnly';
+import { useIsMobile } from 'elements/SizeOnly';
 
 export default function HexagonExploreMap({
   h3TypeDensityHexes,
@@ -39,7 +39,6 @@ export default function HexagonExploreMap({
   const [centerBounds, setCenterBounds] = useState<Point>(null);
   const [geoJsonFeatures, setGeoJsonFeatures] = useState([])
   const [resolution, setResolution] = useState(0)
-  const maxButtonsHexagon = useRef(1)
 
   const currentButton = useGlobalStore((state: GlobalState) => state.explore.currentButton)
 
@@ -94,9 +93,6 @@ export default function HexagonExploreMap({
 
   useEffect(() => {
     setGeoJsonFeatures(() => convertH3DensityToFeatures(h3TypeDensityHexes).filter((hex) => hex.properties.count > 0));
-    maxButtonsHexagon.current = h3TypeDensityHexes.reduce((accumulator, currentValue) => {
-      return Math.max(accumulator, currentValue.count);
-    }, 1);
   }, [h3TypeDensityHexes]);
 
   useEffect(() => {
@@ -119,7 +115,7 @@ export default function HexagonExploreMap({
   useEffect(() => {
     if (!hoverButtonList && !hexagonClicked && !currentButton) {
       setHexagonClickedFeatures(() => null)
-    } else if (hexagonClicked) {
+    } else if (hexagonClicked && !currentButton) {
       setHexagonClickedFeatures(() => hexagonsMedianCenters.find((feature) => feature.hexagon == hexagonClicked))
     } else if(currentButton) {
       const highLightHexagon = cellToZoom(currentButton.hexagon, exploreSettings.zoom)

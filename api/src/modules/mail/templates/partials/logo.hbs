@@ -1,8 +1,6 @@
-<div class="email-header">
-  {{#if jumbo}}
-  <img src="{{jumbo}}" class="email-header__jumbo" alt="" />
-  {{/if}}
-  <div class="email-header__logo{{#if jumbo}} email-header__logo--over-jumbo{{/if}}">
-    <img src="{{logo}}" class="email-header__logo-img" />
-  </div>
+<div class="image-header">
+    <img src="{{logo}}" />
 </div>
+{{#if networkName}}
+<p class="network-name">{{networkName}}</p>
+{{/if}}

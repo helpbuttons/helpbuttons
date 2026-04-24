@@ -23,20 +23,13 @@ export default function FieldImageUpload({
   height = 100,
   alt = "",
 }) {
-  const { publicRuntimeConfig } = getConfig();
-  const  maxUploadSizeBytes = parseSizeToBytes(publicRuntimeConfig.maxUploadSize);
   const [image, setImage] = useState(defaultImage);
   const [isLoading, setIsLoading] = useState(false)
 
   const onChange = async (imageList, addUpdateIndex) => {
     setIsLoading(() => true)
     if(imageList.length > 0) {
-      if(imageList[0].file.size > maxUploadSizeBytes){
-        alertService.warn(t('validation.maxUpload', [publicRuntimeConfig.maxUploadSize]))  
-        setIsLoading(() => false)
-
-        return;
-      }
+      
       if(allowedImageTypes.indexOf(imageList[0].file.type) < 0){
         alertService.warn(t('validation.invalidMimeType', [allowedImageTypes.join(',')]))
         setIsLoading(() => false)

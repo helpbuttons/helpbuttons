@@ -25,7 +25,7 @@ export default function Popup({
         <div className={sectionClass}>{children}</div>
       </div>
         <div className="popup__actions">
-          <div className={'popup__options-h'}>
+          <div className='popup__options-h form__field--multiinput'>
             {cancelAction && (
               <Btn
                 btnType={BtnType.splitIcon}

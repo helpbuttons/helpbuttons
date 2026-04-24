@@ -25,7 +25,7 @@ export default function ActivityList({ setSelectedActivity, selectedActivity, ac
 
     const onActivityClicked = (activity) => {
         
-        if([ActivityEventName.Endorsed, ActivityEventName.RoleUpdate, ActivityEventName.EndorseRevoked, ActivityEventName.DeleteButton].indexOf(activity.eventName) !== -1){
+        if([ActivityEventName.Endorsed, ActivityEventName.RoleUpdate, ActivityEventName.EndorseRevoked].indexOf(activity.eventName) !== -1){
             return;
         }
         if(!activity.read)

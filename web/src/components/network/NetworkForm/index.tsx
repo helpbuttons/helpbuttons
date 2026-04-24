@@ -12,7 +12,7 @@ import Form from 'elements/Form';
 
 import t, { updateNomeclature } from 'i18n';
 import { useRouter } from 'next/router';
-import { findError, getUrlOrigin } from 'shared/sys.helper';
+import { findError, getUrlOrigin, setLocale } from 'shared/sys.helper';
 // name, description, logo, background image, button template, color pallete, colors
 
 import { FieldColorPick } from 'elements/Fields/FieldColorPick';
@@ -23,6 +23,7 @@ import { FieldLanguagePick } from 'elements/Fields/FieldLanguagePick';
 import FieldButtonTemplates from 'components/button/ButtonType/FieldButtonTemplates';
 import { FieldKeySpots } from 'components/map/LocationKey';
 import FieldImageUpload from 'elements/Fields/FieldImageUpload';
+import { CustomFields } from 'shared/types/customFields.type';
 
 export default NetworkForm;
 
@@ -40,6 +41,7 @@ function NetworkForm({
   setFocus,
   description,
   showClose = true,
+  isSetup = false,
 }) {
   const router = useRouter();
 
@@ -61,7 +63,7 @@ function NetworkForm({
         if(!btnTemplate.customFields){
           return false;
         }
-        return btnTemplate.customFields.find((customField) => customField.type == 'price')
+        return btnTemplate.customFields.find((customField) => customField.type == CustomFields.Price)
         })
       if(needsCurrency)
       {
@@ -86,6 +88,12 @@ function NetworkForm({
     }
     return findError(chapter.fields, errors);
   };
+  const onLanguageSelection = (value) => {
+    setValue('locale', value); 
+    if (isSetup) { 
+      setLocale(value) 
+    }
+  }
   return (
     <>
       <Form
@@ -134,6 +142,7 @@ function NetworkForm({
               {...register('slogan', { required: true })}
             />            
             
+            <FieldLanguagePick onChange={onLanguageSelection} defaultValue={watch('locale')}/>
             {/* https://github.com/helpbuttons/helpbuttons/issues/290 */}
             {/* <FieldPrivacy
               name="privacy"

@@ -97,8 +97,18 @@ $card-alert-icon-size: 30px;
   font-weight: bold;
   margin: auto 0;
   height: 100%;
-  word-wrap: break-all;
-  word-break: break-all;
+
+  a {
+    font-weight: $font-weight-bolder;
+    background-color: $color-ligth-gray;
+    padding: $padding-small $padding-medium;
+    border-radius: $border-radius-circle;
+  }
+
+  &:first-letter {
+    text-transform: uppercase;
+  }
+
 }
 
 .card-alert__top-text,

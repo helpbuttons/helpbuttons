@@ -7,6 +7,7 @@ export enum ActivityEventName {
   NewFollowingButton = 'following.button',
   RenewButton = 'renew.button',
   ExpiredButton = 'expired.button',
+  SchedulerExpiredButton = 'schedulerexpired.button',
   Endorsed = 'user.endorsed',
   EndorseRevoked = 'user.endorseRevoked',
   RoleUpdate = 'user.roleChange',

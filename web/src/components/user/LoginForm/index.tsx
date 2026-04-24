@@ -19,6 +19,7 @@ import { CookiesState, MainPopupPage, SetMainPopup } from 'state/HomeInfo';
 import { handleAcceptCookies } from 'components/home/CookiesBanner';
 import { Network } from 'shared/entities/network.entity';
 import { IoQrCode } from 'react-icons/io5';
+import { setLocale } from 'shared/sys.helper';
 
 export default function LoginForm() {
   const {
@@ -41,6 +42,7 @@ export default function LoginForm() {
   };
 
   const onSuccess = (userData) => {
+    setLocale(userData.locale)
     alertService.success(t('user.loginSucess'))
     store.emit(new SetMainPopup(MainPopupPage.HIDE))
   };
