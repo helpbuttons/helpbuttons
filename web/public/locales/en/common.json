@@ -597,7 +597,8 @@
     "contactEmailLabel": "Contact data",
     "FAQs": "Add your legal information",
     "contactEmailPlaceHolder": "Write your network's contact here",
-    "privacySettings": "Set your privacy prefrences"
+    "privacySettings": "Set your privacy preferences",
+    "noNetworkLocation": "Please choose a network location before adding key spots"
   },
   "configure": {
     "browsePins": "",

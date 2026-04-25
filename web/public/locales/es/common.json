@@ -204,7 +204,9 @@
     "privacySettings": "Establece tus preferencias de privacidad",
     "allowGuestCreationExplain": "Cuando permites registros anónimos, es importante recordar que tu red será más vulnerable a spam.",
     "privacyPolicyPlaceHolder": "Escribe una política de privacidad básica: Dónde estás almacenando la información de tus usuarios, qué tipo de datos estás recogiendo y qué haces con ellos.",
-    "ethicsPolicyPlaceHolder": "Escribe unos principios éticos: Cuáles son los valores detrás de la red y la acción de sus usuarios."
+    "ethicsPolicyPlaceHolder": "Escribe unos principios éticos: Cuáles son los valores detrás de la red y la acción de sus usuarios.",
+     "noNetworkLocation": "Por favor, elige la localización principal de tu red antes de seleccionar lugares clave."
+
   },
   "activities": {
     "messages": "Mensajes",
@@ -652,7 +654,7 @@
     "title": "Invitaciones QR",
     "description": "Crear tus invitaciones aquí. Comparte enlaces con otras personas para permitirles acceder a tu red.",
     "inviteOnlyLabel": "Privacidad de la red",
-    "inviteOnlyExplain": "Si habilitas esto, los usuarios solo podrán registrarse y publicar con un código QR.",
+    "inviteOnlyExplain": "Si habilitas esto, los usuarios solo podrán registrarse y publicar con una invitación creada por los usuarios registrados.",
     "inviteOnly": "Sólo permitir el registro con un código QR",
     "generateQr": "Obtener QR",
     "registered": "QR usado",
