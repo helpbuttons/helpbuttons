@@ -28,13 +28,12 @@ export class KeyLocationService {
                 `ST_MakePoint(${createDto.latitude}, ${createDto.longitude})`,
             zoom: createDto.zoom
         }
-        console.log(newKeyLocation)
         return this.keyLocationRepository.insert(newKeyLocation)
       }
 
       list(
       ) {
-        return this.keyLocationRepository.find({ order: { address: 'ASC' }})
+        return this.keyLocationRepository.find()
       }
 
       delete(id: string)

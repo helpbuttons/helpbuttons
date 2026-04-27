@@ -144,7 +144,6 @@ export function FieldLocationKeyMap({
     const findAddressFromPosition = (latLng) => {
         setIsLoading(() => true)
         getLatLngAddress(latLng, false, (place) => {
-            console.log(place)
             setFoundAddress(() => place.formatted)
             setIsLoading(() => false)
         },
