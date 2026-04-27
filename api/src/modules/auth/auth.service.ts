@@ -56,6 +56,7 @@ export class AuthService {
         const newUserDto = {
           username: signupUserDto.username,
           role: Role.registered,
+          email: signupUserDto.email ? signupUserDto.email : null,
           name: signupUserDto.name,
           verificationToken: token(),
           emailVerified: false,
@@ -286,6 +287,7 @@ export class AuthService {
       showWassap: data.showWassap
     };
 
+    console.log(newUser)
     if (avatar) {
       newUser.avatar = (await this.storageService.uploadAndConvertImage(avatar)).name
     }else if(data.avatar){

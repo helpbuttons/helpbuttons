@@ -127,7 +127,7 @@ COALESCE(
     delete newUser.center;
     if(!newUser.email)
     {
-      delete newUser.email
+      newUser.email = null
     }
     newUser.hasPhone = newUser.phone ? true : false
     
