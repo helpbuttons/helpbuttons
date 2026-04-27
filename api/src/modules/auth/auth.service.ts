@@ -22,7 +22,6 @@ import { isImageData } from '@src/shared/helpers/imageIsFile';
 import { NetworkService } from '../network/network.service';
 import { InviteService } from '../invite/invite.service';
 
-export const nomailString = '@nomail.com';
 
 @Injectable()
 export class AuthService {
@@ -46,7 +45,6 @@ export class AuthService {
         return {
           username: signupQRUserDto.username,
           qrcode: signupQRUserDto.qrCode,
-          email: signupQRUserDto.qrCode + nomailString,
           name: signupQRUserDto.name,
           password: token(),
           locale: signupQRUserDto.locale,
@@ -57,7 +55,6 @@ export class AuthService {
       .then((signupUserDto: SignupRequestDto) => {
         const newUserDto = {
           username: signupUserDto.username,
-          email: signupUserDto.email,
           role: Role.registered,
           name: signupUserDto.name,
           verificationToken: token(),
