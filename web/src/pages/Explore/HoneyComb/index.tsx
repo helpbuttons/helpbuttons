@@ -55,6 +55,7 @@ import { cellToParent, getResolution } from 'h3-js';
 import { CustomFields } from 'shared/types/customFields.type';
 import { UpdateButtonList } from 'state/Button';
 import Loading from 'components/loading';
+import { hideAddressResolution } from 'shared/types/honeycomb.const';
 
 
 function HoneyComb({ selectedNetwork }) {
@@ -301,7 +302,8 @@ function useHexagonMap({
   boundsFilteredButtons,
   cachedHexagons,
   buttonTypes,
-  cachedButtons
+  cachedButtons,
+  setCountFilteredButtons
 }) {
 
   
@@ -372,8 +374,17 @@ function useHexagonMap({
     if(debounceHexagonsToFetch.resolution < 1){
       return;
     }
+    setCountFilteredButtons(() => 0)
     const boundCachedButtons = cachedButtons.filter((_btn) => {
       const btnResolution = getResolution(_btn.hexagon)
+      if(_btn.hideAddress && debounceHexagonsToFetch.resolution > hideAddressResolution){
+        // in here we find if the hexagon of the button hidden is parent of the hexagons showing on the screen
+        const hexagon = debounceHexagonsToFetch.hexagons.find((hexagon) => _btn.hexagon == cellToParent(hexagon, btnResolution ))
+        if(hexagon){
+          setCountFilteredButtons((prev) => prev + 1)
+        }
+        return false;
+      }
       if(btnResolution < debounceHexagonsToFetch.resolution){
         return false;
       }
@@ -553,6 +564,8 @@ function ExploreHexagonMap({toggleShowLeftColumn, exploreSettings, selectedNetwo
     (state: GlobalState) => state.explore.map,
     false,
   );
+  const [countFilteredButtons, setCountFilteredButtons] = useState(0)
+
   const boundsFilteredButtons = exploreMapState.boundsFilteredButtons
   const { handleBoundsChange, h3TypeDensityHexes } = useHexagonMap({
     toggleShowLeftColumn,
@@ -561,20 +574,20 @@ function ExploreHexagonMap({toggleShowLeftColumn, exploreSettings, selectedNetwo
     boundsFilteredButtons: boundsFilteredButtons,
     cachedHexagons: exploreMapState.cachedHexagons,
     buttonTypes: selectedNetwork?.buttonTemplates,
-    cachedButtons: exploreSettings.cachedButtons
+    cachedButtons: exploreSettings.cachedButtons,
+    setCountFilteredButtons: setCountFilteredButtons,
   });
-  const [countFilteredButtons, setCountFilteredButtons] = useState(0)
 
-  useEffect(() => {
-    const allHiddenButtons = boundsFilteredButtons.filter((elem) => elem.hideAddress === true)
+  // useEffect(() => {
+  //   const allHiddenButtons = boundsFilteredButtons.filter((elem) => elem.hideAddress === true)
     
-    if(exploreSettings.zoom >= showMarkersZoom ){
-      setCountFilteredButtons(allHiddenButtons.length)
-    }else{
-      setCountFilteredButtons(0)
-    }
+  //   if(exploreSettings.zoom >= showMarkersZoom ){
+  //     setCountFilteredButtons(allHiddenButtons.length)
+  //   }else{
+  //     setCountFilteredButtons(0)
+  //   }
     
-  }, [boundsFilteredButtons, exploreSettings.zoom])
+  // }, [boundsFilteredButtons, exploreSettings.zoom])
 
   const [keyLocations, setKeyLocations] = useState([])
   useEffect(() => {

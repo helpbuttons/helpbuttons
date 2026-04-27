@@ -398,7 +398,7 @@
     "list": "Lista",
     "map": "Mapa",
     "showList": "Mostrar Lista",
-    "hiddenButtons": "Por privacidad, hay _helpbuttons_que ocultan su ubicación exacta.",
+    "hiddenButtons": "Por privacidad, hay {0} _helpbuttons_ que ocultan su ubicación exacta.",
     "viewMode": "Selecciona modo de muestra por defecto"
   },
   "buttonFilters": {
