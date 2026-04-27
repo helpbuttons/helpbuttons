@@ -54,6 +54,7 @@ import { ListKeyLocation } from 'state/Geo';
 import { cellToParent, getResolution } from 'h3-js';
 import { CustomFields } from 'shared/types/customFields.type';
 import { UpdateButtonList } from 'state/Button';
+import Loading from 'components/loading';
 
 
 function HoneyComb({ selectedNetwork }) {
@@ -122,16 +123,19 @@ function HoneyComb({ selectedNetwork }) {
                 )}
               </PopupButtonFile>
             )}
-            <ExploreContainerList
-             listButtons={listButtons}
-             showLeftColumn={showLeftColumn}
-             showMap={true}
-             isListOpen={isListOpen}
-             setListOpen={setListOpen}
-             toggleShowMap={toggleShowMap}
-             toggleShowLeftColumn={toggleShowLeftColumn}
-             onDragPos={null}
-            />
+            {exploreSettings.loading && <Loading/>}
+            {!exploreSettings.loading && 
+              <ExploreContainerList
+              listButtons={listButtons}
+              showLeftColumn={showLeftColumn}
+              showMap={true}
+              isListOpen={isListOpen}
+              setListOpen={setListOpen}
+              toggleShowMap={toggleShowMap}
+              toggleShowLeftColumn={toggleShowLeftColumn}
+              onDragPos={null}
+              />
+            }
           </ExploreContainerLeftColumn>
           <ExploreHexagonMap toggleShowLeftColumn={toggleShowLeftColumn} exploreSettings={exploreSettings} selectedNetwork={selectedNetwork}/>
           
@@ -163,16 +167,19 @@ function HoneyComb({ selectedNetwork }) {
               (currentButton ? ' index__content-bottom--noscroll' : '')
             }
           >
-          <ExploreContainerList
-            listButtons={listButtons}
-            showLeftColumn={showLeftColumn}
-            showMap={showMap}
-            isListOpen={isListOpen}
-            setListOpen={setListOpen}
-            toggleShowMap={toggleShowMap}
-            toggleShowLeftColumn={toggleShowLeftColumn}
-            onDragPos={handleDragPos} 
-          />
+          {exploreSettings.loading && <Loading/>}
+          {!exploreSettings.loading && 
+            <ExploreContainerList
+              listButtons={listButtons}
+              showLeftColumn={showLeftColumn}
+              showMap={showMap}
+              isListOpen={isListOpen}
+              setListOpen={setListOpen}
+              toggleShowMap={toggleShowMap}
+              toggleShowLeftColumn={toggleShowLeftColumn}
+              onDragPos={handleDragPos} 
+            />
+          }
         </div>
         </ExploreContainer>
         
@@ -366,7 +373,8 @@ function useHexagonMap({
       return;
     }
     const boundCachedButtons = cachedButtons.filter((_btn) => {
-      if(getResolution(_btn.hexagon) < debounceHexagonsToFetch.resolution){
+      const btnResolution = getResolution(_btn.hexagon)
+      if(btnResolution < debounceHexagonsToFetch.resolution){
         return false;
       }
       return debounceHexagonsToFetch.hexagons.indexOf(cellToParent(_btn.hexagon, debounceHexagonsToFetch.resolution)) > -1
