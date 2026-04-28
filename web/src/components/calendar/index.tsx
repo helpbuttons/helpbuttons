@@ -22,15 +22,7 @@ export default function CalendarHb(props) {
 
   useEffect(() => {
     const today = new Date();
-    store.emit(
-      new FindMonthCalendar(
-        today.getMonth() + 1,
-        today.getFullYear(),
-        (monthEvents) => {
-          setMonthEvents(() => monthEvents);
-        },
-      ),
-    );
+    requestMonth(today.getMonth() +1, today.getFullYear())
   }, []);
 
   return (

@@ -151,7 +151,7 @@ export function checkIfDateHitsEvent(dateStart, dateEnd, recrule, date) {
     return checkIfDateIsInRecurrentRule(recrule, date);
   }
 
-  if(dateStart >= date && dateEnd <= date){
+  if(isAfter(date, dateStart) && isBefore(date, dateEnd)){
     return true;
   }
   return false;
@@ -169,4 +169,16 @@ export const mergeDateTime = (date, time) => {
     time.getMinutes()
   );
   return newDateTime
+}
+
+function isAfter(dateA, dateB) {
+  const a = new Date(dateA.getFullYear(), dateA.getMonth(), dateA.getDate());
+  const b = new Date(dateB.getFullYear(), dateB.getMonth(), dateB.getDate());
+  return a >= b;
+}
+
+function isBefore(dateA, dateB) {
+  const a = new Date(dateA.getFullYear(), dateA.getMonth(), dateA.getDate());
+  const b = new Date(dateB.getFullYear(), dateB.getMonth(), dateB.getDate());
+  return a <= b;
 }

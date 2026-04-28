@@ -17,7 +17,8 @@ export class FindMonthCalendar implements WatchEvent {
 
   public watch(state: GlobalState) {
     return ButtonService.monthCalendar(this.month, this.year).pipe(
-      map((monthEvents) =>
+      map((monthEvents) => {
+        store.emit(new StoreMonthCalendar(monthEvents))
         this.onSuccess(
           monthEvents.map((event) => {
             return {
@@ -27,13 +28,24 @@ export class FindMonthCalendar implements WatchEvent {
               eventData: dbToRRule(event.eventData),
             };
           }),
-        ),
-      ),
+        )
+      }),
       catchError((error) => {
         dconsole.error(error);
         return of(undefined);
       }),
     );
+  }
+}
+
+export class StoreMonthCalendar implements UpdateEvent{
+  public constructor(
+    private eventsMonth
+  ) { }
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      newState.explore.settings.selectedMonth = this.eventsMonth;
+    });
   }
 }
 

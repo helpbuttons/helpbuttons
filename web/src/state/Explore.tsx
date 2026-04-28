@@ -53,6 +53,7 @@ export interface ExploreSettings {
   viewMode: ExploreViewMode;
   urlUpdated: boolean;
   cachedButtons: ButtonEntry[];
+  selectedMonth: any;
 }
 
 export const exploreSettingsDefault: ExploreSettings = {
@@ -68,6 +69,7 @@ export const exploreSettingsDefault: ExploreSettings = {
   viewMode: ExploreViewMode.LIST,
   urlUpdated: false,
   cachedButtons: [],
+  selectedMonth: null,
 };
 export interface ExploreMapState {
   filters: ButtonFilters;
