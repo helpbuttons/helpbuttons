@@ -481,7 +481,7 @@
     "isExpiringEventMailSubject": "Su _helpbutton_ ha pasado la fecha de vencimiento",
     "isExpiringMail": "Debido a la falta de actividad, su _helpbutton_ '{0}' se borrará en un mes; visite el enlace si desea mantenerlo activo. Si no hay nueva actividad se borrará en un mes.",
     "isExpiringMailSubject": "Su _helpbutton_ ha pasado y está por vencer",
-    "renewSuccess": "Felicidades, renovaste tu _helpbutton_ otros 3 meses",
+    "renewSuccess": "Felicidades, renovaste tu _helpbutton_ ",
     "renewError": "Error al renovar tu _helpbutton_",
     "renewMailSubject": "Renovado con éxito",
     "renewMail": "Renovaste tu _helpbutton_ '{0}' por otros 3 meses.",
@@ -510,7 +510,8 @@
     "expiredLabel": "Expirado",
     "followers": "Seguido por {0} usuarios",
     "copyAlert": "Enlace copiado",
-    "pickPosition": "Please pick a position on the map"
+    "pickPosition": "Please pick a position on the map",
+    "expired": "_helpbutton_ expirado, no se mostrará en resultados"
   },
   "calendarOnce": {
     "label": "Una vez",
