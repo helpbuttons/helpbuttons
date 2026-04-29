@@ -505,7 +505,7 @@
     "sendPrivateMessage": "Enviar mensaje",
     "proposeAddress": "Añadir o editar nuevo lugar en {0}",
     "locationPlaceholder": "Escribe un lugar o dirección",
-    "selectPlace": "Pulsa el lugar en el mapa y guarda",
+    "selectPlace": "Pulsa el lugar en el mapa, escribe y guarda",
     "showMoreTags": "más etiquetas",
     "expiredLabel": "Expirado",
     "followers": "Seguido por {0} usuarios",
