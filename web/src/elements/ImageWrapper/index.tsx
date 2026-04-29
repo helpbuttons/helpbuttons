@@ -143,10 +143,10 @@ export default function ImageWrapper({
   if (imageType == ImageType.formIllustration) {
     return (
       <HbImage
-        style={{ objectFit: 'contain', objectPosition: 'center' }}
+        style={{ objectFit: 'cover', objectPosition: 'center' }}
         src={makeImageUrl(src, localUrl)}
         alt={alt}
-        width={200}
+        width={600}
         height={200}
       />
     );

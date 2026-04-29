@@ -70,5 +70,9 @@ const getTranslations = (language) => {
     },
   );
 };
-const language = process?.argv[2]
+const language = process?.argv[2];
+if (!language) {
+  console.error('Usage: node updateTranslationStrings.js <locale>  (e.g. es, cat, eu, pt)');
+  process.exit(1);
+}
 getTranslations(language);
