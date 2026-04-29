@@ -53,7 +53,7 @@ export class ActivityService {
         return this.findUsersToNotify(button)
           .then((users) => {
             return users.map((_user) => {
-              return this.newActivity(button, _user, author, _user, payload)
+              return this.newActivity(button, _user, author, _user, payload, true)
             })
           })
           .then(() => {
@@ -594,9 +594,10 @@ export class ActivityService {
             buttonType: activity.button.type,
             type: translate(locale, 'activities.notice'),
             footer: `${activity.button.title} - ${activity.button.address}`,
-            message: translate(locale, 'activities.newpost', [post.message]),
+            message: isButtonOwner ? translate(locale, 'activities.newpost', [post.message]) :  translate(locale, 'activities.newpostfollower', [post.message]),
             postId: post.id,
-            link: getUrl(`/Show/${activity.button.id}`)
+            link: getUrl(`/Show/${activity.button.id}`),
+            disableChat: false,
           }
         case ActivityEventName.DeleteButton:
           return {

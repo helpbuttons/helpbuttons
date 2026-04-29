@@ -230,7 +230,8 @@
     "newMentionSubject": "{0} mentioned you on a _helpbutton_",
     "newMentionContent": "{0} mentioned you {1}. on the _helpbutton_ '{2}'",
     "replyToMessage": "Reply to message",
-    "view": "View"
+    "view": "View",
+    "newpostfollower": "A new post was published in a _helpbutton_ you follow"
   },
   "common": {
     "notfound": "No {0} found. Sorry. 🤔",

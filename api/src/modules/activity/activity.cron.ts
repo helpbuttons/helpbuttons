@@ -72,6 +72,9 @@ export class ActivityCron {
                   {
                     return false;
                   }
+                  if(ActivityEventName.NewPost == _activ.eventName && user.id == _activ.from.id){
+                    return false;
+                  } 
                   if(_activ.eventName == ActivityEventName.NewFollowingButton){
                     if(_activ.consumer.id == user.id){
                       return false;
@@ -110,7 +113,7 @@ export class ActivityCron {
         link = null
       }
 
-      if([ActivityEventName.NewButton, ActivityEventName.RenewButton].indexOf(activity.eventName) > -1){
+      if([ActivityEventName.NewButton, ActivityEventName.RenewButton, ActivityEventName.NewPost, ActivityEventName.NewPostComment].indexOf(activity.eventName) > -1){
         link = this.activityService.addLoginParams(getUrl(`/Show/${activityOut.buttonId}`), loginParams)
       }
       extra = {

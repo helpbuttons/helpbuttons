@@ -165,7 +165,7 @@
     "welcomeMessage": "Welcome to your _helpbuttons_ instance",
     "createAdmin": "Let's create your Network. First step: Create your admin account.",
     "configureNetwork": "Customize your site's appearance, topics, post types, and alerts. Add prices, dates, and other modular features to your posts.",
-    "welcomeMessageLong": "Next you´ll see your collaborative network description. Create your first network with the options in the next step.",
+    "welcomeMessageLong": "Next you´ll configure your collaborative network. Create it with the options in the next step.",
     "finish": "Finish setup",
     "configureInstanceDescription": "Wizard to help on configuring your network",
     "configureInstanceTitle": "Setup your network",
@@ -230,7 +230,8 @@
     "newMentionSubject": "{0} mentioned you on a _helpbutton_",
     "newMentionContent": "{0} mentioned you {1}. on the _helpbutton_ '{2}'",
     "replyToMessage": "Reply to message",
-    "view": "View"
+    "view": "View",
+    "newpostfollower": "A new post was published in a _helpbutton_ you follow"
   },
   "common": {
     "notfound": "No {0} found. Sorry. 🤔",
@@ -327,7 +328,7 @@
     "seeHashtags": "See tags",
     "publishComment": "Publish comment",
     "placeHodlerCustomAddress": "Write the new name and select place on the map",
-    "selectPlace": "Select place on map and save",
+    "selectPlace": "Select place on map, write a name and save",
     "sendPrivateMessage": "Send private message to {0}",
     "expiredLabel": "Expired",
     "followers": "Suscribed by {0} users",
@@ -336,7 +337,7 @@
     "copyAlert": "Copied",
     "whereButtonLabel": "Choose place",
     "pickPosition": "Please pick a position on the map",
-    "expired": "_helpbutton_ expired, it is no more posted on the map"
+    "expired": "_helpbutton_ expired, it won't show on search results."
   },
   "user": {
     "login": "Write your credentials",
@@ -591,13 +592,13 @@
     "keyLocationsExplain": "Key spots that will be highlighted in your network. They will appear in the main menus and map for easy access",
     "addLocationKey": "Add Location",
     "privacyPolicyLabel": "Privacy policy",
-    "privacyPolicyPlaceHolder": "Write basic privacy policy, like where are your storing your users' data, what type of data are you using and what for. ",
-    "ethicsPolicyPlaceHolder": "Write basic ethics. What are the values behind your networks' purpose and users' actions.",
+    "privacyPolicyPlaceHolder": "Write basic privacy policy. Where are you storing your users' data? What type of data are you using and what for? ",
+    "ethicsPolicyPlaceHolder": "Write basic ethics. What are the values behind your networks' purpose and users' actions?",
     "ethicsPolicyLabel": "Ethics",
     "contactEmailLabel": "Contact data",
     "FAQs": "Add your legal information",
-    "contactEmailPlaceHolder": "Write your network's contact here",
-    "privacySettings": "Set your privacy preferences",
+    "contactEmailPlaceHolder": "Write your network's contact -phone, address, email, etc-  here",
+    "privacySettings": "Set your privacy prefrences",
     "noNetworkLocation": "Please choose a network location before adding key spots"
   },
   "configure": {
@@ -728,7 +729,9 @@
     "created_at": "Date",
     "edit": "Edit",
     "awaitingApprovalLabel": "Awaiting approval",
-    "buttonsApproved": "All published _helpbuttons_ "
+    "buttonsApproved": "All published _helpbuttons_ ",
+    "view": "View",
+    "approved":"Approved"
   },
   "roles": {
     "blocked": "blocked",
@@ -783,7 +786,7 @@
     "schedulerExplain": "Every X time you will have to reactivate your button",
     "schedulerText": "Add scheduler",
     "priceExplain": "Display a price so user can buy/sell in their _helpbuttons_",
-    "priceText":  "Add price",
+    "priceText": "Add price",
     "eventExplain": "Display a date so the _helpbutton_ type behaves like an event and users can search by calendar",
     "eventText": "Add date",
     "schedulerLabelForm": "Expires {0}.",
@@ -796,7 +799,7 @@
     "schedulerExpiredMailSubject": "Your _helpbutton_ expired",
     "schedulerExpired": "The _helpbutton_ expired",
     "schedulerRenewd": "_helpbutton_ has been renewed",
-    "willExpire":"Expires ",
-    "renewed":"Renewed"
+    "willExpire": "Expires ",
+    "renewed": "Renewed"
   }
 }
