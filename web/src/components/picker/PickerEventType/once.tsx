@@ -3,8 +3,11 @@ import CalendarHb from 'components/calendar';
 import { checkIfDateHitsEvent, mergeDateTime } from 'shared/date.utils';
 import { useEffect, useState } from 'react';
 import { GlobalState, useGlobalStore } from 'state';
-import ContentList from 'components/list/ContentList';
-import { useButtonTypes } from 'shared/buttonTypes';
+import { useButtonType, useButtonTypes } from 'shared/buttonTypes';
+import { CardButtonCustomFields } from 'components/button/ButtonType/CustomFields/CardButtonCustomFields';
+import { useSelectedNetwork } from 'state/Networks';
+import { Network } from 'shared/entities/network.entity';
+import t from 'i18n';
 
 export default function PickerEventTypeOnceForm({
   eventStart,
@@ -77,8 +80,27 @@ export default function PickerEventTypeOnceForm({
   );
 }
 
-export function OverlappingEvents({buttons}){
+export function OverlappingEvents({ buttons }) {
   const buttonTypes = useButtonTypes()
   return <>
-          {buttons.length > 0 && <ContentList buttons={buttons} buttonTypes={buttonTypes} hideEmptyListWarning={true}/>}</>
+    <span>{t('customFields.eventsOnDay')}</span>
+    {buttons.length > 0 && <>{buttons.map((button) => {
+      return <ButtonEventDay buttonTypes={buttonTypes} button={button} />
+    })}</>}
+  </>
+}
+
+export function ButtonEventDay({ button, buttonTypes }) {
+  const { cssColor, caption, customFields, icon } = useButtonType(button, buttonTypes)
+  const sessionUser = useGlobalStore((state: GlobalState) => state.sessionUser);
+  const selectedNetwork: Network = useSelectedNetwork()
+  return <><span>{button.title}</span>
+    <CardButtonCustomFields
+      customFields={customFields}
+      button={button}
+      selectedNetwork={selectedNetwork}
+      isList={false}
+      isButtonOwner={button?.owner?.id == sessionUser?.id}
+    />
+  </>
 }

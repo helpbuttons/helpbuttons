@@ -7,6 +7,7 @@ import produce from 'immer';
 import { Button } from 'shared/entities/button.entity';
 import dconsole from 'shared/debugger';
 import { ButtonEntry } from 'shared/dtos/button.dto';
+import { isAfter } from 'shared/date.utils';
 
 export class FindMonthCalendar implements WatchEvent {
   public constructor(
@@ -44,7 +45,7 @@ export class StoreMonthCalendar implements UpdateEvent{
   ) { }
   public update(state: GlobalState) {
     return produce(state, (newState) => {
-      newState.explore.settings.selectedMonth = this.eventsMonth;
+      newState.explore.settings.selectedMonth = this.eventsMonth.sort((dateA, dateB) => isAfter(new Date(dateA), new Date(dateB)));
     });
   }
 }

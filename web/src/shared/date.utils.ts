@@ -171,13 +171,13 @@ export const mergeDateTime = (date, time) => {
   return newDateTime
 }
 
-function isAfter(dateA, dateB) {
+export function isAfter(dateA, dateB) {
   const a = new Date(dateA.getFullYear(), dateA.getMonth(), dateA.getDate());
   const b = new Date(dateB.getFullYear(), dateB.getMonth(), dateB.getDate());
   return a >= b;
 }
 
-function isBefore(dateA, dateB) {
+export function isBefore(dateA, dateB) {
   const a = new Date(dateA.getFullYear(), dateA.getMonth(), dateA.getDate());
   const b = new Date(dateB.getFullYear(), dateB.getMonth(), dateB.getDate());
   return a <= b;

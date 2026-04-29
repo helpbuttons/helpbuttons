@@ -671,7 +671,8 @@
     "consult": "On request",
     "free": "Free",
     "confirmDeleteLabel": "Delete _helpbutton_ type",
-    "confirmDeleteExplain": "Are you sure you want to delete this button type? This operation will delete all buttons"
+    "confirmDeleteExplain": "Are you sure you want to delete this button type? This operation will delete all buttons",
+    "eventsOnDay": "Events on same day"
   },
   "email": {
     "loginTokenContent": "Welcome to {0}",
