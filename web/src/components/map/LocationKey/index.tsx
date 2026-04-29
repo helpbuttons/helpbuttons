@@ -91,7 +91,7 @@ export function LocationKeyTable({showForm,
                 showForm={showForm}
                 setShowForm={setShowForm}
             />
-            : 'Please choose a network location, before adding key spots'}
+            : t('configuration.noNetworkLocation')}
             <div className="form-list__table form-list__wrapper">
                 {(!showForm && locations?.length > 0) && (
                     <>
@@ -144,7 +144,6 @@ export function FieldLocationKeyMap({
     const findAddressFromPosition = (latLng) => {
         setIsLoading(() => true)
         getLatLngAddress(latLng, false, (place) => {
-            console.log(place)
             setFoundAddress(() => place.formatted)
             setIsLoading(() => false)
         },

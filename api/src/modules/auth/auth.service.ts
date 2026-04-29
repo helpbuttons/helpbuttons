@@ -22,7 +22,6 @@ import { isImageData } from '@src/shared/helpers/imageIsFile';
 import { NetworkService } from '../network/network.service';
 import { InviteService } from '../invite/invite.service';
 
-export const nomailString = '@nomail.com';
 
 @Injectable()
 export class AuthService {
@@ -46,7 +45,6 @@ export class AuthService {
         return {
           username: signupQRUserDto.username,
           qrcode: signupQRUserDto.qrCode,
-          email: signupQRUserDto.qrCode + nomailString,
           name: signupQRUserDto.name,
           password: token(),
           locale: signupQRUserDto.locale,
@@ -57,8 +55,8 @@ export class AuthService {
       .then((signupUserDto: SignupRequestDto) => {
         const newUserDto = {
           username: signupUserDto.username,
-          email: signupUserDto.email,
           role: Role.registered,
+          email: signupUserDto.email ? signupUserDto.email : null,
           name: signupUserDto.name,
           verificationToken: token(),
           emailVerified: false,
@@ -289,6 +287,7 @@ export class AuthService {
       showWassap: data.showWassap
     };
 
+    console.log(newUser)
     if (avatar) {
       newUser.avatar = (await this.storageService.uploadAndConvertImage(avatar)).name
     }else if(data.avatar){

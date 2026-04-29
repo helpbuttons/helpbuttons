@@ -125,7 +125,10 @@ COALESCE(
     }
 
     delete newUser.center;
-    
+    if(!newUser.email)
+    {
+      newUser.email = null
+    }
     newUser.hasPhone = newUser.phone ? true : false
     
     return this.userRepository.update(userId, {

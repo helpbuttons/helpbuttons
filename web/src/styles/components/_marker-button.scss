@@ -238,6 +238,19 @@ $cycle: 10;
   font-size: $font-size-small;
   font-weight: $font-weight-bold;
 
+  max-width: 6ch;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  transition: max-width 0.35s ease;
+
+  &:hover,
+  &:focus,
+  &:active {
+    max-width: 30ch;
+    text-overflow: clip;
+  }
+
 }
 
 .marker-key-location__arrow::after {

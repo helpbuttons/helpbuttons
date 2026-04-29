@@ -109,7 +109,7 @@
     "reset": "Limpiar filtros",
     "invalidMimeType": "{0} tiene un myme type inválido ({1})",
     "next": "Siguiente",
-    "notfound": "No se encontraron {0}, lo siento. 🤔",
+    "notfound": "No se encontraron {0}",
     "add": "Añadir",
     "done": "Hecho",
     "remove": "Eliminar",
@@ -204,7 +204,9 @@
     "privacySettings": "Establece tus preferencias de privacidad",
     "allowGuestCreationExplain": "Cuando permites registros anónimos, es importante recordar que tu red será más vulnerable a spam.",
     "privacyPolicyPlaceHolder": "Escribe una política de privacidad básica: Dónde estás almacenando la información de tus usuarios, qué tipo de datos estás recogiendo y qué haces con ellos.",
-    "ethicsPolicyPlaceHolder": "Escribe unos principios éticos: Cuáles son los valores detrás de la red y la acción de sus usuarios."
+    "ethicsPolicyPlaceHolder": "Escribe unos principios éticos: Cuáles son los valores detrás de la red y la acción de sus usuarios.",
+     "noNetworkLocation": "Por favor, elige la localización principal de tu red antes de seleccionar lugares clave."
+
   },
   "activities": {
     "messages": "Mensajes",
@@ -396,7 +398,7 @@
     "list": "Lista",
     "map": "Mapa",
     "showList": "Mostrar Lista",
-    "hiddenButtons": "Por privacidad, hay _helpbuttons_que ocultan su ubicación exacta.",
+    "hiddenButtons": "Por privacidad, hay {0} _helpbuttons_ que ocultan su ubicación exacta.",
     "viewMode": "Selecciona modo de muestra por defecto"
   },
   "buttonFilters": {
@@ -503,7 +505,7 @@
     "sendPrivateMessage": "Enviar mensaje",
     "proposeAddress": "Añadir o editar nuevo lugar en {0}",
     "locationPlaceholder": "Escribe un lugar o dirección",
-    "selectPlace": "Pulsa el lugar en el mapa y guarda",
+    "selectPlace": "Pulsa el lugar en el mapa, escribe y guarda",
     "showMoreTags": "más etiquetas",
     "expiredLabel": "Expirado",
     "followers": "Seguido por {0} usuarios",
@@ -653,7 +655,7 @@
     "title": "Invitaciones QR",
     "description": "Crear tus invitaciones aquí. Comparte enlaces con otras personas para permitirles acceder a tu red.",
     "inviteOnlyLabel": "Privacidad de la red",
-    "inviteOnlyExplain": "Si habilitas esto, los usuarios solo podrán registrarse y publicar con un código QR.",
+    "inviteOnlyExplain": "Si habilitas esto, los usuarios solo podrán registrarse y publicar con una invitación creada por los usuarios registrados.",
     "inviteOnly": "Sólo permitir el registro con un código QR",
     "generateQr": "Obtener QR",
     "registered": "QR usado",

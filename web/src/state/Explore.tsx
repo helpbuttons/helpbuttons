@@ -127,6 +127,7 @@ export class StoreFindButtons implements UpdateEvent {
     return produce(state, (newState) => {
       const allButtons = _.uniqBy([...this.buttons, ...state.explore.settings.cachedButtons], (_btn) => _btn.id);
       newState.explore.settings.cachedButtons = allButtons
+      newState.explore.settings.loading = false
     });
   }
 }
@@ -538,7 +539,9 @@ export class ResetExploreSettings implements WatchEvent, UpdateEvent {
   }
   public update(state: GlobalState) {
     return produce(state, (newState) => {
+      console.log('settings to load...')
       newState.explore.settings = { ...state.explore.settings, ...this.newExploreSettings };
+      newState.explore.settings.loading = true
       newState.explore.currentButton = null;
     })
   }
@@ -552,9 +555,7 @@ export class UpdateExploreSettings implements UpdateEvent {
 
     return produce(state, (newState) => {
       const prevSettings = state.explore.settings;
-      let newExploreSettings = {
-        loading: false,
-      };
+      let newExploreSettings = {};
 
       if (this.newExploreSettings.center) {
         newExploreSettings = { center: roundCoords(this.newExploreSettings.center), ...newExploreSettings }

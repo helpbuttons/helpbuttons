@@ -327,7 +327,7 @@
     "seeHashtags": "See tags",
     "publishComment": "Publish comment",
     "placeHodlerCustomAddress": "Write the new name and select place on the map",
-    "selectPlace": "Select place on map and save",
+    "selectPlace": "Select place on map, write a name and save",
     "sendPrivateMessage": "Send private message to {0}",
     "expiredLabel": "Expired",
     "followers": "Suscribed by {0} users",
@@ -598,6 +598,7 @@
     "FAQs": "Add your legal information",
     "contactEmailPlaceHolder": "Write your network's contact -phone, address, email, etc-  here",
     "privacySettings": "Set your privacy prefrences"
+    "noNetworkLocation": "Please choose a network location before adding key spots"
   },
   "configure": {
     "browsePins": "",

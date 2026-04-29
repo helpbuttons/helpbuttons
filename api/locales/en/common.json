@@ -224,7 +224,7 @@
     "message": "Message",
     "all": "all",
     "newMessageSubject": "{0} sent you a new message",
-    "newMessageContent": "{0} wrote {1} on the _helpbutton_ ",
+    "newMessageContent": "{0} sent you this message '{1}' about this _helpbutton_",
     "newPostCommentSubject": "{0} commented on a _helpbutton_",
     "newPostCommentContent": "{0} wrote a new comment {1}. on the _helpbutton_ '{2}'",
     "newMentionSubject": "{0} mentioned you on a _helpbutton_",

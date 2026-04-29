@@ -7,6 +7,7 @@ import {
   updateCurrentButton,
   UpdateFilters,
   UpdateFiltersToFilterButtonType,
+  UpdateHexagonClicked,
 } from 'state/Explore';
 import { useStore } from 'state';
 import FieldMultiSelect from 'elements/Fields/FieldMultiSelect';
@@ -58,7 +59,7 @@ export function ListButtonTypes() {
 
     store.emit(new UpdateFilters(newFilters));
     store.emit(new updateCurrentButton(null));
-    
+    store.emit(new UpdateHexagonClicked(null))
     if (pageName != 'Explore') {
       router.push('/Explore');
     }
