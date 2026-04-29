@@ -109,6 +109,10 @@ export class ActivityCron {
       if([ActivityEventName.DeleteButton, ActivityEventName.ExpiredButton, ActivityEventName.SchedulerExpiredButton].indexOf(activity.eventName) > -1){
         link = null
       }
+
+      if([ActivityEventName.NewButton, ActivityEventName.RenewButton].indexOf(activity.eventName) > -1){
+        link = this.activityService.addLoginParams(getUrl(`/Show/${activityOut.buttonId}`), loginParams)
+      }
       extra = {
           content: translate(locale, activityOut.message),
           link,

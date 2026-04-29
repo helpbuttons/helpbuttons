@@ -131,8 +131,8 @@ export class ActivityService {
     userIdsMentioned = unique(userIdsMentioned);
 
     userIdsMentioned.map((userId) => {
-      if (userId == button.owner.id) {
-        return this.newActivity(button, author, userId, { id: author.id }, payload, true, true, true)
+      if (userId == button.owner.id) { // notify author of the comment
+        return this.newActivity(button, author, userId, { id: author.id }, payload, true, true, false)
       } else if (userId == author.id) {
         return this.newActivity(button, author, userId, { id: userId }, payload, true, false, true)
       } else {
@@ -174,7 +174,6 @@ export class ActivityService {
               });
             });
         };
-
         if (button?.tags && button.tags.length > 0) {
           const usersIds = (await getUsersToNotify(button))
             .map((user) => user.id)
@@ -200,10 +199,10 @@ export class ActivityService {
     const { button, owner } = payload.data;
     return this.findUsersToNotify(button)
       .then((users) => {
-        if (users.length < 1) {
-          this.newActivity(button, owner, owner, { id: owner.id }, payload, false, true, false)
-          return;
-        }
+        // if (users.length < 1) {
+        //   this.newActivity(button, owner, owner, { id: owner.id }, payload, false, true, false)
+        //   return;
+        // }
         return users.map((_user, idx) => {
           return this.newActivity(button, _user, owner, _user, payload, true, true)
         })
