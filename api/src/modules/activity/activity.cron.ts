@@ -72,14 +72,14 @@ export class ActivityCron {
                   {
                     return false;
                   }
-                  if(ActivityEventName.NewPost == _activ.eventName && user.id == _activ.from.id){
-                    return false;
-                  } 
                   if(_activ.eventName == ActivityEventName.NewFollowingButton){
                     if(_activ.consumer.id == user.id){
                       return false;
                     }
                   }
+                  if(user.id == _activ.from.id){
+                    return false;
+                  } 
                   return true;
                 });
                 // console.log(filteredActivities.map((ac) => { return {eventName: ac.eventName, createdAt: ac.created_at, title: ac.button.title, consumerId: ac?.consumer?.id, owner: ac?.button?.owner?.id, userid: user.id} }))
