@@ -3,7 +3,7 @@ import { findCustomTemplate } from 'components/templates';
 
 export function CardButtonCustomFields(props) {
   const renderFields = () => {
-    return props?.customFields.map((fieldProps, key) => {
+    return props?.customFields?.map((fieldProps, key) => {
       const type = fieldProps.type;
       const FieldComponent = findCustomTemplate(type)?.fieldView;
       

@@ -1,5 +1,5 @@
 import { MailerService } from '@nestjs-modules/mailer';
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { NetworkService } from '../network/network.service';
 import configs from '@src/config/configuration';
 import { Queue } from 'bull';
@@ -10,6 +10,8 @@ import { uuid } from '@src/shared/helpers/uuid.helper';
 
 @Injectable()
 export class MailService {
+  private readonly logger = new Logger('MAIL');
+
   constructor(
     private readonly mailerService: MailerService,
     private readonly networkService: NetworkService,
@@ -127,8 +129,8 @@ export class MailService {
         }
       })
       .catch((err) => {
-        console.log(err)
-        console.log('catched, is it in setup?')
+        this.logger.error(err)
+        this.logger.error('catched, is it in setup?')
         return {name: 'continue the setup of your network...', logo: 'no', jumbo: ''}
       })
       .then(({name, logo, jumbo}) => {
@@ -138,7 +140,7 @@ export class MailService {
 
         if(!configs().smtpHost)
         {
-          console.log('smtp host not set. not sending')
+          this.logger.warn('smtp host not set. not sending mails')
           return;
         }
         return this.mailerService
@@ -153,12 +155,12 @@ export class MailService {
             headers: {'Message-ID': `<${uuid()}@${configs().hostName}>`}
           })
           .then((mail) => {
-            console.log(
-              `>> mail sent to ${to} with template '${template}'`,
+            this.logger.log(
+              `mail sent to ${to} with template '${template}'`,
             );
           })
           .catch((error) => {
-            console.log(error);
+            this.logger.error(error);
             console.trace();
           });
       })
@@ -167,8 +169,8 @@ export class MailService {
     to,
     content,
     subject,
-    link,
-    linkCaption,
+    link = null,
+    linkCaption = null,
     title, 
     address,
     type,
@@ -189,7 +191,7 @@ export class MailService {
         title,
         address,
         type,
-        networkName
+        networkName,
       },
     });
   }

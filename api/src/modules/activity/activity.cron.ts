@@ -68,7 +68,7 @@ export class ActivityCron {
                 const filteredActivities = activities
                 .filter((_activ) => {
                   // @ts-ignore
-                  if([ActivityEventName.NewButton, ActivityEventName.Message, ActivityEventName.NewPostComment, ActivityEventName.DeleteButton].indexOf(_activ.eventName) > -1)
+                  if([ActivityEventName.Message, ActivityEventName.NewPostComment, ActivityEventName.NewMention].indexOf(_activ.eventName) > -1)
                   {
                     return false;
                   }
@@ -86,7 +86,6 @@ export class ActivityCron {
               })
               .then((activities) => {
                 if(activities?.length > 0){
-                  this.logger.log(`Sending email to ${user.email} with ${activities.length} activities`)
                   this.sendDailyUserOutbox(user, activities);
                 }
               })
@@ -99,28 +98,30 @@ export class ActivityCron {
   public transformActivityOutbox(activity, locale, userId, loginParams, btnTypes): MailButtonActivity {
     let activityOut = this.activityService.transformActivity(activity, locale, userId)
     const button = activity.button;
-    const btnType = btnTypes.find((btnType) => btnType.name == button.type)
-    const btnTypeCaption = `${btnType.icon} ${btnType?.caption}`
-    if (activity.eventName == ActivityEventName.Message) {
-      return {
-        content: translate(locale, 'activities.newMessageOutbox', [activityOut.activityFrom.name, activityOut.message]),
-        link: this.activityService.addLoginParams(getUrl(`/Activity/button/${activityOut.buttonId}`), loginParams),
-        linkCaption: activityOut.linkCaption,
-        type: btnTypeCaption, 
-        title: button.title, 
-        address: button.address,
+
+    let extra = {}
+    if(button) {
+      // this will need the button defi
+      const btnType = btnTypes.find((btnType) => btnType.name == button.type)
+      const btnTypeCaption = `${btnType.icon} ${btnType?.caption}`
+      let link = activityOut.link ? this.activityService.addLoginParams(getUrl(`/Activity/button/${activityOut.buttonId}`), loginParams) : null
+
+      if([ActivityEventName.DeleteButton, ActivityEventName.ExpiredButton, ActivityEventName.SchedulerExpiredButton].indexOf(activity.eventName) > -1){
+        link = null
       }
+      extra = {
+          content: translate(locale, activityOut.message),
+          link,
+          linkCaption: activityOut.linkCaption,
+          type: btnTypeCaption, 
+          title: button.title, 
+          address: button.address,
+        }
     }
     
-    const link = activityOut.link ? this.activityService.addLoginParams(getUrl(`/Activity/button/${activityOut.buttonId}`), loginParams) : null
- 
     return {
       content: activityOut.message,
-      link,
-      linkCaption: activityOut.linkCaption,
-      type: btnTypeCaption, 
-      title: button.title, 
-      address: button.address
+      ...extra
     }
   }
 
@@ -145,6 +146,11 @@ export class ActivityCron {
   }
 
   sendDailyUserOutbox(user, outbox: MailButtonActivity[]) {
+      if(!user.email){
+        this.logger.warn(`'${user.name}' doesnt have an email configured`)
+        return false;
+      }
+      this.logger.log(`Sending email to ${user.email} with ${outbox.length} activities`)
 
       return this.networkService
         .findDefaultNetwork()

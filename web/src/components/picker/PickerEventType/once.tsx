@@ -1,7 +1,13 @@
 import { TimeRangePicker } from './timepick';
 import CalendarHb from 'components/calendar';
-import { mergeDateTime } from 'shared/date.utils';
+import { checkIfDateHitsEvent, mergeDateTime } from 'shared/date.utils';
 import { useEffect, useState } from 'react';
+import { GlobalState, useGlobalStore } from 'state';
+import { useButtonType, useButtonTypes } from 'shared/buttonTypes';
+import { CardButtonCustomFields } from 'components/button/ButtonType/CustomFields/CardButtonCustomFields';
+import { useSelectedNetwork } from 'state/Networks';
+import { Network } from 'shared/entities/network.entity';
+import t from 'i18n';
 
 export default function PickerEventTypeOnceForm({
   eventStart,
@@ -28,6 +34,32 @@ export default function PickerEventTypeOnceForm({
     setEventEnd(() => mergeDateTime(dateStart, newTime))
   }
   
+  const [buttonsOfDay, setButtonsOfDay] = useState([])
+  const eventsMonth = useGlobalStore(    (state: GlobalState) => state.explore.settings.selectedMonth)
+
+
+  useEffect(() => {
+    if (eventsMonth && dateStart) {
+
+
+      setButtonsOfDay(() => eventsMonth.filter((button) => {
+        if (dateStart) {
+          if (checkIfDateHitsEvent(
+            new Date(button.eventStart),
+            new Date(button.eventEnd),
+            button.eventData,
+            dateStart,
+          )) {
+            return true;
+          }
+        }
+
+        return false;
+      }))
+    }
+
+  }, [dateStart])
+
   return (
     
     <>
@@ -40,9 +72,35 @@ export default function PickerEventTypeOnceForm({
           minDate={new Date()}
         />
       </div>
+      <OverlappingEvents buttons={buttonsOfDay}/>
       {(dateStart) && (
         <TimeRangePicker defaultStart={eventStart} defaultEnd={eventEnd} handleChangeEnd={setTimeEnd} handleChangeStart={setTimeStart}/>
       )}
     </>
   );
+}
+
+export function OverlappingEvents({ buttons }) {
+  const buttonTypes = useButtonTypes()
+  return <>
+    <span>{t('customFields.eventsOnDay')}</span>
+    {buttons.length > 0 && <>{buttons.map((button) => {
+      return <ButtonEventDay buttonTypes={buttonTypes} button={button} />
+    })}</>}
+  </>
+}
+
+export function ButtonEventDay({ button, buttonTypes }) {
+  const { cssColor, caption, customFields, icon } = useButtonType(button, buttonTypes)
+  const sessionUser = useGlobalStore((state: GlobalState) => state.sessionUser);
+  const selectedNetwork: Network = useSelectedNetwork()
+  return <><span>{button.title}</span>
+    <CardButtonCustomFields
+      customFields={customFields}
+      button={button}
+      selectedNetwork={selectedNetwork}
+      isList={false}
+      isButtonOwner={button?.owner?.id == sessionUser?.id}
+    />
+  </>
 }

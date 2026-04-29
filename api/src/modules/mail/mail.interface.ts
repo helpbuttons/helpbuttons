@@ -18,9 +18,9 @@ export interface MailActivity {
 export interface MailButtonActivity {
   subject?: string,
   content: string,
-  link: string,
-  linkCaption: string;
-  title: string;
-  address: string;
-  type: string;
+  link?: string,
+  linkCaption?: string;
+  title?: string;
+  address?: string;
+  type?: string;
 }

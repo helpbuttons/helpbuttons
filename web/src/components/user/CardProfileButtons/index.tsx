@@ -11,7 +11,7 @@ export function CardProfileButtonList({user, buttons})
 
   if(!buttons ||
     buttons?.length < 1){
-        return (<ButtonsListEmpty buttons={buttons} filtered={false} isProfileList={true}/>)
+        return (<ButtonsListEmpty buttons={buttons} filtered={false} hideEmptyListWarning={true}/>)
     }
   
   return (<div className="card-profile__button-list-wrapper">
@@ -23,7 +23,7 @@ export function CardProfileButtonList({user, buttons})
               buttons={buttons}
               buttonTypes={buttonTypes}
               linkType={ButtonLinkType.MAINPOPUP}
-              isProfileList={true}
+              hideEmptyListWarning={true}
             />
             
           </div>

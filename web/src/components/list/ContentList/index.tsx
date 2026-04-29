@@ -34,7 +34,7 @@ export default function ContentList({
   buttonTypes,
   showMap = false,
   linkType = null,
-  isProfileList=false,
+  hideEmptyListWarning=false,
 }) {
   const [buttonsSlice, setButtonsSlice] = useState(2);
 
@@ -60,7 +60,7 @@ export default function ContentList({
           linkType={linkType}
         />
       ))}
-      {!isProfileList  &&
+      {!hideEmptyListWarning  &&
         <NoMoreToLoad />
       }
       
@@ -69,7 +69,7 @@ export default function ContentList({
   );
 }
 
-export function ButtonsListEmpty({buttons, filtered, isProfileList=false}){
+export function ButtonsListEmpty({buttons, filtered, hideEmptyListWarning=false}){
 
   if (buttons?.length < 1) {
     return (
@@ -81,7 +81,7 @@ export function ButtonsListEmpty({buttons, filtered, isProfileList=false}){
                 {t('explore.noResults')}
               </div>
               <div className="list__empty-message--comment">
-                {isProfileList ? (t('user.emptyList')) : (t('explore.emptyList'))}
+                {hideEmptyListWarning ? (t('user.emptyList')) : (t('explore.emptyList'))}
               </div>
             </>
           <div className="list__empty-message--button">
@@ -112,7 +112,7 @@ export function ButtonsListEmpty({buttons, filtered, isProfileList=false}){
     );
   }
 }
-export function NoMoreToLoad({isProfileList=false}) {
+export function NoMoreToLoad({hideEmptyListWarning=false}) {
   const filtered = isFiltering();
   return (
     <div className="list__empty-message">
