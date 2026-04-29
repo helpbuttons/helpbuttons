@@ -94,8 +94,8 @@ $feed-padding-bottom: $padding-xbig;
 .feed-section--activity-content {
   overflow-y: auto;
   padding-bottom: calc($footer-height-mobile + 100px);
-  background-color: $color-ligth-gray;
-  border-radius: $border-radius-basic;
+  background-color: $color-white;
+  // border-radius: $border-radius-basic;
 }
 
 .feed-selector {

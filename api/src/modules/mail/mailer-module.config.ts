@@ -10,7 +10,11 @@ export class MailerModuleConfig implements MailerOptionsFactory {
   ) {}
 
   createMailerOptions(): MailerOptions | Promise<MailerOptions> {
-    const helpers = { 
+    const helpers = {
+      capitalize: function(str) {
+        if (!str) return '';
+        return str.charAt(0).toUpperCase() + str.slice(1);
+      },
       list: function(context, options) {
         var ret = "<div>";
       

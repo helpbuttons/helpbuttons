@@ -83,13 +83,33 @@
       font-weight: bold;
       color: #111;
       margin: 8px 0 4px 0;
+      display: block;
+    }
+
+   .network-name::first-letter {
+      text-transform: capitalize;
+    }
+
+    .image-header {
+      background-size: cover;
+      width: 100%;
+      margin: auto;
+      margin-bottom: 50px;
+      position: relative;
     }
 
     .image-header img{
+
       background-size: cover;
-      height: auto;
-      width: 100%;
+      height: 150px;
+      width: 150px;
+      border-radius: 100px;
+      position: relative;
+      left: calc(50% - 75px);
+
+
     }
+
     .breaklines {
 
       white-space: pre-wrap;
@@ -149,6 +169,7 @@
       color: inherit;
       display: block;
       border-bottom: none;
+
     }
 
     .activity-card-link:hover .activity-card {
@@ -196,54 +217,16 @@
       text-decoration: underline;
     }
 
-    /* Email header: jumbo + logo */
-    .email-header {
-      position: relative;
-      width: 100%;
-      max-width: 600px;
-      margin: 0 auto 20px auto;
-      overflow: hidden;
-      background-color: #eee;
-    }
-
-    .email-header__jumbo {
-      display: block;
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-      object-position: center;
-    }
-
-    .email-header__logo {
-      text-align: center;
-      padding: 20px 0;
-    }
-
-    .email-header__logo--over-jumbo {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0;
-    }
-
-    .email-header__logo-img {
-      width: 80px;
-      height: 80px;
-      border-radius: 40px;
-      object-fit: cover;
-      border: 3px solid #fff;
-      background-color: #fff;
-      display: block;
-    }
 
     .date {
       color: #555;
       font-size: 11px ;
+    }
+
+    p::first-letter, h1::first-letter, h2::first-letter, h3::first-letter,
+    h4::first-letter, h5::first-letter, h6::first-letter,
+    td::first-letter, li::first-letter, div::first-letter {
+      text-transform: capitalize;
     }
   </style>
 </head>

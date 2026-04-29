@@ -723,7 +723,8 @@
     "preview": "Previsualización",
     "awaitingApprovalLabel": "Pendientes de aprobación",
     "buttonsApproved": "Lista de _helpbuttons_ publicados",
-    "view": "Ver"
+    "view": "Ver",
+    "approved":"Approved"
   },
   "roles": {
     "blocked": "bloqueado",
