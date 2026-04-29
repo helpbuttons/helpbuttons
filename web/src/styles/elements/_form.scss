@@ -41,6 +41,10 @@ font-weight: $font-weight-bold;
 font-size: $font-size-xbig;
 padding-bottom: $margin-medium;
 
+&::first-letter {
+  text-transform: capitalize;
+}
+
 }
 
 .form__label {
@@ -590,6 +594,10 @@ width: 100%;
   display: flex;
   margin:  $margin-big auto;
   justify-content: center;
+
+  img {
+    width: 100%;
+  }
 
 }
 

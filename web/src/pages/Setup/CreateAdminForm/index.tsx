@@ -147,7 +147,7 @@ export default function CreateAdminForm() {
       <Popup
         title={t('setup.createAdminTitle')}
       >
-        <IllustrationHead title={t('setup.createAdmin')}/>
+        <IllustrationHead imageSrc={'/assets/images/create_network.jpg'} title={t('setup.createAdmin')}/>
         <Form
           onSubmit={handleSubmit(onSubmit)}
           classNameExtra="create-admin"
@@ -191,17 +191,17 @@ export default function CreateAdminForm() {
 export function IllustrationHead({imageSrc = null, title}) {
   return (
       <div className='form__field'>
-
+        {imageSrc && 
+                      <div className='form__illustration'>
+                          <ImageWrapper
+                              imageType={ImageType.formIllustration}
+                              alt={title} src={imageSrc} localUrl={true} />
+                      </div>
+                  }
           <div className='form__header'>
               {title}
           </div>
-          {imageSrc && 
-              <div className='form__illustration'>
-                  <ImageWrapper
-                      imageType={ImageType.formIllustration}
-                      alt={title} src={imageSrc} localUrl={true} />
-              </div>
-          }
+          
       </div>
   )
 }

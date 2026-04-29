@@ -395,7 +395,7 @@ function AprovedButtonsList() {
   const approveButton = (buttonId) => {
     store.emit(
       new ButtonApprove(buttonId, () => {
-        alertService.info('button approved');
+        alertService.info(t('moderation.approved'));
         setButtons((prevButtons) => prevButtons.filter((button) => button.id != buttonId))
       })
     );
