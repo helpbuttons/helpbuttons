@@ -292,6 +292,7 @@ export class ActivityService {
                   networkName: network.name
                 }
                 switch(activity.eventName){
+                  // this activities are exclude in the daily resume, on line activity.cron.ts:71
                   case ActivityEventName.Message:
                     this.mailService.sendActivity({
                       to: activity.to.email,
@@ -303,7 +304,7 @@ export class ActivityService {
                     });
                     break;
                   case ActivityEventName.NewPostComment:
-                    this.mailService.sendWithLink({
+                    this.mailService.sendActivity({
                       to: activity.to.email,
                       content: translate(locale, 'activities.newPostCommentContent', [fromName, _activity.message, publicationTitle]),
                       subject: translate(locale, 'activities.newPostCommentSubject', [fromName]),
@@ -313,7 +314,7 @@ export class ActivityService {
                     })
                     break;
                   case ActivityEventName.NewMention:
-                    this.mailService.sendWithLink({
+                    this.mailService.sendActivity({
                       to: activity.to.email,
                       content: translate(locale, 'activities.newMentionContent', [fromName, _activity.message, publicationTitle]),
                       subject: translate(locale, 'activities.newMentionSubject', [fromName]),
@@ -322,15 +323,8 @@ export class ActivityService {
                       ...extra
                     })
                     break;
-                  case ActivityEventName.SchedulerExpiredButton:
-                    this.mailService.sendWithLink({
-                      to: activity.to.email,
-                      content: translate(locale, 'customTemplates.schedulerExpired'),
-                      subject: translate(locale, 'customTemplates.schedulerExpiredMailSubject'),
-                      link: this.addLoginParams(getUrl(`/Activity/button/${_activity.buttonId}`), loginParams),
-                      linkCaption: translate(locale, 'activities.view'), 
-                    });
-                    break;
+                    default:
+                      this.logger.warn(`mail for the activity "${activity.eventName}" not defined `)
                 }
               })
 

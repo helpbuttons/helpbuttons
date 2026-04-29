@@ -684,7 +684,9 @@
     "activitySubject": "New activity",
     "buttonLinkCaption": "Press here to open",
     "dailyOutBox": "There are {0} activities in {1}, {2}",
-    "welcomeSubject": "Welcome to {0}"
+    "welcomeSubject": "Welcome to {0}",
+    "deletedMailContent": "A _helpbutton_ you follow, has been deleted",
+    "deletedMailSubject": "A _helpbutton_ you follow, has been deleted"
   },
   "dates": {
     "eachMonthFrom": "of each month from",
