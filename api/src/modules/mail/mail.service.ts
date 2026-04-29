@@ -113,6 +113,10 @@ export class MailService {
 
   sendMailDirectly( {to, cc, bcc, subject, template, context})
   {
+    if(!to) {
+      console.log('no recipient defined, skipping mail send')
+      return;
+    }
     this.networkService
       .findDefaultNetwork()
       .then((network) => {

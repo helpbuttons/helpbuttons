@@ -725,7 +725,9 @@
     "created_at": "Date",
     "edit": "Edit",
     "awaitingApprovalLabel": "Awaiting approval",
-    "buttonsApproved": "All published _helpbuttons_ "
+    "buttonsApproved": "All published _helpbuttons_ ",
+    "view": "View",
+    "approved":"Approved"
   },
   "roles": {
     "blocked": "blocked",
