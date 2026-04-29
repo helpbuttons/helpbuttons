@@ -130,13 +130,17 @@ export class ActivityService {
     }
     userIdsMentioned = unique(userIdsMentioned);
 
+    // const consumerId = button.owner.id != author.id ? author.id : 
     userIdsMentioned.map((userId) => {
-      if (userId == button.owner.id) { // notify author of the comment
-        return this.newActivity(button, author, userId, { id: author.id }, payload, true, true, false)
+      if (userId == button.owner.id ) { // notify author of the comment
+        const consumerId = button.owner.id == author.id ? userId : author.id
+        return this.newActivity(button, {id: userId}, author, { id: consumerId }, { ...payload, activityEventName: ActivityEventName.NewMention }, true, false, true)
       } else if (userId == author.id) {
-        return this.newActivity(button, author, userId, { id: userId }, payload, true, false, true)
+        const consumerId = button.owner.id == author.id ? userId : author.id
+        return this.newActivity(button, userId, author, { id: consumerId }, payload, true, false, false)
       } else {
-        return this.newActivity(button, author, userId, { id: userId }, { ...payload, activityEventName: ActivityEventName.NewMention }, true, false, true)
+        const consumerId = button.owner.id == author.id ? userId : author.id
+        return this.newActivity(button, {id: userId}, author, { id: consumerId }, { ...payload, activityEventName: ActivityEventName.NewMention }, true, false, true)
       }
     })
   }
@@ -266,7 +270,6 @@ export class ActivityService {
 
   private async notifyByEmail(insertResult) {
     const activityId = insertResult.identifiers[0].id
-    console.log('should send mail....')
     const network = await this.networkService.findDefaultNetwork()
     const btnTypes = await this.networkService.findButtonTypes()
 
@@ -303,9 +306,12 @@ export class ActivityService {
                     });
                     break;
                   case ActivityEventName.NewPostComment:
+                    // @ts-ignore
+                    const {comment} = activity.data
                     this.mailService.sendActivity({
                       to: activity.to.email,
-                      content: translate(locale, 'activities.newPostCommentContent', [fromName, _activity.message, publicationTitle]),
+                      content: 
+                      translate(locale, 'activities.newPostCommentContent', [fromName, comment.message, publicationTitle]),
                       subject: translate(locale, 'activities.newPostCommentSubject', [fromName]),
                       link: this.addLoginParams(getUrl(`/Activity/button/${_activity.buttonId}`), loginParams),
                       linkCaption: translate(locale, 'activities.replyToMessage'),
@@ -630,8 +636,7 @@ export class ActivityService {
         case ActivityEventName.NewPostComment:
           {
             const { comment } = activity.data
-            const commentOwner = comment.author.id == userId
-
+            const commentOwner = comment.author.id == userId            
             return {
               ...activityOut,
               title: isOwner ? activity.from.name : activity.to.name,
