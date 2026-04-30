@@ -3,10 +3,7 @@ import CalendarHb from 'components/calendar';
 import { checkIfDateHitsEvent, mergeDateTime } from 'shared/date.utils';
 import { useEffect, useState } from 'react';
 import { GlobalState, useGlobalStore } from 'state';
-import { useButtonType, useButtonTypes } from 'shared/buttonTypes';
-import { CardButtonCustomFields } from 'components/button/ButtonType/CustomFields/CardButtonCustomFields';
-import { useSelectedNetwork } from 'state/Networks';
-import { Network } from 'shared/entities/network.entity';
+import { FieldEventView } from 'components/templates/event';
 import t from 'i18n';
 
 export default function PickerEventTypeOnceForm({
@@ -81,26 +78,17 @@ export default function PickerEventTypeOnceForm({
 }
 
 export function OverlappingEvents({ buttons }) {
-  const buttonTypes = useButtonTypes()
   return <>
     <span>{t('customFields.eventsOnDay')}</span>
     {buttons.length > 0 && <>{buttons.map((button) => {
-      return <ButtonEventDay buttonTypes={buttonTypes} button={button} />
+      return <ButtonEventDay button={button} />
     })}</>}
   </>
 }
 
-export function ButtonEventDay({ button, buttonTypes }) {
-  const { cssColor, caption, customFields, icon } = useButtonType(button, buttonTypes)
-  const sessionUser = useGlobalStore((state: GlobalState) => state.sessionUser);
-  const selectedNetwork: Network = useSelectedNetwork()
-  return <><span>{button.title}</span>
-    <CardButtonCustomFields
-      customFields={customFields}
-      button={button}
-      selectedNetwork={selectedNetwork}
-      isList={false}
-      isButtonOwner={button?.owner?.id == sessionUser?.id}
-    />
-  </>
+export function ButtonEventDay({ button }) {
+  return <div className='picker-date__event-card'>
+    <span className='picker-date__event-title'>{button.title}</span>
+    <FieldEventView button={button} isList={false} />
+  </div>
 }

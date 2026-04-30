@@ -86,6 +86,20 @@ $picker-date-height: 40px;
   max-height: 50wh;
 }
 
+.picker-date__event-card {
+display: flex;
+flex-direction: column;
+justify-content: flex-start;
+padding: $padding-big $padding-big;
+
+}
+
+.picker-date__event-title{
+  font-weight: $font-weight-bolder;
+  font-size: $font-size-big;
+}
+
+
 .react-calendar__tile--now {
 
   background-color: $color-white !important;

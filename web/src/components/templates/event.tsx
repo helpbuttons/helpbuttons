@@ -14,10 +14,10 @@ export const eventTemplate : CustomTemplate = {
     fieldView: FieldEventView,
 }
 
-export function FieldEventView({button, isList}) {
-    return <div className={isList ? 'card-button-list__date' : 'card-button__date'}>
-            <IoTimeOutline/>
-            <div>
+export function FieldEventView({button, isList, isCalendar = false}) {
+    return <div className={(isList ? 'card-button-list__date' : 'card-button__date')+(isCalendar ? '' : '')}>
+            {isCalendar && <IoTimeOutline/>}
+            <div className={isCalendar ? "" : ""}>
             <ShowDate
                 eventStart={button.eventStart}
                 eventEnd={button.eventEnd}
