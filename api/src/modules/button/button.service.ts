@@ -281,8 +281,8 @@ export class ButtonService {
       }
     }
 
-    this.buttonRepository
-      .findOne({ where: { id: id } })
+    return this.buttonRepository
+      .findOne({ where: { id: id }, relations:['owner'] })
       .then((storeButton) => {
         if (button.images.length < 0) {
           this.storageService.deleteMany(storeButton.images);
@@ -296,9 +296,15 @@ export class ButtonService {
             this.storageService.deleteMany(deleteImages);
           }
         }
+        return this.buttonRepository.save([button]).then((btn) => {
+          if(storeButton.expired && !button.expired){
+            notifyUser(this.eventEmitter,ActivityEventName.RenewButton,{button, owner: storeButton.owner})
+          }
+          return this.findById(button.id)
+        })
+
       });
 
-      return this.buttonRepository.save([button]).then((btn) => {return this.findById(button.id)})
   }
 
   @UseInterceptors(CacheInterceptor)

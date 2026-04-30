@@ -796,8 +796,10 @@
     "month": "Month",
     "hour": "Hour",
     "day": "day",
-    "schedulerExpiredMailSubject": "Your _helpbutton_ expired",
+    "schedulerExpiredMailSubject": "{0} _helpbutton_ expired",
     "schedulerExpired": "The _helpbutton_ expired",
+    "eventExpired": "The _helpbutton_ expired",
+    "eventExpiredMailSubject": "{0} expired",
     "schedulerRenewd": "_helpbutton_ has been renewed",
     "willExpire": "Expires ",
     "renewed": "Renewed"

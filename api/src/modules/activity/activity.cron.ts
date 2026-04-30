@@ -43,6 +43,8 @@ export class ActivityCron {
     const owners = unique(dailyActivities.map((t) => t.ownerId))
     const userIds = unique([...consumers, ...owners])
     
+    // check and notify users with events tomorrow!
+    
     await Promise.all(
       userIds.map((userId) => {
         return this.userService.findById(userId)

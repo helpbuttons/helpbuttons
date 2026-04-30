@@ -798,6 +798,7 @@
     "day": "day",
     "schedulerExpiredMailSubject": "Your _helpbutton_ expired",
     "schedulerExpired": "The _helpbutton_ expired",
+    "eventExpired": "The _helpbutton_ expired",
     "schedulerRenewd": "_helpbutton_ has been renewed",
     "willExpire": "Expires ",
     "renewed": "Renewed"
