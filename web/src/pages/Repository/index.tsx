@@ -1,10 +1,36 @@
 //List of elements component that can be used anywhere in the app
+import { useState } from 'react';
 import { IoClose, IoEllipsisHorizontalSharp } from "react-icons/io5";
-import Btn, {ContentAlignment, BtnType, IconType} from 'elements/Btn'
+import Btn, {ContentAlignment, BtnType, IconType} from 'elements/Btn';
 import { IoSearch } from "react-icons/io5";
-import BtnCircle from 'elements/BtnCircle'
+import BtnCircle from 'elements/BtnCircle';
+import Accordion from 'elements/Accordion';
+import { ImageGallery } from 'elements/ImageGallery';
+import { DropdownSearch } from 'elements/Dropdown/DropdownSearch';
+import FieldText from 'elements/Fields/FieldText';
+import FieldPassword from 'elements/Fields/FieldPassword';
+import FieldNumber from 'elements/Fields/FieldNumber';
+import { FieldCheckbox } from 'elements/Fields/FieldCheckbox';
+import FieldRadio from 'elements/Fields/FieldRadio';
+import FieldRadioOption from 'elements/Fields/FieldRadio/option';
+import FieldMultiSelect from 'elements/Fields/FieldMultiSelect';
+import MultiSelectOption from 'elements/MultiSelectOption';
+import { FieldColorPick } from 'elements/Fields/FieldColorPick';
+import FieldTags from 'elements/Fields/FieldTags';
+import { FieldTextArea } from 'elements/Fields/FieldTextArea';
+import CalendarHb from 'components/calendar';
 
 function Repository() {
+  const [dsInput, setDsInput] = useState('');
+  const [tags, setTags] = useState(['example', 'tag']);
+  const [color, setColor] = useState('#3b82f6');
+
+  const dummyImages = [
+    { src: 'https://dummyimage.com/600x300/aaa/fff&text=Image+1', alt: 'Image 1' },
+    { src: 'https://dummyimage.com/600x300/888/fff&text=Image+2', alt: 'Image 2' },
+    { src: 'https://dummyimage.com/600x300/666/fff&text=Image+3', alt: 'Image 3' },
+  ];
+
   return (
       <div className="repository">
         <div className="repository__content">
@@ -224,7 +250,117 @@ function Repository() {
           </section>
 
           <h3 className="repository__title">
-            elements/textarea
+            elements/FieldText
+          </h3>
+          <section className="repository__section">
+            <FieldText label="Text field" name="repo-text" placeholder="Type something..." />
+            <FieldText label="With explain" name="repo-text-explain" explain="This is an explain note below the label." placeholder="Placeholder..." />
+            <FieldText label="With max length" name="repo-text-max" maxLength={40} placeholder="Max 40 chars..." />
+          </section>
+
+          <h3 className="repository__title">
+            elements/FieldTextArea
+          </h3>
+          <section className="repository__section">
+            <FieldTextArea
+              label="Textarea field"
+              name="repo-textarea"
+              placeholder="Write something..."
+              watch={() => ''}
+              setValue={() => {}}
+              setFocus={() => {}}
+            />
+            <FieldTextArea
+              label="With max length"
+              name="repo-textarea-max"
+              placeholder="Max 200 chars..."
+              maxLength={200}
+              watch={() => ''}
+              setValue={() => {}}
+              setFocus={() => {}}
+            />
+          </section>
+
+          <h3 className="repository__title">
+            elements/FieldPassword
+          </h3>
+          <section className="repository__section">
+            <FieldPassword label="Password" name="repo-password" placeholder="Enter password..." />
+            <FieldPassword label="With forgot link" name="repo-password-2" placeholder="Enter password..." onForgotPass={() => alert('forgot!')} />
+          </section>
+
+          <h3 className="repository__title">
+            elements/FieldNumber
+          </h3>
+          <section className="repository__section">
+            <FieldNumber label="Number field" name="repo-number" placeholder="0" />
+            <FieldNumber label="With explain" name="repo-number-2" explain="Enter a quantity." placeholder="0" />
+          </section>
+
+          <h3 className="repository__title">
+            elements/FieldCheckbox
+          </h3>
+          <section className="repository__section">
+            <FieldCheckbox label="Checkbox field" name="repo-checkbox" text="Enable this option" />
+            <FieldCheckbox label="Default checked" name="repo-checkbox-2" text="Already enabled" defaultValue={true} />
+            <FieldCheckbox label="With explain" name="repo-checkbox-3" text="Option with explain" explain="Explain what this checkbox does." />
+          </section>
+
+          <h3 className="repository__title">
+            elements/FieldRadio
+          </h3>
+          <section className="repository__section repository__section--yellow">
+            <FieldRadio label="Pick one option">
+              <FieldRadioOption name="repo-radio" value="opt1"><span>Option 1</span></FieldRadioOption>
+              <FieldRadioOption name="repo-radio" value="opt2"><span>Option 2</span></FieldRadioOption>
+              <FieldRadioOption name="repo-radio" value="opt3"><span>Option 3</span></FieldRadioOption>
+            </FieldRadio>
+            <FieldRadio label="Row layout" row={true}>
+              <FieldRadioOption name="repo-radio-row" value="a"><span>A</span></FieldRadioOption>
+              <FieldRadioOption name="repo-radio-row" value="b"><span>B</span></FieldRadioOption>
+            </FieldRadio>
+          </section>
+
+          <h3 className="repository__title">
+            elements/FieldMultiSelect
+          </h3>
+          <section className="repository__section">
+            <FieldMultiSelect label="Multi select options" explain="Pick one or more">
+              <MultiSelectOption name="opt-a" icon="cross"><span>Option A</span></MultiSelectOption>
+              <MultiSelectOption name="opt-b" icon="check"><span>Option B</span></MultiSelectOption>
+              <MultiSelectOption name="opt-c" icon="red"><span>Option C</span></MultiSelectOption>
+            </FieldMultiSelect>
+          </section>
+
+          <h3 className="repository__title">
+            elements/FieldColorPick
+          </h3>
+          <section className="repository__section">
+            <FieldColorPick
+              label="Pick a color"
+              name="repo-color"
+              value={color}
+              setValue={(name, val) => setColor(val)}
+              actionName="Select"
+            />
+          </section>
+
+          <h3 className="repository__title">
+            elements/FieldTags
+          </h3>
+          <section className="repository__section">
+            <FieldTags
+              label="Tags field"
+              tags={tags}
+              setTags={setTags}
+              placeholder="Add a tag..."
+              explain="Press Enter or comma to add a tag."
+              maxTags={8}
+            />
+          </section>
+
+          <h3 className="repository__title">
+            elements/textarea (raw)
           </h3>
 
           <section className="repository__section">
@@ -278,81 +414,31 @@ function Repository() {
               </datalist>
 
           </section>
-{/* 
+
           <h3 className="repository__title">
-            elements/checkbox
+            elements/DropdownSearch
           </h3>
           <section className="repository__section">
-
-          <div className="label">label checkbox</div>
-            <MultiSelectOption icon="cross" text="Ahora CheckBox" inputId="ahora-checkbox" />
-            <div className="checkbox">
-              <label className="checkbox__label">
-                <input type="checkbox" className="checkbox__checkbox" id="input-tos"></input>
-                <div className="checkbox__content">
-                  <div className="checkbox__icon">
-                    <IoClose />
-                  </div>
-                  <div className="checkbox__text">
-                    Ahora
-                  </div>
-                </div>
-              </label>
-            </div>
-
-            <hr></hr>
-
-            <MultiSelectOption icon="red" text="Necesito Ahora CheckBox" inputId="necesito-ahora-checkbox" />
-            <div className="checkbox">
-              <label className="checkbox__label">
-                <input type="checkbox" className="checkbox__checkbox" id="input-tos"></input>
-                <div className="checkbox__content">
-                  <div className="checkbox__icon"></div>
-                  <div className="checkbox__text">
-                    Necesito Ahora
-                  </div>
-                </div>
-              </label>
-            </div>
-
-            <hr></hr>
-
-            <MultiSelectOption icon="cross" text="Fecha/hora concreta CheckBox" inputId="fecha-hora-concreta-checkbox" />
-            <div className="checkbox">
-              <label className="checkbox__label">
-                <input type="checkbox" className="checkbox__checkbox" id="input-tos"></input>
-                <div className="checkbox__content">
-                  <div className="checkbox__icon">
-                    <IoClose />
-                  </div>
-                  <div className="checkbox__text">
-                    Fecha/hora concreta
-                  </div>
-                </div>
-              </label>
-            </div>
-
-            <hr></hr>
-
-            <MultiSelectOption icon="cross" text="Cerca de mí CheckBox" inputId="cerca-de-mi-checkbox" />
-            <div className="checkbox">
-              <label className="checkbox__label">
-                <input type="checkbox" className="checkbox__checkbox" id="input-tos"></input>
-                <div className="checkbox__content">
-                  <div className="checkbox__icon">
-                    <IoClose />
-                  </div>
-                  <div className="checkbox__text">
-                    Cerca de mi
-                  </div>
-                </div>
-              </label>
-            </div>
-          </section> */}
-
+            <DropdownSearch
+              placeholder="Search something..."
+              input={dsInput}
+              setInput={setDsInput}
+              results={
+                dsInput.length > 0
+                  ? [
+                      { label: 'Result one' },
+                      { label: 'Result two' },
+                      { label: 'Result three' },
+                    ]
+                  : []
+              }
+              handleFocus={() => {}}
+              handleSelected={(r) => setDsInput(r.label)}
+            />
+          </section>
 
           <h3 className="repository__title">
-            elements/radio
+            elements/radio (raw)
           </h3>
 
           <section className="repository__section repository__section--yellow">
@@ -444,11 +530,27 @@ function Repository() {
 
           </section>
 
+          <h3 className="repository__title">
+            elements/ImageGallery
+          </h3>
+          <section className="repository__section">
+            <div style={{ maxWidth: '400px' }}>
+              <ImageGallery images={dummyImages} />
+            </div>
+          </section>
+
           <hr></hr>
 
           <h2 className="repository__h2">
             List of components
           </h2>
+
+          <h3 className="repository__title">
+            components/calendar
+          </h3>
+          <section className="repository__section">
+            <CalendarHb value={new Date()} onChange={() => {}} minDate={new Date()} />
+          </section>
 
           <h3 className="repository__title">
             components/card-button-map
@@ -897,14 +999,6 @@ function Repository() {
                     Lorem ipsum es el texto..
                   </div>
                 </div>
-                {/* <button className="btn-circle card-notification__delete">
-                  <div className="btn-circle__content">
-                    <div className="btn-circle__icon">
-                      <IoClose />
-                    </div>
-                  </div>
-                </button> */}
-
               </div>
               <div className="card-notification__answer-btn">
                   <Btn
@@ -1185,16 +1279,6 @@ function Repository() {
 
           </form>
 
-        </section>
-
-        <hr></hr>
-
-        <h3 className="repository__title">
-          component/header-homeinfo
-        </h3>
-
-        <section className="repository__section">
-            not defined as component
         </section>
 
         <hr></hr>
@@ -1581,7 +1665,7 @@ function Repository() {
                   <button className="btn-circle">
                     <div className="btn-circle__content">
                       <div className="btn-circle__icon">
-                        Lun
+                        Mar
                       </div>
                     </div>
                   </button>
@@ -1589,7 +1673,7 @@ function Repository() {
                   <button className="btn-circle">
                     <div className="btn-circle__content">
                       <div className="btn-circle__icon">
-                        Lun
+                        Mié
                       </div>
                     </div>
                   </button>
@@ -1597,7 +1681,7 @@ function Repository() {
                   <button className="btn-circle">
                     <div className="btn-circle__content">
                       <div className="btn-circle__icon">
-                        Lun
+                        Jue
                       </div>
                     </div>
                   </button>
@@ -1605,7 +1689,7 @@ function Repository() {
                   <button className="btn-circle">
                     <div className="btn-circle__content">
                       <div className="btn-circle__icon">
-                        Lun
+                        Vie
                       </div>
                     </div>
                   </button>
@@ -1613,7 +1697,7 @@ function Repository() {
                   <button className="btn-circle">
                     <div className="btn-circle__content">
                       <div className="btn-circle__icon">
-                        Lun
+                        Sáb
                       </div>
                     </div>
                   </button>
@@ -1621,7 +1705,7 @@ function Repository() {
                   <button className="btn-circle">
                     <div className="btn-circle__content">
                       <div className="btn-circle__icon">
-                        Lun
+                        Dom
                       </div>
                     </div>
                   </button>
@@ -1671,359 +1755,6 @@ function Repository() {
 
           </div>
 
-          <hr></hr>
-
-          <div className="picker__content">
-
-            <div className="picker__section">
-
-              <header className="picker__header ">
-                  Selecciona día y hora
-              </header>
-
-              <div className="picker__row">
-
-                  <button className="btn-circle">
-                    <div className="btn-circle__content">
-                      <div className="btn-circle__icon">
-                        Lun
-                      </div>
-                    </div>
-                  </button>
-
-                  <button className="btn-circle">
-                    <div className="btn-circle__content">
-                      <div className="btn-circle__icon">
-                        Lun
-                      </div>
-                    </div>
-                  </button>
-
-                  <button className="btn-circle">
-                    <div className="btn-circle__content">
-                      <div className="btn-circle__icon">
-                        Lun
-                      </div>
-                    </div>
-                  </button>
-
-                  <button className="btn-circle">
-                    <div className="btn-circle__content">
-                      <div className="btn-circle__icon">
-                        Lun
-                      </div>
-                    </div>
-                  </button>
-
-                  <button className="btn-circle">
-                    <div className="btn-circle__content">
-                      <div className="btn-circle__icon">
-                        Lun
-                      </div>
-                    </div>
-                  </button>
-
-                  <button className="btn-circle">
-                    <div className="btn-circle__content">
-                      <div className="btn-circle__icon">
-                        Lun
-                      </div>
-                    </div>
-                  </button>
-
-                  <button className="btn-circle">
-                    <div className="btn-circle__content">
-                      <div className="btn-circle__icon">
-                        Lun
-                      </div>
-                    </div>
-                  </button>
-
-              </div>
-
-              <div className="picker__row">
-
-                  <button className="btn-circle">
-                    <div className="btn-circle__content">
-                      <div className="btn-circle__icon">
-                        Lun
-                      </div>
-                    </div>
-                  </button>
-
-                  <button className="btn-circle">
-                    <div className="btn-circle__content">
-                      <div className="btn-circle__icon">
-                        Lun
-                      </div>
-                    </div>
-                  </button>
-
-                  <button className="btn-circle">
-                    <div className="btn-circle__content">
-                      <div className="btn-circle__icon">
-                        Lun
-                      </div>
-                    </div>
-                  </button>
-
-                  <button className="btn-circle">
-                    <div className="btn-circle__content">
-                      <div className="btn-circle__icon">
-                        Lun
-                      </div>
-                    </div>
-                  </button>
-
-                  <button className="btn-circle">
-                    <div className="btn-circle__content">
-                      <div className="btn-circle__icon">
-                        Lun
-                      </div>
-                    </div>
-                  </button>
-
-                  <button className="btn-circle">
-                    <div className="btn-circle__content">
-                      <div className="btn-circle__icon">
-                        Lun
-                      </div>
-                    </div>
-                  </button>
-
-                  <button className="btn-circle">
-                    <div className="btn-circle__content">
-                      <div className="btn-circle__icon">
-                        Lun
-                      </div>
-                    </div>
-                  </button>
-
-              </div>
-
-              <div className="picker__row">
-
-                  <button className="btn-circle">
-                    <div className="btn-circle__content">
-                      <div className="btn-circle__icon">
-                        Lun
-                      </div>
-                    </div>
-                  </button>
-
-                  <button className="btn-circle">
-                    <div className="btn-circle__content">
-                      <div className="btn-circle__icon">
-                        Lun
-                      </div>
-                    </div>
-                  </button>
-
-                  <button className="btn-circle">
-                    <div className="btn-circle__content">
-                      <div className="btn-circle__icon">
-                        Lun
-                      </div>
-                    </div>
-                  </button>
-
-                  <button className="btn-circle">
-                    <div className="btn-circle__content">
-                      <div className="btn-circle__icon">
-                        Lun
-                      </div>
-                    </div>
-                  </button>
-
-                  <button className="btn-circle">
-                    <div className="btn-circle__content">
-                      <div className="btn-circle__icon">
-                        Lun
-                      </div>
-                    </div>
-                  </button>
-
-                  <button className="btn-circle">
-                    <div className="btn-circle__content">
-                      <div className="btn-circle__icon">
-                        Lun
-                      </div>
-                    </div>
-                  </button>
-
-                  <button className="btn-circle">
-                    <div className="btn-circle__content">
-                      <div className="btn-circle__icon">
-                        Lun
-                      </div>
-                    </div>
-                  </button>
-
-              </div>
-
-              <div className="picker__row">
-
-                  <button className="btn-circle">
-                    <div className="btn-circle__content">
-                      <div className="btn-circle__icon">
-                        Lun
-                      </div>
-                    </div>
-                  </button>
-
-                  <button className="btn-circle">
-                    <div className="btn-circle__content">
-                      <div className="btn-circle__icon">
-                        Lun
-                      </div>
-                    </div>
-                  </button>
-
-                  <button className="btn-circle">
-                    <div className="btn-circle__content">
-                      <div className="btn-circle__icon">
-                        Lun
-                      </div>
-                    </div>
-                  </button>
-
-                  <button className="btn-circle">
-                    <div className="btn-circle__content">
-                      <div className="btn-circle__icon">
-                        Lun
-                      </div>
-                    </div>
-                  </button>
-
-                  <button className="btn-circle">
-                    <div className="btn-circle__content">
-                      <div className="btn-circle__icon">
-                        Lun
-                      </div>
-                    </div>
-                  </button>
-
-                  <button className="btn-circle">
-                    <div className="btn-circle__content">
-                      <div className="btn-circle__icon">
-                        Lun
-                      </div>
-                    </div>
-                  </button>
-
-                  <button className="btn-circle">
-                    <div className="btn-circle__content">
-                      <div className="btn-circle__icon">
-                        Lun
-                      </div>
-                    </div>
-                  </button>
-
-              </div>
-
-              <div className="picker__row">
-
-                  <button className="btn-circle">
-                    <div className="btn-circle__content">
-                      <div className="btn-circle__icon">
-                        Lun
-                      </div>
-                    </div>
-                  </button>
-
-                  <button className="btn-circle">
-                    <div className="btn-circle__content">
-                      <div className="btn-circle__icon">
-                        Lun
-                      </div>
-                    </div>
-                  </button>
-
-                  <button className="btn-circle">
-                    <div className="btn-circle__content">
-                      <div className="btn-circle__icon">
-                        Lun
-                      </div>
-                    </div>
-                  </button>
-
-                  <button className="btn-circle">
-                    <div className="btn-circle__content">
-                      <div className="btn-circle__icon">
-                        Lun
-                      </div>
-                    </div>
-                  </button>
-
-                  <button className="btn-circle">
-                    <div className="btn-circle__content">
-                      <div className="btn-circle__icon">
-                        Lun
-                      </div>
-                    </div>
-                  </button>
-
-                  <button className="btn-circle">
-                    <div className="btn-circle__content">
-                      <div className="btn-circle__icon">
-                        Lun
-                      </div>
-                    </div>
-                  </button>
-
-                  <button className="btn-circle">
-                    <div className="btn-circle__content">
-                      <div className="btn-circle__icon">
-                        Lun
-                      </div>
-                    </div>
-                  </button>
-
-              </div>
-
-              <div className="picker-time__selected">
-
-                <div className="picker-time__dropdown">
-                    <div className="picker-time__dropdown-trigger">
-                      00
-                    </div>
-                    <div className="picker-time__dropdown-content">
-                      <div className="picker-time__dropdown-option">
-                        00
-                      </div>
-                    </div>
-                </div>
-
-                <span className="picker-time__points">:</span>
-
-                <div className="picker-time__dropdown">
-                    <div className="picker-time__dropdown-trigger">
-                      00
-                    </div>
-                    <div className="picker-time__dropdown-content">
-                      <div className="picker-time__dropdown-option">
-                        00
-                      </div>
-                    </div>
-                </div>
-
-                <button className="picker-time__dropdown-option">AM</button>
-                <button  className="picker-time__dropdown-option">PM</button>
-
-              </div>
-
-            </div>
-
-              <div className="picker__options-v">
-                <button  className="picker__option-btn--center" type="button" name="button">
-                    <div className="picker__option-btn--txt">
-                      Aceptar
-                    </div>
-                </button>
-              </div>
-
-            </div>
-
         </section>
 
       <hr></hr>
@@ -2034,20 +1765,17 @@ function Repository() {
 
       <section className="repository__section">
 
-      <button className="accordion">Section 1</button>
-        <div className="panel">
-        <p>Lorem ipsum... palabra. Ejemplo palabras Ejemplo palabras Ejemplo palabras Ejemplo palabras Ejemplo palabras Ejemplo palabras. Ejemplo palabras Ejemplo palabras Ejemplo palabras ., Ejemplo palabrasEjemplo palabras</p>
-        </div>
+        <Accordion title="Section 1">
+          <p>Lorem ipsum es el texto que se usa habitualmente en diseño gráfico en demostraciones de tipografías o de borradores de diseño para probar el diseño visual.</p>
+        </Accordion>
 
-      <button className="accordion">Section 2</button>
-        <div className="panel">
-        <p>Lorem ipsum...</p>
-        </div>
+        <Accordion title="Section 2">
+          <p>Lorem ipsum...</p>
+        </Accordion>
 
-      <button className="accordion">Section 3</button>
-        <div className="panel">
-        <p>Lorem ipsum...</p>
-        </div>
+        <Accordion title="Section 3" collapsed={true}>
+          <p>This one starts expanded.</p>
+        </Accordion>
 
       </section>
 
