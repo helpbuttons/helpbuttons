@@ -1,108 +1,116 @@
-For developers, open [CONTRIBUTING.md](/CONTRIBUTING.md) 
+# Helpbuttons
 
-![HB cover](/web/public/assets/images/hb_landscape_02_small.jpg?raw=true "hb cover")
+> Build your own collaboration app in seconds.
 
-¡Build your own collaboration app in seconds with Helpbuttons! 
+![HB cover](/web/public/assets/images/hb_landscape_02_small.jpg?raw=true)
 
-This software helps you to build collaborative tools for any activity, such as sharing transport or seizing food. It connects people with specific needs to create networks. Mutual support groups, neighborhood communities, schools, town halls or emergency teams would be great benefit from it.
+Helpbuttons helps you build collaborative tools for any activity — sharing transport, seizing food, mutual support, neighborhood communities, schools, town halls, or emergency teams. It connects people with specific needs to create networks under total control of their community.
 
-We're currently testing real life examples that you can check in our website. Specially we're aiming to maximize accesibility and develop modules that allow more use cases. Check those tags if you want to help us in those fields.
+---
 
-You can install your own tool in your server with this repo or ask us for help and host it at <a rel="me" href="https://helpbuttons.org">helputtons.org</a>
+## Features
 
-Project financed by <a rel="me" href="https://wofreedom.org">Wof!</a>, a nonprofit organization dedicated to promote social cooperation and public debate. If you want to support us, you can donate here: 
-[USD/EUR](https://buy.stripe.com/9AQ5kl3CYaIvgRW6ou)
-
-Open your own social network for cooperation, under total control of your community
+Open your own social network for cooperation
 ![cover](https://wofreedom.org/wp-content/uploads/sites/8/2026/03/Captura-de-Pantalla-2026-03-26-a-las-19.40.06-scaled.jpg)
-Customize your look and configure your needs 
+
+Customize your look and configure your needs
 ![cover2](https://wofreedom.org/wp-content/uploads/sites/8/2026/03/Captura-de-Pantalla-2026-03-26-a-las-19.39.55-scaled.jpg)
-Search by location, concept or date to cooperate
+
+Search by location, concept, or date to cooperate
 ![cover3](https://wofreedom.org/wp-content/uploads/sites/8/2026/03/Captura-de-Pantalla-2026-03-26-a-las-19.38.50-scaled.jpg)
+
 Connect and manage messages
 ![cover4](https://wofreedom.org/wp-content/uploads/sites/8/2026/03/Captura-de-Pantalla-2026-03-26-a-las-19.39.46-scaled.jpg)
 
-
-
-<a rel="me" href="https://fosstodon.org/@helpbuttonsorg"><img src="https://static.fsf.org/nosvn/images/socials/mastodon.png" width="48"></a>
-[<img src="https://lh3.googleusercontent.com/jVXglyWWL5J2y1vRN-7Jy3_ozvvZc4w5486IAkbAIrWcNN_vn7YuIvhc1JDtGq43BqGl=s180" width="48">
-](https://t.me/+ls0xkQlG8uBlZjZk)
-[<img src="https://cdn.lo4d.com/t/icon/128/discord.png" width="48">
-](https://discord.gg/UBKWHuj2Vn)
-
-
-
-contact us: help _at_ helpbuttons.org
-# Welcome to Helpbuttons Repository
-
-This is the repository for helpbuttons.org. check [more documentation](https://github.com/helpbuttons/hb-docs).
+---
 
 ## Getting Started
 
-### Using docker
+### Requirements
 
-copy the env.sample file:
-`$ cp env.sample .env`
+- Docker & Docker Compose
 
-edit the `.env` file according to your needs
+### Installation
 
-generate jwt token:
+1. Copy the environment sample file:
+   ```bash
+   cp env.sample .env
+   ```
 
-`$ docker-compose run api yarn cli config:genjwt`
+2. Edit `.env` according to your needs.
 
-add the jwtSecret generated to the .env file
+3. Generate a JWT secret:
+   ```bash
+   docker-compose run api yarn cli config:genjwt
+   ```
+   Add the generated `jwtSecret` to your `.env` file.
 
-lets put it all up
+4. Start the stack:
+   ```bash
+   docker-compose up
+   ```
 
-`$ docker-compose up`
+5. Run database migrations:
+   ```bash
+   docker-compose run api yarn migration:run
+   ```
 
-Open the browser on **http://host:3000**
+6. Open the app at **http://localhost:3000**
 
-run all the migrations / setup the database schema:
+### Upgrade
 
-`$ docker-compose run api yarn migration:run`
+```bash
+docker-compose pull
+docker-compose run api yarn migration:run
+```
 
-#### Upgrade
+---
 
-`$ docker-compose pull`
+## Tech Stack
 
-`$ docker-compose run api yarn migration:run`
+| Layer    | Technologies                          |
+|----------|---------------------------------------|
+| Frontend | TypeScript, React, Next.js, Leaflet   |
+| Backend  | TypeScript, NestJS, TypeORM           |
+| Database | PostgreSQL                            |
 
-### Main tech specifications used in this repo:
+---
 
-Typescript, React, NextJS, Leaflet, CSS, HTML
+## Documentation
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+- [Contributing guide](CONTRIBUTING.md)
+- [Extended documentation](https://github.com/helpbuttons/hb-docs)
+- [Next.js docs](https://nextjs.org/docs)
+- [NestJS docs](https://docs.nestjs.com)
+- [react-icons (io5)](https://react-icons.github.io/react-icons/icons/io5/)
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Troubleshooting
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+**Access the database inside Docker:**
+```bash
+docker-compose exec db psql -U [USER] [DATABASE_NAME]
+```
 
-#### Main tech specifications used in this repo:
+**Reset the database** (when the backend fails to start due to DB issues):
+Remove the `db` directory and restart.
 
-Typescript, NestJS, TypeORM
+**Drop schema and start fresh:**
+```bash
+yarn schema:drop
+# or
+docker-compose exec api yarn schema:drop
+```
 
-This is a [nestjs](https://nestjs.com/) project
+---
 
-To learn more about nestjs, take a look at the following resources:
+## Community
 
-- [Nestjs Documentation](https://docs.nestjs.com/) - learn about nestjs features.
+<a rel="me" href="https://fosstodon.org/@helpbuttonsorg"><img src="https://static.fsf.org/nosvn/images/socials/mastodon.png" width="36"></a>
+&nbsp;
+<a href="https://t.me/+ls0xkQlG8uBlZjZk"><img src="https://lh3.googleusercontent.com/jVXglyWWL5J2y1vRN-7Jy3_ozvvZc4w5486IAkbAIrWcNN_vn7YuIvhc1JDtGq43BqGl=s180" width="36"></a>
+&nbsp;
+<a href="https://discord.gg/UBKWHuj2Vn"><img src="https://cdn.lo4d.com/t/icon/128/discord.png" width="36"></a>
 
-- checkout the list of available icons from [react-icons](https://react-icons.github.io/react-icons/icons/io5/)
-You can check out [the nestjs GitHub repository](https://github.com/nestjs/nest) - your feedback and contributions are welcome!
-
-
-#### Troubleshooting the api
-
-- Accessing the database to docker:
-
-`$ docker-compose exec db psql -U [USER] [DATABASE_NAME]`
-
-- When the backend fails to start because of database problems, you can always reset the database, by removing the directory `db`
-
-- If you need to drop the scheme and restart fresh you run
-`$ yarn schema:drop` or `$ docker-compose exec api yarn schema:drop`
-
+Contact: help _at_ helpbuttons.org
