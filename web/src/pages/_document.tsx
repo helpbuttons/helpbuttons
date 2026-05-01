@@ -32,6 +32,7 @@ class MyDocument extends Document {
           <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
           <link rel="icon" type="image/png" sizes="192x192" href="/favicon/android-chrome-192x192.png" />
           <link rel="icon" type="image/png" sizes="512x512" href="/favicon/android-chrome-512x512.png" />
+          <link rel="mask-icon" href="/assets/svg/favicon/favicon.svg" color="#3d426e" />
         </Head>
         <body>
           <Main />
