@@ -110,7 +110,5 @@ docker-compose exec api yarn schema:drop
 <a rel="me" href="https://fosstodon.org/@helpbuttonsorg"><img src="https://static.fsf.org/nosvn/images/socials/mastodon.png" width="36"></a>
 &nbsp;
 <a href="https://t.me/+ls0xkQlG8uBlZjZk"><img src="https://lh3.googleusercontent.com/jVXglyWWL5J2y1vRN-7Jy3_ozvvZc4w5486IAkbAIrWcNN_vn7YuIvhc1JDtGq43BqGl=s180" width="36"></a>
-&nbsp;
-<a href="https://discord.gg/UBKWHuj2Vn"><img src="https://cdn.lo4d.com/t/icon/128/discord.png" width="36"></a>
 
 Contact: help _at_ helpbuttons.org
