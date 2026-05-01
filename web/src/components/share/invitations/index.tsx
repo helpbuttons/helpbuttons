@@ -12,6 +12,7 @@ import Btn, { BtnType, IconType } from 'elements/Btn';
 import { IoAdd } from 'react-icons/io5';
 import { PdfIframe, usePdfGenerateBlob } from '../pdf';
 import { getShareLink } from 'shared/sys.helper';
+import { getReadableTextColor } from 'shared/helpers/color.helper';
 import QRCode from 'qrcode';
 import Loading from 'components/loading';
 import { CreateInvite } from 'state/Profile';
@@ -160,7 +161,7 @@ const InvitationCard = ({ selectedNetwork, qrCode, qrCodeImage }) => {
       overFlow: 'visible',
       // alignContent:'center',
       // textAlign: 'center',
-      color:  selectedNetwork.textColor,
+      color: getReadableTextColor(selectedNetwork.backgroundColor),
 
       // paddingBottom:'40px',
 
@@ -242,7 +243,7 @@ const InvitationCard = ({ selectedNetwork, qrCode, qrCodeImage }) => {
       // wordBreak: 'break-all',
       // paddingTop: '10px',
       // maxWidth: '100px',
-      color:  selectedNetwork.textColor,
+      color:  getReadableTextColor(selectedNetwork.backgroundColor),
           // Allow text to wrap to the next line
       // hyphens: 'auto',             // Add hyphenation to break long words
       // flexWrap: 'wrap',
