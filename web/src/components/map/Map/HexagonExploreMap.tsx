@@ -21,7 +21,7 @@ import { buttonColorStyle, useButtonType } from 'shared/buttonTypes';
 import Loading from 'components/loading';
 import { IoContract, IoResize, IoStorefrontSharp } from 'react-icons/io5';
 import { useStore } from 'state';
-import { showMarkersZoom } from './Map.consts';
+import { showMarkersZoom, showProtectedMarkersZoom } from './Map.consts';
 import { LocationKeyIcon } from './MarkerButton';
 import t from 'i18n';
 import { circleGeoJSON } from 'shared/geo.utils';
@@ -99,7 +99,7 @@ export default function HexagonExploreMap({
     setHexagonsMedianCenters(() => {
       return h3TypeDensityHexes.map((hex) => {
         let btns = hex.buttons
-        if(exploreSettings.zoom > showMarkersZoom){
+        if(exploreSettings.zoom > showProtectedMarkersZoom){
           btns = btns.filter((btn) => !btn.hideAddress)
         }
         const coordinates = btns.map((btn) => { return { latitude: btn.latitude, longitude: btn.longitude } })

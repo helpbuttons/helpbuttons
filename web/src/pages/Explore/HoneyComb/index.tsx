@@ -46,7 +46,7 @@ import {
 } from 'components/button/ButtonType/CustomFields/AdvancedFiltersCustomFields';
 import PopupButtonFile from 'components/popup/PopupButtonFile';
 import { ButtonShow } from 'components/button/ButtonShow';
-import { showMarkersZoom } from 'components/map/Map/Map.consts';
+import { showMarkersZoom, showProtectedMarkersZoom } from 'components/map/Map/Map.consts';
 import { applyFilters, applyFiltersHex } from 'components/search/AdvancedFilters/filters.type';
 import { Button } from 'shared/entities/button.entity';
 import { replaceUrl } from 'components/uri/builder';
@@ -578,16 +578,14 @@ function ExploreHexagonMap({toggleShowLeftColumn, exploreSettings, selectedNetwo
     setCountFilteredButtons: setCountFilteredButtons,
   });
 
-  // useEffect(() => {
-  //   const allHiddenButtons = boundsFilteredButtons.filter((elem) => elem.hideAddress === true)
-    
-  //   if(exploreSettings.zoom >= showMarkersZoom ){
-  //     setCountFilteredButtons(allHiddenButtons.length)
-  //   }else{
-  //     setCountFilteredButtons(0)
-  //   }
-    
-  // }, [boundsFilteredButtons, exploreSettings.zoom])
+  useEffect(() => {
+    const allHiddenButtons = boundsFilteredButtons.filter((btn) => btn.hideAddress === true)
+    if (exploreSettings.zoom > showProtectedMarkersZoom) {
+      setCountFilteredButtons(allHiddenButtons.length)
+    } else {
+      setCountFilteredButtons(0)
+    }
+  }, [boundsFilteredButtons, exploreSettings.zoom])
 
   const [keyLocations, setKeyLocations] = useState([])
   useEffect(() => {
