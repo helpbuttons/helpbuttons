@@ -785,6 +785,12 @@
     "hour": "Hora",
     "month": "Mes",
     "schedulerExplainAdminForm": "Si añades esto a un tipo de _helpbutton_ , expirarán y se ocultarán automáticamente cada cierto tiempo, teniendo que renovarse por el creador/a.",
-    "priceText": "Añadir precio"
+    "priceText": "Añadir precio",
+    "schedulerExpiredMailSubject": "{0} _helpbutton_ expirado",
+    "schedulerExpired": "The _helpbutton_ expirado",
+    "eventExpired": "The _helpbutton_ expiró",
+    "eventExpiredMailSubject": "{0} expiró",
+    "schedulerRenewd": "_helpbutton_ fue renovado"
+  
   }
 }
