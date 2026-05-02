@@ -179,6 +179,53 @@ The instance of helpbuttons running at https://dev.helpbuttons.org is up to date
 
 8. You can now browse to `http://localhost:3000` to configure helpbuttons!
 
+## Architecture
+
+Helpbuttons is a monorepo with two main packages:
+
+```
+helpbuttons/
+├── api/          # NestJS backend (REST API, business logic, DB migrations)
+│   └── src/
+│       ├── modules/   # Feature modules (auth, network, button, mail, …)
+│       └── data/      # TypeORM entities and migrations
+└── web/          # Next.js frontend (React, SSR/SSG, Leaflet maps)
+    └── src/
+        ├── components/  # Reusable UI components
+        ├── elements/    # Low-level building blocks (inputs, buttons, …)
+        ├── pages/       # Next.js pages and routing
+        └── state/       # Global state (React context / hooks)
+```
+
+Both packages share the `.env` file at the repo root. The API runs on port `3001`, the web app on `3000`.
+
+**Adding a new feature** generally means:
+1. Add the entity/DTO in `api/src/modules/<feature>/`
+2. Generate and run a migration: `yarn migration:generate` → `yarn migration:run`
+3. Expose it via a controller/service in the same module
+4. Add the UI in `web/src/pages/` or `web/src/components/`
+
+---
+
+## Commit messages
+
+We follow [Conventional Commits](https://www.conventionalcommits.org/):
+
+```
+<type>(<scope>): <short summary>
+
+Examples:
+feat(network): add custom accent color picker
+fix(mail): skip send when recipient is empty
+chore(deps): upgrade next to v14
+docs(contributing): add architecture section
+```
+
+Common types: `feat`, `fix`, `refactor`, `chore`, `docs`, `test`, `style`.  
+Keep the summary under 72 characters and in the imperative mood ("add", not "added").
+
+---
+
 ## Key Elements, Components and Layouts
 
 To see a preview of all the styled key pieces that conform the app, open http://localhost:3000/RepositoryPage.
