@@ -311,6 +311,7 @@ $avatar-margin: $padding-big;
     border-radius: $border-radius-circle;
     min-width: calc(100% - $list-width-desktop);
     min-width: $grid-desktop-double-column-left-width;
+    min-height: 200px;
   }
 
   .card-profile__button-list-wrapper {

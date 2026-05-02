@@ -263,12 +263,12 @@ export function ActivityDetailMessage({ activity, isLast = false }) {
         </div>
         <div className="message message--you">
           <div className="message__header">
-            <div className="message__avatar">
+            <div className="message__avatar" onClick={() => store.emit(new FindAndSetMainPopupCurrentProfile(activity.activityFrom.username))} style={{cursor:'pointer'}}>
               <ImageWrapper imageType={ImageType.avatar} src={activity.activityFrom.avatar} alt={activity.activityFrom.name}  />
             </div>
 
             <div className="message__user-name-container">
-              <p className="message__user-name">{activity.from}</p>
+              <p className="message__user-name" onClick={() => store.emit(new FindAndSetMainPopupCurrentProfile(activity.activityFrom.username))} style={{cursor:'pointer'}}>{activity.from}</p>
             </div>
           </div>
           <div className="message__content">
