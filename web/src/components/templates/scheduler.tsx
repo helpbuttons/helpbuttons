@@ -49,7 +49,7 @@ export function FieldSchedulerViewOwner({expirationDate, type}) {
     const now = new Date()
     return <>{expirationDate &&
             (new Date(expirationDate) > now) ? <>
-            <IoTimeOutline />
+            <IoSync />
 
             {t('customTemplates.willExpire')} {readableTimeLeftToDate(expirationDate)}
                             </> : 
