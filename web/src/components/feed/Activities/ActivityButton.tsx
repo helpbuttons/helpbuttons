@@ -288,7 +288,7 @@ export function ActivityDetailMessage({ activity, isLast = false }) {
       </div>
       <div className="message message--me">
         <div className="message__content">
-          {activity.message}
+          <FormatMessage text={activity.message} />
         </div>
       </div>
     </>)
