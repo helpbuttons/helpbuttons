@@ -334,7 +334,6 @@ export class ResetFilters implements UpdateEvent {
     return produce(state, (newState) => {
       newState.explore.settings.hexagonClicked = null;
       // newState.explore.map.listButtons = state.explore.map.boundsFilteredButtons
-      newState.explore.map.listButtons = []
       newState.explore.map.filters = defaultFilters;
     });
   }
