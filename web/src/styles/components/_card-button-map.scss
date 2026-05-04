@@ -161,12 +161,6 @@ $card-button-map-border-height: $border-general-height;
   display: inline-block;
 }
 
-.card-button-map__city:before,
-.card-button-map__city:before,
-.card-button-map__date:before {
-  background: transparent url('../../../public/assets/svg/icons/time_black.svg') left center no-repeat;
-  background-size: 100% auto;
-}
 
 .card-button-maps {
   display: flex;

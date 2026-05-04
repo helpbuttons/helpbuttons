@@ -146,11 +146,8 @@ $card-button-list-status-height: 10px;
 }
 
 .card-button-list__submenu {
-  background: transparent url('../../../public/assets/svg/icons/down.svg') center no-repeat;
-  background-size: 100%;
   height: 100%;
   position: relative;
-  text-indent: -9999999px;
   width: 18px;
 }
 
@@ -314,12 +311,6 @@ $card-button-list-status-height: 10px;
   display: inline-block;
 }
 
-.card-button-list__city:before,
-.card-button-list__city:before,
-.card-button-list__date:before {
-  background: transparent url('../../../public/assets/svg/icons/time_black.svg') left center no-repeat;
-  background-size: 100% auto;
-}
 
 .card-button-list__geoDate {
   display: flex;
