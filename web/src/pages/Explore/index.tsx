@@ -31,7 +31,7 @@ function useParams(router)
     if(exploreSettings?.center)
     {
       // load on last coordinates naviagated...!
-      store.emit(new ResetFilters())
+      // store.emit(new ResetFilters())
       router.push(`/Explore/${exploreSettings.zoom}/${exploreSettings.center[0]}/${exploreSettings.center[1]}`, undefined, { shallow: true });
     }else{
       // load from coordinates of network
