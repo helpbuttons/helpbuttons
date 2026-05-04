@@ -85,7 +85,7 @@ docker-compose run api yarn migration:run
 - [Next.js docs](https://nextjs.org/docs)
 - [NestJS docs](https://docs.nestjs.com)
 - [react-icons (io5)](https://react-icons.github.io/react-icons/icons/io5/)
-- [Helpbuttons Concept Presentation](https://www.dropbox.com/scl/fi/9mttow7agj9f6zmg8dawd/2026_helputtons_concepto_00.pdf?rlkey=xucp3zf2m2tnbjroaobxns63v&e=1&dl=1)
+- [Helpbuttons Concept Slides](https://www.dropbox.com/scl/fi/9mttow7agj9f6zmg8dawd/2026_helputtons_concepto_00.pdf?rlkey=xucp3zf2m2tnbjroaobxns63v&e=1&dl=1)
 
 ---
 
