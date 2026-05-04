@@ -99,6 +99,7 @@ export function ActivityGroupChat({ groupType, close }) {
   }, [activities])
 
   const sendNewMessage = (message, groupType, onSuccess) => {
+    if(message.length < 1) return ;
     store.emit(new SendNewGroupMessage(groupType, message, () => {
       onSuccess()
       store.emit(new FindLatestActivities())
@@ -202,10 +203,7 @@ function ActivityGroupMessageForm({ sendNewMessage, groupType }) {
     // TODO: IMPLEMENT SEND NEW GROUP MESSAGE
     //   sendNewGroupMessage(messageContent.current.value, groupType)
     const message = messageContent.current.value; 
-    if(message.length < 1)
-    {
-      return;
-    }
+    if(message.length < 1) return;
     sendNewMessage(messageContent.current.value, groupType, () => {
       messageContent.current.value = ''
     })

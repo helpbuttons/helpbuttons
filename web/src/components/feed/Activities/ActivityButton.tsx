@@ -59,6 +59,7 @@ export function ActivityDetailConversation({ selectedActivity, closeConversation
   }, [buttonsActivities])
 
   const sendNewMessage = (message, buttonId, consumerId) => {
+    if(message.length < 1) return ;
     store.emit(new SendNewMessage(message, buttonId, consumerId, () => { 
       loadButtonActivities(); 
       // alertService.success(t('activities.sent')) 
@@ -83,6 +84,7 @@ export function ActivityDetailConversation({ selectedActivity, closeConversation
 
 export function ActivityDetailDraft({ setSelectedActivity }) {
   const sendNewMessage = (message, buttonId, consumerId) => {
+    if(message.length < 1) return ;
     store.emit(new SendNewMessage(message, buttonId, consumerId, (res) => {
       
       store.emit(new FindLatestActivities((_activities) => {
