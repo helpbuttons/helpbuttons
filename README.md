@@ -32,6 +32,8 @@ Connect and manage messages
 
 ### Installation
 
+- For a complete guide on how to install Helpbuttons in your own server, follow this link: [New server Install](https://cloud.wofreedom.org/s/wae8FPenaK8MeTD)
+
 1. Copy the environment sample file:
    ```bash
    cp env.sample .env
