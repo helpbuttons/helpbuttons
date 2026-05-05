@@ -674,7 +674,8 @@
     "free": "Gratis",
     "priceExplain": "Especifica un valor. Usa 0 si es gratis o seleciona Precio a Consultar si es variable.",
     "confirmDeleteLabel": "Borrar tipo de _helpbutton_ ",
-    "confirmDeleteExplain": "¿Seguro que quieres borrar este tipo y sus _helpbuttons_? Esto no puede deshacerse."
+    "confirmDeleteExplain": "¿Seguro que quieres borrar este tipo y sus _helpbuttons_? Esto no puede deshacerse.",
+    "eventsOnDay": "Also happening on this day:"
   },
   "email": {
     "loginTokenContent": "Bienvenido a {0}",
