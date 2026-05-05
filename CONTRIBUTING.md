@@ -182,22 +182,9 @@ The instance of helpbuttons running at https://dev.helpbuttons.org is up to date
 ## Architecture
 
 Helpbuttons is a monorepo with two main packages:
+WEB and API
 
-```
-helpbuttons/
-├── api/          # NestJS backend (REST API, business logic, DB migrations)
-│   └── src/
-│       ├── modules/   # Feature modules (auth, network, button, mail, …)
-│       └── data/      # TypeORM entities and migrations
-└── web/          # Next.js frontend (React, SSR/SSG, Leaflet maps)
-    └── src/
-        ├── components/  # Reusable UI components
-        ├── elements/    # Low-level building blocks (inputs, buttons, …)
-        ├── pages/       # Next.js pages and routing
-        └── state/       # Global state (React context / hooks)
-```
-
-Both packages share the `.env` file at the repo root. The API runs on port `3001`, the web app on `3000`.
+The API runs on port `3001`, the web app on `3000`.
 
 **Adding a new feature** generally means:
 1. Add the entity/DTO in `api/src/modules/<feature>/`
@@ -209,20 +196,15 @@ Both packages share the `.env` file at the repo root. The API runs on port `3001
 
 ## Commit messages
 
-We follow [Conventional Commits](https://www.conventionalcommits.org/):
-
 ```
 <type>(<scope>): <short summary>
 
 Examples:
 feat(network): add custom accent color picker
 fix(mail): skip send when recipient is empty
-chore(deps): upgrade next to v14
-docs(contributing): add architecture section
 ```
 
-Common types: `feat`, `fix`, `refactor`, `chore`, `docs`, `test`, `style`.  
-Keep the summary under 72 characters and in the imperative mood ("add", not "added").
+Common types: `feat`, `fix`.  
 
 ---
 
