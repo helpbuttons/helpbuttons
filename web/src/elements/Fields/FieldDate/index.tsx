@@ -68,6 +68,7 @@ export default function FieldDate({
       closePopup={discardDates}
     >
       <div className="picker__section">
+              {/* // TODO: added this to test, remove this and add whatever needed */}
               <input type="hidden" {...register('eventType')} />
               <DropdownField
                 options={[
@@ -75,6 +76,7 @@ export default function FieldDate({
                   { value: 'weekly', name: t('eventType.repeatsEveryWeek') },
                   { value: 'monthly', name: t('eventType.repeatsEveryMonth') },
                 ]}
+                // TODO: added this to test, remove this and add whatever needed
                 onChange={(value) => {
                   if (value === 'once') setEventType(DateTypes.ONCE);
                   else setEventType(DateTypes.RECURRENT);
@@ -83,6 +85,8 @@ export default function FieldDate({
                   eventType === DateTypes.RECURRENT ? 'weekly' : 'once'
                 }
               />
+              {/* // TODO: ONCE type needs to allow multiday selection, so we can remove multiple component (user can select one day and move on if doesnt need more ) */}
+
               {eventType == DateTypes.ONCE && (
                 <PickerEventTypeOnceForm
                   eventStart={_eventStart}
@@ -91,6 +95,7 @@ export default function FieldDate({
                   setEventStart={_setEventStart} 
                 ></PickerEventTypeOnceForm>
               )}
+              
               {eventType == DateTypes.MULTIPLE && (
                   <PickerEventTypeMultipleForm
                     eventStart={_eventStart}
@@ -99,6 +104,8 @@ export default function FieldDate({
                     setEventStart={_setEventStart}
                   ></PickerEventTypeMultipleForm>
               )}
+              {/* // TODO: split recurrent into 2: week and month */}
+
               {eventType == DateTypes.RECURRENT && (
                 <PickerEventTypeRecurrentForm
                   rrule={loadRrules(eventData)}

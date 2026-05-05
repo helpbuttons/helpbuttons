@@ -132,6 +132,7 @@ export function TimeRangePicker({defaultStart, defaultEnd, handleChangeStart, ha
 
   return (
     <div className='picker__hours'>
+      {/* //added  "all day" checkbox inside to filter hour options, we can add it outside if needed*/}
       <FieldCheckbox
         name="allDay"
         text={t('eventType.allDay')}
