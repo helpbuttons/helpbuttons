@@ -186,6 +186,19 @@ WEB and API
 
 The API runs on port `3001`, the web app on `3000`.
 
+helpbuttons/
+├── api/          # NestJS backend (REST API, business logic, DB migrations)
+│   └── src/
+│       ├── modules/   # Feature modules (auth, network, button, mail, …)
+│       └── data/      # TypeORM entities and migrations
+└── web/          # Next.js frontend (React, SSR/SSG, Pigeon maps)
+    └── src/
+        ├── components/  # Reusable UI components
+        ├── elements/    # Low-level building blocks (inputs, buttons, …)
+        ├── pages/       # Next.js pages and routing
+        └── state/       # Global state (React context / hooks)
+```
+
 **Adding a new feature** generally means:
 1. Add the entity/DTO in `api/src/modules/<feature>/`
 2. Generate and run a migration: `yarn migration:generate` → `yarn migration:run`
