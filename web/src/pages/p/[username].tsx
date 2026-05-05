@@ -36,7 +36,6 @@ export function ShowProfile({
   useEffect(() => {
     if (userProfile) {
       if (userProfile.showButtons) {
-        dconsole.log('getting user btns');
         store.emit(
           new FindUserButtons(userProfile.id, (userButtons) =>
             setUserButtons(userButtons),
