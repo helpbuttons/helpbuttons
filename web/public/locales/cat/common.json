@@ -501,7 +501,11 @@
     "onceExplain": "Selecciona el dia i l'hora per al teu esdeveniment",
     "recurringExplain": "Selecciona dies d'inici i final, dies de la setmana i l'hora per als teus esdeveniments",
     "afterStart": "Please select a time/date after {0}",
-    "beforeEnd": "Please select a time/date after {0}"
+    "beforeEnd": "Please select a time/date after {0}",
+    "justOnce": "L'esdeveniment ocorre una sola vegada",
+    "repeatsEveryWeek": "Es repeteix cada setmana",
+    "repeatsEveryMonth": "Es repeteix cada mes",
+    "allDay": "Tot el dia"
   },
   "faqs": {
     "title": "Preguntes freqüents",

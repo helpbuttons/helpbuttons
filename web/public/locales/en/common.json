@@ -465,8 +465,8 @@
     "typePicker": "Pick a date",
     "headerText": "When is your event",
     "calendarHeaderText": "Choose date & hour",
-    "from": "From... ",
-    "until": "Until... ",
+    "from": "From",
+    "until": "To",
     "once": "Once",
     "multipleDates": "Multiple Dates",
     "recurring": "Recurring Dates",
@@ -477,7 +477,11 @@
     "beforeEnd": "Please select a time/date before {0}",
     "changeToMultipleDates": "Press here to select several days",
     "everyMonth": "Each month",
-    "everyWeek": "Each week"
+    "everyWeek": "Each week",
+    "justOnce": "Event happens just once",
+    "repeatsEveryWeek": "Repeats every week",
+    "repeatsEveryMonth": "Repeats every month",
+    "allDay": "All day"
   },
   "validation": {
     "fieldRequired": "{0} is required.",
@@ -673,7 +677,7 @@
     "free": "Free",
     "confirmDeleteLabel": "Delete _helpbutton_ type",
     "confirmDeleteExplain": "Are you sure you want to delete this button type? This operation will delete all buttons",
-    "eventsOnDay": "Events on same day"
+    "eventsOnDay": "Also happening on this day:"
   },
   "email": {
     "loginTokenContent": "Welcome to {0}",

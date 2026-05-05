@@ -608,7 +608,11 @@
     "beforeEnd": "Por favor selecciona una fecha/hora anterior a {0}",
     "changeToMultipleDates": "Presiona para seleccionar varios días",
     "everyMonth": "Cada mes",
-    "everyWeek": "Cada semana"
+    "everyWeek": "Cada semana",
+    "justOnce": "El evento ocurre solo una vez",
+    "repeatsEveryWeek": "Se repite cada semana",
+    "repeatsEveryMonth": "Se repite cada mes",
+    "allDay": "Todo el día"
   },
   "faqs": {
     "title": "Preguntas frecuentes",

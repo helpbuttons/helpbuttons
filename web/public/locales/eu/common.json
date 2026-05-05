@@ -501,7 +501,11 @@
     "onceExplain": "Aukeratu zure ekitaldiaren eguna eta ordua",
     "recurringExplain": "Aukeratu hasiera eta amaiera egun, aste-egunak eta zure ekitaldien ordua",
     "afterStart": "Please select a time/date after {0}",
-    "beforeEnd": "Please select a time/date after {0}"
+    "beforeEnd": "Please select a time/date after {0}",
+    "justOnce": "Event happens just once",
+    "repeatsEveryWeek": "Repeats every week",
+    "repeatsEveryMonth": "Repeats every month",
+    "allDay": "All day"
   },
   "faqs": {
     "title": "Ohiko galderak",

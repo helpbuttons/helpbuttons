@@ -519,7 +519,11 @@
     "onceExplain": "Selecione o dia e a hora para seu evento",
     "recurringExplain": "Selecione os dias de início e término, os dias da semana e o horário dos seus eventos",
     "afterStart": "Por favor escolha hora e data de início {0}",
-    "beforeEnd": "Por favor escolha hora e data de fim {0}"
+    "beforeEnd": "Por favor escolha hora e data de fim {0}",
+    "justOnce": "O evento acontece uma única vez",
+    "repeatsEveryWeek": "Repete-se toda semana",
+    "repeatsEveryMonth": "Repete-se todo mês",
+    "allDay": "O dia todo"
   },
   "faqs": {
     "title": "Perguntas frequentes",
