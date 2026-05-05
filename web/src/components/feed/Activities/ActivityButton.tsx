@@ -21,10 +21,10 @@ export function ActivityButton({ selectedActivity, setSelectedActivity, closeCon
   if (isDrafting) {
     return <ActivityDetailDraft setSelectedActivity={setSelectedActivity} />
   }
-  return <ActivityDetailConversation selectedActivity={selectedActivity} selectedButton={selectedButton} closeConversation={closeConversation} />
+  return <ActivityDetailConversation setSelectedActivity={setSelectedActivity} selectedActivity={selectedActivity} selectedButton={selectedButton} closeConversation={closeConversation} />
 }
 
-export function ActivityDetailConversation({ selectedActivity, closeConversation, selectedButton}) {
+export function ActivityDetailConversation({ selectedActivity, closeConversation, selectedButton, setSelectedActivity}) {
   const [buttonActivities, setButtonActivities] = useState([])
 
   const loadButtonActivities = () => {
@@ -33,6 +33,7 @@ export function ActivityDetailConversation({ selectedActivity, closeConversation
     }
     store.emit(new FindActivityDetails(selectedActivity.buttonId, selectedActivity.consumerId, 0,
       (_activites) => {
+        setSelectedActivity(() => _activites[0])
         setButtonActivities(() => _activites)
       }
     ))
@@ -42,7 +43,9 @@ export function ActivityDetailConversation({ selectedActivity, closeConversation
     if (!selectedActivity) {
       return;
     }
-    loadButtonActivities()
+    if(buttonActivities.length < 1 || selectedActivity.id != buttonActivities[0].id){
+      loadButtonActivities()
+    }
   }, [selectedActivity])
 
   const buttonsActivities = useGlobalStore((state: GlobalState) => state.activities.buttons)
