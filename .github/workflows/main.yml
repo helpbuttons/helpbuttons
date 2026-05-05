@@ -2,24 +2,21 @@ name: ci-test
 on:
   push:
     branches:
-      - main
-      - dev
+      - develop
   pull_request:
     branches:
-      - main
-      - dev
+      - develop
 
 jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
       - name: "checkout"
-        uses: actions/checkout@v4
+        uses: actions/checkout@v2
       - name: "setup node"
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v1
         with:
-          node-version: 20
-          cache: 'yarn'
+          node-version: 12
       - name: "lint"
         run: |
          yarn
@@ -28,12 +25,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: "checkout"
-        uses: actions/checkout@v4
+        uses: actions/checkout@v2
       - name: "setup node"
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v1
         with:
-          node-version: 20
-          cache: 'yarn'
+          node-version: 12
       - name: "build"
         run: |
          cp .env.sample .env
