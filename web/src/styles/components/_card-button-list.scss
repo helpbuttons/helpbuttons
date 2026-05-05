@@ -32,6 +32,7 @@ $card-button-list-status-height: 10px;
   line-height: $text-line-height-small;
   justify-content: space-between;
   border-radius: $border-radius-semicircle;
+  overflow: hidden;
 
   .hashtag {
     cursor: none;
@@ -80,6 +81,7 @@ $card-button-list-status-height: 10px;
 .card-button-list:hover {
   cursor: pointer;
   box-shadow: $box-shadow-divs;
+  overflow: hidden;
 
   & .card-button-list__status::before {
     transition: $transition-default-slow;
