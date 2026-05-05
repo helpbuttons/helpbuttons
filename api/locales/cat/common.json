@@ -344,7 +344,7 @@
     "priceExplain": "Tria preu màxim i mínim",
     "byProximity": "Per proximitat",
     "byEventDate": "Per inici de l'esdeveniment",
-    "followTagSucess": "{0} ha estat afegit als teus temes d'interès. Per veure els teus temes d'interès ves al Meu Perfil.",
+    "followTagsSucess": "{0} ha estat afegit als teus temes d'interès. Per veure els teus temes d'interès ves al Meu Perfil.",
     "focusedArea": "a la zona",
     "locationLimited": "Limitat a {0}, {1}",
     "pickLocationLimits": "Tria una localització",

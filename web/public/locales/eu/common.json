@@ -344,7 +344,7 @@
     "priceExplain": "Hautatu gehienezko eta gutxieneko prezioa",
     "byProximity": "Proximitatearen arabera",
     "byEventDate": "Ekitaldiaren hasieraren arabera",
-    "followTagSucess": "{0} zure interesen gaien artean gehitu da. Zure interesen gaiak ikusteko joan Nire Profilera.",
+    "followTagsSucess": "{0} zure interesen gaien artean gehitu da. Zure interesen gaiak ikusteko joan Nire Profilera.",
     "focusedArea": "eremuan",
     "locationLimited": "{0}, {1}-ra mugatuta",
     "pickLocationLimits": "Aukeratu kokapen-mugak",

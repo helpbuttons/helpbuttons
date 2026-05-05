@@ -359,7 +359,7 @@
     "priceExplain": "Escolha preço máximo e mínimo",
     "byProximity": "Por proximidade",
     "byEventDate": "Por início do evento",
-    "followTagSucess": "{0} foi adicionado aos seus temas de interesse. Para ver seus temas de interesse vá até Meu Perfil.",
+    "followTagsSucess": "{0} foi adicionado aos seus temas de interesse. Para ver seus temas de interesse vá até Meu Perfil.",
     "focusedArea": "na área",
     "locationLimited": "Limitado a {0}, {1}",
     "pickLocationLimits": "Escolha uma localização",
