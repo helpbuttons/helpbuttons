@@ -29,7 +29,7 @@ export enum CookiesState {
 export interface HomeInfoState {
   mainPopupPage: MainPopupPage;
   mainPopupUserProfile: User;
-  mainPopupButton: boolean;
+  mainPopupButton: ButtonEntry;
   version: string;
   isInstallable: boolean;
   pageName: string;
@@ -41,7 +41,7 @@ export interface HomeInfoState {
 export const homeInfoStateInitial = {
   mainPopupPage: MainPopupPage.HIDE,
   mainPopupUserProfile: null,
-  mainPopupButton: false,
+  mainPopupButton: null,
   version: '?',
   isInstallable: false,
   pageName: '',
@@ -56,8 +56,7 @@ export class SetMainPopup implements UpdateEvent {
   public update(state: GlobalState) {
     return produce(state, (newState) => {
       newState.homeInfo.mainPopupPage = this.newPage;
-      newState.homeInfo.mainPopupButton = false;
-      // newState.explore.currentButton = null;
+      newState.homeInfo.mainPopupButton = null;
       newState.homeInfo.mainPopupUserProfile = null;
     });
   }
@@ -69,8 +68,7 @@ export class SetInvitationPopup implements UpdateEvent {
   public update(state: GlobalState) {
     return produce(state, (newState) => {
       newState.homeInfo.mainPopupPage = MainPopupPage.INVITE;
-      newState.homeInfo.mainPopupButton = false;
-      // newState.explore.currentButton = null;
+      newState.homeInfo.mainPopupButton = null;
       newState.homeInfo.mainPopupUserProfile = null;
       newState.homeInfo.invitationCode = this.invitationCode;
     });
@@ -91,7 +89,7 @@ export class SetMainPopupCurrentProfile implements UpdateEvent {
     return produce(state, (newState) => {
       newState.homeInfo.mainPopupPage = MainPopupPage.HIDE
       newState.homeInfo.mainPopupUserProfile = this.profile;
-      newState.homeInfo.mainPopupButton = false;
+      newState.homeInfo.mainPopupButton = null;
     });
   }
 }
@@ -114,13 +112,8 @@ export class SetMainPopupCurrentButton implements UpdateEvent {
       
       newState.homeInfo.mainPopupUserProfile = null;
       // newState.explore.currentButton = this.button;
-      newState.homeInfo.mainPopupButton = true;
-      newState.explore.currentButton = this.button
-      if(state.homeInfo.pageName == 'Explore' && this.button)
-        {
-          newState.homeInfo.mainPopupButton = false;
-          newState.explore.settings.center = [this.button.latitude,this.button.longitude]
-        }
+      newState.homeInfo.mainPopupButton = this.button;
+      // newState.explore.currentButton = this.button
     });
   }
 }

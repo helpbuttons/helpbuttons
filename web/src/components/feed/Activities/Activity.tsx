@@ -11,7 +11,6 @@ import { useRouter } from "next/router";
 import t from "i18n";
 import { IoChatboxOutline } from "react-icons/io5";
 import { ButtonShow } from "components/button/ButtonShow";
-import { FindAndSetMainPopupCurrentButton, SetMainPopupCurrentButton } from "state/HomeInfo";
 import ActivityGroup, { ActivityGroupChat } from "./ActivityGroup";
 import { FindLatestActivities, SetDraftButton } from "state/Activity";
 import { FindButton, updateCurrentButton } from "state/Explore";

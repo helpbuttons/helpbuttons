@@ -3,10 +3,11 @@ import ContentList, { ButtonsListEmpty } from "components/list/ContentList";
 import t from "i18n";
 import { useButtonTypes } from "shared/buttonTypes";
 import { Role } from "shared/types/roles";
-import { useGlobalStore } from "state";
+import { GlobalState, useGlobalStore } from "state";
 
 export function CardProfileButtonList({user, buttons})
 {
+  const pageName = useGlobalStore((state: GlobalState) => state.homeInfo.pageName)
   const buttonTypes = useButtonTypes();
 
   if(!buttons ||
@@ -22,7 +23,7 @@ export function CardProfileButtonList({user, buttons})
             <ContentList
               buttons={buttons}
               buttonTypes={buttonTypes}
-              linkType={ButtonLinkType.MAINPOPUP}
+              linkType={pageName != 'Explore' ? ButtonLinkType.MAINPOPUP : ButtonLinkType.EXPLORE}
               hideEmptyListWarning={true}
             />
             
