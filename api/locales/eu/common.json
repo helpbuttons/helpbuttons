@@ -603,10 +603,10 @@
     "created_at": "Sortua",
     "title": "",
     "confirm": "Confirm",
-    "adminCommunication": "Administrator communications",
+    "adminCommunication": "Coordinator communications",
     "adminCommunicationExplain": "Messages that you share here will be send to all admins or all users of the network",
     "description": "Here you can review the users of your network, and the buttons!",
-    "adminCommunicationLabel": "Administrator communications",
+    "adminCommunicationLabel": "Coordinator communications",
     "edit": "Edit",
     "preview": "Preview"
   },
@@ -653,6 +653,6 @@
     "embbed": ""
   },
   "roles": {
-    "administrator": "administrator"
+    "coordinator": "coordinator"
   }
 }
