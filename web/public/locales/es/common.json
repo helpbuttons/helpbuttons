@@ -790,7 +790,13 @@
     "schedulerExpired": "The _helpbutton_ expirado",
     "eventExpired": "The _helpbutton_ expiró",
     "eventExpiredMailSubject": "{0} expiró",
-    "schedulerRenewd": "_helpbutton_ fue renovado"
+    "schedulerRenewd": "_helpbutton_ fue renovado",
+    "schedulerText": "Añadir tiempo límite",
+    "priceExplain": "Muestra un precio para que los usuarios puedan vender/comprar con sus _helpbuttons_",
+    "eventExplain": "Muestra una fecha en su _helpbutton_ . Se comporta como un evento y los usuarios pueden buscarlo en el calendario",
+    "schedulerExplainForm": "Su _helpbutton_ necesita reconfirmarse cada {0}. Guárdalo para reconfirmar.",
+    "schedulerLabelAdminForm": "Elige cuanto tiempo debe pasar hasta que el usuario tenga que reconfirmar su _helpbuttons_ ",
+    "day": "Día"
   
   }
 }
