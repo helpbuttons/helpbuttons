@@ -735,7 +735,7 @@
   },
   "roles": {
     "blocked": "blocked",
-    "coordinator": "coordinator",
+    "administrator": "coordinator",
     "registered": "registered",
     "guest": "guest"
   },

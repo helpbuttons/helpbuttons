@@ -678,7 +678,7 @@
     "embbed": ""
   },
   "roles": {
-    "coordinador": "coordinador"
+    "administrator": "coordinador"
   },
   "groupChat": {
     "admin": "coordinadors",

@@ -730,7 +730,7 @@
   },
   "roles": {
     "blocked": "bloqueado",
-    "coordinador": "coordinador",
+    "administrator": "coordinador",
     "registered": "registrado",
     "guest": "invitado"
   },

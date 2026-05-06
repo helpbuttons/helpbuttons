@@ -655,6 +655,6 @@
     "embbed": ""
   },
   "roles": {
-    "coordinator": "coordinator"
+    "administrator": "coordinator"
   }
 }
