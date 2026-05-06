@@ -107,7 +107,7 @@
     "choose": "Elige {0}",
     "search": "Buscar",
     "reset": "Limpiar filtros",
-    "invalidMimeType": "{0} tiene un myme type inválido ({1})",
+    "invalidMimeType": "{0} tiene un tipo MIME inválido ({1})",
     "next": "Siguiente",
     "notfound": "No se encontraron {0}",
     "add": "Añadir",
@@ -539,7 +539,7 @@
     "inviteOnly": "Acceso sólo con invitación",
     "address": "Error al obtener la dirección",
     "dates": "Fechas inválidas",
-    "supportFiles": "Aún no admitimos este tipo de archivo, por favor sube {0}"
+    "supportFiles": "Aún no se admite este tipo de archivo, por favor sube {0}"
   },
   "invitation": {
     "card": "Tarjeta anónima de id individual",
