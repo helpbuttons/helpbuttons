@@ -684,5 +684,8 @@
   },
   "roles": {
     "administrator": "administrator"
+  },
+  "customTemplates": {
+    "eventExpiredMailSubject": "{0} iraungitu da"
   }
 }

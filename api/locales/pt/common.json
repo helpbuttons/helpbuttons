@@ -721,5 +721,8 @@
     "otherNetworks": "Ver outras redes",
     "explore": "Explorar _helpbuttons_",
     "whatIsNetwork": "Saber mais..."
+  },
+  "customTemplates": {
+    "eventExpiredMailSubject": "{0} expirou"
   }
 }

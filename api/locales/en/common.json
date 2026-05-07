@@ -731,7 +731,7 @@
     "awaitingApprovalLabel": "Awaiting approval",
     "buttonsApproved": "All published _helpbuttons_ ",
     "view": "View",
-    "approved":"Approved"
+    "approved": "Approved"
   },
   "roles": {
     "blocked": "blocked",
@@ -801,6 +801,7 @@
     "eventExpired": "The _helpbutton_ expired",
     "schedulerRenewd": "_helpbutton_ has been renewed",
     "willExpire": "Expires ",
-    "renewed": "Renewed"
+    "renewed": "Renewed",
+    "eventExpiredMailSubject": "{0} expired"
   }
 }
