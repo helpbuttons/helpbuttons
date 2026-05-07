@@ -205,8 +205,7 @@
     "allowGuestCreationExplain": "Cuando permites registros anónimos, es importante recordar que tu red será más vulnerable a spam.",
     "privacyPolicyPlaceHolder": "Escribe una política de privacidad básica: Dónde estás almacenando la información de tus usuarios, qué tipo de datos estás recogiendo y qué haces con ellos.",
     "ethicsPolicyPlaceHolder": "Escribe unos principios éticos: Cuáles son los valores detrás de la red y la acción de sus usuarios.",
-     "noNetworkLocation": "Por favor, elige la localización principal de tu red antes de seleccionar lugares clave."
-
+    "noNetworkLocation": "Por favor, elige la localización principal de tu red antes de seleccionar lugares clave."
   },
   "activities": {
     "messages": "Mensajes",
@@ -726,7 +725,7 @@
     "awaitingApprovalLabel": "Pendientes de aprobación",
     "buttonsApproved": "Lista de _helpbuttons_ publicados",
     "view": "Ver",
-    "approved":"Approved"
+    "approved": "Approved"
   },
   "roles": {
     "blocked": "bloqueado",
@@ -797,6 +796,5 @@
     "schedulerExplainForm": "Su _helpbutton_ necesita reconfirmarse cada {0}. Guárdalo para reconfirmar.",
     "schedulerLabelAdminForm": "Elige cuanto tiempo debe pasar hasta que el usuario tenga que reconfirmar su _helpbuttons_ ",
     "day": "Día"
-  
   }
 }
