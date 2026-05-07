@@ -205,8 +205,7 @@
     "allowGuestCreationExplain": "Cuando permites registros anónimos, es importante recordar que tu red será más vulnerable a spam.",
     "privacyPolicyPlaceHolder": "Escribe una política de privacidad básica: Dónde estás almacenando la información de tus usuarios, qué tipo de datos estás recogiendo y qué haces con ellos.",
     "ethicsPolicyPlaceHolder": "Escribe unos principios éticos: Cuáles son los valores detrás de la red y la acción de sus usuarios.",
-     "noNetworkLocation": "Por favor, elige la localización principal de tu red antes de seleccionar lugares clave."
-
+    "noNetworkLocation": "Por favor, elige la localización principal de tu red antes de seleccionar lugares clave."
   },
   "activities": {
     "messages": "Mensajes",
@@ -254,7 +253,18 @@
     "newmention": "Fuiste mencionado/a en una conversación. {0}: '{1}'",
     "newmentionOwn": "Publicaste un comentario. '{0}'",
     "title": "Mensajes y avisos",
-    "all": "Todo"
+    "all": "Todo",
+    "newButtonInterest": "Hay un nuevo _helpbutton_ publicado en un tema que sigues en '{0}'",
+    "newMessageOutbox": "{0} te envió un mensaje: '{1}'",
+    "newMessageSubject": "{0} te envió un nuevo mensaje",
+    "newMessageContent": "{0} escribió '{1}' en el _helpbutton_",
+    "newPostCommentSubject": "{0} comentó en un _helpbutton_",
+    "newPostCommentContent": "{0} escribió un nuevo comentario '{1}'. en el _helpbutton_ '{2}'",
+    "newMentionSubject": "{0} te mencionó en un _helpbutton_",
+    "newMentionContent": "{1} en el _helpbutton_ '{2}'",
+    "replyToMessage": "Responder al mensaje",
+    "view": "Ver",
+    "newpostfollower": "Se publicó una nueva entrada en un _helpbutton_ que sigues"
   },
   "activitiesWithSubject": {
     "newbutton": "{0} creó _helpbutton_ en {1}",
@@ -726,7 +736,7 @@
     "awaitingApprovalLabel": "Pendientes de aprobación",
     "buttonsApproved": "Lista de _helpbuttons_ publicados",
     "view": "Ver",
-    "approved":"Approved"
+    "approved": "Approved"
   },
   "roles": {
     "blocked": "bloqueado",
@@ -791,6 +801,5 @@
     "eventExpired": "The _helpbutton_ expiró",
     "eventExpiredMailSubject": "{0} expiró",
     "schedulerRenewd": "_helpbutton_ fue renovado"
-  
   }
 }

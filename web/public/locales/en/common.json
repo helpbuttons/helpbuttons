@@ -228,7 +228,7 @@
     "newPostCommentSubject": "{0} commented on a _helpbutton_",
     "newPostCommentContent": "{0} wrote a new comment '{1}'. on the _helpbutton_ '{2}'",
     "newMentionSubject": "{0} mentioned you on a _helpbutton_",
-    "newMentionContent": "{0} mentioned you {1}. on the _helpbutton_ '{2}'",
+    "newMentionContent": "{0} on the _helpbutton_ '{1}'",
     "replyToMessage": "Reply to message",
     "view": "View",
     "newpostfollower": "A new post was published in a _helpbutton_ you follow"

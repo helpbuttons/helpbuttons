@@ -313,7 +313,7 @@ export class ActivityService {
                   case ActivityEventName.NewMention:
                     this.mailService.sendActivity({
                       to: activity.to.email,
-                      content: translate(locale, 'activities.newMentionContent', [fromName, _activity.message, publicationTitle]),
+                      content: translate(locale, 'activities.newMentionContent', [ _activity.message, publicationTitle]),
                       subject: translate(locale, 'activities.newMentionSubject', [fromName]),
                       link: this.addLoginParams(getUrl(`/Activity/button/${_activity.buttonId}`), loginParams),
                       linkCaption: translate(locale, 'activities.replyToMessage'),
@@ -326,7 +326,7 @@ export class ActivityService {
                       content: translate(locale, 'customTemplates.schedulerExpired'),
                       subject: translate(locale, 'customTemplates.schedulerExpiredMailSubject', [activity.button.title]),
                       link: this.addLoginParams(getUrl(`/Activity/button/${_activity.buttonId}`), loginParams),
-                      linkCaption: translate(locale, 'activities.replyToMessage'),
+                      linkCaption: translate(locale, 'activities.view'),
                       ...extra
                     })
                     break;
@@ -336,7 +336,7 @@ export class ActivityService {
                       content: translate(locale, 'customTemplates.eventExpired'),
                       subject: translate(locale, 'customTemplates.eventExpiredMailSubject', [activity.button.title]),
                       link: this.addLoginParams(getUrl(`/Activity/button/${_activity.buttonId}`), loginParams),
-                      linkCaption: translate(locale, 'activities.replyToMessage'),
+                      linkCaption: translate(locale, 'activities.view'),
                       ...extra
                     })
                     break;
