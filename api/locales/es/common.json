@@ -261,7 +261,7 @@
     "newPostCommentSubject": "{0} comentó en _helpbutton_",
     "newPostCommentContent": "{0} escribió un nuevo comentario '{1}'. en _helpbutton_ '{2}'",
     "newMentionSubject": "{0} te mencionó en _helpbutton_",
-    "newMentionContent": "{1} en _helpbutton_ '{2}'",
+    "newMentionContent": "{1} en _helpbutton_ ",
     "replyToMessage": "Responder al mensaje",
     "view": "Ver",
     "newpostfollower": "Se publicó una nueva entrada en _helpbutton_ que sigues"

@@ -313,7 +313,7 @@ export class ActivityService {
                   case ActivityEventName.NewMention:
                     this.mailService.sendActivity({
                       to: activity.to.email,
-                      content: translate(locale, 'activities.newMentionContent', [ _activity.message, publicationTitle]),
+                      content: translate(locale, 'activities.newMentionContent', [ _activity.message]),
                       subject: translate(locale, 'activities.newMentionSubject', [fromName]),
                       link: this.addLoginParams(getUrl(`/Activity/button/${_activity.buttonId}`), loginParams),
                       linkCaption: translate(locale, 'activities.replyToMessage'),

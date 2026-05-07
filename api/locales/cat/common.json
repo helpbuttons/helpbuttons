@@ -216,7 +216,7 @@
     "newPostCommentSubject": "{0} ha comentat en un _helpbutton_",
     "newPostCommentContent": "{0} ha escrit un nou comentari '{1}'. al _helpbutton_ '{2}'",
     "newMentionSubject": "{0} t'ha mencionat en un _helpbutton_",
-    "newMentionContent": "{1} al _helpbutton_ '{2}'",
+    "newMentionContent": "{1} al _helpbutton_ ",
     "replyToMessage": "Respondre al missatge",
     "view": "Veure",
     "newpostfollower": "S'ha publicat una nova entrada en un _helpbutton_ que segueixes"
