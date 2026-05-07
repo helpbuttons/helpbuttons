@@ -372,21 +372,65 @@ $picker-comments-item-padding: 25px;
 .picker__hours {
 
   display: flex;
-  flex-direction: row;
-  position: relative;
+  flex-direction: column;
   align-items: flex-start;
-  justify-content: space-around;
   padding-bottom: $padding-big;
   gap: $padding-big;
 
 }
 
-.picker__hours-dash {
+.picker__hours-selectors {
 
-  align-self: center;
-  font-weight: $font-weight-bolder;
-  position: absolute;
-  top: $padding-big;
+  display: flex;
+  flex-direction: row;
+  gap: $padding-big;
+  width: 100%;
+
+}
+
+.picker__hours-field {
+
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+
+  input, span > input {
+    width: 100%;
+  }
+
+}
+
+.picker__hours-label {
+
+  display: block;
+  font-size: $font-size-small;
+  font-weight: $font-weight-bold;
+  margin-bottom: $padding-small;
+  color: $color-gray;
+
+}
+
+// .picker__hours-dash {
+//   align-self: center;
+//   font-weight: $font-weight-bolder;
+// }
+
+.picker__overlapping-events {
+
+  width: 100%;
+  background: $color-ligth-gray;
+  border-radius: $border-radius-basic;
+  padding: $padding-big;
+  margin: $margin-small 0;
+  font-size: $font-size-small;
+
+}
+
+.picker__overlapping-events-title {
+
+  display: block;
+  font-weight: $font-weight-bold;
+  margin-bottom: $padding-big;
 
 }
 

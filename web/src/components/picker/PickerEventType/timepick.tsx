@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { DropdownSearch } from 'elements/Dropdown/DropdownSearch';
 import t from 'i18n';
+import { FieldCheckbox } from 'elements/Fields/FieldCheckbox';
 
 export function TimePickInput({defaultDateTime, handleChange}) {
   const [results, setResults] = useState([])
@@ -127,13 +128,32 @@ export function TimePickInput({defaultDateTime, handleChange}) {
 }
 
 export function TimeRangePicker({defaultStart, defaultEnd, handleChangeStart, handleChangeEnd}) {
+  const [isAllDay, setIsAllDay] = useState(true);
+
   return (
-      <div className='picker__hours'>
+    <div className='picker__hours'>
+      {/* //added  "all day" checkbox inside to filter hour options, we can add it outside if needed*/}
+      <FieldCheckbox
+        name="allDay"
+        text={t('eventType.allDay')}
+        defaultValue={true}
+        onChanged={(value) => setIsAllDay(value)}
+        multiInput={true}
+      />
+      {!isAllDay && (
+        <div className='picker__hours-selectors'>
+          <div className='picker__hours-field'>
+            <span className='picker__hours-label'>{t('eventType.from')}</span>
             <TimePickInput defaultDateTime={defaultStart}
-              handleChange={(value) => handleChangeStart(value)} /> <span className='picker__hours-dash'>-</span>
+              handleChange={(value) => handleChangeStart(value)} />
+          </div>
+          <div className='picker__hours-field'>
+            <span className='picker__hours-label'>{t('eventType.until')}</span>
             <TimePickInput defaultDateTime={defaultEnd}
               handleChange={(value) => handleChangeEnd(value)} />
-      </div>
-      
+          </div>
+        </div>
+      )}
+    </div>
   )
 }

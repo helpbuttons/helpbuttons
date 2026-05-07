@@ -231,9 +231,15 @@ $picker-date-height: 40px;
     margin: 2px;
     font-weight: $font-weight-bolder;
 
+    .weekdays__list-interest {
+      background-color: $color-white;
+      border: $border-style-basic;
+      color: $color-dark-gray;
+    }
+    
     .weekdays__list-interest__selected {
       background-color: $color-dark-gray;
-      color: white !important;
+      color: $color-white ;
 
     }
 

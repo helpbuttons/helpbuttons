@@ -83,12 +83,13 @@ export default function PickerEventTypeOnceForm({
 export function OverlappingEvents({ buttons }) {
   const buttonTypes = useButtonTypes()
   return <>
-    {buttons.length > 0 && 
-          <><span>{t('customFields.eventsOnDay')}</span>
-            {buttons.map((button, idx) => {
-                return <ButtonEventDay key={idx} buttonTypes={buttonTypes} button={button} />
-                 })}
-          </>
+    {buttons.length > 0 &&
+      <div className="picker__overlapping-events">
+        <span className="picker__overlapping-events-title">{t('customFields.eventsOnDay')}</span>
+        {buttons.map((button, idx) => {
+          return <ButtonEventDay key={idx} buttonTypes={buttonTypes} button={button} />
+        })}
+      </div>
     }
   </>
 }

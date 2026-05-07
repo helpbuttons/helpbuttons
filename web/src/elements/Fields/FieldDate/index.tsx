@@ -7,14 +7,16 @@ import {
   readableTime,
 } from 'shared/date.utils';
 import t from 'i18n';
-import FieldRadio from '../FieldRadio';
-import FieldRadioOption from '../FieldRadio/option';
+// import FieldRadio from '../FieldRadio';
+// import FieldRadioOption from '../FieldRadio/option';
 import PickerEventTypeOnceForm from 'components/picker/PickerEventType/once';
 import PickerEventTypeMultipleForm from 'components/picker/PickerEventType/multiple';
 import FieldError from '../FieldError';
 import PickerEventTypeRecurrentForm, { loadRrules, recurrentToText } from 'components/picker/PickerEventType/recurrent';
 import PickerField from 'components/picker/PickerField';
-import { IoExpandOutline, IoIceCreamOutline, IoRepeat, IoTimeOutline } from 'react-icons/io5';
+// import { IoExpandOutline, IoIceCreamOutline, IoRepeat, IoTimeOutline } from 'react-icons/io5';
+import { IoTimeOutline } from 'react-icons/io5';
+import { DropdownField } from 'elements/Dropdown/Dropdown';
 
 export default function FieldDate({
   title,
@@ -66,12 +68,25 @@ export default function FieldDate({
       closePopup={discardDates}
     >
       <div className="picker__section">
-              <EventType
-                name="eventType"
-                label={t('eventType.typePicker')}
-                value={eventType}
-                {...register('eventType')}
+              {/* // TODO: added this to test, remove this and add whatever needed */}
+              <input type="hidden" {...register('eventType')} />
+              <DropdownField
+                options={[
+                  { value: 'once', name: t('eventType.justOnce') },
+                  { value: 'weekly', name: t('eventType.repeatsEveryWeek') },
+                  { value: 'monthly', name: t('eventType.repeatsEveryMonth') },
+                ]}
+                // TODO: added this to test, remove this and add whatever needed
+                onChange={(value) => {
+                  if (value === 'once') setEventType(DateTypes.ONCE);
+                  else setEventType(DateTypes.RECURRENT);
+                }}
+                defaultSelected={
+                  eventType === DateTypes.RECURRENT ? 'weekly' : 'once'
+                }
               />
+              {/* // TODO: ONCE type needs to allow multiday selection, so we can remove multiple component (user can select one day and move on if doesnt need more ) */}
+
               {eventType == DateTypes.ONCE && (
                 <PickerEventTypeOnceForm
                   eventStart={_eventStart}
@@ -80,6 +95,7 @@ export default function FieldDate({
                   setEventStart={_setEventStart} 
                 ></PickerEventTypeOnceForm>
               )}
+              
               {eventType == DateTypes.MULTIPLE && (
                   <PickerEventTypeMultipleForm
                     eventStart={_eventStart}
@@ -88,6 +104,8 @@ export default function FieldDate({
                     setEventStart={_setEventStart}
                   ></PickerEventTypeMultipleForm>
               )}
+              {/* // TODO: split recurrent into 2: week and month */}
+
               {eventType == DateTypes.RECURRENT && (
                 <PickerEventTypeRecurrentForm
                   rrule={loadRrules(eventData)}
@@ -111,57 +129,57 @@ export default function FieldDate({
   );
 }
 
-const EventType = React.forwardRef(
-  ({ name, onChange, onBlur, label, explain, value }, ref) => {
-    const eventTypes = [
-      {
-        label: t('eventType.once'),
-        explain: t('eventType.onceExplain'),
-        type: DateTypes.ONCE,
-        icon: <IoIceCreamOutline/>,
-      },
-      {
-        label: t('eventType.multipleDates'),
-        explain: t('eventType.multipleExplain'),
-        type: DateTypes.MULTIPLE,
-        icon: <IoExpandOutline/>,
-      },
-      {
-        label: t('eventType.recurring'),
-        explain: t('eventType.recurringExplain'),
-        type: DateTypes.RECURRENT,
-        icon: <IoRepeat/>,
-      },
-    ];
-    return (
-      <>
-        <FieldRadio label={label} explain={explain}>
-          {eventTypes.map((eventType, idx) => (
-              <FieldRadioOption
-                onChange={(value) => onChange(value)}
-                onBlur={onBlur}
-                name={name}
-                ref={ref}
-                value={eventType.type}
-                key={idx}
-              >
-                <div className="btn-filter__icon">{eventType.icon}</div>
-                <div className="btn-with-icon__text">
-                  {eventType.label}
-                </div>
-              </FieldRadioOption>
-          ))}
-        </FieldRadio>
-        <div className='form__explain'>
-          {value &&
-            eventTypes.find((eventType) => eventType.type == value)
-              .explain
-          }
-        </div>
-      </>
-    );
-  },
-);
+// const EventType = React.forwardRef(
+//   ({ name, onChange, onBlur, label, explain, value }, ref) => {
+//     const eventTypes = [
+//       {
+//         label: t('eventType.once'),
+//         explain: t('eventType.onceExplain'),
+//         type: DateTypes.ONCE,
+//         icon: <IoIceCreamOutline/>,
+//       },
+//       {
+//         label: t('eventType.multipleDates'),
+//         explain: t('eventType.multipleExplain'),
+//         type: DateTypes.MULTIPLE,
+//         icon: <IoExpandOutline/>,
+//       },
+//       {
+//         label: t('eventType.recurring'),
+//         explain: t('eventType.recurringExplain'),
+//         type: DateTypes.RECURRENT,
+//         icon: <IoRepeat/>,
+//       },
+//     ];
+//     return (
+//       <>
+//         <FieldRadio label={label} explain={explain}>
+//           {eventTypes.map((eventType, idx) => (
+//               <FieldRadioOption
+//                 onChange={(value) => onChange(value)}
+//                 onBlur={onBlur}
+//                 name={name}
+//                 ref={ref}
+//                 value={eventType.type}
+//                 key={idx}
+//               >
+//                 <div className="btn-filter__icon">{eventType.icon}</div>
+//                 <div className="btn-with-icon__text">
+//                   {eventType.label}
+//                 </div>
+//               </FieldRadioOption>
+//           ))}
+//         </FieldRadio>
+//         <div className='form__explain'>
+//           {value &&
+//             eventTypes.find((eventType) => eventType.type == value)
+//               .explain
+//           }
+//         </div>
+//       </>
+//     );
+//   },
+// );
 
 export function ShowDate({
   eventStart,
