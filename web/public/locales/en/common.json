@@ -231,9 +231,7 @@
     "newMentionContent": "{0} on the _helpbutton_ :",
     "replyToMessage": "Reply to message",
     "view": "View",
-    "newpostfollower": "A new post was published in a _helpbutton_ you follow",
-    "eventExpiredMailSubject": "{0} expiró",
-
+    "newpostfollower": "A new post was published in a _helpbutton_ you follow"
   },
   "common": {
     "notfound": "No {0} found. Sorry. 🤔",
@@ -804,6 +802,6 @@
     "schedulerRenewd": "_helpbutton_ has been renewed",
     "willExpire": "Expires ",
     "renewed": "Renewed",
-    "eventExpiredMailSubject": "{0} expiró"
+    "eventExpiredMailSubject": "{0} expired"
   }
 }
