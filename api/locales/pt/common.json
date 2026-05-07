@@ -219,7 +219,7 @@
     "newPostCommentSubject": "{0} comentou num _helpbutton_",
     "newPostCommentContent": "{0} escreveu um novo comentário '{1}'. no _helpbutton_ '{2}'",
     "newMentionSubject": "{0} mencionou-te num _helpbutton_",
-    "newMentionContent": "{1} no _helpbutton_ '{2}'",
+    "newMentionContent": "{1} no _helpbutton_ ",
     "replyToMessage": "Responder à mensagem",
     "view": "Ver",
     "newpostfollower": "Uma nova publicação foi feita num _helpbutton_ que segues"
@@ -721,8 +721,5 @@
     "otherNetworks": "Ver outras redes",
     "explore": "Explorar _helpbuttons_",
     "whatIsNetwork": "Saber mais..."
-  },
-  "customTemplates": {
-    "eventExpiredMailSubject": "{0} expirou"
   }
 }

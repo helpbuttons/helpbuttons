@@ -209,7 +209,7 @@
     "deletebutton": "{0} was deleted",
     "expiredEventType": "_helpbutton_ ended",
     "expiredEventTitle": "'{0}' has passed its end date, it won't show no more on the public list.",
-    "endorsed": "You have been endorsed by the administration, now you have a 'verified' badge on your profile",
+    "endorsed": "You have been endorsed by the coordinators, now you have a 'verified' badge on your profile",
     "revokeEndorse": "Unfortunately your 'verified' badge has been removed",
     "roleupdate": "Your role has been updated to '{0}'",
     "newSignup": "New user '{0}' signed up",
@@ -731,7 +731,7 @@
     "awaitingApprovalLabel": "Awaiting approval",
     "buttonsApproved": "All published _helpbuttons_ ",
     "view": "View",
-    "approved": "Approved"
+    "approved":"Approved"
   },
   "roles": {
     "blocked": "blocked",
@@ -803,5 +803,6 @@
     "willExpire": "Expires ",
     "renewed": "Renewed",
     "eventExpiredMailSubject": "{0} expired"
+    
   }
 }

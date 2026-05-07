@@ -216,7 +216,7 @@
     "newPostCommentSubject": "{0}-(e)k _helpbutton_ batean iruzkin bat egin du",
     "newPostCommentContent": "{0}-(e)k iruzkin berri bat idatzi du '{1}'. _helpbutton_ honetan '{2}'",
     "newMentionSubject": "{0}-(e)k _helpbutton_ batean aipatu zaitu",
-    "newMentionContent": "{1} _helpbutton_ honetan '{2}'",
+    " ": "{1} _helpbutton_ honetan ",
     "replyToMessage": "Mezuari erantzun",
     "view": "Ikusi",
     "newpostfollower": "Jarraitzen duzun _helpbutton_ batean argitalpen berri bat egin da"
@@ -684,8 +684,5 @@
   },
   "roles": {
     "administrator": "administrator"
-  },
-  "customTemplates": {
-    "eventExpiredMailSubject": "{0} iraungitu da"
   }
 }
