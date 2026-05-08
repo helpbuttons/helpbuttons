@@ -1,4 +1,4 @@
-import { useGlobalStore, useStore } from 'state';
+import { useStore } from 'state';
 import { GlobalState, store } from 'state';
 import router from 'next/router';
 import t from 'i18n';
@@ -39,7 +39,7 @@ import {  ListButtonTypes } from 'components/nav/ButtonTypes';
 import getConfig from 'next/config';
 import { logoImageUri } from 'shared/sys.helper';
 import { FindLatestNetworkActivity } from 'state/Networks';
-import { InstallButton } from 'components/install';
+import { InstallButton, OpenAppButton } from 'components/install';
 import { TagsNav } from 'elements/Fields/FieldTags';
 import { FindAndSetMainPopupCurrentButton, MainPopupPage, SetMainPopup } from 'state/HomeInfo';
 import { DesktopNotificationsButton } from 'components/notifications';
@@ -118,7 +118,6 @@ export default function HomeInfo({ metadata }) {
               <HomeInfoInfoCard selectedNetwork={selectedNetwork} />
 
               <HomeInfoKeyLocations selectedNetwork={selectedNetwork} />
-              <HomeInfoInstallCard selectedNetwork={selectedNetwork} />
 
               <HomeInfoRecentActivity selectedNetwork={selectedNetwork} />
 
@@ -126,6 +125,7 @@ export default function HomeInfo({ metadata }) {
               <HomeInfoPinnedHashTags selectedNetwork={selectedNetwork} />
 
               <HomeInfoAdministeredBy scrollToContact={scrollToContact} />
+              <HomeInfoInstallCard selectedNetwork={selectedNetwork} />
             </div>
 
             <div
@@ -452,37 +452,28 @@ function HomeSloganCard({ selectedNetwork, config }) {
         
 
 function HomeInfoInstallCard({ selectedNetwork }) {
-  const hasNotificationPermissions = useGlobalStore(
-    (state: GlobalState) =>
-      state.activities.notificationsPermissionGranted,
-  );
-  const isInstallable = useGlobalStore(
-    (state: GlobalState) =>
-      state.homeInfo.isInstallable,
-  );
   return (
-    <>
-      {(isInstallable || hasNotificationPermissions) &&
-        <div className="homeinfo-card">
-          <div className="homeinfo-card__header">
-            <h3 className="homeinfo-card__header-title">
-              <IoDownloadOutline/>
-              {t('homeinfo.install', [
-                selectedNetwork?.name,
-              ])}
-            </h3>
+    <div className="homeinfo-card">
+      <div className="homeinfo-card__header">
+        <h3 className="homeinfo-card__header-title">
+          <IoDownloadOutline/>
+          {t('homeinfo.install', [
+            selectedNetwork?.name,
+          ])}
+        </h3>
 
-            <div className="homeinfo-card__controls">
+        <div className="homeinfo-card__controls">
 
-            </div>
-          </div>
-          <hr></hr>
-          <HomeInfoActionButton>
-            <InstallButton />
-            <DesktopNotificationsButton />
-          </HomeInfoActionButton></div>
-      }</>)
-
+        </div>
+      </div>
+      <hr></hr>
+      <HomeInfoActionButton>
+        <InstallButton />
+        <OpenAppButton />
+        <DesktopNotificationsButton />
+      </HomeInfoActionButton>
+    </div>
+  )
 }
 function HomeInfoExploreButton() {
   return (
