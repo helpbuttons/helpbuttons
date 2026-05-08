@@ -248,7 +248,7 @@ function MyApp({ Component, pageProps }) {
       };
 
       const onError = (err) => {
-        alertService.error(t('login.error'));
+        alertService.error(t('user.loginError'));
       };
       handleAcceptCookies()
       store.emit(new LoginToken(loginToken, onSuccess, onError));

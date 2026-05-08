@@ -18,7 +18,7 @@ export default function PostMessage({ post }) {
     const {ref, focus} = useFocusOn(focusPostId, post.id)
   return (
     <>
-      <div className={"card-notification__content"+( focus ? ' card-notification-comment--focus' : '')}>
+      <div className={"card-notification__content "+( focus ? ' card-notification-comment--focus' : '')}>
       <div ref={focus ? ref : null}></div>
         <div className="card-notification__avatar">
           <div className="avatar-small">
@@ -45,8 +45,8 @@ export default function PostMessage({ post }) {
             </div>
 
           </div>
-          <h2 className="card-notification__title"></h2>
-          <div className="card-notification__paragraph">
+          <h2 className="card-notification__title"></h2>  
+          <div className="card-notification__paragraph card-notification__paragraph--post">
             <FormatMessage text={post.message}/>
           </div>
           <ImageGallery images={post?.images.map((image) => {return {src: image, alt: post.message} })} />

@@ -132,32 +132,24 @@ export function ActivityDetailDraft({ setSelectedActivity }) {
 }
 
 
-function MessageForm({ sendNewMessage, buttonId, consumerId }) {
+export function ChatMessageForm({ onSend }) {
   const messageContent = useRef(null)
-  const inputKeyDown = (e) => {
-    const val = e.target.value;
-    if ((e.key === 'Enter' || e.key === ',') && val && !e.shiftKey) {
+
+  const sendMessage = () => {
+    const message = messageContent.current.value;
+    if (message.length < 1) return;
+    onSend(message, () => { messageContent.current.value = '' });
+  }
+
+  const inputKeyDown = (e: any) => {
+    if ((e.key === 'Enter' || e.key === ',') && e.target.value && !e.shiftKey) {
       e.preventDefault();
-      sendMessage()
+      sendMessage();
     }
   }
 
-  const sendMessage = () => {
-    sendNewMessage(messageContent.current.value, buttonId, consumerId)
-    messageContent.current.value = ''
-  }
   return (
     <form className="chat__new-message">
-      {/* <div className="chat__new-message__attach">
-        <Btn
-          btnType={BtnType.circle}
-          iconLink={<IoAdd /> as any}
-          iconLeft={IconType.circle}
-          contentAlignment={ContentAlignment.center}
-          onClick={() => {
-          }}
-        />
-      </div> */}
       <div className="chat__new-message__message">
         <FieldText
           name="message"
@@ -176,15 +168,25 @@ function MessageForm({ sendNewMessage, buttonId, consumerId }) {
           iconLink={<IoSend />}
           iconLeft={IconType.circle}
           contentAlignment={ContentAlignment.center}
-          onClick={() => {
-            sendMessage()
-          }}
+          onClick={sendMessage}
         />
       </div>
-
     </form>
   )
 }
+
+function MessageForm({ sendNewMessage, buttonId, consumerId }) {
+  return (
+    <ChatMessageForm
+      onSend={(message: string, clear: () => void) => {
+        sendNewMessage(message, buttonId, consumerId);
+        clear();
+      }}
+    />
+  )
+}
+
+
 function ActivityDetailCard({ activity, isLast = false }) {
   if (activity.eventName == ActivityEventName.Message) {
     return <ActivityDetailMessage activity={activity} isLast={isLast} />
@@ -295,7 +297,7 @@ export function ActivityDetailMessage({ activity, isLast = false }) {
       </div>
       <div className="message message--me">
         <div className="message__content">
-          {activity.message}
+          <FormatMessage text={activity.message} />
         </div>
       </div>
     </>)
