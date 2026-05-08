@@ -80,7 +80,7 @@ export function ConfigurationFormScheduler({ setEditing, editingValue
     
     const saveUnity = (value) => {
         setEditing({
-            customFields: editingValue.customFields.map((_field, idx) => {
+            customFields: editingValue?.customFields.map((_field, idx) => {
                 if (_field.type == schedulerTemplate.name) {
                     return { ..._field, unity: value }
                 }
@@ -91,7 +91,7 @@ export function ConfigurationFormScheduler({ setEditing, editingValue
     }
     const saveValue = (value) => {
         setEditing({
-            customFields: editingValue.customFields.map((_field, idx) => {
+            customFields: editingValue?.customFields.map((_field, idx) => {
                 if (_field.type == schedulerTemplate.name) {
                     return { ..._field, value: value }
                 }

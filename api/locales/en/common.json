@@ -209,7 +209,7 @@
     "deletebutton": "{0} was deleted",
     "expiredEventType": "_helpbutton_ ended",
     "expiredEventTitle": "'{0}' has passed its end date, it won't show no more on the public list.",
-    "endorsed": "You have been endorsed by the administration, now you have a 'verified' badge on your profile",
+    "endorsed": "You have been endorsed by the coordinators, now you have a 'verified' badge on your profile",
     "revokeEndorse": "Unfortunately your 'verified' badge has been removed",
     "roleupdate": "Your role has been updated to '{0}'",
     "newSignup": "New user '{0}' signed up",
@@ -228,7 +228,7 @@
     "newPostCommentSubject": "{0} commented on a _helpbutton_",
     "newPostCommentContent": "{0} wrote a new comment '{1}'. on the _helpbutton_ '{2}'",
     "newMentionSubject": "{0} mentioned you on a _helpbutton_",
-    "newMentionContent": "{0} mentioned you {1}. on the _helpbutton_ '{2}'",
+    "newMentionContent": "{0} on the _helpbutton_ ",
     "replyToMessage": "Reply to message",
     "view": "View",
     "newpostfollower": "A new post was published in a _helpbutton_ you follow"
@@ -796,12 +796,13 @@
     "month": "Month",
     "hour": "Hour",
     "day": "day",
-    "schedulerExpiredMailSubject": "{0} _helpbutton_ expired",
+    "schedulerExpiredMailSubject": "Your _helpbutton_ expired",
     "schedulerExpired": "The _helpbutton_ expired",
     "eventExpired": "The _helpbutton_ expired",
-    "eventExpiredMailSubject": "{0} expired",
     "schedulerRenewd": "_helpbutton_ has been renewed",
     "willExpire": "Expires ",
-    "renewed": "Renewed"
+    "renewed": "Renewed",
+    "eventExpiredMailSubject": "{0} expired"
+    
   }
 }

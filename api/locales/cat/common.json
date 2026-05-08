@@ -85,7 +85,7 @@
     "add": "Afegir",
     "done": "Fet",
     "remove": "Eliminar",
-    "click": "Fes clic aquí",
+    "click": "Prem aquí",
     "error": "Hi ha hagut un problema",
     "reloadConfig": "Recarregar configuració",
     "publishTitle": "Crear {0}",
@@ -189,7 +189,37 @@
     "expiredEventType": "_helpbutton_ va finalitzar",
     "expiredEventTitle": "'{0}' ha superat la data de finalització el dia {1}, no apareixerà més a la llista pública.",
     "notifications": "Notifications",
-    "messages": "Messages"
+    "messages": "Messages",
+    "newButtonInterest": "Hi ha un nou _helpbutton_ publicat en un tema que segueixes a '{0}'",
+    "newMessageOutbox": "{0} t'ha enviat un missatge: '{1}'",
+    "deleted": "_helpbutton_ eliminat",
+    "markedAsRead": "Marcat com a llegit",
+    "newcommentOwn": "Has escrit un comentari '{0}'",
+    "newmention": "T'han mencionat en una conversa pública. {0}: '{1}'",
+    "newmentionOwn": "Has publicat un nou comentari en una conversa. '{0}'",
+    "endorsed": "Has estat endorsed per l'administració, ara tens una insígnia 'verificat' al teu perfil",
+    "revokeEndorse": "Malauradament la teva insígnia 'verificat' ha estat eliminada",
+    "roleupdate": "El teu rol ha estat actualitzat a '{0}'",
+    "newSignup": "Nou usuari '{0}' registrat",
+    "notice": "Avís",
+    "sent": "enviat",
+    "writingDraft": "Escrivint missatge privat",
+    "draft": "Esborrany",
+    "pickOne": "Selecciona un xat",
+    "newbuttonHomeinfo": "Nou _helpbutton_",
+    "title": "Missatges i alertes",
+    "comment": "Comentari",
+    "message": "Missatge",
+    "all": "tot",
+    "newMessageSubject": "{0} t'ha enviat un nou missatge",
+    "newMessageContent": "{0} ha escrit '{1}' al _helpbutton_",
+    "newPostCommentSubject": "{0} ha comentat en un _helpbutton_",
+    "newPostCommentContent": "{0} ha escrit un nou comentari '{1}'. al _helpbutton_ '{2}'",
+    "newMentionSubject": "{0} t'ha mencionat en un _helpbutton_",
+    "newMentionContent": "{1} al _helpbutton_ ",
+    "replyToMessage": "Respondre al missatge",
+    "view": "Veure",
+    "newpostfollower": "S'ha publicat una nova entrada en un _helpbutton_ que segueixes"
   },
   "activitiesWithSubject": {
     "newbutton": "{0} ha publicat un _helpbutton_ a {1}",
@@ -560,11 +590,11 @@
   },
   "email": {
     "loginTokenContent": "Benvingut a {0}",
-    "loginTokenSubject": "Has sol·licitat un inici de sessió amb un sol clic",
-    "loginTokenLinkCaption": "Fes clic aquí per accedir al teu compte",
+    "loginTokenSubject": "Has sol·licitat un inici de sessió amb un sol toc",
+    "loginTokenLinkCaption": "Prem aquí per accedir al teu compte",
     "activateContent": "Benvingut a {0}",
     "activateSubject": "Si us plau, activa el teu compte",
-    "activateLinkCaption": "Fes clic aquí per activar el teu compte",
+    "activateLinkCaption": "Prem aquí per activar el teu compte",
     "activitySubject": "Novetat a Xarxa Exemple",
     "buttonLinkCaption": "Prem aquí per obrir-lo",
     "dailyOutBox": "Tens {0} novetats de '{1}', {2}"
@@ -610,7 +640,6 @@
     "edit": "Edit",
     "preview": "Preview",
     "view": "Ver"
-
   },
   "role": {
     "blocked": "desactivat",
@@ -656,5 +685,8 @@
   },
   "roles": {
     "administrator": "coordinator"
+  },
+  "customTemplates": {
+    "eventExpiredMailSubject": "{0} ha expirat"
   }
 }

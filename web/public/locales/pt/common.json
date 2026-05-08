@@ -37,7 +37,7 @@
     "createNetworkButton": "Crie sua própria rede",
     "createNetwork": "Você também pode contatar a equipa se precisar de ajuda para criar sua própria rede",
     "donateSubtitle": "Este app não vende os seus dados nem cobra pelo seu uso. Se você gosta desta filosofia, pode nos apoiar com um donativo:",
-    "callToAdmin": "Clique aqui se precisar de ajuda para entrar ou publicar",
+    "callToAdmin": "Pressione aqui se precisar de ajuda para entrar ou publicar",
     "networkIsPrivate": "Rede privada",
     "needLogo": "Antes de selecionar um lugar, adicione seu logotipo, por favor",
     "needPlace": "Por favor, selecione em qual área está localizada a sua Rede",
@@ -85,7 +85,7 @@
     "add": "Adicionar",
     "done": "Feito",
     "remove": "Remover",
-    "click": "Clique aqui",
+    "click": "Pressione aqui",
     "error": "Houve um problema",
     "reloadConfig": "Recarregar configuração",
     "publishTitle": "Criar {0}",
@@ -97,7 +97,7 @@
     "nameLabel": "Nome da sua Rede",
     "namePlaceHolder": "Rede de agricultores de Vilanova",
     "descriptionLabel": "Descrição da sua Rede",
-    "privacySetPrivate": "Clique aqui para tornar a rede privada",
+    "privacySetPrivate": "Pressione aqui para tornar a rede privada",
     "images": "Imagens da Rede",
     "jumbo": "Selecione a imagem de fundo da Rede",
     "locationExplain": "O mapa sempre será centralizado no local e no raio da sua Rede toda vez que alguém entrar na ferramenta",
@@ -105,7 +105,7 @@
     "centerOfMap": "Selecione a localização base da sua Rede",
     "description": "Aqui você pode modificar as configurações da sua Rede. Se for a primeira vez, você deve adicionar pelo menos o nome, descrição, imagem de perfil, imagem de fundo e uma localização para completar a criação.",
     "title": "Configure sua Rede",
-    "privacySetPublic": "Clique aqui para tornar a rede pública",
+    "privacySetPublic": "Pressione aqui para tornar a rede pública",
     "tagsPlaceHolder": "Comida, ferramentas, brinquedos, roupas...",
     "tags": "Palavras-chave da Rede",
     "logo": "Selecionar logotipo da Rede",
@@ -276,10 +276,10 @@
     "deleteProfile": "Excluir meu perfil",
     "confirmDeleting": "Confirme que deseja excluir todos os seus dados!",
     "securityAndPrivacy": "Segurança e privacidade",
-    "insertedSignUpTitle": "Adicione seus dados de contato ou clique se",
+    "insertedSignUpTitle": "Adicione seus dados de contato ou toque se",
     "acceptPrivacyPolicy": "Eu li e aceito a ",
     "privacyPolicyLink": "política de privacidade",
-    "pressToAccept": "Clique aqui para aceitar",
+    "pressToAccept": "Pressione aqui para aceitar",
     "iAccept": "Eu aceito",
     "pleaseAcceptPrivacy": "Aceite nossa política de privacidade, por favor",
     "loginError": "Falha a entrar, por favor tente outra vez ou contate um coordinador da rede",
@@ -314,7 +314,7 @@
     "browseHoneyComb": "Mapa com zonas poligonais"
   },
   "explore": {
-    "emptyList": "Por favor, altere sua pesquisa, mova o mapa ou clique para encontrar mais botões",
+    "emptyList": "Por favor, altere sua pesquisa, mova o mapa ou toque para encontrar mais botões",
     "createEmpty": "Criar _helpbutton_",
     "noResults": "Desculpe, não há resultados aqui",
     "selectedHexagon": "na área selecionada",
@@ -322,7 +322,7 @@
     "noFilter": "na área",
     "hideMap": "Ocultar Mapa",
     "showMap": "Mostrar Mapa",
-    "displayInstructions": "Clique em um hexágono para obter informações sobre _helpbuttons_ nessa área",
+    "displayInstructions": "Toque em um hexágono para obter informações sobre _helpbuttons_ nessa área",
     "both": "Mapa & Lista",
     "list": "Lista",
     "map": "Mapa",
@@ -342,7 +342,7 @@
     "distance": "Distância de pesquisa",
     "allButtonTypes": "Todos os tipos",
     "queryPlaceHolder": "Digite o que você está procurando",
-    "whereExplain": "Procure no lugar desejado ou clique no ícone para marcar sua localização",
+    "whereExplain": "Procure no lugar desejado ou toque no ícone para marcar sua localização",
     "types": "Filtrar por tipo de _helpbuttons_",
     "typesExplain": "Selecione os tipos de _helpbuttons_ que deseja filtrar",
     "price": "Preço",
@@ -579,13 +579,13 @@
   },
   "email": {
     "loginTokenContent": "Bem-vindo(a) ao {0}",
-    "loginTokenSubject": "Você solicitou um login com um clique",
-    "loginTokenLinkCaption": "Clique aqui para acessar sua conta",
+    "loginTokenSubject": "Você solicitou um login com um toque",
+    "loginTokenLinkCaption": "Pressione aqui para acessar sua conta",
     "activateContent": "Bem-vindo(a) ao {0}",
     "activateSubject": "Ative sua conta",
-    "activateLinkCaption": "Clique aqui para ativar sua conta",
+    "activateLinkCaption": "Pressione aqui para ativar sua conta",
     "activitySubject": "Novidade na Rede Exemplo",
-    "buttonLinkCaption": "Clique aqui para abrir",
+    "buttonLinkCaption": "Pressione aqui para abrir",
     "dailyOutBox": "Você tem {0} novidades de '{1}', {2}"
   },
   "dates": {
@@ -667,7 +667,6 @@
     "optionRss": "Subscrever rss",
     "copyLink": "Copiar link",
     "invitePeopleExplain": "Copia este link e partilha com outros para se juntarem à rede"
-
   },
   "places": {
     "addNew": "",
@@ -695,5 +694,8 @@
     "otherNetworks": "Ver outras redes",
     "explore": "Explorar _helpbuttons_",
     "whatIsNetwork": "Saber mais..."
+  },
+  "customTemplates": {
+    "eventExpiredMailSubject": "{0} expirou"
   }
 }

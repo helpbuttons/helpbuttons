@@ -1,2 +1,2 @@
 export const maxResolution = 12;
-export const hideAddressResolution = 8;
+export const hideAddressResolution = 10;

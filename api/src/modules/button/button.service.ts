@@ -428,11 +428,11 @@ export class ButtonService {
     return button;
   }
 
-  async findByOwner(ownerId: string) {
+  async findByOwner(ownerId: string, includeExpired: boolean = false) {
     let buttons: Button[] = await this.buttonRepository.find({
       where: {
         owner: { id: ownerId},
-        ...this.expiredBlockedConditions(),
+        ...this.expiredBlockedConditions(includeExpired),
       },
       relations: ['owner'],
     });

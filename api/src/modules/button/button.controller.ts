@@ -188,7 +188,7 @@ export class ButtonController {
   @OnlyRegistered()
   @Get('mine')
   findMyButtons(@CurrentUser() user: User) {
-    return this.buttonService.findByOwner(user.id);
+    return this.buttonService.findByOwner(user.id, true);
   }
 
   @OnlyRegistered()

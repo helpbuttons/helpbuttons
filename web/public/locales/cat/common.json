@@ -85,7 +85,7 @@
     "add": "Afegir",
     "done": "Fet",
     "remove": "Eliminar",
-    "click": "Fes clic aquí",
+    "click": "Prem aquí",
     "error": "Hi ha hagut un problema",
     "reloadConfig": "Recarregar configuració",
     "publishTitle": "Crear {0}",
@@ -560,11 +560,11 @@
   },
   "email": {
     "loginTokenContent": "Benvingut a {0}",
-    "loginTokenSubject": "Has sol·licitat un inici de sessió amb un sol clic",
-    "loginTokenLinkCaption": "Fes clic aquí per accedir al teu compte",
+    "loginTokenSubject": "Has sol·licitat un inici de sessió amb un sol toc",
+    "loginTokenLinkCaption": "Prem aquí per accedir al teu compte",
     "activateContent": "Benvingut a {0}",
     "activateSubject": "Si us plau, activa el teu compte",
-    "activateLinkCaption": "Fes clic aquí per activar el teu compte",
+    "activateLinkCaption": "Prem aquí per activar el teu compte",
     "activitySubject": "Novetat a Xarxa Exemple",
     "buttonLinkCaption": "Prem aquí per obrir-lo",
     "dailyOutBox": "Tens {0} novetats de '{1}', {2}"
@@ -610,7 +610,6 @@
     "edit": "Edit",
     "preview": "Preview",
     "view": "Ver"
-
   },
   "role": {
     "blocked": "desactivat",
@@ -656,5 +655,8 @@
   },
   "roles": {
     "administrator": "coordinator"
+  },
+  "customTemplates": {
+    "eventExpiredMailSubject": "{0} ha expirat"
   }
 }

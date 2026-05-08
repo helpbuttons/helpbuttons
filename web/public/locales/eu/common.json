@@ -85,7 +85,7 @@
     "add": "Gehitu",
     "done": "Eginda",
     "remove": "Kendu",
-    "click": "Egin klik hemen",
+    "click": "Sakatu hemen",
     "error": "Arazo bat izan da",
     "reloadConfig": "Berriro kargatu konfigurazioa",
     "publishTitle": "Sortu {0}",
@@ -273,7 +273,7 @@
     "insertedSignUpTitle": "Gehitu zure kontaktu datuak edo sakatu",
     "acceptPrivacyPolicy": "Pribatutasun politika onartu dut",
     "privacyPolicyLink": "pribatutasun politika",
-    "pressToAccept": "Egin klik hemen onartzeko",
+    "pressToAccept": "Sakatu hemen onartzeko",
     "iAccept": "Onartzen dut",
     "pleaseAcceptPrivacy": "Mesedez, onartu gure pribatutasun politika",
     "loginError": "Failed to login, please try again or contact the admin",
@@ -560,11 +560,11 @@
   },
   "email": {
     "loginTokenContent": "Ongi etorri {0}-ra",
-    "loginTokenSubject": "Saio-hasiera klik bakarrarekin eskatu duzu",
-    "loginTokenLinkCaption": "Egin klik hemen zure kontura sartzeko",
+    "loginTokenSubject": "Saio-hasiera ukitu bakarrarekin eskatu duzu",
+    "loginTokenLinkCaption": "Sakatu hemen zure kontura sartzeko",
     "activateContent": "Ongi etorri {0}-ra",
     "activateSubject": "Aktibatu zure kontua",
-    "activateLinkCaption": "Egin klik hemen zure kontua aktibatzeko",
+    "activateLinkCaption": "Sakatu hemen zure kontua aktibatzeko",
     "activitySubject": "Berritasuna Sare Adibidean",
     "buttonLinkCaption": "Sakatu hemen irekitzeko",
     "dailyOutBox": "Berritasun {0} dituzu '{1}'-en, {2}"
@@ -654,5 +654,8 @@
   },
   "roles": {
     "administrator": "coordinator"
+  },
+  "customTemplates": {
+    "eventExpiredMailSubject": "{0} iraungitu da"
   }
 }
