@@ -49,7 +49,12 @@
     "install": "Install {0} and receive notifications:",
     "inviteCopied": "Link copied to clipboard",
     "seeMore": "See more",
-    "inviteToNetwork": "Share"
+    "inviteToNetwork": "Share",
+    "keyLocations": "Llocs clau",
+    "knowMore": "Sobre {0}",
+    "notificationsPermission": "Permet notificacions",
+    "print": "Imprimeix l'activitat",
+    "seeLess": "Veure'n menys"
   },
   "feed": {
     "write": "Escriure missatge",
@@ -68,7 +73,10 @@
     "readMessages": "Read messages",
     "read": "No messages yet",
     "activitiesHistory": "Historial de actividades",
-    "messages": "Public board & comments"
+    "messages": "Public board & comments",
+    "byCategory": "Filtra per categoria",
+    "from": "De",
+    "privateBadge": "privat"
   },
   "hostname": "nom de l'amfitrió",
   "common": {
@@ -89,7 +97,16 @@
     "error": "Hi ha hagut un problema",
     "reloadConfig": "Recarregar configuració",
     "publishTitle": "Crear {0}",
-    "deleteSuccess": "Finalitzat amb èxit"
+    "deleteSuccess": "Finalitzat amb èxit",
+    "cancel": "Cancel·la",
+    "confirm": "Confirma",
+    "delete": "Elimina",
+    "edit": "Edita",
+    "notFoundMessage": "Pàgina no trobada o eliminada",
+    "options": "Opcions",
+    "registeredRequired": "Has de registrar-te",
+    "show": "Mostra",
+    "unsavedChanges": "Atenció! Tens canvis sense desar."
   },
   "configuration": {
     "config": "Opcions de configuració",
@@ -160,7 +177,21 @@
     "locationKeys": "Key Spots",
     "requiredLocation": "Please pickup a place in the map for your network",
     "keyLocationsExplain": "Key spots that will be highlighted in your network. They will appear in the main menus and map for easy access",
-    "addLocationKey": "Add Location"
+    "addLocationKey": "Add Location",
+    "FAQs": "Afegeix la teva informació legal",
+    "allowGuestCreationExplain": "En permetre registres anònims, és important recordar que la teva xarxa estarà més exposada a spam",
+    "contactEmailLabel": "Dades de contacte",
+    "contactEmailPlaceHolder": "Escriu aquí el contacte de la teva xarxa -telèfon, adreça, correu, etc-",
+    "createButtonTypeAction": "Crea un nou tipus",
+    "ethicsPolicyLabel": "Ètica",
+    "ethicsPolicyPlaceHolder": "Escriu l'ètica bàsica. Quins valors hi ha darrere del propòsit de la teva xarxa i les accions dels usuaris?",
+    "noNetworkLocation": "Si us plau, escull una ubicació de xarxa abans d'afegir llocs clau",
+    "privacyPolicyLabel": "Política de privacitat",
+    "privacyPolicyPlaceHolder": "Escriu la política de privacitat bàsica. On emmagatzemes les dades dels teus usuaris? Quin tipus de dades fas servir i per a què? ",
+    "privacySettings": "Configura les teves preferències de privacitat",
+    "showAdvanced": "Mostra les opcions avançades...",
+    "sloganLabel": "Frase de benvinguda de la xarxa",
+    "sloganPlaceHolder": "p. ex. La xarxa feta per ajudar els altres"
   },
   "activities": {
     "allNotifications": "Totes les actualitzacions",
@@ -320,7 +351,31 @@
     "endorse": "Endorse",
     "explainPublishAsGuest": "Signup as anonymous, please generate a new code, that you can use it for logging in to check your _helpbuttons_",
     "explainUseGuestCode": "Please store this code, it is your only way to keep track of your publications",
-    "editUsername": "Edit username"
+    "editUsername": "Edit username",
+    "askForNewCode": "No tinc la meva informació de convidat",
+    "commentsAmount": "Comentaris",
+    "emailOrUsername": "Correu electrònic o nom d'usuari",
+    "emailOrUsernamePlaceholder": "p. ex. meu@correu.com o maria136",
+    "emailRecovery": "Adreça de correu de recuperació",
+    "emailRecoveryExplain": "Si ja tens un compte, inicia sessió fent clic a l'enllaç que t'enviarem al teu correu electrònic.",
+    "emptyList": "Els teus propis _helpbuttons_ es veurien aquí.",
+    "endorsed": "Verificat",
+    "explainGuestDetails": "Últim pas: Completa el teu accés.",
+    "generateCode": "Genera un nou codi de convidat",
+    "guestCode": "Codi de convidat",
+    "guestCodePlaceHolder": "Escriu el codi aquí",
+    "iHaveCode": "Tinc un codi de convidat",
+    "inviteLogin": "Entra",
+    "inviteLoginError": "Codi incorrecte o camps buits",
+    "loginNotFound": "Usuari o contrasenya no trobats",
+    "loginSucessLink": "Sessió iniciada correctament, si us plau <a href='/ProfileEdit'>canvia la teva contrasenya</a>",
+    "optionalFields": "Camps opcionals",
+    "roleChange": "Un administrador ha canviat el teu rol",
+    "showCookiesBanner": "Si us plau, prem aquí per acceptar les cookies",
+    "showWassap": "Activa l'enllaç de Whatsapp",
+    "signupAsGuest": "Participa com a convidat",
+    "signupGuestDetails": "Continua amb els detalls de convidat",
+    "timesFollowed": "Seguit"
   },
   "configure": {
     "browsePins": "Mapa amb pins de ubicació",
@@ -343,7 +398,8 @@
     "map": "Mapa",
     "showList": "Show List",
     "hiddenButtons": "For privacy, there are {0} hidden _helpbuttons_.",
-    "viewMode": "Select default View Mode"
+    "viewMode": "Select default View Mode",
+    "hideList": "Amaga la llista"
   },
   "buttonFilters": {
     "filters": "Cerca i filtres",
@@ -378,7 +434,11 @@
     "focusedArea": "a la zona",
     "locationLimited": "Limitat a {0}, {1}",
     "pickLocationLimits": "Tria una localització",
-    "byCategory": "By category"
+    "byCategory": "By category",
+    "buttonTagsSuccess": "Etiquetes afegides correctament",
+    "byPlace": "Per lloc",
+    "byTopic": "Per tema",
+    "followTagsSuccess": "{0} s'ha afegit als teus interessos"
   },
   "button": {
     "title": "Vista de _helpbutton_",
@@ -445,7 +505,19 @@
     "publishComment": "Publish comment",
     "sendPrivateMessage": "Send private message to {0}",
     "proposeAddress": "Add a missing place in {0}",
-    "locationPlaceholder": "Write a place or address"
+    "locationPlaceholder": "Write a place or address",
+    "autoGenerated": ", generat automàticament a partir de la descripció.",
+    "copyAlert": "Copiat",
+    "expired": "_helpbutton_ caducat, no apareixerà als resultats de cerca.",
+    "expiredLabel": "Caducat",
+    "extraOptions": "Opcions d'edició addicionals",
+    "followers": "{0} usuaris subscrits",
+    "nofollowers": "ningú segueix encara",
+    "pickPosition": "Si us plau, selecciona una posició al mapa",
+    "seeHashtags": "Veure etiquetes",
+    "selectPlace": "Selecciona un lloc al mapa, escriu un nom i desa",
+    "showMoreTags": "més etiquetes",
+    "whereButtonLabel": "Escull el lloc"
   },
   "calendarOnce": {
     "label": "Una vegada",
@@ -472,7 +544,10 @@
     "invalidForm": "Error al validar el formulari",
     "inviteOnly": "Accés només amb invitació",
     "address": "Error en obtenir l'adreça",
-    "dates": "Dates no vàlides"
+    "dates": "Dates no vàlides",
+    "maxUpload": "La càrrega màxima és {0}",
+    "register": "Has d'estar registrat/da per fer servir aquesta funcionalitat",
+    "supportFiles": "Encara no admetem aquests fitxers, si us plau puja {0}"
   },
   "setup": {
     "finish": "Finalitza la configuració",
@@ -492,7 +567,12 @@
     "smtpHost": "",
     "smtpUser": "",
     "from": "",
-    "connect": ""
+    "connect": "",
+    "configureNetwork": "Personalitza l'aparença, els temes, els tipus de publicació i les alertes del teu lloc. Afegeix preus, dates i altres funcions modulars a les teves publicacions.",
+    "createAdmin": "Creem la teva xarxa. Primer pas: Crea el teu compte d'administrador.",
+    "needLogo": "Abans de seleccionar un lloc per a la teva xarxa, si us plau, puja un logotip",
+    "needPlace": "Si us plau, selecciona l'àrea de la teva xarxa",
+    "needsLogin": "Inicia sessió per continuar amb la configuració de la teva xarxa"
   },
   "post": {
     "placeholderWrite": "Escriu una nova actualització en el teu _helpbutton_",
@@ -512,7 +592,8 @@
     "sendPublic": "Respon",
     "sendPrivate": "Respon en privat",
     "send": "Enviar",
-    "posted": "Comment posted"
+    "posted": "Comment posted",
+    "makePublic": "Mostrar missatge en públic"
   },
   "picker": {
     "headerText": "Tria una localització"
@@ -531,7 +612,10 @@
     "onceExplain": "Selecciona el dia i l'hora per al teu esdeveniment",
     "recurringExplain": "Selecciona dies d'inici i final, dies de la setmana i l'hora per als teus esdeveniments",
     "afterStart": "Please select a time/date after {0}",
-    "beforeEnd": "Please select a time/date after {0}"
+    "beforeEnd": "Please select a time/date after {0}",
+    "changeToMultipleDates": "Prem aquí per seleccionar diversos dies",
+    "everyMonth": "Cada mes",
+    "everyWeek": "Cada setmana"
   },
   "faqs": {
     "title": "Preguntes freqüents",
@@ -560,7 +644,8 @@
     "cookieAccept": "Accept",
     "cookiesQuestion": "Cookies policy",
     "cookiesPolicy": "Cookie Policy",
-    "cookieReject": "Reject"
+    "cookieReject": "Reject",
+    "cookiesDescription": "Aquest lloc web utilitza cookies per proporcionar una experiència segura i personalitzada. A continuació es descriu cada cookie que fem servir: 1. ACCESS_TOKEN (access_token): Aquesta cookie emmagatzema de forma segura el teu token d'accés, permetent-te mantenir la sessió iniciada sense necessitat de tornar a autenticar-te. Tipus: Essencial Durada: Basada en la sessió 2. TOKEN_TYPE (token_type): S'utilitza per identificar el tipus de token d'accés que estàs fent servir, assegurant una autenticació i seguretat adequades. Tipus: Essencial Durada: Basada en la sessió 3. NETWORK_SELECTED (network_id): Emmagatzema informació sobre la xarxa seleccionada que estàs fent servir a la plataforma, ajudant a proporcionar una experiència personalitzada. Tipus: Funcionalitat Durada: Basada en la sessió 4. EXPLORE_SETTINGS (explore_settings): Desa les teves preferències i configuracions a la funció d'explorar, fent la navegació més consistent i personalitzada. Tipus: Funcionalitat Durada: Persistent 5. HAS_PERMISSION_NOTIFICATIONS (has_permission_notifications): Registra si has donat permís per a les notificacions, permetent mostrar o amagar les notificacions segons la teva preferència. Tipus: Preferència Durada: Persistent Pots gestionar la configuració de les cookies a través de les preferències del teu navegador. "
   },
   "invite": {
     "never": "Mai",
@@ -580,13 +665,20 @@
     "inviteOnlyExplain": "Si actives això, els usuaris només podran registrar-se i publicar amb un codi QR.",
     "inviteOnly": "Només permetre el registre amb un codi QR",
     "generateQr": "QR",
-    "registered": "QR utilitzat"
+    "registered": "QR utilitzat",
+    "scanCodeExplain": "Pots escriure el teu codi QR si no pots escanejar-lo",
+    "scanCodeLabel": "Escriu el teu codi",
+    "scanPlaceHolder": "Escriu l'enllaç complet de la invitació o el teu codi alfanumèric",
+    "setExpiration": "Estableix el període de caducitat"
   },
   "customFields": {
     "priceLabel": "Preu ({0})",
     "consult": "Preu a consultar",
     "free": "Gratis",
-    "priceExplain": "Specify a value. Use 0 if it's free or select Price to consult if it's not exactly defined."
+    "priceExplain": "Specify a value. Use 0 if it's free or select Price to consult if it's not exactly defined.",
+    "confirmDeleteExplain": "Estàs segur que vols eliminar aquest tipus de botó? Aquesta operació eliminarà tots els botons",
+    "confirmDeleteLabel": "Elimina el tipus de _helpbutton_",
+    "eventsOnDay": "Esdeveniments del mateix dia"
   },
   "email": {
     "loginTokenContent": "Benvingut a {0}",
@@ -597,7 +689,10 @@
     "activateLinkCaption": "Prem aquí per activar el teu compte",
     "activitySubject": "Novetat a Xarxa Exemple",
     "buttonLinkCaption": "Prem aquí per obrir-lo",
-    "dailyOutBox": "Tens {0} novetats de '{1}', {2}"
+    "dailyOutBox": "Tens {0} novetats de '{1}', {2}",
+    "deletedMailContent": "Un _helpbutton_ que segueixes ha estat eliminat",
+    "deletedMailSubject": "Un _helpbutton_ que segueixes ha estat eliminat",
+    "welcomeSubject": "Benvingut/da a {0}"
   },
   "dates": {
     "eachMonthFrom": "de cada mes des de",
@@ -633,13 +728,17 @@
     "created_at": "Creat",
     "title": "",
     "confirm": "Confirm",
-    "adminCommunication": "Administrator communications",
+    "adminCommunication": "Coordinator communications",
     "adminCommunicationExplain": "Messages that you share here will be send to all admins or all users of the network",
     "description": "Here you can review the users of your network, and the buttons!",
-    "adminCommunicationLabel": "Administrator communications",
+    "adminCommunicationLabel": "Coordinator communications",
     "edit": "Edit",
     "preview": "Preview",
-    "view": "Ver"
+    "view": "Ver",
+    "approved": "Aprovat",
+    "awaitingApprovalLabel": "Pendent d'aprovació",
+    "block": "Bloqueja l'usuari",
+    "buttonsApproved": "Tots els _helpbuttons_ publicats "
   },
   "role": {
     "blocked": "desactivat",
@@ -656,12 +755,15 @@
     "noButtons": "",
     "found": "{0} _helpbuttons_ found. From today until {1}",
     "explainBulletin": "Here you can get a list of _helpbuttons_ in a pdf format, with QR codes. So you can spread the word in your own community.",
-    "pdfDate": "since {0}"
+    "pdfDate": "since {0}",
+    "profileButton": "Crea un nou butlletí"
   },
   "invitation": {
     "card": "Anonimous login individual card",
     "name": "This card is unique and personal.",
-    "infoQr": "Contact:"
+    "infoQr": "Contact:",
+    "contact": "Escriu informació de contacte si vols que es retorni en cas de pèrdua. Fes-la servir amb responsabilitat.",
+    "infoCard": "Escaneja el codi per entrar."
   },
   "share": {
     "shareExplain": "Select the amount of results you want to show and copy the code to your site",
@@ -673,7 +775,17 @@
     "shareTypeLabel": "Sharing types",
     "explainInvitations": "Generate individual invitation cards for your community",
     "invitePeople": "Invite people",
-    "advancedInviteOptions": "Printable PDF invitations"
+    "advancedInviteOptions": "Printable PDF invitations",
+    "codeCopied": "Copiat al porta-retalls",
+    "copyCode": "Copia el codi",
+    "copyLink": "Copia l'enllaç",
+    "invitePeopleExplain": "Copia i comparteix aquest enllaç per afegir altres persones a la xarxa",
+    "linkCopied": "{0} copiat al porta-retalls",
+    "optionRss": "Subscriu-te al canal RSS",
+    "printInvites": "Invitacions en PDF imprimibles",
+    "shareContent": "Comparteix el contingut de l'aplicació",
+    "shareField": "Escull la teva opció de compartir",
+    "showSharePopup": "Comparteix aquesta aplicació"
   },
   "places": {
     "addNew": "",
@@ -684,9 +796,54 @@
     "embbed": ""
   },
   "roles": {
-    "administrator": "administrator"
+    "administrator": "coordinator",
+    "blocked": "bloquejat",
+    "guest": "convidat",
+    "registered": "registrat"
   },
   "customTemplates": {
-    "eventExpiredMailSubject": "{0} ha expirat"
+    "eventExpiredMailSubject": "{0} ha expirat",
+    "day": "dia",
+    "eventExpired": "El _helpbutton_ ha caducat",
+    "eventExplain": "Mostra una data perquè el tipus de _helpbutton_ es comporti com un esdeveniment i els usuaris puguin cercar per calendari",
+    "eventText": "Afegeix data",
+    "hour": "Hora",
+    "month": "Mes",
+    "priceExplain": "Mostra un preu perquè els usuaris puguin comprar/vendre als seus _helpbuttons_",
+    "priceText": "Afegeix preu",
+    "renewed": "Renovat",
+    "schedulerExpired": "El _helpbutton_ ha caducat",
+    "schedulerExpiredMailSubject": "El teu _helpbutton_ ha caducat",
+    "schedulerExplain": "Cada X temps hauràs de reactivar el teu botó",
+    "schedulerExplainAdminForm": "Si afegeixtes això a un tipus de _helpbutton_, tots els _helpbuttons_ d'aquest tipus caducaran automàticament",
+    "schedulerExplainForm": "Aquest _helpbutton_ s'ha de renovar cada {0}. Desa'l per renovar.",
+    "schedulerLabelAdminForm": "Escull quant temps ha de passar fins que els _helpbuttons_ caduquin",
+    "schedulerLabelForm": "Caduca el {0}.",
+    "schedulerRenewd": "_helpbutton_ renovat",
+    "schedulerText": "Afegeix caducitat",
+    "willExpire": "Caduca "
+  },
+  "footer": {
+    "adminSupport": "Suport d'administració",
+    "assistance": "Assistència",
+    "create": "Crea el teu _helpbutton_",
+    "developers": "Desenvolupadors",
+    "ethicCode": "Principis ètics",
+    "explore": "Explora _helpbuttons_",
+    "investDonations": "Dona al projecte",
+    "otherNetworks": "Veure altres xarxes",
+    "privacyPolicy": "Política de privacitat",
+    "securitySupport": "Alerta d'un problema de seguretat",
+    "sendAProblem": "Envia un problema tècnic",
+    "whatIsNetwork": "Saber-ne més",
+    "whatsHelpbuttons": "Què és Helpbuttons"
+  },
+  "groupChat": {
+    "admin": "Xat d'administradors",
+    "admin_community": "Admin i comunitat",
+    "community": "Xat de la comunitat",
+    "create": "Crea un nou xat de grup per a {0}",
+    "creating": "Després d'enviar el primer missatge a aquest grup, altres usuaris podran participar en aquest xat de grup",
+    "you": "Tu"
   }
 }
