@@ -193,7 +193,7 @@ function ActivityGroupMessageForm({ sendNewMessage, groupType }) {
   const messageContent = useRef(null)
   const inputKeyDown = (e) => {
     const val = e.target.value;
-    if ((e.key === 'Enter' || e.key === ',') && val) {
+    if ((e.key === 'Enter' || e.key === ',') && val && !e.shiftKey) {
       e.preventDefault();
       sendMessage()
     }

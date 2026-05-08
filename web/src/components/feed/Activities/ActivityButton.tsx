@@ -7,7 +7,7 @@ import { ShowMobileOnly } from "elements/SizeOnly"
 import t from "i18n"
 import router from "next/router"
 import { useEffect, useRef, useState } from "react"
-import { IoArrowBack, IoSend } from "react-icons/io5"
+import { IoAdd, IoArrowBack, IoSend } from "react-icons/io5"
 import { readableTimeLeftToDate } from "shared/date.utils"
 import { ActivitiesPageSize } from "shared/dtos/activity.dto"
 import { useScroll } from "shared/helpers/scroll.helper"
@@ -136,7 +136,7 @@ function MessageForm({ sendNewMessage, buttonId, consumerId }) {
   const messageContent = useRef(null)
   const inputKeyDown = (e) => {
     const val = e.target.value;
-    if ((e.key === 'Enter' || e.key === ',') && val) {
+    if ((e.key === 'Enter' || e.key === ',') && val && !e.shiftKey) {
       e.preventDefault();
       sendMessage()
     }
@@ -148,20 +148,22 @@ function MessageForm({ sendNewMessage, buttonId, consumerId }) {
   }
   return (
     <form className="chat__new-message">
-
-      {/* <Btn
-        btnType={BtnType.circle}
-        iconLink={<IoAdd />}
-        iconLeft={IconType.circle}
-        contentAlignment={ContentAlignment.center}
-        onClick={() => {
-        }}
-      /> */}
+      <div className="chat__new-message__attach">
+        <Btn
+          btnType={BtnType.circle}
+          iconLink={<IoAdd /> as any}
+          iconLeft={IconType.circle}
+          contentAlignment={ContentAlignment.center}
+          onClick={() => {
+          }}
+        />
+      </div>
       <div className="chat__new-message__message">
         <FieldText
           name="message"
           ref={messageContent}
           label={""}
+          multiLine={true}
           classNameInput={"form__input"}
           onInputKeyDown={inputKeyDown}
           multiInput={true}
