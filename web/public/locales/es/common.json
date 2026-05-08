@@ -253,7 +253,18 @@
     "newmention": "Fuiste mencionado/a en una conversación. {0}: '{1}'",
     "newmentionOwn": "Publicaste un comentario. '{0}'",
     "title": "Mensajes y avisos",
-    "all": "Todo"
+    "all": "Todo",
+    "newButtonInterest": "Hay nuevo _helpbutton_ publicado en un tema que sigues en '{0}'",
+    "newMessageOutbox": "{0} te envió un mensaje: '{1}'",
+    "newMessageSubject": "{0} te envió un nuevo mensaje",
+    "newMessageContent": "{0} escribió '{1}' en _helpbutton_",
+    "newPostCommentSubject": "{0} comentó en _helpbutton_",
+    "newPostCommentContent": "{0} escribió un nuevo comentario '{1}'. en _helpbutton_ '{2}'",
+    "newMentionSubject": "{0} te mencionó en _helpbutton_",
+    "newMentionContent": "{1} en _helpbutton_ ",
+    "replyToMessage": "Responder al mensaje",
+    "view": "Ver",
+    "newpostfollower": "Se publicó una nueva entrada en _helpbutton_ que sigues"
   },
   "activitiesWithSubject": {
     "newbutton": "{0} creó _helpbutton_ en {1}",
@@ -623,7 +634,7 @@
     "securityQuestion": "Políticas de Seguridad",
     "contactQuestion": "Contacto",
     "helpbuttonsHighlight": "Helpbuttons",
-    "helpbuttonsDescription": "Botones de ayuda es el software de código abierto que impulsa esta aplicación. Con Helpbuttons, puedes crear tus propias redes para compartir comida, vivienda, transporte o cualquier otra cosa que tengas en mente, y luego federarte con otras redes para compartir usuarios y recursos. Helpbuttons se especializa en conectar a personas que aún no se conocen, para diversos propósitos, en el mundo real.",
+    "helpbuttonsDescription": "Helpbuttons es el software de código abierto que impulsa esta aplicación. Con Helpbuttons, puedes crear tus propias redes para compartir comida, vivienda, transporte o cualquier otra cosa que tengas en mente, y luego federarte con otras redes para compartir usuarios y recursos. Helpbuttons se especializa en conectar a personas que aún no se conocen, para diversos propósitos, en el mundo real.",
     "forDescription": "Nuestro objetivo es optimizar el diseño de herramientas colaborativas para aprovechar al máximo las ventajas de internet aplicadas a la vida real. Fomentando la autonomía digital, la cooperación y la cohesión social. <hr> Creamos un sistema de código abierto modular, que valga para muchos casos, comparta recursos y ponga en manos del público una herramienta de cooperación digital sin necesidad de conocer programación.",
     "helpbuttonDescription": "Un Helpbutton ó Botón de ayuda se refiere a una publicación. Cada publicación realizada por un usuario en Helpbuttons se llama Helpbutton. Los Helpbuttons pueden representar ofertas, necesidades, intercambios, propuestas de transporte, negocios, etc. También se pueden renombrar para adaptarse a las necesidades específicas de tu aplicación.",
     "communityDescription": "Helpbuttons o Botonesdeayuda está diseñado por programadores independientes de España y Portugal. Principalmente con aportaciones desinteresadas en su tiempo libre. Actualmente el proyecto se encuentra en fase de búsqueda de financiación para poder sostener el mantenimiento de su uso para el público general. Estos programadores, junto con la comunidad de usuarios que empieza a usar la herramienta, forman la comunidad que el proyecto necesita para sostenerse frente a otros modelos de aplicaciones tradicionales. Más adelante, al federarnos con otras aplicaciones de Helpbuttons/Botonesdeayuda, podremos compartir usuarios y recursos. Este método de colaboración nos permite unir a más personas y mejorar en última instancia la herramienta que proporcionamos. El representante legal que actúa como interlocutor con la administración es la asociación sin ánimo de lucro 'Watch Out, Freedom!' G67992032, avda Mexico 10, Jerez, Cádiz (Spain). tl:+34680936011",
