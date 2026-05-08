@@ -157,7 +157,7 @@ export function FeedHeader ({
       <div className="feed-line">
           
       {t('feed.messages')}
-      {sessionUser && isButtonOwner && (
+      {sessionUser && isButtonOwner && !button.expired && (
           <>
             <ComposePost
               referer={{ button: button.id }}
