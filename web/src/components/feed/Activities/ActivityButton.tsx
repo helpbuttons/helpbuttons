@@ -148,7 +148,7 @@ function MessageForm({ sendNewMessage, buttonId, consumerId }) {
   }
   return (
     <form className="chat__new-message">
-      <div className="chat__new-message__attach">
+      {/* <div className="chat__new-message__attach">
         <Btn
           btnType={BtnType.circle}
           iconLink={<IoAdd /> as any}
@@ -157,7 +157,7 @@ function MessageForm({ sendNewMessage, buttonId, consumerId }) {
           onClick={() => {
           }}
         />
-      </div>
+      </div> */}
       <div className="chat__new-message__message">
         <FieldText
           name="message"
