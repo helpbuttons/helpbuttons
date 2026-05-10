@@ -542,6 +542,9 @@ function FederationOptions() {
           }
         />
 
+       
+      </div>
+
       <div className="form__field">
         <div className="form__label">{t('share.federateConnectedNetworks')}</div>
         <div className="form__explain">{t('share.federateConnectedNetworksExplain')}</div>
