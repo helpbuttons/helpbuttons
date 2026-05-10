@@ -6,8 +6,8 @@ import { CustomFields } from "shared/types/customFields.type";
 
 export const eventTemplate : CustomTemplate = {
     icon: <IoCalendar/>,
-    explain: t('customTemplates.eventExplain'),
-    text: t('customTemplates.eventText'),
+    explain: 'customTemplates.eventExplain',
+    text: 'customTemplates.eventText',
     name: CustomFields.Event,
     templateField: FieldEvent,
     configurationForm: null,

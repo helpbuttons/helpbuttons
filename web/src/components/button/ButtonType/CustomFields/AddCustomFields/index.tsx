@@ -1,6 +1,7 @@
 import { FieldCheckCard } from 'elements/Fields/FieldCheckCard';
 import _ from 'lodash';
 import { customTemplates } from 'components/templates';
+import t from 'i18n';
 
 
 
@@ -14,8 +15,8 @@ export function AddCustomFields({ selectedCustomTemplates, setSelectedCustomTemp
               <FieldCheckCard
                 name={`${template.name}Field`}
                 image={template.icon}
-                explain={template.explain}
-                text={template.text}
+                explain={t(template.explain)}
+                text={t(template.text)}
                 onChanged={(value) => {
                   if (value) {
                     setSelectedCustomTemplates(

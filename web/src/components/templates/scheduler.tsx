@@ -10,8 +10,8 @@ import { useButtonTypes } from "shared/buttonTypes";
 
 export const schedulerTemplate: CustomTemplate = {
     icon: <IoSync />,
-    explain: t('customTemplates.schedulerExplain'),
-    text: t('customTemplates.schedulerText'),
+    explain: 'customTemplates.schedulerExplain',
+    text: 'customTemplates.schedulerText',
     name: CustomFields.Scheduler,
     configurationForm: ConfigurationFormScheduler,
     templateField: FieldScheduler,
