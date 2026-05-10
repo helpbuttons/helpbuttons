@@ -386,12 +386,12 @@ function ActivityListHomeInfo ({activities}) {
   const onActivityClicked = (activity) => {
     switch(activity.eventName){
       case ActivityEventName.NewButton:
-        store.emit(new FindAndSetMainPopupCurrentButton(activity.buttonId))
+        store.emit(new FindAndSetMainPopupCurrentButton(activity?.buttonId))
         // router.push(`/Show/${activity.buttonId}`)
         break;
       case ActivityEventName.NewPost:
-          store.emit(new SetFocusOnPost(activity.postId))
-          store.emit(new FindAndSetMainPopupCurrentButton(activity.buttonId))
+          store.emit(new SetFocusOnPost(activity?.postId))
+          store.emit(new FindAndSetMainPopupCurrentButton(activity?.buttonId))
           break;
     }
     
@@ -455,8 +455,8 @@ function HomeInfoInstallCard({ selectedNetwork }) {
       </div>
       <hr></hr>
       <HomeInfoActionButton>
-        <InstallButton />
-        <OpenAppButton />
+        {/* <InstallButton /> */}
+        {/* <OpenAppButton /> */}
         <DesktopNotificationsButton />
       </HomeInfoActionButton>
     </div>
