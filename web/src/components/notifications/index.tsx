@@ -1,14 +1,11 @@
 import Btn, { BtnType, ContentAlignment, IconType } from 'elements/Btn';
 import t from 'i18n';
 import { GlobalState, store } from 'state';
-import { useEffect, useRef } from 'react';
-import { IoNotificationsOutline } from 'react-icons/io5';
-import { alertService } from 'services/Alert';
-import { ActivityMessageDto } from 'shared/dtos/activity.dto';
+import { useEffect } from 'react';
+import { IoNotificationsOffOutline, IoNotificationsOutline } from 'react-icons/io5';
 import {
   PermissionGranted,
   PermissionRevoke,
-  useActivities,
 } from 'state/Activity';
 import { useGlobalStore } from 'state';
 import dconsole from 'shared/debugger';
@@ -26,13 +23,15 @@ export function DesktopNotificationsButton() {
 
   useEffect(() => {
     if (isSupported() && Notification.permission === 'granted') {
-      // Check if the browser supports notifications
       store.emit(new PermissionGranted());
     }
   }, []);
-  const requestPermission = () => {
 
-    if (isSupported()) {
+  const handleClick = () => {
+    if (!isSupported()) return;
+    if (hasNotificationPermissions) {
+      store.emit(new PermissionRevoke());
+    } else {
       Notification.requestPermission().then(function (getperm) {
         if (getperm == 'granted') {
           dconsole.log(getperm);
@@ -43,18 +42,17 @@ export function DesktopNotificationsButton() {
       });
     }
   };
+
+  if (!isSupported()) return null;
+
   return (
-    <>
-      {!hasNotificationPermissions && (
-        <Btn
-          btnType={BtnType.filterCorp}
-          iconLink={<IoNotificationsOutline />}
-          caption={t('homeinfo.notificationsPermission')}
-          iconLeft={IconType.circle}
-          contentAlignment={ContentAlignment.center}
-          onClick={requestPermission}
-        />
-      )}
-    </>
+    <Btn
+      btnType={BtnType.filterCorp}
+      iconLink={hasNotificationPermissions ? <IoNotificationsOffOutline /> : <IoNotificationsOutline />}
+      caption={hasNotificationPermissions ? t('homeinfo.revokeNotifications', [], true) : t('homeinfo.notificationsPermission', [], true)}
+      iconLeft={IconType.svg}
+      contentAlignment={ContentAlignment.center}
+      onClick={handleClick}
+    />
   );
 }
