@@ -8,6 +8,9 @@ import Btn, {
   BtnType,
   IconType,
 } from 'elements/Btn';
+import { DropdownSearch } from 'elements/Dropdown/DropdownSearch';
+import { FieldCheckbox as FieldCheckboxRaw } from 'elements/Fields/FieldCheckbox';
+const FieldCheckbox = FieldCheckboxRaw as any;
 import { TagsNav } from 'elements/Fields/FieldTags';
 import t from 'i18n';
 import Link from 'next/link';
@@ -20,6 +23,7 @@ import {
   IoBalloonOutline,
   IoBanOutline,
   IoCheckmarkCircleOutline,
+  IoGitNetwork,
   IoHammerOutline,
   IoLogoSteam,
   IoPersonOutline,
@@ -42,7 +46,8 @@ enum ModerationMode {
   APPROVAL,
   APPROVED,
   COMMUNICATION,
-  QRINVITE
+  QRINVITE,
+  FEDERATION,
 }
 export default function Moderation() {
 
@@ -99,6 +104,14 @@ export default function Moderation() {
                 caption={t('moderation.adminCommunication')}
               />
             </Link>
+            <hr></hr>
+            <Link href="#" onClick={() => setMode(ModerationMode.FEDERATION)}>
+              <Btn
+                iconLeft={IconType.svg}
+                iconLink={<IoGitNetwork />}
+                caption={t('moderation.federation')}
+              />
+            </Link>
           </div>}
 
 
@@ -106,6 +119,7 @@ export default function Moderation() {
           {mode == ModerationMode.APPROVAL && <ModerationHelpButtonsList />}
           {mode == ModerationMode.APPROVED && <AprovedButtonsList />}
           {mode == ModerationMode.COMMUNICATION && <NewAdminCommunication />}
+          {mode == ModerationMode.FEDERATION && <FederationOptions />}
 
         </div>
       </Popup>
@@ -486,4 +500,83 @@ function NewAdminCommunication() {
         <MessageNew onCreate={undefined} isComment={true} />
       </div>
     </div></>
+}
+
+function FederationOptions() {
+  const [dsInput, setDsInput] = useState('');
+  const [allowFederatedLogin, setAllowFederatedLogin] = useState(false);
+  const [requireApproval, setRequireApproval] = useState(false);
+  const [federatedNetworks, setFederatedNetworks] = useState([
+    { id: 1, name: 'mastodon.social' },
+    { id: 2, name: 'fosstodon.org' },
+  ]);
+  const [pageNetworks] = useState(federatedNetworks);
+  const [searchString, setSearchString] = useState('');
+
+  const deleteNetwork = (id) => {
+    setFederatedNetworks((prev) => prev.filter((n) => n.id !== id));
+  };
+
+  useFilterItems(setFederatedNetworks, pageNetworks, searchString, (_s, item) => stringContains(item.name, searchString));
+
+  const onQueryChange = (query) => {
+    setSearchString(() => query.target.value);
+  };
+
+  return (
+    <div className="form__inputs-wrapper form__subsection">
+      <div className="form__field">
+        <div className="form__label">{t('share.federate')}</div>
+        <div className="form__explain">{t('share.federateSearchNetworksExplain')}</div>
+
+        <DropdownSearch
+          input={dsInput}
+          setInput={setDsInput}
+          handleBlur={() => {}}
+          handleFocus={() => {}}
+          handleSelected={(r) => { setDsInput(r.label); }}
+          results={
+            dsInput.length > 0
+              ? [{ label: 'Result one' }, { label: 'Result two' }, { label: 'Result three' }]
+              : []
+          }
+        />
+
+      <div className="form__field">
+        <div className="form__label">{t('share.federateConnectedNetworks')}</div>
+        <div className="form__explain">{t('share.federateConnectedNetworksExplain')}</div>
+        <FieldText
+          name="query"
+          label={t('common.search')}
+          onChange={onQueryChange}
+        />
+        {federatedNetworks?.length > 0 ? (
+          <Table>
+            <TableHeader>
+              <TableHeaderCell>{t('share.federateNetworkName')}</TableHeaderCell>
+              <TableHeaderCell>{t('moderation.actions')}</TableHeaderCell>
+            </TableHeader>
+            <TableBody>
+              {federatedNetworks.map((network, idx) => (
+                <TableLine key={idx}>
+                  <TableLineCell>{network.name}</TableLineCell>
+                  <TableLineCell>
+                    <Btn
+                      btnType={BtnType.small}
+                      borderColor={'red'}
+                      caption={t('common.delete')}
+                      iconLink={null}
+                      onClick={() => deleteNetwork(network.id)}
+                    />
+                  </TableLineCell>
+                </TableLine>
+              ))}
+            </TableBody>
+          </Table>
+        ) : (
+          <div className="form__explain">{t('share.federateNoConnectedNetworks')}</div>
+        )}
+      </div>
+    </div>
+  );
 }
