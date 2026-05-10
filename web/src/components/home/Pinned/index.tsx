@@ -19,7 +19,7 @@ export default function HomeInfoPinnedButtons({ }) {
     return (<>
         {/*  PINNED BUTTONS */}
         {(pinnedButtons && pinnedButtons.length > 0) &&
-            <div className="homeinfo-card">
+            <div className="homeinfo-card homeinfo-card--full-width">
                 <div className="homeinfo-card__header">
                     
                     <h3 className="homeinfo-card__header-title">

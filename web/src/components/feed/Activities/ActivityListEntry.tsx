@@ -11,7 +11,7 @@ export function ActivityListEntryCard({ activity, selected = false, onClick }) {
     }
     return (
         <div className="feed-element">
-            <div onClick={onClick} className={`card-notification ${selected ? 'card-notification--selected' : ''}`}>
+            <div onClick={onClick} className={`card-notification card-notification--activity ${selected ? 'card-notification--selected' : ''}`}>
                 <ActivityListEntryCardInner image={activity?.image} createdAt={activity.createdAt} type={activity.type} read={activity.read} premessage={activity.premessage} message={activity.message} footer={activity.footer} title={activity.title} />
             </div>
         </div>

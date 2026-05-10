@@ -46,6 +46,13 @@ $card-notification-delete-size: 100px;
   
 }
 
+.card-notification--activity:hover {
+ 
+  // box-shadow: $box-shadow-divs;
+  background-color: $color-ligth-gray;
+  cursor: pointer;
+  
+}
 
 .card-notification--offer:after,
 .card-notification--need:after,

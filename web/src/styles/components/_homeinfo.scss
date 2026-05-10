@@ -89,6 +89,7 @@ $info-content-head-margin-mobile: 70px;
   flex-wrap: wrap;
   max-width: $grid-column-max-width;
   margin: auto;
+  gap: $margin-small;
 
 }
 
@@ -496,8 +497,7 @@ hr {
 
   .homeinfo-card__controls--openable {
 
-    position: absolute;
-    right: -60px;
+    position: relative;
     
   }
 

@@ -114,10 +114,9 @@ export default function HomeInfo({ metadata }) {
               <HomeInfoPinnedButtons />
               
               <HomeInfoStatsCard selectedNetwork={selectedNetwork} config={config} />
+              <HomeInfoKeyLocations selectedNetwork={selectedNetwork} />
 
               <HomeInfoInfoCard selectedNetwork={selectedNetwork} />
-
-              <HomeInfoKeyLocations selectedNetwork={selectedNetwork} />
 
               <HomeInfoRecentActivity selectedNetwork={selectedNetwork} />
 
@@ -201,7 +200,7 @@ function HomeInfoInfoCard({ selectedNetwork }) {
     if (selectedNetwork)
     {
       setDescription(() => {
-        return trimCharactersRemoveLastIncompleteWord(selectedNetwork.description, 100)
+        return trimCharactersRemoveLastIncompleteWord(selectedNetwork.description, 200)+ "..."
       })
     }
   },[])
@@ -213,20 +212,10 @@ function HomeInfoInfoCard({ selectedNetwork }) {
                     <IoBookOutline/>
                     {t('homeinfo.knowMore',[selectedNetwork.name])}
                 </h3>
-                <ShowDesktopOnly>
-                <div className="homeinfo-card__controls homeinfo-card__controls--openable">
-                  <Btn
-                    btnType={BtnType.circle}
-                    iconLink={showInfo ? <IoArrowBackSharp/> : <IoInformation/>}
-                    iconLeft={IconType.circle}
-                    contentAlignment={ContentAlignment.center}
-                  />
-                </div>
-              </ShowDesktopOnly>
 
         </div>
         <div className="homeinfo__description homeinfo__description--openable">
-          <TextFormatted text={selectedNetwork.description} />
+          <TextFormatted text={description} />
           <HomeFAQButton/>
         </div>
     </div></>
@@ -352,7 +341,7 @@ function HomeInfoRecentActivity({ selectedNetwork }) {
   }, [selectedNetwork]);
   return (<>
     {/*  RECENT ACTIVITY IN THE APP */}
-      <div className={(showInfo ? "homeinfo-card--opened-right ":" ") + " homeinfo-card homeinfo-card--wrap"}>
+      <div className= "homeinfo-card homeinfo-card--wrap">
       <div className="homeinfo-card__header " onClick={toggleShowInfo}>
           {/* <ShowDesktopOnly>
             <div className="homeinfo-card__controls--openable-right">
