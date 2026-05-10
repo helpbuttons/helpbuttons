@@ -525,28 +525,22 @@ function FederationOptions() {
 
   return (
     <div className="form__inputs-wrapper form__subsection">
+      <div className="form__section-title">{t('share.federate')}</div>
+
       <div className="form__field">
-        <div className="form__label">{t('share.federate')}</div>
         <div className="form__explain">{t('share.federateSearchNetworksExplain')}</div>
 
-        <DropdownSearch
-          input={dsInput}
-          setInput={setDsInput}
-          handleBlur={() => {}}
-          handleFocus={() => {}}
-          handleSelected={(r) => { setDsInput(r.label); }}
-          results={
-            dsInput.length > 0
-              ? [{ label: 'Result one' }, { label: 'Result two' }, { label: 'Result three' }]
-              : []
-          }
+       <FieldText
+          name="query"
+          label={null}
+          onChange={onQueryChange}
         />
 
        
       </div>
+        <div className="form__section-title">{t('share.federateConnectedNetworks')}</div>
 
       <div className="form__field">
-        <div className="form__label">{t('share.federateConnectedNetworks')}</div>
         <div className="form__explain">{t('share.federateConnectedNetworksExplain')}</div>
         <FieldText
           name="query"
