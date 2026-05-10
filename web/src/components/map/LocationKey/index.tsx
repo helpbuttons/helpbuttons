@@ -39,16 +39,20 @@ export function FieldKeySpots() {
 export function LocationKeyItem({ place, deleteAction }) {
 
     return <div className="form-list__table-body-row">
-        <LocationCoordinates latitude={place.latitude} longitude={place.longitude} address={place.address} label={'no'} />
-        <Btn
-            btnType={BtnType.iconActions}
-            iconLink={<IoTrashBinOutline />}
-            iconLeft={IconType.circle}
-            contentAlignment={ContentAlignment.center}
-            onClick={() => {
-                deleteAction(place.id)
-            }}
-        />
+        <div className="form-list__table-body-cell">
+            <LocationCoordinates latitude={place.latitude} longitude={place.longitude} address={place.address} label={'no'} />
+        </div>
+        <div className="form-list__table-body-cell">
+            <Btn
+                btnType={BtnType.iconActions}
+                iconLink={<IoTrashBinOutline /> as any}
+                iconLeft={IconType.circle}
+                contentAlignment={ContentAlignment.center}
+                onClick={() => {
+                    deleteAction(place.id)
+                }}
+            />
+       </div>
     </div>
 }
 

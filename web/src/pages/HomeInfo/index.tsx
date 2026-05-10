@@ -175,7 +175,7 @@ function NavigatorCoordsButton() {
 function HomeInfoNetworkLogo({ selectedNetwork }) {
   return (
 
-        <div className="homeinfo__network-title">
+        <div className="homeinfo__network-title homeinfo-card--full-width">
           <div className="avatar-medium--home">
             <NetworkLogo network={selectedNetwork} />
           </div>
@@ -207,12 +207,10 @@ function HomeInfoInfoCard({ selectedNetwork }) {
   },[])
   return (<>
   {/*  INFO CARD */}
-    <div className={(showInfo ? "homeinfo-card--opened ":" ") + " homeinfo-card homeinfo-card--network-description"}>
+    <div className={(showInfo ? "homeinfo-card--opened ":" ") + " homeinfo-card homeinfo-card--wrap"}>
         <div className="homeinfo-card__header homeinfo-card__header--openable" onClick={toggleShowInfo}>
                 <h3 className="homeinfo-card__header-title" >
-                  <ShowMobileOnly>
                     <IoBookOutline/>
-                  </ShowMobileOnly>
                     {t('homeinfo.knowMore',[selectedNetwork.name])}
                 </h3>
                 <ShowDesktopOnly>
@@ -253,7 +251,7 @@ function HomeFAQButton() {
 function HomeInfoStatsCard({ selectedNetwork, config }) {
   return (<>
     {/* STATS CARD */}
-    <div className="homeinfo-card">
+    <div className="homeinfo-card homeinfo-card--wrap">
       <div className="homeinfo-card__header">
         <h3 className="homeinfo-card__header-title">
           <IoEaselSharp/>
@@ -278,7 +276,7 @@ function HomeInfoStatsCard({ selectedNetwork, config }) {
 function HomeInfoTopHashTags({ selectedNetwork }) {
   return (<>
     {/* TOP 10 HASHTAGS CARD OF NETWORK */}
-    <div className="homeinfo-card">
+    <div className="homeinfo-card homeinfo-card--wrap">
       <div className="homeinfo-card__header">
         <h3 className="homeinfo-card__header-title">
           <IoTrophySharp/>
@@ -307,7 +305,7 @@ function HomeInfoPinnedHashTags({ selectedNetwork }) {
 
     {selectedNetwork?.tags &&
       selectedNetwork?.tags.length > 0 && (
-        <div className="homeinfo-card">
+        <div className="homeinfo-card homeinfo-card--wrap">
           <div className="homeinfo-card__header homeinfo-card__header--openable" onClick={toggleShowInfo}>
               <h3 className="homeinfo-card__header-title">
                 <IoPulseOutline/>
@@ -354,9 +352,9 @@ function HomeInfoRecentActivity({ selectedNetwork }) {
   }, [selectedNetwork]);
   return (<>
     {/*  RECENT ACTIVITY IN THE APP */}
-      <div className={(showInfo ? "homeinfo-card--opened-right ":" ") + " homeinfo-card homeinfo-card--activity"}>
-      <div className="homeinfo-card__header homeinfo-card__header--openable" onClick={toggleShowInfo}>
-          <ShowDesktopOnly>
+      <div className={(showInfo ? "homeinfo-card--opened-right ":" ") + " homeinfo-card homeinfo-card--wrap"}>
+      <div className="homeinfo-card__header " onClick={toggleShowInfo}>
+          {/* <ShowDesktopOnly>
             <div className="homeinfo-card__controls--openable-right">
                   <Btn
                     btnType={BtnType.circle}
@@ -366,12 +364,12 @@ function HomeInfoRecentActivity({ selectedNetwork }) {
                   />
                   
             </div>
-          </ShowDesktopOnly>
+          </ShowDesktopOnly> */}
 
           <h3 className="homeinfo-card__header-title" >
-              <ShowMobileOnly>
+              {/* <ShowMobileOnly> */}
                 <IoStatsChart/> 
-              </ShowMobileOnly>
+              {/* </ShowMobileOnly> */}
               {t('homeinfo.activity')}
           </h3>
           {/* <ShowMobileOnly>
@@ -415,7 +413,7 @@ function ActivityListHomeInfo ({activities}) {
 function HomeInfoAdministeredBy({ scrollToContact }) {
 
   return (<>
-    <div id="Admin" className="homeinfo-card" ref={scrollToContact}>
+    <div id="Admin" className="homeinfo-card homeinfo-card--wrap" ref={scrollToContact}>
       <div className="homeinfo-card__header">
         <h3 className="homeinfo-card__header-title">
           <IoHelpOutline/>
@@ -436,7 +434,7 @@ function HomeInfoAdministeredBy({ scrollToContact }) {
 function HomeSloganCard({ selectedNetwork, config }) {
   return (<>
     {/* SLOGAN CARD */}
-    <div className="homeinfo-card homeinfo__card--slogan-card">
+    <div className="homeinfo-card homeinfo__card--slogan-card homeinfo-card--full-width">
       <div className="homeinfo-card__header homeinfo-card__header--slogan-card">
         <h3 className="homeinfo-card__header-title--slogan">
           {selectedNetwork.slogan}
@@ -453,7 +451,7 @@ function HomeSloganCard({ selectedNetwork, config }) {
 
 function HomeInfoInstallCard({ selectedNetwork }) {
   return (
-    <div className="homeinfo-card">
+    <div className="homeinfo-card homeinfo-card--wrap">
       <div className="homeinfo-card__header">
         <h3 className="homeinfo-card__header-title">
           <IoDownloadOutline/>
@@ -546,7 +544,7 @@ function HomeInfoKeyLocations({selectedNetwork}) {
   }
   return  (<>
   {keyLocations.length > 0 && 
-    <div className="homeinfo-card">
+    <div className="homeinfo-card homeinfo-card--wrap">
       <div className="homeinfo-card__header">
         <h3 className="homeinfo-card__header-title">
           <IoLocateOutline/>
