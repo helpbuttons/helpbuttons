@@ -353,11 +353,12 @@ export class ActivityService {
                     case ActivityEventName.RoleUpdate: {
                       //@ts-ignore
                       const { role } = activity.data
+                      const roleName = translate(locale, `roles.${role}`);
 
                       this.mailService.sendActivity({
                         to: activity.to.email,
-                        content: translate(locale, 'activities.roleupdate', [role]),
-                        subject: translate(locale, 'activities.roleupdate', [role]),
+                        content: translate(locale, 'activities.roleupdate', [roleName]),
+                        subject: translate(locale, 'activities.roleupdate', [roleName]),
                         ...extra,
                         type: null
                       })
@@ -741,6 +742,7 @@ export class ActivityService {
         case ActivityEventName.RoleUpdate:
           {
             const { role } = activity.data
+            const roleName = translate(locale, `roles.${role}`);
             return {
               ...activityOut,
               title: "",
@@ -749,7 +751,7 @@ export class ActivityService {
               buttonType: "",
               type: translate(locale, 'activities.notice'),
               footer: "",
-              message: translate(locale, 'activities.roleupdate', [role]),
+              message: translate(locale, 'activities.roleupdate', [roleName]),
               link: null
             }
           }
