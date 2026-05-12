@@ -440,25 +440,21 @@ function HomeSloganCard({ selectedNetwork, config }) {
 
 function HomeInfoInstallCard({ selectedNetwork }) {
   return (
+    // <div className="homeinfo-card homeinfo-card--wrap">
     <div className="homeinfo-card homeinfo-card--wrap">
       <div className="homeinfo-card__header">
         <h3 className="homeinfo-card__header-title">
-          <IoDownloadOutline/>
+          <IoDownloadOutline />
           {t('homeinfo.install', [
             selectedNetwork?.name,
           ])}
         </h3>
 
         <div className="homeinfo-card__controls">
-
+          <InstallButton />
+          <DesktopNotificationsButton />
         </div>
       </div>
-      <hr></hr>
-      <HomeInfoActionButton>
-        {/* <InstallButton />
-        <OpenAppButton /> */}
-        <DesktopNotificationsButton />
-      </HomeInfoActionButton>
     </div>
   )
 }

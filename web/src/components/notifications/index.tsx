@@ -1,14 +1,11 @@
 import Btn, { BtnType, ContentAlignment, IconType } from 'elements/Btn';
 import t from 'i18n';
 import { GlobalState, store } from 'state';
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { IoNotificationsOutline } from 'react-icons/io5';
-import { alertService } from 'services/Alert';
-import { ActivityMessageDto } from 'shared/dtos/activity.dto';
 import {
   PermissionGranted,
   PermissionRevoke,
-  useActivities,
 } from 'state/Activity';
 import { useGlobalStore } from 'state';
 import dconsole from 'shared/debugger';
@@ -46,14 +43,14 @@ export function DesktopNotificationsButton() {
   return (
     <>
       {!hasNotificationPermissions && (
-        <Btn
-          btnType={BtnType.filterCorp}
-          iconLink={<IoNotificationsOutline />}
-          caption={t('homeinfo.notificationsPermission')}
-          iconLeft={IconType.circle}
-          contentAlignment={ContentAlignment.center}
-          onClick={requestPermission}
-        />
+          <Btn
+            btnType={BtnType.filterCorp}
+            iconLink={<IoNotificationsOutline />}
+            caption={t('homeinfo.notificationsPermission')}
+            iconLeft={IconType.circle}
+            contentAlignment={ContentAlignment.center}
+            onClick={requestPermission}
+          />
       )}
     </>
   );

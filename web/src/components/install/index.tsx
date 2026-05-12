@@ -20,7 +20,6 @@ export function InstallButton() {
   return (
     <>
       {prompt && (
-        <div>
           <Btn
               btnType={BtnType.filterCorp}
               iconLink={<IoDownload />}
@@ -29,7 +28,6 @@ export function InstallButton() {
               contentAlignment={ContentAlignment.center}
               onClick={promptToInstall}
             />
-        </div>
        )}
     </>
   );
