@@ -1,14 +1,12 @@
 import produce from 'immer';
 import { GlobalState, store } from 'state';
-import { catchError, map, of } from 'rxjs';
-import { alertService } from 'services/Alert';
+import { map } from 'rxjs';
 import { UserService } from 'services/Users';
 import { Button } from 'shared/entities/button.entity';
 import { User } from 'shared/entities/user.entity';
 import { UpdateEvent, WatchEvent } from 'store/Event';
 import { ButtonService } from 'services/Buttons';
 import { ButtonEntry } from 'shared/dtos/button.dto';
-import t from 'i18n';
 
 export enum MainPopupPage {
   HIDE = 'hide',
@@ -100,13 +98,7 @@ export class FindAndSetMainPopupCurrentButton implements WatchEvent {
   public constructor(private buttonId) {}
   public watch(state: GlobalState) {
     return ButtonService.findById(this.buttonId).pipe(
-      map((data) => store.emit(new SetMainPopupCurrentButton(data))),
-      catchError((error) => {
-        if (error?.response?.statusCode === 404 || error?.status === 404) {
-          alertService.warn( t("common.notFoundMessage") );
-        }
-        return of(undefined);
-      })
+      map((data) => store.emit(new SetMainPopupCurrentButton(data)))
     );
   }
 
