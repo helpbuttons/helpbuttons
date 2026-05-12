@@ -449,11 +449,10 @@ function HomeInfoInstallCard({ selectedNetwork }) {
             selectedNetwork?.name,
           ])}
         </h3>
-
-        <div className="homeinfo-card__controls">
-          <InstallButton />
+      </div>
+      <div className="homeinfo__description">
+         <InstallButton />
           <DesktopNotificationsButton />
-        </div>
       </div>
     </div>
   )
