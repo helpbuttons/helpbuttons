@@ -109,7 +109,7 @@ export function ActivityGroupChat({ groupType, close }) {
       <ActivityGroupChatDetailHeader closeConversation={close} groupType={groupType} />
       <ActivityGroupMessages messages={messages} loadMessages={loadMessages} groupType={groupType} setMessages={setMessages}/>
       {(messages?.length < 1 ) && <div className="chat__notice">{t('groupChat.creating')}</div>}
-      //refactored.  activitybutton import
+      {/* //refactored.  activitybutton import */}
       <ChatMessageForm onSend={(message: string, clear: () => void) => sendNewMessage(message, groupType, clear)} />
     </>
   )
