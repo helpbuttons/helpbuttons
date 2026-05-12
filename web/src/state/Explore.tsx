@@ -290,7 +290,7 @@ export class updateCurrentButton implements UpdateEvent {
     return produce(state, (newState) => {
       newState.explore.currentButton = this.button;
       if(this.button != null){
-        newState.explore.settings.center = [this.button.latitude,this.button.longitude]
+        // newState.explore.settings.center = [this.button.latitude,this.button.longitude]
         store.emit(new StoreFindButtons([this.button]))
       }
     });

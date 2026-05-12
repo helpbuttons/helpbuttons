@@ -207,8 +207,6 @@ function ButtonTemplateForm({ label, explain, append, buttonTemplates }) {
           <AddCustomFields
             selectedCustomTemplates={customFields}
             setSelectedCustomTemplates={(_customFields) => setValue('customFields', _customFields)}
-            setEditing={null}
-            editingValue={watch}
           />
         }
         <Btn
@@ -289,9 +287,6 @@ function EditButtonTemplate({cancelEdit, setEditing, editingValue, errors, saveE
             <AddCustomFields
               selectedCustomTemplates={editingValue.customFields}
               setSelectedCustomTemplates={(customFields) => setEditing({ customFields: customFields })}
-              setEditing={setEditing}
-              editingValue={editingValue}
-              saveEdit={saveEdit}
             />
           </>
         }

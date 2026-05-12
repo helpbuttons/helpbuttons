@@ -245,7 +245,7 @@ function ActivityDetailCard({ activity, isLast = false }) {
         <div className="chat__notice">
           {activity.message}
           <a href={activity.link}>
-            Show</a>
+            {t('common.show')}</a>
         </div>
       </>
 
