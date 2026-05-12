@@ -11,7 +11,7 @@ import {
   InjectEntityManager,
   InjectRepository,
 } from '@nestjs/typeorm';
-import { uuid } from '@src/shared/helpers/uuid.helper';
+import { slugify, uuid } from '@src/shared/helpers/uuid.helper';
 import {
   Repository,
   In,
@@ -165,7 +165,6 @@ export class ButtonService {
 
 
   async getNewSlug (title) {
-    const slugify = require('slugify')
     let slug = slugify(title);
 
     const checkIfExists = async (newId) => {

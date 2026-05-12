@@ -55,7 +55,7 @@ function ButtonNewForm({ selectedNetwork }) {
     description: '',
     latitude: null,
     longitude: null,
-    type: 'event',
+    type: '',
     tags: [],
     title: '',
     images: [],
