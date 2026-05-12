@@ -363,7 +363,6 @@ const ButtonRow = ({ button, buttonType }) => {
       alignItems: 'center',
       marginRight: '10px',
       margin: 'auto',
-
     },
     button_type: {
       color: rowColor,
@@ -376,7 +375,6 @@ const ButtonRow = ({ button, buttonType }) => {
       fontSize: 16,
       marginBottom: 4,
       marginTop: 1,
-
       textOverflow: 'ellipsis',
       display: 'flex',
       flexWrap: 'nowrap',
@@ -401,7 +399,6 @@ const ButtonRow = ({ button, buttonType }) => {
       height:20,
       textOverflow: 'ellipsis',
       minWidth:0,
-
     },
     place: {
       fontSize: 12,
@@ -450,15 +447,11 @@ const ButtonRow = ({ button, buttonType }) => {
             <Text style={styles.button_type}>{buttonType.caption}</Text>
             <Text style={styles.title}>{button.title}</Text>
             <Text style={styles.description}>{button.description}</Text>
-
             <Text style={styles.place}>{button.address}</Text>
              <Text style={styles.date}>
                  {button.eventStart && (readableDate(button.eventStart))} {button.eventStart && (readableTime(button.eventStart))} {button.eventEnd && (" - " + readableDate(button.eventEnd))} {button.eventEnd && (" " + readableTime(button.eventEnd))}{'  '}
               </Text>
               <View style={styles.phoneContainer}>
-
- 
- 
 
                   {button.owner?.phone && (
                     <>
@@ -472,7 +465,6 @@ const ButtonRow = ({ button, buttonType }) => {
                     </>
                   )}
               </View>
-
           </View>
           <Image style={styles.qrcode} src={button.qrcode} />
         </View>
