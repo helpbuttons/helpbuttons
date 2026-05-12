@@ -109,7 +109,7 @@ function ProfileAdminOptions({ user }) {
         newRole,
         () => {
           alertService.info(t('common.done'));
-          // router.reload()
+          router.reload()
         },
         () => {
           alertService.error(t('common.error'));
