@@ -20,6 +20,8 @@ interface IFieldText {
     onFocus?: (e: React.FocusEvent<HTMLInputElement>) => void;
     onInputKeyDown?:(e: React.KeyboardEventHandler<HTMLInputElement>) => void;
     autoFocus?: boolean;
+    multiLine?: boolean;
+
 }
 
 const FieldText = React.forwardRef<HTMLInputElement, IFieldText>(
@@ -34,6 +36,7 @@ const FieldText = React.forwardRef<HTMLInputElement, IFieldText>(
         onFocus = () => {},
         validationError,
         multiInput = false,
+        multiLine=false,
         explain,
         extraMessage,
         maxLength = -1,
@@ -54,31 +57,57 @@ const FieldText = React.forwardRef<HTMLInputElement, IFieldText>(
           setTextLength(obj.target.value.length);
         }
       };
+
+      const onTextareaInput = (obj: React.FormEvent<HTMLTextAreaElement>) => {
+        const el = obj.currentTarget;
+        el.style.height = 'auto';
+        el.style.height = (el.scrollHeight - 16) + 'px';
+        onInput(obj as any);
+      };
    
       return (
-          <div
+        <div
           className={
-            "form__field " + (multiInput ? "form__field--noMargin" : "")
+            "form__field " + (multiInput ? "form__field--noMargin" : "") 
           }
-           >
+        >
           {label && <label className="form__label">{label}</label>}
           {explain && <p className="form__explain">{explain}</p> }
-          <input
-            name={name}
-            ref={ref}
-            type="text"
-            placeholder={placeholder ? placeholder : label}
-            onChange={onChange}
-            onBlur={onBlur}
-            className={`form__input ${classNameInput} ${
-              validationError ? "validation-error" : ""
-            }`}
-            defaultValue={defaultValue}
-            onInput={onInput}
-            onFocus={onFocus}
-            onKeyDown={onInputKeyDown}
-            autoFocus={autoFocus}
-          />
+          {multiLine ?
+              <textarea
+                name={name}
+                ref={ref as unknown as ForwardedRef<HTMLTextAreaElement>}
+                placeholder={placeholder ? placeholder : label}
+                onChange={onChange as any}
+                onBlur={onBlur as any}
+                className={`form__input form__input--maskTextarea ${classNameInput} ${
+                  validationError ? "validation-error" : ""
+                }`}
+                defaultValue={defaultValue}
+                onInput={onTextareaInput}
+                onFocus={onFocus as any}
+                onKeyDown={onInputKeyDown as any}
+                autoFocus={autoFocus}
+              />
+            :
+            <input
+              name={name}
+              ref={ref}
+              type="text"
+              placeholder={placeholder ? placeholder : label}
+              onChange={onChange}
+              onBlur={onBlur}
+              className={`form__input ${classNameInput} ${
+                validationError ? "validation-error" : ""
+              }`}
+              defaultValue={defaultValue}
+              onInput={onInput}
+              onFocus={onFocus}
+              onKeyDown={onInputKeyDown}
+              autoFocus={autoFocus}
+            />
+          }
+          
           <div className="form__input-subtitle">
               {maxLength > 0 && (
                 <label className="form__input-subtitle--text">
@@ -93,7 +122,7 @@ const FieldText = React.forwardRef<HTMLInputElement, IFieldText>(
 
           </div>
           {children}
-        </div>
+          </div>
       );
     }
   );

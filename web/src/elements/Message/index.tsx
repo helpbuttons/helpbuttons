@@ -55,18 +55,19 @@ export function FormatMessage({ text }) {
       aRef.current.innerHTML = content;
     }
   }, [content]);
-  return <span className='paragraph' ref={aRef} />;
+  return <span className='' ref={aRef} />;
 }
 
 function linkify(text) {
   var urlPattern =
     /(?:https?:)?\/\/(?:(?:[\w-]+\.)+[\w/#@~.-]*)(?:\?(?:[\w&=.!,;$#%-]+)?)?/gi;
 
+  text = (text || '').replace(/\n/g, '<br>');
   text = text.replace(userPattern, function (atUsername) {
     const username = atUsername.substring(1);
     return `<a href="/p/${username}">@${username}</a>`;
   });
-  return (text || '').replace(urlPattern, function (url) {
+  return text.replace(urlPattern, function (url) {
     return '<a href="' + url + '">' + url + '</a>';
   });
 }

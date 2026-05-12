@@ -22,6 +22,11 @@
 
 }
 
+.chat__new-message__send {
+    align-self: flex-end;
+    margin-bottom: $padding-medium;
+}
+
 .chat__header {
 
     width: 100%;
@@ -145,4 +150,12 @@
         width: 25px;
     }
   }
+}
+
+.chat__new-message__attach {
+
+    margin: 0 $padding-small 0 0 ;
+    align-self: flex-end;
+    padding-bottom: $padding-medium;
+
 }

@@ -194,6 +194,7 @@ padding-bottom: $margin-medium;
   font-size: $font-size-medium;
   height: $form-input-height;
   text-overflow: ellipsis;
+  max-height: 200px;
 
   & ul {
 
@@ -216,9 +217,17 @@ padding-bottom: $margin-medium;
 
 }
 
+.form__input--maskTextarea {
+
+  resize: none;
+  overflow: hidden;
+
+}
+
 .form__input__field {
   margin: $margin-xsmall 0;
 }
+
 
 
 .form__input--dropdown-search {
