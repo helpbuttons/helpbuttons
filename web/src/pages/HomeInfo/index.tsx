@@ -39,7 +39,6 @@ import {  ListButtonTypes } from 'components/nav/ButtonTypes';
 import getConfig from 'next/config';
 import { logoImageUri } from 'shared/sys.helper';
 import { FindLatestNetworkActivity } from 'state/Networks';
-import { InstallButton, OpenAppButton } from 'components/install';
 import { TagsNav } from 'elements/Fields/FieldTags';
 import { FindAndSetMainPopupCurrentButton, MainPopupPage, SetMainPopup } from 'state/HomeInfo';
 import { DesktopNotificationsButton } from 'components/notifications';
@@ -455,8 +454,8 @@ function HomeInfoInstallCard({ selectedNetwork }) {
       </div>
       <hr></hr>
       <HomeInfoActionButton>
-        <InstallButton />
-        <OpenAppButton />
+        {/* <InstallButton />
+        <OpenAppButton /> */}
         <DesktopNotificationsButton />
       </HomeInfoActionButton>
     </div>
