@@ -77,32 +77,25 @@ export function ConfigurationFormScheduler({ setEditing, editingValue
         { value: SchedulerUnity.DAY, name: t('customTemplates.day') },
         { value: SchedulerUnity.MONTH, name: t('customTemplates.month') },
     ]
-    
-    const saveUnity = (value) => {
-        setEditing({
-            customFields: editingValue?.customFields.map((_field, idx) => {
+    const saveUnitValue = (unity, value) => {
+        if(!editingValue){
+            setEditing(
+                [...editingValue, {type: schedulerTemplate.name, unity, value}]
+            )
+            return;
+        }
+        setEditing(
+             editingValue?.map((_field, idx) => {
                 if (_field.type == schedulerTemplate.name) {
-                    return { ..._field, unity: value }
+                    return { type: schedulerTemplate.name, unity, value }
                 }
                 return _field
             })
-        }
         )
     }
-    const saveValue = (value) => {
-        setEditing({
-            customFields: editingValue?.customFields.map((_field, idx) => {
-                if (_field.type == schedulerTemplate.name) {
-                    return { ..._field, value: value }
-                }
-                return _field
-            })
-        }
-        )
-    }
-    const customFieldValues = editingValue?.customFields ? editingValue.customFields.find((custom) => custom.type == schedulerTemplate.name) : []
+    const customFieldValues =  editingValue?.find((custom) => custom.type == schedulerTemplate.name)
     return <div className="form__field panel">
-        <FieldText label={t('customTemplates.schedulerLabelAdminForm')} defaultValue={customFieldValues?.value} name={"value"} onChange={(event) => saveValue(event.target.value)} explain={t('customTemplates.schedulerExplainAdminForm')} />
-        <Dropdown defaultSelected={customFieldValues?.unity} options={scheduleUnityOptions} onChange={(value) => saveUnity(value)} />
+        <FieldText label={t('customTemplates.schedulerLabelAdminForm')} defaultValue={customFieldValues?.value} name={"value"} onChange={(event) => saveUnitValue(customFieldValues?.unity, event.target.value)} explain={t('customTemplates.schedulerExplainAdminForm')} />
+        <Dropdown defaultSelected={customFieldValues?.unity} options={scheduleUnityOptions} onChange={(unity) => saveUnitValue(unity, customFieldValues?.value)} />
     </div>
 }

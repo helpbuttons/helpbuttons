@@ -5,13 +5,13 @@ import t from 'i18n';
 
 
 
-export function AddCustomFields({ selectedCustomTemplates, setSelectedCustomTemplates, setEditing, editingValue, saveEdit }) {
+export function AddCustomFields({ selectedCustomTemplates, setSelectedCustomTemplates }) {
   
   return <>{customTemplates
-            .map((template) => {
+            .map((template, idx) => {
               const isSelected = selectedCustomTemplates?.find((_template) => {return _template.type == template.name})
               const FormConfiguration = template.configurationForm;
-              return <>
+              return <div key={idx}>
               <FieldCheckCard
                 name={`${template.name}Field`}
                 image={template.icon}
@@ -30,8 +30,8 @@ export function AddCustomFields({ selectedCustomTemplates, setSelectedCustomTemp
                 }}
                 defaultValue={isSelected}
               />
-              {(isSelected && FormConfiguration) && <FormConfiguration editingValue={editingValue} setEditing={setEditing} saveEdit={saveEdit}/>}
-              </>
+              {(isSelected && FormConfiguration) && <FormConfiguration editingValue={selectedCustomTemplates} setEditing={setSelectedCustomTemplates}/>}
+              </div>
             }
           )}
           </>
