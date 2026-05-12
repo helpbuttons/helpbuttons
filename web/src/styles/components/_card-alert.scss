@@ -48,18 +48,26 @@ $card-alert-icon-size: 30px;
 
 .card-alert--success {
   background-color: $color-green;
+      color: $color-white;
+
 }
 
 .card-alert--error {
   background-color: $color-red;
+      color: $color-white;
+
 }
 
 .card-alert--warning {
   background-color: $color-corporative;
+    color: $color-text-over-corporative;
+
 }
 
 .card-alert--info {
   background-color: var(--network-accent-color);
+    color: $color-white;
+
 }
 
 .card-alert__content {
@@ -70,7 +78,6 @@ $card-alert-icon-size: 30px;
   margin: auto 0;
   padding-right: $padding-big;
   font-weight: $font-weight-bold;
-  color: $color-white;
   gap: $padding-small;
 
 

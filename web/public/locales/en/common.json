@@ -44,6 +44,8 @@
     "callToAdmin": "Hi! Press the phone you need someone to help. The site keeps info about your usage, check the conditions and privacy policy.",
     "latestActivity": "Latest activities",
     "installButton": "Install app",
+    "openApp": "Open app",
+    "revokeNotifications": "Disable browser notifications",
     "print": "Print activity",
     "share": "Share options",
     "notificationsPermission": "Allow notifications",

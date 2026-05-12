@@ -45,6 +45,8 @@
     "needPlace": "Por favor, selecciona en qué zona se situa tu Red",
     "latestActivity": "Últimas actividads",
     "installButton": "Instalar app",
+    "openApp": "Abrir app",
+    "revokeNotifications": "Desactivar notificaciones del navegador",
     "notificationsPermission": "Permitir notificaciones",
     "share": "Compartir esta app",
     "featured": "Destacados",
