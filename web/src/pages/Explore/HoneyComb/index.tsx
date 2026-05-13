@@ -46,8 +46,7 @@ import {
 } from 'components/button/ButtonType/CustomFields/AdvancedFiltersCustomFields';
 import PopupButtonFile from 'components/popup/PopupButtonFile';
 import { ButtonShow } from 'components/button/ButtonShow';
-import { showMarkersZoom } from 'components/map/Map/Map.consts';
-import { applyFilters, applyFiltersHex } from 'components/search/AdvancedFilters/filters.type';
+import { applyBounds, applyFilters } from 'components/search/AdvancedFilters/filters.type';
 import { Button } from 'shared/entities/button.entity';
 import { replaceUrl } from 'components/uri/builder';
 import { ListKeyLocation } from 'state/Geo';
@@ -369,65 +368,57 @@ function useHexagonMap({
     }
   }, [debounceHexagonsToFetch])
 
-  useEffect(() => {
-    
-    if(debounceHexagonsToFetch.resolution < 1){
-      return;
-    }
-    setCountFilteredButtons(() => 0)
-    const boundCachedButtons = cachedButtons.filter((_btn) => {
-      const btnResolution = getResolution(_btn.hexagon)
-      if(_btn.hideAddress && debounceHexagonsToFetch.resolution > hideAddressResolution){
-        // in here we find if the hexagon of the button hidden is parent of the hexagons showing on the screen
-        try{
-          const hexagon = debounceHexagonsToFetch.hexagons.find((hexagon) => _btn.hexagon == cellToParent(hexagon, btnResolution ))
-          if(hexagon){
-            setCountFilteredButtons((prev) => prev + 1)
-          }
-        }catch(err){
-          console.error(`could not calculate button, ${_btn.id}`)
-        }
-        return false;
-      }
-      if(btnResolution < debounceHexagonsToFetch.resolution){
-        return false;
-      }
-      return debounceHexagonsToFetch.hexagons.indexOf(cellToParent(_btn.hexagon, debounceHexagonsToFetch.resolution)) > -1
-    })
-    if(boundCachedButtons.length < 1)
-    {
-      return;
-    }
-    
-    store.emit(
-      new UpdateBoundsFilteredButtons(boundCachedButtons),
-    );
-  }, [cachedButtons, filters, debounceHexagonsToFetch.resolution])
-
-
   const hexagonClicked : Button[] = useGlobalStore((state: GlobalState) => state.explore.settings.hexagonClicked);
-  const listButtons : Button[] = useGlobalStore((state: GlobalState) => state.explore.map.listButtons);
+  const bounds = useGlobalStore((state: GlobalState) => state.explore.settings.bounds);
 
   useEffect(() => {
     if(debounceHexagonsToFetch.resolution < 1){
       return;
     }
+    const applyHideAddress = (boundsButtons) => {
+      return boundsButtons.map((_btn) => {
+        const btnResolution = getResolution(_btn.hexagon)
+        if(_btn.hideAddress && debounceHexagonsToFetch.resolution > hideAddressResolution){
+          // in here we find if the hexagon of the button hidden is parent of the hexagons showing on the screen
+          try{
+            const hexagon = debounceHexagonsToFetch.hexagons.find((hexagon) => _btn.hexagon == cellToParent(hexagon, btnResolution ))
+            if(hexagon){
+              return {hideMap: true, ..._btn};
+            }
+          }catch(err){
+            console.error(`could not calculate button, ${_btn.id}`)
+          }
+          return {hideMap: false, ..._btn};
+        }
+        if(btnResolution < debounceHexagonsToFetch.resolution){
+          return {hideMap: false, ..._btn};
+        }
+        return {hideMap: !(debounceHexagonsToFetch.hexagons.indexOf(cellToParent(_btn.hexagon, debounceHexagonsToFetch.resolution)) > -1), ..._btn};
+      })
+    }
+
+    const boundsButtons = applyBounds(cachedButtons, bounds)
+    const mapButtons = applyHideAddress(boundsButtons)
+
+    setCountFilteredButtons(() => mapButtons.filter((_btn) => _btn.hideMap).length)
     const { filteredButtons } = applyFilters(
       filters,
-      boundsFilteredButtons,
+      mapButtons,
       buttonTypes,
     );
-
+    
     const orderedFilteredButtons = orderBy(
       filteredButtons,
       filters.orderBy,
       exploreSettings?.center,
     );
+
     const filteredHexagons = calculateDensityMap(
-      orderedFilteredButtons,
+      orderedFilteredButtons.filter((_btn) => _btn?.hideMap == false),
       hexagonsToFetch.resolution,
       hexagonsToFetch.hexagons,
     );
+
     seth3TypeDensityHexes(() => {
       return filteredHexagons;
     });
@@ -440,7 +431,7 @@ function useHexagonMap({
     }
 
     store.emit(new UpdateButtonList(orderedFilteredButtons))
-  }, [boundsFilteredButtons, filters, hexagonClicked])
+  }, [debounceHexagonsToFetch.resolution, filters, hexagonClicked])
 
   const handleBoundsChange = (bounds, center: Point, zoom) => {
     if (bounds) {

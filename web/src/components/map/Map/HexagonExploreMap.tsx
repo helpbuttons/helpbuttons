@@ -159,7 +159,7 @@ export default function HexagonExploreMap({
             {/*
             show count of buttons per hexagon
             */}
-            {hexagonsMedianCenters && hexagonsMedianCenters.filter((feat) => feat.count > 0 && hexagonClickedFeatures?.hexagon != feat.hexagon).map((hexagonMedianCenter) => {
+            {hexagonsMedianCenters && hexagonsMedianCenters.filter((feat) => feat.count > 1 && hexagonClickedFeatures?.hexagon != feat.hexagon).map((hexagonMedianCenter) => {
               return <Overlay
                 anchor={hexagonMedianCenter.center}
                 className="pigeon-map__custom-block"
@@ -352,6 +352,11 @@ function MapButtonIcon({ button, buttonTypes }) {
       store.emit(new updateCurrentButton(button))
     }
     
+  }
+  if(!btnType.icon){
+    return <div onClick={handleClick} className={`${button.id == currentButton?.id || hoverButtonList?.id == button.id ? 'pigeon-map__hex-element--emoji-selected' : ''}  pigeon-map__emoji`}>
+    1
+  </div>
   }
   return (
     <div onClick={handleClick} className={`${button.id == currentButton?.id || hoverButtonList?.id == button.id ? 'pigeon-map__hex-element--emoji-selected' : ''}  pigeon-map__emoji`}>

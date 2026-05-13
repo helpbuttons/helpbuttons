@@ -1,4 +1,5 @@
 import { applyCustomFieldsFilters } from "components/button/ButtonType/CustomFields/AdvancedFiltersCustomFields";
+import { isPointInBounds } from "elements/Fields/FieldLocation/location.helpers";
 import { isPointWithinRadius } from "geolib";
 import { Point } from "pigeon-maps";
 import { useEffect, useState } from "react";
@@ -117,6 +118,9 @@ export interface ButtonFilters {
       filteredButtons: res.filteredButtons,
       filteredHexagons: recalculateDensityMap(res.filteredHexagons),
     };
+  }
+  export const applyBounds = (cachedButtons, bounds) => {
+    return cachedButtons.filter((btn) => isPointInBounds([btn.latitude, btn.longitude], bounds))
   }
   export const applyFilters = (filters, buttonList, buttonTypes) => {
     const filteredButtons = buttonList.filter(
