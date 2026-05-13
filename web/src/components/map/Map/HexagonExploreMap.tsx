@@ -102,12 +102,18 @@ export default function HexagonExploreMap({
         if(exploreSettings.zoom > showMarkersZoom){
           btns = btns.filter((btn) => !btn.hideAddress)
         }
-        const coordinates = btns.map((btn) => { return { latitude: btn.latitude, longitude: btn.longitude } })
+        const coordinates = btns.map((btn) => { 
+          if(btn.hideAddress){
+            return { latitude: hex.center[0], longitude: hex.center[1] } 
+          }
+          return { latitude: btn.latitude, longitude: btn.longitude } 
+        })
 
         const medianCenterOfButtons = getCenter(coordinates)
         const center = medianCenterOfButtons ? [medianCenterOfButtons.latitude, medianCenterOfButtons.longitude] : hex.center
         return { center: center, groupByType: hex.groupByType ? hex.groupByType : [], count: btns.length, hexagon: hex.hexagon, buttons: btns }
-      }).filter((h) => h.count > 0)
+      })
+      .filter((h) => h.count > 0)
     })
   }, [h3TypeDensityHexes, exploreSettings.zoom])
   const buttonTypes = selectedNetwork.buttonTemplates;
@@ -153,7 +159,7 @@ export default function HexagonExploreMap({
             {/*
             show count of buttons per hexagon
             */}
-            {hexagonsMedianCenters && hexagonsMedianCenters.filter((feat) => feat.count > 1 && hexagonClickedFeatures?.hexagon != feat.hexagon).map((hexagonMedianCenter) => {
+            {hexagonsMedianCenters && hexagonsMedianCenters.filter((feat) => feat.count > 0 && hexagonClickedFeatures?.hexagon != feat.hexagon).map((hexagonMedianCenter) => {
               return <Overlay
                 anchor={hexagonMedianCenter.center}
                 className="pigeon-map__custom-block"

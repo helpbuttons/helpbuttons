@@ -379,9 +379,13 @@ function useHexagonMap({
       const btnResolution = getResolution(_btn.hexagon)
       if(_btn.hideAddress && debounceHexagonsToFetch.resolution > hideAddressResolution){
         // in here we find if the hexagon of the button hidden is parent of the hexagons showing on the screen
-        const hexagon = debounceHexagonsToFetch.hexagons.find((hexagon) => _btn.hexagon == cellToParent(hexagon, btnResolution ))
-        if(hexagon){
-          setCountFilteredButtons((prev) => prev + 1)
+        try{
+          const hexagon = debounceHexagonsToFetch.hexagons.find((hexagon) => _btn.hexagon == cellToParent(hexagon, btnResolution ))
+          if(hexagon){
+            setCountFilteredButtons((prev) => prev + 1)
+          }
+        }catch(err){
+          console.error(`could not calculate button, ${_btn.id}`)
         }
         return false;
       }
