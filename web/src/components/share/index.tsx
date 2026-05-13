@@ -1,8 +1,7 @@
-import { useState } from 'react';
 import ShareBulletinForm from './bulletin';
 import t from 'i18n';
 import { ShareEmbbedForm } from './embbed';
-import { IoCodeOutline, IoLocateOutline, IoLogoRss, IoLogoWebComponent, IoPersonAddOutline, IoPrintOutline, IoShare } from 'react-icons/io5';
+import { IoCodeOutline, IoGitNetwork, IoLink, IoLogoRss, IoPersonAddOutline, IoPrintOutline, IoShare } from 'react-icons/io5';
 import { store, useGlobalStore } from 'state';
 import { GlobalState } from 'state';
 import ShareInvitationsForm from './invitations';
@@ -29,6 +28,7 @@ export function ShareForm({}) {
   const userLoggedIn = useGlobalStore(
     (state: GlobalState) => state.sessionUser,
   );
+
   return (
     <>
       <div className="form__section">
@@ -72,7 +72,23 @@ export function ShareForm({}) {
             </Accordion>
           </div>
         </div>
-      
+      <div className="form__section">
+
+        <div className="form__section-title">
+          {t('share.federate')}
+        </div>
+
+          <div className="form__field">
+              <div className="form__explain">
+                {t('share.federateExplain')}
+              </div>
+
+              <Accordion icon={<IoGitNetwork/>} title={t('share.optionActivityPub')} >
+                <ShareActivityPubButton/>
+              </Accordion>
+
+          </div>
+        </div>
       
     </>
   );
@@ -120,6 +136,31 @@ function ShareRssButton() {
         contentAlignment={ContentAlignment.center}
         iconLeft={IconType.svg}
         iconLink={<IoLogoRss />}
+        caption={t('share.copyLink')}
+        onClick={onClick}
+      />
+    </div>
+    
+  )
+}
+
+
+function ShareActivityPubButton() {
+  const onClick = () => {
+      store.emit(
+      new SetMainPopup(MainPopupPage.SHARE),
+    )
+    navigator.clipboard.writeText(getShareLink('/activityPub'));
+    alertService.info(t('share.linkCopied', [getShareLink('/activityPub')]))
+  }
+  return (
+    <div className='form__field--multiinput'>
+      <div className='form__input form__fake-input' onClick={onClick} >{getShareLink('/activityPub')}</div>
+      <Btn
+        btnType={BtnType.corporative}
+        contentAlignment={ContentAlignment.center}
+        iconLeft={IconType.svg}
+        iconLink={<IoLink />}
         caption={t('share.copyLink')}
         onClick={onClick}
       />
