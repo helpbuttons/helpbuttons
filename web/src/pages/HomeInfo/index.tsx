@@ -1,4 +1,4 @@
-import { useStore } from 'state';
+import { useGlobalStore, useStore } from 'state';
 import { GlobalState, store } from 'state';
 import router from 'next/router';
 import t from 'i18n';
@@ -39,7 +39,7 @@ import {  ListButtonTypes } from 'components/nav/ButtonTypes';
 import getConfig from 'next/config';
 import { logoImageUri } from 'shared/sys.helper';
 import { FindLatestNetworkActivity } from 'state/Networks';
-import { InstallButton } from 'components/install';
+import { InstallButton, InstallPrompt } from 'components/install';
 import { TagsNav } from 'elements/Fields/FieldTags';
 import { FindAndSetMainPopupCurrentButton, MainPopupPage, SetMainPopup } from 'state/HomeInfo';
 import { DesktopNotificationsButton } from 'components/notifications';
@@ -439,8 +439,16 @@ function HomeSloganCard({ selectedNetwork, config }) {
         
 
 function HomeInfoInstallCard({ selectedNetwork }) {
-  return (
-    // <div className="homeinfo-card homeinfo-card--wrap">
+  const [prompt, promptToInstall] = InstallPrompt();
+
+  const notificationsPermissionGranted = useGlobalStore(
+    (state: GlobalState) =>
+      state.activities.notificationsPermissionGranted,
+  );
+  if(!prompt && notificationsPermissionGranted){
+    return <></>
+  }
+  return (    
     <div className="homeinfo-card homeinfo-card--wrap">
       <div className="homeinfo-card__header">
         <h3 className="homeinfo-card__header-title">
@@ -449,11 +457,11 @@ function HomeInfoInstallCard({ selectedNetwork }) {
             selectedNetwork?.name,
           ])}
         </h3>
-      </div>
-      <div className="homeinfo__description">
-         <InstallButton />
-          <DesktopNotificationsButton />
-      </div>
+        </div>
+        <div className="homeinfo__description">
+          <InstallButton isInstallable={prompt} promptToInstall={promptToInstall}/>
+          <DesktopNotificationsButton allowedToNotify={notificationsPermissionGranted}/>
+        </div>
     </div>
   )
 }

@@ -15,11 +15,7 @@ const isSupported = () =>
       'serviceWorker' in navigator &&
       'PushManager' in window;
 
-export function DesktopNotificationsButton() {
-  const hasNotificationPermissions = useGlobalStore(
-    (state: GlobalState) =>
-      state.activities.notificationsPermissionGranted,
-  );
+export function DesktopNotificationsButton({allowedToNotify}) {
 
   useEffect(() => {
     if (isSupported() && Notification.permission === 'granted') {
@@ -42,7 +38,7 @@ export function DesktopNotificationsButton() {
   };
   return (
     <>
-      {!hasNotificationPermissions && (
+      {!allowedToNotify && (
           <Btn
             btnType={BtnType.filterCorp}
             iconLink={<IoNotificationsOutline />}

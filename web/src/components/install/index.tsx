@@ -6,30 +6,20 @@ import Btn, {
 import t from 'i18n';
 import { useEffect, useState } from 'react';
 import { IoDownload } from 'react-icons/io5';
-import { store } from 'state';
-import { SetIsInstallable } from 'state/HomeInfo';
 
-export function InstallButton() {
-  const [prompt, promptToInstall] = useAddToHomescreenPrompt();
-  useEffect(() => {
-    if(prompt)
-    {
-      store.emit(new SetIsInstallable())
-    }
-  }, [prompt])
+export function InstallButton({isInstallable, promptToInstall}) {
+  if (!isInstallable) {
+    return null;
+  }
   return (
-    <>
-      {prompt && (
-          <Btn
-              btnType={BtnType.filterCorp}
-              iconLink={<IoDownload />}
-              caption={t('homeinfo.installButton')}
-              iconLeft={IconType.circle}
-              contentAlignment={ContentAlignment.center}
-              onClick={promptToInstall}
-            />
-       )}
-    </>
+    <Btn
+        btnType={BtnType.filterCorp}
+        iconLink={<IoDownload />}
+        caption={t('homeinfo.installButton')}
+        iconLeft={IconType.circle}
+        contentAlignment={ContentAlignment.center}
+        onClick={promptToInstall}
+      />
   );
 }
 
@@ -42,7 +32,21 @@ interface IBeforeInstallPromptEvent extends Event {
   prompt(): Promise<void>;
 }
 
-export function useAddToHomescreenPrompt(): [
+// Register service worker for PWA support
+const registerServiceWorker = async () => {
+  if (typeof window === 'undefined' || !('serviceWorker' in navigator)) {
+    return;
+  }
+
+  try {
+    const registration = await navigator.serviceWorker.register('/sw.js');
+    console.log('Service Worker registered:', registration);
+  } catch (error) {
+    console.error('Service Worker registration failed:', error);
+  }
+};
+
+export function InstallPrompt(): [
   IBeforeInstallPromptEvent | null,
   () => void,
 ] {
@@ -61,6 +65,9 @@ export function useAddToHomescreenPrompt(): [
   };
 
   useEffect(() => {
+    // Register service worker first - required for beforeinstallprompt to fire
+    registerServiceWorker();
+
     const ready = (e: IBeforeInstallPromptEvent) => {
       e.preventDefault();
       setState(e);

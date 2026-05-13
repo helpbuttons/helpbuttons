@@ -33,6 +33,7 @@ class MyDocument extends Document {
           <link rel="icon" type="image/png" sizes="192x192" href="/favicon/android-chrome-192x192.png" />
           <link rel="icon" type="image/png" sizes="512x512" href="/favicon/android-chrome-512x512.png" />
           <link rel="mask-icon" href="/assets/svg/favicon/favicon.svg" color="#3d426e" />
+          <link rel="manifest" href="/site.webmanifest" />
         </Head>
         <body>
           <Main />
