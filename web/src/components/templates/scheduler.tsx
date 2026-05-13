@@ -35,7 +35,7 @@ export function FieldSchedulerViewUser({expirationDate,type}) {
     const customFields = buttonTypes.find((_type) => _type.name == type)?.customFields.find((t) => t.type == CustomFields.Scheduler)
 
     const renewdate = customFields?.unity ? calculateRewnedDate(customFields.unity, customFields.value, new Date(expirationDate)) : null
-    return <>{expirationDate &&
+    return <>{expirationDate && renewdate &&
         (new Date(expirationDate) > now) ? <>
         <IoSync />
         {t('customTemplates.renewed')} {readableTimeLeftToDate(renewdate)}
