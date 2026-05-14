@@ -158,9 +158,11 @@ export class ButtonService {
       }
     }
     
-    await this.buttonRepository.insert([button]);
-
-    return await button;
+    return this.buttonRepository.insert([button])
+    .then((btn) => {
+      return this.findById(button.id)
+          .then((_btn) => this.transformButton(_btn, user))
+    })
   }
 
 
@@ -212,7 +214,9 @@ export class ButtonService {
         HttpStatus.NOT_FOUND,
       );
     }
-    return this.transformButton(button, currentUser);
+    const isButtonOwner = currentUser?.id == button?.owner?.id;
+
+    return this.transformButton(button, currentUser, isButtonOwner);
   }
 
   async update(
@@ -300,6 +304,7 @@ export class ButtonService {
             notifyUser(this.eventEmitter,ActivityEventName.RenewButton,{button, owner: storeButton.owner})
           }
           return this.findById(button.id)
+          .then((_btn) => this.transformButton(_btn, currentUser))
         })
 
       });
@@ -364,10 +369,9 @@ export class ButtonService {
     }
   }
 
-  transformButton(btn, currentUser = null) {
+  transformButton(btn, currentUser = null, buttonOwnerIsEditing = false) {
     const isFollowing = currentUser ? btn.followedBy.includes(currentUser.id) : false
-
-    if(btn.hideAddress)
+    if(btn.hideAddress && !buttonOwnerIsEditing)
     {
       btn.hexagon = cellToParent(btn.hexagon, hideAddressResolution)
       const hexCenter = cellToLatLng(btn.hexagon)

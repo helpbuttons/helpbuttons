@@ -51,16 +51,7 @@ export function MarkerEditorMap({
   }
   useEffect(() => {
     if (mapCenterIsReady.current) {
-      if (hideAddress) {
-        let polygons = latLngToGeoJson(
-          pickedPosition[0],
-          pickedPosition[1],
-          getZoomResolution(hexagonSizeZoom),
-        );
-        setMarkerHexagonGeoJson(() => polygons);
-      } else {
         setMarkerHexagonGeoJson(() => null);
-      }
     } else if (pickedPosition && pickedPosition[0] && pickedPosition[1]) {
       setMapCenter(() => pickedPosition);
     } else if (
@@ -73,14 +64,6 @@ export function MarkerEditorMap({
     }
   }, [hideAddress, pickedPosition, networkMapCenter]);
 
-  useEffect(() => {
-    if (hideAddress) {
-      if (zoom > hexagonSizeZoom) {
-        setZoom(() => hexagonSizeZoom);
-      }
-    }
-  }, [hideAddress]);
-
   return (
     <>
       <div className="picker__map">
@@ -92,31 +75,14 @@ export function MarkerEditorMap({
             handleMapClick={handleMapClicked}
             height={'18'}
           >
-            {(hideAddress && pickedPosition) && (
-              <GeoJson
-                data={markerHexagonGeoJson}
-                styleCallback={(feature, hover) => {
-                  return { fill: markerColor, opacity: 0.4 };
-                }}
-              />
-            )}
             {isLocationKeyMarker && 
               <LocationKeyIcon title={markerCaption} anchor={pickedPosition}
               offset={[25, 50]}
               cssColor={'red'}/>
             }
-            {(!isLocationKeyMarker && !hideAddress && pickedPosition) && (
+            {(!isLocationKeyMarker && pickedPosition) && (
               <MarkerButtonIcon
                 anchor={pickedPosition}
-                offset={[25, 50]}
-                cssColor={markerColor}
-                image={markerImage}
-                title={markerCaption}
-              />
-            )}
-            {(!isLocationKeyMarker && hideAddress  && pickedPosition)&& (
-              <MarkerButtonIcon
-                anchor={getHexagonCenter(pickedPosition, hexagonSizeZoom)}
                 offset={[25, 50]}
                 cssColor={markerColor}
                 image={markerImage}
@@ -161,14 +127,14 @@ export default function MarkerViewMap({
             onBoundsChanged={onBoundsChanged}
             height={'18'}
           >
-            {hideAddress && (
+            {/* {hideAddress && (
               <GeoJson
                 data={markerHexagonGeoJson}
                 styleCallback={(feature, hover) => {
                   return { fill: markerColor, opacity: 0.4 };
                 }}
               />
-            )}
+            )} */}
             {!hideAddress && (
               <MarkerButtonIcon
                 anchor={markerPosition}
