@@ -132,12 +132,12 @@ export class ActivityService {
 
     // const consumerId = button.owner.id != author.id ? author.id : 
     userIdsMentioned.map((userId) => {
-      if (userId == button.owner.id ) { // notify author of the comment
-        const consumerId = button.owner.id == author.id ? userId : author.id
-        return this.newActivity(button, {id: userId}, author, { id: consumerId }, { ...payload, activityEventName: ActivityEventName.NewMention }, true, false, true)
-      } else if (userId == author.id) {
+      if (userId == author.id) {
         const consumerId = button.owner.id == author.id ? userId : author.id
         return this.newActivity(button, userId, author, { id: consumerId }, payload, true, false, false)
+      }else if (userId == button.owner.id ) { // notify author of the comment
+        const consumerId = button.owner.id == author.id ? userId : author.id
+        return this.newActivity(button, {id: userId}, author, { id: consumerId }, { ...payload, activityEventName: ActivityEventName.NewMention }, true, false, true)
       } else {
         const consumerId = button.owner.id == author.id ? userId : author.id
         return this.newActivity(button, {id: userId}, author, { id: consumerId }, { ...payload, activityEventName: ActivityEventName.NewMention }, true, false, true)

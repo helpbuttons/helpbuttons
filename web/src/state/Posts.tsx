@@ -57,7 +57,7 @@ export class LoadPosts implements WatchEvent {
   }
 }
 
-export class CreateNewPostComment implements WatchEvent, UpdateEvent {
+export class CreateNewPostComment implements WatchEvent {
   public constructor(
     private postId: string,
     private message,
@@ -70,18 +70,9 @@ export class CreateNewPostComment implements WatchEvent, UpdateEvent {
       catchError((error) => handleError(this.onError, error)),
     );
   }
-  
-  public update(state: GlobalState) {
-    return produce(state, (newState) => {
-      newState.explore.currentButton.isFollowing = true
-      dconsole.log('[CreateNewPostComment]')
-      // newState.explore.settings.forceRefetch = true;
-      // store.emit(new ForceRefetch()) // in the future, should just edit on the list of buttons!
-    });
-  }
 }
 
-export class CreateNewCommentReply implements WatchEvent, UpdateEvent {
+export class CreateNewCommentReply implements WatchEvent {
   public constructor(
     private postId: string,
     private commentId: string,
@@ -94,14 +85,6 @@ export class CreateNewCommentReply implements WatchEvent, UpdateEvent {
       map((data) => this.onSuccess(data)),
       catchError((error) => handleError(this.onError, error)),
     );
-  }
-  
-  public update(state: GlobalState) {
-    return produce(state, (newState) => {
-      newState.explore.currentButton.isFollowing = true
-      dconsole.log('[CreateNewCommentReply]')
-      // newState.explore.settings.forceRefetch = true;
-    });
   }
 }
 
