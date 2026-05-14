@@ -140,7 +140,7 @@ export default function ButtonForm({
                       setValue={setValue}
                       explain={t('button.titleExplain')}
                       setFocus={setFocus}
-                      {...register('title', { required: true, minLength: 10 })}
+                      {...register('title', { required: true })}
                     />
                     <FieldTextArea
                       label={t('button.descriptionLabel')}
