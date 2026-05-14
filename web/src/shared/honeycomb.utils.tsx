@@ -220,11 +220,15 @@ export function calculateDensityMap(
       const { hexagon, ...rest } = button;
       const group = groupBy.find(
         (button) => {
-          if(button.hideAddress && resolution > hideAddressResolution) {
-            return cellToParent(hexagon, hideAddressResolution) === button.hexagon
+          try{
+            if(button.hideAddress && resolution > hideAddressResolution) {
+              return cellToParent(hexagon, hideAddressResolution) === button.hexagon
+            }
+            return cellToParent(button.hexagon, resolution) ===
+            cellToParent(hexagon, resolution)
+          }catch(err){
+            console.error(err)
           }
-          return cellToParent(button.hexagon, resolution) ===
-          cellToParent(hexagon, resolution)
         }
           
       );

@@ -350,16 +350,16 @@ function useHexagonMap({
 
   useEffect(() => {
     if (debounceHexagonsToFetch.init) {
-      if (debounceHexagonsToFetch.hexagons.length > 0) {
-        const hexesToFetch = calculateNonCachedHexagons(
-          debounceHexagonsToFetch,
+      if (hexagonsToFetch.hexagons.length > 0) {
+        const newHexagons = calculateNonCachedHexagons(
+          hexagonsToFetch,
           cachedH3Hexes,
         );
-        if (hexesToFetch.length > 0) {
+        if (newHexagons.length > 0) {
           store.emit(
             new FindButtons(
-              debounceHexagonsToFetch.resolution,
-              hexesToFetch,
+              hexagonsToFetch.resolution,
+              newHexagons,
               (buttons) => {
 
               }, (error) => console.log(error)))
@@ -376,16 +376,16 @@ function useHexagonMap({
   }, [bounds, cachedButtons])
   
   useEffect(() => {
-    if(debounceHexagonsToFetch.resolution < 1){
+    if(hexagonsToFetch.resolution < 1){
       return;
     }
     const applyHideAddress = (boundsButtons) => {
       return boundsButtons.map((_btn) => {
         const btnResolution = getResolution(_btn.hexagon)
-        if(_btn.hideAddress && debounceHexagonsToFetch.resolution > hideAddressResolution){
+        if(_btn.hideAddress && hexagonsToFetch.resolution > hideAddressResolution){
           // in here we find if the hexagon of the button hidden is parent of the hexagons showing on the screen
           try{
-            const hexagon = debounceHexagonsToFetch.hexagons.find((hexagon) => _btn.hexagon == cellToParent(hexagon, btnResolution ))
+            const hexagon = hexagonsToFetch.hexagons.find((hexagon) => _btn.hexagon == cellToParent(hexagon, btnResolution ))
             if(hexagon){
               return {hideMap: true, ..._btn};
             }
@@ -414,8 +414,8 @@ function useHexagonMap({
 
     const filteredHexagons = calculateDensityMap(
       orderedFilteredButtons.filter((_btn) => _btn?.hideMap == false),
-      debounceHexagonsToFetch.resolution,
-      debounceHexagonsToFetch.hexagons,
+      hexagonsToFetch.resolution,
+      debounceHexagonsToFetch.hexagons, // TODO: understand why cant get hexagons from hexgonsToFetch.. and only works from debounce ? 
     );
 
     seth3TypeDensityHexes(() => {
