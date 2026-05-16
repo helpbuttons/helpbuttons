@@ -124,9 +124,9 @@ export interface ButtonFilters {
   }
   export const applyFilters = (filters, buttonList, buttonTypes) => {
     const filteredButtons = buttonList.filter(
-      (button: Button) => applyFilterToButton(button, {...filters, where: {center: null, radius: null}}, buttonTypes)
+      (button: Button) => applyFilterToButton(button, filters, buttonTypes)
     );
-    return {filteredButtons}    
+    return {filteredButtons}
   };
 
   export const isFiltering = () =>
