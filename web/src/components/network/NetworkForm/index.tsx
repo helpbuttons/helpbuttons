@@ -301,6 +301,14 @@ function NetworkForm({
             />
             <FieldKeySpots/>
             <FieldCheckbox
+              name='hideCountryOnAddresses'
+              label={t('configuration.hideCountryOnAddressesLabel')}
+              explain={t('configuration.hideCountryOnAddressesExplain')}
+              defaultValue={watch('hideCountryOnAddresses')}
+              text={t('configuration.hideCountryOnAddressesText')}
+              onChanged={(value) => setValue('hideCountryOnAddresses', value)}
+            />
+            <FieldCheckbox
               name='hideLocationDefault'
               label={t('configuration.hideLocationByDefaultLabel')}
               explain={t('configuration.hideLocationByDefaultExplain')}

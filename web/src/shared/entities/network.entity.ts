@@ -80,6 +80,9 @@ export class Network extends BaseEntity {
   hideLocationDefault: boolean;
 
   @Column({default: false})
+  hideCountryOnAddresses: boolean;
+
+  @Column({default: false})
   allowGuestCreation: boolean;
 
   @Column({default: 'Text to complete by administrators'})

@@ -95,6 +95,7 @@ function Configuration() {
           requireApproval: data.requireApproval,
           slogan: data.slogan,
           hideLocationDefault: data.hideLocationDefault,
+          hideCountryOnAddresses: data.hideCountryOnAddresses,
           allowGuestCreation: data.allowGuestCreation,
           privacyPolicy: data. privacyPolicy,
           ethicsPolicy: data. ethicsPolicy,
