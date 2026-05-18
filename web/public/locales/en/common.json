@@ -233,7 +233,8 @@
     "newMentionContent": "{0} on the _helpbutton_ :",
     "replyToMessage": "Reply to message",
     "view": "View",
-    "newpostfollower": "A new post was published in a _helpbutton_ you follow"
+    "newpostfollower": "A new post was published in a _helpbutton_ you follow",
+    "newEndorsedMessageSubject": "A new message from your network"
   },
   "common": {
     "notfound": "No {0} found. Sorry. 🤔",

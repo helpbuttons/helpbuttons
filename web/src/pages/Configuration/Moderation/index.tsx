@@ -1,10 +1,7 @@
 import MessageNew from 'components/feed/MessageNew';
 import { BtnButtonType } from 'components/nav/ButtonTypes';
 import Popup from 'components/popup/Popup';
-import Accordion from 'elements/Accordion';
 import Btn, {
-  BtnAction,
-  BtnCaption,
   BtnType,
   IconType,
 } from 'elements/Btn';
@@ -20,8 +17,6 @@ import {
   IoBalloonOutline,
   IoBanOutline,
   IoCheckmarkCircleOutline,
-  IoHammerOutline,
-  IoLogoSteam,
   IoPersonOutline,
   IoQrCodeOutline,
 } from 'react-icons/io5';
@@ -30,12 +25,13 @@ import { readableTimeLeftToDate } from 'shared/date.utils';
 import { Role } from 'shared/types/roles';
 import { ButtonApprove, ButtonFindAll, ButtonModerationList } from 'state/Button';
 import { ModerationList, UpdateRole } from 'state/Users';
-import { getEmailPrefix, stringContains } from 'shared/sys.helper';
+import { stringContains } from 'shared/sys.helper';
 import { useButtonTypes } from 'shared/buttonTypes';
 import { FindAndSetMainPopupCurrentProfile, SetMainPopupCurrentButton, SetMainPopupCurrentProfile } from 'state/HomeInfo';
 import { Pagination, Table, TableBody, TableHeader, TableHeaderCell, TableLine, TableLineCell, useFilterItems } from 'components/table';
 import FieldText from 'elements/Fields/FieldText';
-import Invites from 'pages/Profile/Invites';
+import { GroupMessageType } from 'shared/types/group-message.enum';
+import { SendNewGroupMessage } from 'state/Activity';
 
 enum ModerationMode {
   USERS,
@@ -423,7 +419,6 @@ function AprovedButtonsList() {
             {...register('query')}
           /> */}
 
-
           <table className='form-list__table'>
             <thead className='form-list__table-header'>
               <tr className='form-list__table-header-row'>
@@ -483,7 +478,20 @@ function NewAdminCommunication() {
       <div className="form__field">
         <div className="form__label">{t('moderation.adminCommunicationLabel')}</div>
         <div className="form__explain">{t('moderation.adminCommunicationExplain')}</div>
-        <MessageNew onCreate={undefined} isComment={true} />
+        <MessageNew 
+          onCreate={(message) => {
+            store.emit(
+              new SendNewGroupMessage(
+                GroupMessageType.endorsed,
+                message,
+                () => {
+                  alertService.info(t('moderation.messageSent'));
+                }
+              )
+            );
+          }}
+          allowUploadImages={false}
+        />
       </div>
     </div></>
 }
