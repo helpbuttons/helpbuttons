@@ -531,7 +531,6 @@ export class ResetExploreSettings implements WatchEvent, UpdateEvent {
   }
   public update(state: GlobalState) {
     return produce(state, (newState) => {
-      console.log('settings to load...')
       newState.explore.settings = { ...state.explore.settings, ...this.newExploreSettings };
       newState.explore.settings.loading = true
       newState.explore.currentButton = null;
@@ -546,19 +545,8 @@ export class UpdateExploreSettings implements UpdateEvent {
   public update(state: GlobalState) {
 
     return produce(state, (newState) => {
-      const prevSettings = state.explore.settings;
-      let newExploreSettings = {};
-
-      if (this.newExploreSettings.center) {
-        newExploreSettings = { center: roundCoords(this.newExploreSettings.center), ...newExploreSettings }
-      }
-
-      newExploreSettings = { zoom: this.newExploreSettings.zoom, ...newExploreSettings }
-      newExploreSettings = { bounds: this.newExploreSettings.bounds, ...newExploreSettings }
-      if (prevSettings.center != null && JSON.stringify(prevSettings.center) != JSON.stringify(this.newExploreSettings.center)) {
-        newState.explore.map.showInstructions = false;
-      }
-      newState.explore.settings = { ...state.explore.settings, ...newExploreSettings };
+      const newSettings = { ...state.explore.settings, ...this.newExploreSettings }
+      newState.explore.settings = newSettings;
     });
   }
 }

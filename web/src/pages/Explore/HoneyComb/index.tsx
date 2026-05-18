@@ -25,6 +25,7 @@ import {
   convertBoundsToGeoJsonHexagons,
   getZoomResolution,
   hexToResolution,
+  roundCoords,
 } from 'shared/honeycomb.utils';
 import _ from 'lodash';
 import {
@@ -289,8 +290,9 @@ function useExploreSettings({
       {
         replaceUrl(`/Show/${currentButton.id}`)
       }else{
-        const newUrl = `/Explore/${Math.floor(exploreSettings.zoom)}/${exploreSettings.center[0]
-        }/${exploreSettings.center[1]}/${currentButton ? currentButton.id + '/': ''}${urlParams.size ? '?' + urlParams.toString() : ''}`;
+        const center = roundCoords(exploreSettings.center)
+        const newUrl = `/Explore/${Math.floor(exploreSettings.zoom)}/${center[0]
+        }/${center[1]}/${currentButton ? currentButton.id + '/': ''}${urlParams.size ? '?' + urlParams.toString() : ''}`;
         replaceUrl(newUrl)
       }
       }
@@ -451,7 +453,7 @@ function useHexagonMap({
         new UpdateExploreSettings({
           zoom: zoom,
           bounds: bounds,
-          loading: true,
+          // loading: true, // Loading removed...
           center: center,
         }),
       );
