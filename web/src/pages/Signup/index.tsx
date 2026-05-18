@@ -13,6 +13,7 @@ import Btn, {
   ContentAlignment,
   BtnType,
   IconType,
+  BtnSubmit,
 } from 'elements/Btn';
 import Form from 'elements/Form';
 import { useRouter } from 'next/router';
@@ -140,13 +141,7 @@ export function SignupForm() {
           </div>
           <div className="form__btn-wrapper">
             <div className="form__btn-register">
-              <Btn
-                submit={true}
-                btnType={BtnType.submit}
-                caption={t('user.register')}
-                contentAlignment={ContentAlignment.center}
-                disabled={isSubmitting || cookieState != CookiesState.ACCEPTED}
-              />
+              <BtnSubmit isSubmitting={isSubmitting} errors={errors} caption={t('user.register')} disabled={isSubmitting || cookieState != CookiesState.ACCEPTED}/>
             </div>
             <div className="popup__link" onClick={() => store.emit(new SetMainPopup(MainPopupPage.LOGIN))}>
                 {t('user.loginLink')}

@@ -2,6 +2,7 @@
 import React from "react";
 import router from "next/router";
 import Loading from "components/loading";
+import t from "i18n";
 
 export enum BtnType {
     corporative,
@@ -88,6 +89,20 @@ function CaptionNode({
     } else {
         return <>{caption}</>;
     }
+}
+
+export function BtnSubmit({ isSubmitting, errors, caption, disabled = false }) {
+    return <>
+        <Btn
+            btnType={BtnType.submit}
+            contentAlignment={ContentAlignment.center}
+            caption={caption}
+            isSubmitting={isSubmitting}
+            submit={true}
+            disabled={disabled}
+        />
+        {Object.keys(errors).length > 0 && <>{t('validation.invalidForm')}</>}
+    </>
 }
 
 export default function Btn({

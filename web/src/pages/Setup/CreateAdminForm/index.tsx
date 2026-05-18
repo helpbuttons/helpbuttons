@@ -2,7 +2,7 @@ import Popup from 'components/popup/Popup';
 import NewUserFields, {
   passwordsMatch,
 } from 'components/user/NewUserFields';
-import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
+import Btn, { BtnSubmit, BtnType, ContentAlignment } from 'elements/Btn';
 import Form from 'elements/Form';
 import router from 'next/router';
 import { GlobalState, store } from 'state';
@@ -165,14 +165,7 @@ export default function CreateAdminForm() {
             </div>
           </div>
           <div className="form__btn-wrapper">
-            <Btn
-              submit={true}
-              btnType={BtnType.submit}
-              caption={t('common.next')}
-              contentAlignment={ContentAlignment.center}
-              isSubmitting={isSubmitting}
-              disabled={disableSave}
-            />
+            <BtnSubmit isSubmitting={isSubmitting} errors={errors} caption={t('common.save')} disabled={disableSave}/>
             {disableSave && 
               <Btn
                 btnType={BtnType.splitIcon}

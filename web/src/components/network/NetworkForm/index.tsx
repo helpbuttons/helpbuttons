@@ -1,5 +1,6 @@
 // here we have the basic configuration of an network
 import Btn, {
+  BtnSubmit,
   BtnType,
   ContentAlignment,
 } from 'elements/Btn';
@@ -42,6 +43,7 @@ function NetworkForm({
   description,
   showClose = true,
   isSetup = false,
+  isValid = true,
 }) {
   const router = useRouter();
 
@@ -360,13 +362,7 @@ function NetworkForm({
 
             */}
           <div className="publish__submit">
-            <Btn
-              btnType={BtnType.submit}
-              contentAlignment={ContentAlignment.center}
-              caption={t('common.save')}
-              isSubmitting={isSubmitting}
-              submit={true}
-            />
+            <BtnSubmit isSubmitting={isSubmitting} errors={errors} caption={t('common.save')}/>
           </div>
         </div>
       </Form>

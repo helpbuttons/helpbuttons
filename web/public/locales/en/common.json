@@ -493,7 +493,7 @@
     "emailRegistered": "Email already registered",
     "userRegistered": "Username already registered",
     "delete": "Nothing to delete",
-    "invalidForm": "Error validating the form",
+    "invalidForm": "Check fields, there are errors",
     "inviteOnly": "Invite only network",
     "address": "Error getting address",
     "dates": "Invalid dates, the end date time should not be before the start",
