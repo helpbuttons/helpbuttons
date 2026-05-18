@@ -54,7 +54,7 @@ export default function ContentList({
       {buttons?.slice(0, buttonsSlice).map((btn, i) => (
         <CardButtonList
           button={btn}
-          key={i}
+          key={btn.id}
           buttonTypes={buttonTypes}
           showMap={showMap}
           linkType={linkType}
