@@ -546,6 +546,7 @@ export class UpdateExploreSettings implements UpdateEvent {
 
     return produce(state, (newState) => {
       const newSettings = { ...state.explore.settings, ...this.newExploreSettings }
+      newState.explore.map.showInstructions = false;
       newState.explore.settings = newSettings;
     });
   }
