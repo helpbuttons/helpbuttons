@@ -88,7 +88,7 @@ function SearchText({ count, where, filtering = false }) {
 
   const hexagonClicked = useStore(
     store,
-    (state: GlobalState) => state.explore.settings.hexagonClicked,
+    (state: GlobalState) => state.explore.map.filters.hexClicked,
     false,
   );
 

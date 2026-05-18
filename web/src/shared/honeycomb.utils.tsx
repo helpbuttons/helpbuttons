@@ -219,16 +219,8 @@ export function calculateDensityMap(
     } else {
       const { hexagon, ...rest } = button;
       const group = groupBy.find(
-        (button) => {
-          try{
-            if(button.hideAddress && resolution > hideAddressResolution) {
-              return cellToParent(hexagon, hideAddressResolution) === button.hexagon
-            }
-            return cellToParent(button.hexagon, resolution) ===
-            cellToParent(hexagon, resolution)
-          }catch(err){
-            console.error(err)
-          }
+        (_btn) => {
+          return hexToResolution(hexagon, resolution, _btn.hideAddress) == _btn.hexagon
         }
           
       );
@@ -239,7 +231,7 @@ export function calculateDensityMap(
           if(button.hideAddress && resolution > hideAddressResolution) {
             return;
           }
-          const cell = cellToParent(button.hexagon, resolution);
+          const cell = hexToResolution(button.hexagon, resolution);
           groupBy.push({
             hexagon: cell,
             buttons: [button],
@@ -316,7 +308,7 @@ export function cellToZoom(hexagon, zoom)
   {
     return hexagon;
   }
-  return cellToParent(hexagon, resolution)
+  return hexToResolution(hexagon, resolution)
 }
 
 export const getHexagonCenter = (latLng, zoom) => {
@@ -334,6 +326,23 @@ export function debugHexes(hexes) {
   hexes.map((hex) => {
           console.log(`${hex} - ${getResolution(hex)}`)
         })
+}
+
+export function hexToResolution(hexagon, resolution, hiddenAddress = false)
+{
+
+  try {
+    if(hiddenAddress && resolution > hideAddressResolution) {
+        return cellToParent(hexagon, hideAddressResolution)
+    }
+    return cellToParent(hexagon, resolution)
+  }catch(err)
+  {
+    const res = getResolution(hexagon)
+    console.error(`needed resolution: ${res}. requested resolution: ${resolution}`)
+    console.trace()
+  }
+  return -1;
 }
 // console.log(debounceHexagonsToFetch.resolution)
         

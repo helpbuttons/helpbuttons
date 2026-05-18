@@ -56,7 +56,7 @@ function List({
 
   const hexagonClicked = useStore(
     store,
-    (state: GlobalState) => state.explore.settings.hexagonClicked,
+    (state: GlobalState) => state.explore.map.filters.hexClicked,
   );
 
   const showMapIcon = showMap ? <IoClose /> : <IoMapOutline />;

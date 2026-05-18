@@ -4,11 +4,10 @@ import { GlobalState, store, useGlobalStore } from 'state';
 import {
   ExploreViewMode,
   HoverButtonList,
-  ListOnlyButtonType,
   RecenterExplore,
   UpdateExploreSettings,
   UpdateExploreViewMode,
-  UpdateFiltersToFilterButtonType,
+  UpdateFiltersHexButtonType,
   UpdateHexagonClicked, updateCurrentButton,
 } from 'state/Explore';
 import { HbMap } from '.';
@@ -17,7 +16,7 @@ import {
   convertH3DensityToFeatures,
   getZoomResolution} from 'shared/honeycomb.utils';
 import _ from 'lodash';
-import { buttonColorStyle, useButtonType } from 'shared/buttonTypes';
+import { buttonColorStyle } from 'shared/buttonTypes';
 import Loading from 'components/loading';
 import { IoContract, IoResize, IoStorefrontSharp } from 'react-icons/io5';
 import { useStore } from 'state';
@@ -44,7 +43,7 @@ export default function HexagonExploreMap({
 
   const hexagonClicked = useStore(
     store,
-    (state: GlobalState) => state.explore.settings.hexagonClicked
+    (state: GlobalState) => state.explore.map.filters.hexClicked
   );
 
   const hoverButtonList = useStore(
@@ -135,8 +134,7 @@ export default function HexagonExploreMap({
   }, [hoverButtonList, hexagonClicked, hexagonsMedianCenters, currentButton, exploreSettings.zoom])
   
   const filterButtonType = (hexagonSelected, btnTypeName) => {
-    
-    store.emit(new ListOnlyButtonType(hexagonSelected, btnTypeName))
+    store.emit(new UpdateFiltersHexButtonType(hexagonSelected, btnTypeName))
   }
 
   return (

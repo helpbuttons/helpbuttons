@@ -15,6 +15,8 @@ export interface ButtonFilters {
     orderBy: string;
     tags: string[]
     days: number;
+    hexClicked: string;
+    hexClickedBtnType: string;
   }
   
   export const defaultFilters: ButtonFilters = {
@@ -24,6 +26,8 @@ export interface ButtonFilters {
     orderBy: 'date',
     tags: [],
     days: defaultDaysForBulletin,
+    hexClicked: null,
+    hexClickedBtnType: null
   };
   
   const applyButtonTypesFilter = (button, buttonTypes) => {
@@ -132,7 +136,7 @@ export interface ButtonFilters {
   export const isFiltering = () =>
   {
     const filters = useGlobalStore((state: GlobalState) => state.explore.map.filters)
-    const hexagonClicked = useGlobalStore((state: GlobalState) => state.explore.settings.hexagonClicked)
+    const hexagonClicked = useGlobalStore((state: GlobalState) => state.explore.map.filters.hexClicked)
     const currentButton = useGlobalStore((state: GlobalState) => state.explore.currentButton)
 
     const [isFiltering, setIsFiltering] = useState(false)
