@@ -14,6 +14,7 @@ import Btn, {
   ContentAlignment,
   BtnType,
   IconType,
+  BtnSubmit,
 } from 'elements/Btn';
 import Form from 'elements/Form';
 
@@ -324,13 +325,7 @@ export default function ProfileEdit() {
                   </Accordion>
 
                       <div className="publish__submit">
-                        <Btn
-                          btnType={BtnType.submit}
-                          contentAlignment={ContentAlignment.center}
-                          caption={t('common.save')}
-                          isSubmitting={isSubmitting}
-                          submit={true}
-                        />
+                        <BtnSubmit isSubmitting={isSubmitting} errors={errors} caption={t('common.save')}/>
                       </div>
                     </div>
             </Form>

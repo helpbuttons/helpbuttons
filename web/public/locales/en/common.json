@@ -482,8 +482,8 @@
     "everyWeek": "Each week"
   },
   "validation": {
-    "fieldRequired": "{0} is required.",
-    "tooShort": "{0} is too short.",
+    "fieldRequired": "field is required.",
+    "tooShort": "field is too short.",
     "error": "Check the fields, there are errors in the form",
     "register": "You need to be registered to use this functionality",
     "ownership": "You don't have ownership of this",
@@ -493,7 +493,7 @@
     "emailRegistered": "Email already registered",
     "userRegistered": "Username already registered",
     "delete": "Nothing to delete",
-    "invalidForm": "Error validating the form",
+    "invalidForm": "Check fields, there are errors",
     "inviteOnly": "Invite only network",
     "address": "Error getting address",
     "dates": "Invalid dates, the end date time should not be before the start",

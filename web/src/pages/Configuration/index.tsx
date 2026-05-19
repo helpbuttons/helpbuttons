@@ -39,6 +39,7 @@ function Configuration() {
     setError,
     reset,
     setFocus,
+    clearErrors
   } = useForm({});
 
   const backgroundColor = watch('backgroundColor');
@@ -154,6 +155,7 @@ function Configuration() {
               captionAction={t('common.save')}
               linkFwd="/Profile"
               description={t('configuration.description')}
+              clearErrors={clearErrors}
             />
           </Popup>
         )}

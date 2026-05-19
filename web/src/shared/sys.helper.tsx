@@ -36,7 +36,6 @@ export function getLocaleFromCookie(): string | null {
 }
 export function setLocaleCookie(locale: string, days = 365): void {
   try {
-    console.log('setting locale cookie: ' + locale)
     const expires = new Date();
     expires.setTime(expires.getTime() + days * 24 * 60 * 60 * 1000);
     document.cookie = `locale=${locale};expires=${expires.toUTCString()};path=/`;

@@ -43,6 +43,8 @@
     "needPlace": "Por favor, selecione em qual área está localizada a sua Rede",
     "latestActivity": "Últimas atividades",
     "installButton": "Instalar",
+    "openApp": "Abrir app",
+    "revokeNotifications": "Desativar notificações do navegador",
     "powered": "Powered by",
     "featured": "Destaques",
     "share": "Opções de partilha",
@@ -195,34 +197,7 @@
     "messages": "Mensagens",
     "pickOne": "Selecciona uma conversa",
     "draft": "Rascunho",
-    "sent": "Messagem enviada!",
-    "newButtonInterest": "Há um novo _helpbutton_ publicado num tópico que segues em '{0}'",
-    "newMessageOutbox": "{0} enviou-te uma mensagem: '{1}'",
-    "deleted": "_helpbutton_ eliminado",
-    "markedAsRead": "Marcado como lido",
-    "newcommentOwn": "Escreveste um comentário '{0}'",
-    "newmention": "Foste mencionado numa conversa pública. {0}: '{1}'",
-    "newmentionOwn": "Publicaste um novo comentário numa conversa. '{0}'",
-    "endorsed": "Foste endorsed pela administração, agora tens um distintivo 'verificado' no teu perfil",
-    "revokeEndorse": "Infelizmente o teu distintivo 'verificado' foi removido",
-    "roleupdate": "O teu papel foi atualizado para '{0}'",
-    "newSignup": "Novo utilizador '{0}' registado",
-    "notice": "Aviso",
-    "writingDraft": "A escrever mensagem privada",
-    "newbuttonHomeinfo": "Novo _helpbutton_",
-    "title": "Mensagens e alertas",
-    "comment": "Comentário",
-    "message": "Mensagem",
-    "all": "tudo",
-    "newMessageSubject": "{0} enviou-te uma nova mensagem",
-    "newMessageContent": "{0} escreveu '{1}' no _helpbutton_",
-    "newPostCommentSubject": "{0} comentou num _helpbutton_",
-    "newPostCommentContent": "{0} escreveu um novo comentário '{1}'. no _helpbutton_ '{2}'",
-    "newMentionSubject": "{0} mencionou-te num _helpbutton_",
-    "newMentionContent": "{1} no _helpbutton_ ",
-    "replyToMessage": "Responder à mensagem",
-    "view": "Ver",
-    "newpostfollower": "Uma nova publicação foi feita num _helpbutton_ que segues"
+    "sent": "Messagem enviada!"
   },
   "activitiesWithSubject": {
     "newbutton": "{0} publicou um _helpbutton_ em {1}",
@@ -721,5 +696,8 @@
     "otherNetworks": "Ver outras redes",
     "explore": "Explorar _helpbuttons_",
     "whatIsNetwork": "Saber mais..."
+  },
+  "customTemplates": {
+    "eventExpiredMailSubject": "{0} expirou"
   }
 }

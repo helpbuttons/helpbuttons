@@ -32,7 +32,7 @@ export default function HomeInfoPinnedButtons({ }) {
                         {pinnedButtons.map((btn, i) => (
                             <CardButtonList
                                 button={btn}
-                                key={i}
+                                key={btn.id}
                                 buttonTypes={buttonTypes}
                                 showMap={false}
                                 linkType={ButtonLinkType.MAINPOPUP}

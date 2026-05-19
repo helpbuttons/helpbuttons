@@ -1,5 +1,6 @@
 // here we have the basic configuration of an network
 import Btn, {
+  BtnSubmit,
   BtnType,
   ContentAlignment,
 } from 'elements/Btn';
@@ -40,8 +41,10 @@ function NetworkForm({
   linkFwd,
   setFocus,
   description,
+  clearErrors,
   showClose = true,
   isSetup = false,
+  isValid = true,
 }) {
   const router = useRouter();
 
@@ -55,6 +58,12 @@ function NetworkForm({
     }
   }, [nomeclature, nomeclaturePlural])
   
+  const exploreSettings = watch('exploreSettings')
+  useEffect(() => {
+    if(exploreSettings){
+      clearErrors("exploreSettings")
+    }
+  }, [exploreSettings])
   const [showCurrencyDropDown, setShowCurrencyDropDown] = useState(false)
   useEffect(() => {
     if(buttonTemplates)
@@ -79,14 +88,15 @@ function NetworkForm({
     { name: 'appearance', fields: ['logo', 'jumbo'] },
     { name: 'configuration', fields: ['exploreSettings'] },
   ];
+  const [chapterErrors, setChapterErrors] = useState([])
+  useEffect(() => {
+    const chaptersWithErrors = accordionChapters.filter((chapter) => {
+      return findError(chapter.fields, errors)
+    })
+    setChapterErrors(() => chaptersWithErrors.map((bt) => bt.name))
+  }, [isSubmitting])
   const hasErrors = (chapterName) => {
-    const chapter = accordionChapters.find(
-      (chapter) => chapter.name == chapterName,
-    );
-    if (!chapter) {
-      return false;
-    }
-    return findError(chapter.fields, errors);
+    return chapterErrors.includes(chapterName)
   };
   const onLanguageSelection = (value) => {
     setValue('locale', value); 
@@ -368,13 +378,7 @@ function NetworkForm({
 
             */}
           <div className="publish__submit">
-            <Btn
-              btnType={BtnType.submit}
-              contentAlignment={ContentAlignment.center}
-              caption={t('common.save')}
-              isSubmitting={isSubmitting}
-              submit={true}
-            />
+            <BtnSubmit isSubmitting={isSubmitting} errors={errors} caption={t('common.save')}/>
           </div>
         </div>
       </Form>

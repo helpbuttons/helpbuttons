@@ -11,6 +11,7 @@ import { useSelectedNetwork } from "state/Networks";
 import { SetHideNavBottom } from "state/HomeInfo";
 import { useOnPageExit } from "shared/custom.hooks";
 import { ResetFilters } from "state/Explore";
+import { roundCoords } from "shared/honeycomb.utils";
 
 export default function Explore(props) {
   
@@ -23,24 +24,16 @@ export default function Explore(props) {
 function useParams(router)
 {
 
-  const exploreSettings = useGlobalStore((state: GlobalState) => state.explore.settings)
   const selectedNetwork = useSelectedNetwork()
 
   useEffect(() => {
-    
-    if(exploreSettings?.center)
+    if(selectedNetwork)
     {
-      // load on last coordinates naviagated...!
-      // store.emit(new ResetFilters())
-      router.push(`/Explore/${exploreSettings.zoom}/${exploreSettings.center[0]}/${exploreSettings.center[1]}`, undefined, { shallow: true });
-    }else{
-      // load from coordinates of network
-      const centerLat = selectedNetwork.exploreSettings?.center ? selectedNetwork.exploreSettings?.center[0]: 0;
-      const centerLng = selectedNetwork.exploreSettings?.center ? selectedNetwork.exploreSettings?.center[1]: 0;;
-      router.push(`/Explore/${selectedNetwork.exploreSettings.zoom}/${centerLat}/${centerLng}`, undefined, { shallow: true });
+      const center = roundCoords(selectedNetwork.exploreSettings.center)
+      router.push(`/Explore/${selectedNetwork.exploreSettings.zoom}/${center[0]}/${center[1]}`, undefined, { shallow: true });
     }
     
-  }, [exploreSettings])
+  }, [selectedNetwork])
 }
 
 

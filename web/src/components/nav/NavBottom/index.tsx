@@ -73,9 +73,10 @@ function NavBottom({ sessionUser, hideNavBottom=false }) {
 
         <NavLink
           onClick={(e) => {
-            pageName == 'Explore'
-              ? store.emit(new RecenterExplore())
-              : '';
+            if(pageName == 'Explore'){
+              e.preventDefault()
+              store.emit(new RecenterExplore())
+            }
           }}
           href={'/Explore'}
           className={`nav-bottom__link ${isCurrent(

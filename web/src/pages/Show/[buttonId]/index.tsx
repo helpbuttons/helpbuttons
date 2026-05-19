@@ -18,11 +18,9 @@ export default function Show({
 function useParams(router)
 {
   const { buttonId } = router.query;
-
   useEffect(() => {
-    if(buttonId)
-    {
-      router.push(`/Explore/0/0/0/${buttonId}`, undefined, { shallow: true });
+    if(buttonId){
+      router.push(`/Explore/b/${buttonId}`, undefined, { shallow: true });
     }
   }, [buttonId])
 }

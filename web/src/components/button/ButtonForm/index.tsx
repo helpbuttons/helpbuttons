@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Form from 'elements/Form';
 import FieldButtonType from 'components/button/ButtonType';
-import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
+import { BtnSubmit } from 'elements/Btn';
 import FieldLocation from 'elements/Fields/FieldLocation';
 import { FieldTextArea } from 'elements/Fields/FieldTextArea';
 import FieldText from 'elements/Fields/FieldText';
@@ -198,14 +198,7 @@ export default function ButtonForm({
                     <FieldCustomFields customFields={customFields} watch={watch} setValue={setValue} setFocus={setFocus} register={register} errors={errors} currency={selectedNetwork.currency} />
                     <ButtonShare />
                     <div className="publish__submit">
-                      <Btn
-                        btnType={BtnType.submit}
-                        contentAlignment={ContentAlignment.center}
-                        caption={t('common.publish')}
-                        isSubmitting={isSubmitting}
-                        submit={true}
-                        disabled={isSubmitting || cookieState != CookiesState.ACCEPTED}
-                      />
+                      <BtnSubmit disabled={isSubmitting || cookieState != CookiesState.ACCEPTED} isSubmitting={isSubmitting} errors={errors} caption={t('common.publish')}/>
                     </div>
                   </div>
                 </div>

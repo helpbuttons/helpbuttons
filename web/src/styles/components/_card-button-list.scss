@@ -80,13 +80,12 @@ $card-button-list-status-height: 10px;
 
 .card-button-list:hover {
   cursor: pointer;
-  box-shadow: $box-shadow-divs;
-  overflow: hidden;
 
   & .card-button-list__status::before {
     transition: $transition-default-slow;
     width: 20%;
   }
+
 }
 
 .card-button-list__content {
