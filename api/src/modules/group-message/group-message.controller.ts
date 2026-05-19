@@ -28,7 +28,7 @@ export class GroupMessageController {
     @OnlyAdmin()
     @Post('send/endorsed')
     async sendEndorsedMessage(@CurrentUser() user: User, @Body() message) {
-        this.userService.notifyByEmailEndorsedAndAdmins(message);
+        this.userService.notifyByEmailEndorsedAndAdmins(message.message);
         return this.groupMessageService.sendMessage(user, GroupMessageType.endorsed, message.message)
     }
 

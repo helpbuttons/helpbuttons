@@ -345,18 +345,18 @@ COALESCE(
       .then(
         (endorsedAndAdmins) =>
           endorsedAndAdmins.map((user) => {
-            this.notifyByEmail(message, translate(user.locale, 'activities.newEndorsedMessageSubject'), user.locale, user.id, user.email)
+            this.notifyByEmail(message, translate(user.locale, 'activities.newEndorsedMessageSubject'), user.locale, user.id, user.email, '/Activity/community')
           }),
       );
   }
-  async notifyByEmail(message, subject, locale, userId, email) {
+  async notifyByEmail(message, subject, locale, userId, email, path = '/Explore') {
     return this.getUserLoginParams(userId)
       .then((loginParams) => {
         this.mailService.sendWithLink({
           to: email,
           content: message,
           subject: subject,
-          link: getUrl(`/Explore/${loginParams}`),
+          link: getUrl(`${path}/${loginParams}`),
           linkCaption: translate(locale, 'activities.view'),
         });
       })
