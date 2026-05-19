@@ -81,14 +81,15 @@ function NetworkForm({
     { name: 'appearance', fields: ['logo', 'jumbo'] },
     { name: 'configuration', fields: ['exploreSettings'] },
   ];
+  const [chapterErrors, setChapterErrors] = useState([])
+  useEffect(() => {
+    const chaptersWithErrors = accordionChapters.filter((chapter) => {
+      return findError(chapter.fields, errors)
+    })
+    setChapterErrors(() => chaptersWithErrors)
+  }, [isSubmitting])
   const hasErrors = (chapterName) => {
-    const chapter = accordionChapters.find(
-      (chapter) => chapter.name == chapterName,
-    );
-    if (!chapter) {
-      return false;
-    }
-    return findError(chapter.fields, errors);
+    return chapterErrors[chapterName] !== undefined
   };
   const onLanguageSelection = (value) => {
     setValue('locale', value); 
