@@ -666,7 +666,8 @@
     "adminCommunicationLabel": "Administrator communications",
     "edit": "Edit",
     "preview": "Preview",
-    "view": "Ver"
+    "view": "Ver",
+    "messageSent": "Missatge enviat"
   },
   "role": {
     "blocked": "desactivat",

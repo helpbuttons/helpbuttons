@@ -770,7 +770,8 @@
     "awaitingApprovalLabel": "Pendientes de aprobación",
     "buttonsApproved": "Lista de _helpbuttons_ publicados",
     "view": "Ver",
-    "approved": "Approved"
+    "approved": "Approved",
+    "messageSent": "Mensaje enviado"
   },
   "roles": {
     "blocked": "bloqueado",

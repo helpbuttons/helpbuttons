@@ -741,7 +741,8 @@
     "awaitingApprovalLabel": "Onarpenaren zain",
     "block": "Erabiltzailea blokeatu",
     "buttonsApproved": "Argitaratutako _helpbutton_ guztiak ",
-    "view": "Ikusi"
+    "view": "Ikusi",
+    "messageSent": "Mezua bidali da"
   },
   "role": {
     "blocked": "desaktibatuta",
