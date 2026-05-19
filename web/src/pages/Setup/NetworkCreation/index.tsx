@@ -29,6 +29,7 @@ function NetworkCreation() {
     setValue,
     watch,
     setError,
+    clearErrors
   } = useForm({
     defaultValues: {
       name: title,
@@ -181,6 +182,7 @@ function NetworkCreation() {
             showClose={false}
             description={t('setup.configureInstanceDescription')}
             isSetup={true}
+            clearErrors={clearErrors}
           />
         </Popup>
       )}

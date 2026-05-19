@@ -41,6 +41,7 @@ function NetworkForm({
   linkFwd,
   setFocus,
   description,
+  clearErrors,
   showClose = true,
   isSetup = false,
   isValid = true,
@@ -57,6 +58,12 @@ function NetworkForm({
     }
   }, [nomeclature, nomeclaturePlural])
   
+  const exploreSettings = watch('exploreSettings')
+  useEffect(() => {
+    if(exploreSettings){
+      clearErrors("exploreSettings")
+    }
+  }, [exploreSettings])
   const [showCurrencyDropDown, setShowCurrencyDropDown] = useState(false)
   useEffect(() => {
     if(buttonTemplates)
@@ -86,10 +93,10 @@ function NetworkForm({
     const chaptersWithErrors = accordionChapters.filter((chapter) => {
       return findError(chapter.fields, errors)
     })
-    setChapterErrors(() => chaptersWithErrors)
+    setChapterErrors(() => chaptersWithErrors.map((bt) => bt.name))
   }, [isSubmitting])
   const hasErrors = (chapterName) => {
-    return chapterErrors[chapterName] !== undefined
+    return chapterErrors.includes(chapterName)
   };
   const onLanguageSelection = (value) => {
     setValue('locale', value); 

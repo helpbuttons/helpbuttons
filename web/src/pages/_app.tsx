@@ -334,7 +334,6 @@ function ActivityPool({ sessionUser }) {
 
 const useWhichLocale = ({ sessionLocale, networkLocale }) => {
   useEffect(() => {
-    console.log('updating locale.... ' + sessionLocale + ' net: ' + networkLocale)
     if (sessionLocale && networkLocale) {
       setLocale(sessionLocale);
     } else if (networkLocale) {
