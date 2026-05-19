@@ -234,7 +234,7 @@
     "replyToMessage": "Reply to message",
     "view": "View",
     "newpostfollower": "A new post was published in a _helpbutton_ you follow",
-    "newEndorsedMessageSubject": "A new message from your network"
+    "newEndorsedMessageSubject": "A new message from your network coordinator"
   },
   "common": {
     "notfound": "No {0} found. Sorry. 🤔",
@@ -734,7 +734,7 @@
     "awaitingApprovalLabel": "Awaiting approval",
     "buttonsApproved": "All published _helpbuttons_ ",
     "view": "View",
-    "approved":"Approved"
+    "approved": "Approved"
   },
   "roles": {
     "blocked": "blocked",

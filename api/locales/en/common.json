@@ -44,6 +44,8 @@
     "callToAdmin": "Hi! Press the phone you need someone to help. The site keeps info about your usage, check the conditions and privacy policy.",
     "latestActivity": "Latest activities",
     "installButton": "Install app",
+    "openApp": "Open app",
+    "revokeNotifications": "Disable browser notifications",
     "print": "Print activity",
     "share": "Share options",
     "notificationsPermission": "Allow notifications",
@@ -231,7 +233,8 @@
     "newMentionContent": "{0} on the _helpbutton_ ",
     "replyToMessage": "Reply to message",
     "view": "View",
-    "newpostfollower": "A new post was published in a _helpbutton_ you follow"
+    "newpostfollower": "A new post was published in a _helpbutton_ you follow",
+    "newEndorsedMessageSubject": "A new message from your network coordinator"
   },
   "common": {
     "notfound": "No {0} found. Sorry. 🤔",
