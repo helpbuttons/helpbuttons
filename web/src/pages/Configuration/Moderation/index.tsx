@@ -473,25 +473,30 @@ function AprovedButtonsList() {
 }
 
 function NewAdminCommunication() {
+  const [showForm, setShowForm] = useState(true)
   return <>
-    <div className="form__inputs-wrapper form__subsection">
-      <div className="form__field">
-        <div className="form__label">{t('moderation.adminCommunicationLabel')}</div>
-        <div className="form__explain">{t('moderation.adminCommunicationExplain')}</div>
-        <MessageNew 
-          onCreate={(message) => {
-            store.emit(
-              new SendNewGroupMessage(
-                GroupMessageType.endorsed,
-                message,
-                () => {
-                  alertService.info(t('moderation.messageSent'));
-                }
-              )
-            );
-          }}
-          allowUploadImages={false}
-        />
+    {showForm &&
+      <div className="form__inputs-wrapper form__subsection">
+        <div className="form__field">
+          <div className="form__label">{t('moderation.adminCommunicationLabel')}</div>
+          <div className="form__explain">{t('moderation.adminCommunicationExplain')}</div>
+          <MessageNew
+            onCreate={(message) => {
+              store.emit(
+                new SendNewGroupMessage(
+                  GroupMessageType.endorsed,
+                  message,
+                  () => {
+                    setShowForm(() => false)
+                    alertService.info(t('moderation.messageSent'));
+                  }
+                )
+              );
+            }}
+            allowUploadImages={false}
+          />
+        </div>
       </div>
-    </div></>
+    }
+  </>
 }
