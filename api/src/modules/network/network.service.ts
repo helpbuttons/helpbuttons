@@ -72,7 +72,8 @@ export class NetworkService {
       allowGuestCreation: createDto.allowGuestCreation,
       privacyPolicy: createDto.privacyPolicy,
       ethicsPolicy: createDto.ethicsPolicy,
-      contactEmail: createDto.contactEmail
+      contactEmail: createDto.contactEmail,
+      hideCountryOnAddresses: createDto.hideCountryOnAddresses
     };
     if (Array.isArray(createDto.tags)) {
       await this.tagService
@@ -213,7 +214,8 @@ export class NetworkService {
       allowGuestCreation: updateDto.allowGuestCreation,
       privacyPolicy: updateDto.privacyPolicy,
       ethicsPolicy: updateDto.ethicsPolicy,
-      contactEmail: updateDto.contactEmail
+      contactEmail: updateDto.contactEmail,
+      hideCountryOnAddresses: updateDto.hideCountryOnAddresses
     };
 
     /** Dont need to check for orphans no more... ! */
