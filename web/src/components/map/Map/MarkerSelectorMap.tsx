@@ -1,8 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { HbMapUncontrolled } from '.';
-import { GeoJson, Marker } from 'pigeon-maps';
 import {
-  getHexagonCenter,
   getZoomResolution,
   latLngToGeoJson,
 } from 'shared/honeycomb.utils';
@@ -11,7 +9,7 @@ import { LoadabledComponent } from 'components/loading';
 import {
   hexagonSizeZoom,
 } from './Map.consts';
-import dconsole from 'shared/debugger';
+import { useSelectedNetwork } from 'state/Networks';
 export function MarkerEditorMap({
   pickedPosition,
   zoom,
@@ -25,6 +23,7 @@ export function MarkerEditorMap({
   networkMapCenter = null,
   isLocationKeyMarker = false,
 }) {
+  const selectedNetwork = useSelectedNetwork()
   const [markerHexagonGeoJson, setMarkerHexagonGeoJson] =
     useState(null);
   const [mapCenter, setMapCenter] = useState(null);
@@ -74,6 +73,7 @@ export function MarkerEditorMap({
             onBoundsChanged={onBoundsChanged}
             handleMapClick={handleMapClicked}
             height={'18'}
+            tileType={selectedNetwork.exploreSettings.tileType}
           >
             {isLocationKeyMarker && 
               <LocationKeyIcon title={markerCaption} anchor={pickedPosition}
