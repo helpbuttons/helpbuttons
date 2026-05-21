@@ -58,6 +58,7 @@ export function InviteForm() {
     if(loginCode)
     {
       const onLoggingInSuccess = () => {
+        alertService.success(t('user.loginSucess'))
         store.emit(new SetMainPopup(MainPopupPage.HIDE))
         router.push(`/HomeInfo`)
       }
@@ -85,7 +86,7 @@ export function InviteForm() {
             phone: data.phone
           },
           () => {
-            // router.push(`/HomeInfo`)
+            alertService.success(t('user.loginSucess'))
             store.emit(new SetMainPopup(MainPopupPage.HIDE))
           },
           () => {

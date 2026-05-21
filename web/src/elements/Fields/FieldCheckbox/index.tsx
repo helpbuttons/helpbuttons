@@ -19,6 +19,10 @@ export const FieldCheckbox = React.forwardRef(({
   }, ref) => {
     const [checked, setChecked] = useState(defaultValue)
 
+    useEffect(() => {
+      setChecked(defaultValue);
+    }, [defaultValue]);
+
     const onChange = () => {
       setChecked((prevValue) => {
         onChanged(!prevValue)
