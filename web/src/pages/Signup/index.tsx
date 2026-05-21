@@ -31,7 +31,7 @@ import { useMetadataTitle } from 'state/Metadata';
 import dconsole from 'shared/debugger';
 import HomeInfo from 'pages/HomeInfo';
 import { getInvitationLink } from 'pages/Profile/Invites';
-import { IoQrCode } from 'react-icons/io5';
+import { IoQrCode, IoWarningOutline } from 'react-icons/io5';
 
 export default function Signup( {metadata})
 {
@@ -125,8 +125,7 @@ export function SignupForm() {
   }, [router])
 
   if(selectedNetwork?.inviteOnly && !inviteCode) {
-    return (<>{t('invite.inviteOnlyNetwork')}</>
-    )
+    return (<><div className='form__illustration form__illustration--icon'><IoWarningOutline/></div><div className="form__header">{t('invite.inviteOnlyNetwork')}</div></>)
   }
   return (
       <Form onSubmit={handleSubmit(onSubmit)} classNameExtra="login__form">
