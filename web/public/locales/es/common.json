@@ -547,7 +547,7 @@
     "emailRegistered": "Email ya registrado",
     "userRegistered": "Nombre ya registrado",
     "delete": "Nada que eliminar",
-    "invalidForm": "Error al validar el formulario",
+    "invalidForm": "Compruebe los campos. Hay algún error al validar el formulario.",
     "inviteOnly": "Acceso sólo con invitación",
     "address": "Error al obtener la dirección",
     "dates": "Fechas inválidas",
