@@ -25,6 +25,7 @@ import FieldButtonTemplates from 'components/button/ButtonType/FieldButtonTempla
 import { FieldKeySpots } from 'components/map/LocationKey';
 import FieldImageUpload from 'elements/Fields/FieldImageUpload';
 import { CustomFields } from 'shared/types/customFields.type';
+import { DropdownField } from 'elements/Dropdown/Dropdown';
 
 export default NetworkForm;
 
@@ -166,21 +167,16 @@ function NetworkForm({
           <Accordion collapsed={hasErrors('privacySettings')} title={t('configuration.privacySettings')}>
            <>
               <FieldCheckbox
-                name='inviteOnly'
-                label={t('invite.inviteOnlyLabel')}
-                explain={t('invite.inviteOnlyExplain')}
-                defaultValue={watch('inviteOnly')}
-                text={t('invite.inviteOnly')}
-                onChanged={(value) => setValue('inviteOnly', value)}
-              />
-
-              <FieldCheckbox
                 name='requireApproval'
                 label={t('moderation.requireApprovalLabel')}
                 explain={t('moderation.requireApprovalExplain')}
                 defaultValue={watch('requireApproval')}
                 text={t('moderation.requireApproval')}
                 onChanged={(value) => setValue('requireApproval', value)}
+              />
+              <FieldSignupConfiguration 
+                onChanged={(value) => setValue('signupConfiguration', value)}
+                defaultValue={watch('signupConfiguration')}
               />
               <FieldCheckbox
                 name='allowGuestCreation'
@@ -376,4 +372,36 @@ function NetworkForm({
       </Form>
     </>
   );
+}
+
+
+enum SingupConfigurationOptions {
+  ANYONE_CAN = 'anyoneCan',
+  INVITE_ONLY = 'inviteOnly',
+  INVITE_ONLY_BY_ENDORSED = 'inviteOnlyByEndorsed',
+  INVITE_ONLY_BY_ADMIN = 'inviteOnlyByAdmin',
+}
+
+function FieldSignupConfiguration({defaultValue = SingupConfigurationOptions.ANYONE_CAN, onChanged}){
+  const [value, setValue] = useState(defaultValue)
+  
+  // const defaultValue = SingupConfigurationOptions.INVITE_ONLY
+  const onChange = (value) => {
+    setValue(() => value)
+    onChanged(value)
+  }
+  return <>
+  <DropdownField
+                options={[
+                  {value: SingupConfigurationOptions.ANYONE_CAN, name: t(`configuration.${SingupConfigurationOptions.ANYONE_CAN}`) },
+                  { value: SingupConfigurationOptions.INVITE_ONLY, name: t(`configuration.${SingupConfigurationOptions.INVITE_ONLY}`) },
+                  { value: SingupConfigurationOptions.INVITE_ONLY_BY_ENDORSED, name: t(`configuration.${SingupConfigurationOptions.INVITE_ONLY_BY_ENDORSED}`) },
+                  { value: SingupConfigurationOptions.INVITE_ONLY_BY_ADMIN, name: t(`configuration.${SingupConfigurationOptions.INVITE_ONLY_BY_ENDORSED}`) },
+                ]}
+                explain={t(`configuration.explain${value}`)}
+                defaultSelected={defaultValue}
+                onChange={onChange}
+                label={t('user.pickLanguageLabel')}
+              />
+  </>
 }
