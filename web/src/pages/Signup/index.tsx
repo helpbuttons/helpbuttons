@@ -193,19 +193,26 @@ export function SignupAsGuestForm() {
     alertService.info(t('share.codeCopied', invitationLink))
   }
 
+  const selectedNetwork: Network = useStore(
+    store,
+    (state: GlobalState) => state.networks.selectedNetwork,
+  );
+
   return <>
     <Form onSubmit={handleSubmit(onSubmit)} classNameExtra="login__form">
         <div className="form__inputs-wrapper">
           {step == steps.REQUEST_CODE &&
             <>
               <div className='form__header'>{t('user.explainPublishAsGuest')}</div>
-              <Btn
-                submit={false}
-                btnType={BtnType.submit}
-                caption={t('user.generateCode')}
-                contentAlignment={ContentAlignment.center}
-                onClick={() => requestNewGuestCode()}
-              />
+              { !selectedNetwork?.inviteOnly &&
+                <Btn
+                  submit={false}
+                  btnType={BtnType.submit}
+                  caption={t('user.generateCode')}
+                  contentAlignment={ContentAlignment.center}
+                  onClick={() => requestNewGuestCode()}
+                />
+              }
             </>
           }
           {step == steps.SUCCESS &&
@@ -250,6 +257,7 @@ export function SignupAsGuestForm() {
              <div className="popup__link" onClick={() => store.emit(new SetMainPopup(MainPopupPage.INVITE_SCAN))}>
                  <IoQrCode/>{t('user.iHaveCode')}
               </div>
+
               <div className="popup__link" onClick={() => store.emit(new SetMainPopup(MainPopupPage.LOGIN))}>
                   {t('user.loginWEmail')}
               </div>
