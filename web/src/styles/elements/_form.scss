@@ -643,6 +643,11 @@ width: 100%;
 
 .form__fake-input {
 
+  word-break: keep-all;
+  text-wrap: keep-all;
+  overflow-x: auto;
+  overflow-y: hidden;
+
   &:hover {
 
     cursor: pointer;
