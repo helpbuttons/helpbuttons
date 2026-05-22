@@ -26,6 +26,7 @@ import { FieldKeySpots } from 'components/map/LocationKey';
 import FieldImageUpload from 'elements/Fields/FieldImageUpload';
 import { CustomFields } from 'shared/types/customFields.type';
 import { DropdownField } from 'elements/Dropdown/Dropdown';
+import { PrivacyNetworkType } from 'shared/types/privacy.enum';
 
 export default NetworkForm;
 
@@ -374,15 +375,7 @@ function NetworkForm({
   );
 }
 
-
-enum SingupConfigurationOptions {
-  ANYONE_CAN = 'anyoneCan',
-  INVITE_ONLY = 'inviteOnly',
-  INVITE_ONLY_BY_ENDORSED = 'inviteOnlyByEndorsed',
-  INVITE_ONLY_BY_ADMIN = 'inviteOnlyByAdmin',
-}
-
-function FieldSignupConfiguration({defaultValue = SingupConfigurationOptions.ANYONE_CAN, onChanged}){
+function FieldSignupConfiguration({defaultValue = PrivacyNetworkType.ANYONE_CAN, onChanged}){
   const [value, setValue] = useState(defaultValue)
   
   // const defaultValue = SingupConfigurationOptions.INVITE_ONLY
@@ -391,12 +384,12 @@ function FieldSignupConfiguration({defaultValue = SingupConfigurationOptions.ANY
     onChanged(value)
   }
   return <>
-  <DropdownField
+              <DropdownField
                 options={[
-                  {value: SingupConfigurationOptions.ANYONE_CAN, name: t(`configuration.${SingupConfigurationOptions.ANYONE_CAN}`) },
-                  { value: SingupConfigurationOptions.INVITE_ONLY, name: t(`configuration.${SingupConfigurationOptions.INVITE_ONLY}`) },
-                  { value: SingupConfigurationOptions.INVITE_ONLY_BY_ENDORSED, name: t(`configuration.${SingupConfigurationOptions.INVITE_ONLY_BY_ENDORSED}`) },
-                  { value: SingupConfigurationOptions.INVITE_ONLY_BY_ADMIN, name: t(`configuration.${SingupConfigurationOptions.INVITE_ONLY_BY_ENDORSED}`) },
+                  {value: PrivacyNetworkType.ANYONE_CAN, name: t(`configuration.${PrivacyNetworkType.ANYONE_CAN}`) },
+                  { value: PrivacyNetworkType.INVITE_ONLY, name: t(`configuration.${PrivacyNetworkType.INVITE_ONLY}`) },
+                  { value: PrivacyNetworkType.INVITE_ONLY_BY_ENDORSED, name: t(`configuration.${PrivacyNetworkType.INVITE_ONLY_BY_ENDORSED}`) },
+                  { value: PrivacyNetworkType.INVITE_ONLY_BY_ADMIN, name: t(`configuration.${PrivacyNetworkType.INVITE_ONLY_BY_ENDORSED}`) },
                 ]}
                 explain={t(`configuration.explain${value}`)}
                 defaultSelected={defaultValue}
