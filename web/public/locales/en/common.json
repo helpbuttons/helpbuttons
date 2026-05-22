@@ -75,9 +75,7 @@
     "printInvites": "Printable pdf invitations",
     "linkCopied": "{0} copied to clipboard",
     "codeCopied": "Copied on clipboard",
-    "copyCode": "Copy code",
-    "personalInviteExplain": "This network requires an invitation to join. Generate a unique personal link for each person.",
-    "generatePersonalLink": "Generate & copy link"
+    "copyCode": "Copy code"
   },
   "feed": {
     "write": "Write message",

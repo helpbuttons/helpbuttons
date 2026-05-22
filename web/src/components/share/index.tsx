@@ -13,13 +13,11 @@ import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
 import { getShareLink } from 'shared/sys.helper';
 import Btn, { BtnType, ContentAlignment, IconType } from 'elements/Btn';
 import { isAdmin } from 'state/Users';
-import { CreateInvite } from 'state/Profile';
 export function ShareButton({onClick})
 {
   return <ButtonForPopup buttonIcon={<IoShare/>} buttonCaption={t('homeinfo.share')} onClick={onClick}/>
 }
 export function ShareForm({}) {
-
   enum shareOptions {
     rss = 'rss',
     ics = 'ics',
@@ -28,37 +26,29 @@ export function ShareForm({}) {
     bulletin = 'bulletin',
   }
 
-
   const userLoggedIn = useGlobalStore(
     (state: GlobalState) => state.sessionUser,
   );
-  const selectedNetwork = useGlobalStore(
-    (state: GlobalState) => state.networks.selectedNetwork,
-  );
   return (
     <>
-        <div className="form__section">
-          <div className="form__section-title">
-            {t('share.invitePeople')}
-          </div>
-            {selectedNetwork?.inviteOnly
-              ? <SharePersonalInviteLink />
-              : <div className="form__field">
-                  <div className="form__explain">
-                    {t('share.invitePeopleExplain')}
-                  </div>
-                  <ShareInviteButton/>
-                </div>
-            }
-            {isAdmin(userLoggedIn) &&
-              <div className="form__field">
-                <Accordion icon={<IoPrintOutline/>} title={t('share.advancedInviteOptions')} >
-                  <ShareInvitationsForm />
-                </Accordion>
-              </div>
-          }
+      <div className="form__section">
+        <div className="form__section-title">
+          {t('share.invitePeople')}
         </div>
-      
+        <div className="form__field">
+              <div className="form__explain">
+                {t('share.invitePeopleExplain')}
+              </div>
+              <ShareInviteButton/>
+        </div>
+        {isAdmin(userLoggedIn) &&
+          <div className="form__field">
+            <Accordion icon={<IoPrintOutline/>} title={t('share.advancedInviteOptions')} >
+              <ShareInvitationsForm />
+            </Accordion>
+          </div>
+       }  
+      </div>
       <div className="form__section">
 
         <div className="form__section-title">
@@ -111,51 +101,6 @@ function ShareInviteButton() {
     </div>
     
   )
-}
-
-function SharePersonalInviteLink() {
-  const [link, setLink] = useState('');
-  const [isGenerating, setIsGenerating] = useState(false);
-  const userLoggedIn = useGlobalStore(
-    (state: GlobalState) => state.sessionUser,
-  );
-
-  const generateLink = () => {
-    setIsGenerating(true);
-    store.emit(
-      new CreateInvite(
-        { maximumUsage: 1, expirationTimeInSeconds: 0, followMe: false },
-        (invite) => {
-          const url = getShareLink('/Signup/Invite/' + invite.id);
-          setLink(url);
-          setIsGenerating(false);
-          navigator.clipboard.writeText(url);
-          alertService.info(t('share.linkCopied', [url]));
-        },
-      ),
-    );
-  };
-
-  return (
-    <div className="form__field">
-      <div className="form__explain">{t('share.personalInviteExplain')}</div>
-      <div className="form__field--multiinput">
-        {userLoggedIn && <>
-          {link && <div className="form__input form__fake-input">{link}</div>}
-            <Btn
-              btnType={BtnType.corporative}
-              contentAlignment={ContentAlignment.center}
-              iconLeft={IconType.svg}
-              iconLink={<IoPersonAddOutline /> as any}
-              caption={t('share.generatePersonalLink')}
-              onClick={generateLink}
-              disabled={isGenerating}
-            />
-          </>
-        }
-      </div>
-    </div>
-  );
 }
 
 function ShareRssButton() {
