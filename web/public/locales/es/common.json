@@ -79,8 +79,7 @@
     "printInvites": "Invitaciones en PDF",
     "codeCopied": "Código copiado",
     "copyCode": "Copiar código",
-    "linkCopied": "{0} copiado al portapapeles"
-    "copyCode": "Copiar código",
+    "linkCopied": "{0} copiado al portapapeles",
     "personalInviteExplain": "Esta red requiere de invitación para unirse. Cada enlace generado vale para una sola persona.",
     "generatePersonalLink": "Generar y copiar enlace"
   },
