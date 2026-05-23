@@ -208,7 +208,7 @@
     "newmentionOwn": "You post a new coment in a conversation. '{0}'",
     "newfollow": "{0} is now following your _helpbutton_ {1}",
     "newfollowing": "You started following",
-    "newfollowed": "Followed your _helpbutton_",
+    "newfollowed": "{0} followed your _helpbutton_",
     "myhelpbuttons": "My _helpbuttons_",
     "deletebutton": "{0} was deleted",
     "expiredEventType": "_helpbutton_ ended",
