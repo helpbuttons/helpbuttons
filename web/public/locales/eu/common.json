@@ -245,7 +245,7 @@
     "message": "Mezua",
     "all": "dena",
     "newMessageSubject": "{0}-(e)k mezu berri bat bidali dizu",
-    "newMessageContent": "{0}-(e)k '{1}' idatzi du _helpbutton_ honetan",
+    "newMessageContent": "{0} : '{1}' ",
     "newPostCommentSubject": "{0}-(e)k _helpbutton_ batean iruzkin bat egin du",
     "newPostCommentContent": "{0}-(e)k iruzkin berri bat idatzi du '{1}'. _helpbutton_ honetan '{2}'",
     "newMentionSubject": "{0}-(e)k _helpbutton_ batean aipatu zaitu",

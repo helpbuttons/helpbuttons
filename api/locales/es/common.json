@@ -270,7 +270,7 @@
     "newButtonInterest": "Hay nuevo _helpbutton_ sobre un tema que sigues en '{0}'",
     "newMessageOutbox": "{0} te envió un mensaje: '{1}'",
     "newMessageSubject": "{0} te envió un nuevo mensaje",
-    "newMessageContent": "{0} escribió '{1}' en _helpbutton_",
+    "newMessageContent": "{0} : '{1}' ",
     "newPostCommentSubject": "{0} comentó en _helpbutton_",
     "newPostCommentContent": "{0} escribió un nuevo comentario '{1}'. en _helpbutton_ '{2}'",
     "newMentionSubject": "{0} te mencionó en _helpbutton_",
