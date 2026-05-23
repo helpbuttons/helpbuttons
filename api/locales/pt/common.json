@@ -629,7 +629,8 @@
     "description": "Here you can review the users of your network, and the buttons!",
     "adminCommunicationLabel": "Coordinador communications",
     "edit": "Editar",
-    "preview": "Pré-visualizar"
+    "preview": "Pré-visualizar",
+    "messageSent": "Mensagem enviada"
   },
   "role": {
     "blocked": "desativado",

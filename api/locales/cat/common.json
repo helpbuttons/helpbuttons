@@ -174,7 +174,14 @@
     "locationKeys": "Key Spots",
     "requiredLocation": "Please pickup a place in the map for your network",
     "keyLocationsExplain": "Key spots that will be highlighted in your network. They will appear in the main menus and map for easy access",
-    "addLocationKey": "Add Location"
+    "addLocationKey": "Add Location",
+    "privacySettings": "Set your privacy prefrences",
+    "allowGuestCreationExplain": "When allowing anonymous signups, is important to remmember that your network will be easier exposed to spam",
+    "FAQs": "Add your legal information",
+    "privacyPolicyPlaceHolder": "Write basic privacy policy. Where are you storing your users' data? What type of data are you using and what for? ",
+    "ethicsPolicyPlaceHolder": "Write basic ethics. What are the values behind your networks' purpose and users' actions?",
+    "contactEmailPlaceHolder": "Write your network's contact -phone, address, email, etc-  here",
+    "noNetworkLocation": "Please choose a network location before adding key spots"
   },
   "activities": {
     "allNotifications": "Totes les actualitzacions",
@@ -203,7 +210,9 @@
     "expiredEventType": "_helpbutton_ va finalitzar",
     "expiredEventTitle": "'{0}' ha superat la data de finalització el dia {1}, no apareixerà més a la llista pública.",
     "notifications": "Notifications",
-    "messages": "Messages"
+    "messages": "Messages",
+    "draft": "Draft",
+    "title": "Messages & Alerts"
   },
   "activitiesWithSubject": {
     "newbutton": "{0} ha publicat un _helpbutton_ a {1}",
@@ -304,7 +313,19 @@
     "endorse": "Endorse",
     "explainPublishAsGuest": "Signup as anonymous, please generate a new code, that you can use it for logging in to check your _helpbuttons_",
     "explainUseGuestCode": "Please store this code, it is your only way to keep track of your publications",
-    "editUsername": "Edit username"
+    "editUsername": "Edit username",
+    "showCookiesBanner": "Please press here to accept cookies",
+    "emailOrUsername": "Email or username",
+    "signupAsGuest": "Participate as guest",
+    "commentsAmount": "Commented",
+    "emptyList": "Your own _helpbuttons_ could be seen in this spot.",
+    "emailRecovery": "Recovery email address",
+    "loginSucessLink": "Login successful, please <a href='/ProfileEdit'>change your password</a>",
+    "generateCode": "Generate new guest code",
+    "iHaveCode": "I have a guest code",
+    "explainGuestDetails": "Last step: Complete your access.",
+    "inviteLogin": "Enter",
+    "showWassap": "Enable Whatsapp link"
   },
   "configure": {
     "browsePins": "Mapa amb pins de ubicació",
@@ -429,7 +450,11 @@
     "publishComment": "Publish comment",
     "sendPrivateMessage": "Send private message to {0}",
     "proposeAddress": "Add a missing place in {0}",
-    "locationPlaceholder": "Write a place or address"
+    "locationPlaceholder": "Write a place or address",
+    "expiredLabel": "Expired",
+    "followers": "Suscribed by {0} users",
+    "whereButtonLabel": "Choose place",
+    "pickPosition": "Please pick a position on the map"
   },
   "calendarOnce": {
     "label": "Una vegada",
@@ -523,7 +548,8 @@
     "onceExplain": "Selecciona el dia i l'hora per al teu esdeveniment",
     "recurringExplain": "Selecciona dies d'inici i final, dies de la setmana i l'hora per als teus esdeveniments",
     "afterStart": "Please select a time/date after {0}",
-    "beforeEnd": "Please select a time/date after {0}"
+    "beforeEnd": "Please select a time/date after {0}",
+    "everyWeek": "Each week"
   },
   "faqs": {
     "title": "Preguntes freqüents",
@@ -552,7 +578,8 @@
     "cookieAccept": "Accept",
     "cookiesQuestion": "Cookies policy",
     "cookiesPolicy": "Cookie Policy",
-    "cookieReject": "Reject"
+    "cookieReject": "Reject",
+    "cookiesDescription": "This site, uses cookies to provide a secure and personalized experience. Below is a description of specific cookies we use: 1. ACCESS_TOKEN (access_token): This cookie securely stores your access token, allowing you to stay logged in during your session without needing to re-authenticate. Type: Essential Duration: Session-based 2. TOKEN_TYPE (token_type): Used to identify the type of access token you are using, ensuring proper authentication and security. Type: Essential Duration: Session-based 3. NETWORK_SELECTED (network_id): Stores information about the selected network you are using on our platform, helping provide a customized experience based on your selection. Type: Functionality Duration: Session-based 4. EXPLORE_SETTINGS (explore_settings): Saves your preferences and settings in the explore feature, making your browsing experience more consistent and tailored. Type: Functionality Duration: Persistent 5. HAS_PERMISSION_NOTIFICATIONS (has_permission_notifications): Tracks whether you have given permission for notifications, allowing us to show or hide notifications based on your preference. Type: Preference Duration: Persistent You can manage your cookie settings through your browser's preferences. "
   },
   "invite": {
     "never": "Mai",
@@ -582,7 +609,8 @@
     "priceLabel": "Preu ({0})",
     "consult": "Preu a consultar",
     "free": "Gratis",
-    "priceExplain": "Specify a value. Use 0 if it's free or select Price to consult if it's not exactly defined."
+    "priceExplain": "Specify a value. Use 0 if it's free or select Price to consult if it's not exactly defined.",
+    "confirmDeleteLabel": "Delete _helpbutton_ type"
   },
   "email": {
     "loginTokenContent": "Benvingut a {0}",
@@ -638,7 +666,8 @@
     "adminCommunicationLabel": "Administrator communications",
     "edit": "Edit",
     "preview": "Preview",
-    "view": "Ver"
+    "view": "Ver",
+    "messageSent": "Missatge enviat"
   },
   "role": {
     "blocked": "desactivat",
@@ -672,7 +701,13 @@
     "shareTypeLabel": "Sharing types",
     "explainInvitations": "Generate individual invitation cards for your community",
     "invitePeople": "Invite people",
-    "advancedInviteOptions": "Printable PDF invitations"
+    "advancedInviteOptions": "Printable PDF invitations",
+    "invitePeopleExplain": "Copy and share this link to add others to the network",
+    "shareContent": "Share app's content",
+    "optionRss": "Suscribe to Rss feed",
+    "copyLink": "Copy link",
+    "codeCopied": "Copied on clipboard",
+    "copyCode": "Copy code"
   },
   "places": {
     "addNew": "",
