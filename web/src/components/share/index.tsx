@@ -14,6 +14,8 @@ import { getShareLink } from 'shared/sys.helper';
 import Btn, { BtnType, ContentAlignment, IconType } from 'elements/Btn';
 import { isAdmin } from 'state/Users';
 import { CreateInvite } from 'state/Profile';
+import { PrivacyNetworkType } from 'shared/types/privacy.enum';
+import { Role } from 'shared/types/roles';
 export function ShareButton({onClick})
 {
   return <ButtonForPopup buttonIcon={<IoShare/>} buttonCaption={t('homeinfo.share')} onClick={onClick}/>
@@ -35,13 +37,33 @@ export function ShareForm({}) {
   const selectedNetwork = useGlobalStore(
     (state: GlobalState) => state.networks.selectedNetwork,
   );
+  const canCreateInvite = () => {
+    switch(selectedNetwork.privacyNetworkType){
+      case PrivacyNetworkType.INVITE_ONLY:
+      case PrivacyNetworkType.ANYONE_CAN:
+        return true;
+      case PrivacyNetworkType.INVITE_ONLY_BY_ADMIN: 
+        if(userLoggedIn.role == Role.admin){
+          return true
+        }
+        break;
+      case PrivacyNetworkType.INVITE_ONLY_BY_ENDORSED:
+        {
+          if(userLoggedIn.endorsed){
+            return true;
+          }
+        }
+        break;
+    }
+    return false;
+  }
   return (
     <>
         <div className="form__section">
           <div className="form__section-title">
             {t('share.invitePeople')}
           </div>
-            {selectedNetwork?.inviteOnly
+            {canCreateInvite()
               ? <SharePersonalInviteLink />
               : <div className="form__field">
                   <div className="form__explain">
