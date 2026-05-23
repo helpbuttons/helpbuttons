@@ -5,31 +5,55 @@ import { Repository } from "typeorm";
 import { InviteCreateDto } from "./invite.dto";
 import { uuid } from "@src/shared/helpers/uuid.helper";
 import { User } from "../user/user.entity";
+import { NetworkService } from "../network/network.service";
+import { PrivacyNetworkType } from "@src/shared/types/privacy.enum";
+import { Role } from "@src/shared/types/roles";
 
 @Injectable()
 export class InviteService {
   constructor(
     @InjectRepository(Invite)
     private readonly inviteRepository: Repository<Invite>,
-    
+    private readonly networkService: NetworkService,
   ) {}
 
   async create(newInvitation: InviteCreateDto, currentUser: User)
   {
-    const invitation: Invite = {
+    return this.networkService.findDefaultNetwork()
+    .then((network) => {
+      switch(network.privacyNetworkType){
+        case PrivacyNetworkType.INVITE_ONLY_BY_ADMIN: 
+          {
+            if(currentUser.role != Role.admin){
+              console.log('network limited to invite by admins only')
+              throw new UnauthorizedException()
+            }
+          }
+          break;
+        case PrivacyNetworkType.INVITE_ONLY_BY_ENDORSED:
+          {
+            if(currentUser.endorsed != true){
+              console.log('network limited to invite by endorsed users only')
+              throw new UnauthorizedException()
+            }
+          }
+          break;
+      }
+      const invitation: Invite = {
         id: uuid(),
         usage: 0,
         maximumUsage: newInvitation.maximumUsage,
         expiration: this.getExpirationDate(newInvitation.expirationTimeInSeconds),
         owner: currentUser,
         deleted: false,
-    }
+      }
 
-    if (newInvitation.followMe)
-    {
-        // follow user... somehow.
-    }
-    return this.inviteRepository.insert([invitation]).then((data) => invitation)
+      if (newInvitation.followMe)
+      {
+          // follow user... somehow.
+      }
+      return this.inviteRepository.insert([invitation]).then((data) => invitation)
+    })
   }
 
   async createGuest()

@@ -3,6 +3,7 @@
     <p class="activity-label-p">
       <a href='{{link}}'>{{capitalize content}}</a>
     </p>
+    {{#if type}}
     <a href='{{link}}' class="activity-card-link">
       <div class="activity-card">
         <p class="activity-type">{{type}}</p>
@@ -10,6 +11,7 @@
         <p class="activity-meta">📍 <span class="activity-address">{{address}}</span></p>
       </div>
     </a>
+    {{/if}}
     <a class="activity-label" href='{{link}}'>{{linkCaption}}</a>
   {{else}}
     <p class="activity-label-p">

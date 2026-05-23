@@ -72,7 +72,8 @@ export class NetworkService {
       allowGuestCreation: createDto.allowGuestCreation,
       privacyPolicy: createDto.privacyPolicy,
       ethicsPolicy: createDto.ethicsPolicy,
-      contactEmail: createDto.contactEmail
+      contactEmail: createDto.contactEmail,
+      privacyNetworkType: createDto.privacyNetworkType
     };
     if (Array.isArray(createDto.tags)) {
       await this.tagService
@@ -171,6 +172,7 @@ export class NetworkService {
         }
       })
       .catch((err) => {
+        console.log(err)
         console.log('no networks found?')
         throw new HttpException(
           { message: '🙆🏼‍♂️Default network not found' },
@@ -213,9 +215,9 @@ export class NetworkService {
       allowGuestCreation: updateDto.allowGuestCreation,
       privacyPolicy: updateDto.privacyPolicy,
       ethicsPolicy: updateDto.ethicsPolicy,
-      contactEmail: updateDto.contactEmail
+      contactEmail: updateDto.contactEmail,
+      privacyNetworkType: updateDto.privacyNetworkType
     };
-
     /** Dont need to check for orphans no more... ! */
     const buttonTemplatesNew = network.buttonTemplates.filter((btnTemplate) => !btnTemplate.hide).map((btnTemplate) => btnTemplate.name)
 

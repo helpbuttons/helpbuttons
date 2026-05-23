@@ -174,7 +174,14 @@
     "locationKeys": "Key Spots",
     "requiredLocation": "Please pickup a place in the map for your network",
     "keyLocationsExplain": "Key spots that will be highlighted in your network. They will appear in the main menus and map for easy access",
-    "addLocationKey": "Add Location"
+    "addLocationKey": "Add Location",
+    "privacySettings": "Set your privacy prefrences",
+    "allowGuestCreationExplain": "When allowing anonymous signups, is important to remmember that your network will be easier exposed to spam",
+    "FAQs": "Add your legal information",
+    "privacyPolicyPlaceHolder": "Write basic privacy policy. Where are you storing your users' data? What type of data are you using and what for? ",
+    "ethicsPolicyPlaceHolder": "Write basic ethics. What are the values behind your networks' purpose and users' actions?",
+    "contactEmailPlaceHolder": "Write your network's contact -phone, address, email, etc-  here",
+    "noNetworkLocation": "Please choose a network location before adding key spots"
   },
   "activities": {
     "allNotifications": "Totes les actualitzacions",
@@ -203,7 +210,9 @@
     "expiredEventType": "_helpbutton_ va finalitzar",
     "expiredEventTitle": "'{0}' ha superat la data de finalització el dia {1}, no apareixerà més a la llista pública.",
     "notifications": "Notifications",
-    "messages": "Messages"
+    "messages": "Messages",
+    "draft": "Draft",
+    "title": "Messages & Alerts"
   },
   "activitiesWithSubject": {
     "newbutton": "{0} ha publicat un _helpbutton_ a {1}",
@@ -304,7 +313,19 @@
     "endorse": "Endorse",
     "explainPublishAsGuest": "Signup as anonymous, please generate a new code, that you can use it for logging in to check your _helpbuttons_",
     "explainUseGuestCode": "Please store this code, it is your only way to keep track of your publications",
-    "editUsername": "Edit username"
+    "editUsername": "Edit username",
+    "showCookiesBanner": "Please press here to accept cookies",
+    "emailOrUsername": "Email or username",
+    "signupAsGuest": "Participate as guest",
+    "commentsAmount": "Commented",
+    "emptyList": "Your own _helpbuttons_ could be seen in this spot.",
+    "emailRecovery": "Recovery email address",
+    "loginSucessLink": "Login successful, please <a href='/ProfileEdit'>change your password</a>",
+    "generateCode": "Generate new guest code",
+    "iHaveCode": "I have a guest code",
+    "explainGuestDetails": "Last step: Complete your access.",
+    "inviteLogin": "Enter",
+    "showWassap": "Enable Whatsapp link"
   },
   "configure": {
     "browsePins": "Mapa amb pins de ubicació",
@@ -429,7 +450,11 @@
     "publishComment": "Publish comment",
     "sendPrivateMessage": "Send private message to {0}",
     "proposeAddress": "Add a missing place in {0}",
-    "locationPlaceholder": "Write a place or address"
+    "locationPlaceholder": "Write a place or address",
+    "expiredLabel": "Expired",
+    "followers": "Suscribed by {0} users",
+    "whereButtonLabel": "Choose place",
+    "pickPosition": "Please pick a position on the map"
   },
   "calendarOnce": {
     "label": "Una vegada",
@@ -523,7 +548,8 @@
     "onceExplain": "Selecciona el dia i l'hora per al teu esdeveniment",
     "recurringExplain": "Selecciona dies d'inici i final, dies de la setmana i l'hora per als teus esdeveniments",
     "afterStart": "Please select a time/date after {0}",
-    "beforeEnd": "Please select a time/date after {0}"
+    "beforeEnd": "Please select a time/date after {0}",
+    "everyWeek": "Each week"
   },
   "faqs": {
     "title": "Preguntes freqüents",
@@ -542,7 +568,7 @@
     "helpbuttonsDescription": "o Botons d'ajuda és el programari de codi obert que impulsa aquesta aplicació. Amb Helpbuttons, pots crear les teves pròpies xarxes per compartir menjar, habitatge, transport o qualsevol altra cosa que tinguis en ment, i després federar-te amb altres xarxes per compartir usuaris i recursos. Helpbuttons es especialitza en connectar persones que encara no es coneixen, per diversos propòsits, en el món real.",
     "forDescription": "El nostre objectiu és fomentar una societat cohesionada, promoure la cooperació i optimitzar el disseny d'eines col·laboratives per aprofitar al màxim els avantatges d'internet aplicats a la vida real. Coneixem les quantitats de diners i temps requerits cada cop que es llança una nova aplicació col·laborativa. La majoria d'aquestes eines comparteixen una part significativa de les seves funcionalitats bàsiques i creiem que aquestes similituds podrien aprofitar-se per crear un sistema modular, que serveixi per a molts casos i estalviï recursos.",
     "helpbuttonDescription": "Un Helpbutton o Botó es refereix a una publicació. Cada publicació realitzada per un usuari en Helpbuttons es diu Helpbutton. Els Helpbuttons poden representar ofertes, necessitats, intercanvis, propostes de transport, negocis, etc. També es poden canviar el nom per adaptar-se a les necessitats específiques de la teva aplicació.",
-    "communityDescription": "Helpbuttons o Botonsdeayuda està dissenyat per programadors independents d'Espanya i Portugal. Principalment amb aportacions desinteressades en el seu temps lliure. Actualment el projecte es troba en fase de cerca de finançament per poder sostenir el manteniment del seu ús per al públic general. Aquests programadors, juntament amb la comunitat d'usuaris que comença a utilitzar l'eina, formen la comunitat que el projecte necessita per sostenir-se davant altres models d'aplicacions tradicionals. Més endavant, al federar-nos amb altres aplicacions de Helpbuttons/Botonsdeajuda, podrem compartir usuaris i recursos. Aquest mètode de col·laboració ens permet unir més persones i millorar finalment l'eina que proporcionem. El representant legal que actua com a interlocutor amb l'administració és l'associació sense ànim de lucre 'Watch Out, Freedom!' G67992032, av. Mèxic 10, Jerez, Cadis (Spain). tl:+34680936011",
+    "communityDescription": "Helpbuttons o Botonsdeayuda està dissenyat per programadors independents d'Espanya i Portugal. Principalment amb aportacions desinteressades en el seu temps lliure. Actualment el projecte es troba en fase de cerca de finançament per poder sostenir el manteniment del seu ús per al públic general. Aquests programadors, juntament amb la comunitat d'usuaris que comença a utilitzar l'eina, formen la comunitat que el projecte necessita per sostenir-se davant altres models d'aplicacions tradicionals. Més endavant, al federar-nos amb altres aplicacions de Helpbuttons/Botonsdeajuda, podrem compartir usuaris i recursos. Aquest mètode de col·laboració ens permet unir més persones i millorar finalment l'eina que proporcionem. ",
     "networksEthicsDescription": "{0} és una Xarxa creada amb la tecnologia Helpbuttons, els administradors de la Xarxa són els responsables de la moderació del contingut que es publica i el compliment de les normes ètiques i legals de la zona on es desenvolupa la seva Xarxa. Dirigeix-te a ells a través de les opcions de contacte que apareixen a la secció Moderadors de la pàgina d'Inici. Els programadors d'aquesta plataforma no poden fer-se responsables del contingut o propòsits amb els quals es pugui fer servir aquesta eina fora dels nostres servidors.",
     "ethicsDescription": "Aquest projecte busca millorar l'autonomia de les persones i comunitats per cooperar. Els nostres tres principis són: Llibertat, inclusió i descentralització. 1. Llibertat per fer servir l'eina i compartir-la en múltiples propòsits. 2. Inclusió per acollir mitjançant un disseny responsable aquells menys familiaritzats amb les tecnologies, i per atendre les necessitats de la vida real. 3. Descentralització per permetre múltiples graus de responsabilitat compartida en l'ús de les dades: Des de la col·lectiva (servidors) fins a la més individual (claus anònimes). En cas de fer ús dels nostres servidors, tot el que s'alineï amb aquests valors, és benvingut i tindrà total llibertat. Creiem en la transparència, l'honestedat i el respecte per totes les persones. Si bé no podem controlar l'ús que es fa del nostre programari en altres servidors, en la mesura del possible no permetrem conductes que vagin en contra de la integritat i dignitat humanes, o que fomentin el maltractament animal. El nostre programari està dissenyat per connectar les persones i facilitar l'intercanvi, cosa que és una responsabilitat que prenem seriosament. Encoratgem els nostres usuaris a utilitzar la plataforma i aquelles rèpliques que facin amb els mateixos valors en ment, prioritzant la comunicació respectuosa i l'intercanvi conscient. Qualsevol mal ús del programari dins dels nostres servidors, incloent-hi l'explotació, el dany a altres o la manipulació de les funcionalitats de la plataforma amb finalitats personals, no serà tolerat.",
     "privacyDescription": "Treballem cada dia per trobar millors solucions per a la privadesa de les dades en les Xarxes creades amb Helpbuttons. Valorem el dret a l'anonimat i oferim la possibilitat de participar tant a persones que vulguin ser totalment anònimes com a aquelles que cedeixin les seves dades personals. Helpbuttons està dissenyat per NO fer ús en cap cas de les dades personals dels usuaris amb finalitats comercials o d'interès personal d'un grup d'usuaris. Així com oferim la possibilitat d'esborrar totalment les teves dades d'una manera fàcil i transparent. Som transparents pel que fa als nostres processos de recopilació de dades, i tens el dret d'accedir, actualitzar o eliminar les teves dades personals en qualsevol moment. Recorda que compartir informació personal a les publicacions de Helpbuttons està a la teva discreció, sigues conscient i comparteix només el que et sentis còmode compartint amb els altres. Tingues en compte que el responsable de la gestió de les teves dades és l'administrador de la teva Xarxa, no comparteixis dades sensibles si no confies en aquest administrador. Si us plau, dirigeix les teves preguntes al següent correu electrònic: help@helpbuttons.org",
@@ -552,7 +578,8 @@
     "cookieAccept": "Accept",
     "cookiesQuestion": "Cookies policy",
     "cookiesPolicy": "Cookie Policy",
-    "cookieReject": "Reject"
+    "cookieReject": "Reject",
+    "cookiesDescription": "This site, uses cookies to provide a secure and personalized experience. Below is a description of specific cookies we use: 1. ACCESS_TOKEN (access_token): This cookie securely stores your access token, allowing you to stay logged in during your session without needing to re-authenticate. Type: Essential Duration: Session-based 2. TOKEN_TYPE (token_type): Used to identify the type of access token you are using, ensuring proper authentication and security. Type: Essential Duration: Session-based 3. NETWORK_SELECTED (network_id): Stores information about the selected network you are using on our platform, helping provide a customized experience based on your selection. Type: Functionality Duration: Session-based 4. EXPLORE_SETTINGS (explore_settings): Saves your preferences and settings in the explore feature, making your browsing experience more consistent and tailored. Type: Functionality Duration: Persistent 5. HAS_PERMISSION_NOTIFICATIONS (has_permission_notifications): Tracks whether you have given permission for notifications, allowing us to show or hide notifications based on your preference. Type: Preference Duration: Persistent You can manage your cookie settings through your browser's preferences. "
   },
   "invite": {
     "never": "Mai",
@@ -582,7 +609,8 @@
     "priceLabel": "Preu ({0})",
     "consult": "Preu a consultar",
     "free": "Gratis",
-    "priceExplain": "Specify a value. Use 0 if it's free or select Price to consult if it's not exactly defined."
+    "priceExplain": "Specify a value. Use 0 if it's free or select Price to consult if it's not exactly defined.",
+    "confirmDeleteLabel": "Delete _helpbutton_ type"
   },
   "email": {
     "loginTokenContent": "Benvingut a {0}",
@@ -638,7 +666,8 @@
     "adminCommunicationLabel": "Administrator communications",
     "edit": "Edit",
     "preview": "Preview",
-    "view": "Ver"
+    "view": "Ver",
+    "messageSent": "Missatge enviat"
   },
   "role": {
     "blocked": "desactivat",
@@ -672,7 +701,13 @@
     "shareTypeLabel": "Sharing types",
     "explainInvitations": "Generate individual invitation cards for your community",
     "invitePeople": "Invite people",
-    "advancedInviteOptions": "Printable PDF invitations"
+    "advancedInviteOptions": "Printable PDF invitations",
+    "invitePeopleExplain": "Copy and share this link to add others to the network",
+    "shareContent": "Share app's content",
+    "optionRss": "Suscribe to Rss feed",
+    "copyLink": "Copy link",
+    "codeCopied": "Copied on clipboard",
+    "copyCode": "Copy code"
   },
   "places": {
     "addNew": "",

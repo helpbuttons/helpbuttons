@@ -15,6 +15,7 @@ export default function MessageNew({
   mentions = [],
   privateMessage = false,
   isComment = false,
+  allowUploadImages = true
 }) {
   const {
     register,
@@ -96,14 +97,16 @@ export default function MessageNew({
                 </label>
               </div>
             )} */}
-            <FieldImageUploads 
-              defaultImages={watch('images')}
-              name='images'
-              text={t('button.imagesText')} 
-              maxNumber={5}
-              setValue={setValue}
-              validationError={null}
-            />
+            {allowUploadImages && 
+              <FieldImageUploads 
+                defaultImages={watch('images')}
+                name='images'
+                text={t('button.imagesText')} 
+                maxNumber={5}
+                setValue={setValue}
+                validationError={null}
+              />
+            }
           </div>
           <Btn
               submit={true}
