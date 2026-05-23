@@ -75,7 +75,9 @@
     "printInvites": "Printable pdf invitations",
     "linkCopied": "{0} copied to clipboard",
     "codeCopied": "Copied on clipboard",
-    "copyCode": "Copy code"
+    "copyCode": "Copy code",
+    "personalInviteExplain": "This network requires an invitation to join. Generate a unique personal link for each person.",
+    "generatePersonalLink": "Generate & copy link"
   },
   "feed": {
     "write": "Write message",
@@ -602,7 +604,16 @@
     "FAQs": "Add your legal information",
     "contactEmailPlaceHolder": "Write your network's contact -phone, address, email, etc-  here",
     "privacySettings": "Set your privacy prefrences",
-    "noNetworkLocation": "Please choose a network location before adding key spots"
+    "noNetworkLocation": "Please choose a network location before adding key spots",
+    "anyoneCan": "anyone can register",
+    "explainanyoneCan": "",
+    "inviteOnly": "Invite only network",
+    "explaininviteOnly": "The only way to signup to the network is to be invited by other users already registered in the network",
+    "inviteOnlyByEndorsed": "Invite only by endorsed",
+    "explaininviteOnlyByEndorsed": "The only way to signup to the network is to be invited by other users which have been endorsed",
+    "inviteOnlyByAdmin": "Invite only by administrators",
+    "explaininviteOnlyByAdmin": "The only way to signup to the network is to be invited by administrators of the network"
+
   },
   "configure": {
     "browsePins": "",
