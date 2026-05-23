@@ -401,7 +401,7 @@
     "emailOrUsername": "Email o nombre de usuario",
     "emailOrUsernamePlaceholder": "p.ej. miemail@mail.com o maria136",
     "inviteLogin": "Entrar",
-    "inviteLoginError": "Código incorrecto o campos vacíos",
+    "inviteLoginError": "Código incorrecto, usuario existente o campos vacíos",
     "roleChange": "Un coordinador cambió tu rol",
     "showWassap": "Mostrar link de Whatsapp"
   },

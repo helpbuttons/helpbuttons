@@ -125,6 +125,12 @@ $card-notification-delete-size: 100px;
 //   // justify-content: space-between;
 // }
 
+.card-notification__header--with-icon {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
 .card-notification__info {
   // flex: 0 1 50%;
   font-weight: $font-weight-light;
@@ -144,7 +150,6 @@ $card-notification-delete-size: 100px;
   display: flex;
   flex-direction: row;
   align-items: baseline;
-  margin: auto;
   overflow: hidden;
 
 }
@@ -271,6 +276,10 @@ $card-notification-delete-size: 100px;
     &:first-letter {
     text-transform: uppercase;
   }
+}
+
+.card-notification__footer {
+ font-size: $font-size-small;
 }
 
 .card-notification__name {
