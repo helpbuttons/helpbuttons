@@ -1,6 +1,5 @@
 import ImageWrapper, { ImageType } from "elements/ImageWrapper";
 import t from "i18n";
-import { IoPinOutline, IoPinSharp } from "react-icons/io5";
 import { readableTimeLeftToDate } from "shared/date.utils";
 import { GlobalState, useGlobalStore } from "state";
 
@@ -37,8 +36,6 @@ export function ActivityListEntryCardInner({ image, createdAt, type, read, preme
                     <div className="card-notification__info-top">
                         {createdAt && <><div className="card-notification__info-top__element">{readableTimeLeftToDate(createdAt)}</div>&nbsp;·&nbsp;</>}<div className="card-notification__info-top__element">{type}</div>
                     </div>
-                    {/* <IoPinSharp/> */}
-
                 </div>
                 <h2 className={`card-notification__title ` + (!read && 'card-notification--unread')}>
                     {title}
