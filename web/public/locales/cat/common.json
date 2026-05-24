@@ -181,7 +181,15 @@
     "privacyPolicyPlaceHolder": "Write basic privacy policy. Where are you storing your users' data? What type of data are you using and what for? ",
     "ethicsPolicyPlaceHolder": "Write basic ethics. What are the values behind your networks' purpose and users' actions?",
     "contactEmailPlaceHolder": "Write your network's contact -phone, address, email, etc-  here",
-    "noNetworkLocation": "Please choose a network location before adding key spots"
+    "noNetworkLocation": "Please choose a network location before adding key spots",
+    "anyoneCan": "Qualsevol es pot registrar",
+    "explainanyoneCan": "",
+    "inviteOnly": "Xarxa només per invitació",
+    "explaininviteOnly": "L'única manera d'unir-se a la xarxa és ser convidat per altres usuaris ja registrats",
+    "inviteOnlyByEndorsed": "Invitació només per usuaris verificats",
+    "explaininviteOnlyByEndorsed": "L'única manera d'unir-se a la xarxa és ser convidat per usuaris verificats",
+    "inviteOnlyByAdmin": "Invitació només per coordinadors",
+    "explaininviteOnlyByAdmin": "L'única manera d'unir-se a la xarxa és ser convidat pels coordinadors de la xarxa"
   },
   "activities": {
     "allNotifications": "Totes les actualitzacions",
@@ -688,7 +696,9 @@
   },
   "invitation": {
     "card": "Anonimous login individual card",
+    "infoCard": "Escaneja el codi per entrar.",
     "name": "This card is unique and personal.",
+    "contact": "Escriu informació de contacte si vols que te'l retornin en cas de pèrdua. Usa'l amb responsabilitat.",
     "infoQr": "Contact:"
   },
   "share": {
@@ -707,7 +717,9 @@
     "optionRss": "Suscribe to Rss feed",
     "copyLink": "Copy link",
     "codeCopied": "Copied on clipboard",
-    "copyCode": "Copy code"
+    "copyCode": "Copy code",
+    "personalInviteExplain": "Aquesta xarxa requereix una invitació per unir-s'hi. Genera un enllaç personal únic per a cada persona.",
+    "generatePersonalLink": "Genera i copia l'enllaç"
   },
   "places": {
     "addNew": "",

@@ -605,14 +605,14 @@
     "contactEmailPlaceHolder": "Write your network's contact -phone, address, email, etc-  here",
     "privacySettings": "Set your privacy prefrences",
     "noNetworkLocation": "Please choose a network location before adding key spots",
-    "anyoneCan": "anyone can register",
+    "anyoneCan": "Anyone can register",
     "explainanyoneCan": "",
     "inviteOnly": "Invite only network",
     "explaininviteOnly": "The only way to signup to the network is to be invited by other users already registered in the network",
     "inviteOnlyByEndorsed": "Invite only by endorsed",
     "explaininviteOnlyByEndorsed": "The only way to signup to the network is to be invited by other users which have been endorsed",
-    "inviteOnlyByAdmin": "Invite only by administrators",
-    "explaininviteOnlyByAdmin": "The only way to signup to the network is to be invited by administrators of the network"
+    "inviteOnlyByAdmin": "Invite only by coordinators",
+    "explaininviteOnlyByAdmin": "The only way to signup to the network is to be invited by coordinators of the network"
 
   },
   "configure": {

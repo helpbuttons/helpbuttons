@@ -394,7 +394,7 @@ function FieldSignupConfiguration({defaultValue = PrivacyNetworkType.ANYONE_CAN,
                 explain={t(`configuration.explain${value}`)}
                 defaultSelected={defaultValue}
                 onChange={onChange}
-                label={t('user.pickLanguageLabel')}
+                label={t('user.pickPrivacyOption')}
               />
   </>
 }

@@ -35,7 +35,7 @@ export default function PostMessage({ post }) {
           <div className="card-notification__header">
             <div className="card-notification__info">
              
-              <div className="card-notification__name">
+              <div className="card-notification__name card-notification__name--post" onClick={onClick}>
                 {post.author.name}
                 <div className="card-notification__date card-notification__date--nflex">
                 <span>{readableTimeLeftToDate(post.created_at)}</span>

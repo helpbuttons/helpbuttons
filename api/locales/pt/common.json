@@ -165,7 +165,15 @@
     "keyLocationsExplain": "Os pontos importantes serão destacados. Eles irão aparecer nos menus e no mapa",
     "addLocationKey": "Adicionar localização",
     "FAQs": "Informação complementar",
-    "contactEmailPlaceHolder": "Escreve aqui o contato da sua rede"
+    "contactEmailPlaceHolder": "Escreve aqui o contato da sua rede",
+    "anyoneCan": "Qualquer pessoa pode registar-se",
+    "explainanyoneCan": "",
+    "inviteOnly": "Rede apenas por convite",
+    "explaininviteOnly": "A única forma de se registar na rede é ser convidado por outros utilizadores já registados",
+    "inviteOnlyByEndorsed": "Convite apenas por utilizadores verificados",
+    "explaininviteOnlyByEndorsed": "A única forma de se registar na rede é ser convidado por utilizadores verificados",
+    "inviteOnlyByAdmin": "Convite apenas por coordinadores",
+    "explaininviteOnlyByAdmin": "A única forma de se registar na rede é ser convidado por coordinadores da rede"
   },
   "activities": {
     "allNotifications": "Todas as atualizações",
@@ -571,7 +579,11 @@
     "inviteOnlyExplain": "Se você ativar isso, os utilizadors só poderão se registrar e publicar com um código QR.",
     "inviteOnly": "Permitir registo apenas com um código QR",
     "generateQr": "QR",
-    "registered": "QR usado"
+    "registered": "QR usado",
+    "setExpiration": "Definir período de expiração",
+    "scanCodeLabel": "Escreva o seu código",
+    "scanCodeExplain": "Pode escrever o seu código QR se não conseguir escanear",
+    "scanPlaceHolder": "Escreva o link completo do convite ou o seu código alfanumérico"
   },
   "customFields": {
     "priceLabel": "Preço ({0})",
@@ -651,7 +663,10 @@
   },
   "invitation": {
     "card": "Cartão individual de login anónimo",
-    "name": "Este cartão é único e pessoal."
+    "name": "Este cartão é único e pessoal.",
+    "infoCard": "Escaneie o código para entrar.",
+    "contact": "Escreva informações de contacto caso queira recuperá-lo se o perder. Use com responsabilidade.",
+    "infoQr": "Contacto:"
   },
   "share": {
     "shareExplain": "Selecione o número de resultados que deseja mostrar e copie o código para o seu site",
@@ -669,7 +684,9 @@
     "shareContent": "Partilhar conteúdos da app",
     "optionRss": "Subscrever rss",
     "copyLink": "Copiar link",
-    "invitePeopleExplain": "Copia este link e partilha com outros para se juntarem à rede"
+    "invitePeopleExplain": "Copia este link e partilha com outros para se juntarem à rede",
+    "personalInviteExplain": "Esta rede requer um convite para se juntar. Gere um link pessoal único para cada pessoa.",
+    "generatePersonalLink": "Gerar e copiar link"
   },
   "places": {
     "addNew": "",

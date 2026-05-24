@@ -151,6 +151,7 @@ $card-notification-delete-size: 100px;
   flex-direction: row;
   align-items: baseline;
   overflow: hidden;
+  font-size: $font-size-medium;
 
 }
 
@@ -291,7 +292,6 @@ $card-notification-delete-size: 100px;
   line-height: $line-height-regular;
   padding-bottom: $padding-medium;
   align-items: center;
-
  
   
 }
@@ -299,6 +299,14 @@ $card-notification-delete-size: 100px;
 .card-notification__name::first-letter {
   text-transform: uppercase;
 }
+
+.card-notification__name--post:hover { 
+
+  cursor:pointer;
+
+
+}
+
 
 .card-notification__paragraph {
 

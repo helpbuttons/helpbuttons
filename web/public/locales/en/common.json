@@ -461,7 +461,8 @@
     "askForNewCode": "I don't have my guest info",
     "inviteLogin": "Enter",
     "inviteLoginError": "Wrong code or missing fields",
-    "roleChange": "An admin changed your role"
+    "roleChange": "An admin changed your role",
+     "pickPrivacyOption": "Choose privacy"
   },
   "picker": {
     "headerText": "Choose a location"
@@ -605,14 +606,14 @@
     "contactEmailPlaceHolder": "Write your network's contact -phone, address, email, etc-  here",
     "privacySettings": "Set your privacy prefrences",
     "noNetworkLocation": "Please choose a network location before adding key spots",
-    "anyoneCan": "anyone can register",
+    "anyoneCan": "Anyone can register",
     "explainanyoneCan": "",
     "inviteOnly": "Invite only network",
     "explaininviteOnly": "The only way to signup to the network is to be invited by other users already registered in the network",
     "inviteOnlyByEndorsed": "Invite only by endorsed",
     "explaininviteOnlyByEndorsed": "The only way to signup to the network is to be invited by other users which have been endorsed",
-    "inviteOnlyByAdmin": "Invite only by administrators",
-    "explaininviteOnlyByAdmin": "The only way to signup to the network is to be invited by administrators of the network"
+    "inviteOnlyByAdmin": "Invite only by coordinators",
+    "explaininviteOnlyByAdmin": "The only way to signup to the network is to be invited by coordinators of the network"
 
   },
   "configure": {
@@ -734,7 +735,7 @@
     "emptyUsersList": "No users",
     "requireApproval": "Only allow publishing with moderation",
     "requireApprovalLabel": "Network moderation",
-    "requireApprovalExplain": "If you enable this, all _helpbuttons_ created (if not by an admin) won't be published on the map, before an coordinator approves it",
+    "requireApprovalExplain": "If you enable this, all _helpbuttons_ created by not endorsed users need coordinators approval",
     "awaitingApproval": "_helpbutton_ has been added to the moderation list, please wait for an coordinator to approve it",
     "title": "Moderate content and users",
     "adminCommunication": "Coordinator communications",

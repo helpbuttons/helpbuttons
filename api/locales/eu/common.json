@@ -193,7 +193,15 @@
     "privacySettings": "Ezarri zure pribatutasun lehentasunak",
     "showAdvanced": "Aukera aurreratuak erakutsi...",
     "sloganLabel": "Sarearen ongi-etorri esaldia",
-    "sloganPlaceHolder": "adib. Besteei laguntzeko sortutako sarea"
+    "sloganPlaceHolder": "adib. Besteei laguntzeko sortutako sarea",
+    "anyoneCan": "Edonor erregistra daiteke",
+    "explainanyoneCan": "",
+    "inviteOnly": "Gonbidapena bakarrik duen sarea",
+    "explaininviteOnly": "Sarera izena emateko bakarra modu da jadanik erregistratutako beste erabiltzaile batek gonbidatzea",
+    "inviteOnlyByEndorsed": "Gonbidapena balidatuen bidez bakarrik",
+    "explaininviteOnlyByEndorsed": "Sarera izena emateko bakarra modu da balidatutako erabiltzaile batek gonbidatzea",
+    "inviteOnlyByAdmin": "Gonbidapena koordinatzaileen bidez bakarrik",
+    "explaininviteOnlyByAdmin": "Sarera izena emateko bakarra modu da koordinatzaile batek gonbidatzea"
   },
   "activities": {
     "allNotifications": "Aldaketa guztiak",
@@ -789,7 +797,9 @@
     "printInvites": "Inprimatzeko PDF gonbidapenak",
     "shareContent": "Aplikazioaren edukia partekatu",
     "shareField": "Aukeratu partekatzeko aukera",
-    "showSharePopup": "Aplikazio hau partekatu"
+    "showSharePopup": "Aplikazio hau partekatu",
+    "personalInviteExplain": "Sare honek gonbidapen bat behar du sartzeko. Sortu pertsona bakoitzarentzako gonbidapen-esteka bakarra.",
+    "generatePersonalLink": "Sortu eta kopiatu esteka"
   },
   "places": {
     "addNew": "",
