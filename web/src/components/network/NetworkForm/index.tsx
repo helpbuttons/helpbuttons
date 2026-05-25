@@ -176,17 +176,19 @@ function NetworkForm({
                 onChanged={(value) => setValue('requireApproval', value)}
               />
               <FieldSignupConfiguration 
-                onChanged={(value) => setValue('signupConfiguration', value)}
-                defaultValue={watch('signupConfiguration')}
+                onChanged={(value) => setValue('privacyNetworkType', value)}
+                defaultValue={watch('privacyNetworkType')}
               />
-              <FieldCheckbox
-                name='allowGuestCreation'
-                label={t('configuration.allowGuestCreationLabel')}
-                explain={t('configuration.allowGuestCreationExplain')}
-                defaultValue={watch('allowGuestCreation')}
-                text={t('configuration.allowGuestCreation')}
-                onChanged={(value) => setValue('allowGuestCreation', value)}
-              />
+              {watch('privacyNetworkType') == PrivacyNetworkType.ANYONE_CAN &&
+                <FieldCheckbox
+                  name='allowGuestCreation'
+                  label={t('configuration.allowGuestCreationLabel')}
+                  explain={t('configuration.allowGuestCreationExplain')}
+                  defaultValue={watch('allowGuestCreation')}
+                  text={t('configuration.allowGuestCreation')}
+                  onChanged={(value) => setValue('allowGuestCreation', value)}
+                />
+              }
             </>
            </Accordion>
 

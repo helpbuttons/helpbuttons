@@ -125,7 +125,7 @@ export function SignupForm() {
   }, [router])
 
   if(selectedNetwork?.inviteOnly && !inviteCode) {
-    return (<><div className='form__illustration form__illustration--icon'><IoWarningOutline/></div><div className="form__header">{t('invite.inviteOnlyNetwork')}</div></>)
+    return (<><div className='form__illustration form__illustration--icon'><IoWarningOutline/></div><div className="form__header">{t('invite.inviteOnlyNetwork')}</div><SignupOptions selectedNetwork={selectedNetwork}/></>)
   }
   return (
       <Form onSubmit={handleSubmit(onSubmit)} classNameExtra="login__form">
@@ -142,19 +142,20 @@ export function SignupForm() {
             <div className="form__btn-register">
               <BtnSubmit isSubmitting={isSubmitting} errors={errors} caption={t('user.register')} disabled={isSubmitting || cookieState != CookiesState.ACCEPTED}/>
             </div>
-            <div className="popup__link" onClick={() => store.emit(new SetMainPopup(MainPopupPage.LOGIN))}>
-                {t('user.loginLink')}
-            </div>
-            {selectedNetwork?.allowGuestCreation && 
-              <div className="popup__link" onClick={() => store.emit(new SetMainPopup(MainPopupPage.SIGNUP_AS_GUEST))}>
-                 <IoQrCode/>{t('user.signupAsGuest')}
-              </div>
-            }
+            <SignupOptions selectedNetwork={selectedNetwork}/>
           </div>
       </Form>
   );
 }
 
+function SignupOptions({ selectedNetwork }) {
+  return <><div className="popup__link" onClick={() => store.emit(new SetMainPopup(MainPopupPage.LOGIN))}>{t('user.loginLink')}</div>
+    {selectedNetwork?.allowGuestCreation &&
+      <div className="popup__link" onClick={() => store.emit(new SetMainPopup(MainPopupPage.SIGNUP_AS_GUEST))}>
+        <IoQrCode />{t('user.signupAsGuest')}
+      </div>
+    }</>
+}
 
 
 

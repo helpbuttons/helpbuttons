@@ -97,9 +97,10 @@ function Configuration() {
           slogan: data.slogan,
           hideLocationDefault: data.hideLocationDefault,
           allowGuestCreation: data.allowGuestCreation,
-          privacyPolicy: data. privacyPolicy,
-          ethicsPolicy: data. ethicsPolicy,
-          contactEmail: data. contactEmail,
+          privacyPolicy: data.privacyPolicy,
+          ethicsPolicy: data.ethicsPolicy,
+          contactEmail: data.contactEmail,
+          privacyNetworkType: data.privacyNetworkType
         },
         (network) => {
           store.emit(new UpdateExploreSettings(data.exploreSettings));
