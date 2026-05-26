@@ -47,7 +47,8 @@ export function InviteForm() {
       qrCode: '',
       locale: 'en',
       tags: [],
-      acceptPrivacyPolicy: 'no'
+      acceptPrivacyPolicy: 'no',
+      email: ''
     },
   });
 
@@ -83,7 +84,8 @@ export function InviteForm() {
             qrCode:  code ? code : invitationCode,
             locale: getLocale(),
             acceptPrivacyPolicy: data.acceptPrivacyPolicy,
-            phone: data.phone
+            phone: data.phone,
+            email: data.email
           },
           () => {
             alertService.success(t('user.loginSucess'))

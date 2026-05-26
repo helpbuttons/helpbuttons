@@ -50,6 +50,7 @@ export class AuthService {
           locale: signupQRUserDto.locale,
           acceptPrivacyPolicy: signupQRUserDto.acceptPrivacyPolicy,
           phone: signupQRUserDto.phone,
+          email: signupQRUserDto.email
         }
       })
       .then((signupUserDto: SignupRequestDto) => {
