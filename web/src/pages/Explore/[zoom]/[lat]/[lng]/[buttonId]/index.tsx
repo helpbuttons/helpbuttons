@@ -19,8 +19,6 @@ export default function Explore({
     useEffect(() => {
         if(currentButton?.id == buttonId){
            store.emit(new UpdateExploreSettings({center: [parseFloat(lat as string), parseFloat(lng as string)], zoom: parseInt(zoom as string)}));
-        }else{
-            alertService.warn('error')
         }
       }, [currentButton])
     return <ExplorePage/>
