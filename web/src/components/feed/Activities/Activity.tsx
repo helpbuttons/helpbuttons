@@ -6,7 +6,6 @@ import { ActivityButton } from "components/feed/Activities/ActivityButton";
 import ActivityList from "components/feed/Activities/ActivityList";
 import { ShowDesktopOnly, ShowMobileOnly, useIsMobile } from "elements/SizeOnly";
 import { Dropdown, DropdownLine } from "elements/Dropdown/Dropdown";
-import PopupHeader from "components/popup/PopupHeader";
 import { useRouter } from "next/router";
 import t from "i18n";
 import { IoChatboxOutline } from "react-icons/io5";
