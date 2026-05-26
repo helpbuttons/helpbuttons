@@ -20,16 +20,19 @@ import { handleAcceptCookies } from 'components/home/CookiesBanner';
 import { Network } from 'shared/entities/network.entity';
 import { IoQrCode } from 'react-icons/io5';
 import { setLocale } from 'shared/sys.helper';
+import { useEscapeAndEnter } from 'shared/custom.hooks';
 
 export default function LoginForm() {
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
+    watch
   } = useForm();
   const [errorMsg, setErrorMsg] = useState(undefined);
   const router = useRouter();
 
+  useEscapeAndEnter(() => {}, () => {onSubmit(watch())})
   const cookieState = useGlobalStore(
     (state: GlobalState) => state.homeInfo.cookiesState,
   );
