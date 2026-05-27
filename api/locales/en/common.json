@@ -35,7 +35,7 @@
     "buttons": "There are {0} _helpbuttons_ in this network:",
     "users": "{0} users in this network",
     "administeredby": "Admin and support ",
-    "adminInstructions": "Contact any of the following users if you need help using the app",
+    "adminInstructions": "Contact any of the following users if you need help using the app.",
     "actions": "What can I do?",
     "createNetworkButton": "Create your own network",
     "createNetwork": "You can contact with the team if you need help making your own network",

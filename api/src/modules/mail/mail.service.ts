@@ -151,7 +151,7 @@ export class MailService {
             from: from,
             subject: subject,
             template,
-            context: {...context, url: configs().WEB_URL, to: to, logo, jumbo},
+            context: {...context, url: configs().WEB_URL, to: to, logo, jumbo, networkName: context.networkName ?? name},
             headers: {'Message-ID': `<${uuid()}@${configs().hostName}>`}
           })
           .then((mail) => {
