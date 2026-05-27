@@ -18,7 +18,6 @@ import { StorageService } from '../storage/storage.service';
 import { MailService } from '../mail/mail.service';
 import { GroupMessageType } from '@src/shared/types/group-message.enum';
 import translate from '@src/shared/helpers/i18n.helper';
-import { getUrl } from '@src/shared/helpers/mail.helper';
 
 @Injectable()
 export class UserService {
@@ -356,7 +355,7 @@ COALESCE(
           to: email,
           content: message,
           subject: subject,
-          link: getUrl(`${path}/${loginParams}`),
+          link: `${path}${loginParams}`,
           linkCaption: translate(locale, 'activities.view'),
         });
       })
