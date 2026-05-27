@@ -1,7 +1,7 @@
 import { Injectable, UnauthorizedException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Invite } from "./invite.entity";
-import { Repository } from "typeorm";
+import { LessThanOrEqual, Repository } from "typeorm";
 import { InviteCreateDto } from "./invite.dto";
 import { uuid } from "@src/shared/helpers/uuid.helper";
 import { User } from "../user/user.entity";
@@ -86,15 +86,15 @@ export class InviteService {
 
   async isInviteCodeValid(inviteCode: string)
   {
-    const invite = await this.inviteRepository.findOne({where: {id: inviteCode}})
+    const invite = await this.inviteRepository.findOne({where: {id: inviteCode, usage: LessThanOrEqual(1) }})
     if(!invite)
     {
       return false;
     }
-    if( invite.maximumUsage > 0 && invite.maximumUsage < invite.usage)
-    {
-      return false;
-    }
+    // if( invite.maximumUsage > 0 && invite.maximumUsage < invite.usage)
+    // {
+    //   return false;
+    // }
 
     if(invite.expiration && new Date(invite.expiration) < new Date())
     {
