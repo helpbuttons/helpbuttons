@@ -288,7 +288,6 @@ export class AuthService {
       showWassap: data.showWassap
     };
 
-    console.log(newUser)
     if (avatar) {
       newUser.avatar = (await this.storageService.uploadAndConvertImage(avatar)).name
     }else if(data.avatar){
