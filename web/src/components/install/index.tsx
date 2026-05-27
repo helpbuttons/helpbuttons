@@ -32,20 +32,6 @@ interface IBeforeInstallPromptEvent extends Event {
   prompt(): Promise<void>;
 }
 
-// Register service worker for PWA support
-const registerServiceWorker = async () => {
-  if (typeof window === 'undefined' || !('serviceWorker' in navigator)) {
-    return;
-  }
-
-  try {
-    const registration = await navigator.serviceWorker.register('/sw.js');
-    // console.log('Service Worker registered:', registration);
-  } catch (error) {
-    console.error('Service Worker registration failed:', error);
-  }
-};
-
 export function InstallPrompt(): [
   IBeforeInstallPromptEvent | null,
   () => void,
@@ -65,9 +51,6 @@ export function InstallPrompt(): [
   };
 
   useEffect(() => {
-    // Register service worker first - required for beforeinstallprompt to fire
-    registerServiceWorker();
-
     const ready = (e: IBeforeInstallPromptEvent) => {
       e.preventDefault();
       setState(e);
