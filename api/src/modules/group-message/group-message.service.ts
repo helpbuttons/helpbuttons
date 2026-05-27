@@ -56,7 +56,7 @@ export class GroupMessageService {
 
         return this.groupMessageRepository.update({ to: groupMessageType }, { last: false })
         .then(()=> {
-            this.groupMessageRepository.insert([groupMessage])
+            return this.groupMessageRepository.insert([groupMessage])
         })
         
     }
@@ -69,9 +69,9 @@ export class GroupMessageService {
 
         if(groupMessage.from.id == user.id)
         {
-            return {id: groupMessage.id, createdAt: groupMessage.created_at, title: translate(user.locale,'groupChat.you') , message: groupMessage.message, read: true};
+            return {id: groupMessage.id, createdAt: groupMessage.created_at, title: translate(user.locale,'groupChat.you') , message: groupMessage.message, read: true, to: groupMessage.to};
         }else{            
-            return {id: groupMessage.id, createdAt: groupMessage.created_at, title:groupMessage.from.name, message: groupMessage.message, read: read, from: groupMessage.from.name, activityFrom: groupMessage?.from};
+            return {id: groupMessage.id, createdAt: groupMessage.created_at, title:groupMessage.from.name, message: groupMessage.message, read: read, from: groupMessage.from.name, activityFrom: groupMessage?.from, to: groupMessage.to};
         }
         
     }
@@ -88,7 +88,7 @@ export class GroupMessageService {
     findCommunityMessages(user, page = 0)
     {
         this.markAsRead(user, GroupMessageType.community)
-        return this.groupMessageRepository.find({where: { to:GroupMessageType.community}, relations: ['from'], take: ActivitiesPageSize, skip: page * ActivitiesPageSize,order: { created_at: 'DESC' }})
+        return this.groupMessageRepository.find({where: { to: In([GroupMessageType.community, GroupMessageType.endorsed])}, relations: ['from'], take: ActivitiesPageSize, skip: page * ActivitiesPageSize,order: { created_at: 'DESC' }})
         .then((messages) => messages.map(_msg => {
             return this.transformGroupMessage(_msg, user, true) 
         } ))
