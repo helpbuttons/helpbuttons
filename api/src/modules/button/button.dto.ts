@@ -190,6 +190,9 @@ export class ButtonEntry implements Partial<Button> {
 
   @Expose()
   created_at?: Date;
+
+  @Expose()
+  status: string;
 }
 
 

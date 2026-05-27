@@ -381,8 +381,18 @@ export class ButtonService {
       btn.longitude = hexCenter[1]
       btn.location = {type: 'Point', coordinates: hexCenter}
     }
+    const buttonStatus = (button) => {
+      if(button.expired){
+        return 'expired'
+      }else if(button.deleted){
+        return 'deleted'
+      }else{
+        return 'active'
+      }
+    }
     return {
       ...btn,
+      status: buttonStatus(btn),
       postsCount: btn.feed ? btn.feed.length : 0,
       followCount: btn.followedBy ? btn.followedBy.length : 0,
       hasPhone: btn.owner.phone ? true : false,
@@ -630,7 +640,8 @@ export class ButtonService {
         awaitingApproval: false,
       },
       relations: ['owner']
-    });
+    })
+    .then((buttons) => buttons.map((btn) => this.transformButton(btn)))
   }
 
   approve(buttonId: string) {

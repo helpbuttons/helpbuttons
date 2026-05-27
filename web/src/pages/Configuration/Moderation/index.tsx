@@ -437,6 +437,7 @@ function AprovedButtonsList() {
                   <th className='form-list__table-header-cell'>{t('button.titleLabel')}</th>
                   <th className='form-list__table-header-cell'>{t('button.typeLabel')}</th>
                   <th className='form-list__table-header-cell'>{t('button.tagsLabel')}</th>
+                  <th className='form-list__table-header-cell'>{t('button.status')}</th>
                   <th className='form-list__table-header-cell'>{t('moderation.created_at')}</th>
                   <th className='form-list__table-header-cell'>{t('button.authorTitle')}</th>
                   <th className='form-list__table-header-cell'>{t('moderation.actions')}</th>
@@ -450,6 +451,7 @@ function AprovedButtonsList() {
                       <BtnButtonType type={buttonTypes.find((type) => type.name == button.type)} />
                     </td>
                     <td className='form-list__table-body-cell'><TagsNav tags={button.tags} /></td>
+                    <td className='form-list__table-body-cell'>{button.status}</td>
                     <td className='form-list__table-body-cell'>{readableTimeLeftToDate(button.updated_at)}</td>
                     <td className='form-list__table-body-cell'><a onClick={() => store.emit(new SetMainPopupCurrentProfile(button.owner))}>{button.owner.name}</a></td>
                     <td className='form-list__table-body-cell'>
