@@ -269,7 +269,7 @@ function NetworkForm({
 
           </Accordion>
 
-          <Accordion collapsed={hasErrors('configuration') || true} title={t('configuration.configureNetwork')}>
+          <Accordion collapsed={hasErrors('configuration')} title={t('configuration.configureNetwork')}>
 
             {/* BUTTON TYPES */}
           

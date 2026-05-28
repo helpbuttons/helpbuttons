@@ -63,6 +63,9 @@ function NetworkCreation() {
     (state: GlobalState) => state.sessionUser,
   );
   register("exploreSettings", { required: {value: true, message: t('configuration.requiredLocation')} })
+  register("logo", { required: {value: true, message: t('validation.fieldRequired')} })
+  register("jumbo", { required: {value: true, message: t('validation.fieldRequired')} })
+
   const onSubmit = (data) => {
 
     store.emit(
