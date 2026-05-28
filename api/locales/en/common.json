@@ -342,7 +342,8 @@
     "copyAlert": "Copied",
     "whereButtonLabel": "Choose place",
     "pickPosition": "Please pick a position on the map",
-    "expired": "_helpbutton_ expired, it won't show on search results."
+    "expired": "_helpbutton_ expired, it won't show on search results.",
+    "statusLabel": "Status"
   },
   "user": {
     "login": "Write your credentials",

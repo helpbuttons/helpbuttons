@@ -462,7 +462,8 @@
     "expiredLabel": "Expired",
     "followers": "Suscribed by {0} users",
     "whereButtonLabel": "Choose place",
-    "pickPosition": "Please pick a position on the map"
+    "pickPosition": "Please pick a position on the map",
+    "statusLabel": "Estat"
   },
   "calendarOnce": {
     "label": "Una vegada",

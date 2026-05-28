@@ -528,7 +528,8 @@
     "seeHashtags": "Etiketak ikusi",
     "selectPlace": "Hautatu lekua mapan, idatzi izen bat eta gorde",
     "showMoreTags": "etiketa gehiago",
-    "whereButtonLabel": "Lekua aukeratu"
+    "whereButtonLabel": "Lekua aukeratu",
+    "statusLabel": "Egoera"
   },
   "calendarOnce": {
     "label": "Behin",

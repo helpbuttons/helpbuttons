@@ -442,7 +442,8 @@
     "sendPrivateMessage": "Enviar mensagem privada para {0}",
     "proposeAddress": "Adicionar endereço em falta {0}",
     "locationPlaceholder": "Escrever sítio ou morada",
-    "expiredLabel": "Expirado"
+    "expiredLabel": "Expirado",
+    "statusLabel": "Estado"
   },
   "calendarOnce": {
     "label": "Uma vez",
