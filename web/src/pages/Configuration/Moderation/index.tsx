@@ -437,7 +437,7 @@ function AprovedButtonsList() {
                   <th className='form-list__table-header-cell'>{t('button.titleLabel')}</th>
                   <th className='form-list__table-header-cell'>{t('button.typeLabel')}</th>
                   <th className='form-list__table-header-cell'>{t('button.tagsLabel')}</th>
-                  <th className='form-list__table-header-cell'>{t('button.status')}</th>
+                  <th className='form-list__table-header-cell'>{t('button.statusLabel')}</th>
                   <th className='form-list__table-header-cell'>{t('moderation.created_at')}</th>
                   <th className='form-list__table-header-cell'>{t('button.authorTitle')}</th>
                   <th className='form-list__table-header-cell'>{t('moderation.actions')}</th>
