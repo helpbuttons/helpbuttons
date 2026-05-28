@@ -12,6 +12,7 @@ import { readableTimeLeftToDate } from "shared/date.utils"
 import { ActivitiesPageSize } from "shared/dtos/activity.dto"
 import { useScroll } from "shared/helpers/scroll.helper"
 import { ActivityEventName } from "shared/types/activity.list"
+import { GroupMessageType } from "shared/types/group-message.enum"
 import { GlobalState, store, useGlobalStore } from "state"
 import { FindActivityDetails, FindLatestActivities, SendNewMessage, SetFocusOnMessage, SetFocusOnPost } from "state/Activity"
 import { FindButton } from "state/Explore"
@@ -264,6 +265,18 @@ function ActivityDetailCard({ activity, isLast = false }) {
 }
 
 export function ActivityDetailMessage({ activity, isLast = false }) {
+  if(activity.to == GroupMessageType.endorsed){
+    return (
+      <>
+        <div className="chat__time-passed">
+          {readableTimeLeftToDate(activity.createdAt)}
+        </div>
+        <div className="chat__notice">
+          {activity.message}
+        </div>
+      </>
+    )
+  }
   if (activity?.from) {
     return (
       <>

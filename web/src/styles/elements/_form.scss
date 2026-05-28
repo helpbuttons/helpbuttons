@@ -98,6 +98,12 @@ padding-bottom: $margin-medium;
   margin-bottom: $margin-small;
 }
 
+.form__field--multiinput {
+  display: flex;
+  flex-direction: column;
+  gap: $padding-big;
+}
+
 .form__field--noMargin {
   margin-bottom: 0;
 }
@@ -610,6 +616,15 @@ width: 100%;
 
 }
 
+.form__illustration--icon {
+
+  svg {
+    width: 60px;
+    height: 60px;
+  }
+
+}
+
 .form__header {
 
   background-color: $color-ligth-gray;
@@ -627,6 +642,11 @@ width: 100%;
 }
 
 .form__fake-input {
+
+  word-break: keep-all;
+  text-wrap: keep-all;
+  overflow-x: auto;
+  overflow-y: hidden;
 
   &:hover {
 
@@ -655,6 +675,8 @@ width: 100%;
   max-width: 200px;
 
 }
+
+ 
 
 @media #{$breakpoints-medium} {
 

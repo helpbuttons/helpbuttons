@@ -623,7 +623,7 @@ export class ActivityService {
             buttonType: activity.button.type,
             type: translate(locale, 'activities.notice'),
             footer: `${activity.button.title} - ${activity.button.address}`,
-            message: isOwner ? translate(locale, 'activities.newfollowed') : translate(locale, 'activities.newfollowing'),
+            message: isOwner ? translate(locale, 'activities.newfollowed', [activity.from.name]) : translate(locale, 'activities.newfollowing'),
             link: getUrl(`/Show/${activity.button.id}`)
           }
         case ActivityEventName.NewPost:

@@ -25,6 +25,8 @@ import FieldButtonTemplates from 'components/button/ButtonType/FieldButtonTempla
 import { FieldKeySpots } from 'components/map/LocationKey';
 import FieldImageUpload from 'elements/Fields/FieldImageUpload';
 import { CustomFields } from 'shared/types/customFields.type';
+import { DropdownField } from 'elements/Dropdown/Dropdown';
+import { PrivacyNetworkType } from 'shared/types/privacy.enum';
 
 export default NetworkForm;
 
@@ -166,15 +168,6 @@ function NetworkForm({
           <Accordion collapsed={hasErrors('privacySettings')} title={t('configuration.privacySettings')}>
            <>
               <FieldCheckbox
-                name='inviteOnly'
-                label={t('invite.inviteOnlyLabel')}
-                explain={t('invite.inviteOnlyExplain')}
-                defaultValue={watch('inviteOnly')}
-                text={t('invite.inviteOnly')}
-                onChanged={(value) => setValue('inviteOnly', value)}
-              />
-
-              <FieldCheckbox
                 name='requireApproval'
                 label={t('moderation.requireApprovalLabel')}
                 explain={t('moderation.requireApprovalExplain')}
@@ -182,14 +175,20 @@ function NetworkForm({
                 text={t('moderation.requireApproval')}
                 onChanged={(value) => setValue('requireApproval', value)}
               />
-              <FieldCheckbox
-                name='allowGuestCreation'
-                label={t('configuration.allowGuestCreationLabel')}
-                explain={t('configuration.allowGuestCreationExplain')}
-                defaultValue={watch('allowGuestCreation')}
-                text={t('configuration.allowGuestCreation')}
-                onChanged={(value) => setValue('allowGuestCreation', value)}
+              <FieldSignupConfiguration 
+                onChanged={(value) => setValue('privacyNetworkType', value)}
+                defaultValue={watch('privacyNetworkType')}
               />
+              {watch('privacyNetworkType') == PrivacyNetworkType.ANYONE_CAN &&
+                <FieldCheckbox
+                  name='allowGuestCreation'
+                  label={t('configuration.allowGuestCreationLabel')}
+                  explain={t('configuration.allowGuestCreationExplain')}
+                  defaultValue={watch('allowGuestCreation')}
+                  text={t('configuration.allowGuestCreation')}
+                  onChanged={(value) => setValue('allowGuestCreation', value)}
+                />
+              }
             </>
            </Accordion>
 
@@ -384,4 +383,28 @@ function NetworkForm({
       </Form>
     </>
   );
+}
+
+function FieldSignupConfiguration({defaultValue = PrivacyNetworkType.ANYONE_CAN, onChanged}){
+  const [value, setValue] = useState(defaultValue)
+  
+  // const defaultValue = SingupConfigurationOptions.INVITE_ONLY
+  const onChange = (value) => {
+    setValue(() => value)
+    onChanged(value)
+  }
+  return <>
+              <DropdownField
+                options={[
+                  {value: PrivacyNetworkType.ANYONE_CAN, name: t(`configuration.${PrivacyNetworkType.ANYONE_CAN}`) },
+                  { value: PrivacyNetworkType.INVITE_ONLY, name: t(`configuration.${PrivacyNetworkType.INVITE_ONLY}`) },
+                  { value: PrivacyNetworkType.INVITE_ONLY_BY_ENDORSED, name: t(`configuration.${PrivacyNetworkType.INVITE_ONLY_BY_ENDORSED}`) },
+                  { value: PrivacyNetworkType.INVITE_ONLY_BY_ADMIN, name: t(`configuration.${PrivacyNetworkType.INVITE_ONLY_BY_ENDORSED}`) },
+                ]}
+                explain={t(`configuration.explain${value}`)}
+                defaultSelected={defaultValue}
+                onChange={onChange}
+                label={t('user.pickPrivacyOption')}
+              />
+  </>
 }

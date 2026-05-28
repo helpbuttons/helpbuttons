@@ -4,6 +4,7 @@ import { IoClose } from "react-icons/io5";
 import { useEffect, useRef } from "react";
 import Btn, { BtnType, ContentAlignment, IconType } from "elements/Btn";
 import t from "i18n";
+import { useEscapeAndEnter } from "shared/custom.hooks";
 
 const getEffectiveZIndex = (element: HTMLElement | null): number => {
   while (element) {
@@ -20,6 +21,9 @@ const getEffectiveZIndex = (element: HTMLElement | null): number => {
 };
 
 export function Picker({ closeAction, headerText, children, extraClass = '' }) {
+
+  useEscapeAndEnter(() => closeAction())
+
   const modalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {

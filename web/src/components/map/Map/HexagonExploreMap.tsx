@@ -103,7 +103,7 @@ export default function HexagonExploreMap({
         }
         const coordinates = btns.map((btn) => { 
           if(btn.hideAddress){
-            return { latitude: hex.center[0], longitude: hex.center[1] } 
+            return { latitude: btn.latitude, longitude: btn.longitude } 
           }
           return { latitude: btn.latitude, longitude: btn.longitude } 
         })
@@ -152,8 +152,9 @@ export default function HexagonExploreMap({
             <DisplayHiddenButtonsWarning countFilteredButtons={countFilteredButtons} />
             <GeoJson>
             {filteredCircle && <GeoJsonFeature feature={filteredCircle}/>}
-
+            {/* {geoJsonFeatures && <GeoJsonFeature feature={geoJsonFeatures}/>} */}
             </GeoJson>
+            
             {/*
             show count of buttons per hexagon
             */}

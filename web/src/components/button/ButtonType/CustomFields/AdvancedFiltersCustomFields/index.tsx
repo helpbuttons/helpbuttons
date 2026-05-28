@@ -95,13 +95,27 @@ export const applyCustomFieldsFilters = (
       return false;
     }
 
-    if (
-      button.price &&
-      button.price >= filters.minPrice &&
-      button.price <= filters.maxPrice
-    ) {
-      return true;
+    if(!button.price || button.price < 0){
+      return false;
     }
+    if( filters.minPrice && filters.maxPrice){
+      if (
+        button.price >= filters.minPrice &&
+        button.price <= filters.maxPrice
+      ) {
+        return true;
+      }
+    }else if( filters.minPrice){
+      if (button.price >= filters.minPrice) {
+        return true;
+      }
+    }else if(filters.maxPrice){
+      if (button.price <= filters.maxPrice) {
+        return true;
+      }
+    }
+   
+    return false;
   }
   function getDateOnlyDays(dateString, startEnd = 0) {
     // 1 start, 2 end, 0 dont modify
@@ -173,7 +187,6 @@ export function customFieldsFiltersText(filters, currency) {
       {filters.dateRange &&
         ' - ' + readableDateRange(filters.dateRange)}
       {(filters.minPrice || filters.maxPrice) &&
-        ' - ' +
           readableFiltersPrice(
             filters.minPrice,
             filters.maxPrice,
@@ -184,11 +197,19 @@ export function customFieldsFiltersText(filters, currency) {
 }
 
 function readableFiltersPrice(minPrice, maxPrice, currency) {
-  return (
-    formatCurrency(minPrice, currency) +
-    ' - ' +
-    formatCurrency(maxPrice, currency)
-  );
+  if(minPrice && maxPrice){
+    return (
+      t('buttonFilters.minPricePlaceholder') + ' ' + 
+      formatCurrency(minPrice, currency) + ' ' +
+      t('buttonFilters.maxPriceLabel')  + ' ' +
+      formatCurrency(maxPrice, currency)
+    );
+  }else if(minPrice){
+    return t('buttonFilters.minPricePlaceholder') + ' ' + formatCurrency(minPrice, currency)
+  }else if(maxPrice){
+    return t('buttonFilters.maxPriceLabel') + ' ' + formatCurrency(maxPrice, currency)
+  }
+ 
 }
 function readableDateRange(dateRange) {
   return (

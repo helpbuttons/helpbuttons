@@ -33,6 +33,7 @@ import { SetupDtoOut } from '../setup/setup.entity';
 import configs from '@src/config/configuration';
 import { uploadDir } from '../storage/storage.utils';
 import { Cache } from 'cache-manager';
+import { PrivacyNetworkType } from '@src/shared/types/privacy.enum';
 
 @Injectable()
 export class NetworkService {
@@ -49,6 +50,9 @@ export class NetworkService {
   ) { }
 
   async create(createDto: CreateNetworkDto, logo: Express.Multer.File, jumbo: Express.Multer.File) {
+    if(createDto.allowGuestCreation && createDto.privacyNetworkType != PrivacyNetworkType.ANYONE_CAN){
+      createDto.allowGuestCreation = false;
+    }
     const network = {
       id: uuid(),
       description: createDto.description,
@@ -73,7 +77,8 @@ export class NetworkService {
       privacyPolicy: createDto.privacyPolicy,
       ethicsPolicy: createDto.ethicsPolicy,
       contactEmail: createDto.contactEmail,
-      hideCountryOnAddresses: createDto.hideCountryOnAddresses
+      hideCountryOnAddresses: createDto.hideCountryOnAddresses,
+      privacyNetworkType: createDto.privacyNetworkType
     };
     if (Array.isArray(createDto.tags)) {
       await this.tagService
@@ -135,6 +140,7 @@ export class NetworkService {
                   }
                   return {
                     ...defaultNetwork,
+                    inviteOnly: defaultNetwork.privacyNetworkType != PrivacyNetworkType.ANYONE_CAN,
                     buttonTypesCount: networkByButtonTypes,
                     exploreSettings: defaultNetwork.exploreSettings,
                     buttonCount: networkByButtonTypes.reduce(
@@ -172,6 +178,7 @@ export class NetworkService {
         }
       })
       .catch((err) => {
+        console.log(err)
         console.log('no networks found?')
         throw new HttpException(
           { message: '🙆🏼‍♂️Default network not found' },
@@ -190,7 +197,9 @@ export class NetworkService {
 
   async update(updateDto: UpdateNetworkDto, logo, jumbo) {
     const defaultNetwork = await this.findDefaultNetwork();
-
+    if(updateDto.allowGuestCreation && updateDto.privacyNetworkType != PrivacyNetworkType.ANYONE_CAN){
+      updateDto.allowGuestCreation = false;
+    }
     const network = {
       id: defaultNetwork.id,
       description: updateDto.description,
@@ -215,9 +224,9 @@ export class NetworkService {
       privacyPolicy: updateDto.privacyPolicy,
       ethicsPolicy: updateDto.ethicsPolicy,
       contactEmail: updateDto.contactEmail,
-      hideCountryOnAddresses: updateDto.hideCountryOnAddresses
+      hideCountryOnAddresses: updateDto.hideCountryOnAddresses,
+      privacyNetworkType: updateDto.privacyNetworkType
     };
-
     /** Dont need to check for orphans no more... ! */
     const buttonTemplatesNew = network.buttonTemplates.filter((btnTemplate) => !btnTemplate.hide).map((btnTemplate) => btnTemplate.name)
 

@@ -252,7 +252,6 @@ function MyApp({ Component, pageProps }) {
       };
       handleAcceptCookies()
       store.emit(new LoginToken(loginToken, onSuccess, onError));
-    } else if (loginToken) {
       triedToLogin.current = true;
     }
   }, [searchParams]);

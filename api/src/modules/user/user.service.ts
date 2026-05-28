@@ -17,6 +17,7 @@ import { plainToClass } from 'class-transformer';
 import { StorageService } from '../storage/storage.service';
 import { MailService } from '../mail/mail.service';
 import { GroupMessageType } from '@src/shared/types/group-message.enum';
+import translate from '@src/shared/helpers/i18n.helper';
 
 @Injectable()
 export class UserService {
@@ -332,5 +333,31 @@ COALESCE(
     .then((users) => users.map((user) => {
       return {username: user.username, name: user.name, id: user.id, avatar: user.avatar};
     }))
+  }
+
+  notifyByEmailEndorsedAndAdmins(message) {
+    return this.userRepository
+      .find({
+        where: [{ role: Role.admin }, { endorsed: true }],
+        order: { id: 'DESC' },
+      })
+      .then(
+        (endorsedAndAdmins) =>
+          endorsedAndAdmins.map((user) => {
+            this.notifyByEmail(message, translate(user.locale, 'activities.newEndorsedMessageSubject'), user.locale, user.id, user.email, '/Activity/community')
+          }),
+      );
+  }
+  async notifyByEmail(message, subject, locale, userId, email, path = '/Explore') {
+    return this.getUserLoginParams(userId)
+      .then((loginParams) => {
+        this.mailService.sendWithLink({
+          to: email,
+          content: message,
+          subject: subject,
+          link: `${path}${loginParams}`,
+          linkCaption: translate(locale, 'activities.view'),
+        });
+      })
   }
 }

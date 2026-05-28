@@ -204,3 +204,26 @@ export const useOnPageExit = (onPageExit) => {
     }
   }, [])
 }
+
+export const useEscapeAndEnter = (onEscape, onEnter = (event) => {}) => {
+
+  useEffect(() => {
+    const keyDownHandler = event => {
+      if (event.key === 'Enter' ) {
+        event.preventDefault();
+        onEnter(event)
+      }
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        onEscape(event)
+      }
+    };
+
+    document.addEventListener('keydown', keyDownHandler);
+
+    return () => {
+      document.removeEventListener('keydown', keyDownHandler);
+    };
+  }, []);
+
+}

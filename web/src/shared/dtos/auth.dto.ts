@@ -152,6 +152,7 @@ export class SignupQRRequestDto {
   acceptPrivacyPolicy;
   
   phone?: string;
+  email?: string;
 }
 
 export class LoginRequestDto {

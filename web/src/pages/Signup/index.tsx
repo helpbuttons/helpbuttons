@@ -31,7 +31,7 @@ import { useMetadataTitle } from 'state/Metadata';
 import dconsole from 'shared/debugger';
 import HomeInfo from 'pages/HomeInfo';
 import { getInvitationLink } from 'pages/Profile/Invites';
-import { IoQrCode } from 'react-icons/io5';
+import { IoQrCode, IoWarningOutline } from 'react-icons/io5';
 
 export default function Signup( {metadata})
 {
@@ -125,8 +125,7 @@ export function SignupForm() {
   }, [router])
 
   if(selectedNetwork?.inviteOnly && !inviteCode) {
-    return (<>{t('invite.inviteOnlyNetwork')}</>
-    )
+    return (<><div className='form__illustration form__illustration--icon'><IoWarningOutline/></div><div className="form__header">{t('invite.inviteOnlyNetwork')}</div><SignupOptions selectedNetwork={selectedNetwork}/></>)
   }
   return (
       <Form onSubmit={handleSubmit(onSubmit)} classNameExtra="login__form">
@@ -143,19 +142,20 @@ export function SignupForm() {
             <div className="form__btn-register">
               <BtnSubmit isSubmitting={isSubmitting} errors={errors} caption={t('user.register')} disabled={isSubmitting || cookieState != CookiesState.ACCEPTED}/>
             </div>
-            <div className="popup__link" onClick={() => store.emit(new SetMainPopup(MainPopupPage.LOGIN))}>
-                {t('user.loginLink')}
-            </div>
-            {selectedNetwork?.allowGuestCreation && 
-              <div className="popup__link" onClick={() => store.emit(new SetMainPopup(MainPopupPage.SIGNUP_AS_GUEST))}>
-                 <IoQrCode/>{t('user.signupAsGuest')}
-              </div>
-            }
+            <SignupOptions selectedNetwork={selectedNetwork}/>
           </div>
       </Form>
   );
 }
 
+function SignupOptions({ selectedNetwork }) {
+  return <><div className="popup__link" onClick={() => store.emit(new SetMainPopup(MainPopupPage.LOGIN))}>{t('user.loginLink')}</div>
+    {selectedNetwork?.allowGuestCreation &&
+      <div className="popup__link" onClick={() => store.emit(new SetMainPopup(MainPopupPage.SIGNUP_AS_GUEST))}>
+        <IoQrCode />{t('user.signupAsGuest')}
+      </div>
+    }</>
+}
 
 
 
@@ -194,19 +194,26 @@ export function SignupAsGuestForm() {
     alertService.info(t('share.codeCopied', invitationLink))
   }
 
+  const selectedNetwork: Network = useStore(
+    store,
+    (state: GlobalState) => state.networks.selectedNetwork,
+  );
+
   return <>
     <Form onSubmit={handleSubmit(onSubmit)} classNameExtra="login__form">
         <div className="form__inputs-wrapper">
           {step == steps.REQUEST_CODE &&
             <>
               <div className='form__header'>{t('user.explainPublishAsGuest')}</div>
-              <Btn
-                submit={false}
-                btnType={BtnType.submit}
-                caption={t('user.generateCode')}
-                contentAlignment={ContentAlignment.center}
-                onClick={() => requestNewGuestCode()}
-              />
+              { !selectedNetwork?.inviteOnly &&
+                <Btn
+                  submit={false}
+                  btnType={BtnType.submit}
+                  caption={t('user.generateCode')}
+                  contentAlignment={ContentAlignment.center}
+                  onClick={() => requestNewGuestCode()}
+                />
+              }
             </>
           }
           {step == steps.SUCCESS &&
@@ -251,6 +258,7 @@ export function SignupAsGuestForm() {
              <div className="popup__link" onClick={() => store.emit(new SetMainPopup(MainPopupPage.INVITE_SCAN))}>
                  <IoQrCode/>{t('user.iHaveCode')}
               </div>
+
               <div className="popup__link" onClick={() => store.emit(new SetMainPopup(MainPopupPage.LOGIN))}>
                   {t('user.loginWEmail')}
               </div>

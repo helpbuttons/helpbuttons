@@ -103,8 +103,11 @@ export default function ButtonForm({
     clearErrors('eventStart')
   }, [watch('eventStart')])
   useEffect(() => {
-    clearErrors()
+    clearErrors('type')
   }, [watch('type')])
+  useEffect(() => {
+    clearErrors('address')
+  }, [watch('address')])
   const onError = (errors, e) => alertService.error(t('validation.error'))
   return (
     <LoadabledComponent loading={!selectedNetwork}>

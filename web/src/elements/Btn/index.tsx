@@ -3,6 +3,7 @@ import React from "react";
 import router from "next/router";
 import Loading from "components/loading";
 import t from "i18n";
+import FieldError from "elements/Fields/FieldError";
 
 export enum BtnType {
     corporative,
@@ -101,7 +102,21 @@ export function BtnSubmit({ isSubmitting, errors, caption, disabled = false }) {
             submit={true}
             disabled={disabled}
         />
-        {Object.keys(errors).length > 0 && <>{t('validation.invalidForm')}</>}
+
+        <div className="form__input-subtitle">
+            <div className="form__input-subtitle-side">
+                <label className="form__input-subtitle--error">
+                    {Object.keys(errors).length > 0 && <>
+
+                            {t('validation.invalidForm')}
+                            
+                        </>
+                    }
+                </label>
+            </div>
+
+        </div>
+
     </>
 }
 

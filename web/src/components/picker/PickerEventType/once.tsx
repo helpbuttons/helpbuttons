@@ -8,6 +8,7 @@ import { CardButtonCustomFields } from 'components/button/ButtonType/CustomField
 import { useSelectedNetwork } from 'state/Networks';
 import { Network } from 'shared/entities/network.entity';
 import t from 'i18n';
+import { eventTemplate } from 'components/templates/event';
 
 export default function PickerEventTypeOnceForm({
   eventStart,
@@ -97,9 +98,10 @@ export function ButtonEventDay({ button, buttonTypes }) {
   const { cssColor, caption, customFields, icon } = useButtonType(button, buttonTypes)
   const sessionUser = useGlobalStore((state: GlobalState) => state.sessionUser);
   const selectedNetwork: Network = useSelectedNetwork()
+  const onlyDateCustomFields = customFields.filter((customField) => customField.type == eventTemplate.name)
   return <><span>{button.title}</span>
     <CardButtonCustomFields
-      customFields={customFields}
+      customFields={onlyDateCustomFields}
       button={button}
       selectedNetwork={selectedNetwork}
       isList={false}

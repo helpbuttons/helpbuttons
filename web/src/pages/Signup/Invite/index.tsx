@@ -47,7 +47,8 @@ export function InviteForm() {
       qrCode: '',
       locale: 'en',
       tags: [],
-      acceptPrivacyPolicy: 'no'
+      acceptPrivacyPolicy: 'no',
+      email: ''
     },
   });
 
@@ -58,6 +59,7 @@ export function InviteForm() {
     if(loginCode)
     {
       const onLoggingInSuccess = () => {
+        alertService.success(t('user.loginSucess'))
         store.emit(new SetMainPopup(MainPopupPage.HIDE))
         router.push(`/HomeInfo`)
       }
@@ -82,10 +84,11 @@ export function InviteForm() {
             qrCode:  code ? code : invitationCode,
             locale: getLocale(),
             acceptPrivacyPolicy: data.acceptPrivacyPolicy,
-            phone: data.phone
+            phone: data.phone,
+            email: data.email
           },
           () => {
-            // router.push(`/HomeInfo`)
+            alertService.success(t('user.loginSucess'))
             store.emit(new SetMainPopup(MainPopupPage.HIDE))
           },
           () => {

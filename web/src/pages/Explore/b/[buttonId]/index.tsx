@@ -9,8 +9,9 @@ import { ExplorePage } from 'pages/Explore';
 import { ErrorName } from 'shared/types/error.list';
 import { alertService } from 'services/Alert';
 import { useSelectedNetwork } from 'state/Networks';
+import Loading from 'components/loading';
 
-export default function Explore({
+export default function ExploreButtonId({
     metadata
 }) {
     const router = useRouter();
@@ -32,11 +33,9 @@ export default function Explore({
           }))
         }
       }, [buttonId, selectedNetwork])
-    return <ExplorePage/>
+    return <Loading/>
 }
 
 export const getServerSideProps = async (ctx: NextPageContext) => {
     return setMetadata(t('menu.explore'), ctx);
 };
-
-
