@@ -77,6 +77,7 @@ export class NetworkService {
       privacyPolicy: createDto.privacyPolicy,
       ethicsPolicy: createDto.ethicsPolicy,
       contactEmail: createDto.contactEmail,
+      hideCountryOnAddresses: createDto.hideCountryOnAddresses,
       privacyNetworkType: createDto.privacyNetworkType
     };
     if (Array.isArray(createDto.tags)) {
@@ -223,6 +224,7 @@ export class NetworkService {
       privacyPolicy: updateDto.privacyPolicy,
       ethicsPolicy: updateDto.ethicsPolicy,
       contactEmail: updateDto.contactEmail,
+      hideCountryOnAddresses: updateDto.hideCountryOnAddresses,
       privacyNetworkType: updateDto.privacyNetworkType
     };
     /** Dont need to check for orphans no more... ! */

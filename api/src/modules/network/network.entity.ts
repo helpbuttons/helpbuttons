@@ -77,6 +77,9 @@ export class Network extends BaseEntity {
   requireApproval: boolean;
 
   @Column({default: false})
+  hideCountryOnAddresses: boolean;
+  
+  @Column({default: false})
   hideLocationDefault: boolean;
 
   @Column({default: false})

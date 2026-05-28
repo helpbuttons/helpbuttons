@@ -38,11 +38,14 @@ export class GeoService {
   }
 
   async search(query: string, lat: string, lon: string) {
-      return this.geoProvider.searchQuery(query, lat, lon).then((results) =>
+      return this.networkService.findDefaultNetwork()
+      .then((network) => {
+        return this.geoProvider.searchQuery(query, lat, lon, network.hideCountryOnAddresses).then((results) =>
           this.searchCustom(query).then((customResults) => [...customResults, ...results]))
           .then((addresses) => this.removeDuplicateAdresses(addresses))
           .then((addresses) => this.sortAlphabetically(addresses))
           .then((addresses) => this.sortMatches(addresses, query))
+      })
   }
 
   async searchLimited(query: string, lat: string, lon: string) {
@@ -52,7 +55,10 @@ export class GeoService {
   }
 
   async findAddress(lat: string, lng: string) {
-    return this.geoProvider.getAddress({ lat: lat, lng: lng });
+    return this.networkService.findDefaultNetwork()
+      .then((network) => {
+        return this.geoProvider.getAddress({ lat: lat, lng: lng }, network.hideCountryOnAddresses);
+      })
   }
 
   async findAddressLimited(lat: string, lng: string) {

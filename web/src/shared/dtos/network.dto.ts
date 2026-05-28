@@ -101,6 +101,8 @@ export class CreateNetworkDto implements Partial<Network> {
 
   hideLocationDefault: boolean;
 
+  hideCountryOnAddresses: boolean;
+
   allowGuestCreation: boolean;
 
   privacyPolicy: string;
