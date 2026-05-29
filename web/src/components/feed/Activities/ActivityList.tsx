@@ -35,7 +35,7 @@ export default function ActivityList({ setSelectedActivity, selectedActivity, ac
         router.push(`/Activity/${activity.id}`);
     }
     return (<>
-        {scrollIsLoading && <Loading />}
+        {(scrollIsLoading && activities.length > ActivitiesPageSize) && <Loading />}
         {isDrafting && <DraftActivityListEntryCard/>}
         {activities && (
             <>
