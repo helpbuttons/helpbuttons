@@ -611,11 +611,11 @@
     "privacySettings": "Set your privacy prefrences",
     "noNetworkLocation": "Please choose a network location before adding key spots",
     "anyoneCan": "Anyone can register",
-    "explainanyoneCan": "",
+    "explainanyoneCan": "Everyone can sign up in your network.",
     "inviteOnly": "Invite only network",
     "explaininviteOnly": "The only way to signup to the network is to be invited by other users already registered in the network",
-    "inviteOnlyByEndorsed": "Invite only by endorsed",
-    "explaininviteOnlyByEndorsed": "The only way to signup to the network is to be invited by other users which have been endorsed",
+    "inviteOnlyByEndorsed": "Invite only by verified",
+    "explaininviteOnlyByEndorsed": "The only way to signup to the network is to be invited by other users which have been verified",
     "inviteOnlyByAdmin": "Invite only by coordinators",
     "explaininviteOnlyByAdmin": "The only way to signup to the network is to be invited by coordinators of the network"
 
