@@ -399,7 +399,7 @@ function FieldSignupConfiguration({defaultValue = PrivacyNetworkType.ANYONE_CAN,
                   {value: PrivacyNetworkType.ANYONE_CAN, name: t(`configuration.${PrivacyNetworkType.ANYONE_CAN}`) },
                   { value: PrivacyNetworkType.INVITE_ONLY, name: t(`configuration.${PrivacyNetworkType.INVITE_ONLY}`) },
                   { value: PrivacyNetworkType.INVITE_ONLY_BY_ENDORSED, name: t(`configuration.${PrivacyNetworkType.INVITE_ONLY_BY_ENDORSED}`) },
-                  { value: PrivacyNetworkType.INVITE_ONLY_BY_ADMIN, name: t(`configuration.${PrivacyNetworkType.INVITE_ONLY_BY_ENDORSED}`) },
+                  { value: PrivacyNetworkType.INVITE_ONLY_BY_ADMIN, name: t(`configuration.${PrivacyNetworkType.INVITE_ONLY_BY_ADMIN}`) },
                 ]}
                 explain={t(`configuration.explain${value}`)}
                 defaultSelected={defaultValue}
