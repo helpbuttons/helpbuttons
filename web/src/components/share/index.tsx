@@ -40,18 +40,19 @@ export function ShareForm({}) {
   const canCreateInvite = () => {
     switch(selectedNetwork.privacyNetworkType){
       case PrivacyNetworkType.INVITE_ONLY:
+          return true;
       case PrivacyNetworkType.ANYONE_CAN:
-        return true;
-      case PrivacyNetworkType.INVITE_ONLY_BY_ADMIN: 
-        if(userLoggedIn.role == Role.admin){
+        return false;
+      case PrivacyNetworkType.INVITE_ONLY_BY_ADMIN:
+        // if(userLoggedIn?.role == Role.admin){
           return true
-        }
+        // }
         break;
       case PrivacyNetworkType.INVITE_ONLY_BY_ENDORSED:
         {
-          if(userLoggedIn.endorsed){
+          // if(userLoggedIn?.endorsed){
             return true;
-          }
+          // }
         }
         break;
     }
