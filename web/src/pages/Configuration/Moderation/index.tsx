@@ -286,7 +286,7 @@ function ModerationHelpButtonsList() {
   const approveButton = (buttonId) => {
     store.emit(
       new ButtonApprove(buttonId, () => {
-        alertService.info('button approved');
+        alertService.info(t('moderation.approved'));
         setButtons((prevButtons) => prevButtons.filter((button) => button.id != buttonId))
       })
     );
@@ -313,7 +313,7 @@ function ModerationHelpButtonsList() {
             <TableHeaderCell>{t('moderation.created_at')}</TableHeaderCell>
             <TableHeaderCell>{t('button.titleLabel')}</TableHeaderCell>
             <TableHeaderCell>{t('button.typeLabel')}</TableHeaderCell>
-            <TableHeaderCell>{t('button.tagsLabel')}</TableHeaderCell>
+            {/* <TableHeaderCell>{t('button.tagsLabel')}</TableHeaderCell> */}
             <TableHeaderCell>{t('button.whereLabel')}</TableHeaderCell>
             <TableHeaderCell>{t('moderation.actions')}</TableHeaderCell>
           </TableHeader>
@@ -329,9 +329,9 @@ function ModerationHelpButtonsList() {
                 <TableLineCell>
                   <BtnButtonType type={buttonTypes.find((type) => type.name == button.type)} />
                 </TableLineCell>
-                <TableLineCell>
+                {/* <TableLineCell>
                   <TagsNav tags={button.tags} />
-                </TableLineCell>
+                </TableLineCell> */}
                 <TableLineCell>
                   {button.address}
                 </TableLineCell>
@@ -436,7 +436,7 @@ function AprovedButtonsList() {
                 <tr className='form-list__table-header-row'>
                   <th className='form-list__table-header-cell'>{t('button.titleLabel')}</th>
                   <th className='form-list__table-header-cell'>{t('button.typeLabel')}</th>
-                  <th className='form-list__table-header-cell'>{t('button.tagsLabel')}</th>
+                  {/* <th className='form-list__table-header-cell'>{t('button.tagsLabel')}</th> */}
                   <th className='form-list__table-header-cell'>{t('button.statusLabel')}</th>
                   <th className='form-list__table-header-cell'>{t('moderation.created_at')}</th>
                   <th className='form-list__table-header-cell'>{t('button.authorTitle')}</th>
@@ -450,7 +450,7 @@ function AprovedButtonsList() {
                     <td className='form-list__table-body-cell'>
                       <BtnButtonType type={buttonTypes.find((type) => type.name == button.type)} />
                     </td>
-                    <td className='form-list__table-body-cell'><TagsNav tags={button.tags} /></td>
+                    {/* <td className='form-list__table-body-cell'><TagsNav tags={button.tags} /></td> */}
                     <td className='form-list__table-body-cell'>{button.status}</td>
                     <td className='form-list__table-body-cell'>{readableTimeLeftToDate(button.updated_at)}</td>
                     <td className='form-list__table-body-cell'><a onClick={() => store.emit(new SetMainPopupCurrentProfile(button.owner))}>{button.owner.name}</a></td>
