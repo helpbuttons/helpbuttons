@@ -37,7 +37,8 @@ export function makeImageUrl(image, localUrl = false) {
   const { publicRuntimeConfig } = getConfig()
 
   if (!image) {
-    return `${publicRuntimeConfig.apiUrl}/networks/logo/192`;
+    // return `${publicRuntimeConfig.apiUrl}/networks/logo/192`;
+    return "/assets/svg/logo/no-image.svg";
   }
   const regex = /^data\:image/gm;
   const matches = image.match(regex);
