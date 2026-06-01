@@ -769,7 +769,7 @@
     "requireApproval": "Permitir publicación solo con moderación",
     "requireApprovalLabel": "Moderación de la red",
     "requireApprovalExplain": "Si habilitas esto, todos los _helpbuttons_ creados (si no son por un coordinador) no se publicarán en el mapa, hasta que un coordinador lo apruebe",
-    "awaitingApproval": "_helpbutton_ ha sido añadido a la lista de moderación, por favor espera a que un coordinador la apruebe",
+    "awaitingApproval": "Tu _helpbutton_ está en la lista de moderación, por favor, espera a que un coordinador la apruebe",
     "created_at": "Creado en",
     "created": "creado",
     "title": "Modera el contenido y los usuarios",
