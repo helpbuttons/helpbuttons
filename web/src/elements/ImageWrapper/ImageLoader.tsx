@@ -21,8 +21,8 @@ export const ImageLoader = ({ src, alt, ...props }) => {
       height={props.height}
       {...props}
       style={{ ...props.style, visibility }}
-      onError={() => { setImgSrc(NO_IMAGE); setReveal(true); }}
-      onLoad={() => setReveal(true)}
+      onError={() => { setImgSrc(NO_IMAGE); setReveal(() => true); }}
+      onLoad={() => setReveal(() => true)}
     />
     </>
   );
