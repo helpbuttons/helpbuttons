@@ -33,6 +33,7 @@ $card-button-list-status-height: 10px;
   justify-content: space-between;
   border-radius: $border-radius-semicircle;
   overflow: hidden;
+  z-index: $z-index-base;
 
   .hashtag {
     cursor: none;
