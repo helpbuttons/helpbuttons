@@ -148,7 +148,6 @@ export default function HexagonExploreMap({
             tileType={selectedNetwork.exploreSettings.tileType}
             handleClick={onMapClick}
           >
-            <DisplayInstructions />
             <DisplayHiddenButtonsWarning countFilteredButtons={countFilteredButtons} />
             <GeoJson>
             {filteredCircle && <GeoJsonFeature feature={filteredCircle}/>}

@@ -83,7 +83,7 @@
     "reset": "Limpar filtros",
     "invalidMimeType": "{0} tem um tipo MIME inválido ({1})",
     "next": "Próximo",
-    "notfound": "Não foram encontrados {0}, desculpe. 🤔",
+    "notfound": "Não foram encontrados {0}. 🤔",
     "add": "Adicionar",
     "done": "Feito",
     "remove": "Remover",
@@ -324,7 +324,7 @@
     "browseHoneyComb": "Mapa com zonas poligonais"
   },
   "explore": {
-    "emptyList": "Por favor, altere sua pesquisa, mova o mapa ou toque para encontrar mais botões",
+    "emptyList": "Muda a tua pesquisa ou move o mapa",
     "createEmpty": "Criar _helpbutton_",
     "noResults": "Desculpe, não há resultados aqui",
     "selectedHexagon": "na área selecionada",

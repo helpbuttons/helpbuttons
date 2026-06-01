@@ -395,7 +395,7 @@
     "browseHoneyComb": "Mapa hexagono eremuekin"
   },
   "explore": {
-    "emptyList": "Mesedez, aldatu zure bilaketa, mugitu mapa edo sakatu botoia botoi gehiago aurkitzeko",
+    "emptyList": "Aldatu zure bilaketa edo mugitu mapa",
     "createEmpty": "_helpbutton_ sortu",
     "noResults": "Barkatu, ez dago emaitzarik hemen",
     "selectedHexagon": "hautatutako eremuan",
@@ -503,8 +503,8 @@
     "authorTitle": "Egilea:",
     "notFound": "Ezin dut zure botoia aurkitu, ezabatuta izan daiteke?",
     "invalidDates": "Check date and/or hour",
-    "followErrorAlert": "Can`t follow now, sorry",
-    "unfollowErrorAlert": "Can`t unfollow now, sorry",
+    "followErrorAlert": "Can`t follow now",
+    "unfollowErrorAlert": "Can`t unfollow now",
     "pin": "Pineatu",
     "unpin": "Unpineatu",
     "pinSuccess": "Pin arrakastaztatsua",

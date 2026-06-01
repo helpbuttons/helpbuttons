@@ -342,7 +342,7 @@
     "browseHoneyComb": "Mapa amb zones poligonals"
   },
   "explore": {
-    "emptyList": "Si us plau, canvia la teva cerca, mou el mapa o toca per trobar més botons",
+    "emptyList": "Canvia la teva cerca o mou el mapa",
     "createEmpty": "Crear _helpbutton_",
     "noResults": "Ho sento, no hi ha resultats aquí",
     "selectedHexagon": "a l'àrea seleccionada",
@@ -445,8 +445,8 @@
     "authorTitle": "Autor:",
     "notFound": "No puc trobar el teu botó, potser va ser esborrat?",
     "invalidDates": "Check date and/or hour",
-    "followErrorAlert": "Can`t follow now, sorry",
-    "unfollowErrorAlert": "Can`t unfollow now, sorry",
+    "followErrorAlert": "Can`t follow now",
+    "unfollowErrorAlert": "Can`t unfollow now",
     "pin": "Pin",
     "unpin": "Unpin",
     "pinSuccess": "Pin satisfactori",

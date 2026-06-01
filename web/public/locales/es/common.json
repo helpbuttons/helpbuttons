@@ -424,9 +424,9 @@
     "browseHoneyComb": "Mapa con zonas poligonales"
   },
   "explore": {
-    "emptyList": "Por favor, cambia tu búsqueda, mueve el mapa o toca para encontrar más botones",
+    "emptyList": "Cambia tu búsqueda o muévete en el mapa",
     "createEmpty": "Crear _helpbutton_",
-    "noResults": "Lo sentimos, no hay resultados aquí",
+    "noResults": "No hay resultados aquí",
     "selectedHexagon": "en el área seleccionada",
     "filteredRadius": "en {0} · {1}km",
     "noFilter": "en la zona",
@@ -533,8 +533,8 @@
     "authorTitle": "Publicado por ",
     "notFound": "No puedo encontrar tu button, talvez fue borrado?",
     "invalidDates": "Comprueba la fecha y/o la hora",
-    "followErrorAlert": "No puedes seguir ahora, lo sentimos",
-    "unfollowErrorAlert": "No puedes dejar de seguir ahora, lo sentimos",
+    "followErrorAlert": "No puedes seguir ahora",
+    "unfollowErrorAlert": "No puedes dejar de seguir ahora",
     "pin": "Fijar",
     "unpin": "Desfijar",
     "pinSuccess": "Fijado con éxito",
