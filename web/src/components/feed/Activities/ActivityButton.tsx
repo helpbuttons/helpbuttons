@@ -265,6 +265,20 @@ function ActivityDetailCard({ activity, isLast = false }) {
 }
 
 export function ActivityDetailMessage({ activity, isLast = false }) {
+  if(activity.link){
+    return (
+      <>
+        <div className="chat__time-passed">
+          {readableTimeLeftToDate(activity.createdAt)}
+        </div>
+        <div className="chat__notice">
+          {activity.message}
+          <a href={activity.link}>
+            {t('common.show')}</a>
+        </div>
+      </>
+    )
+  }
   if(activity.to == GroupMessageType.endorsed){
     return (
       <>

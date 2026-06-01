@@ -9,6 +9,8 @@ import { uuid } from "@src/shared/helpers/uuid.helper";
 import { ActivitiesPageSize } from "../activity/activity.dto";
 import { UserService } from "../user/user.service";
 import translate from "@src/shared/helpers/i18n.helper";
+import { OnEvent } from "@nestjs/event-emitter";
+import { AdminActivityEventName } from "@src/shared/types/activity.list";
 
 @Injectable()
 export class GroupMessageService {
@@ -61,17 +63,42 @@ export class GroupMessageService {
         
     }
 
+    sendNotification(link, groupMessageType : GroupMessageType, eventName: AdminActivityEventName)
+    {
+        const groupMessage = {
+            id: uuid(),
+            to: groupMessageType,
+            last: true,
+            message: '',
+            link,
+            eventName: eventName
+        }
+
+        return this.groupMessageRepository.update({ to: groupMessageType }, { last: false })
+        .then(()=> {
+            return this.groupMessageRepository.insert([groupMessage])
+        })
+        
+    }
+
     transformGroupMessage (groupMessage, user, read = false) {
         if(!groupMessage)
         {
             return null;
         }
 
-        if(groupMessage.from.id == user.id)
+        let message = groupMessage.message
+        if(groupMessage.eventName) {
+            switch(groupMessage.eventName){
+                case AdminActivityEventName.AwaitApprovalButton:
+                    message = translate(user.locale, `button.awaitApproval`)
+            }
+        }
+        if(groupMessage?.from?.id == user.id)
         {
-            return {id: groupMessage.id, createdAt: groupMessage.created_at, title: translate(user.locale,'groupChat.you') , message: groupMessage.message, read: true, to: groupMessage.to};
+            return {id: groupMessage.id, createdAt: groupMessage.created_at, title: translate(user.locale,'groupChat.you') , message: message, read: true, to: groupMessage.to, link: groupMessage.link};
         }else{            
-            return {id: groupMessage.id, createdAt: groupMessage.created_at, title:groupMessage.from.name, message: groupMessage.message, read: read, from: groupMessage.from.name, activityFrom: groupMessage?.from, to: groupMessage.to};
+            return {id: groupMessage.id, createdAt: groupMessage.created_at, title: groupMessage?.from?.name, message: message, read: read, from: groupMessage?.from?.name, activityFrom: groupMessage?.from, to: groupMessage.to, link: groupMessage.link};
         }
         
     }
@@ -104,5 +131,12 @@ export class GroupMessageService {
             return false;
         }
         return true;
+    }
+
+
+    @OnEvent(AdminActivityEventName.AwaitApprovalButton)
+    onAwaitApprovalButton(payload: any){
+        const { button } = payload.data
+        this.sendNotification(`/Show/${button.id}`, GroupMessageType.admin, AdminActivityEventName.AwaitApprovalButton)
     }
 }

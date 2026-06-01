@@ -146,8 +146,8 @@ function ButtonNewForm({ selectedNetwork }) {
   return (
     <>
       <MobileOnlyPopup title={t('common.publishTitle', ['_helpbutton_'])} linkFwd={'/Explore'}>
-        {!loadedDraft && <Loading />}
-        {loadedDraft && <ButtonForm
+        {(!loadedDraft || isSubmitting) && <Loading />}
+        {(loadedDraft && !isSubmitting) && <ButtonForm
           watch={watch}
           reset={reset}
           getValues={getValues}
