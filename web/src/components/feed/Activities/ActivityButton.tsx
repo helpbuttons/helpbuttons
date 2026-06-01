@@ -7,11 +7,12 @@ import { ShowMobileOnly } from "elements/SizeOnly"
 import t from "i18n"
 import router from "next/router"
 import { useEffect, useRef, useState } from "react"
-import { IoArrowBack, IoSend } from "react-icons/io5"
+import { IoAdd, IoArrowBack, IoSend } from "react-icons/io5"
 import { readableTimeLeftToDate } from "shared/date.utils"
 import { ActivitiesPageSize } from "shared/dtos/activity.dto"
 import { useScroll } from "shared/helpers/scroll.helper"
 import { ActivityEventName } from "shared/types/activity.list"
+import { GroupMessageType } from "shared/types/group-message.enum"
 import { GlobalState, store, useGlobalStore } from "state"
 import { FindActivityDetails, FindLatestActivities, SendNewMessage, SetFocusOnMessage, SetFocusOnPost } from "state/Activity"
 import { FindButton } from "state/Explore"
@@ -21,10 +22,10 @@ export function ActivityButton({ selectedActivity, setSelectedActivity, closeCon
   if (isDrafting) {
     return <ActivityDetailDraft setSelectedActivity={setSelectedActivity} />
   }
-  return <ActivityDetailConversation selectedActivity={selectedActivity} selectedButton={selectedButton} closeConversation={closeConversation} />
+  return <ActivityDetailConversation setSelectedActivity={setSelectedActivity} selectedActivity={selectedActivity} selectedButton={selectedButton} closeConversation={closeConversation} />
 }
 
-export function ActivityDetailConversation({ selectedActivity, closeConversation, selectedButton}) {
+export function ActivityDetailConversation({ selectedActivity, closeConversation, selectedButton, setSelectedActivity}) {
   const [buttonActivities, setButtonActivities] = useState([])
 
   const loadButtonActivities = () => {
@@ -33,6 +34,7 @@ export function ActivityDetailConversation({ selectedActivity, closeConversation
     }
     store.emit(new FindActivityDetails(selectedActivity.buttonId, selectedActivity.consumerId, 0,
       (_activites) => {
+        setSelectedActivity(() => _activites[0])
         setButtonActivities(() => _activites)
       }
     ))
@@ -42,7 +44,9 @@ export function ActivityDetailConversation({ selectedActivity, closeConversation
     if (!selectedActivity) {
       return;
     }
-    loadButtonActivities()
+    if(buttonActivities.length < 1 || selectedActivity.id != buttonActivities[0].id){
+      loadButtonActivities()
+    }
   }, [selectedActivity])
 
   const buttonsActivities = useGlobalStore((state: GlobalState) => state.activities.buttons)
@@ -59,6 +63,7 @@ export function ActivityDetailConversation({ selectedActivity, closeConversation
   }, [buttonsActivities])
 
   const sendNewMessage = (message, buttonId, consumerId) => {
+    if(message.length < 1) return ;
     store.emit(new SendNewMessage(message, buttonId, consumerId, () => { 
       loadButtonActivities(); 
       // alertService.success(t('activities.sent')) 
@@ -83,6 +88,7 @@ export function ActivityDetailConversation({ selectedActivity, closeConversation
 
 export function ActivityDetailDraft({ setSelectedActivity }) {
   const sendNewMessage = (message, buttonId, consumerId) => {
+    if(message.length < 1) return ;
     store.emit(new SendNewMessage(message, buttonId, consumerId, (res) => {
       
       store.emit(new FindLatestActivities((_activities) => {
@@ -127,36 +133,30 @@ export function ActivityDetailDraft({ setSelectedActivity }) {
 }
 
 
-function MessageForm({ sendNewMessage, buttonId, consumerId }) {
+export function ChatMessageForm({ onSend }) {
   const messageContent = useRef(null)
-  const inputKeyDown = (e) => {
-    const val = e.target.value;
-    if ((e.key === 'Enter' || e.key === ',') && val) {
+
+  const sendMessage = () => {
+    const message = messageContent.current.value;
+    if (message.length < 1) return;
+    onSend(message, () => { messageContent.current.value = '' });
+  }
+
+  const inputKeyDown = (e: any) => {
+    if ((e.key === 'Enter' || e.key === ',') && e.target.value && !e.shiftKey) {
       e.preventDefault();
-      sendMessage()
+      sendMessage();
     }
   }
 
-  const sendMessage = () => {
-    sendNewMessage(messageContent.current.value, buttonId, consumerId)
-    messageContent.current.value = ''
-  }
   return (
     <form className="chat__new-message">
-
-      {/* <Btn
-        btnType={BtnType.circle}
-        iconLink={<IoAdd />}
-        iconLeft={IconType.circle}
-        contentAlignment={ContentAlignment.center}
-        onClick={() => {
-        }}
-      /> */}
       <div className="chat__new-message__message">
         <FieldText
           name="message"
           ref={messageContent}
           label={""}
+          multiLine={true}
           classNameInput={"form__input"}
           onInputKeyDown={inputKeyDown}
           multiInput={true}
@@ -169,15 +169,25 @@ function MessageForm({ sendNewMessage, buttonId, consumerId }) {
           iconLink={<IoSend />}
           iconLeft={IconType.circle}
           contentAlignment={ContentAlignment.center}
-          onClick={() => {
-            sendMessage()
-          }}
+          onClick={sendMessage}
         />
       </div>
-
     </form>
   )
 }
+
+function MessageForm({ sendNewMessage, buttonId, consumerId }) {
+  return (
+    <ChatMessageForm
+      onSend={(message: string, clear: () => void) => {
+        sendNewMessage(message, buttonId, consumerId);
+        clear();
+      }}
+    />
+  )
+}
+
+
 function ActivityDetailCard({ activity, isLast = false }) {
   if (activity.eventName == ActivityEventName.Message) {
     return <ActivityDetailMessage activity={activity} isLast={isLast} />
@@ -236,7 +246,7 @@ function ActivityDetailCard({ activity, isLast = false }) {
         <div className="chat__notice">
           {activity.message}
           <a href={activity.link}>
-            Show</a>
+            {t('common.show')}</a>
         </div>
       </>
 
@@ -255,6 +265,18 @@ function ActivityDetailCard({ activity, isLast = false }) {
 }
 
 export function ActivityDetailMessage({ activity, isLast = false }) {
+  if(activity.to == GroupMessageType.endorsed){
+    return (
+      <>
+        <div className="chat__time-passed">
+          {readableTimeLeftToDate(activity.createdAt)}
+        </div>
+        <div className="chat__notice">
+          {activity.message}
+        </div>
+      </>
+    )
+  }
   if (activity?.from) {
     return (
       <>
@@ -263,12 +285,12 @@ export function ActivityDetailMessage({ activity, isLast = false }) {
         </div>
         <div className="message message--you">
           <div className="message__header">
-            <div className="message__avatar">
+            <div className="message__avatar" onClick={() => store.emit(new FindAndSetMainPopupCurrentProfile(activity.activityFrom.username))} style={{cursor:'pointer'}}>
               <ImageWrapper imageType={ImageType.avatar} src={activity.activityFrom.avatar} alt={activity.activityFrom.name}  />
             </div>
 
             <div className="message__user-name-container">
-              <p className="message__user-name">{activity.from}</p>
+              <p className="message__user-name" onClick={() => store.emit(new FindAndSetMainPopupCurrentProfile(activity.activityFrom.username))} style={{cursor:'pointer'}}>{activity.from}</p>
             </div>
           </div>
           <div className="message__content">

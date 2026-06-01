@@ -25,17 +25,17 @@ export default function ActivityList({ setSelectedActivity, selectedActivity, ac
 
     const onActivityClicked = (activity) => {
         
-        if([ActivityEventName.Endorsed, ActivityEventName.RoleUpdate, ActivityEventName.EndorseRevoked].indexOf(activity.eventName) !== -1){
-            return;
-        }
         if(!activity.read)
         {
             store.emit(new ActivityMarkAsRead(activity.id))
         }
+        if([ActivityEventName.Endorsed, ActivityEventName.RoleUpdate, ActivityEventName.EndorseRevoked].indexOf(activity.eventName) !== -1){
+            return;
+        }
         router.push(`/Activity/${activity.id}`);
     }
     return (<>
-        {scrollIsLoading && <Loading />}
+        {(scrollIsLoading && activities.length > ActivitiesPageSize) && <Loading />}
         {isDrafting && <DraftActivityListEntryCard/>}
         {activities && (
             <>

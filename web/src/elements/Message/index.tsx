@@ -118,7 +118,8 @@ function linkify(text) {
   const urlPattern =
     /(?:https?:\/\/|www\.)(?:(?:[\w-]+\.)+[\w/#@~.-]*)(?:\?(?:[\w&=.!,;$#%-]+)?)?/gi;
 
-  text = (text || '').replace(userPattern, function (atUsername) {
+  text = (text || '').replace(/\n/g, '<br>');
+  text = text.replace(userPattern, function (atUsername) {
     const username = atUsername.substring(1);
     return `<a href="/p/${username}">@${username}</a>`;
   });

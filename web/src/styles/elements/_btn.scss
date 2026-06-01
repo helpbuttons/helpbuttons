@@ -393,6 +393,7 @@ $btn-font-size-medium: $font-size-big;
 .btn__hint {
 
   position: relative;
+  display: none;
   font-size: $font-size-xsmall;
   padding: 0 $padding-xsmall;
   background-color: transparent;
@@ -689,6 +690,12 @@ $btn-font-size-medium: $font-size-big;
 
 .btn-file-upload{
   display: none;
+}
+
+@media #{$breakpoints-medium} {
+  .btn__hint {
+    display: block;
+  }
 }
 
 

@@ -1,7 +1,7 @@
 import { BaseEntity } from '@src/shared/types/base.entity';
 import { Column, Entity, OneToMany, PrimaryColumn } from 'typeorm';
 import { Button } from '../button/button.entity';
-import { PrivacyType } from "@src/shared/types/privacy.enum";
+import { PrivacyNetworkType, PrivacyType } from "@src/shared/types/privacy.enum";
 import { ButtonTemplate } from '../button/button.dto';
 
 
@@ -77,6 +77,9 @@ export class Network extends BaseEntity {
   requireApproval: boolean;
 
   @Column({default: false})
+  hideCountryOnAddresses: boolean;
+  
+  @Column({default: false})
   hideLocationDefault: boolean;
 
   @Column({default: false})
@@ -90,4 +93,7 @@ export class Network extends BaseEntity {
 
   @Column({default: ''})
   contactEmail: string;
+
+  @Column({default: PrivacyNetworkType.ANYONE_CAN})
+  privacyNetworkType: PrivacyNetworkType;
 }

@@ -2,7 +2,7 @@
 
 $message-border-radius: $border-radius-basic;
 $message-border-radius-semicircle: $border-radius-semicircle;
-$message-max-width: 300px;
+$message-max-width: 400px;
 $message-min-width: 50px;
 $message-me-after-top: 1rem solid $color-corporative;
 $message-me-after-lateral: .75rem solid transparent;
@@ -100,6 +100,7 @@ $message-you-margin-left: $margin-xbig;
 
       // width: calc(100% - 80px);
           display: flex;
+          padding-bottom: 10px;
 
 }
 

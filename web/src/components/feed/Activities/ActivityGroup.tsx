@@ -5,13 +5,11 @@ import { useSelectedNetwork } from "state/Networks";
 import t from "i18n";
 import { GroupMessageType } from "shared/types/group-message.enum";
 import ImageWrapper, { ImageType } from "elements/ImageWrapper";
-import { IoArrowBack, IoSend } from "react-icons/io5";
-import { useEffect, useRef, useState } from "react";
-import FieldText from "elements/Fields/FieldText";
-import Btn, { BtnType, ContentAlignment, IconType } from "elements/Btn";
+import { IoArrowBack } from "react-icons/io5";
+import { useEffect, useState } from "react";
 import { FindGroupMessages, FindLatestActivities, SendNewGroupMessage, uniqById } from "state/Activity";
 import { useScroll } from "shared/helpers/scroll.helper";
-import { ActivityDetailMessage } from "./ActivityButton";
+import { ActivityDetailMessage, ChatMessageForm } from "./ActivityButton";
 import { ActivitiesPageSize } from "shared/dtos/activity.dto";
 import { ShowMobileOnly } from "elements/SizeOnly";
 import router from "next/router";
@@ -99,6 +97,7 @@ export function ActivityGroupChat({ groupType, close }) {
   }, [activities])
 
   const sendNewMessage = (message, groupType, onSuccess) => {
+    if(message.length < 1) return ;
     store.emit(new SendNewGroupMessage(groupType, message, () => {
       onSuccess()
       store.emit(new FindLatestActivities())
@@ -110,7 +109,8 @@ export function ActivityGroupChat({ groupType, close }) {
       <ActivityGroupChatDetailHeader closeConversation={close} groupType={groupType} />
       <ActivityGroupMessages messages={messages} loadMessages={loadMessages} groupType={groupType} setMessages={setMessages}/>
       {(messages?.length < 1 ) && <div className="chat__notice">{t('groupChat.creating')}</div>}
-      <ActivityGroupMessageForm sendNewMessage={sendNewMessage} groupType={groupType} />
+      {/* //refactored.  activitybutton import */}
+      <ChatMessageForm onSend={(message: string, clear: () => void) => sendNewMessage(message, groupType, clear)} />
     </>
   )
 }
@@ -187,54 +187,3 @@ function ActivityGroupChatDetailHeader({ closeConversation, groupType }) {
 }
 
 
-// TODO: refator to unite with  MessageForm from ActivityButton
-function ActivityGroupMessageForm({ sendNewMessage, groupType }) {
-  const messageContent = useRef(null)
-  const inputKeyDown = (e) => {
-    const val = e.target.value;
-    if ((e.key === 'Enter' || e.key === ',') && val) {
-      e.preventDefault();
-      sendMessage()
-    }
-  }
-
-  const sendMessage = () => {
-    // TODO: IMPLEMENT SEND NEW GROUP MESSAGE
-    //   sendNewGroupMessage(messageContent.current.value, groupType)
-    const message = messageContent.current.value; 
-    if(message.length < 1)
-    {
-      return;
-    }
-    sendNewMessage(messageContent.current.value, groupType, () => {
-      messageContent.current.value = ''
-    })
-  }
-  return (
-    <form className="chat__new-message">
-      <div className="chat__new-message__message">
-        <FieldText
-          name="message"
-          ref={messageContent}
-          label={""}
-          classNameInput={"form__input"}
-          onInputKeyDown={inputKeyDown}
-          multiInput={true}
-          autoFocus={true}
-        />
-      </div>
-      <div className="chat__new-message__send">
-        <Btn
-          btnType={BtnType.circle}
-          iconLink={<IoSend />}
-          iconLeft={IconType.circle}
-          contentAlignment={ContentAlignment.center}
-          onClick={() => {
-            sendMessage()
-          }}
-        />
-      </div>
-
-    </form>
-  )
-}

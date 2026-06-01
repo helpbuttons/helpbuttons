@@ -9,6 +9,7 @@ import ImageUploading from 'react-images-uploading';
 import { alertService } from 'services/Alert';
 import { createThumbnail } from 'shared/helpers/images.helper';
 import { allowedImageExtensions, allowedImageTypes, fileFilter, parseSizeToBytes } from 'shared/types/files';
+import FieldError from '../FieldError';
 
 export default function FieldImageUpload({
   name,
@@ -135,7 +136,9 @@ export default function FieldImageUpload({
         </ImageUploading>
       </div>
       {validationError && (
-        <span style={{ color: 'red' }}>{validationError}</span>
+        <FieldError
+          validationError={validationError}
+        />
       )}
     </>
   );

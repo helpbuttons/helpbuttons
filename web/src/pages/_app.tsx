@@ -248,11 +248,10 @@ function MyApp({ Component, pageProps }) {
       };
 
       const onError = (err) => {
-        alertService.error(t('login.error'));
+        alertService.error(t('user.loginError'));
       };
       handleAcceptCookies()
       store.emit(new LoginToken(loginToken, onSuccess, onError));
-    } else if (loginToken) {
       triedToLogin.current = true;
     }
   }, [searchParams]);
@@ -334,7 +333,6 @@ function ActivityPool({ sessionUser }) {
 
 const useWhichLocale = ({ sessionLocale, networkLocale }) => {
   useEffect(() => {
-    console.log('updating locale.... ' + sessionLocale + ' net: ' + networkLocale)
     if (sessionLocale && networkLocale) {
       setLocale(sessionLocale);
     } else if (networkLocale) {

@@ -39,6 +39,7 @@ function Configuration() {
     setError,
     reset,
     setFocus,
+    clearErrors
   } = useForm({});
 
   const backgroundColor = watch('backgroundColor');
@@ -95,10 +96,12 @@ function Configuration() {
           requireApproval: data.requireApproval,
           slogan: data.slogan,
           hideLocationDefault: data.hideLocationDefault,
+          hideCountryOnAddresses: data.hideCountryOnAddresses,
           allowGuestCreation: data.allowGuestCreation,
-          privacyPolicy: data. privacyPolicy,
-          ethicsPolicy: data. ethicsPolicy,
-          contactEmail: data. contactEmail,
+          privacyPolicy: data.privacyPolicy,
+          ethicsPolicy: data.ethicsPolicy,
+          contactEmail: data.contactEmail,
+          privacyNetworkType: data.privacyNetworkType
         },
         (network) => {
           store.emit(new UpdateExploreSettings(data.exploreSettings));
@@ -153,6 +156,7 @@ function Configuration() {
               captionAction={t('common.save')}
               linkFwd="/Profile"
               description={t('configuration.description')}
+              clearErrors={clearErrors}
             />
           </Popup>
         )}

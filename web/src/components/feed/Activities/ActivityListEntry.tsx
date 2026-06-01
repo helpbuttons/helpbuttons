@@ -11,7 +11,7 @@ export function ActivityListEntryCard({ activity, selected = false, onClick }) {
     }
     return (
         <div className="feed-element">
-            <div onClick={onClick} className={`card-notification ${selected ? 'card-notification--selected' : ''}`}>
+            <div onClick={onClick} className={`card-notification card-notification--activity ${selected ? 'card-notification--selected' : ''}`}>
                 <ActivityListEntryCardInner image={activity?.image} createdAt={activity.createdAt} type={activity.type} read={activity.read} premessage={activity.premessage} message={activity.message} footer={activity.footer} title={activity.title} />
             </div>
         </div>
@@ -32,11 +32,10 @@ export function ActivityListEntryCardInner({ image, createdAt, type, read, preme
                 </div>
             </div>
             <div className="card-notification__text">
-                <div className="card-notification__header">
+                <div className="card-notification__header card-notification__header--with-icon">
                     <div className="card-notification__info-top">
                         {createdAt && <><div className="card-notification__info-top__element">{readableTimeLeftToDate(createdAt)}</div>&nbsp;·&nbsp;</>}<div className="card-notification__info-top__element">{type}</div>
                     </div>
-
                 </div>
                 <h2 className={`card-notification__title ` + (!read && 'card-notification--unread')}>
                     {title}

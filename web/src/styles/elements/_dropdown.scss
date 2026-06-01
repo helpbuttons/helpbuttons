@@ -64,6 +64,8 @@ $dropdown-bck: $color-white;
   padding-right: 1rem;
   outline: $border-style-basic;
 
+  -webkit-appearance: none;
+    appearance: none;
 
   &:hover {
     cursor: pointer;

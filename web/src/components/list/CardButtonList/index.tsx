@@ -91,6 +91,7 @@ export function CardButtonLink({ button, linkType, children }) {
         onMouseLeave={!touch ? () => store.emit(new HoverButtonList(null)) : undefined}
         onClick={(e) => {
           e.preventDefault();
+          store.emit(new SetMainPopupCurrentButton(null))
           store.emit(new updateCurrentButton(button));
         }}
         style={{ display: 'block', cursor: 'pointer' }}

@@ -14,7 +14,7 @@ import {
 import { PartialType } from '@nestjs/swagger';
 import { Column } from 'typeorm';
 import { User } from '../user/user.entity';
-import { PrivacyType } from "@src/shared/types/privacy.enum";
+import { PrivacyNetworkType, PrivacyType } from "@src/shared/types/privacy.enum";
 import { ButtonTemplate } from '../button/button.dto';
 
 // https://github.com/typestack/class-validator
@@ -101,11 +101,14 @@ export class CreateNetworkDto implements Partial<Network> {
 
   hideLocationDefault: boolean;
 
+  hideCountryOnAddresses: boolean;
+
   allowGuestCreation: boolean;
 
   privacyPolicy: string;
   ethicsPolicy: string;
   contactEmail: string;
+  privacyNetworkType: PrivacyNetworkType;
 }
 
 export class UpdateNetworkDto extends PartialType(CreateNetworkDto) {}

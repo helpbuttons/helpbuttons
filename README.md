@@ -32,6 +32,8 @@ Connect and manage messages
 
 ### Installation
 
+- For a complete guide on how to install Helpbuttons in your own server, follow this link: [New server Install](https://cloud.wofreedom.org/s/wae8FPenaK8MeTD)
+
 1. Copy the environment sample file:
    ```bash
    cp env.sample .env
@@ -83,6 +85,7 @@ docker-compose run api yarn migration:run
 - [Next.js docs](https://nextjs.org/docs)
 - [NestJS docs](https://docs.nestjs.com)
 - [react-icons (io5)](https://react-icons.github.io/react-icons/icons/io5/)
+- Helpbuttons Concept Slides [ENG](https://github.com/helpbuttons/hb-docs/raw/1732ecbe23b879cabbf8121d102a609e2577d7f1/docs/pdfs/2026_helputtons_concept_00_eng.pdf) [ESP](https://github.com/helpbuttons/hb-docs/raw/1732ecbe23b879cabbf8121d102a609e2577d7f1/docs/pdfs/2026_helputtons_concepto_00.pdf)
 
 ---
 

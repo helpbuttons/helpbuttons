@@ -21,13 +21,25 @@ To get an overview of the project, read the [README](README.md). Here are some r
 
 If you spot a problem with the help buttons backend, [search if an issue already exists](https://docs.github.com/en/github/searching-for-information-on-github/searching-on-github/searching-issues-and-pull-requests#search-by-the-title-body-or-comments). If a related issue doesn't exist, you can open a new issue.
 
+## Branch model
+
+| Branch | Purpose | Auto-deployed |
+|--------|---------|---------------|
+| `main` | Stable releases — only receives merges from `dev` when a release is ready | Production |
+| `dev`  | Active development — all PRs must target this branch | [dev.helpbuttons.org](https://dev.helpbuttons.org) |
+
+When working on a feature or fix:
+1. Clone the repo and check out `dev` (`git checkout dev`)
+2. Create your branch from `dev` (`git checkout -b feat/my-change`)
+3. Open your PR against `dev`, not `main`
+
 ## Contributing with a Pull Request
 
 If you would like to contribute to helpbuttons, we recommend that either you pick an issue in the github helpbuttons repository, or create a new issue, so that we can agree into adding this new feature or bugfix into the main code of helpbuttons. We recommend that you take a look at the issues labeled with [good first issue](https://github.com/helpbuttons/helpbuttons/issues?q=is%3Aopen+is%3Aissue+label%3A%22good+first+issue%22)
 
-After picking up your issue, you should known that we use git flow. So you should do a branch from the `dev`, and when you feel your code is ready push your branch and open a pull request to the `dev` branch.
+After picking up your issue, create a branch from `dev` and open a pull request back to `dev` when your code is ready.
 
-The instance of helpbuttons runnning in https://dev.helpbuttons.org is up to date with the latest changes in the `dev` branch, the changes are automatically pulled.
+The instance of helpbuttons running at https://dev.helpbuttons.org is up to date with the latest changes in the `dev` branch, the changes are automatically pulled.
 
 ## Requirements (recommended)
  - Docker >= 24.0.7
@@ -167,15 +179,41 @@ The instance of helpbuttons runnning in https://dev.helpbuttons.org is up to dat
 
 8. You can now browse to `http://localhost:3000` to configure helpbuttons!
 
-### Troubleshooting
+## Architecture
 
-If you find this error with yarn dev in web directory
+Helpbuttons is a monorepo with two main packages:
+WEB and API
 
-`Error: error:0308010C:digital envelope routines:: unsupported`
+The API runs on port `3001`, the web app on `3000`.
 
-try this command and retry:
+helpbuttons/
+├── api/          # NestJS backend (REST API, business logic, DB migrations)
+│  
+└── web/          # Next.js frontend (React, SSR/SSG, Pigeon maps)
 
-`export NODE_OPTIONS=--openssl-legacy-provider`
+```
+
+**Adding a new feature** generally means:
+1. Add the entity/DTO in `api/src/`
+2. Generate and run a migration: `yarn migration:generate` → `yarn migration:run`
+3. Expose it via a controller/service in the same module
+4. Add the UI in `web/src/`
+
+---
+
+## Commit messages
+
+```
+<type>(<scope>): <short summary>
+
+Examples:
+feat(network): add custom accent color picker
+fix(mail): skip send when recipient is empty
+```
+
+Common types: `feat`, `fix`.  
+
+---
 
 ## Key Elements, Components and Layouts
 

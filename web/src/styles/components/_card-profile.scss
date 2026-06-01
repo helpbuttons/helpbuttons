@@ -83,7 +83,8 @@ $avatar-margin: $padding-big;
   justify-content: center;
   align-items: center;
   padding: $padding-medium;
-  color: $color-gray;
+  color: $color-med-gray;
+  // background-color: $color-ligth-gray;
 
 }
 
@@ -104,7 +105,7 @@ $avatar-margin: $padding-big;
 
 .card-profile__rate-label {
 
-  color: $color-gray;
+  color: $color-med-gray;
   font-weight: $font-weight-light;
   font-size: $font-size-small;
   padding-right: $padding-medium;
@@ -311,6 +312,7 @@ $avatar-margin: $padding-big;
     border-radius: $border-radius-circle;
     min-width: calc(100% - $list-width-desktop);
     min-width: $grid-desktop-double-column-left-width;
+    min-height: 200px;
   }
 
   .card-profile__button-list-wrapper {

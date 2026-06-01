@@ -5,14 +5,12 @@ import React, { useState, useEffect, useRef } from 'react';
 import {
   ExploreMapState,
   FindButtons,
-  UpdateBoundsFilteredButtons,
   UpdateCachedHexagons,
   UpdateExploreSettings,
   ExploreSettings,
   UpdateHexagonClicked,
   updateCurrentButton,
   UpdateFilters,
-  listButtonsFilteredByHexagon,
 } from 'state/Explore';
 import NavHeader from 'components/nav/NavHeader'; //just for mobile
 import { useStore } from 'state';
@@ -26,6 +24,8 @@ import {
   cellToZoom,
   convertBoundsToGeoJsonHexagons,
   getZoomResolution,
+  hexToResolution,
+  roundCoords,
 } from 'shared/honeycomb.utils';
 import _ from 'lodash';
 import {
@@ -46,12 +46,11 @@ import {
 } from 'components/button/ButtonType/CustomFields/AdvancedFiltersCustomFields';
 import PopupButtonFile from 'components/popup/PopupButtonFile';
 import { ButtonShow } from 'components/button/ButtonShow';
-import { showMarkersZoom } from 'components/map/Map/Map.consts';
-import { applyFilters, applyFiltersHex } from 'components/search/AdvancedFilters/filters.type';
+import { applyBounds, applyFilters } from 'components/search/AdvancedFilters/filters.type';
 import { Button } from 'shared/entities/button.entity';
 import { replaceUrl } from 'components/uri/builder';
 import { ListKeyLocation } from 'state/Geo';
-import { cellToParent, getResolution } from 'h3-js';
+import { getResolution } from 'h3-js';
 import { CustomFields } from 'shared/types/customFields.type';
 import { UpdateButtonList } from 'state/Button';
 import Loading from 'components/loading';
@@ -287,10 +286,17 @@ function useExploreSettings({
       }
 
       const urlParams = new URLSearchParams(obj);
-      const newUrl = `/Explore/${Math.floor(exploreSettings.zoom)}/${exploreSettings.center[0]
-        }/${exploreSettings.center[1]}/${currentButton ? currentButton.id + '/': ''}${urlParams.size ? '?' + urlParams.toString() : ''}`;
+      if(currentButton)
+      {
+        replaceUrl(`/Show/${currentButton.id}`)
+      }else{
+        const center = roundCoords(exploreSettings.center)
+        const newUrl = `/Explore/${Math.floor(exploreSettings.zoom)}/${center[0]
+        }/${center[1]}/${currentButton ? currentButton.id + '/': ''}${urlParams.size ? '?' + urlParams.toString() : ''}`;
         replaceUrl(newUrl)
       }
+      }
+      
   }, [exploreSettings, currentButton, filters, currentProfile]);
 }
 
@@ -351,16 +357,16 @@ function useHexagonMap({
 
   useEffect(() => {
     if (debounceHexagonsToFetch.init) {
-      if (debounceHexagonsToFetch.hexagons.length > 0) {
-        const hexesToFetch = calculateNonCachedHexagons(
-          debounceHexagonsToFetch,
+      if (hexagonsToFetch.hexagons.length > 0) {
+        const newHexagons = calculateNonCachedHexagons(
+          hexagonsToFetch,
           cachedH3Hexes,
         );
-        if (hexesToFetch.length > 0) {
+        if (newHexagons.length > 0) {
           store.emit(
             new FindButtons(
-              debounceHexagonsToFetch.resolution,
-              hexesToFetch,
+              hexagonsToFetch.resolution,
+              newHexagons,
               (buttons) => {
 
               }, (error) => console.log(error)))
@@ -369,74 +375,77 @@ function useHexagonMap({
     }
   }, [debounceHexagonsToFetch])
 
+  const hexagonClicked : Button[] = useGlobalStore((state: GlobalState) => state.explore.map.filters.hexClicked);
+  const bounds = useGlobalStore((state: GlobalState) => state.explore.settings.bounds);
+  const [boundsButtons, setBoundsButtons] = useState([])
   useEffect(() => {
-    
-    if(debounceHexagonsToFetch.resolution < 1){
+    setBoundsButtons(() => applyBounds(cachedButtons, bounds))
+  }, [bounds, cachedButtons])
+  
+  useEffect(() => {
+    if(hexagonsToFetch.resolution < 1){
       return;
     }
-    setCountFilteredButtons(() => 0)
-    const boundCachedButtons = cachedButtons.filter((_btn) => {
-      const btnResolution = getResolution(_btn.hexagon)
-      if(_btn.hideAddress && debounceHexagonsToFetch.resolution > hideAddressResolution){
-        // in here we find if the hexagon of the button hidden is parent of the hexagons showing on the screen
-        const hexagon = debounceHexagonsToFetch.hexagons.find((hexagon) => _btn.hexagon == cellToParent(hexagon, btnResolution ))
-        if(hexagon){
-          setCountFilteredButtons((prev) => prev + 1)
+    const applyHideAddress = (boundsButtons) => {
+      return boundsButtons.map((_btn) => {
+        const btnResolution = getResolution(_btn.hexagon)
+        if(_btn.hideAddress && hexagonsToFetch.resolution > hideAddressResolution){
+          // in here we find if the hexagon of the button hidden is parent of the hexagons showing on the screen
+          const hexagon = hexagonsToFetch.hexagons.find((hexagon) => _btn.hexagon == hexToResolution(hexagon, btnResolution ))
+          if(hexagon){
+            return {hideMap: true, ..._btn};
+          }
         }
-        return false;
-      }
-      if(btnResolution < debounceHexagonsToFetch.resolution){
-        return false;
-      }
-      return debounceHexagonsToFetch.hexagons.indexOf(cellToParent(_btn.hexagon, debounceHexagonsToFetch.resolution)) > -1
-    })
-    if(boundCachedButtons.length < 1)
-    {
-      return;
+        return {hideMap: false, ..._btn};
+      })
     }
-    
-    store.emit(
-      new UpdateBoundsFilteredButtons(boundCachedButtons),
-    );
-  }, [cachedButtons, filters, debounceHexagonsToFetch.resolution])
 
+    const mapButtons = applyHideAddress(boundsButtons)
 
-  const hexagonClicked : Button[] = useGlobalStore((state: GlobalState) => state.explore.settings.hexagonClicked);
-  const listButtons : Button[] = useGlobalStore((state: GlobalState) => state.explore.map.listButtons);
-
-  useEffect(() => {
-    if(debounceHexagonsToFetch.resolution < 1){
-      return;
-    }
+    setCountFilteredButtons(() => mapButtons.filter((_btn) => _btn.hideMap).length)
     const { filteredButtons } = applyFilters(
       filters,
-      boundsFilteredButtons,
+      mapButtons,
       buttonTypes,
     );
-
+    
     const orderedFilteredButtons = orderBy(
       filteredButtons,
       filters.orderBy,
       exploreSettings?.center,
     );
+
     const filteredHexagons = calculateDensityMap(
-      orderedFilteredButtons,
+      orderedFilteredButtons.filter((_btn) => _btn?.hideMap == false),
       hexagonsToFetch.resolution,
-      hexagonsToFetch.hexagons,
+      debounceHexagonsToFetch.hexagons, // TODO: understand why cant get hexagons from hexgonsToFetch.. and only works from debounce ? 
     );
+
     seth3TypeDensityHexes(() => {
       return filteredHexagons;
     });
     recalculateCacheH3Hexes(filteredHexagons);
     
     if(hexagonClicked){
-      const newListButtons = listButtonsFilteredByHexagon(hexagonClicked, orderedFilteredButtons)
-      store.emit(new UpdateButtonList(newListButtons))
+      const applyHexagonFilter = (filteredButtons, hexagonClicked, hexagonClickedtype, resolutionRequested) => {
+        return filteredButtons.filter(
+                (button) => hexToResolution(button.hexagon, resolutionRequested, button.hideAddress) == hexagonClicked
+              )
+              .filter((button) => {
+                if(hexagonClickedtype){
+                    return button.type == hexagonClickedtype
+                }
+                return true;
+              })
+              ;
+      }
+      const hexagonButtonList = applyHexagonFilter(orderedFilteredButtons, hexagonClicked, filters.hexClickedBtnType, hexagonsToFetch.resolution)
+      store.emit(new UpdateButtonList(hexagonButtonList))
       return;
     }
 
     store.emit(new UpdateButtonList(orderedFilteredButtons))
-  }, [boundsFilteredButtons, filters, hexagonClicked])
+  }, [filters, hexagonClicked, boundsButtons])
 
   const handleBoundsChange = (bounds, center: Point, zoom) => {
     if (bounds) {
@@ -444,7 +453,7 @@ function useHexagonMap({
         new UpdateExploreSettings({
           zoom: zoom,
           bounds: bounds,
-          loading: true,
+          // loading: true, // Loading removed...
           center: center,
         }),
       );

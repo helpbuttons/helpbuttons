@@ -11,7 +11,7 @@ import {
   InjectEntityManager,
   InjectRepository,
 } from '@nestjs/typeorm';
-import { uuid } from '@src/shared/helpers/uuid.helper';
+import { slugify, uuid } from '@src/shared/helpers/uuid.helper';
 import {
   Repository,
   In,
@@ -158,14 +158,15 @@ export class ButtonService {
       }
     }
     
-    await this.buttonRepository.insert([button]);
-
-    return await button;
+    return this.buttonRepository.insert([button])
+    .then((btn) => {
+      return this.findById(button.id)
+          .then((_btn) => this.transformButton(_btn, user))
+    })
   }
 
 
   async getNewSlug (title) {
-    const slugify = require('slugify')
     let slug = slugify(title);
 
     const checkIfExists = async (newId) => {
@@ -213,7 +214,9 @@ export class ButtonService {
         HttpStatus.NOT_FOUND,
       );
     }
-    return this.transformButton(button, currentUser);
+    const isButtonOwner = currentUser?.id == button?.owner?.id;
+
+    return this.transformButton(button, currentUser, isButtonOwner);
   }
 
   async update(
@@ -301,6 +304,7 @@ export class ButtonService {
             notifyUser(this.eventEmitter,ActivityEventName.RenewButton,{button, owner: storeButton.owner})
           }
           return this.findById(button.id)
+          .then((_btn) => this.transformButton(_btn, currentUser))
         })
 
       });
@@ -322,8 +326,10 @@ export class ButtonService {
         .createQueryBuilder('button')
         .select('id')
         .where(
-          `h3_cell_to_parent(cast (button.hexagon as h3index),${resolution}) IN(:...hexagons) AND deleted = false AND expired = false AND "awaitingApproval" = false`,
-          { hexagons: hexagons },
+          `h3_cell_to_parent(cast (button.hexagon as h3index),:resolution) IN(:...hexagons) AND 
+          h3_get_resolution(cast(button.hexagon as h3index)) > :resolution AND 
+          deleted = false AND expired = false AND ("ownerId" = :userId OR "awaitingApproval" = false)`,
+          { hexagons: hexagons, resolution: resolution, userId: currentUser.id },
         )
         .execute();
       const buttonsIds = buttonsOnHexagons.map((button) => button.id);
@@ -365,10 +371,9 @@ export class ButtonService {
     }
   }
 
-  transformButton(btn, currentUser = null) {
+  transformButton(btn, currentUser = null, buttonOwnerIsEditing = false) {
     const isFollowing = currentUser ? btn.followedBy.includes(currentUser.id) : false
-
-    if(btn.hideAddress)
+    if(btn.hideAddress && !buttonOwnerIsEditing)
     {
       btn.hexagon = cellToParent(btn.hexagon, hideAddressResolution)
       const hexCenter = cellToLatLng(btn.hexagon)
@@ -376,8 +381,18 @@ export class ButtonService {
       btn.longitude = hexCenter[1]
       btn.location = {type: 'Point', coordinates: hexCenter}
     }
+    const buttonStatus = (button) => {
+      if(button.expired){
+        return 'expired'
+      }else if(button.deleted){
+        return 'deleted'
+      }else{
+        return 'active'
+      }
+    }
     return {
       ...btn,
+      status: buttonStatus(btn),
       postsCount: btn.feed ? btn.feed.length : 0,
       followCount: btn.followedBy ? btn.followedBy.length : 0,
       hasPhone: btn.owner.phone ? true : false,
@@ -428,11 +443,12 @@ export class ButtonService {
     return button;
   }
 
-  async findByOwner(ownerId: string) {
+  async findByOwner(ownerId: string, includeExpired: boolean = false) {
+    const { owner: ownerConditions, ...restConditions } = this.expiredBlockedConditions(includeExpired);
     let buttons: Button[] = await this.buttonRepository.find({
       where: {
-        owner: { id: ownerId, role: Not(Role.blocked)},
-        deleted: false
+        owner: { id: ownerId, ...ownerConditions },
+        ...restConditions,
       },
       relations: ['owner'],
     });
@@ -624,7 +640,8 @@ export class ButtonService {
         awaitingApproval: false,
       },
       relations: ['owner']
-    });
+    })
+    .then((buttons) => buttons.map((btn) => this.transformButton(btn)))
   }
 
   approve(buttonId: string) {

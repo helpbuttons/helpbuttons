@@ -46,6 +46,13 @@ $card-notification-delete-size: 100px;
   
 }
 
+.card-notification--activity:hover {
+ 
+  // box-shadow: $box-shadow-divs;
+  background-color: $color-ligth-gray;
+  cursor: pointer;
+  
+}
 
 .card-notification--offer:after,
 .card-notification--need:after,
@@ -118,6 +125,12 @@ $card-notification-delete-size: 100px;
 //   // justify-content: space-between;
 // }
 
+.card-notification__header--with-icon {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
 .card-notification__info {
   // flex: 0 1 50%;
   font-weight: $font-weight-light;
@@ -137,8 +150,8 @@ $card-notification-delete-size: 100px;
   display: flex;
   flex-direction: row;
   align-items: baseline;
-  margin: auto;
   overflow: hidden;
+  font-size: $font-size-medium;
 
 }
 
@@ -266,6 +279,10 @@ $card-notification-delete-size: 100px;
   }
 }
 
+.card-notification__footer {
+ font-size: $font-size-small;
+}
+
 .card-notification__name {
   display: inline-block;
   color: $color-dark-gray;
@@ -275,7 +292,6 @@ $card-notification-delete-size: 100px;
   line-height: $line-height-regular;
   padding-bottom: $padding-medium;
   align-items: center;
-
  
   
 }
@@ -283,6 +299,14 @@ $card-notification-delete-size: 100px;
 .card-notification__name::first-letter {
   text-transform: uppercase;
 }
+
+.card-notification__name--post:hover { 
+
+  cursor:pointer;
+
+
+}
+
 
 .card-notification__paragraph {
 
@@ -297,6 +321,13 @@ $card-notification-delete-size: 100px;
   }
 }
 
+.card-notification__paragraph--post {
+
+      color: $color-gray;
+      font-size: $font-size-medium;
+
+
+}
 
 .card-notification__delete {
 

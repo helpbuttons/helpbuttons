@@ -73,8 +73,8 @@ td {
   text-decoration: none;
   vertical-align: baseline;
   box-sizing: border-box;
-  word-wrap: break-word;
-  word-break: keep-all;
+  // word-wrap: break-word;
+  // word-break: keep-all;
   hyphens: auto;
   -webkit-hyphens:auto;
   -webkit-hyphenate-limit-after:1;
@@ -202,13 +202,8 @@ q {
 a {
   color: $color-dark-gray; 
   font-weight: $font-weight-regular; 
-  word-break: break-all;
+  hyphens: auto;
 
-  &:hover {
-
-    color: $color-gray;
-
-  }
 }
 
 p {

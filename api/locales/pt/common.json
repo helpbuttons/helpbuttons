@@ -25,7 +25,7 @@
     "actions": "O que você pode fazer?",
     "popularHashtags": "Que temas são abordados?",
     "popularHashtagsExplain": "Estes são os temas criados até agora. Você pode adicionar novos temas ao criar  _helpbutton_. Se te inscreveres, também podes receber alertas, configurando a seção 'Meus Interesses' do seu Perfil.",
-    "recommendedHashtags": "Temas recomendados pelos administradores",
+    "recommendedHashtags": "Temas recomendados pelos coordinadores",
     "profileSubtitle": "Editar perfil",
     "createSubtitle": "Crie seu _helpbutton_ e colabore",
     "faqsSubtitle": "Leia mais sobre este app",
@@ -37,12 +37,14 @@
     "createNetworkButton": "Crie sua própria rede",
     "createNetwork": "Você também pode contatar a equipa se precisar de ajuda para criar sua própria rede",
     "donateSubtitle": "Este app não vende os seus dados nem cobra pelo seu uso. Se você gosta desta filosofia, pode nos apoiar com um donativo:",
-    "callToAdmin": "Clique aqui se precisar de ajuda para entrar ou publicar",
+    "callToAdmin": "Pressione aqui se precisar de ajuda para entrar ou publicar",
     "networkIsPrivate": "Rede privada",
     "needLogo": "Antes de selecionar um lugar, adicione seu logotipo, por favor",
     "needPlace": "Por favor, selecione em qual área está localizada a sua Rede",
     "latestActivity": "Últimas atividades",
     "installButton": "Instalar",
+    "openApp": "Abrir app",
+    "revokeNotifications": "Desativar notificações do navegador",
     "powered": "Powered by",
     "featured": "Destaques",
     "share": "Opções de partilha",
@@ -85,7 +87,7 @@
     "add": "Adicionar",
     "done": "Feito",
     "remove": "Remover",
-    "click": "Clique aqui",
+    "click": "Pressione aqui",
     "error": "Houve um problema",
     "reloadConfig": "Recarregar configuração",
     "publishTitle": "Criar {0}",
@@ -97,7 +99,7 @@
     "nameLabel": "Nome da sua Rede",
     "namePlaceHolder": "Rede de agricultores de Vilanova",
     "descriptionLabel": "Descrição da sua Rede",
-    "privacySetPrivate": "Clique aqui para tornar a rede privada",
+    "privacySetPrivate": "Pressione aqui para tornar a rede privada",
     "images": "Imagens da Rede",
     "jumbo": "Selecione a imagem de fundo da Rede",
     "locationExplain": "O mapa sempre será centralizado no local e no raio da sua Rede toda vez que alguém entrar na ferramenta",
@@ -105,7 +107,7 @@
     "centerOfMap": "Selecione a localização base da sua Rede",
     "description": "Aqui você pode modificar as configurações da sua Rede. Se for a primeira vez, você deve adicionar pelo menos o nome, descrição, imagem de perfil, imagem de fundo e uma localização para completar a criação.",
     "title": "Configure sua Rede",
-    "privacySetPublic": "Clique aqui para tornar a rede pública",
+    "privacySetPublic": "Pressione aqui para tornar a rede pública",
     "tagsPlaceHolder": "Comida, ferramentas, brinquedos, roupas...",
     "tags": "Palavras-chave da Rede",
     "logo": "Selecionar logotipo da Rede",
@@ -136,11 +138,11 @@
     "nomeclaturePluralPlaceHolder": "Digite o novo nome no plural. Por exemplo, 'publicações'",
     "templateMissingFields": "Escolha um nome e uma cor para criar seu tipo de _helpbutton_",
     "templateNewButtonTemplate": "_helpbutton_ adicionado '{0}' {1}",
-    "contactAdmin": "Contate o administrador principal",
+    "contactAdmin": "Contate o coordinador principal",
     "priceFieldAdd": "Adicionar preço",
     "moderationList": "Moderação",
     "createSupportButton": "Crie seu botão de suporte para sua rede",
-    "moderation": "Modere utilizadors e edite administradores",
+    "moderation": "Modere utilizadors e edite coordinadores",
     "customFields": "Campos extras",
     "customFieldsExplain": "Estes são campos extras que você pode adicionar aos seus _helpbuttons_ para se adaptarem às diferentes tarefas. Adicione uma data se quiser que sirvam para gerenciar eventos ou um preço se quiser que os utilizadors vendam produtos.",
     "priceFieldAddLabel": "Exiba um preço no seu tipo de _helpbutton_ para que os utilizadors possam comprar ou vender",
@@ -163,7 +165,15 @@
     "keyLocationsExplain": "Os pontos importantes serão destacados. Eles irão aparecer nos menus e no mapa",
     "addLocationKey": "Adicionar localização",
     "FAQs": "Informação complementar",
-    "contactEmailPlaceHolder": "Escreve aqui o contato da sua rede"
+    "contactEmailPlaceHolder": "Escreve aqui o contato da sua rede",
+    "anyoneCan": "Qualquer pessoa pode registar-se",
+    "explainanyoneCan": "Qualquer pessoa pode registar-se na tua rede.",
+    "inviteOnly": "Rede apenas por convite",
+    "explaininviteOnly": "A única forma de se registar na rede é ser convidado por outros utilizadores já registados",
+    "inviteOnlyByEndorsed": "Convite apenas por utilizadores verificados",
+    "explaininviteOnlyByEndorsed": "A única forma de se registar na rede é ser convidado por utilizadores verificados",
+    "inviteOnlyByAdmin": "Convite apenas por coordinadores",
+    "explaininviteOnlyByAdmin": "A única forma de se registar na rede é ser convidado por coordinadores da rede"
   },
   "activities": {
     "allNotifications": "Todas as atualizações",
@@ -269,20 +279,20 @@
     "phoneExplain": "Adicione seu telefone se desejar que entrem em contato com você através dele",
     "phonePlaceHolder": "Ex.: 34699000000",
     "signupOptions": "Opções Extras",
-    "adminPhonePublishExplain": "Você é o administrador da rede, deseja que seu telefone esteja disponível na página principal? Você também pode indicar se deseja ser contatado pelo WhatsApp.",
+    "adminPhonePublishExplain": "Você é o coordinador da rede, deseja que seu telefone esteja disponível na página principal? Você também pode indicar se deseja ser contatado pelo WhatsApp.",
     "adminPhonePublish": "Publicar meu telefone na página inicial",
     "showWhatsapp": "Mostrar WhatsApp",
-    "addSupport": "Você é administrador, adicione seu telefone para facilitar o contato",
+    "addSupport": "Você é coordinador, adicione seu telefone para facilitar o contato",
     "deleteProfile": "Excluir meu perfil",
     "confirmDeleting": "Confirme que deseja excluir todos os seus dados!",
     "securityAndPrivacy": "Segurança e privacidade",
-    "insertedSignUpTitle": "Adicione seus dados de contato ou clique se",
+    "insertedSignUpTitle": "Adicione seus dados de contato ou toque se",
     "acceptPrivacyPolicy": "Eu li e aceito a ",
     "privacyPolicyLink": "política de privacidade",
-    "pressToAccept": "Clique aqui para aceitar",
+    "pressToAccept": "Pressione aqui para aceitar",
     "iAccept": "Eu aceito",
     "pleaseAcceptPrivacy": "Aceite nossa política de privacidade, por favor",
-    "loginError": "Falha a entrar, por favor tente outra vez ou contate um administrador da rede",
+    "loginError": "Falha a entrar, por favor tente outra vez ou contate um coordinador da rede",
     "errorRequestNewLoginToken": "",
     "myHelpbuttons": "Os teus _helpbuttons_",
     "pleaseAcceptCookies": "Tem de aceitar a utilização de cookies se desejares registar-te ou entrar",
@@ -314,7 +324,7 @@
     "browseHoneyComb": "Mapa com zonas poligonais"
   },
   "explore": {
-    "emptyList": "Por favor, altere sua pesquisa, mova o mapa ou clique para encontrar mais botões",
+    "emptyList": "Por favor, altere sua pesquisa, mova o mapa ou toque para encontrar mais botões",
     "createEmpty": "Criar _helpbutton_",
     "noResults": "Desculpe, não há resultados aqui",
     "selectedHexagon": "na área selecionada",
@@ -322,7 +332,7 @@
     "noFilter": "na área",
     "hideMap": "Ocultar Mapa",
     "showMap": "Mostrar Mapa",
-    "displayInstructions": "Clique em um hexágono para obter informações sobre _helpbuttons_ nessa área",
+    "displayInstructions": "Toque em um hexágono para obter informações sobre _helpbuttons_ nessa área",
     "both": "Mapa & Lista",
     "list": "Lista",
     "map": "Mapa",
@@ -342,7 +352,7 @@
     "distance": "Distância de pesquisa",
     "allButtonTypes": "Todos os tipos",
     "queryPlaceHolder": "Digite o que você está procurando",
-    "whereExplain": "Procure no lugar desejado ou clique no ícone para marcar sua localização",
+    "whereExplain": "Procure no lugar desejado ou toque no ícone para marcar sua localização",
     "types": "Filtrar por tipo de _helpbuttons_",
     "typesExplain": "Selecione os tipos de _helpbuttons_ que deseja filtrar",
     "price": "Preço",
@@ -359,7 +369,7 @@
     "priceExplain": "Escolha preço máximo e mínimo",
     "byProximity": "Por proximidade",
     "byEventDate": "Por início do evento",
-    "followTagSucess": "{0} foi adicionado aos seus temas de interesse. Para ver seus temas de interesse vá até Meu Perfil.",
+    "followTagsSucess": "{0} foi adicionado aos seus temas de interesse. Para ver seus temas de interesse vá até Meu Perfil.",
     "focusedArea": "na área",
     "locationLimited": "Limitado a {0}, {1}",
     "pickLocationLimits": "Escolha uma localização",
@@ -432,7 +442,8 @@
     "sendPrivateMessage": "Enviar mensagem privada para {0}",
     "proposeAddress": "Adicionar endereço em falta {0}",
     "locationPlaceholder": "Escrever sítio ou morada",
-    "expiredLabel": "Expirado"
+    "expiredLabel": "Expirado",
+    "statusLabel": "Estado"
   },
   "calendarOnce": {
     "label": "Uma vez",
@@ -470,7 +481,7 @@
     "postgresHostName": "Servidor do PostgreSQL",
     "smtpUrl": "URL do SMTP",
     "test": "teste",
-    "createAdminTitle": "Criar conta de administrador",
+    "createAdminTitle": "Criar conta de coordinador",
     "postgresPort": "Porta do PostgreSQL",
     "postgresDb": "Nome do banco de dados do PostgreSQL",
     "postgresUser": "utilizador do PostgreSQL",
@@ -538,11 +549,11 @@
     "helpbuttonsDescription": "O helpbuttons é o software de código livre que impulsiona este aplicativo. Com o Helpbuttons, você pode criar suas próprias redes para compartilhar alimentos, moradia, transporte ou qualquer outra coisa que tenha em mente, e depois se federar com outras redes para compartilhar utilizadors e recursos. O Helpbuttons se especializa em conectar pessoas que ainda não se conhecem, para diversos propósitos, no mundo real.",
     "forDescription": "Nosso objetivo é promover uma sociedade coesa, incentivar a cooperação e otimizar o design de ferramentas colaborativas para aproveitar ao máximo as vantagens da internet aplicadas à vida real. Conhecemos as quantias de dinheiro e tempo necessários toda vez que um novo aplicativo colaborativo é lançado. A maioria dessas ferramentas compartilha uma parte significativa de suas funcionalidades básicas, e acreditamos que essas semelhanças poderiam ser aproveitadas para criar um sistema modular que atenda a muitos casos e economize recursos.",
     "helpbuttonDescription": "Um _helpbutton_ refere-se a uma publicação. Cada publicação feita por um utilizador no Helpbuttons é chamada de Helpbutton. Os Helpbuttons podem representar ofertas, necessidades, trocas, propostas de transporte, negócios, etc. Também podem ser renomeados para atender às necessidades específicas do seu aplicativo.",
-    "communityDescription": "O helpbuttons é desenvolvido por programadores independentes da Espanha e de Portugal, principalmente com contribuições voluntárias em seu tempo livre. Atualmente, o projeto está buscando financiamento para sustentar a manutenção de seu uso para o público em geral. Esses programadores, junto com a comunidade de utilizadors que começa a usar a ferramenta, formam a comunidade que o projeto precisa para se sustentar frente a outros modelos de aplicativos tradicionais. Mais adiante, ao nos federarmos com outras aplicações do Helpbuttons/Botonesdeayuda, poderemos compartilhar utilizadors e recursos. Esse método de colaboração nos permite reunir mais pessoas e, em última análise, melhorar a ferramenta que fornecemos. O representante legal que atua como interlocutor com a administração é a associação sem fins lucrativos 'Watch Out, Freedom!' G67992032, av. México 10, Jerez, Cádiz (Espanha). tel:+34680936011",
-    "networksEthicsDescription": "{0} é uma Rede criada com a tecnologia Helpbuttons, os administradores da Rede são responsáveis pela moderação do conteúdo publicado e pelo cumprimento das normas éticas e legais da região onde sua Rede está localizada. Entre em contato com eles através das opções de contato que aparecem na seção Moderadores da página inicial. Os programadores desta plataforma não podem se responsabilizar pelo conteúdo ou pelos propósitos para os quais esta ferramenta pode ser usada fora de nossos servidores.",
+    "communityDescription": "O helpbuttons é desenvolvido por programadores independentes da Espanha e de Portugal, principalmente com contribuições voluntárias em seu tempo livre. Atualmente, o projeto está buscando financiamento para sustentar a manutenção de seu uso para o público em geral. Esses programadores, junto com a comunidade de utilizadors que começa a usar a ferramenta, formam a comunidade que o projeto precisa para se sustentar frente a outros modelos de aplicativos tradicionais. Mais adiante, ao nos federarmos com outras aplicações do Helpbuttons/Botonesdeayuda, poderemos compartilhar utilizadors e recursos. Esse método de colaboração nos permite reunir mais pessoas e, em última análise, melhorar a ferramenta que fornecemos.",
+    "networksEthicsDescription": "{0} é uma Rede criada com a tecnologia Helpbuttons, os coordinadores da Rede são responsáveis pela moderação do conteúdo publicado e pelo cumprimento das normas éticas e legais da região onde sua Rede está localizada. Entre em contato com eles através das opções de contato que aparecem na seção Moderadores da página inicial. Os programadores desta plataforma não podem se responsabilizar pelo conteúdo ou pelos propósitos para os quais esta ferramenta pode ser usada fora de nossos servidores.",
     "ethicsDescription": "Este projeto visa melhorar a autonomia das pessoas e comunidades para cooperar. Nossos três princípios são: Liberdade, inclusão e descentralização. 1. Liberdade para usar a ferramenta e compartilhá-la para diversos fins. 2. Inclusão para acolher, através de um design responsável, aqueles menos familiarizados com as tecnologias e atender às necessidades da vida real. 3. Descentralização para permitir diferentes níveis de responsabilidade compartilhada no uso de dados: Desde a coletiva (servidores) até a mais individual (chaves anônimas). No caso de usar nossos servidores, tudo o que se alinha com esses valores é bem-vindo e terá total liberdade. Acreditamos na transparência, na honestidade e no respeito por todas as pessoas. Embora não possamos controlar o uso que se faz de nosso software em outros servidores, na medida do possível não permitiremos condutas que violem a integridade e dignidade humana, ou que incentivem maus-tratos aos animais. Nosso software é projetado para conectar pessoas e facilitar trocas, o que é uma responsabilidade que levamos a sério. Incentivamos nossos utilizadors a usarem a plataforma e quaisquer réplicas que fizerem com esses mesmos valores em mente, priorizando a comunicação respeitosa e a troca consciente. Qualquer uso indevido do software dentro de nossos servidores, incluindo exploração, dano a outros ou manipulação das funcionalidades da plataforma para fins pessoais, não será tolerado.",
-    "privacyDescription": "Trabalhamos todos os dias para encontrar melhores soluções para a privacidade dos dados nas Redes criadas com o Helpbuttons. Valorizamos o direito ao anonimato e oferecemos a possibilidade de participar tanto para pessoas que desejam ser totalmente anônimas quanto para aquelas que fornecem seus dados pessoais. O Helpbuttons é projetado para NÃO fazer uso em nenhum caso dos dados pessoais dos utilizadors para fins comerciais ou de interesse pessoal de um grupo de utilizadors. Também oferecemos a possibilidade de excluir totalmente seus dados de maneira fácil e transparente. Somos transparentes em nossos processos de coleta de dados, e você tem o direito de acessar, atualizar ou excluir seus dados pessoais a qualquer momento. Lembre-se de que compartilhar informações pessoais nas publicações do Helpbuttons é a seu critério; seja consciente e compartilhe apenas o que se sentir confortável em compartilhar com os outros. Tenha em mente que o responsável pelo gerenciamento de seus dados é o administrador da sua Rede; não compartilhe dados sensíveis se não confiar nesse administrador. Por favor, envie suas perguntas para o seguinte e-mail: help@helpbuttons.org",
-    "securityDescription": "Todos os dias incorporamos novas melhorias à segurança das Redes; através do trabalho conjunto com a comunidade open source, estamos analisando e preparando ferramentas de segurança para que utilizadors sem conhecimento de informática possam usá-las. Se você acredita que pode haver um problema de segurança relacionado ao uso da Rede, entre em contato com o administrador através da página inicial. Se você acredita que pode haver uma falha de segurança informática que coloca em risco a integridade de nosso software e a segurança de nossos utilizadors, escreva-nos para help@helpbuttons.org. Atualizamos e revisamos continuamente nossos sistemas para garantir que estejam em conformidade com os mais altos padrões de cibersegurança. No entanto, também acreditamos que a segurança é uma responsabilidade compartilhada. Se você instalou esta ferramenta em seu servidor, incentivamos a prática de comportamentos seguros online, como o uso de senhas fortes e a proteção de informações pessoais. Por favor, envie suas perguntas para o seguinte e-mail: help@helpbuttons.org",
+    "privacyDescription": "Trabalhamos todos os dias para encontrar melhores soluções para a privacidade dos dados nas Redes criadas com o Helpbuttons. Valorizamos o direito ao anonimato e oferecemos a possibilidade de participar tanto para pessoas que desejam ser totalmente anônimas quanto para aquelas que fornecem seus dados pessoais. O Helpbuttons é projetado para NÃO fazer uso em nenhum caso dos dados pessoais dos utilizadors para fins comerciais ou de interesse pessoal de um grupo de utilizadors. Também oferecemos a possibilidade de excluir totalmente seus dados de maneira fácil e transparente. Somos transparentes em nossos processos de coleta de dados, e você tem o direito de acessar, atualizar ou excluir seus dados pessoais a qualquer momento. Lembre-se de que compartilhar informações pessoais nas publicações do Helpbuttons é a seu critério; seja consciente e compartilhe apenas o que se sentir confortável em compartilhar com os outros. Tenha em mente que o responsável pelo gerenciamento de seus dados é o coordinador da sua Rede; não compartilhe dados sensíveis se não confiar nesse coordinador. Por favor, envie suas perguntas para o seguinte e-mail: help@helpbuttons.org",
+    "securityDescription": "Todos os dias incorporamos novas melhorias à segurança das Redes; através do trabalho conjunto com a comunidade open source, estamos analisando e preparando ferramentas de segurança para que utilizadors sem conhecimento de informática possam usá-las. Se você acredita que pode haver um problema de segurança relacionado ao uso da Rede, entre em contato com o coordinador através da página inicial. Se você acredita que pode haver uma falha de segurança informática que coloca em risco a integridade de nosso software e a segurança de nossos utilizadors, escreva-nos para help@helpbuttons.org. Atualizamos e revisamos continuamente nossos sistemas para garantir que estejam em conformidade com os mais altos padrões de cibersegurança. No entanto, também acreditamos que a segurança é uma responsabilidade compartilhada. Se você instalou esta ferramenta em seu servidor, incentivamos a prática de comportamentos seguros online, como o uso de senhas fortes e a proteção de informações pessoais. Por favor, envie suas perguntas para o seguinte e-mail: help@helpbuttons.org",
     "contactDescription": "Se você deseja se comunicar com os gestores da página, vá até a seção Início. Se você deseja entrar em contato com os programadores que tornam o app possível, por favor, envie suas perguntas para o seguinte e-mail: help@helpbuttons.org",
     "cookiesExplanation": "Este site usa cookies somente quando você faz login. Para mais detalhes, consulte a nossa ",
     "cookieAccept": "Aceitar",
@@ -569,7 +580,11 @@
     "inviteOnlyExplain": "Se você ativar isso, os utilizadors só poderão se registrar e publicar com um código QR.",
     "inviteOnly": "Permitir registo apenas com um código QR",
     "generateQr": "QR",
-    "registered": "QR usado"
+    "registered": "QR usado",
+    "setExpiration": "Definir período de expiração",
+    "scanCodeLabel": "Escreva o seu código",
+    "scanCodeExplain": "Pode escrever o seu código QR se não conseguir escanear",
+    "scanPlaceHolder": "Escreva o link completo do convite ou o seu código alfanumérico"
   },
   "customFields": {
     "priceLabel": "Preço ({0})",
@@ -579,13 +594,13 @@
   },
   "email": {
     "loginTokenContent": "Bem-vindo(a) ao {0}",
-    "loginTokenSubject": "Você solicitou um login com um clique",
-    "loginTokenLinkCaption": "Clique aqui para acessar sua conta",
+    "loginTokenSubject": "Você solicitou um login com um toque",
+    "loginTokenLinkCaption": "Pressione aqui para acessar sua conta",
     "activateContent": "Bem-vindo(a) ao {0}",
     "activateSubject": "Ative sua conta",
-    "activateLinkCaption": "Clique aqui para ativar sua conta",
+    "activateLinkCaption": "Pressione aqui para ativar sua conta",
     "activitySubject": "Novidade na Rede Exemplo",
-    "buttonLinkCaption": "Clique aqui para abrir",
+    "buttonLinkCaption": "Pressione aqui para abrir",
     "dailyOutBox": "Você tem {0} novidades de '{1}', {2}"
   },
   "dates": {
@@ -604,8 +619,8 @@
   "moderation": {
     "buttons": "Aqui você pode revisar os utilizadors da sua rede e os botões para aprovação",
     "verified": "Verificado",
-    "revoke": "Revogar direitos de administrador",
-    "promote": "Promover a administrador",
+    "revoke": "Revogar direitos de coordinador",
+    "promote": "Promover a coordinador",
     "activate": "Ativar",
     "deactivate": "Desativar",
     "remove": "Excluir",
@@ -617,21 +632,22 @@
     "emptyUsersList": "Sem utilizadors",
     "requireApproval": "Permitir publicação apenas com moderação",
     "requireApprovalLabel": "Moderação da rede",
-    "requireApprovalExplain": "Se você ativar isso, todos os _helpbuttons_ criados (se não forem por um administrador) não serão publicados no mapa até que um administrador os aprove",
-    "awaitingApproval": "_helpbutton_ foi adicionado à lista de moderação, aguarde a aprovação de um administrador",
+    "requireApprovalExplain": "Se você ativar isso, todos os _helpbuttons_ criados (se não forem por um coordinador) não serão publicados no mapa até que um coordinador os aprove",
+    "awaitingApproval": "_helpbutton_ foi adicionado à lista de moderação, aguarde a aprovação de um coordinador",
     "created_at": "Criado",
     "title": "",
     "confirm": "Confirm",
-    "adminCommunication": "Administrator communications",
+    "adminCommunication": "Coordinador communications",
     "adminCommunicationExplain": "Messages that you share here will be send to all admins or all users of the network",
     "description": "Here you can review the users of your network, and the buttons!",
-    "adminCommunicationLabel": "Administrator communications",
+    "adminCommunicationLabel": "Coordinador communications",
     "edit": "Editar",
-    "preview": "Pré-visualizar"
+    "preview": "Pré-visualizar",
+    "messageSent": "Mensagem enviada"
   },
   "role": {
     "blocked": "desativado",
-    "admin": "administrador",
+    "admin": "coordinador",
     "registered": "registrado",
     "guest": "visitante"
   },
@@ -648,7 +664,10 @@
   },
   "invitation": {
     "card": "Cartão individual de login anónimo",
-    "name": "Este cartão é único e pessoal."
+    "name": "Este cartão é único e pessoal.",
+    "infoCard": "Escaneie o código para entrar.",
+    "contact": "Escreva informações de contacto caso queira recuperá-lo se o perder. Use com responsabilidade.",
+    "infoQr": "Contacto:"
   },
   "share": {
     "shareExplain": "Selecione o número de resultados que deseja mostrar e copie o código para o seu site",
@@ -666,8 +685,9 @@
     "shareContent": "Partilhar conteúdos da app",
     "optionRss": "Subscrever rss",
     "copyLink": "Copiar link",
-    "invitePeopleExplain": "Copia este link e partilha com outros para se juntarem à rede"
-
+    "invitePeopleExplain": "Copia este link e partilha com outros para se juntarem à rede",
+    "personalInviteExplain": "Esta rede requer um convite para se juntar. Gere um link pessoal único para cada pessoa.",
+    "generatePersonalLink": "Gerar e copiar link"
   },
   "places": {
     "addNew": "",
@@ -678,16 +698,16 @@
     "embbed": ""
   },
   "roles": {
-    "administrator": "administrador"
+    "administrator": "coordinador"
   },
   "groupChat": {
-    "admin": "administradors",
+    "admin": "coordinadors",
     "create": "Criar novo chat de grupo para {0}"
   },
   "footer": {
     "create": "Criar _helpbutton_",
     "privacyPolicy": "Política de privacidade",
-    "adminSupport": "Apoio de administradores",
+    "adminSupport": "Apoio de coordinadores",
     "sendAProblem": "Envia-nos um problema técnico Send a technical issue",
     "investDonations": "Doar ao projeto",
     "developers": "Programadores",
@@ -695,5 +715,8 @@
     "otherNetworks": "Ver outras redes",
     "explore": "Explorar _helpbuttons_",
     "whatIsNetwork": "Saber mais..."
+  },
+  "customTemplates": {
+    "eventExpiredMailSubject": "{0} expirou"
   }
 }

@@ -11,8 +11,8 @@ import { CustomFields } from "shared/types/customFields.type";
 
 export const priceTemplate : CustomTemplate = {
     icon: <IoCash/>,
-    explain: t('customTemplates.priceExplain'),
-    text: t('customTemplates.priceText'),
+    explain: 'customTemplates.priceExplain',
+    text: 'customTemplates.priceText',
     name: CustomFields.Price,
     templateField: FieldPrice,
     configurationForm: null,

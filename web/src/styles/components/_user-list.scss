@@ -21,6 +21,8 @@
 .form-list__table-body-cell {
 
   padding: $padding-small;
+  gap: $padding-small;
+
 }
 
 .form-list__table-body-row {
@@ -33,6 +35,7 @@
 }
 
   .form-list__table {
+    display: table;
     width: 100%;
     border-collapse: collapse;
     font-size: $font-size-small;

@@ -132,12 +132,12 @@ export class ActivityService {
 
     // const consumerId = button.owner.id != author.id ? author.id : 
     userIdsMentioned.map((userId) => {
-      if (userId == button.owner.id ) { // notify author of the comment
-        const consumerId = button.owner.id == author.id ? userId : author.id
-        return this.newActivity(button, {id: userId}, author, { id: consumerId }, { ...payload, activityEventName: ActivityEventName.NewMention }, true, false, true)
-      } else if (userId == author.id) {
+      if (userId == author.id) {
         const consumerId = button.owner.id == author.id ? userId : author.id
         return this.newActivity(button, userId, author, { id: consumerId }, payload, true, false, false)
+      }else if (userId == button.owner.id ) { // notify author of the comment
+        const consumerId = button.owner.id == author.id ? userId : author.id
+        return this.newActivity(button, {id: userId}, author, { id: consumerId }, { ...payload, activityEventName: ActivityEventName.NewMention }, true, false, true)
       } else {
         const consumerId = button.owner.id == author.id ? userId : author.id
         return this.newActivity(button, {id: userId}, author, { id: consumerId }, { ...payload, activityEventName: ActivityEventName.NewMention }, true, false, true)
@@ -313,7 +313,7 @@ export class ActivityService {
                   case ActivityEventName.NewMention:
                     this.mailService.sendActivity({
                       to: activity.to.email,
-                      content: translate(locale, 'activities.newMentionContent', [fromName, _activity.message, publicationTitle]),
+                      content: translate(locale, 'activities.newMentionContent', [ _activity.message]),
                       subject: translate(locale, 'activities.newMentionSubject', [fromName]),
                       link: this.addLoginParams(getUrl(`/Activity/button/${_activity.buttonId}`), loginParams),
                       linkCaption: translate(locale, 'activities.replyToMessage'),
@@ -326,7 +326,7 @@ export class ActivityService {
                       content: translate(locale, 'customTemplates.schedulerExpired'),
                       subject: translate(locale, 'customTemplates.schedulerExpiredMailSubject', [activity.button.title]),
                       link: this.addLoginParams(getUrl(`/Activity/button/${_activity.buttonId}`), loginParams),
-                      linkCaption: translate(locale, 'activities.replyToMessage'),
+                      linkCaption: translate(locale, 'activities.view'),
                       ...extra
                     })
                     break;
@@ -336,7 +336,7 @@ export class ActivityService {
                       content: translate(locale, 'customTemplates.eventExpired'),
                       subject: translate(locale, 'customTemplates.eventExpiredMailSubject', [activity.button.title]),
                       link: this.addLoginParams(getUrl(`/Activity/button/${_activity.buttonId}`), loginParams),
-                      linkCaption: translate(locale, 'activities.replyToMessage'),
+                      linkCaption: translate(locale, 'activities.view'),
                       ...extra
                     })
                     break;
@@ -353,11 +353,12 @@ export class ActivityService {
                     case ActivityEventName.RoleUpdate: {
                       //@ts-ignore
                       const { role } = activity.data
+                      const roleName = translate(locale, `roles.${role}`);
 
                       this.mailService.sendActivity({
                         to: activity.to.email,
-                        content: translate(locale, 'activities.roleupdate', [role]),
-                        subject: translate(locale, 'activities.roleupdate', [role]),
+                        content: translate(locale, 'activities.roleupdate', [roleName]),
+                        subject: translate(locale, 'activities.roleupdate', [roleName]),
                         ...extra,
                         type: null
                       })
@@ -622,7 +623,7 @@ export class ActivityService {
             buttonType: activity.button.type,
             type: translate(locale, 'activities.notice'),
             footer: `${activity.button.title} - ${activity.button.address}`,
-            message: isOwner ? translate(locale, 'activities.newfollowed') : translate(locale, 'activities.newfollowing'),
+            message: isOwner ? translate(locale, 'activities.newfollowed', [activity.from.name]) : translate(locale, 'activities.newfollowing'),
             link: getUrl(`/Show/${activity.button.id}`)
           }
         case ActivityEventName.NewPost:
@@ -741,6 +742,7 @@ export class ActivityService {
         case ActivityEventName.RoleUpdate:
           {
             const { role } = activity.data
+            const roleName = translate(locale, `roles.${role}`);
             return {
               ...activityOut,
               title: "",
@@ -749,7 +751,7 @@ export class ActivityService {
               buttonType: "",
               type: translate(locale, 'activities.notice'),
               footer: "",
-              message: translate(locale, 'activities.roleupdate', [role]),
+              message: translate(locale, 'activities.roleupdate', [roleName]),
               link: null
             }
           }

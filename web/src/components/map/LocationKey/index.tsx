@@ -13,6 +13,7 @@ import { FieldMapZoomSlide } from "elements/Fields/FieldAreaMap";
 import { MapLocationKey } from "../Map/NetworkMapConfigure";
 import { useGeoReverse } from "elements/Fields/FieldLocation/location.helpers";
 import { alertService } from "services/Alert";
+import { TableHeader, TableLine, TableLineCell } from "components/table";
 
 export function FieldKeySpots() {
     const [showPopup, setShowPopup] = useState(false)
@@ -38,18 +39,25 @@ export function FieldKeySpots() {
 
 export function LocationKeyItem({ place, deleteAction }) {
 
-    return <div className="form-list__table-body-row">
-        <LocationCoordinates latitude={place.latitude} longitude={place.longitude} address={place.address} label={'no'} />
-        <Btn
-            btnType={BtnType.iconActions}
-            iconLink={<IoTrashBinOutline />}
-            iconLeft={IconType.circle}
-            contentAlignment={ContentAlignment.center}
-            onClick={() => {
-                deleteAction(place.id)
-            }}
-        />
-    </div>
+    return <>
+        <TableLine>
+                <TableLineCell>
+                <LocationCoordinates latitude={place.latitude} longitude={place.longitude} address={place.address} label={'no'} />
+                </TableLineCell>
+                <TableLineCell>
+                    <Btn
+                        btnType={BtnType.iconActions}
+                        iconLink={<IoTrashBinOutline />}
+                        iconLeft={IconType.circle}
+                        contentAlignment={ContentAlignment.center}
+                        onClick={() => {
+                            deleteAction(place.id)
+                        }}
+                    />
+                </TableLineCell>
+            </TableLine>
+        </>  
+   
 }
 
 
@@ -92,15 +100,24 @@ export function LocationKeyTable({showForm,
                 setShowForm={setShowForm}
             />
             : t('configuration.noNetworkLocation')}
-            <div className="form-list__table form-list__wrapper">
-                {(!showForm && locations?.length > 0) && (
+            
+            <div className="form-list__wrapper">
+
+                <div className="form-list__table ">
+              
                     <>
-                        {locations.map((place, idx) =>
-                            <LocationKeyItem key={idx} place={place} deleteAction={deleteLocation} />
+                        {(!showForm && locations?.length > 0) && (
+                            <>
+                                {locations.map((place, idx) =>
+                                    <LocationKeyItem key={idx} place={place} deleteAction={deleteLocation} />
+                                )}
+                            </>
                         )}
                     </>
-                )}
+                                        
+                </div>
             </div>
+
         </>
     )
 }

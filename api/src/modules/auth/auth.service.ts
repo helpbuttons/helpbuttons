@@ -50,6 +50,7 @@ export class AuthService {
           locale: signupQRUserDto.locale,
           acceptPrivacyPolicy: signupQRUserDto.acceptPrivacyPolicy,
           phone: signupQRUserDto.phone,
+          email: signupQRUserDto.email
         }
       })
       .then((signupUserDto: SignupRequestDto) => {
@@ -287,7 +288,6 @@ export class AuthService {
       showWassap: data.showWassap
     };
 
-    console.log(newUser)
     if (avatar) {
       newUser.avatar = (await this.storageService.uploadAndConvertImage(avatar)).name
     }else if(data.avatar){

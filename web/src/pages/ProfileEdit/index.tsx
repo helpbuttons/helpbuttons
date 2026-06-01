@@ -14,6 +14,7 @@ import Btn, {
   ContentAlignment,
   BtnType,
   IconType,
+  BtnSubmit,
 } from 'elements/Btn';
 import Form from 'elements/Form';
 
@@ -39,6 +40,7 @@ import { IoTrashBinOutline } from 'react-icons/io5';
 import { LocationSearchBarSimple } from 'elements/LocationSearchBar';
 import { useNetworkCenter } from 'state/Networks';
 import FieldImageUpload from 'elements/Fields/FieldImageUpload';
+import { RadiusSlider } from 'components/search/AdvancedFilters/filter-by-location';
 
 export default function ProfileEdit() {
   const {
@@ -241,30 +243,17 @@ export default function ProfileEdit() {
                     defaultValue={sessionUser.receiveNotifications}
                     text={t('user.textReceiveNotifications')}
                     onChanged={(value) => {setValue('receiveNotifications', value)}}
-                  />
+                  />     
                   <LocationSearchBarSimple 
                     placeholder={t('user.location')}
-                    markerAddress={watch('address')}
+                    markerAddress={sessionUser.address}
                     setMarkerAddress={(address) => setValue('address', address)}
                     focusPoint={focusPoint}
                     setMarkerPosition={(position) => setValue('center', {coordinates: position})}
                   />
-                <div className="form__field">
-                    <label className="form__label">
-                      {t('user.distance')} - {readableDistance(radius)}
-                    </label>
-                    <p className='form__explain'>{t('user.distanceExplain')} </p>
-                    <div style={{ padding: '1rem' }}>
-                      <Slider
-                        min={0}
-                        max={300}
-                        onChange={(radiusValue) =>
-                          setValue('radius', radiusValue)
-                        }
-                        value={radius}
-                      />
-                    </div>
-                  </div>
+                {center && 
+                  <RadiusSlider pickedRadius={radius} setPickedRadius={(radiusValue) =>setValue('radius', radiusValue)}/>
+                }
                 <FieldTags
                   label={t('user.tags')}
                   explain={t('user.tagsExplain')}
@@ -324,13 +313,7 @@ export default function ProfileEdit() {
                   </Accordion>
 
                       <div className="publish__submit">
-                        <Btn
-                          btnType={BtnType.submit}
-                          contentAlignment={ContentAlignment.center}
-                          caption={t('common.save')}
-                          isSubmitting={isSubmitting}
-                          submit={true}
-                        />
+                        <BtnSubmit isSubmitting={isSubmitting} errors={errors} caption={t('common.save')}/>
                       </div>
                     </div>
             </Form>

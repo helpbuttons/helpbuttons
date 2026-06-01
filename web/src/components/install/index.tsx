@@ -6,32 +6,20 @@ import Btn, {
 import t from 'i18n';
 import { useEffect, useState } from 'react';
 import { IoDownload } from 'react-icons/io5';
-import { store } from 'state';
-import { SetIsInstallable } from 'state/HomeInfo';
 
-export function InstallButton() {
-  const [prompt, promptToInstall] = useAddToHomescreenPrompt();
-  useEffect(() => {
-    if(prompt)
-    {
-      store.emit(new SetIsInstallable())
-    }
-  }, [prompt])
+export function InstallButton({isInstallable, promptToInstall}) {
+  if (!isInstallable) {
+    return null;
+  }
   return (
-    <>
-      {prompt && (
-        <div>
-          <Btn
-              btnType={BtnType.filterCorp}
-              iconLink={<IoDownload />}
-              caption={t('homeinfo.installButton')}
-              iconLeft={IconType.circle}
-              contentAlignment={ContentAlignment.center}
-              onClick={promptToInstall}
-            />
-        </div>
-       )}
-    </>
+    <Btn
+        btnType={BtnType.filterCorp}
+        iconLink={<IoDownload />}
+        caption={t('homeinfo.installButton')}
+        iconLeft={IconType.circle}
+        contentAlignment={ContentAlignment.center}
+        onClick={promptToInstall}
+      />
   );
 }
 
@@ -44,7 +32,7 @@ interface IBeforeInstallPromptEvent extends Event {
   prompt(): Promise<void>;
 }
 
-export function useAddToHomescreenPrompt(): [
+export function InstallPrompt(): [
   IBeforeInstallPromptEvent | null,
   () => void,
 ] {

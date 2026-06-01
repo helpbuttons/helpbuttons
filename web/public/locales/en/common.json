@@ -44,6 +44,8 @@
     "callToAdmin": "Hi! Press the phone you need someone to help. The site keeps info about your usage, check the conditions and privacy policy.",
     "latestActivity": "Latest activities",
     "installButton": "Install app",
+    "openApp": "Open app",
+    "revokeNotifications": "Disable browser notifications",
     "print": "Print activity",
     "share": "Share options",
     "notificationsPermission": "Allow notifications",
@@ -73,7 +75,9 @@
     "printInvites": "Printable pdf invitations",
     "linkCopied": "{0} copied to clipboard",
     "codeCopied": "Copied on clipboard",
-    "copyCode": "Copy code"
+    "copyCode": "Copy code",
+    "personalInviteExplain": "This network requires an invitation to join. Generate a unique personal link for each person.",
+    "generatePersonalLink": "Generate & copy link"
   },
   "feed": {
     "write": "Write message",
@@ -161,7 +165,7 @@
     "postgresHostName": "Postgresql HostName",
     "postgresPort": "Postgresql Port",
     "smtpUrl": "Smtp url",
-    "createAdminTitle": "Create administrator account",
+    "createAdminTitle": "Create coordinator account",
     "welcomeMessage": "Welcome to your _helpbuttons_ instance",
     "createAdmin": "Let's create your Network. First step: Create your admin account.",
     "configureNetwork": "Customize your site's appearance, topics, post types, and alerts. Add prices, dates, and other modular features to your posts.",
@@ -204,7 +208,7 @@
     "newmentionOwn": "You post a new coment in a conversation. '{0}'",
     "newfollow": "{0} is now following your _helpbutton_ {1}",
     "newfollowing": "You started following",
-    "newfollowed": "Followed your _helpbutton_",
+    "newfollowed": "{0} followed your _helpbutton_",
     "myhelpbuttons": "My _helpbuttons_",
     "deletebutton": "{0} was deleted",
     "expiredEventType": "_helpbutton_ ended",
@@ -224,14 +228,15 @@
     "message": "Message",
     "all": "all",
     "newMessageSubject": "{0} sent you a new message",
-    "newMessageContent": "{0} wrote '{1}' on the _helpbutton_ ",
+    "newMessageContent": "{0} : '{1}'  ",
     "newPostCommentSubject": "{0} commented on a _helpbutton_",
     "newPostCommentContent": "{0} wrote a new comment '{1}'. on the _helpbutton_ '{2}'",
     "newMentionSubject": "{0} mentioned you on a _helpbutton_",
-    "newMentionContent": "{0} mentioned you {1}. on the _helpbutton_ '{2}'",
+    "newMentionContent": "{0} on the _helpbutton_ :",
     "replyToMessage": "Reply to message",
     "view": "View",
-    "newpostfollower": "A new post was published in a _helpbutton_ you follow"
+    "newpostfollower": "A new post was published in a _helpbutton_ you follow",
+    "newEndorsedMessageSubject": "A new message from your network coordinator"
   },
   "common": {
     "notfound": "No {0} found. Sorry. 🤔",
@@ -337,7 +342,8 @@
     "copyAlert": "Copied",
     "whereButtonLabel": "Choose place",
     "pickPosition": "Please pick a position on the map",
-    "expired": "_helpbutton_ expired, it won't show on search results."
+    "expired": "_helpbutton_ expired, it won't show on search results.",
+    "statusLabel": "Status"
   },
   "user": {
     "login": "Write your credentials",
@@ -416,7 +422,7 @@
     "signupOptions": "Extra options",
     "adminPhonePublish": "Publish my phone in the home page",
     "showWassap": "Enable Whatsapp link",
-    "adminPhonePublishExplain": "You are a network administrator, do you want your phone to be available on the main page?",
+    "adminPhonePublishExplain": "You are a network coordinator, do you want your phone to be available on the main page?",
     "addSupport": "You're admin, add a phone of contact so people can reach you",
     "deleteProfile": "Delete my account",
     "confirmDeleting": "Confirm that you want to delete all your data!",
@@ -456,7 +462,8 @@
     "askForNewCode": "I don't have my guest info",
     "inviteLogin": "Enter",
     "inviteLoginError": "Wrong code or missing fields",
-    "roleChange": "An admin changed your role"
+    "roleChange": "An admin changed your role",
+     "pickPrivacyOption": "Choose privacy"
   },
   "picker": {
     "headerText": "Choose a location"
@@ -480,8 +487,8 @@
     "everyWeek": "Each week"
   },
   "validation": {
-    "fieldRequired": "{0} is required.",
-    "tooShort": "{0} is too short.",
+    "fieldRequired": "field is required.",
+    "tooShort": "field is too short.",
     "error": "Check the fields, there are errors in the form",
     "register": "You need to be registered to use this functionality",
     "ownership": "You don't have ownership of this",
@@ -491,7 +498,7 @@
     "emailRegistered": "Email already registered",
     "userRegistered": "Username already registered",
     "delete": "Nothing to delete",
-    "invalidForm": "Error validating the form",
+    "invalidForm": "Check fields, there are errors",
     "inviteOnly": "Invite only network",
     "address": "Error getting address",
     "dates": "Invalid dates, the end date time should not be before the start",
@@ -567,8 +574,8 @@
     "nomeclaturePlaceHolder": "Type n>ew name",
     "moderateNetwork": "Moderate Network",
     "blockedExplain": "These users are blocked from your network. To edit visit their profiles",
-    "adminUsers": "These are your Network's Administrator. To edit visit their profiles",
-    "contactAdmin": "Contact the administrator",
+    "adminUsers": "These are your Network's Coordinator. To edit visit their profiles",
+    "contactAdmin": "Contact the coordinator",
     "customFields": "Custom fields",
     "customFieldsExplain": "These are extra fields that you can add to your _helpbuttons_ so they accomplish different tasks. Add date if you want to handle events, or price if you want the users to be able to sell products.",
     "currencyLabel": "Currency",
@@ -591,6 +598,9 @@
     "locationKeys": "Key Spots",
     "keyLocationsExplain": "Key spots that will be highlighted in your network. They will appear in the main menus and map for easy access",
     "addLocationKey": "Add Location",
+    "hideCountryOnAddressesLabel": "Hide country on addresses",
+    "hideCountryOnAddressesExplain": "If your network is focused on the same country, you can hide the country from addresses so it is not redundant.",
+    "hideCountryOnAddressesText": "Hide country",
     "privacyPolicyLabel": "Privacy policy",
     "privacyPolicyPlaceHolder": "Write basic privacy policy. Where are you storing your users' data? What type of data are you using and what for? ",
     "ethicsPolicyPlaceHolder": "Write basic ethics. What are the values behind your networks' purpose and users' actions?",
@@ -599,7 +609,16 @@
     "FAQs": "Add your legal information",
     "contactEmailPlaceHolder": "Write your network's contact -phone, address, email, etc-  here",
     "privacySettings": "Set your privacy prefrences",
-    "noNetworkLocation": "Please choose a network location before adding key spots"
+    "noNetworkLocation": "Please choose a network location before adding key spots",
+    "anyoneCan": "Anyone can register",
+    "explainanyoneCan": "Everyone can sign up in your network.",
+    "inviteOnly": "Invite only network",
+    "explaininviteOnly": "The only way to signup to the network is to be invited by other users already registered in the network",
+    "inviteOnlyByEndorsed": "Invite only by verified",
+    "explaininviteOnlyByEndorsed": "The only way to signup to the network is to be invited by other users which have been verified",
+    "inviteOnlyByAdmin": "Invite only by coordinators",
+    "explaininviteOnlyByAdmin": "The only way to signup to the network is to be invited by coordinators of the network"
+
   },
   "configure": {
     "browsePins": "",
@@ -651,8 +670,8 @@
     "title": "Invites",
     "description": "Invite people, manage and share links with other people to allow them to access your network",
     "inviteOnlyLabel": "Network privacy",
-    "inviteOnlyExplain": "If you enable this, users will only be able to register and publish if they use a QR code. They will still see the _helpbuttons_.",
-    "inviteOnly": "Only allow signup with an QR code",
+    "inviteOnlyExplain": "If you enable this, users will only be able to register and publish if they use a QR code invitation. They will still see the _helpbuttons_.",
+    "inviteOnly": "Only allow signup with a QR code invitation",
     "generateQr": "Get QR",
     "registered": "Qr code already registered",
     "scanCodeLabel": "Type your code",
@@ -705,10 +724,10 @@
   "moderation": {
     "description": "Here you can review the users and _helpbuttons_ of your network",
     "verified": "Verified",
-    "revoke": "Revoke administrator rights",
+    "revoke": "Revoke coordinator rights",
     "activate": "Activate",
     "block": "Block user",
-    "promote": "Promote to administrator",
+    "promote": "Promote to coordinator",
     "remove": "Delete",
     "actions": "Actions",
     "role": "Role",
@@ -720,22 +739,23 @@
     "emptyUsersList": "No users",
     "requireApproval": "Only allow publishing with moderation",
     "requireApprovalLabel": "Network moderation",
-    "requireApprovalExplain": "If you enable this, all _helpbuttons_ created (if not by an admin) won't be published on the map, before an administrator approves it",
-    "awaitingApproval": "_helpbutton_ has been added to the moderation list, please wait for an administrator to approve it",
+    "requireApprovalExplain": "If you enable this, all _helpbuttons_ created by not endorsed users need coordinators approval",
+    "awaitingApproval": "_helpbutton_ has been added to the moderation list, please wait for an coordinator to approve it",
     "title": "Moderate content and users",
-    "adminCommunication": "Administrator communications",
-    "adminCommunicationLabel": "Administrator communications",
+    "adminCommunication": "Coordinator communications",
+    "adminCommunicationLabel": "Coordinator communications",
     "adminCommunicationExplain": "Messages that you share here will be send to all admins or all users of the network",
     "created_at": "Date",
     "edit": "Edit",
     "awaitingApprovalLabel": "Awaiting approval",
     "buttonsApproved": "All published _helpbuttons_ ",
     "view": "View",
-    "approved":"Approved"
+    "approved": "Approved",
+    "messageSent": "Message sent"
   },
   "roles": {
     "blocked": "blocked",
-    "administrator": "administrator",
+    "administrator": "coordinator",
     "registered": "registered",
     "guest": "guest"
   },
@@ -801,6 +821,7 @@
     "eventExpired": "The _helpbutton_ expired",
     "schedulerRenewd": "_helpbutton_ has been renewed",
     "willExpire": "Expires ",
-    "renewed": "Renewed"
+    "renewed": "Renewed",
+    "eventExpiredMailSubject": "{0} expired"
   }
 }

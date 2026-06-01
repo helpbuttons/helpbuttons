@@ -13,6 +13,7 @@ export class MailerModuleConfig implements MailerOptionsFactory {
     const helpers = {
       capitalize: function(str) {
         if (!str) return '';
+        if (typeof str !== 'string') str = String(str);
         return str.charAt(0).toUpperCase() + str.slice(1);
       },
       list: function(context, options) {

@@ -37,7 +37,7 @@ $info-content-head-margin-mobile: 70px;
   background-color: transparent;
   width: 100%;
   height: auto;
-  overflow: auto;
+  overflow: visible;
   box-sizing: border-box;
 
  }
@@ -87,6 +87,9 @@ $info-content-head-margin-mobile: 70px;
   flex-direction: row;
   justify-content: space-evenly;
   flex-wrap: wrap;
+  max-width: $grid-column-max-width;
+  margin: auto;
+  // gap: $margin-small;
 
 }
 
@@ -494,8 +497,7 @@ hr {
 
   .homeinfo-card__controls--openable {
 
-    position: absolute;
-    right: -60px;
+    position: relative;
     
   }
 
@@ -545,5 +547,36 @@ hr {
     z-index: $z-index-02;
 
   }
+
+  .homeinfo__sections {
+
+    display: block;
+    max-width: $grid-two-column-max-width;
+    columns: 2;         /* Creates two columns */
+    column-gap: 10px;
+  }
+
+  .homeinfo-card--full-width {
+
+    column-span: all;    /* Forces the item to take 100% width */
+
+  }
+
+  .homeinfo-card--wrap {
+
+      display: block;      
+      width: 100%;        /* Item fills the width of its column */
+      margin-bottom: 20px;
+      break-inside: avoid;
+  }
+
+  .homeinfo-card.homeinfo__card--title-card::before {
+              
+    max-width: $grid-two-column-max-width ;
+    margin: auto;
+    transform: translateX(math.div(-$scrollbar-width, 2));
+
+  }
+
 
  }

@@ -1,4 +1,5 @@
 import { applyCustomFieldsFilters } from "components/button/ButtonType/CustomFields/AdvancedFiltersCustomFields";
+import { isPointInBounds } from "elements/Fields/FieldLocation/location.helpers";
 import { isPointWithinRadius } from "geolib";
 import { Point } from "pigeon-maps";
 import { useEffect, useState } from "react";
@@ -14,6 +15,8 @@ export interface ButtonFilters {
     orderBy: string;
     tags: string[]
     days: number;
+    hexClicked: string;
+    hexClickedBtnType: string;
   }
   
   export const defaultFilters: ButtonFilters = {
@@ -23,6 +26,8 @@ export interface ButtonFilters {
     orderBy: 'date',
     tags: [],
     days: defaultDaysForBulletin,
+    hexClicked: null,
+    hexClickedBtnType: null
   };
   
   const applyButtonTypesFilter = (button, buttonTypes) => {
@@ -118,17 +123,20 @@ export interface ButtonFilters {
       filteredHexagons: recalculateDensityMap(res.filteredHexagons),
     };
   }
+  export const applyBounds = (cachedButtons, bounds) => {
+    return cachedButtons.filter((btn) => isPointInBounds([btn.latitude, btn.longitude], bounds))
+  }
   export const applyFilters = (filters, buttonList, buttonTypes) => {
     const filteredButtons = buttonList.filter(
-      (button: Button) => applyFilterToButton(button, {...filters, where: {center: null, radius: null}}, buttonTypes)
+      (button: Button) => applyFilterToButton(button, filters, buttonTypes)
     );
-    return {filteredButtons}    
+    return {filteredButtons}
   };
 
   export const isFiltering = () =>
   {
     const filters = useGlobalStore((state: GlobalState) => state.explore.map.filters)
-    const hexagonClicked = useGlobalStore((state: GlobalState) => state.explore.settings.hexagonClicked)
+    const hexagonClicked = useGlobalStore((state: GlobalState) => state.explore.map.filters.hexClicked)
     const currentButton = useGlobalStore((state: GlobalState) => state.explore.currentButton)
 
     const [isFiltering, setIsFiltering] = useState(false)

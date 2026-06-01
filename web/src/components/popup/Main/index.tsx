@@ -26,12 +26,11 @@ export default function MainPopup() {
 
   const sessionUser = useGlobalStore((state: GlobalState) => state.sessionUser);
   const popupPage: MainPopupPage = useGlobalStore((state: GlobalState) => state.homeInfo.mainPopupPage)
-  const currentButton = useGlobalStore((state: GlobalState) => state.explore.currentButton)
   const mainPopupUserProfile = useGlobalStore((state: GlobalState) => state.homeInfo.mainPopupUserProfile)
   const mainPopupButton = useGlobalStore((state: GlobalState) => state.homeInfo.mainPopupButton)
   const isMobile = useIsMobile()
 
-  useReplaceUrl(mainPopupUserProfile, mainPopupButton, popupPage, currentButton)
+  useReplaceUrl(mainPopupUserProfile, mainPopupButton, popupPage)
   return (
     <>
       <OnlyGuest sessionUser={sessionUser}>
@@ -103,13 +102,13 @@ export default function MainPopup() {
           <ShowProfile userProfile={mainPopupUserProfile} sessionUser={sessionUser} />
         </Picker>
       )}
-      {mainPopupButton && (pageName != 'Activity' || isMobile) && (
+      {(mainPopupButton) && (
         <Picker
           headerText={null}
-          closeAction={() => {if(pageName != 'Activity') {store.emit(new SetMainPopupCurrentButton(null));} closePopup() }}
+          closeAction={() => {store.emit(new SetMainPopupCurrentButton(null)); closePopup() }}
           extraClass={'picker__content--nopadding'}
         >
-          <ButtonShow button={currentButton} />
+          <ButtonShow button={mainPopupButton} />
         </Picker>
       )}
     </>
@@ -117,7 +116,7 @@ export default function MainPopup() {
 }
 
 
-function useReplaceUrl(mainPopupUserProfile, mainPopupButton, popupPage, currentButton) {
+function useReplaceUrl(mainPopupUserProfile, mainPopupButton, popupPage) {
   useEffect(() => {
     if (mainPopupUserProfile) {
       replaceUrl(`/p/${mainPopupUserProfile.username}`);
@@ -127,7 +126,7 @@ function useReplaceUrl(mainPopupUserProfile, mainPopupButton, popupPage, current
 
   useEffect(() => {
     if (mainPopupButton) {
-      replaceUrl(`/Show/${currentButton?.id}`);
+      replaceUrl(`/Show/${mainPopupButton?.id}`);
     }
   }, [mainPopupButton])
 

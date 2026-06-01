@@ -32,6 +32,7 @@ $card-button-list-status-height: 10px;
   line-height: $text-line-height-small;
   justify-content: space-between;
   border-radius: $border-radius-semicircle;
+  overflow: hidden;
 
   .hashtag {
     cursor: none;
@@ -79,12 +80,12 @@ $card-button-list-status-height: 10px;
 
 .card-button-list:hover {
   cursor: pointer;
-  box-shadow: $box-shadow-divs;
 
   & .card-button-list__status::before {
     transition: $transition-default-slow;
     width: 20%;
   }
+
 }
 
 .card-button-list__content {
@@ -146,16 +147,13 @@ $card-button-list-status-height: 10px;
 }
 
 .card-button-list__submenu {
-  background: transparent url('../../../public/assets/svg/icons/down.svg') center no-repeat;
-  background-size: 100%;
   height: 100%;
   position: relative;
-  text-indent: -9999999px;
   width: 18px;
 }
 
 .card-button-list__title {
-  font-size: $font-size-medium;
+  font-size: $font-size-big;
   line-height: auto;
   margin-bottom: 0;
   font-weight: $font-weight-bolder;
@@ -314,12 +312,6 @@ $card-button-list-status-height: 10px;
   display: inline-block;
 }
 
-.card-button-list__city:before,
-.card-button-list__city:before,
-.card-button-list__date:before {
-  background: transparent url('../../../public/assets/svg/icons/time_black.svg') left center no-repeat;
-  background-size: 100% auto;
-}
 
 .card-button-list__geoDate {
   display: flex;
