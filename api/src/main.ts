@@ -15,7 +15,7 @@ import {
 } from './shared/middlewares/errors/validation-filter.middleware';
 import configs from './config/configuration';
 import { GlobalVarHelper } from './shared/helpers/global-var.helper';
-import { checkDatabase } from './shared/helpers/config.helper';
+import { checkDatabase, checkMigrations } from './shared/helpers/config.helper';
 import { CallHandler, ExecutionContext, Injectable, PlainLiteralObject } from '@nestjs/common';
 import { map, Observable } from 'rxjs';
 import { Role } from './shared/types/roles';
@@ -29,7 +29,7 @@ export class RolesSerializerInterceptor extends ClassSerializerInterceptor {
     context: ExecutionContext,
     next: CallHandler
   ): Observable<any> {
-    const userRole  = context.switchToHttp().getRequest().user?.role ?? Role.guest;
+    const userRole = context.switchToHttp().getRequest().user?.role ?? Role.guest;
     let requiredRoles = this.reflector.getAllAndOverride(
       'roles',
       [context.getHandler(), context.getClass()],
@@ -39,10 +39,9 @@ export class RolesSerializerInterceptor extends ClassSerializerInterceptor {
       ...this.defaultOptions,
       ...contextOptions,
     };
-    if(userRole == Role.admin)
-    {
+    if (userRole == Role.admin) {
       return next
-      .handle()
+        .handle()
     }
     return next
       .handle()
@@ -58,58 +57,6 @@ export const bootstrap = async () => {
    * README: Calling initializeTransactionalContext and or patchTypeORMRepositoryWithBaseRepository must happen BEFORE any application context is initialized!
    */
   initializeTransactionalContext();
-
-  // check if .env exists... else give an api call anywayz
-  var path = require('path');
-
-  console.log('Using configurations: ');
-  console.log(configs());
-
-  const app = await NestFactory.create(AppModule);
-  
-  // Enable CORS with proper configuration
-  app.enableCors({
-    origin: configs().WEB_URL || true, // Allow configured origin or any in development
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'X-Requested-With'],
-    exposedHeaders: ['Content-Disposition'],
-    credentials: true,
-    maxAge: 86400, // 24 hours preflight cache
-  });
-  
-  app.use(function(req, res, next) {
-    res.setHeader("Content-Security-Policy", `script-src 'self' ${configs().WEB_URL || 'self'}`);
-    return next();
-  });
-  app.use(bodyParser.json({ limit: '99mb' }));
-  app.use(bodyParser.urlencoded({ limit: '99mb', extended: true }));
-  app.use(
-    helmet({
-      contentSecurityPolicy: {
-        directives: {
-          "script-src": ["'self'", configs().WEB_URL],
-        },
-      },
-    }),
-  );
-  app.useGlobalInterceptors(new RolesSerializerInterceptor(
-    app.get(Reflector))
-  );
-  app.useGlobalFilters(new HttpExceptionFilter());
-  // validation filters
-  app.useGlobalFilters(new ValidationFilter());
-  app.useGlobalPipes(
-    new ValidationPipe({
-      transform: true,
-      exceptionFactory: (errors: ValidationError[]) => {
-        const errMsg = {};
-        errors.forEach((err) => {
-          errMsg[err.property] = [...Object.values(err.constraints)];
-        });
-        return new ValidationException(errMsg);
-      },
-    }),
-  );
 
   const nodemailer = require('nodemailer');
 
@@ -147,7 +94,58 @@ export const bootstrap = async () => {
       console.log(err);
       throw Error("Can't connect to database");
     });
-  
+
+  await checkMigrations(configs())
+    .then(() => console.log('Migrations check passed!'))
+    .catch((err) => {
+      throw Error("Migrations not up to date");
+    });
+
+  const app = await NestFactory.create(AppModule);
+
+  // Enable CORS with proper configuration
+  app.enableCors({
+    origin: configs().WEB_URL || true, // Allow configured origin or any in development
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'X-Requested-With'],
+    exposedHeaders: ['Content-Disposition'],
+    credentials: true,
+    maxAge: 86400, // 24 hours preflight cache
+  });
+
+  app.use(function (req, res, next) {
+    res.setHeader("Content-Security-Policy", `script-src 'self' ${configs().WEB_URL || 'self'}`);
+    return next();
+  });
+  app.use(bodyParser.json({ limit: '99mb' }));
+  app.use(bodyParser.urlencoded({ limit: '99mb', extended: true }));
+  app.use(
+    helmet({
+      contentSecurityPolicy: {
+        directives: {
+          "script-src": ["'self'", configs().WEB_URL],
+        },
+      },
+    }),
+  );
+  app.useGlobalInterceptors(new RolesSerializerInterceptor(
+    app.get(Reflector))
+  );
+  app.useGlobalFilters(new HttpExceptionFilter());
+  // validation filters
+  app.useGlobalFilters(new ValidationFilter());
+  app.useGlobalPipes(
+    new ValidationPipe({
+      transform: true,
+      exceptionFactory: (errors: ValidationError[]) => {
+        const errMsg = {};
+        errors.forEach((err) => {
+          errMsg[err.property] = [...Object.values(err.constraints)];
+        });
+        return new ValidationException(errMsg);
+      },
+    }),
+  );
   const title = 'Helpbuttons API documentation'
   const version = require('./version.json').version
   const config = new DocumentBuilder()
@@ -162,7 +160,7 @@ export const bootstrap = async () => {
     .build();
 
   const document = SwaggerModule.createDocument(app, config, { ignoreGlobalPrefix: true });
-  SwaggerModule.setup('/', app, document, { customSiteTitle: title});
+  SwaggerModule.setup('/', app, document, { customSiteTitle: title });
   await app.listen('3001');
 };
 
