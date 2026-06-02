@@ -29,7 +29,7 @@ export default function Error({ metadata }) {
   );
 }
 
-function ErrorPopup({ errorCustomRaw = null }) {
+export function ErrorPopup({ errorCustomRaw = null }) {
   const selectedNetwork = useGlobalStore(
     (state: GlobalState) => state.networks.selectedNetwork,
   );
@@ -46,7 +46,7 @@ function ErrorPopup({ errorCustomRaw = null }) {
       </div>
       {errorCustomRaw && <code>{errorCustomRaw}</code>}
       <div className="homeinfo__description">
-        {t('homeinfo.adminInstructions')}
+        {selectedNetwork?.administrator?.length > 0 && t('homeinfo.adminInstructions')}
         <div className="homeinfo__users">
           <LinkAdmins/>
         </div>

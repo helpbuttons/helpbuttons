@@ -35,6 +35,7 @@ import { MainPopupPage, SetMainPopup, SetPageName } from 'state/HomeInfo';
 import { localStorageService, LocalStorageVars } from 'services/LocalStorage';
 import { usePoolFindNewActivities } from 'state/Activity';
 import { ResetFilters } from 'state/Explore';
+import { ErrorPopup } from './Error';
 
 export default appWithTranslation(MyApp);
 
@@ -63,7 +64,7 @@ function MyApp({ Component, pageProps }) {
       alertService.error(
         `Error: Backend not found, something went terribly wrong.`,
       );
-      router.push('/Error');
+      setFetchingNetworkError(() => true)
     }
     dconsole.log(error);
     return;
@@ -86,14 +87,14 @@ function MyApp({ Component, pageProps }) {
   const onFetchingNetworkError = (error) => {
     if (error == 'network-not-found') {
       alertService.error(t('networkNotFound'))
-      setFetchingNetworkError(true)
+      setFetchingNetworkError(() => true)
     }
 
     if (error == 'nobackend') {
       alertService.error(
-        `Error: Backend not found, something went terribly wrong.`,
+        `Error: Backend not foundddd, something went terribly wrong.`,
       );
-      router.push('/Error');
+      setFetchingNetworkError(() => true)
     }
     dconsole.log(error);
     return;
@@ -312,6 +313,9 @@ function MyApp({ Component, pageProps }) {
           </>
         );
       } else {
+        if(fetchingNetworkError){
+          return <ErrorPopup/>
+        }
         return <><Loading /></>;
       }
 
