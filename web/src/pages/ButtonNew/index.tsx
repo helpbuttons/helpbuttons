@@ -46,6 +46,9 @@ export const onButtonValidationError = (err, setError) => {
   } else if (err.errorName == ErrorName.validationError) {
     alertService.error(err.caption);
   } else {
+    if(err.caption){
+      alertService.error(err.caption);
+    }
     console.error(JSON.stringify(err))
   }
 };

@@ -2,6 +2,8 @@ import {
   Injectable,
   BadRequestException,
   UnsupportedMediaTypeException,
+  HttpException,
+  HttpStatus,
 } from '@nestjs/common';
 
 import { InjectRepository } from '@nestjs/typeorm';
@@ -87,14 +89,22 @@ export class StorageService {
     // Validate file size against MAX_UPLOAD_SIZE
     const maxSizeBytes = getMaxUploadSizeBytes();
     if (maxSizeBytes > 0 && file.size > maxSizeBytes) {
-      throw new BadRequestException(`File size exceeds maximum allowed size of ${configs().maxUploadSize}`);
+      // throw new BadRequestException(`File size exceeds maximum allowed size of ${configs().maxUploadSize}`);
+      throw new HttpException(
+        { message: `File size exceeds maximum allowed size of ${configs().maxUploadSize}`},
+        HttpStatus.BAD_REQUEST,
+      );
     }
 
     // Validate mimetype
     if (!this.validateImageMimetype(file.mimetype)) {
-      throw new CustomHttpException(
-        ErrorName.InvalidMimetype,
+      throw new HttpException(
+        { message: ErrorName.InvalidMimetype},
+        HttpStatus.BAD_REQUEST,
       );
+      // throw new CustomHttpException(
+      //   ErrorName.InvalidMimetype,
+      // );
     }
     // Generate unique filename with converted extension
     const outputFormat = options.format || imageOutputFormat;
@@ -110,7 +120,10 @@ export class StorageService {
         // Disk storage: copy file from path
         await fs.promises.copyFile(file.path, tempPath);
       } else {
-        throw new BadRequestException('No file data available');
+        throw new HttpException(
+          { message: 'No file data available'},
+          HttpStatus.BAD_REQUEST,
+        );
       }
 
       // Convert to web standard format
@@ -141,7 +154,12 @@ export class StorageService {
       try {
         await fs.promises.unlink(tempPath).catch(() => {});
       } catch {}
-      
+      console.error(error)
+      throw new HttpException(
+        { message: `Failed to process image: ${error.message}`},
+        HttpStatus.BAD_REQUEST,
+      );
+
       if (error instanceof UnsupportedMediaTypeException) {
         throw error;
       }
@@ -163,7 +181,11 @@ export class StorageService {
     // Validate file size against MAX_UPLOAD_SIZE
     const maxSizeBytes = getMaxUploadSizeBytes();
     if (maxSizeBytes > 0 && file.size > maxSizeBytes) {
-      throw new BadRequestException(`File size exceeds maximum allowed size of ${configs().maxUploadSize}`);
+      // throw new BadRequestException(`File size exceeds maximum allowed size of ${configs().maxUploadSize}`);
+      throw new HttpException(
+        { message: `File size exceeds maximum allowed size of ${configs().maxUploadSize}`},
+        HttpStatus.BAD_REQUEST,
+      );
     }
 
     const ext = getFileExtension(file.originalname);
@@ -171,22 +193,34 @@ export class StorageService {
     const isVideo = allowedVideoExtensions.includes(ext);
 
     if (!isImage && !isVideo) {
-      throw new UnsupportedMediaTypeException(
-        `Invalid file type. Allowed images: ${allowedImageExtensions.join(', ')}. Allowed videos: ${allowedVideoExtensions.join(', ')}`
+      // throw new UnsupportedMediaTypeException(
+      //   `Invalid file type. Allowed images: ${allowedImageExtensions.join(', ')}. Allowed videos: ${allowedVideoExtensions.join(', ')}`
+      // );
+      throw new HttpException(
+        { message: `Invalid file type. Allowed images: ${allowedImageExtensions.join(', ')}. Allowed videos: ${allowedVideoExtensions.join(', ')}`},
+        HttpStatus.BAD_REQUEST,
       );
     }
 
     // Validate mimetype matches extension
     if (isImage && !this.validateImageMimetype(file.mimetype)) {
-      throw new UnsupportedMediaTypeException(
-        `Invalid image mimetype. Allowed: ${allowedImageTypes.join(', ')}`
+      // throw new UnsupportedMediaTypeException(
+      //   `Invalid image mimetype. Allowed: ${allowedImageTypes.join(', ')}`
+      // );
+      throw new HttpException(
+        { message: `Invalid video mimetype. Allowed: ${allowedImageTypes.join(', ')}`},
+        HttpStatus.BAD_REQUEST,
       );
     }
 
     if (isVideo && !this.validateVideoMimetype(file.mimetype)) {
-      throw new UnsupportedMediaTypeException(
-        `Invalid video mimetype. Allowed: ${allowedVideoTypes.join(', ')}`
+      throw new HttpException(
+        { message: `Invalid video mimetype. Allowed: ${allowedVideoTypes.join(', ')}`},
+        HttpStatus.BAD_REQUEST,
       );
+      // throw new UnsupportedMediaTypeException(
+      //   `Invalid video mimetype. Allowed: ${allowedVideoTypes.join(', ')}`
+      // );
     }
 
     // Generate unique filename preserving original extension
@@ -214,8 +248,10 @@ export class StorageService {
       try {
         await fs.promises.unlink(outputPath).catch(() => {});
       } catch {}
-      
-      throw new BadRequestException(`Failed to upload media: ${error.message}`);
+      throw new HttpException(
+        { message: `Failed to upload media: ${error.message}` },
+        HttpStatus.BAD_REQUEST,
+      );
     }
   }
 
