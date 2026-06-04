@@ -4,6 +4,8 @@ import { encode } from "html-entities";
 import t from "i18n";
 import { FilterByNumber } from "components/search/AdvancedFilters/filter-by-number";
 import { defaultButtonsForEmbbed } from "components/search/AdvancedFilters/filters.type";
+import { store } from "state";
+import { alertService } from "services/Alert";
 
 export const getIframe = (nrButtons) => {
   return `<iframe src="${getShareLink(
@@ -19,12 +21,13 @@ export function ShareEmbbedForm() {
       setIframeCode(() => getIframe(nrButtons));
     }, [nrButtons]);
     return (
+      <>
+      <div className="form__explain">{t('share.shareExplain')}</div>
+
       <div className="form__field">
-        <div className="form__label">Embbed</div>
-        <div className="form__explain">{t('share.shareExplain')}</div>
         <FilterByNumber number={nrButtons} setNumber={setNrButtons} label={nrButtons} max={15}/>
         <div className="_iframe__code">
-          <div className="__iframe__code-box">
+        <div className="__iframe__code-box">
             <pre>
               <code
                 dangerouslySetInnerHTML={{ __html: encode(iframeCode) }}
@@ -34,6 +37,7 @@ export function ShareEmbbedForm() {
           <code dangerouslySetInnerHTML={{ __html: iframeCode }} />
         </div>
       </div>
+      </>
     );
   }
   

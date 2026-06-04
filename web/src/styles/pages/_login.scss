@@ -1,23 +1,4 @@
-.login {
-
-  height: 100%;
-
-  &__container {
-
-    height: 100vh;
-    min-height: 100vh;
-
-  }
-
-  &__header {
-
-    position: fixed;
-    width: 100%;
-    top: 0;
-    z-index: 1;
-  }
-
-}
+@use '../variables' as *;
 
 .login__form {
 
@@ -25,7 +6,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  height: 100%;
+  height: auto;
 
   .form__inputs-wrapper {
 
@@ -40,7 +21,4 @@
 
   }
 
-  .from__btn-register button{
-    text-transform: uppercase;
-  }
 }

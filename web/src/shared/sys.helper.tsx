@@ -1,18 +1,16 @@
 import { pathToRegexp } from 'path-to-regexp';
 import { allowedPathsPerRole } from './pagesRoles';
 import { Role } from './types/roles';
-import getConfig from 'next/config';
-import { localesFiles } from 'i18n/availableLocales';
 
 export const logoImageUri = '/network/logo/'; // [16, 32, 48, 72, 96, 144, 168, 180, 192]
 export let locale = 'en';
 
 export function setLocale(_locale) {
   locale = _locale;
+  setLocaleCookie(_locale)
 }
 export function getShareLink(link) {
-  const locale = (getLocale() == 'en' )? '' : `/${getLocale()}`
-  return `${getUrlOrigin()}${locale}${link}`;
+  return `${getUrlOrigin()}${link}`;
 }
 export function getHostname() {
   return window.location.hostname;
@@ -26,44 +24,28 @@ export function getHref() {
   return window.location.href;
 }
 
-export function getLocaleFromUrl()
-{
+export function getLocaleFromCookie(): string | null {
   try {
-    const splitHref = getHref().split('/');
-
-    const availableLocales = localesFiles.map(({ locale }) => locale);
-
-    if (
-      splitHref &&
-      splitHref.length > 2 &&
-      availableLocales.includes(splitHref[3])
-    ) {
-      return splitHref[3];
-    }
+    console.log(document.cookie)
+    const match = document.cookie.match(/locale=([^;]+)/);
+    return match ? match[1] : null;
   } catch (err) {
+    console.log(err)
     return null;
   }
 }
-export function getLocale() {
-  return locale;
+export function setLocaleCookie(locale: string, days = 365): void {
+  try {
+    const expires = new Date();
+    expires.setTime(expires.getTime() + days * 24 * 60 * 60 * 1000);
+    document.cookie = `locale=${locale};expires=${expires.toUTCString()};path=/`;
+  } catch (err) {
+    console.log(err)
+  }
 }
 
-export function makeImageUrl(image) {
-  const { publicRuntimeConfig } = getConfig()
-
-  if (!image) {
-    return `${publicRuntimeConfig.apiUrl}/networks/logo/192`;
-  }
-  const regex = /^data\:image/gm;
-  const matches = image.match(regex);
-  if (!matches) {
-    const regexHref = /^(http|https)/gm;
-    if (image.match(regexHref)) {
-      return image;
-    }
-    return `${publicRuntimeConfig.apiUrl}${image}`;
-  }
-  return image;
+export function getLocale() {
+  return locale
 }
 
 export function isRoleAllowed(role: Role, path): boolean {
@@ -179,3 +161,11 @@ export const getEmailPrefix = (email) => {
   
   );
 };
+
+export const stringContains = (str1, str2) => {
+  if (!str1 || !str2) return false;
+  if (str1.toLowerCase().includes(str2.toLowerCase())) {
+    return true;
+  }
+  return false;
+}

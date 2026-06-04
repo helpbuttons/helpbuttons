@@ -13,8 +13,10 @@ import {
   Text,
   View,
   StyleSheet,
+  Svg,
+  Path,
 } from '@react-pdf/renderer';
-import { getShareLink, makeImageUrl } from 'shared/sys.helper';
+import { makeImageUrl } from 'shared/helpers/images.helper';
 import { useButtonTypes } from 'shared/buttonTypes';
 import AdvancedFilters from 'components/search/AdvancedFilters';
 import {
@@ -36,6 +38,7 @@ import Loading from 'components/loading';
 import { FilterByDays } from 'components/search/AdvancedFilters/filter-by-days';
 import Popup from 'components/popup/Popup';
 import { PdfIframe, usePdfGenerateBlob } from '../pdf';
+import { getShareLink } from 'shared/sys.helper';
 
 export default function ShareBulletinForm() {
   const [bulletinButtons, setBulletinButtons] = useState(null);
@@ -164,11 +167,11 @@ export default function ShareBulletinForm() {
     store.emit(new UpdateFilters({ ...filters, days }));
   };
 
-  
-
   return (
-    <>
-        {t('bulletin.explainBulletin')}
+    <>  
+        <div className='form__explain'>
+          {t('bulletin.explainBulletin')}
+        </div>
         <div>
           <FilterByDays days={days} setDays={(days) => {setDays(days);  updateDays(days);}} />
           <PdfIframe
@@ -248,10 +251,11 @@ const ButtonRows = ({ buttons, buttonTypes }) => {
       borderTopColor: '#3778C2',
       borderTopWidth: 3,
       alignItems: 'center',
-      paddingVertical: 10,
+      paddingVertical: 0,
       width: '100%',
       maxWidth: '100%',
       fontStyle: 'bold',
+      padding:0,
     },
     tableContainer: {
       flexDirection: 'column',
@@ -343,8 +347,14 @@ const ButtonRows = ({ buttons, buttonTypes }) => {
 //     </>
 //   );
 // };
+const truncate = (text: string, maxChars: number) => {
+  if (!text || text.length <= maxChars) return text;
+  return text.substring(0, maxChars) + '…';
+};
+
 const ButtonRow = ({ button, buttonType }) => {
   const rowColor = buttonType.cssColor;
+
   const styles = StyleSheet.create({
     image: {
       width: '80px',
@@ -357,59 +367,69 @@ const ButtonRow = ({ button, buttonType }) => {
       justifyContent: 'center',
       alignItems: 'center',
       marginRight: '10px',
+      margin: 'auto',
     },
     button_type: {
       color: rowColor,
       fontWeight: 'bold',
       fontSize: 10,
+      marginTop: 0,
     },
     title: {
-      fontWeight: 'bold',
+      fontWeight: 8,
       fontSize: 16,
       marginBottom: 4,
-      textOverflow: 'ellipsis',
-      display: 'flex',
-      flexWrap: 'nowrap',
+      marginTop: 1,
+      maxWidth: '340',
     },
-    row: {
+    textGroup: {
       flexDirection: 'column',
       justifyContent: 'center',
-      textOverflow: 'ellipsis',
-      maxWidth: '300px',
-      overflow: 'hidden',
-      overflowWrap: 'nowrap',
-      flexGrow: 1,  // Ensures this section takes up available space
-      flexBasis: 'auto',
-      paddingRight: '10px',
-      maxHeight: '75px',
+      flexGrow: 1,
+      flexShrink: 1,
+      minWidth: 0,
+      paddingLeft: 10,
     },
     description: {
       fontSize: 12,
       color: 'gray',
+      maxWidth: '340',
     },
     place: {
       fontSize: 12,
-      marginTop: 4,
+      marginTop: 'auto',
     },
     qrcode: {
-      width: '80px',
-      height: '80px',
-      marginLeft: '10px',
+      width: 80,
+      height: 80,
+      minWidth: 80,
+      flexShrink: 0,
+      marginLeft: 10,
     },
     date: {
       fontSize: 12,
-      marginTop: 4,
+      marginBottom: 0,
     },
     container: {
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',  // Spreads elements evenly
-      borderBottomColor: '#3778C2',
-      borderBottomWidth: 1,
-      paddingVertical: 2,
+      borderWidth: 0.5,
+      borderTop: 'none',
+      borderColor: 'gray',
+      padding: 10,
       paddingHorizontal: '10px',
       width: '100%',  // Ensures container takes up full width
       flexWrap: 'nowrap',  // Prevents wrapping
+    },
+      phoneContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    },
+    phoneIcon: {
+      width: 12,
+      height: 12,
+      marginRight: 4,
     },
   });
 
@@ -420,13 +440,28 @@ const ButtonRow = ({ button, buttonType }) => {
           <View style={styles.imageWrapper}>
             <Image style={styles.image} src={makeImageUrl(button.image)} />
           </View>
-          <View style={styles.row}>
+          <View style={styles.textGroup}>
             <Text style={styles.button_type}>{buttonType.caption}</Text>
-            <Text style={styles.title}>{button.title}</Text>
+            <Text style={styles.title}>{truncate(button.title, 90)}</Text>
+            <Text style={styles.description}>{truncate(button.description, 120)}</Text>
             <Text style={styles.place}>{button.address}</Text>
-            <Text style={styles.date}>
-              {readableDate(button.created_at)} - {readableTime(button.created_at)}
-            </Text>
+             <Text style={styles.date}>
+                 {button.eventStart && (readableDate(button.eventStart))} {button.eventStart && (readableTime(button.eventStart))} {button.eventEnd && (" - " + readableDate(button.eventEnd))} {button.eventEnd && (" " + readableTime(button.eventEnd))}{'  '}
+              </Text>
+              <View style={styles.phoneContainer}>
+
+                  {button.owner?.phone && (
+                    <>
+                      <Svg style={styles.phoneIcon} viewBox="0 0 24 24">
+                        <Path 
+                          fill="#000000"
+                          d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"
+                        />
+                      </Svg>
+                      <Text style={styles.date}>{button.owner.phone}</Text>
+                    </>
+                  )}
+              </View>
           </View>
           <Image style={styles.qrcode} src={button.qrcode} />
         </View>

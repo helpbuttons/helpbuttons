@@ -11,17 +11,20 @@ import { RequestNewLoginToken } from 'state/Profile';
 import { alertService } from 'services/Alert';
 import { useRouter } from 'next/router';
 import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
+import { useIsSetup } from 'pages/_app';
 
 export default function LoginClick() {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm();
   const [errorMsg, setErrorMsg] = useState(undefined);
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const router = useRouter()
   const onSubmit = (data) => {
+    setIsSubmitting(() => true)
     store.emit(
       new RequestNewLoginToken(
         data.email,
@@ -37,6 +40,7 @@ export default function LoginClick() {
     );
   };
 
+  const isSetup = useIsSetup();
   const [params, setParams] = useState([])
   useEffect(() => {
     if(!router.isReady)
@@ -46,17 +50,19 @@ export default function LoginClick() {
     setParams(() => new URLSearchParams(router.query))
   },[router.isReady])
 
+  
+  
   return (
     <>
         <Form
           onSubmit={handleSubmit(onSubmit)}
-          classNameExtra="login"
+          classNameExtra="login__form"
         > 
-          <div className="login__form">
             <div className="form__inputs-wrapper">
               <FieldText
                 name="email"
-                label={t('user.email')}
+                label={t('user.emailRecovery')}
+                explain={t('user.emailRecoveryExplain')}
                 classNameInput="squared"
                 placeholder={t('user.emailPlaceHolder')}
                 validationError={errors.email}
@@ -76,19 +82,17 @@ export default function LoginClick() {
                 contentAlignment={ContentAlignment.center}
                 isSubmitting={isSubmitting}
               />
-              <div className="popup__link">
-                <div onClick={() => store.emit(new SetMainPopup(MainPopupPage.LOGIN))} className={`nav-bottom__link`}>
-                  {t('user.loginWEmail')}
+              {!isSetup && <>
+                <div className="popup__link" onClick={() => store.emit(new SetMainPopup(MainPopupPage.LOGIN))}>
+                    {t('user.loginWEmail')}
                 </div>
-              </div>
-              <div className="popup__link">
-                <div onClick={() => store.emit(new SetMainPopup(MainPopupPage.SIGNUP))} className={`nav-bottom__link`}>
-                  {t('user.noAccount')}
+                <div className="popup__link" onClick={() => store.emit(new SetMainPopup(MainPopupPage.SIGNUP))}>
+                    {t('user.noAccount')}
                 </div>
-              </div>
+              </>}
             </div>
-          </div>
-        </Form>
+
+</Form>
     </>
   );
 }

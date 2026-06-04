@@ -22,6 +22,10 @@ export function MapTileSelector({ tileType, setMapTile }) {
       name: 'Watercolor',
       value: HbMapTiles.WATERCOLOR,
     },
+    {
+      name: 'Sattelite',
+      value: HbMapTiles.SATELLITE,
+    },
   ];
 
   return (

@@ -1,9 +1,13 @@
+@use '../variables' as *;
+
 $list-container-height: 300px;
 $list-drag-tab-height: 35px;
 $list-container-hide-height: calc($footer-height-mobile - $list-container-height);
 $list-order-tabs-bottom: calc($footer-height-mobile + $list-container-height);
 $list-container-hide-nohover-height: calc($footer-height-mobile - $list-container-height + 15px);
 $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-height - 40px);
+$list-content-height-full-screen-mobile: calc(var(--vh) - 220px );
+$list-content-height-mid-screen-mobile: calc(345px - $list-drag-tab-height);
 
 
 ///shouldd be the posts list
@@ -32,32 +36,6 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
 
 // }
 
-.list__show-map-button {
-
-  position: relative;
-  display: flex;
-  width: auto;
-  z-index: $z-index-04;  
-  // right: $padding-big;
-
- .btn--center {
-  // width: 80px;
-  padding: $padding-small;
-  margin: auto;
-
- }
-
-}
-
-.list__show-map-button--hideList {
-
-  bottom: 40px;
-  position: absolute;
-  right: 0;
-  padding-right: $padding-big;
-
-}
-
 .list__content {
 
   display: flex;
@@ -77,6 +55,10 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
   // flex-grow: 1;
   flex-basis: 100%;
   padding-right: $padding-xsmall;
+  padding-bottom: $padding-xxsmall;
+  padding-top: $padding-xsmall;
+  transition: $transition-default-slow;
+
 
 }
 
@@ -121,18 +103,31 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
   display: flex;
   justify-content: center;
   flex-direction: column;
-  // height: 100%;
+  height: auto;
   width: 100%;
   margin: auto;
   align-items: center;
   padding: $padding-big;
   font-size: $font-size-small;
+  grid-column: 1 / -1; 
+
+}
+
+.list__empty-message--img{
+
+
+  & svg {
+    height: 80px;
+    width: 80px;
+
+  }
 
 }
 
 .list__empty-message--prev{
 
  font-weight: $font-weight-bold;
+ text-align: center;
 
 }
 
@@ -142,9 +137,13 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
 
 }
 
-.list__empty-message--create{
+.list__empty-message--button {
 
-  width: 50%;
+  display: flex;
+  flex-direction: column;
+  max-width: 500px;
+  padding-top: $padding-medium;
+  gap: $margin-xsmall;
 
 }
 
@@ -194,15 +193,21 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
 
 }
 
-.list__order--hide {
-
-  background-color: $color-corporative;
-
-}
-
 @media #{$breakpoints-medium} {
-  .list__show-map-button--hideList {
-    bottom: 40px;
+
+  .list__empty-message{
+
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    height: 300px;
+    width: 100%;
+    margin: auto;
+    align-items: center;
+    padding: $padding-big;
+    font-size: $font-size-small;
+    grid-column: 1 / -1; 
+
   }
 
   .list__content--full-screen {
@@ -250,9 +255,8 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
   }
 
   .list__element {
-    width: 100%;
     flex-basis: 30%;
-    
+    flex: 0 1 50%; 
     min-width: $card-button-list-width;
   }
 
@@ -279,6 +283,7 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
     left: auto;
     border-radius: 0;
     padding: 0 0 ;
+    padding-left: $margin-small;
     
   }
 

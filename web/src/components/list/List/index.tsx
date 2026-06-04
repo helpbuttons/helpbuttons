@@ -7,7 +7,6 @@ import {
   IoMap,
   IoMapOutline,
 } from 'react-icons/io5';
-import ContentList from 'components/list/ContentList';
 import t from 'i18n';
 import { AdvancedFiltersSortDropDown } from 'components/search/AdvancedFilters';
 import { GlobalState, store } from 'state';
@@ -25,6 +24,9 @@ import { ShowDesktopOnly, ShowMobileOnly } from 'elements/SizeOnly';
 import { useButtonTypes } from 'shared/buttonTypes';
 import DraggableList from '../DraggableList';
 import { ButtonLinkType } from '../CardButtonList';
+import { ButtonList } from '../ContentList';
+import { useScrollDirection } from 'shared/custom.hooks';
+import { SetHideNavBottom } from 'state/HomeInfo';
 
 function List({
   onLeftColumnToggle,
@@ -33,6 +35,7 @@ function List({
   showMap,
   isListOpen,
   setListOpen,
+  onDragPos,
   toggleShowMap = (e) => {},
 }) {
   const filters = useStore(
@@ -53,7 +56,7 @@ function List({
 
   const hexagonClicked = useStore(
     store,
-    (state: GlobalState) => state.explore.settings.hexagonClicked,
+    (state: GlobalState) => state.explore.map.filters.hexClicked,
   );
 
   const showMapIcon = showMap ? <IoClose /> : <IoMapOutline />;
@@ -65,6 +68,13 @@ function List({
 
   const [isListFullScreen, setListFullScreen] =
   useState<boolean>(true);
+
+  const listContentRef = useRef<HTMLDivElement>(null);
+  const isScrollingUp = useScrollDirection(listContentRef)
+
+  useEffect(() => {
+    store.emit(new SetHideNavBottom(!isScrollingUp))
+  }, [isScrollingUp])
 // const [isListOpen, setListOpen] = useState<boolean>(true);
 
   useEffect(() => {
@@ -73,14 +83,14 @@ function List({
         toggleShowMap(true);
         onLeftColumnToggle(false);
         setListOpen(false);
-        setListFullScreen(false);
+        setListFullScreen(() => false);
         break;
       }
       case ExploreViewMode.LIST: {
         toggleShowMap(false);
         onLeftColumnToggle(true);
         setListOpen(true);
-        setListFullScreen(true);
+        setListFullScreen(() => true);
         break;
       }
       default:
@@ -88,7 +98,7 @@ function List({
         toggleShowMap(true);
         onLeftColumnToggle(true);
         setListOpen(true);
-        setListFullScreen(false);
+        setListFullScreen(() => false);
         break;
       }
     }
@@ -127,6 +137,8 @@ function List({
               isListFullScreen={isListFullScreen}
               setListOpen={setListOpen}
               viewMode={viewMode}
+              onDragPos={onDragPos} 
+              onScroll={undefined}
             >
               <div
                 className={
@@ -136,7 +148,7 @@ function List({
                     : '')
                 }
               >
-                <div className="drag-tab__line"></div>
+                {!isListFullScreen && <span className="drag-tab__line"></span>}
                 {isListOpen && (
                   <AdvancedFiltersSortDropDown
                     className={'dropdown__dropdown-trigger--list'}
@@ -159,12 +171,13 @@ function List({
                 )}
               </div>
               <div
+                ref={listContentRef}
                 className={
                   'list__content list__content--full-screen' 
                 }
               >
                 {buttonTypes?.length > 0 && (
-                  <ContentList
+                  <ButtonList
                     buttons={buttons}
                     buttonTypes={buttonTypes}
                     showMap={showMap}
@@ -200,44 +213,7 @@ function List({
                 />
               )}
 
-              {!showLeftColumn ? (
-                <div
-                  onClick={() =>
-                    store.emit(
-                      new UpdateExploreViewMode(ExploreViewMode.BOTH),
-                    )
-                  }
-                  className={
-                    'drag-tab ' +
-                    (showLeftColumn ? '' : 'drag-tab--open') +
-                    (showMap ? '' : 'drag-tab--hide')
-                  }
-                >
-                  <span className="drag-tab__line"></span>
-                  <div className="drag-tab__icon">
-                    <IoList />
-                  </div>
-                  {t('explore.showList')}
-                </div>
-              ) : (
-                <div
-                  onClick={() =>
-                    store.emit(
-                      new UpdateExploreViewMode(ExploreViewMode.MAP),
-                    )
-                  }
-                  className={
-                    'drag-tab ' +
-                    (showLeftColumn ? '' : 'drag-tab--open') +
-                    (showMap ? '' : 'drag-tab--hide')
-                  }
-                >
-                  <span className="drag-tab__line"></span>
-                  <div className="drag-tab__icon">
-                    <IoClose />
-                  </div>
-                </div>
-              )}
+ 
             </div>
             <div
               className={
@@ -248,7 +224,7 @@ function List({
               }
             >
               {buttonTypes?.length > 0 && (
-                <ContentList
+                <ButtonList
                   buttons={buttons}
                   buttonTypes={buttonTypes}
                   showMap={showMap}

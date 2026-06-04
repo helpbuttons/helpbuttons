@@ -1,6 +1,9 @@
 ///Btn is the project convention for tradittional buttons, in order to avoidd confussion with app's buttons
 import React from "react";
-import Spinner from "elements/Spinner";
+import router from "next/router";
+import Loading from "components/loading";
+import t from "i18n";
+import FieldError from "elements/Fields/FieldError";
 
 export enum BtnType {
     corporative,
@@ -87,6 +90,34 @@ function CaptionNode({
     } else {
         return <>{caption}</>;
     }
+}
+
+export function BtnSubmit({ isSubmitting, errors, caption, disabled = false }) {
+    return <>
+        <Btn
+            btnType={BtnType.submit}
+            contentAlignment={ContentAlignment.center}
+            caption={caption}
+            isSubmitting={isSubmitting}
+            submit={true}
+            disabled={disabled}
+        />
+
+        <div className="form__input-subtitle">
+            <div className="form__input-subtitle-side">
+                <label className="form__input-subtitle--error">
+                    {Object.keys(errors).length > 0 && <>
+
+                            {t('validation.invalidForm')}
+                            
+                        </>
+                    }
+                </label>
+            </div>
+
+        </div>
+
+    </>
 }
 
 export default function Btn({
@@ -182,7 +213,7 @@ export default function Btn({
         <button {...attr} onClick={onClick} disabled={disabled} className={className + ' ' + extraClass} 
         style={{'borderColor': borderColor} as React.CSSProperties}  
         >
-            {isSubmitting && <Spinner />}
+            {isSubmitting && <Loading />}
             <BtnIcon icon={iconLeft} iconLink={iconLink} 
             style={
                 {
@@ -210,17 +241,20 @@ export function BtnAction({ icon, onClick }) {
   );
 }
 
-export function BtnCaption({ caption, icon, onClick, color, selected }) {
+export function BtnCaption({ caption, icon, onClick, color, selected = false, disabled = false }) {
   const cssColor = (cssColor: string) => {
     return { '--button-color': cssColor } as React.CSSProperties;
   };
 
   return (
-    <span style={cssColor(color)} className={selected ? 'btn-filter-active' : ''}>
+    <span style={cssColor(color)}>
+        
       <Btn
         btnType={BtnType.filterEmoji}
         iconLeft={IconType.svg}
         iconLink={icon}
+        extraClass={selected? 'btn-filter--active' : ''}
+        disabled={disabled}
         caption={caption}
         onClick={onClick}
       />

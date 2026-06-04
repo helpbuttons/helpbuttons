@@ -14,18 +14,18 @@ export default function Explore({
 
     const router = useRouter();
     const { zoom, lat, lng } = router.query;
-    const loadedNewSettings = useRef(false);
+    const init = useRef(false)
     useEffect(() => {
-        if(loadedNewSettings.current == false){
+        if(!init.current){
             const _updateSettings: Partial<ExploreSettings> = {
                 center: [roundCoord(Number(lat)), roundCoord(Number(lng))],
                 zoom: Number(zoom),
             }
             store.emit(new ResetExploreSettings(_updateSettings));
-            loadedNewSettings.current = true;
+            init.current = true;
         }
         
-    }, [router]);
+    }, []);
     return <ExplorePage/>
 }
 

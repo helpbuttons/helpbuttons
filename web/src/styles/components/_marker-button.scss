@@ -1,3 +1,6 @@
+@use '../variables' as *;
+@use "sass:math";
+
 $marker-button-height: 50px;
 $marker-button-height-name: 20px;
 $marker-button-width-change: 25px;
@@ -6,8 +9,6 @@ $marker-button-radius: $border-radius-circle;
 $marker-button-line: 0.2rem;
 $marker-arrow-width: 2px;
 $marker-arrow-height: 5px;
-
-@use "sass:math";
 
 $cycle: 10;
 
@@ -21,7 +22,7 @@ $cycle: 10;
   margin-bottom: 0;
   position: absolute;
   transition: transform 0.3s ease;
-  cursor: grab;
+  cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: flex-end;
@@ -79,108 +80,6 @@ $cycle: 10;
 
 }
 
-.marker-button--grey {
-    opacity: 0.5;
-  }
-
-.marker-button--change {
-    &:before,
-    &:after {
-      content: "";
-      display: block;
-      width: $marker-button-width-change;
-      height: $marker-button-height;
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      margin: auto;
-      z-index: -1;
-    }
-    &:before {
-      left: 0;
-      background-color: $color-green;
-      border-bottom-left-radius: $marker-button-radius;
-      border-top-left-radius: $marker-button-radius;
-    }
-    &:after {
-      right: 0;
-      background-color: $color-red;
-      border-bottom-right-radius: $marker-button-radius;
-      border-top-right-radius: $marker-button-radius;
-    }
-
-    .marker-button__image {
-      border-color: transparent;
-
-    }
-    .marker-button__arrow {
-      &:after {
-        height: auto;
-        border-top-color: $color-green;
-      }
-    }
-  }
-
-.marker-button--swap {
-    &:before,
-    &:after {
-      content: "";
-      display: block;
-      width: 25px;
-      height: 50px;
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      margin: auto;
-      z-index: -1;
-    }
-    &:before {
-      left: 0;
-      background-color: $color-red;
-      border-bottom-left-radius: $marker-button-radius;
-      border-top-left-radius: $marker-button-radius;
-    }
-    &:after {
-      right: 0;
-      background-color: $color-green;
-      border-bottom-right-radius: $marker-button-radius;
-      border-top-right-radius: $marker-button-radius;
-    }
-
-    .marker-button__image {
-      border-color: transparent;
-    }
-    .marker-button__arrow {
-      &:after {
-        border-top-color: $color-red;
-      }
-    }
-  }
-
-
-.marker-button--create {
-    .marker-button__image {
-      border-color: $color-corporative;
-      background-color: $color-corporative;
-    }
-    .marker-button__arrow {
-      &:after {
-        border-top-color: $color-corporative;
-      }
-    }
-  }
-
-.marker-button--neutro {
-    .marker-button__image {
-      border-color: $color-black;
-      background-color: transparent;
-    }
-    .marker-button__arrow {
-      &:after {
-        border-top-color: $color-black;
-      }
-    }
-  }
 
 
 
@@ -210,47 +109,6 @@ $cycle: 10;
   }
 
 
-.marker-button__tracking_pos {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    margin: 0 auto;
-    border-top-color: $color-corporative;
-    border-color: $color-corporative;
-    background-color: $color-corporative;
-    &:after,
-    &:before {
-      content: "";
-      border-top-color: $color-green;
-      display: block;
-      height: 10px;
-      width: 5px;
-      border-top: 10px solid transparent;
-      border-right: 6px solid transparent;
-      border-left: 6px solid transparent;
-      position: absolute;
-      bottom: -9px;
-      right: 0;
-      left: 0;
-      margin: 0 auto;
-    }
-  }
-
-.marker-button--cluster {
-
-  .marker-button__image {
-    border-color: $color-corporative;
-    background-color: $color-corporative;
-  }
-  .marker-button__arrow {
-    &:after {
-      border-top-color: $color-corporative;
-    }
-  }
-
-}
-
 
 .marker-button__tags {
 
@@ -279,52 +137,20 @@ $cycle: 10;
 }
 
 
-.marker-button__tags--change {
-  .marker-button__link-tag {
-    &:before,
-    &:after {
-      content: "";
-      display: block;
-      width: 50%;
-      height: auto;
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      margin: auto;
-      z-index: -1;
-    }
-    &:before {
-      left: 0;
-      background-color: $color-green;
-      border-bottom-left-radius: 50px;
-      border-top-left-radius: 50px;
-    }
-    &:after {
-      right: 0;
-      background-color: $color-red;
-      border-bottom-right-radius: 50px;
-      border-top-right-radius: 50px;
-    }
 
-    .marker-button__image {
-      border-color: transparent;
-    }
-    .marker-button__arrow {
-      &:after {
-        border-top-color: $color-green;
-      }
-    }
-  }
+.marker-button__wrapper:hover {
+
+  position: relative;
+
+
 }
 
-.marker-button__tags--yellow {
-  .marker-button__link-tag {
-    color: $color-black;
-    background: $color-corporative;
-  }
+.marker-button__wrapper:hover {
+
+  z-index: $z-index-02;
+
+
 }
-
-
 
 .marker-button-selector{
   .marker-button__link-tag {
@@ -344,6 +170,8 @@ $cycle: 10;
     }
   }
 }
+
+
 
 .marker-button__image--fix {
 
@@ -370,7 +198,7 @@ $cycle: 10;
 }
 
 
-.marker-button__link-tag {
+.marker-button__link-tag, .marker-key-spot {
 
   bottom: 102%;
   min-height: 20px;
@@ -385,7 +213,7 @@ $cycle: 10;
   word-wrap: normal;
   word-break: keep-all;
   hyphens: auto;
-  font-size: $font-size-general;
+  font-size: $font-size-medium;
   font-weight: $font-weight-bold;
   padding: $padding-small $padding-medium;
   opacity: 0;
@@ -400,3 +228,49 @@ $cycle: 10;
 
 }
 
+
+.marker-key-location__name {
+
+  background-color: $color-white;
+  padding: $padding-small;
+  border-radius: $border-radius-circle;
+  color: $color-black;
+  font-size: $font-size-small;
+  font-weight: $font-weight-bold;
+
+  max-width: 6ch;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  transition: max-width 0.35s ease;
+
+  &:hover,
+  &:focus,
+  &:active {
+    max-width: 30ch;
+    text-overflow: clip;
+  }
+
+}
+
+.marker-key-location__arrow::after {
+ border-top: 10px solid $color-white;
+ color: $color-white;
+}
+
+.marker-key-location {
+
+  overflow-x: auto;
+  overflow-y: auto;
+  position: absolute;
+  max-width: fit-content;
+  white-space: nowrap;
+  justify-content: center;
+  width: fit-content;
+  height: auto;
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  max-height: 50px;
+
+}

@@ -9,6 +9,7 @@ import { Activities, activitiesInitialState } from './Activity';
 import { MetadataState, metadataInitialState } from './Metadata';
 import { CacheValue } from './Cache';
 import { Store, useRef } from '../store/Store';
+import { Button } from 'shared/entities/button.entity';
 
 // -- estado global --
 export interface GlobalState {
@@ -25,6 +26,7 @@ export interface GlobalState {
   metadata: MetadataState;
   cacheValues: CacheValue[];
   signupTags: string[];
+  myButtons: Button[];
   // newNotifications: NewNotification[]
 }
 
@@ -48,7 +50,8 @@ export const store = new Store<GlobalState>({
   activities: activitiesInitialState,
   metadata: metadataInitialState,
   cacheValues: [],
-  signupTags: []
+  signupTags: [],
+  myButtons: []
 });
 
 export function useGlobalStore(localState) {

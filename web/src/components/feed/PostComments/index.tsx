@@ -20,7 +20,7 @@ import {
 import { readableTimeLeftToDate } from 'shared/date.utils';
 import ImageWrapper, { ImageType } from 'elements/ImageWrapper';
 import { PrivacyType } from 'shared/types/privacy.enum';
-import { formatMessage } from 'elements/Message';
+import { FormatMessage } from 'elements/Message';
 import { uniqueArray } from 'shared/sys.helper';
 import { Compose } from 'layouts/Feed';
 import { useEffect, useRef, useState } from 'react';
@@ -30,6 +30,7 @@ import { mentionsOfMessage } from 'shared/types/message.helper';
 import { ImageGallery } from 'elements/ImageGallery';
 import Link from 'next/link';
 import { FindAndSetMainPopupCurrentProfile } from 'state/HomeInfo';
+import { useFocusOn } from 'shared/helpers/scroll.helper';
 
 export default function PostComments({
   comments,
@@ -101,25 +102,11 @@ export function PostComment({
       setShowComposeComment(() => ComposeCommentState.HIDE);
     }
   };
-
-  const [focus, setFocus] = useState(false)
   const focusMessageId = useGlobalStore(
-    (state: GlobalState) => state.activities.focusMessageId,
-  );
-  useEffect(() => {
-    if(focusMessageId == comment.id){
-      setFocus(() => true)
-    }else{
-      setFocus(() => false)
-    }
-  }, [focusMessageId])
-
-  const alertRef = useRef(null);
-  useEffect(() => {
-    if (alertRef.current) {
-      alertRef.current.scrollIntoView({ behavior: 'smooth' });
-    }
-  }, [focus]); 
+      (state: GlobalState) => state.activities.focusMessageId,
+    );
+    const {ref, focus} = useFocusOn(focusMessageId, comment.id)
+  
   return (
     <>
     <div
@@ -129,10 +116,10 @@ export function PostComment({
           ? ' card-notification--comment-private'
           : '') +
         (isReply ? ' card-notification--reply' : '')
-        +( focus ? ' card-notification-comment-focus' : '')
+        +( focus ? ' card-notification-comment--focus' : '')
       }
     >
-      {focus && <div ref={alertRef}></div>}
+      <div ref={focus ? ref : null}></div>
       
       <Comment comment={comment} sessionUser={sessionUser}/>
       <div className={'message__actions ' + (sessionUser && (sessionUser.id == comment.author.id) ? ' ' : 'message__actions--you') }>
@@ -244,18 +231,19 @@ export function Comment({ comment, sessionUser }) {
                 </span>{' '}
                 {/* @{comment.author.username} */}
               </p>
+               <div className="message__hour">
+                {readableTimeLeftToDate(comment.created_at)}{' '}
+                {comment.privacy == PrivacyType.PRIVATE && (
+                  <span style={{ color: 'red' }}>private</span>
+                )}
+              </div>
             </div>
           </div>
           <div className="message__content">
-            {formatMessage(comment.message, comment.mentions)}
+            <FormatMessage text={comment.message}/>
           </div>
 
-          <div className="message__hour">
-            {readableTimeLeftToDate(comment.created_at)},{' '}
-            {comment.privacy == PrivacyType.PRIVATE && (
-              <span style={{ color: 'red' }}>private</span>
-            )}
-          </div>
+
 
           <div className="message__avatar">
           <Link href="#" onClick={onClick}>
@@ -271,7 +259,6 @@ export function Comment({ comment, sessionUser }) {
       }
       {isAuthor &&
         <div className="message message--others">
-
           <div className="message__header">
             <div className="message__user-name-container">
               <p className="message__author">
@@ -280,18 +267,19 @@ export function Comment({ comment, sessionUser }) {
                 </span>{' '}
                 {/* @{comment.author.username} */}
               </p>
+              <div className="message__hour">
+                {readableTimeLeftToDate(comment.created_at)}{' '}
+                {comment.privacy == PrivacyType.PRIVATE && (
+                  <span style={{ color: 'red' }}>private</span>
+                )}
+              </div>
             </div>
           </div>
           <div className="message__content">
-            {formatMessage(comment.message, comment.mentions)}
+            <FormatMessage text={comment.message}/>
           </div>
 
-          <div className="message__hour">
-            {readableTimeLeftToDate(comment.created_at)},{' '}
-            {comment.privacy == PrivacyType.PRIVATE && (
-              <span style={{ color: 'red' }}>private</span>
-            )}
-          </div>
+
           <div className="message__avatar">
           <Link href="#" onClick={onClick}>
             <ImageWrapper

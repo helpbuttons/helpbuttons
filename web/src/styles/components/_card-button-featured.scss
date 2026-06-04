@@ -1,3 +1,5 @@
+@use '../variables' as *;
+
 .card-button-featured {
     display: flex;
     flex-wrap: wrap;
@@ -8,7 +10,7 @@
   .card-button-featured__container {
     width: 48%;
     border: 1px solid #ccc;
-    border-radius: 8px;
+    border-radius: $border-radius-basic;
     /* padding: 10px; */
   }
   
@@ -63,7 +65,7 @@
   }
   
   .homeinfo-card__section2 {
-    border-radius: 8px;
+    border-radius: $border-radius-basic;
     background-color: transparent;
     padding: 5px;
     font-weight: 500;

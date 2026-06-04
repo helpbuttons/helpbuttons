@@ -1,7 +1,7 @@
 //Form component with the main fields for signup in the platform
 //imported from libraries
 import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
+import router, { useRouter } from 'next/router';
 import { GlobalState, store, useGlobalStore } from 'state';
 import Form from 'elements/Form';
 import NewUserFields from 'components/user/NewUserFields';
@@ -16,6 +16,8 @@ import { setMetadata } from 'services/ServerProps';
 import dconsole from 'shared/debugger';
 import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
 import HomeInfo from 'pages/HomeInfo';
+import { Scanner } from '@yudiel/react-qr-scanner';
+import FieldText from 'elements/Fields/FieldText';
 
 export default function Invite( {metadata})
 {
@@ -45,21 +47,22 @@ export function InviteForm() {
       qrCode: '',
       locale: 'en',
       tags: [],
-      acceptPrivacyPolicy: 'no'
+      acceptPrivacyPolicy: 'no',
+      email: ''
     },
   });
 
   const [loading, setLoading] = useState(true)
   
   useEffect(() => {
-    const loginCode = code ? code : invitationCode
+    const loginCode = code ? code : null
     if(loginCode)
     {
       const onLoggingInSuccess = () => {
+        alertService.success(t('user.loginSucess'))
         store.emit(new SetMainPopup(MainPopupPage.HIDE))
         router.push(`/HomeInfo`)
       }
-      // store.emit(new Login(code, code, onLoggingInSuccess, () => {}))
       store.emit(new LoginQR(loginCode, null, onLoggingInSuccess, (err) => { 
         if(err == 'login-incorrect')
         {
@@ -80,14 +83,16 @@ export function InviteForm() {
             username: data.username,
             qrCode:  code ? code : invitationCode,
             locale: getLocale(),
-            acceptPrivacyPolicy: data.acceptPrivacyPolicy
+            acceptPrivacyPolicy: data.acceptPrivacyPolicy,
+            phone: data.phone,
+            email: data.email
           },
           () => {
-            // router.push(`/HomeInfo`)
+            alertService.success(t('user.loginSucess'))
             store.emit(new SetMainPopup(MainPopupPage.HIDE))
           },
           () => {
-            alertService.error('Error, invitation code not valid')
+            alertService.error(t('user.inviteLoginError'))
           },
         ),
       );
@@ -98,7 +103,9 @@ export function InviteForm() {
     <>
       <Form onSubmit={handleSubmit(onSubmit)} classNameExtra="login">
         <div className="login__form">
-          {t('user.explainGuestDetails')}          
+          <div className="form__header">
+            {t('user.explainGuestDetails')}   
+          </div>       
           <div className="form__inputs-wrapper">
             <NewUserFields
               control={control}
@@ -110,7 +117,7 @@ export function InviteForm() {
             />
           </div>
           <div className="form__btn-wrapper">
-            <div className="from__btn-register">
+            <div className="form__btn-register">
               <Btn
                 submit={true}
                 btnType={BtnType.submit}
@@ -120,10 +127,54 @@ export function InviteForm() {
               />
             </div>
           </div>
-        </div>
+          </div>
       </Form>
     </>
     
+  );
+}
+
+
+export function InviteScan() {
+  
+  const [qrCode, setQrCode] = useState('')
+  const handleScan = (detectedCodes) => {
+    const regex = /Signup\/Invite\/(([a-zA-Z]|[0-9])*)/gm;
+    detectedCodes.forEach(code => {
+      if(code.format == 'qr_code'){
+        const found = [...code.rawValue.matchAll(regex)];
+        if(found.length > 0){
+          const code = found[0][1]
+          router.push(`/Signup/Invite/${code}`)
+          console.log('invite code found' + code)
+        }
+
+      }
+    });
+  };
+  const handleSubmit = () => {
+    router.push(`/Signup/Invite/${qrCode}`)
+  }
+  return (
+    <>
+    <Scanner
+      onScan={handleScan}
+      onError={(error) => console.error(error)}
+    />
+    <FieldText
+          name={t('invite.scan')}
+          label={t('invite.scanCodeLabel')}
+          explain={t('invite.scanCodeExplain')}
+          placeholder={t('invite.scanPlaceHolder')}
+          onChange={(e) => setQrCode(() => e.target.value)}
+        />
+      <Btn
+        onClick={handleSubmit}
+        btnType={BtnType.submit}
+        caption={t('user.inviteLogin')}
+        contentAlignment={ContentAlignment.center}
+      />
+    </>
   );
 }
 

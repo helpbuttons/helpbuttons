@@ -1,39 +1,27 @@
+@use '../../variables' as *;
+
 // TODO: refactor styles, use REM properly, maybe split this styles in other
 // blocks in other style files too, ex: aside-info
 
 $index-mobile-fixed-z-index: $z-index-05;
-$index-content-left--distance: $grid-max-width;
-
-.index__mobile-fixed {
-  width: 100%;
-  z-index: $index-mobile-fixed-z-index;
-}
 
 .index__container {
   width: 100vw;
   overflow: hidden;
 }
 
-// .index__content {
-
-//   width: 100vw;
-//   overflow: hidden;
-//   display: flex;
-//   justify-content: flex-end;
-//   align-items: flex-end;
-
-// }
-
-
 .index__explore-container {
   display: flex;
   flex-direction: column;
-  justify-content:baseline;
+  justify-content: baseline;
   align-items: stretch;
-  // height: 100%;
-  // max-height: 100%;
   overflow: hidden;
   width: 100%;
+  &div {
+      transition: $transition-default-slow;
+
+
+  }
 }
 
 .index__content-left {
@@ -44,22 +32,17 @@ $index-content-left--distance: $grid-max-width;
 
 .index__content-bottom {
 
-  transition: height 0.5s linear; /* Specify the transition property and duration */
-  transition: $transition-default-slow;
-  height: 60px;
+  height: $nav-bottom-height;
 
 }
 
-.index__content-bottom--mid-screen {
-
-  height: calc(420px + 20px) ;
-
+.explore__map-wrapper {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
 }
 
 .index__content-bottom--hide {
-
-  // margin-bottom: calc($list-container-hide-height);
-  
 }
 
 .index__content-bottom--noscroll {
@@ -71,16 +54,13 @@ $index-content-left--distance: $grid-max-width;
 @media (hover: none) {
 
   .index__content-bottom--hide {
-
-    // margin-bottom: calc($list-container-hide-nohover-height);
-    
   }
 
 }
 
 @media #{$breakpoints-xlarge} {
   .index__explore-container {
-    position: fixed;
+    position: relative;
     display: flex;
     flex-direction: row;
   }
@@ -94,7 +74,6 @@ $index-content-left--distance: $grid-max-width;
     transition: $transition-default-slow;
     min-width: $index-content-left--distance;
     box-shadow: $box-shadow-divs;
-    // border-right: $popup-soptions-border-top;
   }
 
   .index__content-left--hide {

@@ -1,6 +1,6 @@
 import ButtonForm from 'components/button/ButtonForm';
 import { GlobalState, store } from 'state';
-import { CreateButton, SaveButtonDraft, UpdateCachedHexagons } from 'state/Explore';
+import { CreateButton, SaveButtonDraft, UpdateCachedHexagons, updateCurrentButton } from 'state/Explore';
 import { alertService } from 'services/Alert';
 import { useForm } from 'react-hook-form';
 import router from 'next/router';
@@ -18,6 +18,9 @@ import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
 import { useMetadataTitle } from 'state/Metadata';
 import { useSelectedNetwork } from 'state/Networks';
 import { markerFocusZoom } from 'components/map/Map/Map.consts';
+import { MobileOnlyPopup, ShowDesktopOnly, ShowMobileOnly } from 'elements/SizeOnly';
+import Popup from 'components/popup/Popup';
+import { ButtonEntry } from 'shared/dtos/button.dto';
 
 export default function ButtonNew({ metadata }) {
   const selectedNetwork = useSelectedNetwork()
@@ -26,23 +29,26 @@ export default function ButtonNew({ metadata }) {
 
   return (
     <>
-    {selectedNetwork?.exploreSettings?.center ? 
-      <ButtonNewForm selectedNetwork={selectedNetwork} />
-     : <Loading/>
-    }
+      {selectedNetwork?.exploreSettings?.center ?
+        <ButtonNewForm selectedNetwork={selectedNetwork} />
+        : <Loading />
+      }
     </>
   );
 }
 
 export const onButtonValidationError = (err, setError) => {
-  if(err.errorName == ErrorName.invalidDates){
+  if (err.errorName == ErrorName.invalidDates) {
     alertService.error(t('button.invalidDates'))
     setError('eventStart', { type: 'server', message: t('button.invalidDates') });
-  }else if(err.errorName == ErrorName.InvalidMimetype){
+  } else if (err.errorName == ErrorName.InvalidMimetype) {
     alertService.error(err.caption);
-  }else if(err.errorName == ErrorName.validationError){
+  } else if (err.errorName == ErrorName.validationError) {
     alertService.error(err.caption);
-  }else{
+  } else {
+    if(err.caption){
+      alertService.error(err.caption);
+    }
     console.error(JSON.stringify(err))
   }
 };
@@ -83,7 +89,7 @@ function ButtonNewForm({ selectedNetwork }) {
     defaultValues
   });
 
-  register("address", { required: true })  
+  register("address", { required: true })
 
   const [isSubmitting, setIsSubmitting] = useState(false)
   const onSubmit = (data) => {
@@ -98,7 +104,7 @@ function ButtonNewForm({ selectedNetwork }) {
     );
   };
 
-  const onSuccess = (buttonData : Button) => {
+  const onSuccess = (buttonData: ButtonEntry) => {
     store.emit(new SaveButtonDraft(defaultValues));
     store.emit(
       new CreateNewPost(
@@ -107,13 +113,15 @@ function ButtonNewForm({ selectedNetwork }) {
           message: t('button.firstPost', [readableDate(buttonData.created_at)], true)
         },
         (data) => {
-          if(buttonData.awaitingApproval)
-          {
+          if (buttonData.awaitingApproval) {
             setIsSubmitting(() => false)
-            alertService.info(t('moderation.awaitingApproval'));
-            router.push(`/Explore`);
-          }else{
             store.emit(new UpdateCachedHexagons([]))
+            store.emit(new updateCurrentButton(buttonData))
+            alertService.info(t('moderation.awaitingApproval'));
+            router.push(`/Show/${buttonData.id}`);
+          } else {
+            store.emit(new UpdateCachedHexagons([]))
+            store.emit(new updateCurrentButton(buttonData))
             router.push(`/Explore/${markerFocusZoom}/${buttonData.latitude}/${buttonData.longitude}/${buttonData.id}`);
             alertService.success(t('button.created'))
           }
@@ -123,45 +131,47 @@ function ButtonNewForm({ selectedNetwork }) {
           console.error(errorMessage)
         },
       ),
-    );    
+    );
   };
   const onError = (err) => {
     if (err.errorName == ErrorName.NeedToBeRegistered) {
       store.emit(new SaveButtonDraft(getValues()));
       alertService.error(err.caption);
       store.emit(new SetMainPopup(MainPopupPage.LOGIN))
-    }else{
+    } else {
       onButtonValidationError(err, setError)
     }
     setIsSubmitting(() => false)
   };
 
-  const {loadedDraft} = useButtonDraft({watch, getValues, reset, defaultValues})
+  const { loadedDraft } = useButtonDraft({ watch, getValues, reset, defaultValues })
+
   return (
     <>
-    {loadedDraft &&
-      <ButtonForm
-        watch={watch}
-        reset={reset}
-        getValues={getValues}
-        handleSubmit={handleSubmit}
-        register={register}
-        errors={errors}
-        control={control}
-        setValue={setValue}
-        setFocus={setFocus}
-        isSubmitting={isSubmitting}
-        onSubmit={onSubmit}
-        title={t('common.publishTitle', ['_helpbutton_'])}
-        clearErrors={clearErrors}
-      ></ButtonForm>
-    }
+      <MobileOnlyPopup title={t('common.publishTitle', ['_helpbutton_'])} linkFwd={'/Explore'}>
+        {(!loadedDraft || isSubmitting) && <Loading />}
+        {(loadedDraft && !isSubmitting) && <ButtonForm
+          watch={watch}
+          reset={reset}
+          getValues={getValues}
+          handleSubmit={handleSubmit}
+          register={register}
+          errors={errors}
+          control={control}
+          setValue={setValue}
+          setFocus={setFocus}
+          isSubmitting={isSubmitting}
+          onSubmit={onSubmit}
+          title={t('common.publishTitle', ['_helpbutton_'])}
+          clearErrors={clearErrors}
+        ></ButtonForm>}
+      </MobileOnlyPopup>
     </>
   );
 }
 
 
-function useButtonDraft({watch, getValues, reset, defaultValues}) {
+function useButtonDraft({ watch, getValues, reset, defaultValues }) {
   const buttonDraft = useStore(
     store,
     (state: GlobalState) => state.explore.draftButton,
@@ -172,22 +182,19 @@ function useButtonDraft({watch, getValues, reset, defaultValues}) {
   const [loadedDraft, setLoadedDraft] = useState(false);
 
   useEffect(() => {
-    if(!loadedDraft && buttonDraft !== false)
-    {
-      if(buttonDraft)
-      {
+    if (!loadedDraft && buttonDraft !== false) {
+      if (buttonDraft) {
         reset(buttonDraft)
-      }else{
+      } else {
         reset(defaultValues)
       }
       setLoadedDraft(() => true)
     }
-      
+
   }, [buttonDraft])
   useEffect(() => {
-    
-    if(JSON.stringify(watchAllFields) != watchedValues)
-    {
+
+    if (JSON.stringify(watchAllFields) != watchedValues) {
       setWatchedValues((prevWatchedFields) => {
         return JSON.stringify(watchAllFields)
       })
@@ -198,7 +205,7 @@ function useButtonDraft({watch, getValues, reset, defaultValues}) {
     store.emit(new SaveButtonDraft(getValues()));
   }, [watchedValues])
 
-  return {loadedDraft}
+  return { loadedDraft }
 }
 
 export const getServerSideProps = async (ctx: NextPageContext) => {

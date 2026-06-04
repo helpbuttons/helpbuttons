@@ -1,18 +1,15 @@
+@use '../../variables' as *;
+
 $search-map-height: 0; // Altura del header
 
 .search-map__network-title{
 
-  font-size: $font-size-medium;
+  font-size: $font-size-big;
   font-weight: $font-weight-bold;
-  color: $color-white;
-  position: relative;
   text-overflow: ellipsis;
-  text-shadow: 0 0 10px var(--network-text-color);
   max-width: 80vw;
-  left: 10px;
-  top: 10px;
-  // z-index: $z-index-01;
-
+  left: $padding-medium;
+  top: $padding-medium;
 }
 
 .search-map__sign {
@@ -24,53 +21,33 @@ $search-map-height: 0; // Altura del header
 }
 
 
-.search-map__instructions {
-
-  color: $color-dark-gray;
-  padding: $padding-medium;
-  top: 20%;
+.search-map__instructions, .search-map__hidden-buttons-warning {
+  color: $color-white;
+  padding: $padding-big;
+  display: flex;
+  bottom: $header-height-mobile;
   position: absolute;
-  left: calc(50% - 100px);
-  width: auto;
+  left: $margin-medium;
+  width: calc(100% - ($margin-medium*2));
   overflow: visible;
-  max-width: 200px;
   text-align: center;
-  text-wrap:balance;
-  margin-left: auto;
+  text-wrap: balance;
   z-index: $z-index-01;
-  margin-top: $margin-small;
-  background-color: $color-blue;
+  background-color: $color-gray-transparent;
   border-radius: $border-radius-basic;
   font-weight: $font-weight-bold;
   font-size: $font-size-small;
-
-  background-color: rgba(255, 255, 255, 0.3);
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
-
 }
 
-.search-map__hidden-buttons-warning {
-  color: #2E2E2E;
-  padding: 10px;
-  bottom: 20%;
-  position: absolute;
-  left: calc(50% - 100px);
-  width: auto;
-  overflow: visible;
-  max-width: 200px;
-  text-align: center;
-  text-wrap: balance;
-  margin-left: auto;
-  z-index: 100;
-  margin-bottom: 20px;
-  background-color: #18AAD2;
-  border-radius: 8px;
-  font-weight: 600;
-  font-size: 14px;
-  background-color: rgba(255, 255, 255, 0.3);
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
+.search-map__name{
+  font-weight: $font-weight-regular;
+  color: $color-text-over-corporative;
+  display: block;
+  &:first-letter {
+    text-transform: uppercase;
+  }
 }
 
 @media #{$breakpoints-xlarge} {
@@ -81,14 +58,13 @@ $search-map-height: 0; // Altura del header
     display: flex;
     align-items: center;
     height: 100%;
-
-    align-items: flex-start;
     justify-content: flex-start;
-    font-size: $font-size-title;
+    font-size: $font-size-xbig;
     font-weight: $font-weight-bold;
     color: $color-black;
     text-shadow: none;
-    position: relative;
+    min-width: 0;
+    text-overflow: ellipsis;
     flex: 1;
     gap: 1rem;
 
@@ -108,12 +84,12 @@ $search-map-height: 0; // Altura del header
   .search-map__name{
 
     align-items: flex-start;
+    min-width: 0;
     overflow: hidden;
     max-height: 2.4rem;
     overflow-y: hidden;
     text-overflow: ellipsis;
-    max-width: 300px;
-    margin-bottom: $padding-big;
+    max-width: 400px;
 
     a {
 
@@ -123,11 +99,13 @@ $search-map-height: 0; // Altura del header
       -webkit-box-orient: vertical;
       text-overflow: ellipsis;
       overflow: hidden;
-      text-overflow: ellipsis;
       word-wrap: break-word;
       max-height: 2.4em;
       line-height: 1.2em;
       margin-left: 0;
+      color: $color-text-over-corporative;
+      font-weight: $font-weight-bolder;
+
     }
     
 
@@ -146,6 +124,12 @@ $search-map-height: 0; // Altura del header
     justify-content: center;
     align-items: center;
     text-wrap:nowrap;
+
+  }
+
+  .search-map__instructions, .search-map__hidden-buttons-warning {
+    
+    bottom: $margin-big;
 
   }
   

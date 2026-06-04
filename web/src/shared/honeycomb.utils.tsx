@@ -3,11 +3,13 @@ import {
   cellToChildren,
   cellToLatLng,
   cellToParent,
+  getResolution,
+  gridRing,
   latLngToCell,
 } from 'h3-js';
 import { featureToH3Set, h3SetToFeature } from 'geojson2h3';
 import _ from 'lodash';
-import { maxResolution } from './types/honeycomb.const';
+import { hideAddressResolution, maxResolution } from './types/honeycomb.const';
 import dconsole from './debugger';
 
 export function convertBoundsToGeoJsonPolygon(bounds: Bounds) {
@@ -46,7 +48,9 @@ export function convertBoundsToGeoJsonHexagons(
 ) {
   const polygon = convertBoundsToGeoJsonPolygon(bounds);
   const hexs = featureToH3Set(polygon, resolution);
-  return hexs;
+  // grab all hexagons around, so that edges are inclduded
+  const hexsDistanceOne = hexs.map((h) => gridRing(h, 1))
+  return _.uniq([...hexs,..._.flatten(hexsDistanceOne)])
 }
 
 export function getGeoJsonHexesForBounds(bounds, resolution) {
@@ -101,34 +105,25 @@ export function getDegreesBleed(
   return newBounds;
 }
 
-export function getZoomResolution(zoom) {
-  switch (Math.floor(zoom)) {
-    case 4:
-      return 2;
-    case 5:
-      return 2;
-    case 6:
-      return 3;
-    case 7:
-    case 8:
-      return 4;
-    case 9:
-      return 5;
-    case 10:
-    case 11:
-      return 6;
-    case 12:
-      return 7;
-    case 13:
-      return 8;
-    case 14:
-    case 15:
-    case 16:
-      return 8;
-
-    default:
-      return 1;
-  }
+const ZOOM_TO_H3_RES_CORRESPONDENCE = {
+  4: 1,
+  5: 2,
+  6: 3,
+  7: 3,
+  8: 4,
+  9: 4,
+  10: 5,
+  11: 6,
+  12: 6,
+  13: 7,
+  14: 8,
+  15: 9,
+  16: 10,
+  17: 11,
+  18: 12,
+};
+export function getZoomResolution(mapZoom) {
+  return ZOOM_TO_H3_RES_CORRESPONDENCE[mapZoom] ?? Math.floor((mapZoom - 1) * 0.7);
 }
 export function getBottomHexes(hex) {
   return cellToChildren(hex, maxResolution);
@@ -224,15 +219,19 @@ export function calculateDensityMap(
     } else {
       const { hexagon, ...rest } = button;
       const group = groupBy.find(
-        (button) =>
-          cellToParent(button.hexagon, resolution) ===
-          cellToParent(hexagon, resolution),
+        (_btn) => {
+          return hexToResolution(hexagon, resolution, _btn.hideAddress) == _btn.hexagon
+        }
+          
       );
       if (group) {
         group.buttons.push(button);
       } else {
         try {
-          const cell = cellToParent(button.hexagon, resolution);
+          if(button.hideAddress && resolution > hideAddressResolution) {
+            return;
+          }
+          const cell = hexToResolution(button.hexagon, resolution);
           groupBy.push({
             hexagon: cell,
             buttons: [button],
@@ -303,8 +302,13 @@ export function calculateDensityMap(
 
 export function cellToZoom(hexagon, zoom)
 {
-  const resolution = getZoomResolution(zoom)
-  return cellToParent(hexagon, resolution)
+  const resolution = getZoomResolution(Math.floor(zoom))
+  const maxResolution = getResolution(hexagon)
+  if(resolution > maxResolution)
+  {
+    return hexagon;
+  }
+  return hexToResolution(hexagon, resolution)
 }
 
 export const getHexagonCenter = (latLng, zoom) => {
@@ -317,3 +321,28 @@ export const getHexagonCenter = (latLng, zoom) => {
 
   return center;
 };
+
+export function debugHexes(hexes) {
+  hexes.map((hex) => {
+          console.log(`${hex} - ${getResolution(hex)}`)
+        })
+}
+
+export function hexToResolution(hexagon, resolution, hiddenAddress = false)
+{
+
+  try {
+    if(hiddenAddress && resolution > hideAddressResolution) {
+        return cellToParent(hexagon, hideAddressResolution)
+    }
+    return cellToParent(hexagon, resolution)
+  }catch(err)
+  {
+    const res = getResolution(hexagon)
+    console.error(`needed resolution: ${res}. requested resolution: ${resolution}`)
+    console.trace()
+  }
+  return -1;
+}
+// console.log(debounceHexagonsToFetch.resolution)
+        

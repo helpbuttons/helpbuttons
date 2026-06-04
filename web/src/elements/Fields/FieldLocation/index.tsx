@@ -6,15 +6,15 @@ import React, {
 import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
 import { MarkerEditorMap } from 'components/map/Map/MarkerSelectorMap';
 import t from 'i18n';
-import { roundCoord, roundCoords } from 'shared/honeycomb.utils';
+import { roundCoord } from 'shared/honeycomb.utils';
 import { FieldCheckbox } from '../FieldCheckbox';
 import PickerField from 'components/picker/PickerField';
-import { minZoom } from 'components/map/Map/Map.consts';
-import { useGeoReverse } from './location.helpers';
-import { IoLocation, IoLocationOutline, IoLocationSharp, IoSearchOutline } from 'react-icons/io5';
+import { getCoordinatesDMS, useGeoReverse } from './location.helpers';
+import { IoLocationOutline } from 'react-icons/io5';
 import LocationSearchBar from 'elements/LocationSearchBar';
-import dconsole from 'shared/debugger';
-
+import { markerFocusZoom } from 'components/map/Map/Map.consts';
+import { alertService } from 'services/Alert';
+import { getDistance } from 'geolib';
 
 export default function FieldLocation({
   validationError,
@@ -32,39 +32,56 @@ export default function FieldLocation({
   setLongitude,
   isCustomAddress,
   setIsCustomAddress,
-  markerPosition
+  markerPosition,
+  onCloseAndSave = (place, close) => { },
+  isLocationKey = false,
 }) {
   const [pickedPosition, setPickedPosition] = useState(markerPosition)
-
-  const [zoom, setZoom] = useState(selectedNetwork.exploreSettings.zoom);
+  const [zoom, setZoom] = useState((markerPosition && markerPosition[0]) ? markerFocusZoom : selectedNetwork.exploreSettings.zoom );
   const [showPopup, setShowPopup] = useState(false);
   const [isLoading, setIsLoading] = useState(false)
   const [pickedAddress, setPickedAddress] = useState(markerAddress)
-
+  const [findNewAddress, setFindNewAddress] = useState(false)
   const closeWithoutSaving = () => {
 
     setPickedAddress(() => markerAddress)
     setPickedPosition(() => markerPosition)
     setShowPopup(() => false)
   }
-  const closeAndSave = () => {
-    if (!isCustomAddress && hideAddress) {
-      getLatLngAddress(pickedPosition, true, (place) => {
+  useEffect(() => {
+    if(!isCustomAddress && pickedPosition[0] != null){
+      getLatLngAddress(pickedPosition, hideAddress, (place) => {
         const address = place.formatted;
-        setMarkerAddress(address)
-        setLatitude(pickedPosition[0])
-        setLongitude(pickedPosition[1])
-        setShowPopup(() => false)
+        setPickedAddress(() => address)
       },
         (error) => {
           const address = t('button.unknownPlace')
-          setMarkerAddress(address)
+          setPickedAddress(address)
           setLatitude(pickedPosition[0])
           setLongitude(pickedPosition[1])
           setShowPopup(() => false)
         }
       );
+    }
+  }, [hideAddress])
+  const closeAndSave = () => {
+    if (isLocationKey) {
+      onCloseAndSave({ address: pickedAddress, latitude: Number(pickedPosition[0]), longitude: Number(pickedPosition[1]) }, () => {
+        setShowPopup(() => false)
+        setPickedAddress(() => null)
+        setPickedPosition(() => selectedNetwork.exploreSettings.center)
+        setZoom(() => selectedNetwork.exploreSettings.zoom)
+      })
     } else {
+      if(!pickedAddress || pickedAddress.length < 1){
+        console.log('error no address defined')
+        return;
+      }
+      if(pickedPosition[0] == null)
+      {
+        alertService.warn(t('button.pickPosition'))
+        return;
+      }
       setMarkerAddress(pickedAddress)
       setLatitude(pickedPosition[0])
       setLongitude(pickedPosition[1])
@@ -76,18 +93,33 @@ export default function FieldLocation({
 
   const onMapClick = (latLng) => {
     setPickedPosition(() => latLng)
-    if (!isCustomAddress) {
-      findAddressFromPosition(latLng)
-    }
+    setFindNewAddress(() => true)
   }
+
+  useEffect(() => {
+    if (!isCustomAddress && findNewAddress) {
+      findAddressFromPosition(pickedPosition)
+    }else{
+      setIsLoading(() => false)
+    }
+  }, [findNewAddress, pickedPosition])
 
   const getLatLngAddress = useGeoReverse()
   const findAddressFromPosition = (latLng) => {
 
     setIsLoading(() => true)
     if (latLng[0] && latLng[1]) {
-      getLatLngAddress(latLng, false, (place) => {
-        dconsole.log('gettings place... ', place)
+      getLatLngAddress(latLng, hideAddress, (place) => {
+        const distance = getDistance(
+          { latitude: place.geometry.lat, longitude: place.geometry.lng },
+          { latitude: latLng[0], longitude: latLng[1] },
+        );
+        if(distance > 200) { // if the point found is more than 600meters, better to set as unknown place!
+          setPickedAddress(() => t('button.unknownPlace', [], true))
+          
+          setIsLoading(() => false)
+          return;
+        }
         setPickedAddress(() => place.formatted)
         setIsLoading(() => false)
       },
@@ -116,7 +148,7 @@ export default function FieldLocation({
         longitude={markerPosition[1]}
         address={markerAddress}
         label={label}
-      /> : t('button.whereLabel')
+      /> : t('button.whereButtonLabel')
     }
     headerText={t('picker.headerText')}
     explain={t('button.whereExplain')}
@@ -134,7 +166,7 @@ export default function FieldLocation({
       setIsLoading={setIsLoading}
       pickedAddress={pickedAddress}
       setPickedAddress={setPickedAddress}
-      focusPoint={pickedPosition}
+      focusPoint={pickedPosition ? pickedPosition : selectedNetwork.exploreSettings.center}
     />
     <MarkerEditorMap
       toggleLoadingNewAddress={() => setIsLoading(() => true)}
@@ -177,10 +209,11 @@ export function LocationCoordinates({
       {address || (longitude && latitude) ? (
         <>
           {address && <span>{address}</span>}
-          {latitude && longitude && (
+          {(latitude && longitude) && (
             <span>
-              {' '}
-              ({roundCoord(latitude)},{roundCoord(longitude)})
+              &nbsp; - {
+                getCoordinatesDMS(`${latitude}, ${longitude}`)
+              }
             </span>
           )}
           {/* (radius: ${radius} km) */}

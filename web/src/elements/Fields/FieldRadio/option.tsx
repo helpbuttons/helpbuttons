@@ -6,7 +6,7 @@ const FieldRadioOption = forwardRef(({
   value,
   onChange,
   onBlur,
-  color = 'black'
+  color = 'transparent'
 }, ref) => {
   return (
     <>

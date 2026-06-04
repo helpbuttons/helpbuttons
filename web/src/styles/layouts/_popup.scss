@@ -1,9 +1,12 @@
+@use '../variables' as *;
+@use '../elements/btn';
+
 $popup-background: rgba(0,0,0,.2);
 $popup-header-height: 50px;
 $popup-header-height-mobile: 50px;
 $popup-options-height: 80px;
 $popup-options-border-top: 1px solid $color-ligth-gray;
-$popup-max-width: $grid-max-width;
+$popup-max-width: $grid-column-max-width;
 $popup-content-height: calc( 100vh - #{$popup-header-height });
 $popup-header-lateral: calc( 100% / 2 - #{$popup-max-width} / 2 );
 $popup-header-width: 100%;
@@ -61,27 +64,19 @@ $popup-max-height-large: 720px;
 
 
 //POPUP HEADERS
-.popup__header--trans,
+
 .popup__header {
 
-  width: 100%;
-  padding: $padding-big $padding-medium;
-  position:  relative;
-  border-radius: $border-radius-semicircle $border-radius-semicircle 0 0;
-  height: $popup-header-height-mobile;
-  border-bottom: 1px solid $color-ligth-gray;
+    height: $popup-header-height;
+    min-height: $popup-header-height;
+    border-bottom: $border-style-basic;
 
 }
-
-.popup__header--trans {
-  background: transparent;
-}
-
 
 .popup__header-center {
   flex: 0 1 calc( 100% - #{$btn-circle-icon-height} * 2 );
   text-align: center;
-  padding: 0 10px;
+  padding: 0 $padding-medium;
 
   .icon {
     max-width: 100%;
@@ -110,7 +105,7 @@ $popup-max-height-large: 720px;
 
 .popup__header-title  {
 
-  font-size: $font-size-general;
+  font-size: $font-size-medium;
   font-weight: $font-weight-bold;
   color: $color-dark-gray;
   letter-spacing: 2px;
@@ -119,22 +114,29 @@ $popup-max-height-large: 720px;
 .popup__header-button {
   background-color: transparent;
   border-style: none;
+  color: $color-dark-gray;
+
   cursor: pointer;
   &:active,
   &:focus {
     outline: none;
   }
 
-  .icon {
-    width: $popup-header-icon-width;
-    height: auto;
-    max-height: 25px;
+  .popup__header-button__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    // max-height: 30px;
+    & svg {
+        height: 25px;
+        width: 25px;
+    }
   }
 }
 
 .popup__paragraph {
 
-  font-size: $font-size-general;
+  font-size: $font-size-medium;
   line-height: 1.5rem;
   margin-bottom: $margin-small;
 }
@@ -147,12 +149,12 @@ $popup-max-height-large: 720px;
   border-radius: 0 0 $border-radius-semicircle $border-radius-semicircle;//REVISE
   display: flex;
   flex-direction: column;
-
+  overscroll-behavior: contain;
 }
 
 .popup__section {
 
-  padding: $padding-huge;
+  padding: $padding-big;
   height: auto;
   position: relative;
   
@@ -181,52 +183,6 @@ $popup-max-height-large: 720px;
 
 }
 
-.popup__map-input {
-
-  position: absolute;
-  margin-top: $margin-big;
-
-}
-
-.popup__close-container {
-  width: 100%;
-}
-
-.popup__close-overlay {
-
-  height: 100vh;
-  position: fixed;
-  top: 0;
-  z-index: $z-index-base;
-  width: 100%;
-  border: none;
-  background: none;
-  padding: 0;
-
-}
-
-.popup__comments,
-.popup__options-v,
-.popup__options-h {
-  display: flex; // Static components
-}
-
-.popup__comments {
-
-  padding: $popup-comments;
-  overflow-y: auto;
-  max-height: 300px;
-
-}
-
-.popups__comments-item {
-
-  background: $color-ligth-gray;
-  margin: 8px 0;
-  padding: 25px 0;
-
-}
-
 .popup__options-btn {
 
   display: inline-block;
@@ -234,7 +190,7 @@ $popup-max-height-large: 720px;
   height: $popup-options-height;
 
   text-align: center;
-  font-size: $font-size-general;
+  font-size: $font-size-medium;
   line-height: $popup-options-height;
   width: 100%;
   vertical-align: middle;
@@ -243,12 +199,6 @@ $popup-max-height-large: 720px;
 
   &:focus {
     background: $color-corporative;
-  }
-  &--stroked {
-    stroke: $color-corporative;
-    fill: $color-corporative;
-    border-color: $color-black;
-    background-color: $color-black;
   }
   &:hover {
     fill: $color-corporative;
@@ -263,11 +213,17 @@ $popup-max-height-large: 720px;
 }
 
 .popup__link {
-
-  text-decoration: underline;
+  @extend .btn;
+  text-decoration: none;
+  border: $border-style-thick;
+  margin-top: $padding-big;
+  border-radius: $border-radius-circle;
   text-align: center;
   width: 100%;
+  color: $color-gray;
   padding: $padding-big;
+  justify-content: center;
+  gap: $padding-big;
 
   a, a:visited, a:active {
 
@@ -286,25 +242,6 @@ $popup-max-height-large: 720px;
 }
 
 
-.popup__options-btn--icon {
-
-  height: 20px;
-
-}
-
-.popup__options-title {
-
-  display: inline-block;
-  text-align: center;
-  font-size: $font-size-general;
-  line-height: 1.5rem;
-  width: 100%;
-  vertical-align: middle;
-  height: auto;
-  margin-bottom: 10px;
-
-}
-
 
 .popup__options-v {
 
@@ -315,7 +252,7 @@ $popup-max-height-large: 720px;
     flex: 0 1 50%;
 
     &:last-child {
-      border-radius: 0 0 25px 25px;
+      border-radius: 0 0 $border-radius-semicircle $border-radius-semicircle;
     }
 
   }
@@ -324,6 +261,7 @@ $popup-max-height-large: 720px;
 
 .popup__options-h {
 
+  display: flex;
   flex-flow: row nowrap;
   // flex-wrap: wrap;
   justify-content: space-between;
@@ -355,18 +293,11 @@ $popup-max-height-large: 720px;
 
 }
 
-.popup-paragraph {
-
-  text-align: center;
-  margin-top: 20px;
-
-}
-
 @media #{$breakpoints-medium} {
 
   .popup {
 
-    margin: 0px auto;
+    margin: 0 auto;
     // Centering
     display: flex;
     flex-flow: column nowrap;
@@ -395,15 +326,10 @@ $popup-max-height-large: 720px;
   .popup__content {
     border-radius:  0;
   }
-  .popup__header {
-
-    height: $popup-header-height;
-    min-height: $popup-header-height;
-
-  }
+  
 
   .popup__section {
-    padding: $padding-huge $padding-huge;
+    padding: $padding-xbig $padding-xbig;
   }
 
 
@@ -411,7 +337,6 @@ $popup-max-height-large: 720px;
 
     flex-flow: row nowrap;
     align-items: flex-end;
-
 
   }
 
@@ -432,7 +357,6 @@ $popup-max-height-large: 720px;
   .popup__header {
 
     border-radius: $border-radius-semicircle $border-radius-semicircle 0 0;
-    margin-top: $margin-xsmall;
   }
 
   .popup__content {
@@ -445,7 +369,7 @@ $popup-max-height-large: 720px;
 
   .popup--button-file {
 
-    max-width: $grid-max-width;
+    max-width: $grid-column-max-width;
   } 
 
 

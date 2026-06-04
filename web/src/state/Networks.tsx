@@ -8,17 +8,14 @@ import { NetworkService } from 'services/Networks';
 import { isHttpError } from 'services/HttpService';
 import { of } from 'rxjs';
 import { GlobalState, store } from 'state';
-import { CreateNetworkDto } from 'shared/dtos/network.dto';
 import { Network } from 'shared/entities/network.entity';
 import { HttpStatus } from 'shared/types/http-status.enum';
-import { ExploreViewMode, UpdateExploreSettings } from './Explore';
+import { ExploreViewMode } from './Explore';
 import { useGlobalStore } from 'state';
 import { useEffect, useRef, useState } from 'react';
-import { SetupSteps } from 'shared/setupSteps';
-import { ConfigFound, GetConfig } from './Setup';
 import { getLocale } from 'shared/sys.helper';
-import { roundCoords } from 'shared/honeycomb.utils';
-import dconsole from 'shared/debugger';
+import { ButtonService } from 'services/Buttons';
+import { handleError } from './helper';
 // import router from 'next/router';
 
 export interface NetworksState {
@@ -224,23 +221,7 @@ export class UpdateNetwork implements WatchEvent {
       map((networkData) => {
         this.onSuccess(networkData.response);
       }),
-      catchError((error) => {
-        if (!error.response) {
-          this.onError(error, this.network);
-          throw error
-        }
-        let err = error.response;
-
-        if (isHttpError(err) && err.statusCode === 401) { // Unauthorized
-          this.onError("unauthorized", this.network);
-        } else if (err.statusCode === HttpStatus.BAD_REQUEST && err.message === "validation-error" && err.validationErrors) {
-          this.onError(err)
-        } else {
-          this.onError(err)
-          throw error;
-        }
-        return of(undefined);
-      })
+      catchError((error) => handleError(this.onError, error))
     );
   }
 }
@@ -257,3 +238,12 @@ export class FindLatestNetworkActivity implements WatchEvent {
   }
 }
 
+
+export class DeleteButtonsType implements WatchEvent {
+  public constructor(private type, private onSuccess){}
+  public watch (state: GlobalState) {
+    return ButtonService.deleteType(this.type).pipe(
+      map(() => this.onSuccess())
+    )
+  }
+}

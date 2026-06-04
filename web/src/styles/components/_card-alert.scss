@@ -1,3 +1,5 @@
+@use '../variables' as *;
+
 $card-alert-padding: $padding-big;
 $card-alert-margin: $margin-big;
 $card-alert-text-margin: $margin-xsmall;
@@ -24,10 +26,14 @@ $card-alert-icon-size: 30px;
   border-radius: $card-alert-radius;
   color: $color-dark-gray;
   display: flex;
+  align-items: center;
+
 }
 
 .card-alert__container {
   top: auto;
+  display: flex;
+  flex-direction: column;
   bottom: 0;
   z-index: $z-index-06;
   min-width: 150px;
@@ -36,23 +42,32 @@ $card-alert-icon-size: 30px;
   float: left;
   left: 0;
   padding: 0 $card-alert-padding;
+  gap: $padding-small;
   margin-bottom: calc($footer-height-mobile + $padding-big);
 }
 
 .card-alert--success {
   background-color: $color-green;
+      color: $color-white;
+
 }
 
 .card-alert--error {
   background-color: $color-red;
+      color: $color-white;
+
 }
 
 .card-alert--warning {
   background-color: $color-corporative;
+    color: $color-text-over-corporative;
+
 }
 
 .card-alert--info {
-  background-color: var(--network-text-color);
+  background-color: var(--network-accent-color);
+    color: $color-white;
+
 }
 
 .card-alert__content {
@@ -63,7 +78,6 @@ $card-alert-icon-size: 30px;
   margin: auto 0;
   padding-right: $padding-big;
   font-weight: $font-weight-bold;
-  color: $color-white;
   gap: $padding-small;
 
 
@@ -86,12 +100,22 @@ $card-alert-icon-size: 30px;
 
 .card-alert__title {
 
-  font-size: $font-size-general;
+  font-size: $font-size-medium;
   font-weight: bold;
   margin: auto 0;
   height: 100%;
-  word-wrap: break-all;
-  word-break: break-all;
+
+  a {
+    font-weight: $font-weight-bolder;
+    background-color: $color-ligth-gray;
+    padding: $padding-small $padding-medium;
+    border-radius: $border-radius-circle;
+  }
+
+  &:first-letter {
+    text-transform: uppercase;
+  }
+
 }
 
 .card-alert__top-text,
@@ -102,16 +126,6 @@ $card-alert-icon-size: 30px;
 
 }
 
-
-.card-alert__btn-options {
-
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  gap: $padding-small;
-
-
-}
 
 
 
@@ -135,9 +149,7 @@ $card-alert-icon-size: 30px;
     box-shadow: $box-shadow-divs;
 
     a {
-      color: $color-corporative;
       text-decoration: underline;
-
       &:hover {
         text-decoration: none;
       }
@@ -183,6 +195,7 @@ $card-alert-icon-size: 30px;
     margin-bottom: $footer-height-mobile;
     margin-bottom: 0;
     margin-left: $margin-big;
+
   }
 
 }

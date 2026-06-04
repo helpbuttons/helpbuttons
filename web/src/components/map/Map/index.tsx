@@ -21,7 +21,6 @@ interface HbMapProps {
   zoomSnap: boolean;
   onClick: ({ event, latLng, pixel }) => void;
   provider: (x: any, y: any, z: any, dpr: any) => string;
-  width?: string;
   height?: string;
   maxZoom: number;
   minZoom: number;
@@ -41,6 +40,8 @@ export function HbMap({
   return (
     <Map
       center={mapCenter}
+      defaultHeight={0}
+      defaultWidth={0}
       zoom={mapZoom}
       onBoundsChanged={({ center, zoom, bounds }) => {
         onBoundsChanged({
@@ -69,7 +70,6 @@ export function HbMapUncontrolled({
   mapZoom,
   onBoundsChanged = (objectRet) => {},
   handleMapClick = ({latLng}) => {},
-  width,
   height = null,
   tileType = HbMapTiles.OSM,
 }) {
@@ -88,7 +88,7 @@ export function HbMapUncontrolled({
           bounds,
         });
       },
-      zoomSnap: true,
+      zoomSnap: false,
       onClick: ({ event, latLng, pixel }) => {
         handleMapClick({ latLng });
       },
@@ -96,9 +96,6 @@ export function HbMapUncontrolled({
       maxZoom: maxZoom,
       minZoom: minZoom,
     };
-    if (width !== null) {
-      mapProps = { ...mapProps, width };
-    }
     if (height !== null) {
       mapProps = { ...mapProps, height };
     }

@@ -1,3 +1,5 @@
+@use 'variables' as *;
+
 html,
 body,
 div,
@@ -71,8 +73,8 @@ td {
   text-decoration: none;
   vertical-align: baseline;
   box-sizing: border-box;
-  word-wrap: break-word;
-  word-break: keep-all;
+  // word-wrap: break-word;
+  // word-break: keep-all;
   hyphens: auto;
   -webkit-hyphens:auto;
   -webkit-hyphenate-limit-after:1;
@@ -129,7 +131,7 @@ body,
 
 .homeinfo__container {
 
-  height: calc(var(--vh) - 60px) !important;
+  height: var(--vh) !important;
 
 }
 
@@ -147,22 +149,28 @@ body,
 .list__container--full-screen,
 .list__content--full-screen{
 
-  height: calc(var(--vh) - 120px ) !important; //header + filters bar
+    height: calc(var(--vh) - 182px) !important;
 
 }
 
 .list__container--mid-screen,
 .list__content--mid-screen{
 
-  height: calc(var(--vh) - 190px ) !important; //header + filters bar
+  height: calc(var(--vh) - 150px ) !important; //header + filters bar
+
+}
+
+.feed-section--activity-content {
+
+    height: calc(var(--vh) - $footer-height-mobile) !important;
 
 }
 
 .popup,
-.filters__wrapper
+.filters__wrapper,
+.feed-section__center--mobile
 {
-  height: calc(var(--vh) ) !important;
-  /* Add other styles as needed */
+  height: var(--vh) !important;
 }
 
 ol,
@@ -192,14 +200,10 @@ q {
 }
 
 a {
-  color: $color-secondary;  
-  word-break: break-all;
+  color: $color-dark-gray; 
+  font-weight: $font-weight-regular; 
+  hyphens: auto;
 
-  &:hover {
-
-    color: $color-gray;
-
-  }
 }
 
 p {
@@ -229,25 +233,29 @@ p {
   .list__container--full-screen,
   .popup--button-file,
   .index__explore-container,
-  .feed-section--activity-content,
-  .feed__container
+  .feed-section--activity-content
   {
     height: calc(var(--vh) - $header-height-desktop - $nav-header-height-desktop) !important;
+  }
+
+  .homeinfo__container {
+
+    height: var(--vh) !important;
+  }
+
+  .feed__container {
+
+    height: calc(var(--vh) - $nav-header-height-desktop) !important;
+
   }
 
   .popup__content {
     height: calc(var(--vh) - 199px) !important;
   }
 
-  .homeinfo__container {
-
-    height: calc(var(--vh) - 134px) !important;
-
-  }
-
   .list__content {
 
-    height: calc(var(--vh) - 194px) !important;
+    height: calc(var(--vh) - 182px) !important;
 
   }
 
@@ -256,4 +264,25 @@ p {
 
 body {
   overflow: hidden; // Revise: Adiós Scroll desde el Body
+}
+
+@media (hover: none) {
+  
+  /* Apply to your specific class, or use '*' for everything */
+  button, 
+  a {
+    /* 1. Remove the standard hover/active/focus states */
+    &:hover,
+    &:active
+    &:focus 
+    {
+      
+    }
+  }
+
+  /* 2. Remove the specific mobile "Tap Highlight" (Gray/Blue flash) */
+  * {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none; /* Disables long-touch menu on iOS */
+  }
 }

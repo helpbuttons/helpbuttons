@@ -1,12 +1,12 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { MailService } from '../mail/mail.service';
-import { Cron } from '@nestjs/schedule';
+import { Cron, CronExpression } from '@nestjs/schedule';
 import {
   InjectEntityManager,
   InjectRepository,
 } from '@nestjs/typeorm';
 import { Activity } from './activity.entity';
-import { EntityManager, Repository } from 'typeorm';
+import { Between, EntityManager, Repository } from 'typeorm';
 import { ActivityEventName } from '@src/shared/types/activity.list';
 import translate, {
   readableDate,
@@ -14,11 +14,15 @@ import translate, {
 import { UserService } from '../user/user.service';
 import { getUrl } from '@src/shared/helpers/mail.helper';
 import { NetworkService } from '../network/network.service';
-import { getButtonActivity, getPostActivity } from './activity.transform';
+import { ActivityService } from './activity.service';
+import { MailButtonActivity } from '../mail/mail.interface';
+import { unique } from '@src/shared/helpers/array.helper';
 
-const outboxConditions = `created_at between now() - INTERVAL '2 day' AND now()`;
+const outboxConditions = `activity.created_at between now() - INTERVAL '1 day' AND now()`;
 @Injectable()
 export class ActivityCron {
+  private readonly logger = new Logger('TASKS');
+
   constructor(
     private readonly mailService: MailService,
     private readonly userService: UserService,
@@ -27,28 +31,111 @@ export class ActivityCron {
     @InjectEntityManager()
     private readonly entityManager: EntityManager,
     private readonly networkService: NetworkService,
+    private readonly activityService: ActivityService,
   ) {}
 
-  @Cron('27 18 * * *', {
-    name: 'notifications',
-  })
+  @Cron(CronExpression.EVERY_DAY_AT_5PM)
   async triggerNotifications() {
-    const usersWithPendingNotifications =
-      await this.findUsersWithPendingNotifications();
+    this.logger.log('Starting to notify all outboxes')
+    
+    const dailyActivities = await this.findActivitiesOfDay()
+    const consumers = unique(dailyActivities.filter((t) => t?.consumerId).map((t) => t.consumerId))
+    const owners = unique(dailyActivities.map((t) => t.ownerId))
+    const userIds = unique([...consumers, ...owners])
+    
+    // check and notify users with events tomorrow!
+    
     await Promise.all(
-      usersWithPendingNotifications.map((user) => {
-        return this.getUserOutBox(user.id).then((outboxUser) => {
-          return this.sendDailyUserOutbox(user.id, outboxUser);
-        });
-      }),
-    );
-    await this.setAsSent()
+      userIds.map((userId) => {
+        return this.userService.findById(userId)
+          .then((user) => {
+              return this.activityRepository.find({
+                where: [
+                  { 
+                    consumer: { id: user.id },
+                    created_at: Between(new Date(Date.now() - 24 * 60 * 60 * 1000), new Date())
+                  },
+                  { 
+                    button: { owner: { id: user.id } },
+                    created_at: Between(new Date(Date.now() - 24 * 60 * 60 * 1000), new Date())
+                  }, 
+                ],
+                relations: ['button.owner', 'to', 'from', 'consumer'],
+                order: { created_at: 'DESC' },
+              })
+              .then(async (activities) => {
+                const loginParams = await this.userService.getUserLoginParams(user.id)
+                const btnTypes = await this.networkService.findButtonTypes()
+
+                const filteredActivities = activities
+                .filter((_activ) => {
+                  // @ts-ignore
+                  if([ActivityEventName.Message, ActivityEventName.NewPostComment, ActivityEventName.NewMention].indexOf(_activ.eventName) > -1)
+                  {
+                    return false;
+                  }
+                  if(_activ.eventName == ActivityEventName.NewFollowingButton){
+                    if(_activ.consumer.id == user.id){
+                      return false;
+                    }
+                  }
+                  if(user.id == _activ.from.id){
+                    return false;
+                  } 
+                  return true;
+                });
+                // console.log(filteredActivities.map((ac) => { return {eventName: ac.eventName, createdAt: ac.created_at, title: ac.button.title, consumerId: ac?.consumer?.id, owner: ac?.button?.owner?.id, userid: user.id} }))
+                return filteredActivities.map((activity) => {
+                  return this.transformActivityOutbox(activity, user.locale, user.id, loginParams, btnTypes);
+                })
+              })
+              .then((activities) => {
+                if(activities?.length > 0){
+                  this.sendDailyUserOutbox(user, activities);
+                }
+              })
+          })
+    })
+    )
   }
 
-  public findUsersWithPendingNotifications() {
-    return this.entityManager.query(
-      `select "ownerId" as id, count(id) as numberActivities from activity where outbox = true AND ${outboxConditions} group by "ownerId"`,
-    );
+
+  public transformActivityOutbox(activity, locale, userId, loginParams, btnTypes): MailButtonActivity {
+    let activityOut = this.activityService.transformActivity(activity, locale, userId)
+    const button = activity.button;
+
+    let extra = {}
+    if(button) {
+      // this will need the button defi
+      const btnType = btnTypes.find((btnType) => btnType.name == button.type)
+      const btnTypeCaption = `${btnType.icon} ${btnType?.caption}`
+      let link = activityOut.link ? this.activityService.addLoginParams(getUrl(`/Activity/button/${activityOut.buttonId}`), loginParams) : null
+
+      if([ActivityEventName.DeleteButton, ActivityEventName.ExpiredButton, ActivityEventName.SchedulerExpiredButton].indexOf(activity.eventName) > -1){
+        link = null
+      }
+
+      if([ActivityEventName.NewButton, ActivityEventName.RenewButton, ActivityEventName.NewPost, ActivityEventName.NewPostComment].indexOf(activity.eventName) > -1){
+        link = this.activityService.addLoginParams(getUrl(`/Show/${activityOut.buttonId}`), loginParams)
+      }
+      extra = {
+          content: translate(locale, activityOut.message),
+          link,
+          linkCaption: activityOut.linkCaption,
+          type: btnTypeCaption, 
+          title: button.title, 
+          address: button.address,
+        }
+    }
+    
+    return {
+      content: activityOut.message,
+      ...extra
+    }
+  }
+
+  public findActivitiesOfDay() {
+    return this.entityManager.query(`select button."ownerId","consumerId", activity.created_at, "eventName" from activity, button where button.id = "buttonId" AND  ${outboxConditions} `)
   }
 
   public setAsSent() {
@@ -61,71 +148,34 @@ export class ActivityCron {
     return this.activityRepository
       .createQueryBuilder('activity')
       .where(
-        `outbox = true AND ${outboxConditions} AND "ownerId" = :ownerId`,
-        { ownerId: userId },
+        `outbox = true AND ${outboxConditions} AND "consumerId" = :consumerId`,
+        { consumerId: userId },
       )
       .getMany();
   }
 
-  sendDailyUserOutbox(userId, outbox: Activity[]) {
-    return this.userService.findById(userId).then((user) => {
-      const activitiesToSend = outbox.map((activity) => {
-        switch (activity.eventName) {
-          case ActivityEventName.NewPost: {
-            const post = getPostActivity(activity.data);
-            const button = post.button;
-            const author = post.author;
-            return {
-              content: translate(user.locale, 'activities.newpost', [
-                post.message,
-                button.title,
-                author.username,
-              ]),
-              link: getUrl(user.locale, `/ButtonFile/${button.id}`),
-              linkCaption: translate(
-                user.locale,
-                'email.buttonLinkCaption',
-              ),
-            };
+  sendDailyUserOutbox(user, outbox: MailButtonActivity[]) {
+      if(!user.email){
+        this.logger.warn(`'${user.name}' doesnt have an email configured`)
+        return false;
+      }
+      this.logger.log(`Sending email to ${user.email} with ${outbox.length} activities`)
 
-            // add to email to send...
-            break;
-          }
-          case ActivityEventName.NewButton: {
-            const button = getButtonActivity(activity.data);
-            const interests = user.tags.filter(x => button.tags.includes(x));
-
-            return {
-              content: translate(
-                user.locale,
-                'activities.newbuttoninterest',
-                [interests.join(',')],
-              ),
-              link: getUrl(user.locale, `/ButtonFile/${button.id}`),
-              linkCaption: translate(
-                user.locale,
-                'email.buttonLinkCaption',
-              ),
-            };
-            break;
-          }
-          default:
-            return null;
-        }
-      });
       return this.networkService
         .findDefaultNetwork()
         .then((network) => {
+          const date = readableDate(user.locale)
           return this.mailService.sendDailyOutbox({
-            activities: activitiesToSend,
+            activities: outbox,
             to: user.email,
             subject: translate(user.locale, 'email.dailyOutBox', [
-              activitiesToSend.length.toString(),
+              outbox.length.toString(),
               network.name,
               readableDate(user.locale),
             ]),
+            networkName: network.name,
+            date: date
           });
         });
-    });
   }
 }

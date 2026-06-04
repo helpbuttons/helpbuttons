@@ -3,6 +3,41 @@ import configs from '@src/config/configuration';
 import { SetupDtoOut } from '@src/modules/setup/setup.entity';
 
 const { Pool } = require('pg');
+const fs = require('fs');
+const path = require('path');
+
+export const checkMigrations = async (config): Promise<void> => {
+  const pool = new Pool({
+    host: config.postgresHostName,
+    port: config.postgresPort,
+    user: config.postgresUser,
+    password: config.postgresPassword,
+    database: config.postgresDb,
+  });
+
+  const poolconnection = await pool.connect();
+  try {
+    const executedMigrations = await poolconnection.query(
+      'SELECT name FROM migrations'
+    );
+
+    const migrationsDir = path.join(__dirname, '../../data/migrations');
+    const migrationFiles = fs.readdirSync(migrationsDir)
+      .filter((file) => file.endsWith('.ts'))
+    const executedCount = executedMigrations.rows.length;
+    const expectedCount = migrationFiles.length;
+
+    if (executedCount < expectedCount) {
+      console.error('ERROR: Not all migrations have been run!');
+      console.error('Please run $ yarn migration:run')
+      process.exit(1);
+    }
+
+  } finally {
+    poolconnection.release();
+    await pool.end();
+  }
+};
 
 export const checkDatabase = async (
   config,

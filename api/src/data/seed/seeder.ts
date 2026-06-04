@@ -9,6 +9,7 @@ import { validate } from '@src/app/validators/env.validator';
 import { User } from '@src/modules/user/user.entity';
 import { Post } from '@src/modules/post/post.entity';
 import { Network } from '@src/modules/network/network.entity';
+import { KeyLocation } from '@src/modules/geo/keylocation.entity';
 
 
 seeder({
@@ -22,6 +23,6 @@ seeder({
     }),
 
     TypeOrmModule.forRoot(dataSourceOptions),
-    TypeOrmModule.forFeature([Button, User, Post, Network]),
+    TypeOrmModule.forFeature([Button, User, Post, Network, KeyLocation]),
   ],
 }).run([ButtonsSeeder]);

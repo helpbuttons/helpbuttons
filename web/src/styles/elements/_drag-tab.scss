@@ -1,3 +1,5 @@
+@use '../variables' as *;
+
 $drag-tab-height: 35px;
 $drag-tab-width-desktop: 44px;
 $drag-tab-height-desktop: 200px;
@@ -22,13 +24,9 @@ $drag-tab-icon-size: 25px;
   margin: 0;
   z-index: $z-index-01;
   margin-bottom: calc( $footer-height-mobile + 70px);
-  // padding: $padding-small $padding-small;
   border-radius: $border-radius-circle $border-radius-circle;
-  // transform: translateY(-35px);
   transition: $transition-default-slow;
-
-  // margin-right: $margin-small;
-
+  color: $color-text-over-corporative;
 
   :hover {
 
@@ -39,12 +37,6 @@ $drag-tab-icon-size: 25px;
 }
 
 
-
-.drag-tab--hide{
-
- display: none  ;
-
-}
 
 .drag-tab__line {
 
@@ -57,40 +49,8 @@ $drag-tab-icon-size: 25px;
   margin: auto;
   height: $drag-tab-line-height;
   left: calc(50% - 10%);
-  top: $margin-xsmall;
+  top: $margin-xxsmall;
 
-}
-
-
-.drag-tab__order {
-
-  margin: $margin-small;
-
-}
-
-.drag-tab__list {
-}
-
-.drag-tab__icon {
-
-  display: flex;
-  flex: 1;
-
-  svg {
-    transition: $transition-no;
-    // transform: rotate(-90deg);
-    transform-origin: 50% 50%;
-    width: $drag-tab-icon-size;
-    height: $drag-tab-icon-size;
-  }
-
-}
-
-.drag-tab__counter {
-
-  margin: auto;
-  font-size: $font-size-small;
-  
 }
 
 @media #{$breakpoints-medium} {
@@ -140,19 +100,6 @@ $drag-tab-icon-size: 25px;
   .drag-tab__line {
 
     display: none;
-
-  }
-
-  .drag-tab__icon {
-
-    display: flex;
-
-    svg {
-      transform: rotate(0deg);
-      width: $drag-tab-icon-size;
-      height: $drag-tab-icon-size;
-    }
-
 
   }
 

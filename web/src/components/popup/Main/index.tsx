@@ -12,7 +12,8 @@ import { ShowProfile } from "pages/p/[username]";
 import { useEffect } from "react";
 import { replaceUrl, usePreviousUrl } from "components/uri/builder";
 import LoginForm from "components/user/LoginForm";
-import { InviteForm } from "pages/Signup/Invite";
+import { InviteForm, InviteScan } from "pages/Signup/Invite";
+import { useIsMobile } from "elements/SizeOnly";
 
 export default function MainPopup() {
   const pageName = useGlobalStore((state: GlobalState) => state.homeInfo.pageName)
@@ -25,9 +26,9 @@ export default function MainPopup() {
 
   const sessionUser = useGlobalStore((state: GlobalState) => state.sessionUser);
   const popupPage: MainPopupPage = useGlobalStore((state: GlobalState) => state.homeInfo.mainPopupPage)
-  const currentButton = useGlobalStore((state: GlobalState) => state.explore.currentButton)
   const mainPopupUserProfile = useGlobalStore((state: GlobalState) => state.homeInfo.mainPopupUserProfile)
   const mainPopupButton = useGlobalStore((state: GlobalState) => state.homeInfo.mainPopupButton)
+  const isMobile = useIsMobile()
 
   useReplaceUrl(mainPopupUserProfile, mainPopupButton, popupPage)
   return (
@@ -85,6 +86,14 @@ export default function MainPopup() {
           <InviteForm />
         </Picker>
       )}
+      {popupPage == MainPopupPage.INVITE_SCAN && (
+        <Picker
+          headerText={t('user.signup')}
+          closeAction={closePopup}
+        >
+        <InviteScan />
+      </Picker>
+      )}
       {(mainPopupUserProfile) && (
         <Picker
           headerText={t('user.otherProfileView')}
@@ -93,10 +102,10 @@ export default function MainPopup() {
           <ShowProfile userProfile={mainPopupUserProfile} sessionUser={sessionUser} />
         </Picker>
       )}
-      {mainPopupButton && (
+      {(mainPopupButton) && (
         <Picker
-          headerText={mainPopupButton.title}
-          closeAction={() => { store.emit(new SetMainPopupCurrentButton(null)); closePopup() }}
+          headerText={null}
+          closeAction={() => {store.emit(new SetMainPopupCurrentButton(null)); closePopup() }}
           extraClass={'picker__content--nopadding'}
         >
           <ButtonShow button={mainPopupButton} />
@@ -117,7 +126,7 @@ function useReplaceUrl(mainPopupUserProfile, mainPopupButton, popupPage) {
 
   useEffect(() => {
     if (mainPopupButton) {
-      replaceUrl(`/Show/${mainPopupButton.id}`);
+      replaceUrl(`/Show/${mainPopupButton?.id}`);
     }
   }, [mainPopupButton])
 
@@ -150,4 +159,23 @@ function OnlyGuest({ sessionUser, children }) {
     return <></>
   }
   return children
+}
+
+export function SetupMainPopup() {
+  const sessionUser = useGlobalStore((state: GlobalState) => state.sessionUser);
+
+  const previousUrl = usePreviousUrl();
+
+  const popupPage: MainPopupPage = useGlobalStore((state: GlobalState) => state.homeInfo.mainPopupPage)
+
+  const closePopup = () => {
+    replaceUrl(previousUrl)
+    store.emit(new SetMainPopup(MainPopupPage.HIDE));
+  }
+
+  return <OnlyGuest sessionUser={sessionUser}>{popupPage == MainPopupPage.REQUEST_LINK && (
+    <Picker closeAction={closePopup} headerText={null}>
+      <LoginClick />
+    </Picker>
+  )}</OnlyGuest>
 }

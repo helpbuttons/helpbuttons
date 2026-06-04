@@ -1,8 +1,10 @@
 import React from "react";
-import NextLink from "next/link";
 import { IoClose } from "react-icons/io5";
 
 import { useEffect, useRef } from "react";
+import Btn, { BtnType, ContentAlignment, IconType } from "elements/Btn";
+import t from "i18n";
+import { useEscapeAndEnter } from "shared/custom.hooks";
 
 const getEffectiveZIndex = (element: HTMLElement | null): number => {
   while (element) {
@@ -19,6 +21,9 @@ const getEffectiveZIndex = (element: HTMLElement | null): number => {
 };
 
 export function Picker({ closeAction, headerText, children, extraClass = '' }) {
+
+  useEscapeAndEnter(() => closeAction())
+
   const modalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -50,11 +55,11 @@ export function Picker({ closeAction, headerText, children, extraClass = '' }) {
                 </h1>
               </div>
               <div className="picker__header-right">
-                <a onClick={() => closeAction()} className="picker__header-button">
-                  <div className="btn-circle__icon">
+                <div onClick={() => closeAction()} className="picker__header-button">
+                  <div className="picker__header-button__icon">
                     <IoClose />
                   </div>
-                </a>
+                </div>
               </div>
             </div>
           </div>
@@ -85,4 +90,29 @@ export function PickerSelector({ onHandleChange, label, value }) {
       </button>
     </>
   );
+}
+
+
+export function PickerConfirmation({ children = null, title, onCancel, onConfirmation }) {
+  return (
+    <Picker closeAction={onCancel} headerText={title}>
+      {children}
+      <div className="form__field--multiinput">
+        <Btn
+          btnType={BtnType.submit}
+          iconLeft={IconType.svg}
+          caption={t('common.confirm')}
+          contentAlignment={ContentAlignment.center}
+          onClick={onConfirmation}
+        />
+        <Btn
+          btnType={BtnType.splitIcon}
+          iconLeft={IconType.svg}
+          caption={t('common.cancel')}
+          contentAlignment={ContentAlignment.center}
+          onClick={onCancel}
+        />
+      </div>
+    </Picker>
+  )
 }

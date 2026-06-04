@@ -15,7 +15,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: true,
       secretOrKey: configs().jwtSecret,
-      signOptions: { expiresIn: '365d' },
+      // signOptions: { expiresIn: '365d' },
     });
   }
 

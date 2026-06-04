@@ -129,6 +129,18 @@ export class User extends BaseEntity {
   @Expose()
   @Column({default: false})
   endorsed?: boolean;
+
+  @Expose()
+  @Column('text', { array: true, default: [] })
+  follows: string[];
+
+  @Expose()
+  @Column({default: false})
+  hasPhone?: boolean;
+
+  @Expose()
+  @Column({type: 'jsonb', default: {}})
+  readGroupMessages?: string;
 }
 
 export interface UserRelations {

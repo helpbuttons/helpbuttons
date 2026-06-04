@@ -6,31 +6,25 @@ import {
 } from '@nestjs/typeorm';
 import { uuid } from '@src/shared/helpers/uuid.helper';
 import { ActivityEventName } from '@src/shared/types/activity.list';
-import { EntityManager, In, Not, Repository } from 'typeorm';
+import { EntityManager, Repository } from 'typeorm';
 import { Activity } from './activity.entity';
 
 import { UserService } from '../user/user.service';
 import { MailService } from '../mail/mail.service';
 import translate from '@src/shared/helpers/i18n.helper';
-import { getUrl } from '@src/shared/helpers/mail.helper';
 import { ButtonService } from '../button/button.service';
-import {
-  getButtonActivity,
-  getUserActivity,
-  transformToMessage,
-} from './activity.transform';
 import { NetworkService } from '../network/network.service';
-import { ActivityDtoOut, ActivityMessageDto, ExcerptMaxChars } from './activity.dto';
-import { Button } from '../button/button.entity';
-import { User } from '../user/user.entity';
-import { unique } from '@src/shared/helpers/array.helper';
-import { excerpt } from './activity.utils';
-import { Comment } from '../post/comment.entity';
+import { Activities, ActivitiesPageSize, ActivityDtoOut } from './activity.dto';
 import { PostService } from '../post/post.service';
-import { getAction } from './activity.types';
+import { unique } from '@src/shared/helpers/array.helper';
+import { IsNull } from "typeorm"
+import { GroupMessageService } from '../group-message/group-message.service';
+import { getUrl } from '@src/shared/helpers/mail.helper';
+import { SourceCodeLogger } from '@src/shared/helpers/source-code-logger.helper';
 
 @Injectable()
 export class ActivityService {
+  private logger = new SourceCodeLogger('Activity')
   constructor(
     @InjectRepository(Activity)
     private readonly activityRepository: Repository<Activity>,
@@ -41,48 +35,83 @@ export class ActivityService {
     private readonly buttonService: ButtonService,
     private readonly networkService: NetworkService,
     private readonly postService: PostService,
-  ) {}
+    private readonly groupMessageService: GroupMessageService
+  ) { }
 
   @OnEvent(ActivityEventName.NewPost)
   async onNewPost(payload: any) {
     const post = payload.data.post;
     const button = post.button;
+    const author = post.author;
     // check users following the button of this post, and add a new actitivy to the daily outbox
-    // console.log(button)
     return this.postService.findByButtonId(button.id)
-    .then(async (posts) => {
-      if(posts.length <= 1)
-      {
-        console.log('do not notify, automatic post')
-        return Promise.resolve(true)
-      }
-      return await this.buttonService
-      .findById(button.id)
-      .then(async (_button) => {
-        const usersFollowing =
-          await this.userService.findAllByIdsToBeNotified(
-            _button.followedBy,
-          );
-
-        // notify users following button...
-        await Promise.all(
-          usersFollowing.map((user) => {
-            return this.createActivity(user, payload, true);
-          }),
-        );
-
-        // notify button owner
-        return this.createActivity(_button.owner, payload, false);
+      .then(async (posts) => {
+        if (posts.length <= 1) {
+          // do not notify, automatic post
+          return Promise.resolve(true)
+        }
+        return this.findUsersToNotify(button)
+          .then((users) => {
+            return users.map((_user) => {
+              return this.newActivity(button, _user, author, _user, payload, true)
+            })
+          })
+          .then(() => {
+            return this.newNetworkActivity(button, author, payload);
+          });
       })
-      .then(() => {
-        return this.newNetworkActivity(payload);
-      });
+
+  }
+
+  findUsersToNotify(button) {
+    if(!button.followedBy){
+      console.error('button doesnt have followedBy')
+      console.trace()
+      return Promise.resolve([])
+    }
+    return this.userService.findAllByIdsToBeNotified(button.followedBy);
+  }
+
+  @OnEvent(ActivityEventName.NewFollowingButton)
+  async newFollowingButton(payload: any) {
+    const { user, button } = payload.data;
+    return this.activityRepository.delete({
+      consumer: { id: user.id },
+      button: { id: button.id },
+      eventName: ActivityEventName.NewFollowingButton,
     })
-    
+      .then(() => this.newActivity(button, button.owner, user, user, payload, true, true))
+  }
+
+  @OnEvent(ActivityEventName.UnfollowButton)
+  async unfollowButton(payload: any) {
+    const { user, button } = payload.data;
+    return this.activityRepository.delete({
+      consumer: { id: user.id },
+      button: { id: button.id },
+      eventName: ActivityEventName.NewFollowingButton,
+    })
+  }
+
+  @OnEvent(ActivityEventName.DeleteButton)
+  async onDeleteButton(payload: any) {
+    const { user, button } = payload.data
+
+    return this.findUsersToNotify(button)
+      .then((users) => {
+        return users.map((_user) => {
+          return this.newActivity(button, _user, button.owner, _user, payload, true, false)
+        })
+      })
   }
 
   @OnEvent(ActivityEventName.NewPostComment)
   async onNewPostComment(payload: any) {
+
+
+    // notify owner of button
+    // author
+
     // notify
     // - dont send mail to author of comment
     // - send mail to owner of button if owner is not author
@@ -91,83 +120,40 @@ export class ActivityService {
     const message = comment.message;
     const author = comment.author;
     const button = comment.button;
-
-    // notify users mentioned
-    let userIdsMentioned = await this.findUserMentionsInMessage(
+    let usersMentioned = await this.findUserMentionsInMessage(
       message,
       author.username,
-    ).then((users) =>
-      users.filter((user) => !!user).map((user) => user.id),
-    );
+    )
+    let userIdsMentioned = usersMentioned.map((user) => user.id);
+    if (button.owner.id != author.id) {
+      userIdsMentioned = [...userIdsMentioned, button.owner.id];
+    }
+    userIdsMentioned = unique(userIdsMentioned);
 
-    // notify owner of button if different from author
-    const userIdsToNotify = unique([
-      ...userIdsMentioned,
-      author.id,
-      button.owner.id,
-    ]);
-    console.log(userIdsToNotify)
-    return Promise.all(
-      userIdsToNotify.map((userId) => {
-        return this.userService.findById(userId).then((user) => {
-          if (user.id == author.id) {
-            console.log('author: ' + author.email)
-            return user;
-          }
-
-          console.log('sending mail to ' +user.email );
-          //by Mail
-          return this.userService
-            .getUserLoginParams(user.id)
-            .then((loginParams) => {
-              // console.log('sending mail to: ' + user.email);
-              // we don't need to wait for the mail to be sent.. so we ignore this promise:
-              this.mailService.sendWithLink({
-                to: user.email,
-                content: translate(
-                  user.locale,
-                  'activities.newcomment',
-                  [author.username, message],
-                ),
-                subject: translate(
-                  user.locale,
-                  'activities.newcommentSubject',
-                  [button.title],
-                ),
-                link: getUrl(
-                  user.locale,
-                  `/ButtonFile/${comment.button.id}${loginParams}`,
-                ),
-                linkCaption: translate(
-                  user.locale,
-                  'email.buttonLinkCaption',
-                ),
-              });
-
-              return user;
-            })
-            .then((user) => {
-              let read = false;
-              if (user.id == author.id) {
-                read = true;
-              }
-              if(!user)
-              {
-                return;
-              }
-              return this.createActivity(user, payload, false, read);
-            });
-        });
-      }),
-    );
+    // const consumerId = button.owner.id != author.id ? author.id : 
+    userIdsMentioned.map((userId) => {
+      if (userId == author.id) {
+        const consumerId = button.owner.id == author.id ? userId : author.id
+        return this.newActivity(button, userId, author, { id: consumerId }, payload, true, false, false)
+      }else if (userId == button.owner.id ) { // notify author of the comment
+        const consumerId = button.owner.id == author.id ? userId : author.id
+        return this.newActivity(button, {id: userId}, author, { id: consumerId }, { ...payload, activityEventName: ActivityEventName.NewMention }, true, false, true)
+      } else {
+        const consumerId = button.owner.id == author.id ? userId : author.id
+        return this.newActivity(button, {id: userId}, author, { id: consumerId }, { ...payload, activityEventName: ActivityEventName.NewMention }, true, false, true)
+      }
+    })
   }
 
   @OnEvent(ActivityEventName.NewButton)
   async onNewButton(payload: any) {
-    const button_ = getButtonActivity(payload.data);
+    const { button } = payload.data
+
+    this.newNetworkActivity(button, button.owner, payload)
+    const _button = payload.data.button
     // check users following the button of this post, and add a new actitivy to the daily outbox
     return this.buttonService
-      .findById(button_.id)
+      .findById(_button.id)
       .then(async (button) => {
         // calculate users to be notified:
         // - check users with this interests/tags
@@ -192,164 +178,214 @@ export class ActivityService {
               });
             });
         };
-
         if (button?.tags && button.tags.length > 0) {
           const usersIds = (await getUsersToNotify(button))
             .map((user) => user.id)
             .filter((userId) => userId != button.owner.id);
           const usersToNotify =
             await this.userService.findAllByIdsToBeNotified(usersIds);
-
           // notify users following this tag
           await Promise.all(
             usersToNotify.map((user) => {
-              // auto follow button!
-              return this.buttonService
-                .follow(button.id, user.id)
-                .then(() => {
-                  // add new button to activity of user following interest in their radius!
-                  return this.createActivity(user, payload, true);
-                });
+                return this.newActivity(button, user.id, button.owner.id, { id: user.id },  { data: { button: button }, activityEventName: ActivityEventName.NewButton } , true, false)
             }),
           ).catch((err) => {
             console.log(payload);
             console.log(err);
           });
         }
-        return this.createActivity(button.owner, payload, false);
       })
-      .then(() => {
-        return this.newNetworkActivity(payload);
-      });
   }
 
-  @OnEvent(ActivityEventName.DeleteButton)
-  async onDeleteButton(payload: any) {
-    const button = getButtonActivity(payload.data);
-    const user = getUserActivity(payload.data);
-
-    return this.entityManager
-      .query(
-        `delete from activity WHERE (data->'button'->'id' @> '"${button.id}"' OR data->'post'->'button'->'id' @> '"${button.id}"' OR data->'comment'->'button'->'id' @> '"${button.id}"')`,
-      )
-      .then(() => {
-        return this.createActivity(button.owner, payload, false);
-      });
-  }
   @OnEvent(ActivityEventName.RenewButton)
   async onRenewButton(payload: any) {
-    console.log('doing nothing for now');
-    // https://github.com/helpbuttons/helpbuttons/issues/703
-    // deactivating this email
-    // {
-    //   const owner = payload.data.owner;
-    //   const button = payload.data.button;
-    //   return this.userService.getUserLoginParams(owner.id).then(
-    //     (loginParams) => {
-    //   this.mailService.sendWithLink({
-    //         to: owner.email,
-    //         content: translate(owner.locale, 'button.renewMail', [button.title]),
-    //         subject: translate(owner.locale, 'button.renewMailSubject'),
-    //         link: getUrl(
-    //           owner.locale,
-    //           `/ButtonFile/${button.id}${loginParams}`,
-    //         ),
-    //         linkCaption: translate(
-    //           owner.locale,
-    //           'email.buttonLinkCaption',
-    //         ),
-    //       })
-    //     })
-    // }
+    const { button, owner} = payload.data;
+    return this.findUsersToNotify(button)
+      .then((users) => {
+        return users.map((_user, idx) => {
+          return this.newActivity(button, _user, owner, _user, payload, true, true)
+        })
+      })
   }
   @OnEvent(ActivityEventName.ExpiredButton)
   async onExpiredButton(payload: any) {
     const { button } = payload.data;
-
-    // delete from home info
-    await this.createActivity(button.owner, payload, false);
+    this.newActivity(button, {id: button.ownerId}, button.ownerId, null, payload, false, false, true)
+    return this.findUsersToNotify(button)
+      .then((users) => {
+        return users.map((_user) => {
+          return this.newActivity(button, _user, button.ownerId, _user, payload)
+        })
+      })
   }
 
-  @OnEvent(ActivityEventName.NewFollowingButton)
-  async newFollowingButton(payload: any) {
-    const { user, button } = payload.data;
-    this.createActivity(user, payload, false);
+  @OnEvent(ActivityEventName.SchedulerExpiredButton)
+  async onSchedulerExpired(payload: any)
+  {
+    const { button } = payload.data;
+    this.newActivity(button, {id: button.ownerId}, button.ownerId, null, payload, false, false, true)
+
+    return this.findUsersToNotify(button)
+      .then((users) => {
+        return users.map((_user, idx) => {
+          return this.newActivity(button, _user, button.ownerId, _user, payload, true, true)
+        })
+      })
   }
 
-  @OnEvent(ActivityEventName.NewFollowedButton)
-  async newFollowedButton(payload: any) {
-    const { user, button } = payload.data;
-    this.createActivity(button.owner, payload, false);
+  @OnEvent(ActivityEventName.EndorseRevoked)
+  async onEndorseRevoked(payload: any) {
+    const { user } = payload.data;
+    return this.activityRepository.delete({
+      consumer: { id: user.id },
+      eventName: ActivityEventName.Endorsed,
+    })
   }
 
   @OnEvent(ActivityEventName.Endorsed)
-  @OnEvent(ActivityEventName.RevokeEndorsed)
   @OnEvent(ActivityEventName.RoleUpdate)
-  async onEvent(payload: any) {
-    const {user, addToDaily} = getAction(ActivityEventName.Endorsed).onEvent(payload)
-    this.createActivity(user, payload, addToDaily)
+  async onRoleUpdated(payload: any) {
+    const { user, sessionUser } = payload.data;
+    this.newActivity(null, user.id, sessionUser, { id: user.id }, payload, false, false, true)
   }
 
-  findByUserId(
-    userId: string,
-    locale: string,
-    read: boolean = null,
-    page,
-    eventNameFindOptions = null,
-    hydrate = (activity, buttonTypes) => {},
-  ): Promise<ActivityDtoOut[] | ActivityMessageDto[]> {
-    //@ts-ignore
-    return this.networkService
-      .findButtonTypes()
-      .then((buttonTypes) => {
-        let findConditions = {
-          where: {
-            owner: { id: userId },
-            eventName: eventNameFindOptions,
-            read,
-          },
-          relations: ['owner'],
-          order: { created_at: 'DESC' },
-        };
-        if (page || page === 0) {
-          findConditions = {
-            ...findConditions,
-            ...{ take: 5, skip: page * 5 },
-          };
+  public sendMessage(fromId, consumerId, buttonId, message) {
+    return this.buttonService.findById(buttonId)
+      .then((button) => {
+        let toId = consumerId
+        if (consumerId == fromId) {
+          toId = button.owner.id
         }
-        return (
-          this.activityRepository
-            //@ts-ignore
-            .find(findConditions)
-            .then((activities) => {
-              return { buttonTypes, activities };
-            })
-        );
+        return this.newActivity({ id: buttonId }, { id: toId }, { id: fromId }, { id: consumerId }, { data: { message: message }, activityEventName: ActivityEventName.Message }, true, true, true)
       })
-      .then(({ activities, buttonTypes }) => {
-        return activities.map(
-          (activity): ActivityDtoOut | ActivityMessageDto => {
-            //@ts-ignore
-            return hydrate(activity, buttonTypes);
-          },
-        );
-      });
   }
 
+  private async notifyByEmail(insertResult) {
+    const activityId = insertResult.identifiers[0].id
+    const network = await this.networkService.findDefaultNetwork()
+    const btnTypes = await this.networkService.findButtonTypes()
+
+    return this.activityRepository.findOne({ where: { id: activityId }, relations: ['button.owner', 'to', 'from', 'consumer'] })
+      .then((activity) => {
+        const toId = activity.to.id;
+        return this.userService.findById(toId)
+          .then((user) => {
+            const _activity = this.transformActivity(activity, user.locale, toId);
+            const isButtonOwner = activity?.button?.owner?.id == toId
+            const fromName: string = activity?.from?.name;
+            const publicationTitle: string = activity?.button?.title
+            const locale = activity.to.locale
+            return this.userService.getUserLoginParams(toId)
+              .then((loginParams) => {
+                const btnType = btnTypes.find((btnType) => btnType.name == activity?.button?.type)
+                const btnTypeCaption = `${btnType?.icon} ${btnType?.caption}`
+                const extra = {
+                  title: activity?.button?.title,
+                  address: activity?.button?.address,
+                  type: btnTypeCaption,
+                  networkName: network.name
+                }
+                switch(activity.eventName){
+                  // this activities are exclude in the daily resume, on line activity.cron.ts:71
+                  case ActivityEventName.Message:
+                    this.mailService.sendActivity({
+                      to: activity.to.email,
+                      content: translate(locale, 'activities.newMessageContent', [fromName, _activity.message]),
+                      subject: translate(locale, 'activities.newMessageSubject', [fromName]),
+                      link: this.addLoginParams(getUrl(`/Activity/button/${_activity.buttonId}`), loginParams),
+                      linkCaption: translate(locale, 'activities.replyToMessage'),
+                      ...extra
+                    });
+                    break;
+                  case ActivityEventName.NewPostComment:
+                    // @ts-ignore
+                    const {comment} = activity.data
+                    this.mailService.sendActivity({
+                      to: activity.to.email,
+                      content: 
+                      translate(locale, 'activities.newPostCommentContent', [fromName, comment.message, publicationTitle]),
+                      subject: translate(locale, 'activities.newPostCommentSubject', [fromName]),
+                      link: this.addLoginParams(getUrl(`/Activity/button/${_activity.buttonId}`), loginParams),
+                      linkCaption: translate(locale, 'activities.replyToMessage'),
+                      ...extra
+                    })
+                    break;
+                  case ActivityEventName.NewMention:
+                    this.mailService.sendActivity({
+                      to: activity.to.email,
+                      content: translate(locale, 'activities.newMentionContent', [ _activity.message]),
+                      subject: translate(locale, 'activities.newMentionSubject', [fromName]),
+                      link: this.addLoginParams(getUrl(`/Activity/button/${_activity.buttonId}`), loginParams),
+                      linkCaption: translate(locale, 'activities.replyToMessage'),
+                      ...extra
+                    })
+                    break;
+                    case ActivityEventName.ExpiredButton:
+                    this.mailService.sendActivity({
+                      to: activity.to.email,
+                      content: translate(locale, 'customTemplates.schedulerExpired'),
+                      subject: translate(locale, 'customTemplates.schedulerExpiredMailSubject', [activity.button.title]),
+                      link: this.addLoginParams(getUrl(`/Activity/button/${_activity.buttonId}`), loginParams),
+                      linkCaption: translate(locale, 'activities.view'),
+                      ...extra
+                    })
+                    break;
+                    case ActivityEventName.SchedulerExpiredButton:
+                    this.mailService.sendActivity({
+                      to: activity.to.email,
+                      content: translate(locale, 'customTemplates.eventExpired'),
+                      subject: translate(locale, 'customTemplates.eventExpiredMailSubject', [activity.button.title]),
+                      link: this.addLoginParams(getUrl(`/Activity/button/${_activity.buttonId}`), loginParams),
+                      linkCaption: translate(locale, 'activities.view'),
+                      ...extra
+                    })
+                    break;
+                    case ActivityEventName.Endorsed: {
+                      this.mailService.sendActivity({
+                        to: activity.to.email,
+                        content: translate(locale, 'activities.endorsed'),
+                        subject: translate(locale, 'activities.endorsed'),
+                        ...extra,
+                        type: null
+                      })
+                      break;
+                    }
+                    case ActivityEventName.RoleUpdate: {
+                      //@ts-ignore
+                      const { role } = activity.data
+                      const roleName = translate(locale, `roles.${role}`);
+
+                      this.mailService.sendActivity({
+                        to: activity.to.email,
+                        content: translate(locale, 'activities.roleupdate', [roleName]),
+                        subject: translate(locale, 'activities.roleupdate', [roleName]),
+                        ...extra,
+                        type: null
+                      })
+                      break;
+                    }
+                    default:
+                      this.logger.warn(`mail for the activity "${activity.eventName}" not defined `)
+                }
+              })
+
+          })
+      })
+  }
   private markAllAsRead(userId: string, eventNameFindOptions) {
     return this.activityRepository.update(
       {
         read: false,
-        owner: { id: userId },
+        to: { id: userId },
         eventName: eventNameFindOptions,
       },
       { read: true },
     );
   }
 
-  markAsRead(userId: string, notificationId: string) {
+  markAsRead(userId: string, activityId: string) {
     return this.activityRepository.update(
-      { id: notificationId, owner: { id: userId } },
+      { id: activityId, to: { id: userId } },
       { read: true },
     );
   }
@@ -372,53 +408,74 @@ export class ActivityService {
     ).then((users) => users.filter((user) => user));
   }
 
-  createActivityForUsers(
-    users,
-    payload,
-    addToDailyMailResume = false,
-    read = false,
-  ) {
-    return Promise.all(
-      users.map((_user) =>
-        this.createActivity(
-          _user.id,
-          payload,
-          addToDailyMailResume,
-          read,
-        ),
-      ),
-    );
-  }
-  createActivity(
-    user,
-    payload,
-    addToDailyMailResume = false,
-    read = false,
-  ) {
-    try {
-      console.log(
-        `new activity ${user.username} ${payload.activityEventName} outbox? ${addToDailyMailResume}`,
-      );
-    } catch (err) {
-      console.log(`${JSON.stringify(user)}`)
-      console.log(err);
-    }
-    const activity = {
-      id: uuid(),
-      owner: user,
-      eventName: payload.activityEventName,
-      data: JSON.stringify(payload.data),
-      outbox: addToDailyMailResume,
-      read,
-    };
-    return this.activityRepository.insert([activity]);
+  async hideActivitiesButtonConsumer(buttonId, consumerId) {
+    return await this.activityRepository.update(
+      {
+        button: { id: buttonId },
+        consumer: { id: consumerId },
+      },
+      { lastActivityButtonConsumer: false },
+    )
   }
 
-  private newNetworkActivity(payload) {
+  async hideActivitiesButtonOwner(buttonId, consumerId) {
+    return await this.activityRepository.update(
+      {
+        button: { id: buttonId },
+        consumer: { id: consumerId },
+      },
+      { lastActivityButtonOwner: false },
+    )
+  }
+
+  async newActivity(button, to, from, consumer, payload, setAsLastButtonConsumer = true, setAsLastButtonOwner = false, notifyToEmail = false) {
     const activity = {
       id: uuid(),
+      button,
+      to,
+      from,
+      consumer,
       eventName: payload.activityEventName,
       data: JSON.stringify(payload.data),
+      outbox: !notifyToEmail,// if doesn't notify, will be sent on resume to mail
+      lastActivityButtonConsumer: setAsLastButtonConsumer,
+      lastActivityButtonOwner: setAsLastButtonOwner,
+    };
+       
+    if(!from){
+      this.logger.warn(payload.activityEventName)
+      this.logger.warn(from)
+      console.trace()
+      return;
+    }
+    if (setAsLastButtonConsumer) {
+      await this.hideActivitiesButtonConsumer(button.id, consumer.id)
+    }
+    if (setAsLastButtonOwner) {
+      await this.hideActivitiesButtonOwner(button.id, consumer.id)
+    }
+
+    
+    return this.activityRepository.insert([activity])
+    .then((insertResult) => {
+      if(notifyToEmail) {
+        this.notifyByEmail(insertResult)
+      }
+      return insertResult
+    })
+  }
+
+
+  private newNetworkActivity(button, from, payload) {
+    const activity = {
+      id: uuid(),
+      button,
+      from,
+      eventName: payload.activityEventName,
+      data: JSON.stringify(payload.data),
+      outbox: false,
+      lastActivityButtonConsumer: false,
+      lastActivityButtonOwner: false,
       homeinfo: true,
     };
     return this.activityRepository.insert([activity]);
@@ -426,93 +483,354 @@ export class ActivityService {
 
   public deleteme(authorId: string) {
     return this.activityRepository.delete({
-      owner: { id: authorId },
+      to: { id: authorId },
     });
   }
 
+  public findNotificationByButtonAndUser(userId, buttonId, consumerId, locale, page): Promise<ActivityDtoOut[]> {
 
+    return this.activityRepository.find({
+      where:
+        { button: { id: buttonId }, consumer: { id: consumerId } },
+      relations: ['button.owner', 'to', 'from', 'consumer'],
+      take: ActivitiesPageSize, skip: page * ActivitiesPageSize,
+      order: { created_at: 'DESC' },
+    })
+      .then((activities) => {
+        return activities.filter((activity) => {
+          const isButtonOwner = activity?.button?.owner?.id == userId
+          const isConsumer = userId == consumerId
+          if (!isConsumer && !isButtonOwner) {
+            return false;
+          }
+          return true;
+        })
+      })
+      .then((activities) => {
+        return activities.map((activity) => {
+          return this.transformActivity(activity, locale, userId);
+        })
+      })
+  }
 
-  public findMessagesByUserId(
-    userId,
-    locale,
-    read,
-    page,
-  ): ActivityMessageDto[] {
-    //@ts-ignore
-    return this.findByUserId(
-      userId,
-      locale,
-      read,
-      page,
-      In([ActivityEventName.NewPostComment]),
-      (activity, buttonTypes): ActivityMessageDto => {
-        if (activity.eventName == ActivityEventName.NewPostComment) {
-          //@ts-ignore
-          const comment: Comment = activity.data.comment;
-          //@ts-ignore
-          const button: Button = comment.post.button;
-          const authorComment: User = comment.author;
-          const excerptMessage = excerpt(comment.message)
+  public findNotificationsByUser(
+    user,
+    page = 0,
+  ): Promise<Activities> {
+
+    return this.activityRepository.find({
+      where: [
+        { consumer: { id: user.id }, lastActivityButtonConsumer: true },
+        { button: { owner: { id: user.id } }, lastActivityButtonOwner: true },
+        { consumer: { id: user.id }, button: IsNull() }
+      ],
+      relations: ['button.owner', 'to', 'from', 'consumer'],
+      take: ActivitiesPageSize, skip: page * ActivitiesPageSize,
+      order: { created_at: 'DESC' },
+    })
+      .then((activities) => {
+        return activities.map((activity) => {
+          return this.transformActivity(activity, user.locale, user.id);
+        })
+      }).then((activities) => {
+        return this.groupMessageService.findByUser(user)
+          .then((groupMessages) => {
+            return {
+              buttons: activities,
+              ...groupMessages
+            }
+          })
+      })
+  }
+
+  transformActivityHomeInfo(activity, locale, userId) {
+    let activityOut = {
+      id: activity.id,
+      eventName: activity.eventName,
+      read: true,
+      createdAt: activity.created_at,
+      buttonId: activity?.button?.id,
+      fromId: activity?.from?.id,
+      consumerId: activity?.consumer?.id,
+      activityFrom: activity?.button?.owner,
+      disableChat: true
+    }
+
+    switch (activity.eventName) {
+      case ActivityEventName.NewButton:
+        {
+          const { button } = activity.data
           return {
-            image: authorComment.avatar ? authorComment.avatar : null, //  (authorButton.avatar ? authorButton.avatar : null)
-            //@ts-ignore
-            button: {
-              type: button.type,
-              title: button.title,
-              id: button.id,
-              image: button.image
-            },
-            authorName: comment.author.name,
-            privacy: comment.privacy,
-            message: comment.message,
-            createdAt: activity.created_at,
-            read: activity.read,
-            messageId: comment.id.toString(),
-            id: activity.id.toString(),
-            excerpt: excerptMessage,
-          };
+            ...activityOut,
+            title: button.title,
+            from: button.owner.name,
+            image: button.image,
+            buttonType: button.type,
+            type: translate(locale, 'activities.notice'),
+            footer: button.address,
+            message: translate(locale, 'activities.newbuttonHomeinfo'),
+          }
         }
-      },
-    );
+      case ActivityEventName.NewPost:
+        {
+          const { post } = activity.data
+          return {
+            ...activityOut,
+            title: activity.from.name,
+            from: "",
+            image: activity.button.image,
+            buttonType: activity.button.type,
+            type: translate(locale, 'activities.notice'),
+            footer: `${activity.button.title} - ${activity.button.address}`,
+            message: translate(locale, 'activities.newpost', [post.message]),
+            postId: post.id,
+          }
+        }
+    }
   }
-  public findNotificationsByUserId(
-    userId,
-    locale,
-    read,
-    page = null,
-  ): ActivityDtoOut[] {
-    //@ts-ignore
-    return this.findByUserId(
-      userId,
-      locale,
-      read,
-      page,
-      Not(In([ActivityEventName.NewPostComment])),
-      (activity, buttonTypes): ActivityDtoOut => {
-        return transformToMessage(
-          activity,
-          userId,
-          buttonTypes,
-          locale,
-        );
-      },
-    )
-    //@ts-ignore
-    .then((activities) => activities.filter((activity) => activity))
-  }
+  
+  public transformActivity(activity, locale, userId) {
+    try {
+      const isOwner = activity?.to?.id == userId;
+      const isButtonOwner = activity?.button?.owner?.id == userId
+      const disableChat = (userId == activity?.button?.owner.id && activity?.consumer?.id == userId) ? true : false;
+      const read = (activity?.from?.id == userId) ? true : activity.read;
+      if (activity.from == null) {
+        console.log(activity)
+        this.logger.warn(`activity as from null: ${activity.eventName} ${activity.id}`)
+      }
+      let activityOut = {
+        id: activity.id,
+        eventName: activity.eventName,
+        read: read,
+        createdAt: activity.created_at,
+        buttonId: activity?.button?.id,
+        fromId: activity?.from?.id,
+        consumerId: activity?.consumer?.id,
+        activityFrom: isButtonOwner ? activity.consumer : activity?.button?.owner,
+        disableChat: disableChat,
+        link: getUrl('/Explore'),
+        linkCaption: translate(locale, 'activities.view')
+      }
 
-  public markAllMessagesAsRead(userId) {
-    return this.markAllAsRead(
-      userId,
-      In([ActivityEventName.NewPostComment]),
-    );
-  }
+      switch (activity.eventName) {
+        case ActivityEventName.NewFollowingButton:
+          return {
+            ...activityOut,
+            title: isButtonOwner ? activity.from.name : activity.button.owner.name,
+            from: "",
+            image: isOwner ? activity.from.avatar : activity.button.image,
+            buttonType: activity.button.type,
+            type: translate(locale, 'activities.notice'),
+            footer: `${activity.button.title} - ${activity.button.address}`,
+            message: isOwner ? translate(locale, 'activities.newfollowed', [activity.from.name]) : translate(locale, 'activities.newfollowing'),
+            link: getUrl(`/Show/${activity.button.id}`)
+          }
+        case ActivityEventName.NewPost:
+          const { post } = activity.data
+          return {
+            ...activityOut,
+            title: activity.from.name,
+            from: "",
+            image: isOwner ? activity.from.avatar : activity.button.image,
+            buttonType: activity.button.type,
+            type: translate(locale, 'activities.notice'),
+            footer: `${activity.button.title} - ${activity.button.address}`,
+            message: isButtonOwner ? translate(locale, 'activities.newpost', [post.message]) :  translate(locale, 'activities.newpostfollower', [post.message]),
+            postId: post.id,
+            link: getUrl(`/Show/${activity.button.id}`),
+            disableChat: false,
+          }
+        case ActivityEventName.DeleteButton:
+          return {
+            ...activityOut,
+            title: activity.from.name,
+            from: "",
+            image: isOwner ? activity.from.avatar : activity.button.image,
+            buttonType: activity.button.type,
+            type: translate(locale, 'activities.notice'),
+            footer: `${activity.button.title} - ${activity.button.address}`,
+            message: translate(locale, 'activities.deleted'),
+            link: null,
+            disableChat: true,
+          }
+        case ActivityEventName.Message:
+          {
+            const { message } = activity.data
+            return {
+              ...activityOut,
+              title: isOwner ? activity.from.name : activity.to.name,
+              from: isOwner ? activity.from.name : '',
+              image: isOwner ? activity.from.avatar : activity.button.image,
+              buttonType: activity.button.type,
+              type: translate(locale, 'activities.message'),
+              footer: `${activity.button.title} - ${activity.button.address}`,
+              message: message,
+              link: getUrl(`/Activity/${activity.id}`)
+            }
+          }
+        case ActivityEventName.NewPostComment:
+          {
+            const { comment } = activity.data
+            const commentOwner = comment.author.id == userId            
+            return {
+              ...activityOut,
+              title: isOwner ? activity.from.name : activity.to.name,
+              from: isOwner ? activity.from.name : '',
+              image: isOwner ? activity.from.avatar : activity.button.image,
+              buttonType: activity.button.type,
+              type: translate(locale, 'activities.comment'),
+              footer: `${activity.button.title} - ${activity.button.address}`,
+              message: commentOwner ? translate(locale, 'activities.newcommentOwn', [comment.message]) : translate(locale, 'activities.newcomment', [comment.author.name, comment.message]),
+              messageId: comment.id,
+              link: getUrl(`/Show/${activity.button.id}`)
+            }
+          }
+        case ActivityEventName.NewMention:
+          {
+            const { comment } = activity.data
+            const commentOwner = comment.author.id == userId
 
-  public markAllNotificationsAsRead(userId) {
-    return this.markAllAsRead(
-      userId,
-      Not(In([ActivityEventName.NewPostComment])),
-    );
+            return {
+              ...activityOut,
+              title: '',
+              from: isOwner ? activity.from.name : '',
+              image: isOwner ? activity.from.avatar : activity.button.image,
+              buttonType: activity.button.type,
+              type: translate(locale, 'activities.notice'),
+              footer: `${activity.button.title} - ${activity.button.address}`,
+              message: commentOwner ? translate(locale, 'activities.newmentionOwn', [comment.message]) :
+                translate(locale, 'activities.newmention', [comment.author.name, comment.message]),
+              messageId: comment.id,
+              link: getUrl(`/Show/${activity.button.id}`)
+            }
+          }
+        case ActivityEventName.NewButton:
+          {
+            const { button } = activity.data
+            let message = translate(locale, 'activities.newButtonInterest', [button.address])
+            if(isButtonOwner)
+            {
+              message = translate(locale, 'activities.newbutton', [button.address])
+            }
+            return {
+              ...activityOut,
+              title: button.title,
+              from: button.owner.name,
+              image: button.image,
+              buttonType: button.type,
+              type: translate(locale, 'activities.notice'),
+              footer: button.address,
+              message: message,
+              link: getUrl(`/Show/${activity.button.id}`)
+            }
+          }
+        case ActivityEventName.Endorsed:
+          {
+            return {
+              ...activityOut,
+              title: "",
+              from: "",
+              image: "",
+              buttonType: "",
+              type: translate(locale, 'activities.notice'),
+              footer: "",
+              message: translate(locale, 'activities.endorsed'),
+              link: null
+            }
+          }
+        case ActivityEventName.RoleUpdate:
+          {
+            const { role } = activity.data
+            const roleName = translate(locale, `roles.${role}`);
+            return {
+              ...activityOut,
+              title: "",
+              from: "",
+              image: "",
+              buttonType: "",
+              type: translate(locale, 'activities.notice'),
+              footer: "",
+              message: translate(locale, 'activities.roleupdate', [roleName]),
+              link: null
+            }
+          }
+        case ActivityEventName.RenewButton:
+          return {
+            ...activityOut,
+            title: activity?.from?.name,
+            from: "",
+            image: activity.button.image,
+            buttonType: activity.button.type,
+            type: translate(locale, 'activities.notice'),
+            footer: `${activity.button.title} - ${activity.button.address}`,
+            message: translate(locale, 'customTemplates.schedulerRenewd'),
+            link: null,
+            disableChat: false,
+          }
+        case ActivityEventName.SchedulerExpiredButton:
+          return {
+            ...activityOut,
+            title: activity?.from?.name,
+            from: "",
+            image: activity.button.image,
+            buttonType: activity.button.type,
+            type: translate(locale, 'activities.notice'),
+            footer: `${activity.button.title} - ${activity.button.address}`,
+            message: translate(locale, 'customTemplates.schedulerExpired'),
+            link: null,
+            disableChat: true,
+          }
+        case ActivityEventName.ExpiredButton:
+          return {
+            ...activityOut,
+            title: activity?.from?.name,
+            from: "",
+            image: activity.button.image,
+            buttonType: activity.button.type,
+            type: translate(locale, 'activities.notice'),
+            footer: `${activity.button.title} - ${activity.button.address}`,
+            message: translate(locale, 'customTemplates.eventExpired'),
+            link: null,
+            disableChat: true,
+          }
+        default:
+          return {
+            ...activityOut,
+            title: "",
+            from: "",
+            image: "",
+            buttonType: "",
+            type: "",
+            footer: "",
+            message: activity.eventName
+          }
+      }
+    } catch (err) {
+      // console.log(activity)
+      console.log(activity.id)
+      console.log(err)
+    }
+    return {
+        id: activity.id,
+        eventName: activity.eventName,
+        read: false,
+        createdAt: activity.created_at,
+        buttonId: activity?.button?.id,
+        fromId: activity?.from?.id,
+        consumerId: activity.consumer.id,
+        activityFrom: false,
+        disableChat: true,
+        link: getUrl('/Explore'),
+        linkCaption: 'errror',
+        title: "",
+        from: "",
+        image: "",
+        buttonType: "",
+        type: "",
+        footer: "",
+        message: activity.eventName
+    }
   }
 
   public findNetworkActivity(locale) {
@@ -524,19 +842,39 @@ export class ActivityService {
             take: 5,
             order: { created_at: 'DESC' },
             where: { homeinfo: true },
+            relations: ['button.owner', 'to', 'from', 'consumer'],
           })
           .then((activities) => {
             return activities.map((activity): ActivityDtoOut => {
-              return transformToMessage(
-                activity,
-                false,
-                buttonTypes,
-                locale,
-              );
+              try {
+                return this.transformActivityHomeInfo(activity, locale, false)
+              } catch (err) {
+                console.log(activity)
+                console.log(err)
+              }
             });
           })
-          .then((activities) => activities.filter((activity) => activity))
       });
   }
-}
 
+  @OnEvent(ActivityEventName.NotifyAdmins)
+  public notifyAdmins(payload: any) {
+    this.userService.findAdministrators()
+      .then((admins) => {
+        // console.log(admins)
+        admins.map((admin) => {
+          // this.createActivity(admin, payload, false);
+        })
+      })
+
+  }
+
+  public addLoginParams(link, loginParams){
+    if(!link)
+    {
+      return null
+    }
+    
+    return  `${link}${loginParams}`
+  }
+}

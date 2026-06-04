@@ -20,7 +20,9 @@ export enum ErrorName{
     invalidDates = 'invalid-dates',
     InvalidUsername = 'invalid-username',
     expiredDates = 'expired-dates',
-    InvalidQrCode = 'invalid-qrcode'
+    InvalidQrCode = 'invalid-qrcode',
+    ButtonNotFound = 'button-not-found',
+    UploadNotWritable = 'upload-not-writable',
 }
 
 export const errorsList: ErrorText[] = 
@@ -99,5 +101,15 @@ export const errorsList: ErrorText[] =
         name: ErrorName.InvalidQrCode,
         caption: `Invalid QR Code`,
         status: HttpStatus.FORBIDDEN
+    },
+    {
+        name: ErrorName.ButtonNotFound,
+        caption: `_helpbutton_ not found`,
+        status: HttpStatus.NOT_FOUND
+    },
+    {
+        name: ErrorName.UploadNotWritable,
+        caption: `Upload directory not writable, please contact administrator`,
+        status: HttpStatus.INTERNAL_SERVER_ERROR
     },
 ]

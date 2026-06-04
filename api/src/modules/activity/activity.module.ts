@@ -11,6 +11,7 @@ import { ScheduleModule } from '@nestjs/schedule';
 import { ButtonModule } from '../button/button.module';
 import { ActivityCommand } from './activity.command';
 import { PostModule } from '../post/post.module';
+import { GroupMessageModule } from '../group-message/group-message.module';
 
 
 @Module({
@@ -21,7 +22,8 @@ import { PostModule } from '../post/post.module';
     NetworkModule,
     ScheduleModule.forRoot(),
     ButtonModule,
-    PostModule
+    PostModule,
+    GroupMessageModule
   ],
   controllers: [
     ActivityController

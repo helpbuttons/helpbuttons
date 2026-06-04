@@ -8,7 +8,6 @@ import { User, UserExtended } from './user.entity';
 import { InviteService } from '../invite/invite.service';
 import { InviteCreateDto } from '../invite/invite.dto';
 import { plainToClass } from 'class-transformer';
-import { nomailString } from '../auth/auth.service';
 import { notifyUser } from '@src/app/app.event';
 import { ActivityEventName } from '@src/shared/types/activity.list';
 import { EventEmitter2 } from '@nestjs/event-emitter';
@@ -26,23 +25,10 @@ export class UserController {
 
   @OnlyRegistered()
   @Get('whoAmI')
-  whoAmI(@Request() req) {
-    const user = req.user
-    let userClean = user;
-    if(user.email.endsWith(nomailString))
-    {
-      userClean = {...user, email: ''}
-    }
-    return {...userClean, t: 'k'}
+  whoAmI(@CurrentUser() user: User) {
+    return user
   }
-
-  @OnlyAdmin()
-  @Get('findExtra/:userId')
-  async findExtra(@Param('userId') userId: string){
-    return await this.userService
-    .findById(userId);
-  }
-
+  
   @OnlyRegistered()
   @Get('invites')
   async invites(@CurrentUser() user: User) {
@@ -124,9 +110,15 @@ export class UserController {
   @Get('revokeEndorse/:userId')
   untrust(@CurrentUser() sessionUser: User, @Param('userId') userId: string) {
     return this.userService.revokeEndorse(userId).then((user) => {
-      notifyUser(this.eventEmitter,ActivityEventName.RevokeEndorsed, {user, sessionUser})
+      notifyUser(this.eventEmitter,ActivityEventName.EndorseRevoked, {user, sessionUser})
     });
   }
 
-  // create new invite.. per ip address ? 
+  @AllowGuest()
+  @Get('/find/:username')
+  async find(@Param('username') username: string) {
+    const user = await this.userService.findByUsername(username, true);
+     return plainToClass(UserExtended, user, { excludeExtraneousValues: true })
+  }
+
 }

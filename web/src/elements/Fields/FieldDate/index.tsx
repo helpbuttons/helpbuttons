@@ -1,5 +1,5 @@
 //is the component or element integrated in buttonNewPublish. Right before activate button. It displays the current selected date and a button to chang it, that ddisplays a picker with the date options for the net that's selecte
-import React, {  useState } from 'react';
+import React, { useState } from 'react';
 import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
 import {
   DateTypes,
@@ -14,7 +14,7 @@ import PickerEventTypeMultipleForm from 'components/picker/PickerEventType/multi
 import FieldError from '../FieldError';
 import PickerEventTypeRecurrentForm, { loadRrules, recurrentToText } from 'components/picker/PickerEventType/recurrent';
 import PickerField from 'components/picker/PickerField';
-import { IoTimeOutline } from 'react-icons/io5';
+import { IoExpandOutline, IoIceCreamOutline, IoRepeat, IoTimeOutline } from 'react-icons/io5';
 
 export default function FieldDate({
   title,
@@ -43,15 +43,8 @@ export default function FieldDate({
     setEventEnd(_eventEnd)
     closePopup()
   }
-  const [_eventStart, _setEventStart] = useState(eventStart)
-  const [_eventEnd, _setEventEnd] = useState(eventEnd)
-
-  const handleChangeToMultipleDates = (newStartTimeDate, newEndTimeDate) => {
-    _setEventStart(newStartTimeDate)
-    _setEventEnd(newEndTimeDate)
-    setEventType(DateTypes.MULTIPLE)
-  }
-  // https://www.npmjs.com/package/react-time-picker
+  const [_eventStart, _setEventStart] = useState(eventStart ? eventStart : null)
+  const [_eventEnd, _setEventEnd] = useState(eventEnd ? eventEnd : null)
   return (
     <>
     <PickerField
@@ -85,7 +78,6 @@ export default function FieldDate({
                   eventEnd={_eventEnd}
                   setEventEnd={_setEventEnd}
                   setEventStart={_setEventStart} 
-                  handleChangeToMultipleDates={handleChangeToMultipleDates}                  
                 ></PickerEventTypeOnceForm>
               )}
               {eventType == DateTypes.MULTIPLE && (
@@ -126,16 +118,19 @@ const EventType = React.forwardRef(
         label: t('eventType.once'),
         explain: t('eventType.onceExplain'),
         type: DateTypes.ONCE,
+        icon: <IoIceCreamOutline/>,
       },
       {
         label: t('eventType.multipleDates'),
         explain: t('eventType.multipleExplain'),
         type: DateTypes.MULTIPLE,
+        icon: <IoExpandOutline/>,
       },
       {
         label: t('eventType.recurring'),
         explain: t('eventType.recurringExplain'),
         type: DateTypes.RECURRENT,
+        icon: <IoRepeat/>,
       },
     ];
     return (
@@ -150,7 +145,7 @@ const EventType = React.forwardRef(
                 value={eventType.type}
                 key={idx}
               >
-                <div className="btn-filter__icon"></div>
+                <div className="btn-filter__icon">{eventType.icon}</div>
                 <div className="btn-with-icon__text">
                   {eventType.label}
                 </div>

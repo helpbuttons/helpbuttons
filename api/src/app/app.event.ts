@@ -1,8 +1,5 @@
-import { Button } from "@src/modules/button/button.entity";
-import { Post } from "@src/modules/post/post.entity";
-import { User } from "@src/modules/user/user.entity"
-import { ActivityEventName } from "@src/shared/types/activity.list"
-import { ClassConstructor, instanceToInstance, plainToInstance } from "class-transformer";
+import { ActivityEventName, AdminActivityEventName } from "@src/shared/types/activity.list"
+import {  instanceToInstance } from "class-transformer";
 
 export function notifyUser(eventEmitter, activityEventName : ActivityEventName, data: any) {
     eventEmitter.emit(activityEventName, 
@@ -10,6 +7,16 @@ export function notifyUser(eventEmitter, activityEventName : ActivityEventName, 
       )
 }
 
+export function notifyAdmins(eventEmitter, activityEventName : AdminActivityEventName, data: any) {
+    eventEmitter.emit(activityEventName, 
+        new AdminActivityEvent(instanceToInstance(data,{ excludeExtraneousValues: true }), activityEventName)
+      )
+}
+
 export class ActivityEvent {
     constructor (public data: any,public activityEventName : ActivityEventName) {}
+}
+
+export class AdminActivityEvent {
+    constructor (public data: any,public activityEventName : AdminActivityEventName) {}
 }

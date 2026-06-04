@@ -1,10 +1,12 @@
+import { debounce } from 'lodash';
 import { useCallback } from 'react';
-import debounce from 'lodash.debounce';
+
 import { store } from 'state';
 import {
   GeoFindAddress,
   GeoReverseFindAddress,
 } from 'state/Geo';
+const { convert } = require('geo-coordinates-parser'); //CommonJS
 
 export const useGeoSearch = () => {
   const GeoFindByQuery = useCallback(
@@ -54,3 +56,38 @@ export const useGeoReverse = () => {
   };
   return _debounceFunc;
 };
+
+export const getCoordinatesDegrees = (value) => {
+  let converted;
+  try {
+    converted = convert(value);
+    return [converted.decimalLatitude, converted.decimalLongitude];
+  }
+  catch {
+  }
+  return null;
+}
+
+export const getCoordinatesDMS = (value) => {
+  let converted;
+  try {
+    converted = convert(value);
+    return converted.toCoordinateFormat(convert.to.DMS);
+  }
+  catch {
+  }
+  return null;
+}
+export const formatedCoords = (place) => {
+  const coordsString = getCoordinatesDMS(`${place.geometry.lat}, ${place.geometry.lng}`)
+  
+  return `${place.formatted} - ${coordsString}`
+}
+
+export const isPointInBounds = (point, bounds) => {
+  if(point[0] <= bounds?.ne[0] && point[0] >= bounds?.sw[0] && point[1] <= bounds?.ne[1] && point[1] >= bounds?.sw[1])
+  {
+    return true;
+  }
+  return false;
+}

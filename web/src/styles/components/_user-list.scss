@@ -1,66 +1,75 @@
-.user-list__wrapper {
+@use '../variables' as *;
+
+.form-list__wrapper {
 
     width: 100%;
     overflow-x: auto;
 
 }
 
-.user-list__table-header-cell {
+.form-list__table-header-cell {
   padding: $padding-medium;
   min-width: 100px;
   font-weight: $font-weight-bolder;
 }
 
-.user-list__table-header-cell:first-letter,
-.user-list__table-body-cell:first-letter {
+.form-list__table-header-cell:first-letter,
+.form-list__table-body-cell:first-letter {
   text-transform: uppercase;
 }
 
-.user-list__table-body-cell {
+.form-list__table-body-cell {
 
   padding: $padding-small;
-}
-
-.user-list__table-body-cell--email {
-
-  font-weight: $font-weight-bolder;
+  gap: $padding-small;
 
 }
 
-.user-list__table-container {
-    min-width: 800px;
-  }
-  
-  .user-list__table {
+.form-list__table-body-row {
+
+  display: table-row;
+  width: 100%;
+
+  padding: $padding-small;
+
+}
+
+  .form-list__table {
+    display: table;
     width: 100%;
-    min-width: 700px;
     border-collapse: collapse;
     font-size: $font-size-small;
     background-color: #fff; // Optional: adjust background color as needed
   
-    &--header {
+    &-header {
       background-color: #f0f0f0; // Optional: adjust header background color
       text-align: left;
   
-      &--row {
+      &-row {
         border-bottom: 2px solid #D4D4D4; // Border for header row
       }
   
-      &--cell {
-        padding: 12px;
+      &-cell {
+        padding: $padding-medium;
         font-weight: bold;
         text-align: left; // Align headers with columns
         white-space: nowrap; // Prevent headers from wrapping
       }
     }
   
-    &--body--row {
-      &:nth-child(even) {
-        background-color: #fafafa; // Zebra striping for rows
+    &-body {
+      display: table-row-group;
+      width: 100%;
+
+      &-row {
+        &:nth-child(even) {
+          background-color: #fafafa; // Zebra striping for rows
+        }
       }
+
   
-      &--cell {
-        padding: 12px;
+      &-cell {
+        padding: $padding-medium;
         border-bottom: 1px solid #D4D4D4; // Border for each cell
         white-space: nowrap; // Prevent cell text from wrapping
       }
@@ -75,7 +84,7 @@
       }
     }
   }
-  
+
 
 
   

@@ -1,5 +1,7 @@
+@use '../variables' as *;
+
 $card-notification-background: $color-white;
-$card-notification-border: 1px solid $color-ligth-gray;
+$card-notification-border: $border-style-light;
 $card-notification-box-shadow: $box-shadow-card;
 $card-notification-busca-background: $color-red;
 $card-notification-ofrece-background: $color-green;
@@ -20,42 +22,40 @@ $card-notification-delete-size: 100px;
   border-radius: $border-radius-basic;
   // box-shadow: $card-notification-box-shadow;
   display: block;
-  text-decoration: none; /* remove underline */
+  text-decoration: none; 
   position: relative;
   color: $color-gray;
 
   a {
     font-weight: $font-weight-bold;
     color: $color-black;
+    width: 100%;
+    height: 100%;
   }
 
-  &:hover {
+  // &:hover {
 
-    border: 1px solid var(--network-text-color);
-
-  }
+  //   // box-shadow: $box-shadow-card;
+  // }
 }
 
 .card-notification:hover {
  
-  box-shadow: $card-notification-box-shadow;
+  // box-shadow: $box-shadow-divs;
+  cursor: pointer;
   
 }
 
+.card-notification--activity:hover {
+ 
+  // box-shadow: $box-shadow-divs;
+  background-color: $color-ligth-gray;
+  cursor: pointer;
+  
+}
 
 .card-notification--offer:after,
 .card-notification--need:after,
-.card-notification--exchange:after,
-.card-notification--exchange:before {
-  content: '';
-  display: inline-block;
-  height: $card-notification-border-height;
-  left: 0;
-  position: absolute;
-  top: 0;
-  width: 100%;
-}
-
 .card-notification--offer:after {
   background: $color-green;
 }
@@ -64,37 +64,15 @@ $card-notification-delete-size: 100px;
   background: $color-red;
 }
 
-.card-notification--exchange:after,
-.card-notification--exchange:before {
-  width: 50%;
-}
-
-.card-notification--exchange:after {
-  background: $color-red;
-}
-
-.card-notification--exchange:before {
-  background: $color-green;
-  left: auto;
-  right: 0;
-}
-
-.card-notification__ribbon:before {
-  background: green;
-  content: '';
-  display: inline-block;
-  margin-right: 4px;
-  transform: translateY(.25rem);
-
-  height: $card-button-size-icon-before;
-  width: $card-button-size-icon-before;
-  opacity: .6; // Revise
-}
-
 .card-notification__content {
   display: flex;
-  padding: 1rem;
+  padding: $padding-big $padding-xbig;
   position: relative;
+
+}
+
+.card-notification__content--home-activity {
+  padding: $padding-medium;
 }
 
 .card-notification__avatar {
@@ -131,31 +109,68 @@ $card-notification-delete-size: 100px;
 
 .card-notification__text {
   flex: 0 1 100%;
-}
-
-.card-notification__header {
-  color: $color-gray;
   display: flex;
-  font-size: $font-size-small;
-  flex-flow: row nowrap;
-  word-break: keep-all;
-  justify-content: space-between;
+  flex-direction: column;
+  flex: 1;       
+  min-width: 0;
+  
 }
 
-.card-notification__type {
+// .card-notification__header {
+//   // color: $color-gray;
+//   // display: flex;
+//   // font-size: $font-size-small;
+//   // flex-flow: row nowrap;
+//   // word-break: keep-all;
+//   // justify-content: space-between;
+// }
 
-  color: $color-secondary;
-  padding-left: $padding-small;
-  font-size: $font-size-xsmall;
-  text-wrap: nowrap;
-
-
+.card-notification__header--with-icon {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 .card-notification__info {
   // flex: 0 1 50%;
   font-weight: $font-weight-light;
   color: $color-med-gray;
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  margin: auto;
+
+
+}
+
+.card-notification__info-top {
+  // flex: 0 1 50%;
+  font-weight: $font-weight-light;
+  color: $color-med-gray;
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  overflow: hidden;
+  font-size: $font-size-medium;
+
+}
+
+
+.card-notification__info-top__element {
+
+  text-wrap: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  &:first-letter {
+    text-transform: uppercase;
+  }
+
+}
+
+.card-notification__date::before {
+  // flex: 0 1 50%;
+  content: '·';
+  padding: $padding-small;
 }
 
 .card-notification__date {
@@ -165,6 +180,7 @@ $card-notification-delete-size: 100px;
   text-align: right;
   font-size: $font-size-xsmall;
   align-items: center;
+  line-height: normal;
 
 }
 
@@ -182,11 +198,6 @@ $card-notification-delete-size: 100px;
   flex-wrap: wrap;
   border-radius: 0 0 $border-radius-basic $border-radius-basic;
 
-    button {
-
-      // width: 40%;
-
-    }
 
 }
 
@@ -211,17 +222,6 @@ $card-notification-delete-size: 100px;
 
 }
 
-.card-notification--comment-actions {
-
-  display: flex;
-  align-items: flex-end;
-  justify-content: flex-end;
-  flex-direction: row;
-  right: 0;
-  margin-right: $margin-xbig;
-
-}
-
 .card-notification__comment-count {
 
   padding: $padding-small $padding-big;
@@ -236,32 +236,6 @@ $card-notification-delete-size: 100px;
 
 }
 
-.card-notification__helpbutton-type {
-
-  flex: 0 1 auto;        /* 1 */
-  overflow: hidden;
-  font-weight: $font-weight-bolder;
-  display: flex;
-  gap: $padding-small;
-  align-items: center;
-
-  p {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 200px;
-    
-  }
-
-}
-
-.card-notification__helpbutton-title {
-
-  color: $color-med-gray;
-  font-size: $font-size-xsmall;
-
-}
-
 .card-notification__label {
 
     display: inline-flex;
@@ -272,74 +246,88 @@ $card-notification-delete-size: 100px;
     font-size: $font-size-small;
 }
 
-.card-notification__nolabel {
 
-  flex: 0 0 50%;
-  padding: $padding-small 0 0 $padding-small ;
-  pointer-events: none;
-  gap: $margin-xsmall;
-  align-items: center;
-  font-size: $font-size-small;
-
-}
-
-.card-notification__date:before {
-  background: $color-corporative;
-  border-radius: $border-radius-circle;
-  content: '';
-  display: inline-block;
-  height: $card-notification-date-before-size;
-  transform: translateX(-.5rem);
-  width: $card-notification-date-before-size;
-}
-
-.card-notification__date:before {
-  background: $color-corporative;
-  border-radius: $border-radius-circle;
-  content: '';
-  display: inline-block;
-  height: $card-notification-date-before-size;
-  transform: translateX(-.5rem);
-  width: $card-notification-date-before-size;
-}
-
-.card-notification__old:before {
-  display: none;
-}
+// .card-notification__date:before {
+//   // background: $color-corporative;
+//   // border-radius: $border-radius-circle;
+//   // content: '';
+//   // display: inline-block;
+//   // height: $card-notification-date-before-size;
+//   // transform: translateX(-.5rem);
+//   // width: $card-notification-date-before-size;
+// }
 
 .card-notification__title {
   color: $color-dark-gray;
-  font-size: $font-size-general;
+  font-size: $font-size-medium;
   padding: 0;
   text-align: left;
-  font-weight: $font-weight-bolder;
   hyphens: auto;
   word-break: keep-all;
+  &:first-letter {
+    text-transform: uppercase;
+  }
+}
+
+.card-notification__title,
+.card-notification__footer {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+    &:first-letter {
+    text-transform: uppercase;
+  }
+}
+
+.card-notification__footer {
+ font-size: $font-size-small;
 }
 
 .card-notification__name {
+  display: inline-block;
   color: $color-dark-gray;
-  font-weight: $font-weight-bold;
-  font-size: $font-size-small;
-  color: $color-med-gray;
-  font-weight: $font-weight-light;
-
+  font-weight: $font-weight-bolder;
+  font-size: $font-size-medium;
   display: flex;
-  color: #8da0a0;
-  line-height: 15px;
-  padding-bottom: 5px;
+  line-height: $line-height-regular;
+  padding-bottom: $padding-medium;
+  align-items: center;
+ 
+  
 }
+
+.card-notification__name::first-letter {
+  text-transform: uppercase;
+}
+
+.card-notification__name--post:hover { 
+
+  cursor:pointer;
+
+
+}
+
 
 .card-notification__paragraph {
 
-  color: $color-gray;
   text-overflow: ellipsis;
   word-wrap: break-word;
   line-height: $text-line-height-xsmall;
   font-size: $font-size-small;
-  color: $color-gray;
+  font-weight: $font-weight-light;
+  color: $color-dark-gray;
+    &:first-letter {
+    text-transform: uppercase;
+  }
 }
 
+.card-notification__paragraph--post {
+
+      color: $color-gray;
+      font-size: $font-size-medium;
+
+
+}
 
 .card-notification__delete {
 
@@ -364,6 +352,22 @@ $card-notification-delete-size: 100px;
 
 }
 
-.card-notification-comment-focus {
-  border: 2px solid $color-blue;
+.card-notification-comment--focus, .card-notification--selected {
+  border: 1px solid $color-gray-border;
+}
+
+.card-notification--selected {
+ background-color: $color-ligth-gray;
+}
+
+.card-notification--unread{
+  font-weight: $font-weight-bolder;
+}
+
+
+@media #{$breakpoints-medium} {
+
+
+
+
 }

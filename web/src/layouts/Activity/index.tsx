@@ -11,7 +11,7 @@ import FieldMultiSelect from 'elements/Fields/FieldMultiSelect';
 import { IoList } from 'react-icons/io5';
 import { useActivities } from 'state/Activity';
 
-export default function ActivityLayout({ sessionUser }) {
+export default function ActivityLayout() {
   const { notifications, messages } = useActivities();
   const [countUnreadNotifications, setCountUnreadNotifications] =
     useState(0);
@@ -92,6 +92,8 @@ export default function ActivityLayout({ sessionUser }) {
           />
         </div>
       </div>
+      <ActivityNotificationList />
+
       {activitySelectedTab == ActivityTab.MESSAGES && (
         <ActivityMessageList />
       )}

@@ -8,6 +8,8 @@ import {
   IoHeart,
   IoLogoWhatsapp,
   IoLocationOutline,
+  IoNotificationsOutline,
+  IoNotifications,
 } from 'react-icons/io5';
 import t from 'i18n';
 
@@ -17,7 +19,6 @@ import router from 'next/router';
 import { useEffect, useState } from 'react';
 import {
   getShareLink,
-  makeImageUrl,
   readableDistance,
 } from 'shared/sys.helper';
 import {
@@ -30,7 +31,7 @@ import { useRef } from 'store/Store';
 import { GlobalState, store, useGlobalStore } from 'state';
 import Link from 'next/link';
 import { GetPhone, isAdmin } from 'state/Users';
-import { TextFormatted, formatMessage } from 'elements/Message';
+import { TextFormatted } from 'elements/Message';
 import { CardButtonCustomFields } from '../ButtonType/CustomFields/CardButtonCustomFields';
 import {
   CardSubmenu,
@@ -44,18 +45,21 @@ import Btn, {
   IconType,
 } from 'elements/Btn';
 import { FixedAlert } from 'components/overlay/Alert';
-import { maxZoom, showHexagonsZoom, showMarkersZoom } from 'components/map/Map/Map.consts';
+import { maxZoom, showHexagonsZoom } from 'components/map/Map/Map.consts';
 import { Button } from 'shared/entities/button.entity';
 import MarkerViewMap from 'components/map/Map/MarkerSelectorMap';
-import { TagsNav } from 'elements/Fields/FieldTags';
 import { ImageGallery } from 'elements/ImageGallery';
 import Loading from 'components/loading';
-import { SetMainPopupCurrentProfile } from 'state/HomeInfo';
+import { FindAndSetMainPopupCurrentProfile, MainPopupPage, SetMainPopup, SetMainPopupCurrentProfile } from 'state/HomeInfo';
 import React from 'react';
-import dconsole from 'shared/debugger';
-import { ButtonPin, ButtonUnpin } from 'state/Button';
+import { ButtonPin, ButtonUnpin, FindFollowers } from 'state/Button';
+import { useToggle } from 'shared/custom.hooks';
+import { useIsMobile } from 'elements/SizeOnly';
+import { ButtonDelete, ButtonRenew, updateCurrentButton } from 'state/Explore';
+import { Network } from 'shared/entities/network.entity';
+import { useSelectedNetwork } from 'state/Networks';
 
-export default function CardButton({ button, buttonTypes, toggleShowReplyFirstPost }) {
+export default function CardButton({ button, buttonTypes, toggleShowReplyFirstPost,            hideSendPrivateMessage = false}) {
   const buttonType = useButtonType(button, buttonTypes);
   return (
     <>
@@ -63,33 +67,34 @@ export default function CardButton({ button, buttonTypes, toggleShowReplyFirstPo
       {button && buttonType && (
         <>
           {/* <CardButtonOptions /> */}
-          <div
-            className="card-button card-button__file"
-            style={buttonColorStyle(buttonType.cssColor)}
-          >
-
-            <div>
-              {/* <Btn
-              onClick={() => store.emit(new NextCurrentButton())}
-              caption="next"
-            ></Btn>
-            <Btn
-              onClick={() => store.emit(new PreviousCurrentButton())}
-              caption="previous"
-            ></Btn> */}
-              <CardButtonHeadBig
-                button={button}
-                buttonTypes={buttonTypes}
-                toggleShowReplyFirstPost={toggleShowReplyFirstPost}
-              />
-            </div>
-          </div>
-          <ImageGallery
+                    <ImageGallery
             images={button?.images.map((image) => {
               return { src: image, alt: button.description };
             })}
           />
+          <div
+            className="card-button card-button__file"
+            style={buttonColorStyle(buttonType.cssColor)}
+          >
+              {/* <Btn
+                onClick={() => store.emit(new NextCurrentButton())}
+                caption="next"
+              ></Btn>
+              <Btn
+                onClick={() => store.emit(new PreviousCurrentButton())}
+                caption="previous"
+              ></Btn> */}
+              <CardButtonHeadBig
+                button={button}
+                buttonTypes={buttonTypes}
+                toggleShowReplyFirstPost={toggleShowReplyFirstPost}
+                hideSendPrivateMessage={hideSendPrivateMessage}
+              />
+            </div>
 
+          <CardButtonFollowerSection
+            button={button}
+          />
           <CardButtonAuthorSection
             button={button}
           />
@@ -99,11 +104,24 @@ export default function CardButton({ button, buttonTypes, toggleShowReplyFirstPo
   );
 }
 
+function CardButtonState({expired, awaitingApproval})
+{
+  if(expired)
+  {
+    return (<div className='card-button__content--expired'>{t('button.expiredLabel')}</div>)
+  }
+  if(awaitingApproval)
+  {
+    return (<div className='card-button__content--expired'>{t('moderation.awaitingApprovalLabel')}</div>)
+  }
+}
 // card button list on explore
 export function CardButtonHeadMedium({ button, buttonType }) {
-
+  const selectedNetwork: Network = useSelectedNetwork()
+  const sessionUser = useGlobalStore((state: GlobalState) => state.sessionUser)
   return (
     <div className="card-button__content card-button__content--small">
+      <CardButtonState expired={button.expired} awaitingApproval={button.awaitingApproval}/>
       <div className="card-button__header">
         {/* <div className="card-button__avatar">
           <div className="avatar-small">
@@ -116,15 +134,14 @@ export function CardButtonHeadMedium({ button, buttonType }) {
         </div> */}
 
         <div className="card-button__info">
-          <div className="card-button__status">
+          <div className="card-button-list__status">
             {buttonType.icon && (
               <div className="card-button__emoji">
                 {buttonType.icon}
               </div>
             )}
             <span
-              className="card-button"
-              style={buttonColorStyle(buttonType.cssColor)}
+              className=""
             >
               {buttonType.caption}
             </span>
@@ -162,15 +179,21 @@ export function CardButtonHeadMedium({ button, buttonType }) {
             <CardButtonCustomFields
               customFields={buttonType.customFields}
               button={button}
+              selectedNetwork={selectedNetwork}
+              isList={true}
+              isButtonOwner={button?.owner?.id == sessionUser?.id}
             />
           )}
           
-        <div className="card-button__city card-button__everywhere ">
+        <div className="card-button-list__city ">
+          {/* show post count and follow count {button.followCount} | {button.postsCount} */}
           <IoLocationOutline/>
-          {button.address}{' '}
-          {button?.distance && (
-            <> - {readableDistance(button?.distance)}</>
-          )}
+          <div className="card-button-list__city__name ">
+            {button.address}{' '}
+            {button?.distance && (
+              <> - {readableDistance(button?.distance)}</>
+            )}
+          </div>
         </div>
       </div>
     </div>
@@ -241,32 +264,30 @@ function CardButtonSubmenu({ button }) {
     if (!canFollowButton(button, sessionUser)) {
       return;
     }
-
-    if (isFollowingButton(button, sessionUser)) {
-      return (
-        <CardSubmenuOption
-          onClick={() => {
-            followButton(button.id);
-          }}
-          label={t('button.follow')}
-        />
-      );
-    }
-    return (
-      <CardSubmenuOption
-        onClick={() => {
-          unFollowButton(button.id);
-        }}
-        label={t('button.unfollow')}
-      />
-    );
   };
+  const deleteButton = (buttonId) => {
+    store.emit(
+      new ButtonDelete(
+        buttonId,
+        () => {
+          alertService.success(t('common.deleteSuccess', [buttonId]));
+          
+          store.emit(new updateCurrentButton(null))
+          store.emit(new SetMainPopup(MainPopupPage.HIDE))
+        },
+        (errorMessage) => {
+          console.error(errorMessage)
+          alertService.error(errorMessage.caption);
+        },
+      ),
+    );
+  }
   return (
     <CardSubmenu>
       <CardSubmenuOption
         onClick={() => {
           navigator.clipboard.writeText(linkButton);
-          alertService.info(`${linkButton}`);
+          alertService.info(t("button.copyAlert"));
         }}
         label={t('button.copy')}
       />
@@ -276,14 +297,13 @@ function CardButtonSubmenu({ button }) {
         <>
           <CardSubmenuOption
             onClick={() => {
+              store.emit(new SetMainPopup(MainPopupPage.HIDE))
               router.push(`/ButtonEdit/${button.id}`);
             }}
             label={t('button.edit')}
           />
           <CardSubmenuOption
-            onClick={() => {
-              router.push(`/ButtonRemove/${button.id}`);
-            }}
+            onClick={() => deleteButton(button.id)}
             label={t('button.delete')}
           />
         </>
@@ -300,31 +320,33 @@ function CardButtonSubmenu({ button }) {
   );
 }
 
-function SendMessageButton({toggleShowReplyFirstPost, sessionUser})
+function SendMessageButton({button})
 {
-  if(!sessionUser)
-  {
-    return ;
-  }
   return <Btn
           btnType={BtnType.smallCircle}
           contentAlignment={ContentAlignment.center}
           iconLeft={IconType.circle}
           iconLink={<IoMailOutline />}
           onClick={()=> {
-            toggleShowReplyFirstPost(true)
+            sendCurrentButtonMessage(button)
         }}
         />
 }
-export function CardButtonHeadBig({ button, buttonTypes, toggleShowReplyFirstPost }) {
+export function CardButtonHeadBig({ button, buttonTypes, toggleShowReplyFirstPost, hideSendPrivateMessage = false}) {
   const { cssColor, caption, customFields, icon } = useButtonType(button, buttonTypes)
   const sessionUser = useRef(
     store,
     (state: GlobalState) => state.sessionUser,
     false,
   );
-  const [showMap, setShowMap] = useState(true);
-
+  const selectedNetwork: Network = useSelectedNetwork()
+  const [showMap, setShowMap] = useState(false);
+  const isMobile = useIsMobile()
+  useEffect(() => {
+    if(!isMobile){
+      setShowMap(() => false)
+    }
+  }, [isMobile])
   return (
     <>
       <div className='card-button__head-actions'>
@@ -332,21 +354,20 @@ export function CardButtonHeadBig({ button, buttonTypes, toggleShowReplyFirstPos
           button={button}
           sessionUser={sessionUser}
         />
-        <SendMessageButton toggleShowReplyFirstPost={toggleShowReplyFirstPost} sessionUser={sessionUser}/>
+        {!hideSendPrivateMessage && sessionUser && !isButtonOwner(sessionUser, button) && <SendMessageButton button={button}/>}
         
         <CardButtonSubmenu button={button} />
       </div>
-      <ExpiringAlert
+      <SchdulerExpiringAlert
         button={button}
         isOwner={isButtonOwner(sessionUser, button)}
       />
       {button.awaitingApproval && (
         <FixedAlert
           alertType={AlertType.Info}
-          message={t('moderation.awaitingApproval')}
-        />
+        >{t('moderation.awaitingApproval')}</FixedAlert>
       )}
-      <div className="card-button__content card-button__full-content">
+      <div className="card-button__content card-button__full-content ">
         <div className="card-button__header">
           <div className="card-button__info">
             <div className="card-button__status">
@@ -354,48 +375,48 @@ export function CardButtonHeadBig({ button, buttonTypes, toggleShowReplyFirstPos
                 <div className="card-button__emoji">{icon}</div>
               )}
               <span
-                className="card-button__status"
-                style={buttonColorStyle(cssColor)}
+                className=""
               >
                 {caption}
               </span>
             </div>
           </div>
         </div>
-
         <div className="card-button__title">
           {button.title}
         </div>
-
         <div className="card-button__paragraph">
           <TextFormatted text={button.description} />
         </div>
+        {/* REMOVING TAGS FOR NOW TO TEST BEHAVIOUR FOR CLEANER CARD LOOK - REVISE IN THE FUTURE
         <div className="card-button__hashtags">
           <TagsNav tags={button.tags} />
-        </div>
-
-        <div className="card-button__bottom-properties">
-          {customFields && customFields.length > 0 && (
-            <>
-              <CardButtonCustomFields
-                customFields={customFields}
-                button={button}
-              />
-            </>
-          )}
-          <div
-            className={
-              'card-button__city card-button__everywhere' +
-              (!button.hideAddress
-                ? ' card-button__city--displayMap'
-                : '')
-            }
-            onClick={() => setShowMap(() => !showMap)}
-          >
-            {<IoLocationOutline/>}
-            {button.address}
+        </div> */}
+          <div className="card-button__bottom-properties">
+            {customFields && customFields.length > 0 && (
+              <div className='card-button__custom-fields-container card-button__custom-fields-container--button-page'>
+                <CardButtonCustomFields
+                  customFields={customFields}
+                  button={button}
+                  selectedNetwork={selectedNetwork}
+                  isList={false}
+                  isButtonOwner={button.owner.id == sessionUser?.id}
+                />
+              </div>
+            )}
+            <div
+              className={
+                'card-button__city ' +
+                (!button.hideAddress
+                  ? ' card-button__city--displayMap'
+                  : ' card-button__city--noMap ')
+              }
+              onClick={() => setShowMap(() => !showMap)}
+            >
+              {<IoLocationOutline/>}
+              {button.address}
+            </div>
           </div>
-        </div>
         {showMap && (
           <MarkerViewMap
             markerPosition={[button.latitude, button.longitude]}
@@ -412,13 +433,27 @@ export function CardButtonHeadBig({ button, buttonTypes, toggleShowReplyFirstPos
   );
 }
 
-function ExpiringAlert({
+function SchdulerExpiringAlert({
   button,
   isOwner = false,
 }: {
   button: Button;
   isOwner: boolean;
 }) {
+  const renewButton = (id) => {
+    store.emit(
+      new ButtonRenew(
+        id,
+        () => {
+          alertService.success(t('button.renewSuccess'));
+        },
+        (error) => {
+          alertService.error(error.caption);
+        },
+      ),
+    );
+  }
+  
   if (!isOwner) {
     return;
   }
@@ -430,22 +465,19 @@ function ExpiringAlert({
     return (
       <FixedAlert
         alertType={AlertType.Info}
-        message={`${t('button.endDatesExpired')}`}
-      />
+      >{t('button.endDatesExpired')}</FixedAlert>
     );
   }
   return (
     <FixedAlert
       alertType={AlertType.Success}
-      message={`${t('button.isExpiringLink')} <a href="/ButtonRenew/${button.id
-        }">${t('button.renewLink')}</a>`}
-    />
+    >{t('button.expired')} <a href="#" onClick={() => {renewButton(button.id)}}>{t('button.renewLink')}</a></FixedAlert>
   );
 }
 
 export function ButtonOwnerPhone({ user, button }) {
   const [phone, setPhone] = useState(null);
-  
+
   const showPhone = () => {
     store.emit(
         new GetPhone(
@@ -462,7 +494,7 @@ export function ButtonOwnerPhone({ user, button }) {
   }
   return (
     <>
-      {user?.publishPhone && (
+      {user?.hasPhone && (
         <>
           {!phone && 
             <Btn
@@ -523,7 +555,7 @@ export function CardButtonHeadActions({
       )}
       {button.hearts && !isButtonOwner && (
         <span className="btn-circle__icon">
-          <IoHeartOutline />
+          <IoNotificationsOutline />
           {button.hearts}
         </span>
       )}
@@ -579,38 +611,94 @@ export function CardButtonAuthorSection({ button }) {
   );
 }
 
+export function CardButtonFollowerSection({ button }) {
+  const sessionUser = useGlobalStore((state: GlobalState) => state.sessionUser);
+  const [showFollowers, toggleShowFollowers] = useToggle(false)
+  const [followers, setFollowers] = useState([])
+  useEffect(() => {
+    if (showFollowers) {
+      store.emit(new FindFollowers(button.id, (followers => setFollowers(() => followers))))
+    }
+  }, [showFollowers])
+
+
+  return (
+    <>
+          {button.followCount > 0 &&
+            <div className="card-button__followers">
+                  <div className="card-button__followers__number">
+                    {sessionUser ? 
+                      <Link href="#" onClick={() => toggleShowFollowers((prev) => !prev)}>
+                        <div className="card-button__followers-title">
+                          {t('button.followers', [button.followCount])}
+                        </div>
+                      </Link>  
+                    :
+                        <div className="card-button__followers-title">
+                          {t('button.followers', [button.followCount])}
+                        </div>
+                    }
+                  </div>
+                  <div className='card-button__followers-row'>
+                    {sessionUser && (showFollowers && button.followCount > 0) && <>{followers.map((follower, idx) => 
+                        <Follower user={follower} key={idx}/>
+                    )}</>}
+                  </div>
+                </div>
+            }        
+      
+    </>
+    
+  );
+}
+function Follower({ user }) {
+  const onClick = () => {
+    store.emit(new FindAndSetMainPopupCurrentProfile(user.username))
+
+  }
+  return <div className="card-button__followers__avatars">
+    <Link href="#" onClick={onClick}>
+      {/* <span>{user.name}</span> */}
+      <div className="avatar-small">
+        <ImageWrapper
+          imageType={ImageType.avatarMed}
+          src={user.avatar}
+          alt="Avatar"
+        />
+      </div>
+    </Link>
+  </div>
+}
 
 function FollowButtonHeart({ button, sessionUser }) {
   if (!canFollowButton(button, sessionUser)) {
     return;
   }
 
-  if (isFollowingButton(button, sessionUser)) {
+  if (!button.isFollowing) {
     return (
-      <div className='card-button__follow-wrap'>
-        {t('button.followme')}
+      <>
+        <span onClick={() => followButton(button.id)} className='btn__hint'>{t('button.follow')}</span>
         <Btn
-          btnType={BtnType.iconActions}
+          btnType={BtnType.smallCircle}
           contentAlignment={ContentAlignment.center}
-          iconLink={<IoHeartOutline />}
+          iconLink={<IoNotificationsOutline />}
           iconLeft={IconType.circle}
           onClick={() => followButton(button.id)}
         />
-      </div>  
+      </>
+      
     );
   }
 
   return (
-    <div className='card-button__follow-wrap'>
-      {t('button.following')}
-      <Btn
-        btnType={BtnType.iconActions}
-        contentAlignment={ContentAlignment.center}
-        iconLink={<IoHeart />}
-        iconLeft={IconType.circle}
-        onClick={() => unFollowButton(button.id)}
-      />
-    </div>  
+    <Btn
+      btnType={BtnType.smallCircle}
+      contentAlignment={ContentAlignment.center}
+      iconLink={<IoNotifications />}
+      iconLeft={IconType.circle}
+      onClick={() => unFollowButton(button.id)}
+    />
   );
 }
 
@@ -623,10 +711,6 @@ const canFollowButton = (button, user) => {
     return false;
   }
   return true;
-};
-
-const isFollowingButton = (button, user) => {
-  return button.followedBy.indexOf(user.id) < 0;
 };
 
 const followButton = (buttonId) => {
@@ -656,4 +740,10 @@ function isButtonOwner(sessionUser, button) {
   return (
     sessionUser && sessionUser.username == button.owner.username
   );
+}
+
+
+export const sendCurrentButtonMessage = (button) => {
+  store.emit(new SetMainPopup(MainPopupPage.HIDE))
+  router.push(`/Activity/draft/${button.id}`)
 }

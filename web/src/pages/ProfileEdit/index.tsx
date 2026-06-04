@@ -14,6 +14,7 @@ import Btn, {
   ContentAlignment,
   BtnType,
   IconType,
+  BtnSubmit,
 } from 'elements/Btn';
 import Form from 'elements/Form';
 
@@ -23,7 +24,6 @@ import FieldText from 'elements/Fields/FieldText';
 import { alertService } from 'services/Alert';
 import { User } from 'shared/entities/user.entity';
 import { useRef } from 'store/Store';
-import { FieldImageUpload } from 'elements/Fields/FieldImageUpload';
 import FieldPassword from 'elements/Fields/FieldPassword';
 import { findError, getHostname, locale, readableDistance, setLocale } from 'shared/sys.helper';
 import { UserUpdateDto } from 'shared/dtos/user.dto';
@@ -32,14 +32,15 @@ import t from 'i18n';
 import { FieldLanguagePick } from 'elements/Fields/FieldLanguagePick';
 import { FieldCheckbox } from 'elements/Fields/FieldCheckbox';
 import Accordion from 'elements/Accordion';
-import DropDownSearchLocation from 'elements/DropDownSearchLocation';
 import FieldTags from 'elements/Fields/FieldTags';
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 import { Role } from 'shared/types/roles';
 import { IoTrashBinOutline } from 'react-icons/io5';
-import LocationSearchBar, { LocationSearchBarSimple } from 'elements/LocationSearchBar';
+import { LocationSearchBarSimple } from 'elements/LocationSearchBar';
 import { useNetworkCenter } from 'state/Networks';
+import FieldImageUpload from 'elements/Fields/FieldImageUpload';
+import { RadiusSlider } from 'components/search/AdvancedFilters/filter-by-location';
 
 export default function ProfileEdit() {
   const {
@@ -52,16 +53,7 @@ export default function ProfileEdit() {
     watch,
     setFocus,
     formState: { errors, isSubmitting },
-  } = useForm({defaultValues: {
-    locale: 'en',
-    receiveNotifications: true,
-    showButtons: false,
-    tags: [],
-    address: '',
-    center: {coordinates: null},
-    radius: 0,
-    publishPhone: false,
-  }});
+  } = useForm();
   const [errorMsg, setErrorMsg] = useState(undefined);
   const [setNewPassword, setSetNewPassword] = useState(false);
   const [_locale, set_Locale] = useState(locale)
@@ -111,7 +103,7 @@ export default function ProfileEdit() {
   const onSuccess = () => {
     
     store.emit(new FetchUserData((userData) => {
-      setLocale( userData.locale )
+      // setLocale( userData.locale )
       router.push({ pathname: '/Profile' });
     }, onError));
     ;
@@ -150,7 +142,7 @@ export default function ProfileEdit() {
           <Popup title={t('user.updateProfile')} linkBack={() => router.back()}>
             <Form
               onSubmit={handleSubmit(onSubmit)}
-              classNameExtra="login"
+              classNameExtra="login__form"
             >              
                 <div className="form__inputs-wrapper">
                 <Accordion collapsed={true} title={t('user.personalData')}>
@@ -164,19 +156,15 @@ export default function ProfileEdit() {
                     validationError={errors.name}
                     {...register('name', { required: true })}
                   ></FieldText>
-                  <FieldImageUpload
-                    name="avatar"
+                   <FieldImageUpload
+                    defaultImage={sessionUser.avatar}
+                    name='avatar'
                     text={t('user.avatar')}
                     label={t('user.avatarLabel')}
                     explain={t('user.avatarExplain')}
-                    control={control}
                     width={150}
-                    height={150}
-                    subtitle={'150x150px'}
-                    validationError={errors.avatar}
-                    setValue={setValue}
-                    {...register('avatar')}
-                  />
+                    validationError={errors.avatar} 
+                    setValue={setValue} />
                    <FieldTextArea
                     name="description"
                     label={t('user.description')}
@@ -186,7 +174,7 @@ export default function ProfileEdit() {
                     setValue={setValue}
                     setFocus={setFocus}
                     validationError={errors.description}
-                    {...register('description', { required: true })}
+                    {...register('description')}
                   />
                                   
                   <FieldLanguagePick onChange={(value) => set_Locale(value)} explain={t('user.pickLanguageExplain')} defaultValue={sessionUser.locale}/>
@@ -198,7 +186,7 @@ export default function ProfileEdit() {
                     classNameInput="squared"
                     placeholder={t('user.emailPlaceHolder')}
                     validationError={errors.email}
-                    {...register('email', { required: true })}
+                    {...register('email')}
                   ></FieldText>  
 
                   <FieldText
@@ -255,30 +243,17 @@ export default function ProfileEdit() {
                     defaultValue={sessionUser.receiveNotifications}
                     text={t('user.textReceiveNotifications')}
                     onChanged={(value) => {setValue('receiveNotifications', value)}}
-                  />
+                  />     
                   <LocationSearchBarSimple 
                     placeholder={t('user.location')}
-                    markerAddress={watch('address')}
+                    markerAddress={sessionUser.address}
                     setMarkerAddress={(address) => setValue('address', address)}
                     focusPoint={focusPoint}
                     setMarkerPosition={(position) => setValue('center', {coordinates: position})}
                   />
-                <div className="form__field">
-                    <label className="form__label">
-                      {t('user.distance')} - {readableDistance(radius)}
-                    </label>
-                    <p className='form__explain'>{t('user.distanceExplain')} </p>
-                    <div style={{ padding: '1rem' }}>
-                      <Slider
-                        min={0}
-                        max={300}
-                        onChange={(radiusValue) =>
-                          setValue('radius', radiusValue)
-                        }
-                        value={radius}
-                      />
-                    </div>
-                  </div>
+                {center && 
+                  <RadiusSlider pickedRadius={radius} setPickedRadius={(radiusValue) =>setValue('radius', radiusValue)}/>
+                }
                 <FieldTags
                   label={t('user.tags')}
                   explain={t('user.tagsExplain')}
@@ -338,13 +313,7 @@ export default function ProfileEdit() {
                   </Accordion>
 
                       <div className="publish__submit">
-                        <Btn
-                          btnType={BtnType.submit}
-                          contentAlignment={ContentAlignment.center}
-                          caption={t('common.publish')}
-                          isSubmitting={isSubmitting}
-                          submit={true}
-                        />
+                        <BtnSubmit isSubmitting={isSubmitting} errors={errors} caption={t('common.save')}/>
                       </div>
                     </div>
             </Form>

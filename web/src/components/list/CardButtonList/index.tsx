@@ -4,11 +4,11 @@ import { IoChevronForwardOutline } from 'react-icons/io5';
 import { IoChevronBackOutline } from 'react-icons/io5';
 import { CardButtonHeadMedium } from 'components/button/CardButton';
 import { buttonColorStyle } from 'shared/buttonTypes';
-import { HiglightHexagonFromButton, updateCurrentButton } from 'state/Explore';
+import { HoverButtonList, updateCurrentButton } from 'state/Explore';
 import { store } from 'state';
-import router from 'next/router';
-import { MainPopupPage, SetMainPopup, SetMainPopupCurrentButton } from 'state/HomeInfo';
+import { SetMainPopupCurrentButton } from 'state/HomeInfo';
 import { alertService } from 'services/Alert';
+import t from 'i18n';
 
 export enum ButtonLinkType {
   EXPLORE,
@@ -71,21 +71,50 @@ export default function CardButtonList({ buttonTypes, button, showMap, linkType 
   );
 }
 
-export function CardButtonLink({ button, linkType , children }) {
-    
-  if(linkType == ButtonLinkType.EXPLORE)
-    {
-      return <a href={`/ButtonFile/${button.id}`} onMouseEnter={() => {store.emit(new HiglightHexagonFromButton(button.hexagon))}}
-      onMouseLeave={() => {store.emit(new HiglightHexagonFromButton(null))}} onClick={(e) => {e.preventDefault();store.emit(new HiglightHexagonFromButton(button.hexagon))
-        store.emit(new updateCurrentButton(button))}}>{children}</a>
-    }else if(linkType == ButtonLinkType.IFRAME){
-      return <a href={`/ButtonFile/${button.id}`} target="_blank">{children}</a>
-    }else if(linkType == ButtonLinkType.MAINPOPUP){
-      return <a href={`/ButtonFile/${button.id}`} onClick={(e) => {
-        e.preventDefault()
-        store.emit(new SetMainPopupCurrentButton(button))
-      } }>{children}</a>
-    }else{
-      return <a href={`/ButtonFile/${button.id}`} target="_blank">{children}</a>
-    }
+export function CardButtonLink({ button, linkType, children }) {
+  // Touch device detection
+  const isTouchDevice = () => {
+    return (
+      typeof window !== 'undefined' &&
+      ('ontouchstart' in window ||
+        navigator.maxTouchPoints > 0 )
+    );
+  };
+
+  const touch = isTouchDevice();
+
+  if (linkType == ButtonLinkType.EXPLORE) {
+    return (
+      <a
+        href={`/Show/${button.id}`}
+        onMouseEnter={!touch ? () => store.emit(new HoverButtonList(button)) : undefined}
+        onMouseLeave={!touch ? () => store.emit(new HoverButtonList(null)) : undefined}
+        onClick={(e) => {
+          e.preventDefault();
+          store.emit(new SetMainPopupCurrentButton(null))
+          store.emit(new updateCurrentButton(button));
+        }}
+        style={{ display: 'block', cursor: 'pointer' }}
+      >
+        {children}
+      </a>
+    );
+  } else if (linkType == ButtonLinkType.IFRAME) {
+    return <a href={`/ButtonFile/${button.id}`} target="_blank" style={{ display: 'block', cursor: 'pointer' }}>{children}</a>;
+  } else if (linkType == ButtonLinkType.MAINPOPUP) {
+    return (
+      <a
+        href={`/ButtonFile/${button.id}`}
+        onClick={(e) => {
+          e.preventDefault();
+          store.emit(new SetMainPopupCurrentButton(button));
+        }}
+        style={{ display: 'block', cursor: 'pointer' }}
+      >
+        {children}
+      </a>
+    );
+  } else {
+    return <a href={`/ButtonFile/${button.id}`} target="_blank" style={{ display: 'block', cursor: 'pointer' }}>{children}</a>;
+  }
 }

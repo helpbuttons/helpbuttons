@@ -45,9 +45,6 @@ export function FilterByDays({
   return (
     <>
         <div className="form__field">
-          <label className="form__label">
-            {t('bulletin.since',[readableDate(dateTime)])}
-          </label>
           <div style={{ padding: '1rem' }}>
             <Slider
               min={1}
@@ -58,6 +55,9 @@ export function FilterByDays({
               defaultValue={calcSliderFromValue(days)}
             />
           </div>
+          <label className="form__label">
+            {t('bulletin.since',[readableDate(dateTime)])}
+          </label>
         </div>
     </>
   );

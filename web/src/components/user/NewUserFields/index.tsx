@@ -11,6 +11,9 @@ import { Network } from 'shared/entities/network.entity';
 import { getHostname } from 'shared/sys.helper';
 import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
 import { useStore } from 'state';
+import { handleAcceptCookies, handleRejectCookies } from 'components/home/CookiesBanner';
+import Accordion from 'elements/Accordion';
+import { IoOptions } from 'react-icons/io5';
 
 export default function NewUserFields({
   register,
@@ -72,26 +75,32 @@ export default function NewUserFields({
           {...register('email', { required: true })}
         ></FieldText>
       }
+
       <FieldText
         name="name"
         label={t('user.name')}
-        explain={t('user.nameExplain')}
+        // explain={t('user.nameExplain')}
         classNameInput="squared"
         placeholder={t('user.namePlaceHolder')}
         validationError={errors.name}
         {...register('name', { required: true })}
       >
       { username &&  !showUsername &&
+          <div className="form__input-subtitle">
           <div className="form__input-subtitle-side">
               <label className="form__input-subtitle--text">
-                {`${t('user.usernameWillBe')}`} 
                 <span className='highlight'>
                   {`${username}@${hostname}`}
                 </span>
-                  <span onClick={() => setshowUsername(true) } className="link">
-                      {t('common.edit')}
-                  </span> 
+                <div className=" link" onClick={() => setshowUsername(true) }>
+                {t('user.editUsername')}
+                </div> 
+
               </label>
+          </div>
+         <div className="form__input-subtitle-side">
+
+          </div>
           </div>
         }
       </FieldText>
@@ -128,8 +137,48 @@ export default function NewUserFields({
         {...register('password', { minLength: 8 })}
       ></FieldPassword>
       } */}
+      {short &&  // not required
+        <Accordion icon={<IoOptions/>} title={t("user.optionalFields")} >
+
+            <FieldText
+            name="email"
+            label={t('user.email')}
+            explain={t('user.emailExplain')}
+            classNameInput="squared"
+            placeholder={t('user.emailPlaceHolder')}
+            validationError={errors.email}
+            {...register('email')}
+          ></FieldText>
+
+          <FieldText
+            name="phone"
+            label={t('user.phone')}
+            explain={t('user.phoneExplain')}
+            classNameInput="squared"
+            placeholder={t('user.phonePlaceHolder')}
+            validationError={errors.phone}
+            {...register('phone')}               
+          ></FieldText>
+
+          {selectedNetwork && !isInitAdminForm && short && (
+            <FieldTags
+              label={t('user.tags')}
+              explain={t('user.tagsExplain')}
+              placeholder={t('common.add')}
+              validationError={errors.tags}
+              setTags={(tags) => {
+                setValue('tags', tags);
+              }}
+              tags={watch('tags')}
+              maxTags={30}
+            />
+           )}
+
+        </Accordion>
+        
+      }
       
-      {selectedNetwork && !isInitAdminForm && (
+      {selectedNetwork && !isInitAdminForm && !short && (
           <FieldTags
             label={t('user.tags')}
             explain={t('user.tagsExplain')}
@@ -153,7 +202,9 @@ export default function NewUserFields({
           minLength: 8,
         })}
       ></FieldPassword> */}
-      {t('user.acceptPrivacyPolicy')}<Link onClick={() => store.emit(new SetMainPopup(MainPopupPage.FAQS))} href="#">{t('user.privacyPolicyLink')}</Link>
+      <div className='form__explain'>
+        {t('user.acceptPrivacyPolicy')}<Link onClick={() => store.emit(new SetMainPopup(MainPopupPage.FAQS))} className='link' href="#">{t('user.privacyPolicyLink')}</Link>
+      </div>
       <FieldCheckbox
         name="acceptPrivacyPolicy"
         // defaultValue={watch('acceptPrivacyPolicy')}
@@ -162,8 +213,10 @@ export default function NewUserFields({
         onChanged={(value) => {
           if(value)
           {
+            handleAcceptCookies()
             setValue('acceptPrivacyPolicy', 'yes')
           }else{
+            handleRejectCookies()
             setValue('acceptPrivacyPolicy', 'no')
           }
         }

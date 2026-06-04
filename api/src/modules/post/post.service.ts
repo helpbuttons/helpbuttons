@@ -27,9 +27,10 @@ export class PostService {
     private storageService: StorageService,
   ) {}
 
-  new(message: string, images: string[], buttonId: string, author: User) {
-    return this.storageService.storageMultipleImages(images)
-    .then((imagesStored ) => {
+  new(message: string, images: Express.Multer.File[], buttonId: string, author: User) {
+    return this.storageService.uploadMultipleImages(images)
+    .then((imagesUploaded ) => {
+      const imagesStored = imagesUploaded.map((img) => img.name)
       return this.buttonService
       .findById(buttonId, true)
       .then((button) => {

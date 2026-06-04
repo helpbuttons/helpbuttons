@@ -1,60 +1,39 @@
 import { FieldCheckCard } from 'elements/Fields/FieldCheckCard';
-import { FieldCheckbox } from 'elements/Fields/FieldCheckbox';
-import t from 'i18n';
-import { useForm } from 'react-hook-form';
-import { IoAccessibility, IoCalendar, IoCash } from 'react-icons/io5';
 import _ from 'lodash';
+import { customTemplates } from 'components/templates';
+import t from 'i18n';
 
-export function AddCustomFields({ customFields, setCustomFields }) {
-  const hasPrice = customFields.find(
-    (customField) => customField.type == 'price',
-  );
-  const hasEvent = customFields.find(
-    (customField) => customField.type == 'event',
-  );
-  return (
-    <>
-      {customFields && (
-        <>
-          <FieldCheckCard
-            name="priceField"
-            image={<IoCash />}
-            explain={t('configuration.priceFieldAddLabel')}
-            text={t('configuration.priceFieldAdd')}
-            onChanged={(value) => {
-              if (value) {
-                setCustomFields(
-                  _.uniq([...customFields, { type: 'price' }]),
-                );
-              } else {
-                setCustomFields(
-                  customFields.filter((elem) => elem.type != 'price'),
-                );
-              }
-            }}
-            defaultValue={hasPrice}
-          />
-          <FieldCheckCard
-            name="eventField"
-            image={<IoCalendar />}
-            explain={t('configuration.dateFieldAddLabel')}
-            // defaultValue={watch('eventField')}
-            text={t('eventType.eventFieldAdd')}
-            onChanged={(value) => {
-              if (value) {
-                setCustomFields(
-                  _.uniq([...customFields, { type: 'event' }]),
-                );
-              } else {
-                setCustomFields(
-                  customFields.filter((elem) => elem.type != 'event'),
-                );
-              }
-            }}
-            defaultValue={hasEvent}
-          />
-        </>
-      )}
-    </>
-  );
+
+
+export function AddCustomFields({ selectedCustomTemplates, setSelectedCustomTemplates }) {
+  
+  return <>{customTemplates
+            .map((template, idx) => {
+              const isSelected = selectedCustomTemplates?.find((_template) => {return _template.type == template.name})
+              const FormConfiguration = template.configurationForm;
+              return <div key={idx}>
+              <FieldCheckCard
+                name={`${template.name}Field`}
+                image={template.icon}
+                explain={t(template.explain)}
+                text={t(template.text)}
+                onChanged={(value) => {
+                  if (value) {
+                    setSelectedCustomTemplates(
+                      _.uniq([...selectedCustomTemplates, { type: template.name }]),
+                    );
+                  } else {
+                    setSelectedCustomTemplates(
+                      selectedCustomTemplates.filter((elem) => elem.type != template.name),
+                    );
+                  }
+                }}
+                defaultValue={isSelected}
+              />
+              {(isSelected && FormConfiguration) && <FormConfiguration editingValue={selectedCustomTemplates} setEditing={setSelectedCustomTemplates}/>}
+              </div>
+            }
+          )}
+          </>
+  
 }

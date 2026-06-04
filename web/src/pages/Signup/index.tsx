@@ -12,6 +12,8 @@ import QRCode from 'qrcode';
 import Btn, {
   ContentAlignment,
   BtnType,
+  IconType,
+  BtnSubmit,
 } from 'elements/Btn';
 import Form from 'elements/Form';
 import { useRouter } from 'next/router';
@@ -29,7 +31,7 @@ import { useMetadataTitle } from 'state/Metadata';
 import dconsole from 'shared/debugger';
 import HomeInfo from 'pages/HomeInfo';
 import { getInvitationLink } from 'pages/Profile/Invites';
-import { AcceptCookiesWarn } from 'components/home/CookiesBanner';
+import { IoQrCode, IoWarningOutline } from 'react-icons/io5';
 
 export default function Signup( {metadata})
 {
@@ -84,7 +86,8 @@ export function SignupForm() {
             locale: getLocale(),
             inviteCode: data.inviteCode,
             acceptPrivacyPolicy: data.acceptPrivacyPolicy,
-            qrcode: null
+            qrcode: null,
+            tags: data.tags
           },
           onSuccess,
           onError,
@@ -122,12 +125,10 @@ export function SignupForm() {
   }, [router])
 
   if(selectedNetwork?.inviteOnly && !inviteCode) {
-    return (<>{t('invite.inviteOnlyNetwork')}</>
-    )
+    return (<><div className='form__illustration form__illustration--icon'><IoWarningOutline/></div><div className="form__header">{t('invite.inviteOnlyNetwork')}</div><SignupOptions selectedNetwork={selectedNetwork}/></>)
   }
   return (
-      <Form onSubmit={handleSubmit(onSubmit)} classNameExtra="login">
-        <div className="login__form">
+      <Form onSubmit={handleSubmit(onSubmit)} classNameExtra="login__form">
           <div className="form__inputs-wrapper">
             <NewUserFields
               control={control}
@@ -138,34 +139,23 @@ export function SignupForm() {
             />
           </div>
           <div className="form__btn-wrapper">
-            <div className="from__btn-register">
-              <Btn
-                submit={true}
-                btnType={BtnType.submit}
-                caption={t('user.register')}
-                contentAlignment={ContentAlignment.center}
-                disabled={isSubmitting || cookieState != CookiesState.ACCEPTED}
-              />
-              <AcceptCookiesWarn cookieState={cookieState}/>
+            <div className="form__btn-register">
+              <BtnSubmit isSubmitting={isSubmitting} errors={errors} caption={t('user.register')} disabled={isSubmitting || cookieState != CookiesState.ACCEPTED}/>
             </div>
-            <div className="popup__link">
-              <div onClick={() => store.emit(new SetMainPopup(MainPopupPage.LOGIN))} className={`nav-bottom__link`}>
-                {t('user.loginLink')}
-              </div>
-            </div>
-            {selectedNetwork?.allowGuestCreation && 
-              <div className="popup__link">
-                <div onClick={() => store.emit(new SetMainPopup(MainPopupPage.SIGNUP_AS_GUEST))} className={`nav-bottom__link`}>
-                  {t('user.signupAsGuest')}
-                </div>
-              </div>
-            }
+            <SignupOptions selectedNetwork={selectedNetwork}/>
           </div>
-        </div>
       </Form>
   );
 }
 
+function SignupOptions({ selectedNetwork }) {
+  return <><div className="popup__link" onClick={() => store.emit(new SetMainPopup(MainPopupPage.LOGIN))}>{t('user.loginLink')}</div>
+    {selectedNetwork?.allowGuestCreation &&
+      <div className="popup__link" onClick={() => store.emit(new SetMainPopup(MainPopupPage.SIGNUP_AS_GUEST))}>
+        <IoQrCode />{t('user.signupAsGuest')}
+      </div>
+    }</>
+}
 
 
 
@@ -189,7 +179,7 @@ export function SignupAsGuestForm() {
 
   const requestNewGuestCode = () => {
     store.emit(new RequestGuestInvite((code) => {
-      setCode(code)
+      setCode(() => code)
       const link = getInvitationLink(code);
       setInvitationLink(getShareLink(link))
       QRCode.toDataURL(getShareLink(link), function (err, dataUrl) {
@@ -198,35 +188,65 @@ export function SignupAsGuestForm() {
       setStep(steps.SUCCESS)
     }))
   }
+
+  const onClick = () => {
+    navigator.clipboard.writeText(invitationLink);
+    alertService.info(t('share.codeCopied', invitationLink))
+  }
+
+  const selectedNetwork: Network = useStore(
+    store,
+    (state: GlobalState) => state.networks.selectedNetwork,
+  );
+
   return <>
-    <Form onSubmit={handleSubmit(onSubmit)} classNameExtra="login">
-      <div className="login__form">
+    <Form onSubmit={handleSubmit(onSubmit)} classNameExtra="login__form">
         <div className="form__inputs-wrapper">
           {step == steps.REQUEST_CODE &&
             <>
-              <div>{t('user.explainPublishAsGuest')}</div>
-              <Btn
-                submit={false}
-                btnType={BtnType.submit}
-                caption={t('user.generateCode')}
-                contentAlignment={ContentAlignment.center}
-                onClick={() => requestNewGuestCode()}
-              />
+              <div className='form__header'>{t('user.explainPublishAsGuest')}</div>
+              { !selectedNetwork?.inviteOnly &&
+                <Btn
+                  submit={false}
+                  btnType={BtnType.submit}
+                  caption={t('user.generateCode')}
+                  contentAlignment={ContentAlignment.center}
+                  onClick={() => requestNewGuestCode()}
+                />
+              }
             </>
           }
           {step == steps.SUCCESS &&
             <>
-              <div>{t('user.explainUseGuestCode')}</div>
-              {qrCodeData && <><img src={qrCodeData} />{invitationLink}</>}
-              <Btn
-                submit={false}
-                btnType={BtnType.submit}
-                caption={t('user.signupGuestDetails')}
-                contentAlignment={ContentAlignment.center}
-                onClick={() => {
-                  store.emit(new SetInvitationPopup(code))
-                }}
-              />
+              <div className='form__header'>{t('user.explainUseGuestCode')}</div>
+              <div className='form__subsection'> 
+                <div className='form__qr-code'>
+                 {qrCodeData && 
+                 
+                 <><img className='form__qr-code__qr-image' src={qrCodeData} />
+                      {invitationLink}
+                      <Btn
+                         btnType={BtnType.corporative}
+                         contentAlignment={ContentAlignment.center}
+                         iconLeft={IconType.svg}
+                         iconLink={<IoQrCode />}
+                         caption={t('share.copyCode')}
+                         onClick={onClick}
+                       />
+                 </>
+                 }
+                </div>
+              </div>
+
+                <Btn
+                  submit={false}
+                  btnType={BtnType.submit}
+                  caption={t('user.signupGuestDetails')}
+                  contentAlignment={ContentAlignment.center}
+                  onClick={() => {
+                    store.emit(new SetInvitationPopup(code))
+                  }}
+                />
             </>
           }
 
@@ -235,18 +255,15 @@ export function SignupAsGuestForm() {
         <div className="form__btn-wrapper">
           {(step == steps.REQUEST_CODE) &&
             <>
-              <div className="popup__link">
-                <div onClick={() => store.emit(new SetMainPopup(MainPopupPage.LOGIN))} className={`nav-bottom__link`}>
-                  {t('user.loginLink')}
-                </div>
+             <div className="popup__link" onClick={() => store.emit(new SetMainPopup(MainPopupPage.INVITE_SCAN))}>
+                 <IoQrCode/>{t('user.iHaveCode')}
               </div>
-              <div className="popup__link">
-                <div onClick={() => store.emit(new SetMainPopup(MainPopupPage.SIGNUP))} className={`nav-bottom__link`}>
-                  {t('user.noAccount')}
-                </div>
+
+              <div className="popup__link" onClick={() => store.emit(new SetMainPopup(MainPopupPage.LOGIN))}>
+                  {t('user.loginWEmail')}
               </div>
             </>}
-        </div></div>
+        </div>
     </Form>
   </>
 }

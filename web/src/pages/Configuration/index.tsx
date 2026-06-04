@@ -6,8 +6,6 @@ import { GlobalState, store } from 'state';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { alertService } from 'services/Alert';
-import { useToggle } from 'shared/custom.hooks';
-import { Network } from 'shared/entities/network.entity';
 import { Role } from 'shared/types/roles';
 import { UpdateExploreSettings } from 'state/Explore';
 import {
@@ -19,10 +17,12 @@ import {
 } from 'state/Networks';
 import { useStore } from 'state';
 import dconsole from 'shared/debugger';
+import { useWarnIfUnsavedChanges } from 'shared/custom.hooks';
 
 export default Configuration;
 
 function Configuration() {
+  
   const sessionUser = useStore(
     store,
     (state: GlobalState) => state.sessionUser,
@@ -31,7 +31,7 @@ function Configuration() {
 
   const {
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors, isSubmitting, isDirty },
     register,
     control,
     setValue,
@@ -39,6 +39,7 @@ function Configuration() {
     setError,
     reset,
     setFocus,
+    clearErrors
   } = useForm({});
 
   const backgroundColor = watch('backgroundColor');
@@ -47,6 +48,7 @@ function Configuration() {
   const textColor = watch('textColor');
   useTextColor(textColor);
   const { pathname, asPath, query } = useRouter();
+  const [submitting, setSubmitting] = useState(false) // isSubmitting won't work?
 
   const [selectedNetwork, setSelectedNetwork] = useState(null);
   useEffect(() => {
@@ -63,7 +65,16 @@ function Configuration() {
       
     );
   }, []);
+
+  const _setValue = (name, value) => {
+    setValue(name, value, { shouldDirty: true });
+  }
+  useWarnIfUnsavedChanges(isDirty && !submitting, () => {
+    return confirm(t('common.unsavedChanges'))
+  })
+
   const onSubmit = (data) => {
+    setSubmitting(() => true)
     store.emit(
       new UpdateNetwork(
         {
@@ -85,7 +96,12 @@ function Configuration() {
           requireApproval: data.requireApproval,
           slogan: data.slogan,
           hideLocationDefault: data.hideLocationDefault,
-          allowGuestCreation: data.allowGuestCreation
+          hideCountryOnAddresses: data.hideCountryOnAddresses,
+          allowGuestCreation: data.allowGuestCreation,
+          privacyPolicy: data.privacyPolicy,
+          ethicsPolicy: data.ethicsPolicy,
+          contactEmail: data.contactEmail,
+          privacyNetworkType: data.privacyNetworkType
         },
         (network) => {
           store.emit(new UpdateExploreSettings(data.exploreSettings));
@@ -108,50 +124,14 @@ function Configuration() {
             ),
           );
         },
-        (err) => {
-          if (err?.message.indexOf('validation-error') === 0) {
-            const mimetypeError = 'invalid-mimetype-';
-            if (
-              err?.validationErrors?.jumbo &&
-              err.validationErrors.jumbo.indexOf(mimetypeError) === 0
-            ) {
-              const mimetype = err.validationErrors.jumbo.substr(
-                mimetypeError.length,
-              );
-              dconsole.log(mimetype);
-              const mimetypeErrorMessage = t(
-                'common.invalidMimeType',
-                ['background image', mimetype],
-              );
-              setError('background image', {
-                type: 'custom',
-                message: mimetypeErrorMessage,
-              });
-            } else if (
-              err?.validationErrors?.logo &&
-              err.validationErrors.logo.indexOf(mimetypeError) === 0
-            ) {
-              const mimetype = err.validationErrors.logo.substr(
-                mimetypeError.length,
-              );
-              const mimetypeErrorMessage = t(
-                'common.invalidMimeType',
-                ['logo', mimetype],
-              );
-              setError('logo', {
-                type: 'custom',
-                message: mimetypeErrorMessage,
-              });
-            } else if (err?.validationErrors?.buttonTemplates) {
-              alertService.warn(err.validationErrors.buttonTemplates);
-            } else {
-              alertService.warn(
-                `Validation errors ${JSON.stringify(err)}`,
-              );
-            }
-          } else {
-            dconsole.error(err);
+        (error) => {
+          if(error.caption){
+            alertService.error(error.caption)
+          }else{
+            alertService.error(JSON.stringify(error))
           }
+          
+          setSubmitting(() => false)
         },
       ),
     );
@@ -167,7 +147,7 @@ function Configuration() {
               handleSubmit={handleSubmit}
               onSubmit={onSubmit}
               register={register}
-              setValue={setValue}
+              setValue={_setValue}
               setFocus={setFocus}
               watch={watch}
               isSubmitting={isSubmitting}
@@ -176,6 +156,7 @@ function Configuration() {
               captionAction={t('common.save')}
               linkFwd="/Profile"
               description={t('configuration.description')}
+              clearErrors={clearErrors}
             />
           </Popup>
         )}

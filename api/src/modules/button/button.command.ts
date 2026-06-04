@@ -14,6 +14,5 @@ export class ButtonCommand {
     
   ) {
     await this.buttonCron.clearEventButtons()
-    await this.buttonCron.clearOldButtons()
   }
 }

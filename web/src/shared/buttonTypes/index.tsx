@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { CustomFields } from 'shared/types/customFields.type';
 import { GlobalState, store } from 'state';
 import { useStore } from 'state';
 
@@ -28,11 +29,11 @@ export const isButtonTypeEvent = (buttonType) => {
     return false;
   }
   const btnType = buttonTypes.find(({name}) => name == buttonType)
-  if(!btnType.customFields)
+  if(!btnType?.customFields)
   {
     return false;
   }
-  return btnType.customFields.find((field) => field.type == 'event')
+  return btnType.customFields.find((field) => field.type == CustomFields.Event)
 }
 
 export const isEventAndIsExpired = (button) => {
@@ -55,7 +56,7 @@ export const useButtonType = (button,buttonTypes) => {
         ),
       );
     }
-  }, [buttonTypes]);
+  }, [buttonTypes, button]);
   return buttonType;
 }
 

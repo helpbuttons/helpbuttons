@@ -1,0 +1,49 @@
+// Shared dimensional variables referenced across multiple element/component/layout/page files.
+// These are extracted here so all partials can access them via @use '../variables' as *
+// without needing explicit cross-file @use dependencies.
+
+@use 'grid' as *;
+@use 'border' as *;
+@use 'colors' as *;
+@use 'paddings' as *;
+
+// From elements/_checkbox.scss (used in _dropdown.scss)
+$checkbox-content-border: $border-lines-width;
+
+// From elements/_hashtag.scss (used in components and layouts)
+$hashtag-hover-color: $color-white;
+$hashtag-padding-x: $padding-big;
+$hashtag-padding-y: $padding-small;
+
+// From elements/_scrollbar.scss (used in _homeinfo.scss)
+$scrollbar-width: 8px;
+
+// From elements/_form.scss
+$form-input-height: 54px;
+
+// From elements/_icon.scss
+$icon-width-small: 18px;
+$icon-width-medium: 22px;
+$icon-height-medium: 25px;
+
+// From elements/_btn.scss
+$btn-circle-icon-height: 20px;
+
+// From components/_card-button.scss (used in _card-notification.scss)
+$card-button-size-icon-before: 20px;
+
+// From components/_nav-header.scss
+$nav-header-height: $header-height-mobile;
+$nav-header-height-desktop: $header-height-desktop;
+
+// From components/_nav-bottom.scss
+$nav-bottom-height: $footer-height-mobile;
+
+// From components/_card-button-list.scss
+$card-button-list-height: 225px;
+$card-button-list-width: 400px;
+$card-button-list-feat-width: 300px;
+$card-button-list-border-height: $border-general-height;
+
+// From pages/index/_index.scss
+$index-content-left--distance: $grid-column-max-width;

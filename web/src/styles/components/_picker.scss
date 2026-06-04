@@ -1,3 +1,5 @@
+@use '../variables' as *;
+
 $picker-background: rgba(0,0,0,.2);
 $picker-header-height: 50px;
 $picker-max-width: 680px;
@@ -39,6 +41,8 @@ $picker-comments-item-padding: 25px;
   flex-direction: column;
   padding: $padding-big;
   overflow-y: auto;
+  height: 100%;
+  min-height: 300px;
 
 }
 
@@ -58,6 +62,7 @@ $picker-comments-item-padding: 25px;
 
   width: 100% !important;
   height: 100px !important;
+  margin-bottom: $padding-xbig;
 
 }
 
@@ -98,7 +103,7 @@ $picker-comments-item-padding: 25px;
 //picker HEADERS
 .picker__header {
   width: 100%;
-  font-size: $font-size-medium;
+  font-size: $font-size-big;
   font-weight: $font-weight-regular;
   text-align: center;
 }
@@ -136,6 +141,7 @@ $picker-comments-item-padding: 25px;
 
 .picker__header-left {
   text-align: left;
+  min-width: 25px;
 }
 
 .picker__header-right {
@@ -144,42 +150,56 @@ $picker-comments-item-padding: 25px;
 
 .picker__header-content {
 
-  @extend .popup__header-content;
   height: 100%;
   display: flex;
   align-items: center;
   width: 100%;
   justify-content: center;
+
 }
 
 .picker__header-title  {
-  font-size: $font-size-general;
+  font-size: $font-size-medium;
 
   font-weight: $font-weight-bold;
   color: $color-dark-gray;
   letter-spacing: 2px;
 }
 
+
 .picker__header-button {
   background-color: transparent;
   border-style: none;
+  color: $color-dark-gray;
+
   cursor: pointer;
   &:active,
   &:focus {
     outline: none;
   }
 
-  .icon {
-    width: $picker-header-icon-width;
-    height: auto;
-    max-height: 25px;
+  .picker__header-button__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    // max-height: 30px;
+    & svg {
+        height: 25px;
+        width: 25px;
+    }
   }
 }
 
+.picker__header__icon {
+  color: $color-dark-gray;
+  width: $picker-header-icon-width;
+  height: auto;
+  max-height: 25px;
+}
 // contents
 .picker__paragraph {
 
-  font-size: $font-size-general;
+  font-size: $font-size-medium;
   line-height: 1.5rem;
   padding: $picker-paragraph-padding;
 }
@@ -261,6 +281,7 @@ $picker-comments-item-padding: 25px;
   margin: $margin-small 0;
   display: flex;
   justify-content: space-evenly;
+  align-items: center;
 
 }
 
@@ -299,7 +320,7 @@ $picker-comments-item-padding: 25px;
 }
 
 .picker__option-btn--txt{
-  font-size: $font-size-general;
+  font-size: $font-size-medium;
 }
 
 .picker__map {
@@ -309,13 +330,16 @@ $picker-comments-item-padding: 25px;
   height: auto;
   width: auto;
   display: flex;
-  margin: $margin-medium 0;
+  margin-bottom: $padding-xbig ;
+
+  // padding-bottom: $padding-xbig ;
   min-height: 250px;
 
   .pigeon-zoom-buttons {
 
     right: $padding-small;
-    top: 0;
+    top: $margin-small !important;
+    position: absolute !important;
 
   }
 
@@ -336,14 +360,34 @@ $picker-comments-item-padding: 25px;
 .picker--over {
 
   position: absolute;
-  top: 50%; 
+  top: auto; 
   padding: 0;
-  left: 50%;
-  transform: translate(-50%,-50%);
+  // transform: translate(-50%,-50%);
   width: 100%;
   height: 100%;
   z-index: $z-index-05;
   padding: 0;
+
+}
+
+.picker__hours {
+
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  align-items: flex-start;
+  justify-content: space-around;
+  padding-bottom: $padding-big;
+  gap: $padding-big;
+
+}
+
+.picker__hours-dash {
+
+  align-self: center;
+  font-weight: $font-weight-bolder;
+  position: absolute;
+  top: $padding-big;
 
 }
 
@@ -362,7 +406,7 @@ $picker-comments-item-padding: 25px;
   }
 
   .picker__content {
-    padding: $padding-huge $padding-huge;
+    padding: $padding-xbig $padding-xbig;
   }
 
   .picker__content--nopadding {
@@ -373,9 +417,13 @@ $picker-comments-item-padding: 25px;
 
   .picker--over {
     // max-width: 700px;
-    width: 100%;
+    // width: 100%;
+    position: relative;
+    margin: auto;
     z-index: $z-index-05;
     max-height: 90%;
+    top: 5%;
+    bottom: auto;
     padding: 0;
   }
 
@@ -386,5 +434,8 @@ $picker-comments-item-padding: 25px;
     margin: auto;
     z-index: $z-index-05;
   }
+
+
+
 
 }

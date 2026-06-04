@@ -1,5 +1,5 @@
 import { MailerService } from '@nestjs-modules/mailer';
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { NetworkService } from '../network/network.service';
 import configs from '@src/config/configuration';
 import { Queue } from 'bull';
@@ -10,6 +10,8 @@ import { uuid } from '@src/shared/helpers/uuid.helper';
 
 @Injectable()
 export class MailService {
+  private readonly logger = new Logger('MAIL');
+
   constructor(
     private readonly mailerService: MailerService,
     private readonly networkService: NetworkService,
@@ -37,7 +39,7 @@ export class MailService {
           locale,
           'email.activateSubject'
         ),
-        link: getUrl(locale, activationUrl),
+        link: activationUrl,
         linkCaption: translate(
           locale,
           'email.activateLinkCaption'
@@ -55,25 +57,33 @@ export class MailService {
     activationUrl: string;
     locale: string
   }) {
+
     return this.networkService.findDefaultNetwork().then((network) => {
+      return network.name;
+    })
+    .catch((err) => {
+      console.log(err)
+      return 'network in configuration'
+    })
+    .then((networkName) => {
       return this.sendWithLink({
         to,
         content: translate(
           locale,
           'email.loginTokenContent',
-          [network.name]
+          [networkName]
         ),
         subject: translate(
           locale,
           'email.loginTokenSubject'
         ),
-        link: getUrl(locale, activationUrl),
+        link: activationUrl,
         linkCaption: translate(
           locale,
           'email.loginTokenLinkCaption'
         ),
       });
-    });
+    })
   }
   
   private async sendMail({
@@ -105,28 +115,33 @@ export class MailService {
 
   sendMailDirectly( {to, cc, bcc, subject, template, context})
   {
+    if(!to) {
+      console.log('no recipient defined, skipping mail send')
+      return;
+    }
     this.networkService
       .findDefaultNetwork()
       .then((network) => {
-        let from  = configs().from
-        try {
-          from = network.name + configs().from.slice(configs().from.indexOf('<'))
-        }catch(err)
-        {
-          console.log('could not add network name to from')
+        return {
+          name: network.name,
+          logo: configs().WEB_URL + '/api' + network.logo,
+          jumbo: network.jumbo ? configs().WEB_URL + '/api' + network.jumbo : '',
         }
+      })
+      .catch((err) => {
+        this.logger.error(err)
+        this.logger.error('catched, is it in setup?')
+        return {name: 'continue the setup of your network...', logo: 'no', jumbo: ''}
+      })
+      .then(({name, logo, jumbo}) => {
+        let from  = configs().from
+          from = name + configs().from.slice(configs().from.indexOf('<'))
+
 
         if(!configs().smtpHost)
         {
-          console.log('smtp host not set. not sending')
+          this.logger.warn('smtp host not set. not sending mails')
           return;
-        }
-        let logo = 'no logo'
-        try{
-          logo = configs().WEB_URL + '/api' + network.logo
-        }catch(err)
-        {
-          console.log(err)
         }
         return this.mailerService
           .sendMail({
@@ -136,22 +151,50 @@ export class MailService {
             from: from,
             subject: subject,
             template,
-            context: {...context, hostName: configs().hostName, to: to, logo},
+            context: {...context, url: configs().WEB_URL, to: to, logo, jumbo, networkName: context.networkName ?? name},
             headers: {'Message-ID': `<${uuid()}@${configs().hostName}>`}
           })
           .then((mail) => {
-            console.log(
-              `>> mail sent to ${to} with template '${template}'`,
+            this.logger.log(
+              `mail sent to ${to} with template '${template}'`,
             );
           })
           .catch((error) => {
-            console.log(error);
+            this.logger.error(error);
             console.trace();
           });
       })
-      .catch((error) => console.log('getting network error?'));
   }
-
+  sendActivity({
+    to,
+    content,
+    subject,
+    link = null,
+    linkCaption = null,
+    title, 
+    address,
+    type,
+    networkName
+  }){
+    return this.sendMail({
+      to: to,
+      cc: null,
+      bcc: null,
+      subject: subject,
+      template: 'mail',
+      context: {
+        subject: subject,
+        content: content,
+        link: link, 
+        linkCaption: linkCaption,
+        to: to,
+        title,
+        address,
+        type,
+        networkName,
+      },
+    });
+  }
   sendWithLink({
     to,
     content,
@@ -168,7 +211,7 @@ export class MailService {
       context: {
         subject: subject,
         content: content,
-        link: link, 
+        link: getUrl(link), 
         linkCaption: linkCaption,
         to: to,
       },
@@ -178,7 +221,9 @@ export class MailService {
   sendDailyOutbox({
     activities,
     to,
-    subject
+    subject,
+    date,
+    networkName
   })
   {
     return this.sendMail({
@@ -189,8 +234,47 @@ export class MailService {
       template: 'daily-outbox',
       context: {
           activities,
-          subject
+          subject,
+          networkName,
+          date
       },
     });
+  }
+
+  sendWelcomeMail({
+    name,
+    to,
+    locale,
+  }: {
+    name: string;
+    to: string;
+    locale: string;
+  }) {
+    return this.networkService.findDefaultNetwork().then((network) => {
+      let template = `welcome/${locale}`
+      const fs = require('fs');
+      const templateFilename = `${__dirname}/templates/${template}.hbs`;
+      if(!fs.existsSync(templateFilename)){
+        console.log(`${template} not found, changing to 'en'`)
+        template = `welcome/en`
+      }
+      return this.sendMail({
+        to: `${name}<${to}>`,
+        cc: null,
+        bcc: null,
+        subject: translate(locale,'email.welcomeSubject', [network.name]),
+        template,
+        context: {
+          network,
+          locale,
+          url: configs().WEB_URL,
+          name: name,
+        },
+      });
+    })
+    .catch((err) => {
+      console.log('not possible to send email ', err)
+    })
+    ;
   }
 }

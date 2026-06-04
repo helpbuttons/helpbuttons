@@ -6,6 +6,8 @@ import { dbToRRule } from 'components/picker/PickerEventType/recurrent';
 import produce from 'immer';
 import { Button } from 'shared/entities/button.entity';
 import dconsole from 'shared/debugger';
+import { ButtonEntry } from 'shared/dtos/button.dto';
+import { isAfter } from 'shared/date.utils';
 
 export class FindMonthCalendar implements WatchEvent {
   public constructor(
@@ -16,7 +18,8 @@ export class FindMonthCalendar implements WatchEvent {
 
   public watch(state: GlobalState) {
     return ButtonService.monthCalendar(this.month, this.year).pipe(
-      map((monthEvents) =>
+      map((monthEvents) => {
+        store.emit(new StoreMonthCalendar(monthEvents))
         this.onSuccess(
           monthEvents.map((event) => {
             return {
@@ -26,13 +29,24 @@ export class FindMonthCalendar implements WatchEvent {
               eventData: dbToRRule(event.eventData),
             };
           }),
-        ),
-      ),
+        )
+      }),
       catchError((error) => {
         dconsole.error(error);
         return of(undefined);
       }),
     );
+  }
+}
+
+export class StoreMonthCalendar implements UpdateEvent{
+  public constructor(
+    private eventsMonth
+  ) { }
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      newState.explore.settings.selectedMonth = this.eventsMonth.sort((dateA, dateB) => isAfter(new Date(dateA), new Date(dateB)));
+    });
   }
 }
 
@@ -95,7 +109,7 @@ export class FindBulletinButtons implements WatchEvent {
 }
 
 export class UpdateButtonList implements UpdateEvent {
-  public constructor(private buttons: Button[]) { }
+  public constructor(private buttons: ButtonEntry[]) { }
   public update(state: GlobalState) {
     return produce(state, (newState) => {
       dconsole.log('[UpdateButtonList]')
@@ -199,7 +213,10 @@ export class ButtonUnpin implements WatchEvent, UpdateEvent {
   public update(state: GlobalState) {
     return produce(state, (newState) => {
       newState.explore.currentButton.pin = false;
-      newState.explore.map.pinnedButtons = state.explore.map.pinnedButtons.filter((button) => button.id != state.explore.currentButton.id)
+      if(state.explore.map.pinnedButtons.length > 0)
+      {
+        newState.explore.map.pinnedButtons = state.explore.map.pinnedButtons.filter((button) => button.id != state.explore.currentButton.id)
+      }
     });
   }
 }
@@ -214,6 +231,25 @@ export class ButtonFindAll implements WatchEvent {
     return ButtonService.findAll(this.page).pipe(
       map((buttonList) => {
         this.onSuccess(buttonList);
+      }),
+      catchError((error) => {
+        this.onSuccess([]);
+        return of(undefined);
+      }),
+    );
+  }
+}
+
+export class FindFollowers implements WatchEvent {
+  public constructor(
+    private buttonId: string,
+    private onSuccess,
+  ) { }
+
+  public watch(state: GlobalState) {
+    return ButtonService.followers(this.buttonId).pipe(
+      map((followersList) => {
+        this.onSuccess(followersList);
       }),
       catchError((error) => {
         this.onSuccess([]);

@@ -3,6 +3,7 @@ export enum HbMapTiles {
   TERRAIN = 'terrain',
   WATERCOLOR = 'watercolor',
   OSM = 'osm',
+  SATELLITE = 'satellite',
 }
 export function HbTiles(
   mapType: HbMapTiles,
@@ -13,6 +14,9 @@ export function HbTiles(
 ): string {
   if (mapType == HbMapTiles.OSM) {
     return osm(x,y,z)
+  }
+  if (mapType == HbMapTiles.SATELLITE) {
+    return satellite(x,y,z)
   }
     return `//tiles.stadiamaps.com/tiles/stamen_${mapType}/${z}/${x}/${y}${
       dpr >= 2 ? '@2x' : ''
@@ -26,6 +30,15 @@ export function osm(
 ) {
   const s = String.fromCharCode(97 + ((x + y + z) % 3));
     return `https://${s}.tile.openstreetmap.org/${z}/${x}/${y}.png`;
+}
+
+export function satellite(
+  x: number,
+  y: number,
+  z: number
+) {
+  // ESRI World Imagery - free satellite imagery
+  return `https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/${z}/${y}/${x}`;
 }
 
 

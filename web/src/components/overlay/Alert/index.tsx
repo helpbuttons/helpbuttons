@@ -75,7 +75,7 @@ function Alert({ id, fade }) {
                     <div key={index} className={cssClasses(alert)}>
                         <div className="card-alert__content">
                           <div className="card-alert__icon">{iconShape(alert)}</div>
-                          <span className="card-alert__title" dangerouslySetInnerHTML={{ __html: alert.message }}></span>
+                          <span className="card-alert__title">{alert.message}</span>
                         </div>
                         <Btn
                           btnType={BtnType.smallCircle}
@@ -90,7 +90,7 @@ function Alert({ id, fade }) {
     );
 }
 
-export function FixedAlert({ alertType = AlertType.Info, message }) {
+export function FixedAlert({ alertType = AlertType.Info, children }) {
   return (
     <div className="card-alert__container">
         <div className={alertTypeClass[alertType]+' card-alert'}>
@@ -100,8 +100,7 @@ export function FixedAlert({ alertType = AlertType.Info, message }) {
             </div>
             <span
               className="card-alert__title"
-              dangerouslySetInnerHTML={{ __html: message }}
-            ></span>
+            >{children}</span>
           </div>
         </div>
     </div>

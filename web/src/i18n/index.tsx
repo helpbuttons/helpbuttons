@@ -70,6 +70,6 @@ function getTranslation(locale, key) {
 
 function setNomeclature(locale, translatedString)
 {
-    const translating = translatedString.replace('_helpbuttons_', nomeclaturePlural)
-    return translating.replace('_helpbutton_', nomeclature)
+    const translating = translatedString.replaceAll('_helpbuttons_', nomeclaturePlural)
+    return translating.replaceAll('_helpbutton_', nomeclature)
   }

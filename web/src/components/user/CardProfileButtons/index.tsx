@@ -1,0 +1,63 @@
+import { ButtonLinkType } from "components/list/CardButtonList";
+import ContentList, { ButtonsListEmpty } from "components/list/ContentList";
+import t from "i18n";
+import { useButtonTypes } from "shared/buttonTypes";
+import { Role } from "shared/types/roles";
+import { GlobalState, useGlobalStore } from "state";
+
+export function CardProfileButtonList({user, buttons})
+{
+  const pageName = useGlobalStore((state: GlobalState) => state.homeInfo.pageName)
+  const buttonTypes = useButtonTypes();
+
+  if(!buttons ||
+    buttons?.length < 1){
+        return (<ButtonsListEmpty buttons={buttons} filtered={false} hideEmptyListWarning={true}/>)
+    }
+  
+  return (<div className="card-profile__button-list-wrapper">
+        <ButtonListHead user={user}/>
+        <div className="card-profile__button-list-content">
+          <div className="card-profile__button-list">
+          
+            <ContentList
+              buttons={buttons}
+              buttonTypes={buttonTypes}
+              linkType={pageName != 'Explore' ? ButtonLinkType.MAINPOPUP : ButtonLinkType.EXPLORE}
+              hideEmptyListWarning={true}
+            />
+            
+          </div>
+        </div>
+
+      </div>
+
+    )
+}
+
+function ButtonListHead({ user }) {
+  const sessionUser = useGlobalStore((state) => state.sessionUser)
+
+  return (
+    <div className="card-profile__rating">
+      <div className={'card-profile__rate ' + (sessionUser.id == user.id || sessionUser?.role == Role.admin ? ' card-profile__rate--published' : 'card-profile__rate--')}>
+        <div className="card-profile__rate-label">
+          {t('user.helpbuttonsPublishedAmount')}
+        </div>
+        {user?.buttonCount ?? 0}
+      </div>
+      <div className="card-profile__rate">
+        <div className="card-profile__rate-label">
+          {t('user.timesFollowed')}
+        </div>
+        {user?.followsCount ?? 0}
+      </div>
+      <div className="card-profile__rate">
+        <div className="card-profile__rate-label">
+          {t('user.commentsAmount')}
+        </div>
+        {user?.commentCount ?? 0}
+      </div>
+    </div>
+  )
+}

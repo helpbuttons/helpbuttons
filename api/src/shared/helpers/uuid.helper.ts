@@ -5,3 +5,8 @@ export function uuid(length = 36): string {
 export function token(length = 21): string {
   return uuid(length)
 }
+
+export function slugify(title) {
+  const slugify = require('slugify')
+  return slugify(title, {remove: /[*+~.()'"!:@]/g});
+}

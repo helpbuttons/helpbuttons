@@ -10,6 +10,7 @@ import {
   IsArray,
   IsIn
 } from 'class-validator';
+import { User } from '../user/user.entity';
 
 const specialCharRegex = /(?=.*[!@#$%^&*()_\-+=].*[!@#$%^&*()_\-+=])/;
 
@@ -37,7 +38,7 @@ export class SignupRequestDto {
   })
   @IsEmail()
   @Transform((email) => email.value.toLowerCase())
-  email: string;
+  email?: string;
 
   @ApiProperty({
     default: '',
@@ -111,6 +112,8 @@ export class SignupRequestDto {
   acceptPrivacyPolicy
 
   qrcode: string;
+
+  phone?: string;
 }
 
 
@@ -146,7 +149,10 @@ export class SignupQRRequestDto {
   tags?: string[];
 
   @IsIn(['yes'])
-  acceptPrivacyPolicy
+  acceptPrivacyPolicy;
+  
+  phone?: string;
+  email?: string;
 }
 
 export class LoginRequestDto {
@@ -192,4 +198,8 @@ export class LoginRequestDto {
     message: `Password should contains at least two number.`,
   })
   password: string;
+}
+
+export class UserOutDto extends User{
+  token: string
 }

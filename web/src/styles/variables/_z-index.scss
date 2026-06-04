@@ -1,9 +1,9 @@
 // z-index
 $z-index-background: -1; /// backdrop
 $z-index-base: 10; /// under everything
-$z-index-01: 100;
-$z-index-02: 200;
-$z-index-03: 300; // main navigation menus
+$z-index-01: 100; //map layer 
+$z-index-02: 200; // card , map layer over map, main pages
+$z-index-03: 300; // main navigation menus, option menus over maps and cards
 $z-index-04: 400; /// popups, search filters, extra navigation menus 
-$z-index-05: 500; //data pickers menuselects
+$z-index-05: 500; //data pickers menuselects , over popups
 $z-index-06: 600; ///over everything, just loaders, alerts messages

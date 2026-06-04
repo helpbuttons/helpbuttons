@@ -10,7 +10,12 @@ export class MailerModuleConfig implements MailerOptionsFactory {
   ) {}
 
   createMailerOptions(): MailerOptions | Promise<MailerOptions> {
-    const helpers = { 
+    const helpers = {
+      capitalize: function(str) {
+        if (!str) return '';
+        if (typeof str !== 'string') str = String(str);
+        return str.charAt(0).toUpperCase() + str.slice(1);
+      },
       list: function(context, options) {
         var ret = "<div>";
       
@@ -48,6 +53,7 @@ export class MailerModuleConfig implements MailerOptionsFactory {
           strict: true,
         },
       },
+      // preview: true, // uncomment for testing, opens a tab on your browser when sending a new email
       options: {
         partials: {
           dir: __dirname + '/templates/partials',

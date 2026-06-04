@@ -21,6 +21,7 @@ import { activitiesInitialState } from './Activity';
 import dconsole from 'shared/debugger';
 import { SetMainPopupCurrentButton, SetMainPopupCurrentProfile } from './HomeInfo';
 import { updateCurrentButton } from './Explore';
+import { Button } from 'shared/entities/button.entity';
 
 export class AddUserToKnownUsers implements UpdateEvent {
   public constructor(private newUser: IUser) {}
@@ -44,13 +45,6 @@ export class UpdateRole implements WatchEvent {
   public watch(state: GlobalState) {
     return UserService.updateRole(this.userId,this.newRole).pipe(
       map((data) => {
-        store.emit(new SetMainPopupCurrentProfile(data))
-        if(this.newRole == Role.blocked)
-        {
-          store.emit(new updateCurrentButton(null))
-          store.emit(new SetMainPopupCurrentButton(null))
-        }
-        
         this.onSuccess(true)
       }),
       catchError((error) => {  
@@ -113,6 +107,30 @@ export class FindUserButtons implements WatchEvent {
   }
 }
 
+export class SaveMyButtons implements UpdateEvent {
+  public constructor(
+    private buttons: Button[],
+  ) {}
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      newState.myButtons = this.buttons;
+    });
+  }
+}
+
+export class FindMyButtons implements WatchEvent {
+  public constructor(
+  ) {}
+
+  public watch(state: GlobalState) {
+    return UserService.findMyButtons().pipe(
+      map((buttonList) => {
+        store.emit(new SaveMyButtons(buttonList))
+      }),
+      catchError((error) => {new SaveMyButtons([]); dconsole.log(error); return  of(undefined)})
+    )
+  }
+}
 
 
 export function isAdmin(sessionUser)
@@ -203,3 +221,19 @@ export class UserRevokeEndorse implements WatchEvent, UpdateEvent {
   }
 }
 
+
+export class FindUser implements WatchEvent {
+  public constructor(
+    private username: string,
+    private onResult,
+  ) {}
+
+  public watch(state: GlobalState) {
+    return UserService.find(this.username).pipe(
+      map((user) => {
+        this.onResult(user);
+      }),
+      catchError((error) => {this.onResult(null); dconsole.log(error); return  of(undefined)})
+    )
+  }
+}

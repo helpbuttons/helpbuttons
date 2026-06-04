@@ -46,7 +46,7 @@ export function HeaderSearch({ toggleAdvancedFilters, exploreMapState, selectedN
           }
         }}
       >
-        <div className="header-search__column">
+        <div className={" header-search__column"}>
           <SearchText
             count={buttonCount}
             where={exploreMapState.filters.where}
@@ -88,7 +88,7 @@ function SearchText({ count, where, filtering = false }) {
 
   const hexagonClicked = useStore(
     store,
-    (state: GlobalState) => state.explore.settings.hexagonClicked,
+    (state: GlobalState) => state.explore.map.filters.hexClicked,
     false,
   );
 

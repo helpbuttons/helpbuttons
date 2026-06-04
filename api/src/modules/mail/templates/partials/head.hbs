@@ -53,9 +53,7 @@
 
     /* Link Styles */
     .container a {
-      color: #0066cc;
       text-decoration: none;
-      border-bottom: 1px solid #0066cc;
       transition: border-color 0.3s;
     }
 
@@ -70,7 +68,8 @@
       font-size: 12px;
       color: #666;
     }
-    .image-header{
+    
+    .email-header{
       height: 80px;
       width: 80px;
       border-radius: 40px;
@@ -78,10 +77,160 @@
       margin: auto;
       margin-bottom: 30px;
     }
-    .image-header img{
+    .network-name {
+      text-align: center;
+      font-size: 22px;
+      font-weight: bold;
+      color: #111;
+      margin: 8px 0 12px 0;
+      display: block;
+    }
+
+   .network-name::first-letter {
+      text-transform: capitalize;
+    }
+
+    .image-header {
       background-size: cover;
-      height: auto;
       width: 100%;
+      margin: auto;
+      margin-bottom: 50px;
+      display: flex;
+      justify-content: center;
+      position: relative;
+    }
+
+    .image-header img{
+
+      background-size: cover;
+      height: 150px;
+      width: 150px;
+      border-radius: 100px;
+      position: relative;
+
+    }
+
+    .breaklines {
+
+      white-space: pre-wrap;
+    }
+
+    /* Activity item */
+    .activity-group {
+      margin-bottom: 16px;
+      text-align: left;
+    }
+    
+
+    .activity-label {
+      display: block;
+      width: fit-content;
+      background-color: #282828;
+      color: #fcfcfc !important;
+      font-weight: bold;
+      font-size: 14px;
+      padding: 6px 18px;
+      border-radius: 20px;
+      margin: 10px auto 12px auto;
+      text-decoration: none;
+    }
+
+    .activity-label::first-letter {
+      text-transform: uppercase;
+    }
+
+    .activity-label-p {
+      display: block;
+      width: auto;
+      text-align: left;
+      background-color: #f4f4f4;
+      color: #000 !important;
+      font-weight: normal;
+      font-size: 16px;
+      padding: 14px 18px;
+      border-radius: 3px;
+      margin: 8px auto 10px auto;
+      text-decoration: none;
+
+    }
+
+    .activity-label-p a {
+
+      text-decoration: none;
+      color: #000 !important;
+
+    }
+    .activity-label-p a::first-letter {
+      text-transform: uppercase !important;
+    }
+
+    .activity-card-link {
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      border-bottom: none;
+
+    }
+
+    .activity-card-link:hover .activity-card {
+      box-shadow: 6px 6px 14px rgba(0, 0, 0, 0.18);
+    }
+
+    .activity-card-link:hover {
+      cursor: pointer;
+    }
+
+    .activity-card {
+      background-color: #fff;
+      border-radius: 12px;
+      box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.12);
+      padding: 14px 16px;
+    }
+
+    .activity-type {
+      color: #434343;
+      font-size: 13px;
+      margin: 0 0 4px 0;
+    }
+
+    .activity-title {
+      font-size: 16px;
+      font-weight: bold;
+      color: #111;
+      margin: 0 0 4px 0;
+      text-transform: uppercase;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+    }
+
+    .activity-description {
+      font-size: 13px;
+      color: #555;
+      margin: 0 0 10px 0;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+    }
+
+    .activity-meta {
+      font-size: 13px;
+      color: #333;
+      margin: 4px 0 0 0;
+    }
+
+    .activity-address {
+      text-decoration: underline;
+    }
+
+
+    .date {
+      color: #555;
+      font-size: 11px ;
+    }
+
+    p::first-letter, h1::first-letter, h2::first-letter, h3::first-letter,
+    h4::first-letter, h5::first-letter, h6::first-letter,
+    td::first-letter, li::first-letter, div::first-letter {
+      text-transform: capitalize;
     }
   </style>
 </head>

@@ -11,10 +11,8 @@ export function FilterByNumber({
   return (
     <>
         <div className="form__field">
-          <label className="form__label">
-            {label}
-          </label>
-          <div style={{ padding: '1rem' }}>
+
+          <div >
             <Slider
               min={1}
               max={max}
@@ -23,6 +21,9 @@ export function FilterByNumber({
               }}
               defaultValue={number}
             />
+          </div>
+          <div className="form__input form__fake-input">
+            {label}
           </div>
         </div>
 

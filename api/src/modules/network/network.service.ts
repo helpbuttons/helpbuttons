@@ -3,7 +3,6 @@ import {
   Inject,
   forwardRef,
   Injectable,
-  UseInterceptors,
 } from '@nestjs/common';
 import { HttpStatus } from '@src/shared/types/http-status.enum';
 
@@ -20,7 +19,6 @@ import {
   UpdateNetworkDto,
 } from './network.dto';
 import { Network } from './network.entity';
-import { getManager } from 'typeorm';
 import { StorageService } from '../storage/storage.service';
 import { ValidationException } from '@src/shared/middlewares/errors/validation-filter.middleware';
 import { UserService } from '../user/user.service';
@@ -28,9 +26,6 @@ import { isImageData } from '@src/shared/helpers/imageIsFile';
 import { removeUndefined } from '@src/shared/helpers/removeUndefined';
 import {
   CACHE_MANAGER,
-  CacheInterceptor,
-  CacheKey,
-  CacheTTL,
 } from '@nestjs/cache-manager';
 import { updateNomeclature } from '@src/shared/helpers/i18n.helper';
 import { getConfig } from '@src/shared/helpers/config.helper';
@@ -38,6 +33,7 @@ import { SetupDtoOut } from '../setup/setup.entity';
 import configs from '@src/config/configuration';
 import { uploadDir } from '../storage/storage.utils';
 import { Cache } from 'cache-manager';
+import { PrivacyNetworkType } from '@src/shared/types/privacy.enum';
 
 @Injectable()
 export class NetworkService {
@@ -53,7 +49,10 @@ export class NetworkService {
     @Inject(CACHE_MANAGER) private cacheManager: Cache
   ) { }
 
-  async create(createDto: CreateNetworkDto) {
+  async create(createDto: CreateNetworkDto, logo: Express.Multer.File, jumbo: Express.Multer.File) {
+    if(createDto.allowGuestCreation && createDto.privacyNetworkType != PrivacyNetworkType.ANYONE_CAN){
+      createDto.allowGuestCreation = false;
+    }
     const network = {
       id: uuid(),
       description: createDto.description,
@@ -75,43 +74,32 @@ export class NetworkService {
       requireApproval: createDto.requireApproval,
       hideLocationDefault: createDto.hideLocationDefault,
       allowGuestCreation: createDto.allowGuestCreation,
+      privacyPolicy: createDto.privacyPolicy,
+      ethicsPolicy: createDto.ethicsPolicy,
+      contactEmail: createDto.contactEmail,
+      hideCountryOnAddresses: createDto.hideCountryOnAddresses,
+      privacyNetworkType: createDto.privacyNetworkType
     };
-    await getManager().transaction(
-      async (transactionalEntityManager) => {
-        if (Array.isArray(createDto.tags)) {
-          await this.tagService
-            .addTags('network', network.id, createDto.tags)
-            .catch((err) => {
-              throw new HttpException(
-                { message: err.message },
-                HttpStatus.BAD_REQUEST,
-              );
-            });
-        }
-
-        try {
-          network.logo = await this.storageService.newImage64(
-            createDto.logo,
+    if (Array.isArray(createDto.tags)) {
+      await this.tagService
+        .addTags('network', network.id, createDto.tags)
+        .catch((err) => {
+          throw new HttpException(
+            { message: err.message },
+            HttpStatus.BAD_REQUEST,
           );
-        } catch (err) {
-          console.log(err)
-          throw new ValidationException({ logo: err.message });
-        }
+        });
+    }
+    if(logo){
+      network.logo = await this.storageService.uploadAndConvertImage(logo).then((val) => val.name);
+    }
+    
+    if(jumbo){
+      network.jumbo = await this.storageService.uploadAndConvertImage(jumbo).then((val) => val.name);
+    }
 
-        try {
-          network.jumbo = await this.storageService.newImage64(
-            createDto.jumbo,
-          );
-        } catch (err) {
-          console.log(`errorjumboooooror: ${err.message}`);
-          throw new ValidationException({ jumbo: err.message });
-        }
-        console.log(
-          `network.logo ${network.logo} jumbo ${network.jumbo}`,
-        );
-        await this.networkRepository.insert([network]);
-      },
-    );
+    await this.networkRepository.insert([network]);
+    await this.userService.setAdminLocale(createDto.locale)
 
     return network;
   }
@@ -152,6 +140,7 @@ export class NetworkService {
                   }
                   return {
                     ...defaultNetwork,
+                    inviteOnly: defaultNetwork.privacyNetworkType != PrivacyNetworkType.ANYONE_CAN,
                     buttonTypesCount: networkByButtonTypes,
                     exploreSettings: defaultNetwork.exploreSettings,
                     buttonCount: networkByButtonTypes.reduce(
@@ -188,6 +177,14 @@ export class NetworkService {
           return network
         }
       })
+      .catch((err) => {
+        console.log(err)
+        console.log('no networks found?')
+        throw new HttpException(
+          { message: '🙆🏼‍♂️Default network not found' },
+          HttpStatus.NOT_FOUND,
+        );
+      })
   }
 
   async getCenter(): Promise<any> {
@@ -198,17 +195,19 @@ export class NetworkService {
     return this.findDefaultNetwork();
   }
 
-  async update(updateDto: UpdateNetworkDto) {
+  async update(updateDto: UpdateNetworkDto, logo, jumbo) {
     const defaultNetwork = await this.findDefaultNetwork();
-
+    if(updateDto.allowGuestCreation && updateDto.privacyNetworkType != PrivacyNetworkType.ANYONE_CAN){
+      updateDto.allowGuestCreation = false;
+    }
     const network = {
       id: defaultNetwork.id,
       description: updateDto.description,
       slogan: updateDto.slogan,
       tags: this.tagService.formatTags(updateDto.tags),
       privacy: updateDto.privacy,
-      logo: null,
-      jumbo: null,
+      logo: updateDto.logo,
+      jumbo: updateDto.jumbo,
       name: updateDto.name,
       exploreSettings: updateDto.exploreSettings,
       backgroundColor: updateDto.backgroundColor,
@@ -222,7 +221,13 @@ export class NetworkService {
       requireApproval: updateDto.requireApproval,
       hideLocationDefault: updateDto.hideLocationDefault,
       allowGuestCreation: updateDto.allowGuestCreation,
+      privacyPolicy: updateDto.privacyPolicy,
+      ethicsPolicy: updateDto.ethicsPolicy,
+      contactEmail: updateDto.contactEmail,
+      hideCountryOnAddresses: updateDto.hideCountryOnAddresses,
+      privacyNetworkType: updateDto.privacyNetworkType
     };
+    /** Dont need to check for orphans no more... ! */
     const buttonTemplatesNew = network.buttonTemplates.filter((btnTemplate) => !btnTemplate.hide).map((btnTemplate) => btnTemplate.name)
 
     const buttonTemplateActive = await this.entityManager.query(`select count(id), type from button group by type;`)
@@ -232,55 +237,36 @@ export class NetworkService {
     })
 
     if (orphanButtonTemplates.length > 0) {
-      const undeletedButtonTemplates = orphanButtonTemplates.map((btnTemplate) => btnTemplate.type)
-      throw new ValidationException({ buttonTemplates: 'cant delete button template ' + JSON.stringify(undeletedButtonTemplates) });
+      await orphanButtonTemplates.map(async (btnTemplate) => {
+        await this.entityManager.query(`update button set deleted = true where type = $1`,[btnTemplate.type])
+      } )
     }
 
     await this.cacheManager.del('defaultNetwork');
-    await getManager().transaction(
-      async (transactionalEntityManager) => {
-        if (Array.isArray(updateDto.tags)) {
-          await this.tagService
-            .addTags('network', network.id, updateDto.tags)
-            .catch((err) => {
-              throw new HttpException(
-                { message: err.message },
-                HttpStatus.BAD_REQUEST,
-              );
-            });
-        }
+    if (Array.isArray(updateDto.tags)) {
+      await this.tagService
+        .addTags('network', network.id, updateDto.tags)
+        .catch((err) => {
+          throw new HttpException(
+            { message: err.message },
+            HttpStatus.BAD_REQUEST,
+          );
+        });
+    }
 
-        if (isImageData(updateDto.logo)) {
-          try {
-            network.logo = await this.storageService.newImage64(
-              updateDto.logo,
-            );
-            if (defaultNetwork.logo != network.logo) {
-              await this.storageService.delete(defaultNetwork.logo)
-            }
-          } catch (err) {
-            throw new ValidationException({ logo: err.message });
-          }
-        }
+    if (logo && defaultNetwork.logo != logo) {
+      network.logo = await this.storageService.uploadAndConvertImage(logo).then((val) => val.name);
+    }
+    
+    if (jumbo && defaultNetwork.jumbo != jumbo) {
+      network.jumbo = await this.storageService.uploadAndConvertImage(jumbo).then((val) => val.name);
+    }
 
-        if (isImageData(updateDto.jumbo)) {
-          try {
-            network.jumbo = await this.storageService.newImage64(
-              updateDto.jumbo,
-            );
-            if (defaultNetwork.jumbo != network.jumbo) {
-              await this.storageService.delete(defaultNetwork.jumbo)
-            }
-          } catch (err) {
-            throw new ValidationException({ jumbo: err.message });
-          }
-        }
-        await this.networkRepository.update(
-          defaultNetwork.id,
-          removeUndefined(network),
-        );
-      },
+    await this.networkRepository.update(
+      defaultNetwork.id,
+      removeUndefined(network),
     );
+    await this.userService.setAdminLocale(updateDto.locale)
 
     return network;
   }
@@ -289,7 +275,7 @@ export class NetworkService {
     return getConfig();
   }
 
-  getButtonTypesWithEventField() {
+  getButtonTypesWith(customFields) {
     return this.findButtonTypes()
       .then((buttonTemplates) => {
         return buttonTemplates
@@ -299,7 +285,7 @@ export class NetworkService {
             }
             const buttonTemplatesEvents =
               buttonTemplate.customFields.filter((customField) => {
-                return customField.type == 'event';
+                return customFields.indexOf(customField.type) > -1
               });
             if (buttonTemplatesEvents.length > 0) {
               return true;

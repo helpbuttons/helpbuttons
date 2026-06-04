@@ -18,9 +18,10 @@ export class CommentService {
     private storageService: StorageService
   ) {}
 
-  new(message: string, images: string[], postId: string, author: User, privacy: PrivacyType) {
-    return this.storageService.storageMultipleImages(images)
-    .then((imagesStored ) => {
+  new(message: string, images: Express.Multer.File[], postId: string, author: User) {
+    return this.storageService.uploadMultipleImages(images)
+    .then((imagesUploaded ) => {
+      const imagesStored = imagesUploaded.map((img) => img.name)
       return this.postSerice.findById(postId).then((post) => {
         const comment = {
           id: uuid(),
@@ -28,7 +29,7 @@ export class CommentService {
           images: imagesStored,
           post,
           author,
-          privacy
+          privacy: PrivacyType.PUBLIC
         };
         return this.commentRepository.insert([comment]).then((result) => {
           return {...comment, button: post.button}
@@ -37,9 +38,10 @@ export class CommentService {
     })
   }
 
-  newReply(message: string, images: string[], postId: string, commentParentId: string, author: User, privacy: PrivacyType) {
-    return this.storageService.storageMultipleImages(images)
-    .then((imagesStored ) => {
+  newReply(message: string, images: Express.Multer.File[], postId: string, commentParentId: string, author: User) {
+    return this.storageService.uploadMultipleImages(images)
+    .then((imagesUploaded ) => {
+      const imagesStored = imagesUploaded.map((img) => img.name)
     return this.postSerice.findById(postId).then((post) => {
       const comment = {
         id: uuid(),
@@ -47,7 +49,7 @@ export class CommentService {
         images: imagesStored,
         post,
         author,
-        privacy,
+        privacy: PrivacyType.PUBLIC,
         commentParentId: commentParentId,
       };
       return this.commentRepository.insert([comment]).then((result) => {

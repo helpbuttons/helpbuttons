@@ -1,4 +1,5 @@
 import { of } from 'rxjs';
+import { alertService } from 'services/Alert';
 import { isHttpError } from 'services/HttpService';
 import { errorsList, ErrorText } from 'shared/types/error.list';
 
@@ -19,14 +20,14 @@ export function handleError(onError, error) {
       onError({caption: errorText[0].caption, errorName: err.message, validationErrors});
     } else {
       console.error(`fatal error: could not find error "${err.message}" [${err.statusCode}] `)
-      onError(error.message);
+      onError({caption: err.message});
     }
   }
   return of(undefined);
 }
 
 export function setValidationErrors(validationErrors, setError) {
-  if(validationErrors.length < 1)
+  if(!validationErrors || validationErrors.length < 1)
   {
     return false;
   }

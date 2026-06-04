@@ -1,4 +1,5 @@
 import {
+  Body,
   Controller,
   Get,
   Param,
@@ -11,65 +12,40 @@ import { AllowGuest, OnlyRegistered } from '@src/shared/decorator/roles.decorato
 import { User } from '../user/user.entity';
 import { ActivityService } from './activity.service';
 import { ActivityCron } from './activity.cron';
-import { ActivityDtoOut, ActivityMessageDto } from './activity.dto';
+import { Activities, ActivityDtoOut, MessageDto } from './activity.dto';
+import { ButtonService } from '../button/button.service';
+import { UserService } from '../user/user.service';
+import { EventEmitter2 } from '@nestjs/event-emitter';
+import { ActivityEventName } from '@src/shared/types/activity.list';
+import { notifyUser } from '@src/app/app.event';
 
 @ApiTags('activity')
 @Controller('activity')
 export class ActivityController {
-  constructor(private readonly activityService: ActivityService,
-    private readonly activityCron: ActivityCron
+  constructor(
+    private readonly activityService: ActivityService,
+    private readonly buttonService: ButtonService,
+    private readonly userService: UserService,
+    private readonly activityCron: ActivityCron,
+    private eventEmitter: EventEmitter2
     ) {}
-
+  
   @OnlyRegistered()
-  @Get('messages/search/:query')
-  async messagesSearch(@CurrentUser() user: User, @Param('query') query: string) : Promise<boolean> {
-    console.log('search... ' + query)
-    return true;
+  @Get('activities/:page')
+  async notificationsRead(@CurrentUser() user: User, @Param('page') page: number) : Promise<Activities> {
+    return this.activityService.findNotificationsByUser(user, page ? page : 0);
   }
 
   @OnlyRegistered()
-  @Get('messages/markAllAsRead')
-  async messagesMarkAllAsRead(@CurrentUser() user: User) : Promise<any> {
-    return this.activityService.markAllMessagesAsRead(user.id);
-  }
-
-  @OnlyRegistered()
-  @Get('messages/unread')
-  async messagesUnread(@CurrentUser() user: User) : Promise<ActivityMessageDto[]> {
-    return this.activityService.findMessagesByUserId(user.id, user.locale, false, null);
+  @Get('activities/button/:buttonId/:consumerId/:page')
+  async activityButton(@CurrentUser() user: User, @Param('buttonId') buttonId: string, @Param('consumerId') consumerId: string, @Param('page') page: string) : Promise<ActivityDtoOut[]> {
+    return this.activityService.findNotificationByButtonAndUser(user.id, buttonId, consumerId, user.locale, page ? page : 0);
   }
   
   @OnlyRegistered()
-  @Get('messages/read/:page')
-  async messagesRead(@CurrentUser() user: User, @Param('page') page: string) : Promise<ActivityMessageDto[]> {
-    return this.activityService.findMessagesByUserId(user.id, user.locale, true, page ? page : 0);
-  }
-  
-
-  @OnlyRegistered()
-  @Get('notifications/search/:query')
-  async notificationsSearch(@CurrentUser() user: User, @Param('query') query: string) : Promise<boolean> {
-    console.log('search... ' + query)
-    return true;
-  }
-  
-  // @OnlyRegistered()
-  // @Get('notifications/markAllAsRead')
-  // async notificationsMarkAllAsRead(@CurrentUser() user: User) : Promise<any> {
-  //   return this.activityService.markAllMessagesAsRead(user.id);
-  // }
-
-
-  // @OnlyRegistered()
-  // @Get('notifications/unread')
-  // async notificationsUnread(@CurrentUser() user: User) : Promise<ActivityDtoOut[]> {
-  //   return this.activityService.findNotificationsByUserId(user.id, user.locale, false, null);
-  // }
-  
-  @OnlyRegistered()
-  @Get('notifications/:page')
-  async notificationsRead(@CurrentUser() user: User, @Param('page') page: string) : Promise<ActivityDtoOut[]> {
-    return this.activityService.findNotificationsByUserId(user.id, user.locale, null, page ? page : 0);
+  @Post('sendMessage/:buttonId/:consumerId')
+  async sendMessage(@CurrentUser() user: User, @Body() message: MessageDto, @Param('buttonId') buttonId: string, @Param('consumerId') consumerId: string) {
+      return this.activityService.sendMessage(user.id, consumerId, buttonId, message.message)
   }
 
   @OnlyRegistered()
@@ -88,9 +64,9 @@ export class ActivityController {
     return await this.activityService.findNetworkActivity(locale)
   }
 
-  // @Get('triggerNotifications')
-  // async triggerNotifications()
-  // {
-  //   return await this.activityCron.triggerNotifications()
-  // }
+  @Get('triggerNotifications')
+  async triggerNotifications()
+  {
+    return await this.activityCron.triggerNotifications()
+  }
 }

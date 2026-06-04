@@ -1,56 +1,43 @@
-import { GlobalState } from 'state';
+import { GlobalState, store } from 'state';
 import { catchError, map } from 'rxjs';
 import { ButtonService } from 'services/Buttons';
-import { UpdateEvent, WatchEvent } from 'store/Event';
+import { WatchEvent } from 'store/Event';
 import { handleError } from './helper';
-import produce from 'immer';
-import dconsole from 'shared/debugger';
+import { FindLatestActivities } from './Activity';
+import { updateCurrentButton } from './Explore';
 
-export class FollowButton implements WatchEvent, UpdateEvent {
+export class FollowButton implements WatchEvent {
   public constructor(
     private buttonId: string,
     private onSuccess,
     private onError,
-  ) {}
+  ) { }
   public watch(state: GlobalState) {
     return ButtonService.follow(this.buttonId).pipe(
-      map((data) => this.onSuccess()),
+      map((data) => {
+        this.onSuccess();
+        store.emit(new updateCurrentButton({...state.explore.currentButton, isFollowing: true, followCount: state.explore.currentButton.followCount + 1 }))
+        store.emit(new FindLatestActivities())
+      }),
+        
       catchError((error) => handleError(this.onError, error)),
     );
-  }
-
-  public update(state: GlobalState) {
-    return produce(state, (newState) => {
-      newState.explore.currentButton.followedBy = [...state.explore.currentButton.followedBy,state.sessionUser.id]
-      dconsole.log('[FollowButton]')
-      newState.explore.settings.forceRefetch = true;
-    });
   }
 }
 
-export class UnfollowButton implements WatchEvent, UpdateEvent {
+export class UnfollowButton implements WatchEvent {
   public constructor(
     private buttonId: string,
     private onSuccess,
     private onError,
-  ) {}
+  ) { }
   public watch(state: GlobalState) {
     return ButtonService.unfollow(this.buttonId).pipe(
-      map((data) => this.onSuccess()),
+      map((data) => { this.onSuccess(); 
+        store.emit(new updateCurrentButton({...state.explore.currentButton, isFollowing: false, followCount: state.explore.currentButton.followCount - 1 }))
+      }),
       catchError((error) => handleError(this.onError, error)),
     );
   }
 
-  public update(state: GlobalState) {
-    return produce(state, (newState) => {
-      const index = state.explore.currentButton.followedBy.indexOf(state.sessionUser.id);
-      dconsole.log('[UnfollowButton]')
-      if (index > -1) {
-        let followedBy = [...state.explore.currentButton.followedBy];
-        followedBy.splice(index,1)
-        newState.explore.currentButton.followedBy = followedBy
-        newState.explore.settings.forceRefetch = true;
-      }
-    });
-  }
 }

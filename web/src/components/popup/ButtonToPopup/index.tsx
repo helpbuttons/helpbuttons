@@ -46,7 +46,7 @@ export function ButtonForPopup({
         btnType={BtnType.corporative}
         iconLink={buttonIcon}
         caption={buttonCaption}
-        iconLeft={IconType.circle}
+        iconLeft={IconType.svg}
         contentAlignment={ContentAlignment.left}
         onClick={onClick}
       />

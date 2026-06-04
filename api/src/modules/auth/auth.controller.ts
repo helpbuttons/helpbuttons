@@ -8,6 +8,9 @@ import {
   UseGuards,
   HttpException,
   UnauthorizedException,
+  UploadedFile,
+  UseInterceptors,
+  UploadedFiles,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { CurrentUser } from '@src/shared/decorator/current-user';
@@ -19,11 +22,19 @@ import { User } from '../user/user.entity';
 import { SignupQRRequestDto, SignupRequestDto } from './auth.dto';
 import { AuthService } from './auth.service';
 import { LocalAuthGuard } from './guards/local-auth.guard';
+import { notifyUser } from '@src/app/app.event';
+import { ActivityEventName } from '@src/shared/types/activity.list';
+import { EventEmitter2 } from '@nestjs/event-emitter';
+import { imageFileFilter } from '../storage/storage.utils';
+import { FileFieldsUploadInterceptor } from '@src/shared/decorators/file-upload.decorator';
 
 @ApiTags('User')
 @Controller('users')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private eventEmitter: EventEmitter2
+  ) {}
 
   @AllowGuest()
   @Post('signupQR')
@@ -38,12 +49,18 @@ export class AuthController {
 
   @AllowGuest()
   @Post('signup')
-  async signup(@Body() signupUserDto: SignupRequestDto) {
-    return this.authService.signup(signupUserDto).then((accessToken) => {
-      if (typeof accessToken === typeof undefined) {
+  async signup(
+    @Body() signupUserDto: SignupRequestDto,
+    @UploadedFile() avatar : Express.Multer.File,
+  ) {
+    return this.authService.signup(signupUserDto, avatar).then((newUser) => {
+      if (typeof newUser === typeof undefined) {
         throw new HttpException('could not create token', HttpStatus.BAD_GATEWAY)
       }
-      return accessToken;
+      // this.notifyAdmins()
+      notifyUser(this.eventEmitter,ActivityEventName.NotifyAdmins,{user: newUser })  
+
+      return newUser;
     });
   }
 
@@ -80,7 +97,21 @@ export class AuthController {
 
   @OnlyRegistered()
   @Post('update')
-  async update(@Body() data: UserUpdateDto, @CurrentUser() user: User) {
-    return await this.authService.update(data, user);
+  @UseInterceptors(
+    FileFieldsUploadInterceptor(
+      [
+        { name: 'avatar', maxCount: 1 },
+      ],
+      imageFileFilter
+    )
+  )
+  async update(
+    @Body() body: any,
+    @CurrentUser() user: User,
+    @UploadedFiles() files: {avatar?: Express.Multer.File[]},
+  ) {
+    const data : UserUpdateDto = JSON.parse(body.data);
+    const avatar = files?.avatar?.length > 0 ? files.avatar[0] : null;
+    return await this.authService.update(user, data, avatar);
   }
 }

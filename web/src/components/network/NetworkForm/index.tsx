@@ -1,11 +1,11 @@
 // here we have the basic configuration of an network
 import Btn, {
+  BtnSubmit,
   BtnType,
   ContentAlignment,
 } from 'elements/Btn';
 
 import FieldAreaMap from 'elements/Fields/FieldAreaMap';
-import { FieldImageUpload } from 'elements/Fields/FieldImageUpload';
 import FieldTags from 'elements/Fields/FieldTags';
 import FieldText from 'elements/Fields/FieldText';
 import { FieldTextArea } from 'elements/Fields/FieldTextArea';
@@ -13,7 +13,7 @@ import Form from 'elements/Form';
 
 import t, { updateNomeclature } from 'i18n';
 import { useRouter } from 'next/router';
-import { findError, getUrlOrigin } from 'shared/sys.helper';
+import { findError, getUrlOrigin, setLocale } from 'shared/sys.helper';
 // name, description, logo, background image, button template, color pallete, colors
 
 import { FieldColorPick } from 'elements/Fields/FieldColorPick';
@@ -22,6 +22,11 @@ import Accordion from 'elements/Accordion';
 import { FieldCheckbox } from 'elements/Fields/FieldCheckbox';
 import { FieldLanguagePick } from 'elements/Fields/FieldLanguagePick';
 import FieldButtonTemplates from 'components/button/ButtonType/FieldButtonTemplates';
+import { FieldKeySpots } from 'components/map/LocationKey';
+import FieldImageUpload from 'elements/Fields/FieldImageUpload';
+import { CustomFields } from 'shared/types/customFields.type';
+import { DropdownField } from 'elements/Dropdown/Dropdown';
+import { PrivacyNetworkType } from 'shared/types/privacy.enum';
 
 export default NetworkForm;
 
@@ -38,7 +43,10 @@ function NetworkForm({
   linkFwd,
   setFocus,
   description,
+  clearErrors,
   showClose = true,
+  isSetup = false,
+  isValid = true,
 }) {
   const router = useRouter();
 
@@ -52,6 +60,12 @@ function NetworkForm({
     }
   }, [nomeclature, nomeclaturePlural])
   
+  const exploreSettings = watch('exploreSettings')
+  useEffect(() => {
+    if(exploreSettings){
+      clearErrors("exploreSettings")
+    }
+  }, [exploreSettings])
   const [showCurrencyDropDown, setShowCurrencyDropDown] = useState(false)
   useEffect(() => {
     if(buttonTemplates)
@@ -60,7 +74,7 @@ function NetworkForm({
         if(!btnTemplate.customFields){
           return false;
         }
-        return btnTemplate.customFields.find((customField) => customField.type == 'price')
+        return btnTemplate.customFields.find((customField) => customField.type == CustomFields.Price)
         })
       if(needsCurrency)
       {
@@ -76,15 +90,22 @@ function NetworkForm({
     { name: 'appearance', fields: ['logo', 'jumbo'] },
     { name: 'configuration', fields: ['exploreSettings'] },
   ];
+  const [chapterErrors, setChapterErrors] = useState([])
+  useEffect(() => {
+    const chaptersWithErrors = accordionChapters.filter((chapter) => {
+      return findError(chapter.fields, errors)
+    })
+    setChapterErrors(() => chaptersWithErrors.map((bt) => bt.name))
+  }, [isSubmitting])
   const hasErrors = (chapterName) => {
-    const chapter = accordionChapters.find(
-      (chapter) => chapter.name == chapterName,
-    );
-    if (!chapter) {
-      return false;
-    }
-    return findError(chapter.fields, errors);
+    return chapterErrors.includes(chapterName)
   };
+  const onLanguageSelection = (value) => {
+    setValue('locale', value); 
+    if (isSetup) { 
+      setLocale(value) 
+    }
+  }
   return (
     <>
       <Form
@@ -98,7 +119,7 @@ function NetworkForm({
               <b>{getUrlOrigin()}</b>
             </p>
           </div>
-
+          
 
           <Accordion collapsed={hasErrors('defineNetwork')} title={t('configuration.defineNetwork')}>
             <FieldText
@@ -131,34 +152,9 @@ function NetworkForm({
               setValue={setValue}
               setFocus={setFocus}
               {...register('slogan', { required: true })}
-            />
-            <FieldCheckbox
-              name='inviteOnly'
-              label={t('invite.inviteOnlyLabel')}
-              explain={t('invite.inviteOnlyExplain')}
-              defaultValue={watch('inviteOnly')}
-              text={t('invite.inviteOnly')}
-              onChanged={(value) => setValue('inviteOnly', value)}
-            />
-
-            <FieldCheckbox
-              name='requireApproval'
-              label={t('moderation.requireApprovalLabel')}
-              explain={t('moderation.requireApprovalExplain')}
-              defaultValue={watch('requireApproval')}
-              text={t('moderation.requireApproval')}
-              onChanged={(value) => setValue('requireApproval', value)}
-            />
-            <FieldCheckbox
-              name='allowGuestCreation'
-              label={t('configuration.allowGuestCreationLabel')}
-              explain={t('configuration.allowGuestCreationExplain')}
-              defaultValue={watch('allowGuestCreation')}
-              text={t('configuration.allowGuestCreation')}
-              onChanged={(value) => setValue('allowGuestCreation', value)}
-            />
-            <FieldLanguagePick onChange={(value) => setValue('locale',value)} defaultValue={watch('locale')}/>
-
+            />            
+            
+            <FieldLanguagePick onChange={onLanguageSelection} defaultValue={watch('locale')}/>
             {/* https://github.com/helpbuttons/helpbuttons/issues/290 */}
             {/* <FieldPrivacy
               name="privacy"
@@ -169,9 +165,35 @@ function NetworkForm({
             /> */}
 
            </Accordion>
-         
-           <Accordion collapsed={hasErrors('appearance')} title={t('configuration.customizeAppearance')}>
+          <Accordion collapsed={hasErrors('privacySettings')} title={t('configuration.privacySettings')}>
+           <>
+              <FieldCheckbox
+                name='requireApproval'
+                label={t('moderation.requireApprovalLabel')}
+                explain={t('moderation.requireApprovalExplain')}
+                defaultValue={watch('requireApproval')}
+                text={t('moderation.requireApproval')}
+                onChanged={(value) => setValue('requireApproval', value)}
+              />
+              <FieldSignupConfiguration 
+                onChanged={(value) => setValue('privacyNetworkType', value)}
+                defaultValue={watch('privacyNetworkType')}
+              />
+              {watch('privacyNetworkType') == PrivacyNetworkType.ANYONE_CAN &&
+                <FieldCheckbox
+                  name='allowGuestCreation'
+                  label={t('configuration.allowGuestCreationLabel')}
+                  explain={t('configuration.allowGuestCreationExplain')}
+                  defaultValue={watch('allowGuestCreation')}
+                  text={t('configuration.allowGuestCreation')}
+                  onChanged={(value) => setValue('allowGuestCreation', value)}
+                />
+              }
+            </>
+           </Accordion>
 
+           <Accordion collapsed={hasErrors('appearance')} title={t('configuration.customizeAppearance')}>
+           <>
              <FieldText
                 name="nomeclature"
                 label={t('configuration.nomeclatureLabel')}
@@ -188,6 +210,7 @@ function NetworkForm({
                 validationError={errors.nomeclaturePlural}
                 {...register('nomeclaturePlural', { required: true })}
               />
+              </>
             <div className="form__field">
                 <label className="form__label">{t('configuration.chooseColors')}</label>
                 <p className="form__explain">{t('configuration.chooseColorsExplain')}</p>
@@ -221,20 +244,20 @@ function NetworkForm({
               </div>
             </div>
 
-            <FieldImageUpload
+             <FieldImageUpload
               name="logo"
+              defaultImage={watch('logo')}
               label={t('configuration.logo')}
               text={t('configuration.logo')}
               width={200}
               height={200}
               subtitle="400x400px"
               setValue={setValue}
-              validationError={errors.logo}
-              control={control}
-              {...register('logo', { required: true })}
-            />
+              validationError={errors.logo} 
+              />
             <FieldImageUpload
               name="jumbo"
+              defaultImage={watch('jumbo')}
               label={t('configuration.jumbo')}
               text={t('configuration.jumbo')}
               subtitle="1500x1500px"
@@ -242,13 +265,11 @@ function NetworkForm({
               width={750}
               height={250}
               validationError={errors.jumbo}
-              control={control}
-              {...register('jumbo', { required: true })}
             />
 
           </Accordion>
 
-          <Accordion collapsed={hasErrors('configuration') || true} title={t('configuration.configureNetwork')}>
+          <Accordion collapsed={hasErrors('configuration')} title={t('configuration.configureNetwork')}>
 
             {/* BUTTON TYPES */}
           
@@ -287,6 +308,15 @@ function NetworkForm({
               value={watch('exploreSettings')}
               markerColor={watch('backgroundColor')}
             />
+            <FieldKeySpots/>
+            <FieldCheckbox
+              name='hideCountryOnAddresses'
+              label={t('configuration.hideCountryOnAddressesLabel')}
+              explain={t('configuration.hideCountryOnAddressesExplain')}
+              defaultValue={watch('hideCountryOnAddresses')}
+              text={t('configuration.hideCountryOnAddressesText')}
+              onChanged={(value) => setValue('hideCountryOnAddresses', value)}
+            />
             <FieldCheckbox
               name='hideLocationDefault'
               label={t('configuration.hideLocationByDefaultLabel')}
@@ -308,6 +338,37 @@ function NetworkForm({
             />
 
           </Accordion>
+          <Accordion title={t('configuration.FAQs')}>
+            <FieldTextArea
+              name="privacyPolicy"
+              label={t('configuration.privacyPolicyLabel')}
+              placeholder={t('configuration.privacyPolicyPlaceHolder')}
+              classNameInput="squared"
+              validationError={errors.privacyPolicy}
+              watch={watch}
+              setValue={setValue}
+              setFocus={setFocus}
+              {...register('privacyPolicy')}/>
+
+            <FieldTextArea
+              name="ethicsPolicy"
+              label={t('configuration.ethicsPolicyLabel')}
+              placeholder={t('configuration.ethicsPolicyPlaceHolder')}
+              classNameInput="squared"
+              validationError={errors.ethicsPolicy}
+              watch={watch}
+              setValue={setValue}
+              setFocus={setFocus}
+              {...register('ethicsPolicy')}/>
+            <FieldText
+              name="contactEmail"
+              label={t('configuration.contactEmailLabel')}
+              placeholder={t('configuration.contactEmailPlaceHolder')}
+              classNameInput="squared"
+              validationError={errors.contactEmail}
+              {...register('contactEmail')}
+            ></FieldText>
+          </Accordion>
 
 {/*
           <div className="form__section-title">
@@ -316,16 +377,34 @@ function NetworkForm({
 
             */}
           <div className="publish__submit">
-            <Btn
-              btnType={BtnType.submit}
-              contentAlignment={ContentAlignment.center}
-              caption={t('common.publish')}
-              isSubmitting={isSubmitting}
-              submit={true}
-            />
+            <BtnSubmit isSubmitting={isSubmitting} errors={errors} caption={t('common.save')}/>
           </div>
         </div>
       </Form>
     </>
   );
+}
+
+function FieldSignupConfiguration({defaultValue = PrivacyNetworkType.ANYONE_CAN, onChanged}){
+  const [value, setValue] = useState(defaultValue)
+  
+  // const defaultValue = SingupConfigurationOptions.INVITE_ONLY
+  const onChange = (value) => {
+    setValue(() => value)
+    onChanged(value)
+  }
+  return <>
+              <DropdownField
+                options={[
+                  {value: PrivacyNetworkType.ANYONE_CAN, name: t(`configuration.${PrivacyNetworkType.ANYONE_CAN}`) },
+                  { value: PrivacyNetworkType.INVITE_ONLY, name: t(`configuration.${PrivacyNetworkType.INVITE_ONLY}`) },
+                  { value: PrivacyNetworkType.INVITE_ONLY_BY_ENDORSED, name: t(`configuration.${PrivacyNetworkType.INVITE_ONLY_BY_ENDORSED}`) },
+                  { value: PrivacyNetworkType.INVITE_ONLY_BY_ADMIN, name: t(`configuration.${PrivacyNetworkType.INVITE_ONLY_BY_ADMIN}`) },
+                ]}
+                explain={t(`configuration.explain${value}`)}
+                defaultSelected={defaultValue}
+                onChange={onChange}
+                label={t('user.pickPrivacyOption')}
+              />
+  </>
 }

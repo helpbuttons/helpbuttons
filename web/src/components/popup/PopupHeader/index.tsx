@@ -1,21 +1,19 @@
 ///Header for popups, with cclose option and optional other elements
 import { IoArrowBack, IoClose } from "react-icons/io5";
-import { Link } from 'elements/Link';
 import Router from 'next/router';
-import dconsole from "shared/debugger";
 
-
-export default function PopupHeader({children, linkBack = null,linkFwd = null}) {
-  const onClick =(action)=> {
-    if (action instanceof Function)
-    {
-      action()
-    } else if (typeof action === "string") {
-      Router.push(action)
-    } else {
-      dconsole.log('wrong action ' + typeof action)
-    }
+export const doAction =(action)=> {
+  if (action instanceof Function)
+  {
+    action()
+  } else if (typeof action === "string") {
+    Router.push(action)
+  } else {
+    console.log('wrong action ' + typeof action)
   }
+}
+export default function PopupHeader({children, linkBack = null,linkFwd = null}) {
+
   return (
 
     <>
@@ -23,8 +21,8 @@ export default function PopupHeader({children, linkBack = null,linkFwd = null}) 
         <header className="popup__header-content">
           <div className="popup__header-left">
             {linkBack &&            
-              <div onClick={()=>onClick(linkBack)} className="popup__header-button">
-                <div className="btn-circle__icon">
+              <div onClick={()=>doAction(linkBack)} className="popup__header-button">
+                <div className="popup__header-button__icon">
                   <IoArrowBack />
                 </div>
               </div>           
@@ -37,8 +35,8 @@ export default function PopupHeader({children, linkBack = null,linkFwd = null}) 
           </div>
           <div className="popup__header-right">
             {linkFwd &&
-              <div onClick={()=>onClick(linkFwd)} className="popup__header-button">
-                <div className="btn-circle__icon">
+              <div onClick={()=>doAction(linkFwd)} className="popup__header-button">
+                <div className="popup__header-button__icon">
                   <IoClose />
                 </div>
               </div>
