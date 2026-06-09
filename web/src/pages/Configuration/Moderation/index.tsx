@@ -24,7 +24,7 @@ import { alertService } from 'services/Alert';
 import { readableTimeLeftToDate } from 'shared/date.utils';
 import { Role } from 'shared/types/roles';
 import { ButtonApprove, ButtonFindAll, ButtonModerationList } from 'state/Button';
-import { ModerationList, UpdateRole } from 'state/Users';
+import { ModerationList, UpdateRole, UserEndorse, UserRevokeEndorse } from 'state/Users';
 import { stringContains } from 'shared/sys.helper';
 import { useButtonTypes } from 'shared/buttonTypes';
 import { FindAndSetMainPopupCurrentProfile, SetMainPopupCurrentButton, SetMainPopupCurrentProfile } from 'state/HomeInfo';
@@ -204,7 +204,7 @@ function ModerationUsersList() {
                       {t(`roles.${user.role}`)}
                     </TableLineCell>
                     <TableLineCell>
-                      {user.verified ? (
+                      {user.endorsed ? (
                         <IoCheckmarkCircleOutline />
                       ) : (
                         <IoBanOutline />
@@ -246,6 +246,28 @@ function ModerationUsersList() {
                           caption={t('moderation.activate')}
                           iconLink={null}
                           onClick={() => updateRole(user.id, Role.registered)}
+                        />
+                      }
+                      {user.endorsed &&
+                        <Btn
+                          btnType={BtnType.small}
+                          borderColor={'orange'}
+                          caption={t('user.revokeEndorse')}
+                          iconLink={null}
+                          onClick={() => {
+                            store.emit(new UserRevokeEndorse(user.id));
+                          }}
+                        />
+                      }
+                      {!user.endorsed &&
+                        <Btn
+                          btnType={BtnType.small}
+                          borderColor={'orange'}
+                          caption={t('user.endorse')}
+                          iconLink={null}
+                          onClick={() => {
+                            store.emit(new UserEndorse(user.id));
+                          }}
                         />
                       }
                     </TableLineCell>
