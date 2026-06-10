@@ -2,8 +2,8 @@ import { GroupMessageDtoOut } from "../group-message/group-message.dto";
 
 export class Activities {
   buttons: ActivityDtoOut[];
-  community: GroupMessageDtoOut;
-  admin?: GroupMessageDtoOut;
+  community: {lastMessage: GroupMessageDtoOut, unreadCount: number};
+  admin?: {lastMessage: GroupMessageDtoOut, unreadCount: number};
 }
 export class ActivityDtoOut {
   id: string;

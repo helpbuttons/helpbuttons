@@ -28,7 +28,7 @@ import { ClienteSideRendering } from 'pages/_app';
 export default NavBottom;
 
 function NavBottom({ sessionUser, hideNavBottom=false }) {
-  const activities = useGlobalStore((state: GlobalState) => state.activities.buttons)
+  const activities = useGlobalStore((state: GlobalState) => state.activities)
   const pageName = useGlobalStore((state: GlobalState) => state.homeInfo.pageName)
   
   const [countUnreadNotifications, setCountUnreadNotifications] =
@@ -40,14 +40,17 @@ function NavBottom({ sessionUser, hideNavBottom=false }) {
     return '';
   };
   useEffect(() => {
-    const countUnread = activities.reduce((countUnread, activity) => { 
+    if(!activities || !activities.community){
+      return;
+    }
+    const countButtonsUnread = activities.buttons.reduce((countUnread, activity) => { 
       if (activity.read == false) { 
         return countUnread + 1 
       } 
       return countUnread 
     }, 0)
     setCountUnreadNotifications(
-      () => countUnread
+      () => countButtonsUnread + activities?.community.unreadCount + activities?.admin.unreadCount
     );
   }, [activities]);
   return (
@@ -153,7 +156,7 @@ function NavBottom({ sessionUser, hideNavBottom=false }) {
               <div className="nav-bottom__icon">
                 { countUnreadNotifications > 0 && (
                   <span className="notif-circle">
-                    {countUnreadNotifications} 
+                    {countUnreadNotifications}
                   </span>
                 )}
                 {isCurrent(
