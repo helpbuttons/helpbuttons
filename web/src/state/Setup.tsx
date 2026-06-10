@@ -10,7 +10,7 @@ import { UserService } from 'services/Users';
 import { SignupRequestDto } from 'shared/dtos/auth.dto';
 import { HttpStatus } from 'shared/types/http-status.enum';
 import { UpdateEvent, WatchEvent } from 'store/Event';
-import { FetchUserData } from './Profile';
+import { FetchUserData, SessionUserLogout } from './Profile';
 import { alertService } from 'services/Alert';
 import { useEffect, useRef } from 'react';
 import { useStore } from 'state';
@@ -60,6 +60,13 @@ export class GetConfig implements WatchEvent {
             err.statusCode === HttpStatus.SERVICE_UNAVAILABLE
           ) {
             alertService.error('backend error: ' + err.message)
+        } else if (
+              isHttpError(err) &&
+              err.statusCode === HttpStatus.FORBIDDEN
+            ) {
+              UserService.logout();
+              store.emit(new SessionUserLogout())
+              alertService.error('not allowed, have you been blocked?')
         } else if (
           error.status === HttpStatus.INTERNAL_SERVER_ERROR
         ) {
