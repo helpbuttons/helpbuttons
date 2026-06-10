@@ -15,3 +15,7 @@ export enum ActivityEventName {
   Message = 'message',
   UnfollowButton = 'unfollow.button'
 }
+
+export enum AdminActivityEventName {
+  AwaitApprovalButton = 'awaitApproval.button'
+}
