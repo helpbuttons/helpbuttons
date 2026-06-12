@@ -102,7 +102,7 @@ export default function MainPopup() {
           <ShowProfile userProfile={mainPopupUserProfile} sessionUser={sessionUser} />
         </Picker>
       )}
-      {(mainPopupButton) && (
+      {(mainPopupButton && !(!isMobile && pageName == 'Activity')) && (
         <Picker
           headerText={null}
           closeAction={() => {store.emit(new SetMainPopupCurrentButton(null)); closePopup() }}
