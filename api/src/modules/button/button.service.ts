@@ -499,14 +499,18 @@ export class ButtonService {
     });
   }
 
-  expiredBlockedConditions(includeExpired: boolean = false) {
+  expiredBlockedConditions(includeExpired: boolean = false, includeForApproval: boolean = false) {
     const blocked = {
       owner: { role: Not(Role.blocked) },
       deleted: false,
     };
-    if (!includeExpired) {
+    if (!includeExpired && !includeForApproval) {
+      return { expired: false, awaitingApproval: false, ...blocked };
+    }else if(includeExpired && !includeForApproval){
+      return { awaitingApproval: false, ...blocked };
+    }else if(!includeExpired && includeForApproval){
       return { expired: false, ...blocked };
-    }
+    } // else includeExpired & includeForApproval
     return blocked;
   }
     
@@ -608,12 +612,14 @@ export class ButtonService {
             new Date(year, month, 1),
             new Date(year, month, 31),
           ),
+          ...this.expiredBlockedConditions(),
         },
         {
           eventStart: Between(
             new Date(year, month, 1),
             new Date(year, month, 31),
           ),
+          ...this.expiredBlockedConditions(),
         },
       ],
     });
@@ -625,8 +631,7 @@ export class ButtonService {
       skip: page * 10,
       order: { created_at: 'DESC' },
       where: {
-        awaitingApproval: true,
-        ...this.expiredBlockedConditions(true),
+        ...this.expiredBlockedConditions(true, true),
       },
     });
   }
