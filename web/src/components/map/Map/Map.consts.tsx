@@ -4,6 +4,7 @@ export enum HbMapTiles {
   WATERCOLOR = 'watercolor',
   OSM = 'osm',
   SATELLITE = 'satellite',
+  FIRE = 'fire'
 }
 export function HbTiles(
   mapType: HbMapTiles,
@@ -17,6 +18,9 @@ export function HbTiles(
   }
   if (mapType == HbMapTiles.SATELLITE) {
     return satellite(x,y,z)
+  }
+  if(mapType == HbMapTiles.FIRE){
+    return fire(x,y,z)
   }
     return `//tiles.stadiamaps.com/tiles/stamen_${mapType}/${z}/${x}/${y}${
       dpr >= 2 ? '@2x' : ''
@@ -41,6 +45,13 @@ export function satellite(
   return `https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/${z}/${y}/${x}`;
 }
 
+export function fire(
+  x: number,
+  y: number,
+  z: number
+) {
+  return `https://wayback-a.maptiles.arcgis.com/arcgis/rest/services/World_Imagery/WMTS/1.0.0/default028mm/MapServer/tile/10/${z}/${y}/${x}`
+}
 
 export enum BrowseType {
   PINS = 'pins',
@@ -48,7 +59,7 @@ export enum BrowseType {
   LIST = 'list',
 }
 
-export const maxZoom = 18;
+export const maxZoom = 19;
 export const minZoom = 4;
 export const hexagonSizeZoom = 14;
 export const onMarkerPositionChangeZoomTo = 10;

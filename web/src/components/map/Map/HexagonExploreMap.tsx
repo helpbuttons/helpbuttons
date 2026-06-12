@@ -18,14 +18,15 @@ import {
 import _ from 'lodash';
 import { buttonColorStyle } from 'shared/buttonTypes';
 import Loading from 'components/loading';
-import { IoContract, IoResize, IoStorefrontSharp } from 'react-icons/io5';
+import { IoColorWand, IoContract, IoMic, IoResize, IoStorefrontSharp } from 'react-icons/io5';
 import { useStore } from 'state';
-import { showMarkersZoom } from './Map.consts';
+import { HbMapTiles, showMarkersZoom } from './Map.consts';
 import { LocationKeyIcon } from './MarkerButton';
 import t from 'i18n';
 import { circleGeoJSON } from 'shared/geo.utils';
 import { getCenter } from 'geolib';
 import { useIsMobile } from 'elements/SizeOnly';
+import { useToggle } from 'shared/custom.hooks';
 
 export default function HexagonExploreMap({
   h3TypeDensityHexes,
@@ -137,6 +138,8 @@ export default function HexagonExploreMap({
     store.emit(new UpdateFiltersHexButtonType(hexagonSelected, btnTypeName))
   }
 
+  const [fireOn, toggleFireOn] = useToggle(false)
+
   return (
     <>
       {(exploreSettings.center && selectedNetwork) && (
@@ -145,7 +148,7 @@ export default function HexagonExploreMap({
             mapCenter={exploreSettings.center}
             mapZoom={exploreSettings.zoom}
             onBoundsChanged={onBoundsChanged}
-            tileType={selectedNetwork.exploreSettings.tileType}
+            tileType={!fireOn ? selectedNetwork.exploreSettings.tileType : HbMapTiles.FIRE}
             handleClick={onMapClick}
           >
             <DisplayHiddenButtonsWarning countFilteredButtons={countFilteredButtons} />
@@ -167,7 +170,7 @@ export default function HexagonExploreMap({
               </Overlay>
             })}
 
-            {hexagonsMedianCenters && hexagonsMedianCenters.filter((feat) => feat.count == 1).map((hexagonMedianCenter,idx) => {
+            {!fireOn && hexagonsMedianCenters && hexagonsMedianCenters.filter((feat) => feat.count == 1).map((hexagonMedianCenter,idx) => {
               return (
                 <Overlay
                   anchor={hexagonMedianCenter.center}
@@ -239,12 +242,11 @@ export default function HexagonExploreMap({
                 <button
                   className="pigeon-center-view"
                   onClick={() => {
-                    store.emit(new RecenterExplore());
+                    toggleFireOn(() => !fireOn)
                   }}
                 >
-                  <IoStorefrontSharp />
+                  <IoColorWand />
                 </button>
-
               
             </Overlay>
              
