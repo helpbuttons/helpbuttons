@@ -50,7 +50,8 @@ const FieldButtonTemplates = forwardRef(
       cssColor: null, 
       caption: '',
       hide: false,
-      customFields: null
+      customFields: null,
+      name: ''
     };
     const [editingValue, setEditingValue] = useState(editingDefaultValue)
    
@@ -86,8 +87,8 @@ const FieldButtonTemplates = forwardRef(
                 key={idx}
                 className="form__list-item--button-type-field"
                 style={buttonColorStyle(val.cssColor)}>
-                {editingValue?.id == idx &&
-                  <EditButtonTemplate cancelEdit={cancelEdit} setEditing={setEditing} editingValue={editingValue} errors={errors} saveEdit={saveEdit} remove={remove} defaultValue={val} />
+                {editingValue?.name == val.name &&
+                  <EditButtonTemplate cancelEdit={cancelEdit} setEditing={setEditing} editingValue={editingValue} errors={errors} saveEdit={saveEdit} remove={() => remove(idx)} defaultValue={val} />
                 }
 
                 <Btn
@@ -233,14 +234,14 @@ function EditButtonTemplate({cancelEdit, setEditing, editingValue, errors, saveE
     if(buttonCount > 0){
       setShowConfirmation(() => true)
     }else{
-      remove(editingValue.id)
+      remove()
       cancelEdit()
     }
   }
 
   const onDeleteConfirm = () => {
     store.emit(new DeleteButtonsType(editingValue.name, () => {
-      remove(editingValue.id)
+      remove()
       cancelEdit()
     }))
     setShowConfirmation(() => false)
