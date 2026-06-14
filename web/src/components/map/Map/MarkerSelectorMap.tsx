@@ -116,7 +116,7 @@ export default function MarkerViewMap({
     markerPosition[1],
     getZoomResolution(hexagonSizeZoom),
   );
-
+  const selectedNetwork = useSelectedNetwork()
   return (
     <>
       <div className="picker__map">
@@ -126,6 +126,7 @@ export default function MarkerViewMap({
             mapZoom={zoom}
             onBoundsChanged={onBoundsChanged}
             height={'18'}
+            tileType={selectedNetwork.exploreSettings.tileType}
           >
             {/* {hideAddress && (
               <GeoJson
