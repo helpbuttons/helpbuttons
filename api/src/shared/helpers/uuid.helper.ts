@@ -8,5 +8,5 @@ export function token(length = 21): string {
 
 export function slugify(title) {
   const slugify = require('slugify')
-  return slugify(title, {remove: /[*+~.()'"!:@]/g});
+  return slugify(title, {remove: /[*+~.()'"!:@?]/g});
 }
