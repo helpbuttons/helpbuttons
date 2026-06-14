@@ -59,7 +59,7 @@ export enum BrowseType {
   LIST = 'list',
 }
 
-export const maxZoom = 19;
+export const maxZoom = 18;
 export const minZoom = 4;
 export const hexagonSizeZoom = 14;
 export const onMarkerPositionChangeZoomTo = 10;
