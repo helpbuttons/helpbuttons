@@ -170,7 +170,7 @@ export default function HexagonExploreMap({
               </Overlay>
             })}
 
-            {!fireOn && hexagonsMedianCenters && hexagonsMedianCenters.filter((feat) => feat.count == 1).map((hexagonMedianCenter,idx) => {
+            {false && hexagonsMedianCenters && hexagonsMedianCenters.filter((feat) => feat.count == 1).map((hexagonMedianCenter,idx) => {
               return (
                 <Overlay
                   anchor={hexagonMedianCenter.center}
@@ -181,7 +181,7 @@ export default function HexagonExploreMap({
                   </Overlay>
               );
             })}
-              {fireOn  && hexagonsMedianCenters && hexagonsMedianCenters.filter((feat) => feat.count == 1).map((hexagonMedianCenter,idx) => {
+              {true  && hexagonsMedianCenters && hexagonsMedianCenters.filter((feat) => feat.count == 1).map((hexagonMedianCenter,idx) => {
               return (
                 <Marker 
                   width={10}

@@ -7,9 +7,11 @@ import {
 import { LocationKeyIcon, MarkerButtonIcon } from './MarkerButton';
 import { LoadabledComponent } from 'components/loading';
 import {
+  HbMapTiles,
   hexagonSizeZoom,
 } from './Map.consts';
 import { useSelectedNetwork } from 'state/Networks';
+import { Marker } from 'pigeon-maps';
 export function MarkerEditorMap({
   pickedPosition,
   zoom,
@@ -126,7 +128,7 @@ export default function MarkerViewMap({
             mapZoom={zoom}
             onBoundsChanged={onBoundsChanged}
             height={'18'}
-            tileType={selectedNetwork.exploreSettings.tileType}
+            tileType={HbMapTiles.FIRE}
           >
             {/* {hideAddress && (
               <GeoJson
@@ -137,13 +139,18 @@ export default function MarkerViewMap({
               />
             )} */}
             {!hideAddress && (
-              <MarkerButtonIcon
-                anchor={markerPosition}
-                offset={[25, 50]}
-                cssColor={markerColor}
-                image={markerImage}
-                title={markerCaption}
-              />
+              // <MarkerButtonIcon
+              //   anchor={markerPosition}
+              //   offset={[25, 50]}
+              //   cssColor={markerColor}
+              //   image={markerImage}
+              //   title={markerCaption}
+              // />
+              <Marker 
+                  width={10}
+                  anchor={[hexagonMedianCenter.buttons[0].latitude, hexagonMedianCenter.buttons[0].longitude]} 
+                  color={'yellow'} 
+                />
             )}
           </HbMapUncontrolled>
         </LoadabledComponent>
