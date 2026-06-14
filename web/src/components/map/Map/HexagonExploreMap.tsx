@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { GeoJson, GeoJsonFeature, Overlay, Point } from 'pigeon-maps';
+import { GeoJson, GeoJsonFeature, Marker, Overlay, Point } from 'pigeon-maps';
 import { GlobalState, store, useGlobalStore } from 'state';
 import {
   ExploreViewMode,
@@ -18,7 +18,7 @@ import {
 import _ from 'lodash';
 import { buttonColorStyle } from 'shared/buttonTypes';
 import Loading from 'components/loading';
-import { IoColorWand, IoContract, IoMic, IoResize, IoStorefrontSharp } from 'react-icons/io5';
+import { IoColorWand, IoContract, IoGlobeOutline, IoLayers, IoLayersOutline, IoMic, IoResize, IoStorefrontSharp } from 'react-icons/io5';
 import { useStore } from 'state';
 import { HbMapTiles, showMarkersZoom } from './Map.consts';
 import { LocationKeyIcon } from './MarkerButton';
@@ -181,7 +181,15 @@ export default function HexagonExploreMap({
                   </Overlay>
               );
             })}
-              
+              {fireOn  && hexagonsMedianCenters && hexagonsMedianCenters.filter((feat) => feat.count == 1).map((hexagonMedianCenter,idx) => {
+              return (
+                <Marker 
+                  width={10}
+                  anchor={[hexagonMedianCenter.buttons[0].latitude, hexagonMedianCenter.buttons[0].longitude]} 
+                  color={'yellow'} 
+                />
+              );
+            })}
              {keyLocations?.length > 0 && 
               keyLocations.map((place, idx) => {
                 return (
@@ -245,7 +253,8 @@ export default function HexagonExploreMap({
                     toggleFireOn(() => !fireOn)
                   }}
                 >
-                  <IoColorWand />
+                  {!fireOn && <IoLayersOutline />}
+                  {fireOn && <IoLayers />}
                 </button>
               
             </Overlay>
