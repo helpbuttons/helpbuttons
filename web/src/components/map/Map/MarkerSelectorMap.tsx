@@ -148,7 +148,7 @@ export default function MarkerViewMap({
               // />
               <Marker 
                   width={10}
-                  anchor={[hexagonMedianCenter.buttons[0].latitude, hexagonMedianCenter.buttons[0].longitude]} 
+                  anchor={markerPosition} 
                   color={'yellow'} 
                 />
             )}
