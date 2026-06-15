@@ -18,7 +18,7 @@ import { IoGlobeOutline } from 'react-icons/io5';
 import { IoHomeOutline } from 'react-icons/io5';
 import t from 'i18n';
 import { GlobalState, store, useGlobalStore } from 'state';
-import { RecenterExplore } from 'state/Explore';
+import { RecenterExplore, updateCurrentButton, UpdateHexagonClicked } from 'state/Explore';
 import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
 import { useEffect, useState } from 'react';
 import { ShowMobileOnly } from 'elements/SizeOnly';
@@ -78,6 +78,8 @@ function NavBottom({ sessionUser, hideNavBottom=false }) {
           onClick={(e) => {
             if(pageName == 'Explore'){
               e.preventDefault()
+              store.emit(new updateCurrentButton(null))
+              store.emit(new UpdateHexagonClicked(null))
               store.emit(new RecenterExplore())
             }
           }}
