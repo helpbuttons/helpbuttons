@@ -123,8 +123,6 @@ function HoneyComb({ selectedNetwork }) {
                 )}
               </PopupButtonFile>
             )}
-            {exploreSettings.loading && <Loading/>}
-            {!exploreSettings.loading && 
               <ExploreContainerList
               listButtons={listButtons}
               showLeftColumn={showLeftColumn}
@@ -135,7 +133,6 @@ function HoneyComb({ selectedNetwork }) {
               toggleShowLeftColumn={toggleShowLeftColumn}
               onDragPos={null}
               />
-            }
           </ExploreContainerLeftColumn>
           <ExploreHexagonMap toggleShowLeftColumn={toggleShowLeftColumn} exploreSettings={exploreSettings} selectedNetwork={selectedNetwork}/>
           

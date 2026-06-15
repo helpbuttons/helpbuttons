@@ -22,7 +22,6 @@ export default function CardButtonList({ buttonTypes, button, showMap, linkType 
   if(!buttonType && buttonTypes.length > 0)
   {
     alertService.error(`type of button not found '${button.type}'`)
-    console.error(`type of button not found '${button.type}'`)
   }
   return (
     <>

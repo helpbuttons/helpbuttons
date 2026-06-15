@@ -692,8 +692,11 @@
     "consult": "On request",
     "free": "Free",
     "confirmDeleteLabel": "Delete _helpbutton_ type",
-    "confirmDeleteExplain": "Are you sure you want to delete this button type? This operation will delete all buttons",
-    "eventsOnDay": "Events on same day"
+    "confirmDeleteExplain": "Are you sure you want to delete this button type? This operation will delete all _helpbuttons_",
+    "eventsOnDay": "Events on same day",
+    "onlyEndorsedFieldText": "This button is only visible by others users which have been endorsed in this network",
+    "onlyEndorsedExplain": "This type of _helpbuttons_ will only be visible to verified users",
+    "onlyEndorsedText": "Only shows button type to verified users"
   },
   "email": {
     "loginTokenContent": "Welcome to {0}",

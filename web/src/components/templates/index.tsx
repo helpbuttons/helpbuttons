@@ -1,4 +1,5 @@
 import { eventTemplate } from "./event";
+import { onlyEndorsedTemplate } from "./onlyEndorsed";
 import { priceTemplate } from "./price";
 import { schedulerTemplate } from "./scheduler";
 
@@ -11,7 +12,7 @@ export interface CustomTemplate {
     configurationForm: any,
     fieldView: any,
 }
-export const customTemplates : CustomTemplate[] = [priceTemplate, eventTemplate, schedulerTemplate]
+export const customTemplates : CustomTemplate[] = [priceTemplate, eventTemplate, schedulerTemplate, onlyEndorsedTemplate]
 
 export const customTemplateIcon = (name) => {
     return customTemplates.find((_template) => _template.name == name)?.icon

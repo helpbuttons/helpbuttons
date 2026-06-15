@@ -1,4 +1,4 @@
-import { catchError, tap, map } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { produce } from 'immer';
 
 import { WatchEvent, UpdateEvent, EffectEvent } from 'store/Event';
@@ -16,7 +16,8 @@ import { useEffect, useRef, useState } from 'react';
 import { getLocale } from 'shared/sys.helper';
 import { ButtonService } from 'services/Buttons';
 import { handleError } from './helper';
-// import router from 'next/router';
+import { Role } from 'shared/types/roles';
+import { CustomFields } from 'shared/types/customFields.type';
 
 export interface NetworksState {
   // networks: Network[];
@@ -171,13 +172,34 @@ export class SelectedNetworkFetched implements UpdateEvent {
 
   public update(state: GlobalState) {
     return produce(state, (newState) => {
+
       newState.networks.selectedNetwork = this.network
+
+      newState.networks.selectedNetwork.buttonTemplates = findAvailableButtonTemplates(this.network.buttonTemplates, state.sessionUser)
+
       newState.explore.settings.viewMode = this.network.exploreSettings?.viewMode ? this.network.exploreSettings.viewMode : ExploreViewMode.LIST
       newState.networks.initialized = true;
     });
   }
 }
 
+export function findAvailableButtonTemplates(allButtonTemplates, user) {
+  const buttonTemplates = allButtonTemplates.map((_btnTemplate) => {
+    const isOnlyForEndorsed = _btnTemplate?.customFields.find((_cstomfield) => {
+      return _cstomfield.type == CustomFields.OnlyEndorsed
+    })
+    if(isOnlyForEndorsed)
+    {
+      if(user && (user.role == Role.admin || user.endorsed))
+      {
+        return {..._btnTemplate, hide: false}  
+      }
+      return {..._btnTemplate, hide: true}
+    }
+    return {..._btnTemplate, hide: false}
+  })
+  return buttonTemplates
+}
 export class CreateNetwork implements WatchEvent {
   public constructor(
     private network,

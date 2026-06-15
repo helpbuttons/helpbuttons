@@ -277,7 +277,6 @@ function EditButtonTemplate({cancelEdit, setEditing, editingValue, errors, saveE
           value={editingValue.cssColor}
         />
 
-        {editingValue?.customFields &&
           <>
             <label className="form__label">
               {t('configuration.customFields')}:
@@ -286,11 +285,10 @@ function EditButtonTemplate({cancelEdit, setEditing, editingValue, errors, saveE
               {t('configuration.customFieldsExplain')}
             </p>
             <AddCustomFields
-              selectedCustomTemplates={editingValue.customFields}
+              selectedCustomTemplates={editingValue.customFields ? editingValue.customFields : []}
               setSelectedCustomTemplates={(customFields) => setEditing({ customFields: customFields })}
             />
           </>
-        }
         <div className='form__field--multiinput'>
           <Btn
             btnType={BtnType.submit}

@@ -286,7 +286,7 @@ export class ButtonController {
   @Get('findAll/:page')
   findAll(@Param('page') page: number, @CurrentUser() user: User)
   {
-    return this.buttonService.findAll(page)
+    return this.buttonService.findAll(page, user)
   }
 
   @OnlyRegistered()
