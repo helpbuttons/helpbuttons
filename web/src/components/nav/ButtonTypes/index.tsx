@@ -28,7 +28,7 @@ export function ListButtonTypes() {
 
   useEffect(() => {
     const selectedTypes = filters.helpButtonTypes;
-    if (selectedTypes) {
+    if (selectedTypes && buttonTypes) {
       const bttypes = buttonTypes.map((buttonType) => {
         const typeCount = selectedNetwork.buttonTypesCount.find(
           (buttonTypeCount) =>

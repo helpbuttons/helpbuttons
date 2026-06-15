@@ -13,6 +13,7 @@ import { activitiesInitialState } from "./Activity";
 import { UserUpdateDto } from "shared/dtos/user.dto";
 import { InviteCreateDto } from "shared/dtos/invite.dto";
 import { Invite } from "shared/entities/invite.entity";
+import { findAvailableButtonTemplates } from "./Networks";
 
 export interface UsersState {
     currentUser: IUser;
@@ -153,6 +154,7 @@ export class SetCurrentUser implements UpdateEvent {
     public update(state: GlobalState) {
         return produce(state, (newState) => {
             newState.sessionUser = this.currentUser;
+            newState.networks.selectedNetwork.buttonTemplates = findAvailableButtonTemplates(state.networks.selectedNetwork.buttonTemplates, this.currentUser)
         });
     }
 }

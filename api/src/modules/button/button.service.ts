@@ -214,6 +214,21 @@ export class ButtonService {
         HttpStatus.NOT_FOUND,
       );
     }
+    if (!currentUser.endorsed && currentUser.role != Role.admin) {
+      const buttonTypes = await this.networkService.findButtonTypes()
+
+      const hide = this.isOnlyEndorsed(button,buttonTypes)
+
+      if(hide)
+      {
+        throw new HttpException(
+          'button-not-found',
+          HttpStatus.NOT_FOUND,
+        );
+      }
+    }
+    
+
     const isButtonOwner = currentUser?.id == button?.owner?.id;
 
     return this.transformButton(button, currentUser, isButtonOwner);
@@ -361,6 +376,9 @@ export class ButtonService {
           return btns.filter((btn) => !btn.expired);
         })
         .then((btns) => {
+          return this.filterOnlyEndorsed(currentUser, btns)
+        })
+        .then((btns) => {
           return btns.map((btn) => 
             this.transformButton(btn, currentUser)
           );
@@ -399,6 +417,26 @@ export class ButtonService {
       isFollowing: isFollowing,
     };
   }
+
+  filterOnlyEndorsed(currentUser, btns) {
+    return this.networkService.findButtonTypes()
+      .then((buttonTypes) => {
+        if (currentUser.endorsed || currentUser.role == Role.admin) {
+          return btns;
+        }
+        return btns.filter((btn) => {
+          return !this.isOnlyEndorsed(btn,buttonTypes)
+        })
+      })
+  }
+  
+  isOnlyEndorsed(button, buttonTypes) {
+    const buttonType = buttonTypes.find((_btnType) => _btnType.name == button.type)
+    return buttonType?.customFields.find((_cstomfield) => {
+      return _cstomfield.type == CustomFields.OnlyEndorsed
+    })
+  }
+
   async delete(buttonId: string) {
     this.cacheManager.del(CacheKeys.FINDH3_CACHE_KEY)
     return this.findById(buttonId, true).then((button) => {
@@ -636,7 +674,7 @@ export class ButtonService {
     });
   }
 
-  findAll(page: number) {
+  findAll(page: number, currentUser: User) {
     return this.buttonRepository.find({
       take: 10,
       skip: page * 10,

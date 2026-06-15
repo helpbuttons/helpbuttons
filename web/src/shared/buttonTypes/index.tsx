@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { CustomFields } from 'shared/types/customFields.type';
-import { GlobalState, store } from 'state';
-import { useStore } from 'state';
+import { useSelectedNetwork } from 'state/Networks';
 
 
 export const buttonColorStyle = (cssColor: string) => {
@@ -9,13 +8,14 @@ export const buttonColorStyle = (cssColor: string) => {
 };
 
 export const useButtonTypes = () => {
-  const selectedNetwork = useStore(
-    store,
-    (state: GlobalState) => state.networks.selectedNetwork,
-  );
-  return selectedNetwork
-  ?.buttonTemplates ? selectedNetwork
-  ?.buttonTemplates : []
+  const [buttonTemplates, setButtonTemplates] = useState([])
+  const selectedNetwork = useSelectedNetwork()
+  useEffect(() => {
+    if(selectedNetwork.buttonTemplates){
+      setButtonTemplates(() => selectedNetwork.buttonTemplates.filter((_btnTemplate) => !_btnTemplate.hide))
+    }
+  }, [selectedNetwork.buttonTemplates])
+  return buttonTemplates;
 }
 
 export const showButtonTypeCaption = (typeName) => {
