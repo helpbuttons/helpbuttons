@@ -206,7 +206,7 @@ export function FieldLocationKeyMap({
                     <MapLocationKey
                         center={center}
                         zoom={zoom}
-                        tileType={undefined}
+                        tileType={selectedNetwork.exploreSettings.tileType}
                         onBoundsChanged={onBoundsChange}
                         handleMapClick={onMapClick}
                     >

@@ -106,7 +106,12 @@ export class ButtonService {
     if (network.requireApproval && user.role != Role.admin) {
       awaitingApproval = true;
     }
-
+    if(!buttonTemplate){
+      throw new HttpException(
+        { message: 'Button template not found' },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
     const button = {
       id: await this.getNewSlug(createDto.title),
       type: createDto.type,
@@ -214,7 +219,7 @@ export class ButtonService {
         HttpStatus.NOT_FOUND,
       );
     }
-    if (!currentUser.endorsed && currentUser.role != Role.admin) {
+    if (!currentUser || !currentUser.endorsed || currentUser?.role != Role.admin) {
       const buttonTypes = await this.networkService.findButtonTypes()
 
       const hide = this.isOnlyEndorsed(button,buttonTypes)
