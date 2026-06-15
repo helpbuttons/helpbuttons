@@ -50,7 +50,9 @@ export function fire(
   y: number,
   z: number
 ) {
-  return `https://wayback-a.maptiles.arcgis.com/arcgis/rest/services/World_Imagery/WMTS/1.0.0/default028mm/MapServer/tile/10/${z}/${y}/${x}`
+  const zoom = z > 18 ? 18 : z
+  
+  return `https://wayback-a.maptiles.arcgis.com/arcgis/rest/services/World_Imagery/WMTS/1.0.0/default028mm/MapServer/tile/10/${zoom}/${y}/${x}`
 }
 
 export enum BrowseType {
@@ -59,7 +61,7 @@ export enum BrowseType {
   LIST = 'list',
 }
 
-export const maxZoom = 18;
+export const maxZoom = 20;
 export const minZoom = 4;
 export const hexagonSizeZoom = 14;
 export const onMarkerPositionChangeZoomTo = 10;

@@ -148,7 +148,7 @@ export default function HexagonExploreMap({
             mapCenter={exploreSettings.center}
             mapZoom={exploreSettings.zoom}
             onBoundsChanged={onBoundsChanged}
-            tileType={!fireOn ? selectedNetwork.exploreSettings.tileType : HbMapTiles.FIRE}
+            tileType={(!fireOn && !currentButton) ? selectedNetwork.exploreSettings.tileType : HbMapTiles.FIRE}
             handleClick={onMapClick}
           >
             <DisplayHiddenButtonsWarning countFilteredButtons={countFilteredButtons} />
@@ -209,13 +209,14 @@ export default function HexagonExploreMap({
             {/* draw clicked hexagon */}
             {!exploreSettings.loading && 
               hexagonClickedFeatures && hexagonClickedFeatures.count > 1 && (
-                <Overlay
-                  anchor={hexagonClickedFeatures.center}
-                  className="pigeon-map__custom-block"
-                  key={hexagonClickedFeatures.hex}
-                >
-                  <MapSelectedHexagon hexagonClickedFeatures={hexagonClickedFeatures} buttonTypes={buttonTypes} filterButtonType={filterButtonType}/>
-                </Overlay>
+                hexagonClickedFeatures.buttons.map((_btn) => {
+                  return <Marker 
+                  width={10}
+                  anchor={[_btn.latitude, _btn.longitude]} 
+                  onClick={() => store.emit(new updateCurrentButton(_btn))}
+                  color={'yellow'} 
+                />
+                })
               )}
             {/* draw go to center icon */}
             <Overlay
@@ -231,7 +232,6 @@ export default function HexagonExploreMap({
                         )
                       }
                   >
-                  
                   <IoContract />
                 </button>
               }
@@ -272,8 +272,6 @@ export default function HexagonExploreMap({
     </>
   );
 }
-
-
 
 function DisplayInstructions() {
   const sessionUser = useStore(
