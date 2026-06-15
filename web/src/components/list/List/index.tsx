@@ -115,15 +115,20 @@ function List({
     }
   }, [hexagonClicked]);
 
-
-
+  const buttonTypes = useButtonTypes();
+  const currentButton = useGlobalStore((state: GlobalState) => state.explore.currentButton);
   const toggleListOpen = (value1, value2) => {
     setListOpen(value1);
     setListFullScreen(value2);
   };
+  useEffect(() => {
+    if(currentButton){
+      toggleListOpen(true, false)
+    }
+  }, [currentButton])
 
-  const buttonTypes = useButtonTypes();
-  const currentButton = useGlobalStore((state: GlobalState) => state.explore.currentButton);
+
+
   return (
     <>
       <>
