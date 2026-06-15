@@ -186,6 +186,7 @@ export default function HexagonExploreMap({
                 <Marker 
                   width={10}
                   anchor={[hexagonMedianCenter.buttons[0].latitude, hexagonMedianCenter.buttons[0].longitude]} 
+                  onClick={() => store.emit(new updateCurrentButton(hexagonMedianCenter.buttons[0]))}
                   color={'yellow'} 
                 />
               );
