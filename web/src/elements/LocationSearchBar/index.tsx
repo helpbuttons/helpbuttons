@@ -1,6 +1,6 @@
 import Loading, { LoadabledComponent } from "components/loading";
 import Btn, { BtnType, ContentAlignment, IconType } from "elements/Btn";
-import { formatedCoords, getCoordinatesDegrees, getCoordinatesDMS, useGeoReverse, useGeoSearch } from "elements/Fields/FieldLocation/location.helpers";
+import { formatedCoords, getCoordinatesDegrees, getCoordinatesDMS, getUnkownAddress, useGeoReverse, useGeoSearch } from "elements/Fields/FieldLocation/location.helpers";
 import t from "i18n";
 import { useEffect, useRef, useState } from "react";
 import { IoAdd, IoCloseOutline, IoLocationOutline } from "react-icons/io5";
@@ -184,7 +184,7 @@ function FieldLocationSearch({ isCustomAddress = false, placeholder, setResults,
         },
             (error) => {
                 setIsLoading(() => false)
-                setResults(() => [{ formatted: t('button.unknownPlace'), geometry: { lat: latLng[0], lng: latLng[1] } }])
+                setResults(() => [{ formatted: getUnkownAddress(latLng[0], latLng[1], hideAddress), geometry: { lat: latLng[0], lng: latLng[1] } }])
             }
         );
     }

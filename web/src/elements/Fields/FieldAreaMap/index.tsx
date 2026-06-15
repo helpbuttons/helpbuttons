@@ -12,7 +12,7 @@ import { IoLocationOutline, IoSearchOutline } from 'react-icons/io5';
 import dconsole from 'shared/debugger';
 import Slider from 'rc-slider';
 import LocationSearchBar, { LocationSearchBarSimple } from 'elements/LocationSearchBar';
-import { useGeoReverse } from '../FieldLocation/location.helpers';
+import { getUnkownAddress, useGeoReverse } from '../FieldLocation/location.helpers';
 import { circleGeoJSON } from 'shared/geo.utils';
 import { ExploreViewMode } from 'state/Explore';
 import { DropdownField } from 'elements/Dropdown/Dropdown';
@@ -144,7 +144,7 @@ export function FieldAreaMapSettings({
     },
       (error) => {
         setIsLoading(() => false)
-        setAddress(() => t('button.unknownPlace'))
+        setAddress(() => getUnkownAddress(latLng[0], latLng[1], hideAddress))
       }
     );
   }

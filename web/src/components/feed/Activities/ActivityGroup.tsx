@@ -26,7 +26,7 @@ export default function ActivityGroup({ selectedGroupType }) {
       <ActivityGroupMessageEntry selectedGroupType={selectedGroupType} groupType={GroupMessageType.community} groupMessages={userGroupMessages.community?.lastMessage} />
     </>
   }
-  if (!userGroupMessages.community && !isAdmin) {
+  if (!isAdmin) {
     return <></>
   }
   return (<>
