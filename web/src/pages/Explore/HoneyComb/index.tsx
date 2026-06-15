@@ -143,15 +143,6 @@ function HoneyComb({ selectedNetwork }) {
           <ExploreContainerLeftColumn showLeftColumn={showLeftColumn}>
             <NavHeader selectedNetwork={selectedNetwork}/>
             <AdvancedFilters />
-            {currentButton && (
-              <PopupButtonFile
-                linkBack={() => {
-                  store.emit(new updateCurrentButton(null));
-                }}
-              >
-                <ButtonShow button={currentButton} />
-              </PopupButtonFile>
-            )}
           </ExploreContainerLeftColumn>
           <div className="explore__map-wrapper">
             <ExploreHexagonMap toggleShowLeftColumn={toggleShowLeftColumn} exploreSettings={exploreSettings} selectedNetwork={selectedNetwork}/>
@@ -164,19 +155,16 @@ function HoneyComb({ selectedNetwork }) {
               (currentButton ? ' index__content-bottom--noscroll' : '')
             }
           >
-          {exploreSettings.loading && <Loading/>}
-          {!exploreSettings.loading && 
-            <ExploreContainerList
-              listButtons={listButtons}
-              showLeftColumn={showLeftColumn}
-              showMap={showMap}
-              isListOpen={isListOpen}
-              setListOpen={setListOpen}
-              toggleShowMap={toggleShowMap}
-              toggleShowLeftColumn={toggleShowLeftColumn}
-              onDragPos={handleDragPos} 
-            />
-          }
+          <ExploreContainerList
+            listButtons={listButtons}
+            showLeftColumn={showLeftColumn}
+            showMap={showMap}
+            isListOpen={isListOpen}
+            setListOpen={setListOpen}
+            toggleShowMap={toggleShowMap}
+            toggleShowLeftColumn={toggleShowLeftColumn}
+            onDragPos={handleDragPos} 
+          />
         </div>
         </ExploreContainer>
         

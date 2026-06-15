@@ -9,10 +9,11 @@ import {
 } from 'react-icons/io5';
 import t from 'i18n';
 import { AdvancedFiltersSortDropDown } from 'components/search/AdvancedFilters';
-import { GlobalState, store } from 'state';
+import { GlobalState, store, useGlobalStore } from 'state';
 import { useStore } from 'state';
 import {
   ExploreViewMode,
+  updateCurrentButton,
   UpdateExploreViewMode,
   UpdateFilters,
 } from 'state/Explore';
@@ -27,6 +28,8 @@ import { ButtonLinkType } from '../CardButtonList';
 import { ButtonList } from '../ContentList';
 import { useScrollDirection } from 'shared/custom.hooks';
 import { SetHideNavBottom } from 'state/HomeInfo';
+import Popup from 'components/popup/Popup';
+import { ButtonShow } from 'components/button/ButtonShow';
 
 function List({
   onLeftColumnToggle,
@@ -120,7 +123,7 @@ function List({
   };
 
   const buttonTypes = useButtonTypes();
-
+  const currentButton = useGlobalStore((state: GlobalState) => state.explore.currentButton);
   return (
     <>
       <>
@@ -176,6 +179,23 @@ function List({
                   'list__content list__content--full-screen' 
                 }
               >
+                {currentButton && (
+                  <div
+                    className={
+                      'list__content ' +
+                      (showMap
+                        ? 'list__content--mid-screen'
+                        : 'list__content--full-screen')
+                    }
+                  >
+                    <Popup
+                      linkBack={() => {
+                        store.emit(new updateCurrentButton(null));
+                      }}
+                    >
+                      <ButtonShow button={currentButton} />
+                    </Popup></div>
+                )}
                 {buttonTypes?.length > 0 && (
                   <ButtonList
                     buttons={buttons}
