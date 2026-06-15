@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { GeoJson, GeoJsonFeature, Marker, Overlay, Point } from 'pigeon-maps';
+import { GeoJson, GeoJsonFeature, GeoJsonLoader, Marker, Overlay, Point } from 'pigeon-maps';
 import { GlobalState, store, useGlobalStore } from 'state';
 import {
   ExploreViewMode,
@@ -27,6 +27,7 @@ import { circleGeoJSON } from 'shared/geo.utils';
 import { getCenter } from 'geolib';
 import { useIsMobile } from 'elements/SizeOnly';
 import { useToggle } from 'shared/custom.hooks';
+import { Role } from 'shared/types/roles';
 
 export default function HexagonExploreMap({
   h3TypeDensityHexes,
@@ -61,6 +62,9 @@ export default function HexagonExploreMap({
     (state: GlobalState) => state.explore.settings.viewMode
   );
 
+  const sessionUser = useGlobalStore(
+    (state: GlobalState) => state.sessionUser,
+);
   const [hexagonsMedianCenters, setHexagonsMedianCenters] = useState([])
 
   const [filteredCircle, setFilteredCircle] = useState(null)
@@ -156,42 +160,60 @@ export default function HexagonExploreMap({
             {filteredCircle && <GeoJsonFeature feature={filteredCircle}/>}
             {/* {geoJsonFeatures && <GeoJsonFeature feature={geoJsonFeatures}/>} */}
             </GeoJson>
-            
+            {(sessionUser.role == Role.admin || sessionUser.endorsed) && 
+            <GeoJsonLoader
+              link={'/assets/barroso.geojson'}
+              styleCallback={(feature, hover) => {
+                if(feature.properties.name.startsWith('Silha')){
+                  return { strokeWidth: "1", stroke: feature.properties.stroke };
+                }
+                if(feature.properties.name.startsWith('CONCESSAO')){
+                  return { strokeWidth: "1", stroke: feature.properties.stroke, fill: '#f549274a' };
+                }
+                if(feature.properties.name.startsWith('R-baldio')){
+                  return { strokeWidth: "1", stroke: feature.properties.stroke, fill: '#45f4195f' };
+                }
+                return { strokeWidth: "1", stroke: feature.properties.stroke, fill: feature.properties.fill };
+              }}
+            />}
+            <GeoJsonLoader
+              link={'/assets/silhas.geojson'}
+              styleCallback={(feature, hover) => {
+                if(feature.properties.name.startsWith('Silha')){
+                  return { strokeWidth: "1", stroke: feature.properties.stroke };
+                }
+                return { strokeWidth: "1", stroke: feature.properties.stroke, fill: feature.properties.fill };
+              }}
+            />
             {/*
-            show count of buttons per hexagon
+            show all silhas visible
             */}
             {hexagonsMedianCenters && hexagonsMedianCenters.map(
               (feat) => feat?.buttons?.map((_btn) => {
-              return (
-                <Marker 
-                width={10}
-                anchor={[_btn.latitude, _btn.longitude]} 
-                onClick={() => store.emit(new updateCurrentButton(_btn))}
-                color={'yellow'} 
-              />)}
+                if(_btn.id == currentButton?.id){
+                  return (<></>)
+                }
+                  return (
+                  <Overlay
+                    anchor={[_btn.latitude, _btn.longitude]}
+                    className="pigeon-map__custom-block"
+                    key={_btn.id}
+                  >
+                  <MapButtonIcon button={_btn} buttonTypes={buttonTypes}/>
+                  </Overlay>
+                )
+                }
               ))}
 
-            {false && hexagonsMedianCenters && hexagonsMedianCenters.filter((feat) => feat.count == 1).map((hexagonMedianCenter,idx) => {
-              return (
-                <Overlay
-                  anchor={hexagonMedianCenter.center}
-                  className="pigeon-map__custom-block"
-                  key={idx}
-                >
-                  <MapButtonIcon button={hexagonMedianCenter.buttons[0]} buttonTypes={buttonTypes}/>
-                  </Overlay>
-              );
-            })}
-              {true  && hexagonsMedianCenters && hexagonsMedianCenters.filter((feat) => feat.count == 1).map((hexagonMedianCenter,idx) => {
-              return (
-                <Marker 
-                  width={10}
-                  anchor={[hexagonMedianCenter.buttons[0].latitude, hexagonMedianCenter.buttons[0].longitude]} 
-                  onClick={() => store.emit(new updateCurrentButton(hexagonMedianCenter.buttons[0]))}
-                  color={'yellow'} 
-                />
-              );
-            })}
+            {currentButton && 
+               <Overlay
+               anchor={[currentButton.latitude, currentButton.longitude]}
+               className="pigeon-map__custom-block"
+               key={currentButton.id}
+             >
+              <MapButtonIcon button={currentButton} buttonTypes={buttonTypes}/>
+             </Overlay>
+              }
              {keyLocations?.length > 0 && 
               keyLocations.map((place, idx) => {
                 return (
@@ -207,18 +229,6 @@ export default function HexagonExploreMap({
               })
             }
 
-            {/* draw clicked hexagon */}
-            {!exploreSettings.loading && 
-              hexagonClickedFeatures && hexagonClickedFeatures.count > 1 && (
-                hexagonClickedFeatures.buttons.map((_btn) => {
-                  return <Marker 
-                  width={10}
-                  anchor={[_btn.latitude, _btn.longitude]} 
-                  onClick={() => store.emit(new updateCurrentButton(_btn))}
-                  color={'yellow'} 
-                />
-                })
-              )}
             {/* draw go to center icon */}
             <Overlay
               anchor={[100, 100]}
@@ -362,7 +372,7 @@ function MapButtonIcon({ button, buttonTypes }) {
     }
     
   }
-  if(!btnType.icon){
+  if(!btnType?.icon){
     return <div onClick={handleClick} className={`${button.id == currentButton?.id || hoverButtonList?.id == button.id ? 'pigeon-map__hex-element--emoji-selected' : ''}  pigeon-map__emoji`}>
     1
   </div>
