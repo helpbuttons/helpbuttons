@@ -160,15 +160,16 @@ export default function HexagonExploreMap({
             {/*
             show count of buttons per hexagon
             */}
-            {hexagonsMedianCenters && hexagonsMedianCenters.filter((feat) => feat.count > 1 && hexagonClickedFeatures?.hexagon != feat.hexagon).map((hexagonMedianCenter) => {
-              return <Overlay
-                anchor={hexagonMedianCenter.center}
-                className="pigeon-map__custom-block"
-                key={hexagonMedianCenter.hexagon}
-              >
-                <MapCircleButtonsCount hexagonCenter={hexagonMedianCenter}/>
-              </Overlay>
-            })}
+            {hexagonsMedianCenters && hexagonsMedianCenters.map(
+              (feat) => feat?.buttons?.map((_btn) => {
+              return (
+                <Marker 
+                width={10}
+                anchor={[_btn.latitude, _btn.longitude]} 
+                onClick={() => store.emit(new updateCurrentButton(_btn))}
+                color={'yellow'} 
+              />)}
+              ))}
 
             {false && hexagonsMedianCenters && hexagonsMedianCenters.filter((feat) => feat.count == 1).map((hexagonMedianCenter,idx) => {
               return (
