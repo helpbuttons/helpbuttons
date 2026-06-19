@@ -96,7 +96,7 @@ export class ButtonController {
     @Param('buttonId') buttonId: string,
     @CurrentUser() user: User,
   ){
-    return this.buttonService.findById(buttonId, true, user)
+    return this.buttonService.findById(buttonId, true, false, user)
   }
 
   @OnlyRegistered()
@@ -111,9 +111,8 @@ export class ButtonController {
     @UploadedFiles() images : Express.Multer.File[],
   ) {
     const updateDto : UpdateButtonDto = JSON.parse(body.data);
-
     return await this.buttonService
-      .isOwner(user, buttonId, true)
+      .isOwner(user, buttonId)
       .then((isOwner) => {
         if (!isOwner) {
           throw new CustomHttpException(ErrorName.NoOwnerShip);
@@ -130,7 +129,7 @@ export class ButtonController {
     @CurrentUser() user: User,
   ) {
     return await this.buttonService
-      .isOwner(user, buttonId, true)
+      .isOwner(user, buttonId)
       .then((isOwner) => {
         if (!isOwner) {
           throw new CustomHttpException(ErrorName.NoOwnerShip);
@@ -196,7 +195,7 @@ export class ButtonController {
   async renew(@Param('buttonId') buttonId: string, @CurrentUser() user: User)
   {
     return await this.buttonService
-    .isOwner(user, buttonId, true)
+    .isOwner(user, buttonId)
     .then((isOwner) => {
       if (!isOwner) {
         throw new CustomHttpException(ErrorName.NoOwnerShip);
