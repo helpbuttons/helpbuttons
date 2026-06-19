@@ -441,9 +441,9 @@ export class ButtonService {
     })
   }
 
-  async delete(buttonId: string) {
+  async delete(buttonId: string, currentUser) {
     this.cacheManager.del(CacheKeys.FINDH3_CACHE_KEY)
-    return this.findById(buttonId, true).then((button) => {
+    return this.findById(buttonId, true, true, currentUser).then((button) => {
       return this.buttonRepository
         .update(button.id, { deleted: true })
         .then((res) => {

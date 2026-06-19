@@ -128,13 +128,15 @@ export class ButtonController {
     @Param('buttonId') buttonId: string,
     @CurrentUser() user: User,
   ) {
-    return await this.buttonService
+    console.log('oi')
+    return this.buttonService
       .isOwner(user, buttonId)
       .then((isOwner) => {
         if (!isOwner) {
           throw new CustomHttpException(ErrorName.NoOwnerShip);
         }
-        return this.buttonService.delete(buttonId).then((button) => {
+        console.log('dskajdlsa')
+        return this.buttonService.delete(buttonId, user).then((button) => {
           notifyUser(this.eventEmitter,ActivityEventName.DeleteButton,{button, user})
           return true;
         });
