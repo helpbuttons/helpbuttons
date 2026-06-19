@@ -10,6 +10,7 @@ import { MetadataState, metadataInitialState } from './Metadata';
 import { CacheValue } from './Cache';
 import { Store, useRef } from '../store/Store';
 import { Button } from 'shared/entities/button.entity';
+import { KeyLocation } from 'shared/entities/keylocation.entity';
 
 // -- estado global --
 export interface GlobalState {
@@ -27,6 +28,7 @@ export interface GlobalState {
   cacheValues: CacheValue[];
   signupTags: string[];
   myButtons: Button[];
+  keylocations: KeyLocation[];
   // newNotifications: NewNotification[]
 }
 
