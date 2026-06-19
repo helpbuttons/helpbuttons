@@ -214,6 +214,7 @@ export function FieldLocationKeyMap({
                             title={address} anchor={center}
                             offset={[25, 50]}
                             cssColor={'red'}
+                            zoom={zoom}
                         />
                     </MapLocationKey>
                     <FieldMapZoomSlide zoom={zoom} setZoom={(zoom) => setZoom(() => Math.round(zoom))} />

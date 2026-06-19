@@ -228,17 +228,23 @@ $cycle: 10;
 
 }
 
+.marker-key-location__name-zoomed{
+  max-width: 20ch;
+}
 
-.marker-key-location__name {
+.marker-key-location__name{
+  max-width: 6ch;
+}
 
-  background-color: $color-white;
+.marker-key-location__name, .marker-key-location__name-zoomed {
+
+  // background-color: $color-white;
   padding: $padding-small;
   border-radius: $border-radius-circle;
-  color: $color-black;
+  color: $color-white;
   font-size: $font-size-small;
   font-weight: $font-weight-bold;
 
-  max-width: 6ch;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -248,29 +254,7 @@ $cycle: 10;
   &:focus,
   &:active {
     max-width: 30ch;
-    text-overflow: clip;
+    // text-overflow: clip;
   }
-
-}
-
-.marker-key-location__arrow::after {
- border-top: 10px solid $color-white;
- color: $color-white;
-}
-
-.marker-key-location {
-
-  overflow-x: auto;
-  overflow-y: auto;
-  position: absolute;
-  max-width: fit-content;
-  white-space: nowrap;
-  justify-content: center;
-  width: fit-content;
-  height: auto;
-  display: flex;
-  align-items: center;
-  margin-left: auto;
-  max-height: 50px;
 
 }

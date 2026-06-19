@@ -224,6 +224,7 @@ export default function HexagonExploreMap({
                     color={'white'}
                     title={place.address}
                     onClick={() => store.emit(new UpdateExploreSettings({zoom: place.zoom, center: [place.latitude, place.longitude]}))}
+                    zoom={exploreSettings.zoom}
                   />
                 );
               })

@@ -80,7 +80,8 @@ export function MarkerEditorMap({
             {isLocationKeyMarker && 
               <LocationKeyIcon title={markerCaption} anchor={pickedPosition}
               offset={[25, 50]}
-              cssColor={'red'}/>
+              cssColor={'red'}
+              zoom={zoom}/>
             }
             {(!isLocationKeyMarker && pickedPosition) && (
               <MarkerButtonIcon

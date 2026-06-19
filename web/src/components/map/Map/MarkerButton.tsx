@@ -151,13 +151,11 @@ export function LocationKeyIcon(props) {
         >
           {props.title && 
             <div className=" marker-key-location marker-button-selector-title">
-              <div className="marker-key-location__name">
+              <div className={props.zoom > 15 ? "marker-key-location__name-zoomed" : "marker-key-location__name"}>
                 {props.title}
               </div>
             </div>
           }
-          <span className="marker-button__arrow marker-key-location__arrow"></span>
-
         </figure>
       </div>
     </>
