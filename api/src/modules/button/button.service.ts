@@ -167,7 +167,7 @@ export class ButtonService {
     
     return this.buttonRepository.insert([button])
     .then((btn) => {
-      return this.findById(button.id)
+      return this.findById(button.id, true, true, user)
           .then((_btn) => this.transformButton(_btn, user))
     })
   }
