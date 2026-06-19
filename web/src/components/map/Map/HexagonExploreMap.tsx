@@ -28,6 +28,7 @@ import { getCenter } from 'geolib';
 import { useIsMobile } from 'elements/SizeOnly';
 import { useToggle } from 'shared/custom.hooks';
 import { Role } from 'shared/types/roles';
+import { SetMainPopupCurrentButton } from 'state/HomeInfo';
 
 export default function HexagonExploreMap({
   h3TypeDensityHexes,
@@ -152,7 +153,7 @@ export default function HexagonExploreMap({
             mapCenter={exploreSettings.center}
             mapZoom={exploreSettings.zoom}
             onBoundsChanged={onBoundsChanged}
-            tileType={(!fireOn && !currentButton) ? selectedNetwork.exploreSettings.tileType : HbMapTiles.FIRE}
+            tileType={!fireOn ? selectedNetwork.exploreSettings.tileType : HbMapTiles.FIRE}
             handleClick={onMapClick}
           >
             <DisplayHiddenButtonsWarning countFilteredButtons={countFilteredButtons} />
@@ -361,13 +362,8 @@ function MapButtonIcon({ button, buttonTypes }) {
   const handleClick = () => {
     if(isMobile)
     {
-      const clickedHexagon = cellToZoom(button.hexagon, zoom)
-      store.emit(new UpdateHexagonClicked(clickedHexagon))
-      store.emit(
-        new HoverButtonList(
-          button
-        ),
-      )
+
+      store.emit(new SetMainPopupCurrentButton(button))
     }else{
       store.emit(new updateCurrentButton(button))
     }

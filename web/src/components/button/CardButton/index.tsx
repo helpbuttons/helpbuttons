@@ -417,16 +417,18 @@ export function CardButtonHeadBig({ button, buttonTypes, toggleShowReplyFirstPos
               {button.address}
             </div>
           </div>
-        {showMap && (
+        {true && (
+          <>
+
           <MarkerViewMap
             markerPosition={[button.latitude, button.longitude]}
-            defaultZoom={(button.hideAddress ? showHexagonsZoom : maxZoom )}
+            defaultZoom={18}
             markerColor={cssColor}
             markerImage={button.image}
             markerCaption={button.title}
             hideAddress={button.hideAddress}
             hexagon={button.hexagon}
-          />
+          /></>
         )}
       </div>
     </>

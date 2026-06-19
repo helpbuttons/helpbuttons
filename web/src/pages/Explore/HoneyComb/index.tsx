@@ -147,7 +147,7 @@ function HoneyComb({ selectedNetwork }) {
           <div className="explore__map-wrapper">
             <ExploreHexagonMap toggleShowLeftColumn={toggleShowLeftColumn} exploreSettings={exploreSettings} selectedNetwork={selectedNetwork}/>
           </div>
-          <div
+          {/* <div
             ref={bottomRef}
             className={
               'index__content-bottom ' +
@@ -165,7 +165,7 @@ function HoneyComb({ selectedNetwork }) {
             toggleShowLeftColumn={toggleShowLeftColumn}
             onDragPos={handleDragPos} 
           />
-        </div>
+        </div> */}
         </ExploreContainer>
         
     </ShowMobileOnly >

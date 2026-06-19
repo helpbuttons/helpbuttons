@@ -11,7 +11,9 @@ import {
   hexagonSizeZoom,
 } from './Map.consts';
 import { useSelectedNetwork } from 'state/Networks';
-import { Marker } from 'pigeon-maps';
+import { GeoJsonLoader, Marker } from 'pigeon-maps';
+import { GlobalState, useGlobalStore } from 'state';
+import { Role } from 'shared/types/roles';
 export function MarkerEditorMap({
   pickedPosition,
   zoom,
@@ -108,29 +110,51 @@ export default function MarkerViewMap({
   hideAddress = false,
   hexagon
 }) {
-  const [mapCenter, setMapCenter] = useState(markerPosition);
-  const [zoom, setZoom] = useState(defaultZoom)
-  const onBoundsChanged = ({ center, zoom, bounds, initial }) => {
-    setZoom(() => zoom);
-    setMapCenter(() => center);
-  };
+ 
   const markerHexagonGeoJson = latLngToGeoJson(
     markerPosition[0],
     markerPosition[1],
     getZoomResolution(hexagonSizeZoom),
   );
+  const sessionUser = useGlobalStore(
+    (state: GlobalState) => state.sessionUser,
+);
   const selectedNetwork = useSelectedNetwork()
+  // return (<>lala</>)
   return (
     <>
       <div className="picker__map">
-        <LoadabledComponent loading={!mapCenter}>
           <HbMapUncontrolled
-            mapCenter={mapCenter}
-            mapZoom={zoom}
-            onBoundsChanged={onBoundsChanged}
+            mapCenter={markerPosition}
+            mapZoom={defaultZoom}
             height={'18'}
             tileType={HbMapTiles.FIRE}
           >
+            {(sessionUser.role == Role.admin || sessionUser.endorsed) && 
+            <GeoJsonLoader
+              link={'/assets/barroso.geojson'}
+              styleCallback={(feature, hover) => {
+                if(feature.properties.name.startsWith('Silha')){
+                  return { strokeWidth: "1", stroke: feature.properties.stroke };
+                }
+                if(feature.properties.name.startsWith('CONCESSAO')){
+                  return { strokeWidth: "1", stroke: feature.properties.stroke, fill: '#f549274a' };
+                }
+                if(feature.properties.name.startsWith('R-baldio')){
+                  return { strokeWidth: "1", stroke: feature.properties.stroke, fill: '#45f4195f' };
+                }
+                return { strokeWidth: "1", stroke: feature.properties.stroke, fill: feature.properties.fill };
+              }}
+            />}
+            <GeoJsonLoader
+              link={'/assets/silhas.geojson'}
+              styleCallback={(feature, hover) => {
+                if(feature.properties.name.startsWith('Silha')){
+                  return { strokeWidth: "1", stroke: feature.properties.stroke };
+                }
+                return { strokeWidth: "1", stroke: feature.properties.stroke, fill: feature.properties.fill };
+              }}
+            />
             {/* {hideAddress && (
               <GeoJson
                 data={markerHexagonGeoJson}
@@ -154,7 +178,6 @@ export default function MarkerViewMap({
                 />
             )}
           </HbMapUncontrolled>
-        </LoadabledComponent>
       </div>
     </>
   );

@@ -41,7 +41,7 @@ export function satellite(
   y: number,
   z: number
 ) {
-  if(z > 17){return;}
+  if(z > 18){return}
   // ESRI World Imagery - free satellite imagery
   return `https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/${z}/${y}/${x}`;
 }
@@ -51,7 +51,7 @@ export function fire(
   y: number,
   z: number
 ) {
-  if(z > 17){return;}
+  if(z > 18){return;}
   return `https://wayback-a.maptiles.arcgis.com/arcgis/rest/services/World_Imagery/WMTS/1.0.0/default028mm/MapServer/tile/10/${z}/${y}/${x}`
 }
 
