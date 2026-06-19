@@ -32,7 +32,7 @@ export class PostService {
     .then((imagesUploaded ) => {
       const imagesStored = imagesUploaded.map((img) => img.name)
       return this.buttonService
-      .findById(buttonId, true)
+      .findById(buttonId, true, true, author)
       .then((button) => {
         const post = {
           id: uuid(),
