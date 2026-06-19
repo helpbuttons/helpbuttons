@@ -128,7 +128,6 @@ export class ButtonController {
     @Param('buttonId') buttonId: string,
     @CurrentUser() user: User,
   ) {
-    console.log('oi')
     return this.buttonService
       .isOwner(user, buttonId)
       .then((isOwner) => {

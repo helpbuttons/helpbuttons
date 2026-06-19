@@ -96,7 +96,7 @@ export class DeleteKeyLocation implements WatchEvent {
 
 export class ListKeyLocation implements WatchEvent {
   public constructor(
-    private onSuccess = undefined,
+    private onSuccess = (x) => {},
   ) {}
 
   public watch(state: GlobalState) {
