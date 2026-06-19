@@ -68,3 +68,4 @@ export const onMarkerPositionChangeZoomTo = 10;
 export const showMarkersZoom = maxZoom - 2;
 export const showHexagonsZoom = maxZoom - 4;
 export const markerFocusZoom = 14;
+export const keyLocationZoom = 16;

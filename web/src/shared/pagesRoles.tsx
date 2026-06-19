@@ -14,6 +14,7 @@ export const allowedPathsPerRole =
             '/Explore/:zoom/:lat/:lng',
             '/Explore/:zoom/:lat/:lng/:btn',
             '/Explore/b/:btn',
+            '/Explore/p/:place',
             '/',
             '/ButtonFile/:id',
             '/LoginClick',
