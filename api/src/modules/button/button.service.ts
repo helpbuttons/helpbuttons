@@ -105,6 +105,8 @@ export class ButtonService {
     let awaitingApproval = false;
     if (network.requireApproval && user.role != Role.admin) {
       awaitingApproval = true;
+    }else if(!network.requireApproval){
+      awaitingApproval = false
     }
     if(!buttonTemplate){
       throw new HttpException(
@@ -206,20 +208,22 @@ export class ButtonService {
   async findById(
     id: string,
     includeExpired: boolean = false,
+    includeForApproval: boolean = false,
     currentUser = null,
   ): Promise<Button> {
     let button: Button = await this.buttonRepository.findOne({
-      where: { id, ...this.expiredBlockedConditions(includeExpired) },
+      where: { id, ...this.expiredBlockedConditions(includeExpired, includeForApproval) },
       relations: ['owner'],
     });
-
+    
     if (!button) {
       throw new HttpException(
         'button-not-found',
         HttpStatus.NOT_FOUND,
       );
     }
-    if (!currentUser || !currentUser.endorsed || currentUser?.role != Role.admin) {
+    const isButtonOwner = currentUser?.id == button?.owner?.id;
+    if (!(isButtonOwner || currentUser?.role == Role.admin || currentUser?.endorsed)) {
       const buttonTypes = await this.networkService.findButtonTypes()
 
       const hide = this.isOnlyEndorsed(button,buttonTypes)
@@ -234,8 +238,6 @@ export class ButtonService {
     }
     
 
-    const isButtonOwner = currentUser?.id == button?.owner?.id;
-
     return this.transformButton(button, currentUser, isButtonOwner);
   }
 
@@ -246,7 +248,7 @@ export class ButtonService {
     currentUser: User,
   ) {
     const network = await this.networkService.findDefaultNetwork();
-    const currentButton = await this.findById(id, true);
+    const currentButton = await this.findById(id, true, true, currentUser);
     this.cacheManager.del(CacheKeys.FINDH3_CACHE_KEY)
     let location = {};
     let hexagon = {};
@@ -323,7 +325,7 @@ export class ButtonService {
           if(storeButton.expired && !button.expired){
             notifyUser(this.eventEmitter,ActivityEventName.RenewButton,{button, owner: storeButton.owner})
           }
-          return this.findById(button.id)
+          return this.findById(button.id, true, true, currentUser)
           .then((_btn) => this.transformButton(_btn, currentUser))
         })
 
@@ -376,9 +378,6 @@ export class ButtonService {
                 return !buttonType?.hide;
               });
             });
-        })
-        .then((btns) => {
-          return btns.filter((btn) => !btn.expired);
         })
         .then((btns) => {
           return this.filterOnlyEndorsed(currentUser, btns)
@@ -456,9 +455,8 @@ export class ButtonService {
   public isOwner(
     currentUser: User,
     buttonId: string,
-    includeExpired: boolean = false,
   ) {
-    return this.findById(buttonId, includeExpired).then((button) => {
+    return this.findById(buttonId, true, true, currentUser).then((button) => {
       if (
         currentUser.role == Role.admin ||
         currentUser.id == button.owner.id
@@ -547,6 +545,8 @@ export class ButtonService {
       owner: { role: Not(Role.blocked) },
       deleted: false,
     };
+
+    // its always false.. except when owner of button! 
     if (!includeExpired && !includeForApproval) {
       return { expired: false, awaitingApproval: false, ...blocked };
     }else if(includeExpired && !includeForApproval){
