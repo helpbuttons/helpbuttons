@@ -22,15 +22,15 @@ export default function ActivityGroup({ selectedGroupType }) {
   const isAdmin = sessionUser.role == Role.admin;
   if (isAdmin) {
     return <>
-      <ActivityGroupMessageEntry selectedGroupType={selectedGroupType} groupType={GroupMessageType.admin} groupMessages={userGroupMessages.admin} />
-      <ActivityGroupMessageEntry selectedGroupType={selectedGroupType} groupType={GroupMessageType.community} groupMessages={userGroupMessages.community} />
+      <ActivityGroupMessageEntry selectedGroupType={selectedGroupType} groupType={GroupMessageType.admin} groupMessages={userGroupMessages.admin?.lastMessage} />
+      <ActivityGroupMessageEntry selectedGroupType={selectedGroupType} groupType={GroupMessageType.community} groupMessages={userGroupMessages.community?.lastMessage} />
     </>
   }
-  if (!userGroupMessages.community && !isAdmin) {
+  if (!isAdmin) {
     return <></>
   }
   return (<>
-    <ActivityGroupMessageEntry selectedGroupType={selectedGroupType} groupType={GroupMessageType.community} groupMessages={userGroupMessages.community} />
+    <ActivityGroupMessageEntry selectedGroupType={selectedGroupType} groupType={GroupMessageType.community} groupMessages={userGroupMessages.community?.lastMessage} />
   </>)
 }
 
@@ -71,13 +71,13 @@ export function ActivityGroupChat({ groupType, close }) {
     let latestMessageFromPoll = null
     if(groupType == GroupMessageType.admin){
       if(activities.admin){
-        latestMessageFromPoll = activities.admin.createdAt;
+        latestMessageFromPoll = activities.admin?.lastMessage?.createdAt;
       }
     }
 
     if(groupType == GroupMessageType.community){
       if(activities.community){
-        latestMessageFromPoll = activities.community.createdAt;
+        latestMessageFromPoll = activities.community?.lastMessage?.createdAt;
       }
     }
     if(messages?.length > 0)
@@ -88,7 +88,8 @@ export function ActivityGroupChat({ groupType, close }) {
           setMessages((prev) => uniqById( _msgs, prev))
         })
       }
-    }else{
+    }
+    else if(latestMessageFromPoll){
       loadMessages(0, (_msgs) => {
         setMessages((prev) => uniqById( _msgs, prev))
       })

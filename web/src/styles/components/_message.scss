@@ -19,7 +19,6 @@ $message-you-margin-left: $margin-xbig;
 
 }
 
-
 .message--me {
 
     background: $color-dark-gray;
@@ -117,6 +116,11 @@ $message-you-margin-left: $margin-xbig;
   font-size: $font-size-medium;
   margin-bottom: 0;
 
+  a {
+    color: $color-blue;
+    font-weight: $font-weight-bolder;
+  }
+
 }
 
 .message--you {
@@ -199,4 +203,41 @@ $message-you-margin-left: $margin-xbig;
   display: flex;
   justify-content: flex-start;
 
+}
+
+.message__button-preview {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: $padding-small;
+  margin-top: $margin-xsmall;
+  padding: $padding-small;
+  border-radius: $border-radius-basic;
+  border: $border-style-light;
+  background: $color-white;
+  cursor: pointer;
+  max-width: $message-max-width;
+
+  &:hover {
+    background: $color-ligth-gray;
+  }
+
+  img {
+    width: 48px;
+    height: 48px;
+    object-fit: cover;
+    border-radius: $border-radius-basic;
+    flex-shrink: 0;
+  }
+}
+
+.message__button-preview__title {
+  font-size: $font-size-small;
+  font-weight: $font-weight-bold;
+  color: $color-black;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
 }

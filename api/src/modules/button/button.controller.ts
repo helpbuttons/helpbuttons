@@ -96,7 +96,7 @@ export class ButtonController {
     @Param('buttonId') buttonId: string,
     @CurrentUser() user: User,
   ){
-    return this.buttonService.findById(buttonId, true, user)
+    return this.buttonService.findById(buttonId, true, false, user)
   }
 
   @OnlyRegistered()
@@ -111,9 +111,8 @@ export class ButtonController {
     @UploadedFiles() images : Express.Multer.File[],
   ) {
     const updateDto : UpdateButtonDto = JSON.parse(body.data);
-
     return await this.buttonService
-      .isOwner(user, buttonId, true)
+      .isOwner(user, buttonId)
       .then((isOwner) => {
         if (!isOwner) {
           throw new CustomHttpException(ErrorName.NoOwnerShip);
@@ -129,13 +128,14 @@ export class ButtonController {
     @Param('buttonId') buttonId: string,
     @CurrentUser() user: User,
   ) {
-    return await this.buttonService
-      .isOwner(user, buttonId, true)
+    return this.buttonService
+      .isOwner(user, buttonId)
       .then((isOwner) => {
         if (!isOwner) {
           throw new CustomHttpException(ErrorName.NoOwnerShip);
         }
-        return this.buttonService.delete(buttonId).then((button) => {
+        console.log('dskajdlsa')
+        return this.buttonService.delete(buttonId, user).then((button) => {
           notifyUser(this.eventEmitter,ActivityEventName.DeleteButton,{button, user})
           return true;
         });
@@ -196,7 +196,7 @@ export class ButtonController {
   async renew(@Param('buttonId') buttonId: string, @CurrentUser() user: User)
   {
     return await this.buttonService
-    .isOwner(user, buttonId, true)
+    .isOwner(user, buttonId)
     .then((isOwner) => {
       if (!isOwner) {
         throw new CustomHttpException(ErrorName.NoOwnerShip);
@@ -286,7 +286,7 @@ export class ButtonController {
   @Get('findAll/:page')
   findAll(@Param('page') page: number, @CurrentUser() user: User)
   {
-    return this.buttonService.findAll(page)
+    return this.buttonService.findAll(page, user)
   }
 
   @OnlyRegistered()

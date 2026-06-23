@@ -11,7 +11,7 @@ import { useSelectedNetwork } from "state/Networks";
 import { LocationKeyIcon } from "../Map/MarkerButton";
 import { FieldMapZoomSlide } from "elements/Fields/FieldAreaMap";
 import { MapLocationKey } from "../Map/NetworkMapConfigure";
-import { useGeoReverse } from "elements/Fields/FieldLocation/location.helpers";
+import { getUnkownAddress, useGeoReverse } from "elements/Fields/FieldLocation/location.helpers";
 import { alertService } from "services/Alert";
 import { TableHeader, TableLine, TableLineCell } from "components/table";
 
@@ -166,7 +166,7 @@ export function FieldLocationKeyMap({
         },
             (error) => {
                 setIsLoading(() => false)
-                setFoundAddress(() => t('button.unknownPlace'))
+                setFoundAddress(() => getUnkownAddress(latLng[0], latLng[1]))
             }
         );
     }
@@ -206,7 +206,7 @@ export function FieldLocationKeyMap({
                     <MapLocationKey
                         center={center}
                         zoom={zoom}
-                        tileType={undefined}
+                        tileType={selectedNetwork.exploreSettings.tileType}
                         onBoundsChanged={onBoundsChange}
                         handleMapClick={onMapClick}
                     >

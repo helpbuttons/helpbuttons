@@ -9,7 +9,7 @@ import t from 'i18n';
 import { roundCoord } from 'shared/honeycomb.utils';
 import { FieldCheckbox } from '../FieldCheckbox';
 import PickerField from 'components/picker/PickerField';
-import { getCoordinatesDMS, useGeoReverse } from './location.helpers';
+import { getCoordinatesDMS, getUnkownAddress, useGeoReverse } from './location.helpers';
 import { IoLocationOutline } from 'react-icons/io5';
 import LocationSearchBar from 'elements/LocationSearchBar';
 import { markerFocusZoom } from 'components/map/Map/Map.consts';
@@ -55,7 +55,7 @@ export default function FieldLocation({
         setPickedAddress(() => address)
       },
         (error) => {
-          const address = t('button.unknownPlace')
+          const address = getUnkownAddress(pickedPosition[0], pickedPosition[1], hideAddress)
           setPickedAddress(address)
           setLatitude(pickedPosition[0])
           setLongitude(pickedPosition[1])
@@ -115,7 +115,7 @@ export default function FieldLocation({
           { latitude: latLng[0], longitude: latLng[1] },
         );
         if(distance > 200) { // if the point found is more than 600meters, better to set as unknown place!
-          setPickedAddress(() => t('button.unknownPlace', [], true))
+          setPickedAddress(() => getUnkownAddress(latLng[0], latLng[1], hideAddress))
           
           setIsLoading(() => false)
           return;
@@ -125,7 +125,7 @@ export default function FieldLocation({
       },
         (error) => {
           setIsLoading(() => false)
-          setPickedAddress(() => t('button.unknownPlace'))
+          setPickedAddress(() => getUnkownAddress(latLng[0], latLng[1], hideAddress))
         }
       );
     }

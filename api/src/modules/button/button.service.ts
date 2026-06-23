@@ -105,8 +105,15 @@ export class ButtonService {
     let awaitingApproval = false;
     if (network.requireApproval && user.role != Role.admin) {
       awaitingApproval = true;
+    }else if(!network.requireApproval){
+      awaitingApproval = false
     }
-
+    if(!buttonTemplate){
+      throw new HttpException(
+        { message: 'Button template not found' },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
     const button = {
       id: await this.getNewSlug(createDto.title),
       type: createDto.type,
@@ -160,7 +167,7 @@ export class ButtonService {
     
     return this.buttonRepository.insert([button])
     .then((btn) => {
-      return this.findById(button.id)
+      return this.findById(button.id, true, true, user)
           .then((_btn) => this.transformButton(_btn, user))
     })
   }
@@ -201,13 +208,14 @@ export class ButtonService {
   async findById(
     id: string,
     includeExpired: boolean = false,
+    includeForApproval: boolean = false,
     currentUser = null,
   ): Promise<Button> {
     let button: Button = await this.buttonRepository.findOne({
-      where: { id, ...this.expiredBlockedConditions(includeExpired) },
+      where: { id, ...this.expiredBlockedConditions(includeExpired, includeForApproval) },
       relations: ['owner'],
     });
-
+    
     if (!button) {
       throw new HttpException(
         'button-not-found',
@@ -215,6 +223,20 @@ export class ButtonService {
       );
     }
     const isButtonOwner = currentUser?.id == button?.owner?.id;
+    if (!(isButtonOwner || currentUser?.role == Role.admin || currentUser?.endorsed)) {
+      const buttonTypes = await this.networkService.findButtonTypes()
+
+      const hide = this.isOnlyEndorsed(button,buttonTypes)
+
+      if(hide)
+      {
+        throw new HttpException(
+          'button-not-found',
+          HttpStatus.NOT_FOUND,
+        );
+      }
+    }
+    
 
     return this.transformButton(button, currentUser, isButtonOwner);
   }
@@ -226,7 +248,7 @@ export class ButtonService {
     currentUser: User,
   ) {
     const network = await this.networkService.findDefaultNetwork();
-    const currentButton = await this.findById(id, true);
+    const currentButton = await this.findById(id, true, true, currentUser);
     this.cacheManager.del(CacheKeys.FINDH3_CACHE_KEY)
     let location = {};
     let hexagon = {};
@@ -303,7 +325,7 @@ export class ButtonService {
           if(storeButton.expired && !button.expired){
             notifyUser(this.eventEmitter,ActivityEventName.RenewButton,{button, owner: storeButton.owner})
           }
-          return this.findById(button.id)
+          return this.findById(button.id, true, true, currentUser)
           .then((_btn) => this.transformButton(_btn, currentUser))
         })
 
@@ -358,7 +380,7 @@ export class ButtonService {
             });
         })
         .then((btns) => {
-          return btns.filter((btn) => !btn.expired);
+          return this.filterOnlyEndorsed(currentUser, btns)
         })
         .then((btns) => {
           return btns.map((btn) => 
@@ -399,9 +421,29 @@ export class ButtonService {
       isFollowing: isFollowing,
     };
   }
-  async delete(buttonId: string) {
+
+  filterOnlyEndorsed(currentUser, btns) {
+    return this.networkService.findButtonTypes()
+      .then((buttonTypes) => {
+        if (currentUser.endorsed || currentUser.role == Role.admin) {
+          return btns;
+        }
+        return btns.filter((btn) => {
+          return !this.isOnlyEndorsed(btn,buttonTypes)
+        })
+      })
+  }
+  
+  isOnlyEndorsed(button, buttonTypes) {
+    const buttonType = buttonTypes.find((_btnType) => _btnType.name == button.type)
+    return buttonType?.customFields.find((_cstomfield) => {
+      return _cstomfield.type == CustomFields.OnlyEndorsed
+    })
+  }
+
+  async delete(buttonId: string, currentUser) {
     this.cacheManager.del(CacheKeys.FINDH3_CACHE_KEY)
-    return this.findById(buttonId, true).then((button) => {
+    return this.findById(buttonId, true, true, currentUser).then((button) => {
       return this.buttonRepository
         .update(button.id, { deleted: true })
         .then((res) => {
@@ -413,9 +455,8 @@ export class ButtonService {
   public isOwner(
     currentUser: User,
     buttonId: string,
-    includeExpired: boolean = false,
   ) {
-    return this.findById(buttonId, includeExpired).then((button) => {
+    return this.findById(buttonId, true, true, currentUser).then((button) => {
       if (
         currentUser.role == Role.admin ||
         currentUser.id == button.owner.id
@@ -499,14 +540,20 @@ export class ButtonService {
     });
   }
 
-  expiredBlockedConditions(includeExpired: boolean = false) {
+  expiredBlockedConditions(includeExpired: boolean = false, includeForApproval: boolean = false) {
     const blocked = {
       owner: { role: Not(Role.blocked) },
       deleted: false,
     };
-    if (!includeExpired) {
+
+    // its always false.. except when owner of button! 
+    if (!includeExpired && !includeForApproval) {
+      return { expired: false, awaitingApproval: false, ...blocked };
+    }else if(includeExpired && !includeForApproval){
+      return { awaitingApproval: false, ...blocked };
+    }else if(!includeExpired && includeForApproval){
       return { expired: false, ...blocked };
-    }
+    } // else includeExpired & includeForApproval
     return blocked;
   }
     
@@ -608,12 +655,14 @@ export class ButtonService {
             new Date(year, month, 1),
             new Date(year, month, 31),
           ),
+          ...this.expiredBlockedConditions(),
         },
         {
           eventStart: Between(
             new Date(year, month, 1),
             new Date(year, month, 31),
           ),
+          ...this.expiredBlockedConditions(),
         },
       ],
     });
@@ -625,13 +674,12 @@ export class ButtonService {
       skip: page * 10,
       order: { created_at: 'DESC' },
       where: {
-        awaitingApproval: true,
-        ...this.expiredBlockedConditions(true),
+        ...this.expiredBlockedConditions(true, true),
       },
     });
   }
 
-  findAll(page: number) {
+  findAll(page: number, currentUser: User) {
     return this.buttonRepository.find({
       take: 10,
       skip: page * 10,

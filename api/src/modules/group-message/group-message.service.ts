@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { Role } from "@src/shared/types/roles";
 import {  GroupMessages } from "./group-message.dto";
 import { GroupMessage } from "./group-message.entity";
-import { In, Repository } from "typeorm";
+import { In, MoreThan, Repository } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
 import { GroupMessageType } from "@src/shared/types/group-message.enum";
 import { uuid } from "@src/shared/helpers/uuid.helper";
@@ -29,7 +29,7 @@ export class GroupMessageService {
             conditions = {last: true, to: In([GroupMessageType.community, GroupMessageType.admin])}
             
         }
-        return this.groupMessageRepository.find({where: conditions, relations: ['from']}).then((groupMessages) => {
+        return this.groupMessageRepository.find({where: conditions, relations: ['from']}).then(async (groupMessages) => {
             
             const commmunityLastMessage = groupMessages.find((groupMessage) => groupMessage.to == GroupMessageType.community)
 
@@ -37,11 +37,24 @@ export class GroupMessageService {
 
             const readAdmin = user?.readGroupMessages?.admin ? this.isRead(adminLastMessage?.created_at, user?.readGroupMessages?.admin) : false;
 
-            const readCommunity = user?.readGroupMessages?.community ? this.isRead(commmunityLastMessage?.created_at, user?.readGroupMessages?.community) : false;
+            let unreadAdmin = 0
+            if(user?.readGroupMessages.admin){
+                unreadAdmin = await this.groupMessageRepository.count({where: {created_at: MoreThan(user?.readGroupMessages.admin), to: GroupMessageType.admin }})
+            }else{
+                unreadAdmin = await this.groupMessageRepository.count({where: {to: GroupMessageType.admin}})
+            }
 
+            let unreadCommunity = 0
+            if(user?.readGroupMessages.community){
+                unreadCommunity = await this.groupMessageRepository.count({where: {created_at: MoreThan(user?.readGroupMessages.community), to: GroupMessageType.community}})
+            }else{
+                unreadCommunity = await this.groupMessageRepository.count({where: {to: GroupMessageType.community}})
+            }
+            
+            const readCommunity = user?.readGroupMessages?.community ? this.isRead(commmunityLastMessage?.created_at, user?.readGroupMessages?.community) : false;
             return {
-                community: this.transformGroupMessage(commmunityLastMessage, user, readCommunity),
-                admin: this.transformGroupMessage(adminLastMessage, user, readAdmin)
+                community: {lastMessage: this.transformGroupMessage(commmunityLastMessage, user, readCommunity), unreadCount: unreadCommunity},
+                admin: {lastMessage: this.transformGroupMessage(adminLastMessage, user, readAdmin), unreadCount: unreadAdmin}
             }
         }) 
     }

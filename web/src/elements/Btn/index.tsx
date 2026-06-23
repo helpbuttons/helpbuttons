@@ -241,7 +241,7 @@ export function BtnAction({ icon, onClick }) {
   );
 }
 
-export function BtnCaption({ caption, icon, onClick, color, selected = false, disabled = false }) {
+export function BtnCaption({ caption, icon, onClick = () => {}, color, selected = false, disabled = false }) {
   const cssColor = (cssColor: string) => {
     return { '--button-color': cssColor } as React.CSSProperties;
   };

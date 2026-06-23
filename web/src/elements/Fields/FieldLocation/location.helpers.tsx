@@ -1,3 +1,4 @@
+import t from 'i18n';
 import { debounce } from 'lodash';
 import { useCallback } from 'react';
 
@@ -90,4 +91,11 @@ export const isPointInBounds = (point, bounds) => {
     return true;
   }
   return false;
+}
+
+export const getUnkownAddress = (lat, lng, hideAddress = false) => {
+  if(hideAddress){
+    return t('button.unknownPlace')
+  }
+  return getCoordinatesDMS(`${lat}, ${lng}`)
 }

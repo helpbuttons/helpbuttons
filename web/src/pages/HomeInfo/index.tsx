@@ -51,6 +51,7 @@ import { ActivityListEntryCard } from 'components/feed/Activities/ActivityListEn
 import { ActivityEventName } from 'shared/types/activity.list';
 import { SetFocusOnPost } from 'state/Activity';
 import { ResetFilters } from 'state/Explore';
+import Link from 'next/link';
 
 export default function HomeInfo({ metadata }) {
 
@@ -531,9 +532,7 @@ function HomeInfoKeyLocations({selectedNetwork}) {
     );
   }, []);
   
-  const handleClick = (place) => {
-    router.push(`/Explore/${place.zoom}/${place.latitude}/${place.longitude}/`)
-  }
+  
   return  (<>
   {keyLocations.length > 0 && 
     <div className="homeinfo-card homeinfo-card--wrap">
@@ -552,15 +551,13 @@ function HomeInfoKeyLocations({selectedNetwork}) {
       <div className="homeinfo__hashtags">
         {keyLocations.map((place, idx) => {
           return <div key={idx} className="hashtags__list-item">
+            <Link href={`/Explore/p/${place.id}`} >
             <BtnCaption
               caption={`${place.address}`}
               selected={false}
               icon={null}
               color={'black'}
-              onClick={() =>
-                handleClick(place)
-              }
-            />
+            /></Link>
           </div>
 
         })}

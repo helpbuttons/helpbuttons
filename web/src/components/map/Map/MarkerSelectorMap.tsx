@@ -10,6 +10,7 @@ import {
   hexagonSizeZoom,
 } from './Map.consts';
 import { useSelectedNetwork } from 'state/Networks';
+import { useKeyLocations } from 'state/Geo';
 export function MarkerEditorMap({
   pickedPosition,
   zoom,
@@ -62,6 +63,7 @@ export function MarkerEditorMap({
       setMapCenter(() => networkMapCenter);
     }
   }, [hideAddress, pickedPosition, networkMapCenter]);
+  const keyLocations = useKeyLocations()
 
   return (
     <>
@@ -89,6 +91,19 @@ export function MarkerEditorMap({
                 title={markerCaption}
               />
             )}
+            {!isLocationKeyMarker && keyLocations?.length > 0 && 
+              keyLocations.map((place, idx) => {
+                return (
+                  <LocationKeyIcon
+                    key={idx}
+                    anchor={[place.latitude, place.longitude]}
+                    offset={[35, 65]}
+                    color={'white'}
+                    title={place.address}
+                  />
+                );
+              })
+            }
           </HbMapUncontrolled>
         </LoadabledComponent>
       </div>
@@ -116,7 +131,7 @@ export default function MarkerViewMap({
     markerPosition[1],
     getZoomResolution(hexagonSizeZoom),
   );
-
+  const selectedNetwork = useSelectedNetwork()
   return (
     <>
       <div className="picker__map">
@@ -126,6 +141,7 @@ export default function MarkerViewMap({
             mapZoom={zoom}
             onBoundsChanged={onBoundsChanged}
             height={'18'}
+            tileType={selectedNetwork.exploreSettings.tileType}
           >
             {/* {hideAddress && (
               <GeoJson

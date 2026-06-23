@@ -134,26 +134,47 @@ export function InviteForm() {
   );
 }
 
-
+const loginWithCode = (code) => {
+  const onLoggingInSuccess = () => {
+    alertService.success(t('user.loginSucess'))
+    store.emit(new SetMainPopup(MainPopupPage.HIDE))
+    router.push(`/HomeInfo`)
+  }
+  store.emit(new LoginQR(code, null, onLoggingInSuccess, (err) => { 
+    if(err == 'login-incorrect')
+    {
+      dconsole.log('tryin to login, failed, its ok, qr code is not registered yet')
+    }else{
+      dconsole.error(err)
+    }
+  }))
+}
 export function InviteScan() {
+  const regex = /Signup\/Invite\/(([a-zA-Z]|[0-9])*)/gm;
+
   
   const [qrCode, setQrCode] = useState('')
   const handleScan = (detectedCodes) => {
-    const regex = /Signup\/Invite\/(([a-zA-Z]|[0-9])*)/gm;
     detectedCodes.forEach(code => {
       if(code.format == 'qr_code'){
         const found = [...code.rawValue.matchAll(regex)];
         if(found.length > 0){
           const code = found[0][1]
-          router.push(`/Signup/Invite/${code}`)
-          console.log('invite code found' + code)
+          // router.push(`/Explore?code=${code}`)
+          loginWithCode(code)
         }
-
       }
     });
   };
   const handleSubmit = () => {
-    router.push(`/Signup/Invite/${qrCode}`)
+    if(qrCode.search('/') > -1 ){
+      const found = Array.from(qrCode.matchAll(regex))
+      const code = found[0][1]
+      loginWithCode(code)
+    }else{
+      loginWithCode(qrCode)
+    }
+    
   }
   return (
     <>

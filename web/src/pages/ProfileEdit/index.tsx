@@ -133,8 +133,7 @@ export default function ProfileEdit() {
   }, [sessionUser]);
 
   const radius = watch('radius')
-  const coordinates = watch('center.coordinates')
-  const center = coordinates ? [coordinates[1],coordinates[0]] : null;
+  const coordinates = watch('center')
   return (
     <>
       {sessionUser && (
@@ -251,7 +250,7 @@ export default function ProfileEdit() {
                     focusPoint={focusPoint}
                     setMarkerPosition={(position) => setValue('center', {coordinates: position})}
                   />
-                {center && 
+                {coordinates != null && 
                   <RadiusSlider pickedRadius={radius} setPickedRadius={(radiusValue) =>setValue('radius', radiusValue)}/>
                 }
                 <FieldTags

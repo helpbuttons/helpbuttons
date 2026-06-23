@@ -9,7 +9,7 @@ import { TagsNav } from 'elements/Fields/FieldTags';
 import t from 'i18n';
 import Link from 'next/link';
 import router from 'next/router';
-import { store } from 'state';
+import { GlobalState, store, useGlobalStore } from 'state';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import {
@@ -146,6 +146,10 @@ function ModerationUsersList() {
     );
   };
 
+  const sessionUser = useGlobalStore(
+    (state: GlobalState) => state.sessionUser,
+  );
+
   const [users, setUsers] = useState(null);
   const [pageUsers, setPageUsers] = useState(null);
   const [page, setPage] = useState(0);
@@ -211,7 +215,7 @@ function ModerationUsersList() {
                       )}
                     </TableLineCell>
                     <TableLineCell>
-                      {user.role == Role.registered &&
+                      {user.id != sessionUser.id && user.role == Role.registered &&
                         <Btn
                           btnType={BtnType.small}
 
@@ -221,7 +225,7 @@ function ModerationUsersList() {
                           onClick={() => updateRole(user.id, Role.admin)}
                         />
                       }
-                      {user.role == Role.admin &&
+                      {user.id != sessionUser.id && user.role == Role.admin &&
                         <Btn
                           btnType={BtnType.small}
                           borderColor={'red'}
@@ -230,7 +234,7 @@ function ModerationUsersList() {
                           onClick={() => updateRole(user.id, Role.registered)}
                         />
                       }
-                      {user.role == Role.registered &&
+                      {user.id != sessionUser.id && user.role == Role.registered &&
                         <Btn
                           btnType={BtnType.small}
                           borderColor={'orange'}
@@ -239,7 +243,7 @@ function ModerationUsersList() {
                           onClick={() => updateRole(user.id, Role.blocked)}
                         />
                       }
-                      {user.role == Role.blocked &&
+                      {user.id != sessionUser.id && user.role == Role.blocked &&
                         <Btn
                           btnType={BtnType.small}
                           borderColor={'green'}

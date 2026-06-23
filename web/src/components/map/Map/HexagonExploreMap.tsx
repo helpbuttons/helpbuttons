@@ -26,6 +26,7 @@ import t from 'i18n';
 import { circleGeoJSON } from 'shared/geo.utils';
 import { getCenter } from 'geolib';
 import { useIsMobile } from 'elements/SizeOnly';
+import { isPointInBounds } from 'elements/Fields/FieldLocation/location.helpers';
 
 export default function HexagonExploreMap({
   h3TypeDensityHexes,
@@ -38,7 +39,7 @@ export default function HexagonExploreMap({
   const [centerBounds, setCenterBounds] = useState<Point>(null);
   const [geoJsonFeatures, setGeoJsonFeatures] = useState([])
   const [resolution, setResolution] = useState(0)
-
+  const [keyLocationsInBounds, setKeyLocationsInBounds] = useState([])
   const currentButton = useGlobalStore((state: GlobalState) => state.explore.currentButton)
 
   const hexagonClicked = useStore(
@@ -82,6 +83,8 @@ export default function HexagonExploreMap({
     }
     handleBoundsChange(bounds, center, zoom)
     setCenterBounds(center);
+
+    setKeyLocationsInBounds(() => keyLocations.filter((_kl) => isPointInBounds([_kl.latitude, _kl.longitude], bounds)))
   };
 
   const onMapClick = () => {

@@ -282,7 +282,7 @@ export class AuthService {
       tags: data.tags,
       center: data.center,
       address: data.address,
-      radius: data.radius,
+      radius: data.radius ? data.radius : 0,
       phone: data.phone,
       publishPhone: data.publishPhone,
       showWassap: data.showWassap

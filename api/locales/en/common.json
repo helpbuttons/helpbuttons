@@ -35,7 +35,7 @@
     "buttons": "There are {0} _helpbuttons_ in this network:",
     "users": "{0} users in this network",
     "administeredby": "Admin and support ",
-    "adminInstructions": "Contact any of the following users if you need help using the app.",
+    "adminInstructions": "Contact any of the following users if you need help using the app",
     "actions": "What can I do?",
     "createNetworkButton": "Create your own network",
     "createNetwork": "You can contact with the team if you need help making your own network",
@@ -209,7 +209,7 @@
     "newfollow": "{0} is now following your _helpbutton_ {1}",
     "newfollowing": "You started following",
     "newfollowed": "{0} followed your _helpbutton_",
-    "myhelpbuttons": "My _helpbuttons_",  
+    "myhelpbuttons": "My _helpbuttons_",
     "deletebutton": "{0} was deleted",
     "expiredEventType": "_helpbutton_ ended",
     "expiredEventTitle": "'{0}' has passed its end date, it won't show no more on the public list.",
@@ -228,7 +228,7 @@
     "message": "Message",
     "all": "all",
     "newMessageSubject": "{0} sent you a new message",
-    "newMessageContent": "{0} : '{1}' ",
+    "newMessageContent": "{0} : '{1}'  ",
     "newPostCommentSubject": "{0} commented on a _helpbutton_",
     "newPostCommentContent": "{0} wrote a new comment '{1}'. on the _helpbutton_ '{2}'",
     "newMentionSubject": "{0} mentioned you on a _helpbutton_",
@@ -343,7 +343,8 @@
     "whereButtonLabel": "Choose place",
     "pickPosition": "Please pick a position on the map",
     "expired": "_helpbutton_ expired, it won't show on search results.",
-    "statusLabel": "Status"
+    "statusLabel": "Status",
+    "awaitApproval": "A _helpbutton_ is awaiting approval"
   },
   "user": {
     "login": "Write your credentials",
@@ -462,7 +463,8 @@
     "askForNewCode": "I don't have my guest info",
     "inviteLogin": "Enter",
     "inviteLoginError": "Wrong code or missing fields",
-    "roleChange": "An admin changed your role"
+    "roleChange": "An admin changed your role",
+     "pickPrivacyOption": "Choose privacy"
   },
   "picker": {
     "headerText": "Choose a location"
@@ -597,6 +599,9 @@
     "locationKeys": "Key Spots",
     "keyLocationsExplain": "Key spots that will be highlighted in your network. They will appear in the main menus and map for easy access",
     "addLocationKey": "Add Location",
+    "hideCountryOnAddressesLabel": "Hide country on addresses",
+    "hideCountryOnAddressesExplain": "If your network is focused on the same country, you can hide the country from addresses so it is not redundant.",
+    "hideCountryOnAddressesText": "Hide country",
     "privacyPolicyLabel": "Privacy policy",
     "privacyPolicyPlaceHolder": "Write basic privacy policy. Where are you storing your users' data? What type of data are you using and what for? ",
     "ethicsPolicyPlaceHolder": "Write basic ethics. What are the values behind your networks' purpose and users' actions?",
@@ -610,8 +615,8 @@
     "explainanyoneCan": "Everyone can sign up in your network.",
     "inviteOnly": "Invite only network",
     "explaininviteOnly": "The only way to signup to the network is to be invited by other users already registered in the network",
-    "inviteOnlyByEndorsed": "Invite only by endorsed",
-    "explaininviteOnlyByEndorsed": "The only way to signup to the network is to be invited by other users which have been endorsed",
+    "inviteOnlyByEndorsed": "Invite only by verified",
+    "explaininviteOnlyByEndorsed": "The only way to signup to the network is to be invited by other users which have been verified",
     "inviteOnlyByAdmin": "Invite only by coordinators",
     "explaininviteOnlyByAdmin": "The only way to signup to the network is to be invited by coordinators of the network"
 
@@ -735,7 +740,7 @@
     "emptyUsersList": "No users",
     "requireApproval": "Only allow publishing with moderation",
     "requireApprovalLabel": "Network moderation",
-    "requireApprovalExplain": "If you enable this, all _helpbuttons_ created (if not by an admin) won't be published on the map, before an coordinator approves it",
+    "requireApprovalExplain": "If you enable this, all _helpbuttons_ created by not endorsed users need coordinators approval",
     "awaitingApproval": "_helpbutton_ has been added to the moderation list, please wait for an coordinator to approve it",
     "title": "Moderate content and users",
     "adminCommunication": "Coordinator communications",

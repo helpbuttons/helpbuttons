@@ -18,7 +18,7 @@ import { IoGlobeOutline } from 'react-icons/io5';
 import { IoHomeOutline } from 'react-icons/io5';
 import t from 'i18n';
 import { GlobalState, store, useGlobalStore } from 'state';
-import { RecenterExplore } from 'state/Explore';
+import { RecenterExplore, updateCurrentButton, UpdateHexagonClicked } from 'state/Explore';
 import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
 import { useEffect, useState } from 'react';
 import { ShowMobileOnly } from 'elements/SizeOnly';
@@ -28,7 +28,7 @@ import { ClienteSideRendering } from 'pages/_app';
 export default NavBottom;
 
 function NavBottom({ sessionUser, hideNavBottom=false }) {
-  const activities = useGlobalStore((state: GlobalState) => state.activities.buttons)
+  const activities = useGlobalStore((state: GlobalState) => state.activities)
   const pageName = useGlobalStore((state: GlobalState) => state.homeInfo.pageName)
   
   const [countUnreadNotifications, setCountUnreadNotifications] =
@@ -40,14 +40,17 @@ function NavBottom({ sessionUser, hideNavBottom=false }) {
     return '';
   };
   useEffect(() => {
-    const countUnread = activities.reduce((countUnread, activity) => { 
+    if(!activities || !activities.community){
+      return;
+    }
+    const countButtonsUnread = activities.buttons.reduce((countUnread, activity) => { 
       if (activity.read == false) { 
         return countUnread + 1 
       } 
       return countUnread 
     }, 0)
     setCountUnreadNotifications(
-      () => countUnread
+      () => countButtonsUnread + activities?.community.unreadCount + activities?.admin.unreadCount
     );
   }, [activities]);
   return (
@@ -75,6 +78,8 @@ function NavBottom({ sessionUser, hideNavBottom=false }) {
           onClick={(e) => {
             if(pageName == 'Explore'){
               e.preventDefault()
+              store.emit(new updateCurrentButton(null))
+              store.emit(new UpdateHexagonClicked(null))
               store.emit(new RecenterExplore())
             }
           }}
@@ -153,7 +158,7 @@ function NavBottom({ sessionUser, hideNavBottom=false }) {
               <div className="nav-bottom__icon">
                 { countUnreadNotifications > 0 && (
                   <span className="notif-circle">
-                    {countUnreadNotifications} 
+                    {countUnreadNotifications}
                   </span>
                 )}
                 {isCurrent(

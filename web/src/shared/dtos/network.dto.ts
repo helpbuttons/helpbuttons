@@ -99,9 +99,8 @@ export class CreateNetworkDto implements Partial<Network> {
 
   nomeclaturePlural?: string;
 
-  hideLocationDefault: boolean;
-
   hideCountryOnAddresses: boolean;
+  hideLocationDefault: boolean;
 
   allowGuestCreation: boolean;
 

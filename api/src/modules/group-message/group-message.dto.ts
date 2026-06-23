@@ -1,8 +1,8 @@
 import { GroupMessageType } from "@src/shared/types/group-message.enum";
 
 export class GroupMessages{
-    community: GroupMessageDtoOut;
-    admin?: GroupMessageDtoOut;
+    community: {lastMessage: GroupMessageDtoOut, unreadCount: number};
+    admin?: {lastMessage: GroupMessageDtoOut, unreadCount: number};
 }
 export class GroupMessageDtoOut {
     id: string;

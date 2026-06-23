@@ -6,7 +6,36 @@ export function token(length = 21): string {
   return uuid(length)
 }
 
-export function slugify(title) {
+export function slugify(name) {
   const slugify = require('slugify')
-  return slugify(title, {remove: /[*+~.()'"!:@]/g});
+  return slugify(name, {remove: /[*+~.()'"!:@\?]/g});
+}
+
+export const newsguuid = async (name, findById, append = '_') => {
+  const checkIfExists = async (newId, findById) => {
+    try {
+      console.log('trying.. >> ' + newId)
+      const found = await findById(newId)
+      console.log(' <<' +found)
+      if (found) {
+        return true;
+      }
+    } catch (exception) {
+      return true;
+    }
+    return false;
+  }
+
+  let slug = slugify(name);
+  let idExists = await checkIfExists(slug, findById)
+  while (idExists) {
+    slug = slugify(name + append);
+    append = append + '_'
+    idExists = await checkIfExists(slug, findById)
+    if (append.length > 10) {
+      slug = uuid()
+      break;
+    }
+  }
+  return slug;
 }
