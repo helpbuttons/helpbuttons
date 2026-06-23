@@ -318,6 +318,8 @@ export class UpdateFilters implements UpdateEvent {
       newFilters.tags = _.uniq([...tagsFound, ...this.filters.tags])
       newFilters.query = newQuery
       newState.explore.map.filters = newFilters;
+      newState.explore.currentButton = null;
+      newState.explore.map.filters.hexClicked = null
 
     });
   }
