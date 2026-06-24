@@ -18,8 +18,12 @@ export class KeyLocationService {
         createDto: CreateKeyLocationDto,
         user: User
       ) {
+
+        const findById = (id) => {
+          return this.findById(id)
+        }
         
-        newsguuid(createDto.address, this.findById)
+        newsguuid(createDto.address, findById)
         .then((uuid) => {
           return {
             ...createDto,
@@ -43,7 +47,7 @@ export class KeyLocationService {
 
       list(
       ) {
-        return this.keyLocationRepository.find()
+        return this.keyLocationRepository.find({order: { address: 'ASC' }})
       }
 
       delete(id: string)
