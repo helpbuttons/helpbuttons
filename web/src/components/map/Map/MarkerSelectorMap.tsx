@@ -14,6 +14,7 @@ import { useSelectedNetwork } from 'state/Networks';
 import { GeoJsonLoader, Marker } from 'pigeon-maps';
 import { GlobalState, useGlobalStore } from 'state';
 import { Role } from 'shared/types/roles';
+import { useKeyLocations } from 'state/Geo';
 export function MarkerEditorMap({
   pickedPosition,
   zoom,
@@ -66,6 +67,7 @@ export function MarkerEditorMap({
       setMapCenter(() => networkMapCenter);
     }
   }, [hideAddress, pickedPosition, networkMapCenter]);
+  const keyLocations = useKeyLocations()
 
   return (
     <>
@@ -94,6 +96,19 @@ export function MarkerEditorMap({
                 title={markerCaption}
               />
             )}
+            {!isLocationKeyMarker && keyLocations?.length > 0 && 
+              keyLocations.map((place, idx) => {
+                return (
+                  <LocationKeyIcon
+                    key={idx}
+                    anchor={[place.latitude, place.longitude]}
+                    offset={[35, 65]}
+                    color={'white'}
+                    title={place.address}
+                  />
+                );
+              })
+            }
           </HbMapUncontrolled>
         </LoadabledComponent>
       </div>

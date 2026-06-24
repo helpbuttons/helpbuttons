@@ -29,6 +29,7 @@ import { useIsMobile } from 'elements/SizeOnly';
 import { useToggle } from 'shared/custom.hooks';
 import { Role } from 'shared/types/roles';
 import { SetMainPopupCurrentButton } from 'state/HomeInfo';
+import { isPointInBounds } from 'elements/Fields/FieldLocation/location.helpers';
 
 export default function HexagonExploreMap({
   h3TypeDensityHexes,
@@ -41,7 +42,7 @@ export default function HexagonExploreMap({
   const [centerBounds, setCenterBounds] = useState<Point>(null);
   const [geoJsonFeatures, setGeoJsonFeatures] = useState([])
   const [resolution, setResolution] = useState(0)
-
+  const [keyLocationsInBounds, setKeyLocationsInBounds] = useState([])
   const currentButton = useGlobalStore((state: GlobalState) => state.explore.currentButton)
 
   const hexagonClicked = useStore(
@@ -88,6 +89,8 @@ export default function HexagonExploreMap({
     }
     handleBoundsChange(bounds, center, zoom)
     setCenterBounds(center);
+
+    setKeyLocationsInBounds(() => keyLocations.filter((_kl) => isPointInBounds([_kl.latitude, _kl.longitude], bounds)))
   };
 
   const onMapClick = () => {
