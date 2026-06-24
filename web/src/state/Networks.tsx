@@ -185,7 +185,7 @@ export class SelectedNetworkFetched implements UpdateEvent {
 
 export function findAvailableButtonTemplates(allButtonTemplates, user) {
   const buttonTemplates = allButtonTemplates.map((_btnTemplate) => {
-    const isOnlyForEndorsed = _btnTemplate?.customFields.find((_cstomfield) => {
+    const isOnlyForEndorsed = _btnTemplate?.customFields?.find((_cstomfield) => {
       return _cstomfield.type == CustomFields.OnlyEndorsed
     })
     if(isOnlyForEndorsed)
