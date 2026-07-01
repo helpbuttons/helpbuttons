@@ -399,7 +399,7 @@ export class StorageService {
   send(image, res){
     const path = `${uploadDir}/${image}`
     if(fs.existsSync(path)){
-      return res.sendFile(path);
+      return res.sendFile(image, { root: uploadDir });
     }
     this.logger.error(`'${path}' image not found`)
     return null;
