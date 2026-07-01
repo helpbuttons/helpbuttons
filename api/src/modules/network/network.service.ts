@@ -34,9 +34,12 @@ import configs from '@src/config/configuration';
 import { uploadDir } from '../storage/storage.utils';
 import { Cache } from 'cache-manager';
 import { PrivacyNetworkType } from '@src/shared/types/privacy.enum';
+import { SourceCodeLogger } from '@src/shared/helpers/source-code-logger.helper';
 
 @Injectable()
 export class NetworkService {
+  private logger = new SourceCodeLogger('Files')
+
   constructor(
     @InjectRepository(Network)
     private readonly networkRepository: Repository<Network>,
@@ -303,6 +306,10 @@ export class NetworkService {
       const fs = require('fs');
       const logo = network.logo.replace('/files/get/', '');
       const logoResized = `logo_${resolution}_${logo}`;
+      if(!fs.existsSync(`${uploadDir}${logo}`)){
+        this.logger.error(`'${uploadDir}${logo}' logo not found`)
+        return null;
+      }
       if (!fs.existsSync(`${uploadDir}${logoResized}`)) {
         await this.storageService.createImage(
           `${uploadDir}${logo}`,
