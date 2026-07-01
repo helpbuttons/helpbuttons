@@ -31,6 +31,7 @@ import * as path from 'path';
 import { CustomHttpException } from '@src/shared/middlewares/errors/custom-http-exception.middleware';
 import { ErrorName } from '@src/shared/types/error.list';
 import configs from '@src/config/configuration';
+import { SourceCodeLogger } from '@src/shared/helpers/source-code-logger.helper';
 
 const getMaxUploadSizeBytes = (): number => {
   const sizeString = configs().maxUploadSize;
@@ -54,6 +55,8 @@ export interface ImageConvertOptions {
 
 @Injectable()
 export class StorageService {
+  private logger = new SourceCodeLogger('Files')
+
   constructor(
     @InjectRepository(ImageFile)
     private readonly imageFilesRepository: Repository<ImageFile>,
@@ -361,9 +364,13 @@ export class StorageService {
 
 
   async createImage(imageFileName, imageOutputFileName, size) {
-    return await sharp(imageFileName)
+    if(fs.existsSync(imageFileName)){
+      return await sharp(imageFileName)
       .resize(size, size)
       .toFile(imageOutputFileName);
+    }
+    this.logger.error(`'${imageFileName}' image not found`)
+    return null;
   }
 
   async delete(filename: string) {
@@ -387,6 +394,15 @@ export class StorageService {
     if (filenames.length > 0) {
       return filenames.map((filename) => this.delete(filename));
     }
+  }
+
+  send(image, res){
+    const path = `${uploadDir}/${image}`
+    if(fs.existsSync(path)){
+      return res.sendFile(image, { root: uploadDir });
+    }
+    this.logger.error(`'${path}' image not found`)
+    return null;
   }
 }
 
