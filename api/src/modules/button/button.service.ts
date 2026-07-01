@@ -436,6 +436,9 @@ export class ButtonService {
   
   isOnlyEndorsed(button, buttonTypes) {
     const buttonType = buttonTypes.find((_btnType) => _btnType.name == button.type)
+    if(!buttonType?.customFields){
+      return false;
+    }
     return buttonType?.customFields.find((_cstomfield) => {
       return _cstomfield.type == CustomFields.OnlyEndorsed
     })

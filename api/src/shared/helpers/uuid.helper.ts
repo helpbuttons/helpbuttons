@@ -14,9 +14,7 @@ export function slugify(name) {
 export const newsguuid = async (name, findById, append = '_') => {
   const checkIfExists = async (newId, findById) => {
     try {
-      console.log('trying.. >> ' + newId)
       const found = await findById(newId)
-      console.log(' <<' +found)
       if (found) {
         return true;
       }
