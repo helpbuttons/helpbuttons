@@ -38,9 +38,11 @@ export class GroupMessageService {
             const readAdmin = user?.readGroupMessages?.admin ? this.isRead(adminLastMessage?.created_at, user?.readGroupMessages?.admin) : false;
 
             let unreadAdmin = 0
-            if(user?.readGroupMessages.admin){
+            if(user.role != Role.admin){
+                unreadAdmin = 0
+            }else if(user?.readGroupMessages.admin){
                 unreadAdmin = await this.groupMessageRepository.count({where: {created_at: MoreThan(user?.readGroupMessages.admin), to: GroupMessageType.admin }})
-            }else{
+            }else{ 
                 unreadAdmin = await this.groupMessageRepository.count({where: {to: GroupMessageType.admin}})
             }
 
