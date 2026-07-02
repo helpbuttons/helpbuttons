@@ -8,7 +8,7 @@ export function token(length = 21): string {
 
 export function slugify(name) {
   const slugify = require('slugify')
-  return slugify(name, {remove: /[*+~.()'"!:@\?]/g});
+  return slugify(name, {remove: /[*+~.()'"!:@\?#]/g, strict: true});
 }
 
 export const newsguuid = async (name, findById, append = '_') => {
