@@ -162,17 +162,15 @@ export class ActivityService {
           const tagQuery = button.tags
             .map((tag) => `'${tag.toLowerCase()}' = any(tags)`)
             .join(' OR ');
-          const query = `select id, radius,center,ST_Distance(center, ST_Point(${button.longitude}, ${button.latitude},4326)::geography ) / 1000 as distance, tags from public.user where ${tagQuery}`;
+          const query = `select id,username, radius,center,ST_Distance(center, ST_Point(${button.longitude}, ${button.latitude},4326)::geography ) / 1000 as distance, tags from public.user where ${tagQuery}`;
           return this.entityManager
             .query(query)
             .then((usersDistanceToNotify) => {
               return usersDistanceToNotify.filter((user) => {
                 if (user.radius < 1) {
                   return true;
-                } else {
-                  if (user.distance <= user.radius) {
+                } else if (user.distance <= user.radius) {
                     return true;
-                  }
                 }
                 return false;
               });
