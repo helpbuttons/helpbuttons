@@ -27,8 +27,6 @@ export function MetadataSEO(props) {
     webUrl = '/'
   } =  props;
 
-  const csp = `object-src 'none'; base-uri 'none'; script-src 'self' 'unsafe-eval' 'unsafe-inline' https: http: 'nonce-${nonce}' 'strict-dynamic'`
-
   return (
       // <Head nonce={nonce}>
         <Head>
