@@ -51,13 +51,11 @@ export function DesktopNotificationsButton({ allowedToNotify }) {
     if (isSupported()) {
       Notification.requestPermission().then(function (getperm) {
         if (getperm == 'granted') {
-          dconsole.log(getperm);
-          store.emit(new PermissionGranted());
+          subscribeToPush()
         } else {
-          store.emit(new PermissionRevoke());
+          unsubscribeFromPush()
         }
       });
-      subscribeToPush()
     }
   };
 
@@ -72,8 +70,8 @@ export function DesktopNotificationsButton({ allowedToNotify }) {
       ),
     })
     setSubscription(sub)
-    store.emit(new PushSubscribe(sub))
     store.emit(new PermissionGranted());
+    store.emit(new PushSubscribe(sub))
   }
   async function unsubscribeFromPush() {
     store.emit(new PermissionRevoke());
@@ -86,7 +84,7 @@ export function DesktopNotificationsButton({ allowedToNotify }) {
   const isSubscribe = sessionUser.pushSubscribed;
   return (
     <>
-      {!allowedToNotify || !isSubscribe ? (
+      {!isSubscribe ? (
         <Btn
           btnType={BtnType.filterCorp}
           iconLink={<IoNotificationsOutline />}

@@ -226,6 +226,11 @@ hasPhone?: boolean;
 
 // @Expose()
 // readGroupMessages?: string;
+followsCount: number;
+commentCount: number;
+buttonCount: number;
+
+pushSubscribed: boolean;
 
 }
 export interface UserRelations {

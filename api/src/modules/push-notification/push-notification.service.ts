@@ -62,6 +62,9 @@ export class PushNotificationService implements OnModuleInit {
         }
         await this.userService.allEndPoints().then((users) => {
             users.map((subscription) => {
+                if(!subscription.endpoint){
+                  return;
+                }
                 try {
                     return webpush.sendNotification(
                         {
@@ -80,7 +83,6 @@ export class PushNotificationService implements OnModuleInit {
 
                     // Remove expired/invalid subscriptions (410 Gone or 404)
                     if (error.statusCode === 410 || error.statusCode === 404) {
-                        console.log('DO SOMETHING')
                         staleEndpoints.push(subscription.endpoint)
                     }
                 }
@@ -116,7 +118,7 @@ export class PushNotificationService implements OnModuleInit {
       this.logger.error('VAPID keys are not configured')
       return
     }
-    
+
     try {
       await webpush.sendNotification(
         {

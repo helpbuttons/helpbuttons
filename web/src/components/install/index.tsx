@@ -112,9 +112,18 @@ export default function InstallButton({setIsInstalled, isInstalled}) {
       window.removeEventListener('beforeinstallprompt', handler)
     }
   }, [])
-
+  const alertHowToInstall = () => {
+    alert(
+      'To install this app:\n\n' +
+      '1. Tap the menu (⋮) button\n' +
+      '2. Tap "Install" or "Add to Home Screen"'
+    )
+  }
   const handleInstallClick = async () => {
-    if (!deferredPrompt) return
+    if (!deferredPrompt) {
+      alertHowToInstall()
+      return
+    }
 
     // Show the browser's install prompt
     await deferredPrompt.prompt()
@@ -137,17 +146,17 @@ export default function InstallButton({setIsInstalled, isInstalled}) {
   }
 
   // iOS - show manual instructions
-  if (isIOS) {
-    return (
-        <Btn
-          btnType={BtnType.filterCorp}
-          iconLink={<IoDownload />}
-          caption={t('homeinfo.installButton')}
-          iconLeft={IconType.circle}
-          contentAlignment={ContentAlignment.center}
-          onClick={handleInstallClick}
-        />)
-  }
+  // if (isIOS) {
+  //   return (
+  //       <Btn
+  //         btnType={BtnType.filterCorp}
+  //         iconLink={<IoDownload />}
+  //         caption={t('homeinfo.installButton')}
+  //         iconLeft={IconType.circle}
+  //         contentAlignment={ContentAlignment.center}
+  //         onClick={handleInstallClick}
+  //       />)
+  // }
 
   // Firefox - show manual instructions
   if (isFirefox) {
@@ -159,13 +168,7 @@ export default function InstallButton({setIsInstalled, isInstalled}) {
           caption={t('homeinfo.installButton')}
           iconLeft={IconType.circle}
           contentAlignment={ContentAlignment.center}
-          onClick={() => {
-            alert(
-              'To install this app:\n\n' +
-              '1. Tap the menu (⋮) button\n' +
-              '2. Tap "Install" or "Add to Home Screen"'
-            )
-          }}
+          onClick={alertHowToInstall}
         />
       </div>
     )

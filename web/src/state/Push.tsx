@@ -1,7 +1,8 @@
+import produce from "immer";
 import { map, of } from "rxjs";
 import { PushNotificationService } from "services/PushNotification";
-import { GlobalState } from "state";
-import { WatchEvent } from "store/Event";
+import { GlobalState, store } from "state";
+import { UpdateEvent, WatchEvent } from "store/Event";
 
 export class PushSubscribe implements WatchEvent {
     public constructor(private subscribeData) { }
@@ -12,13 +13,22 @@ export class PushSubscribe implements WatchEvent {
       }
       return PushNotificationService.subscribe(this.subscribeData).pipe(
         map((ans) => {
-          console.log(ans)
-
+          if(ans?.affected){
+            store.emit(new UpdateSubscribe(true))
+          }
         }),
       );
     }
   }
 
+  export class UpdateSubscribe implements UpdateEvent{
+    public constructor(private newValue) {}
+    public update(state: GlobalState) {
+      return produce(state, (newState) => {
+        newState.sessionUser.pushSubscribed = this.newValue
+      });
+    }
+  }
   export class PushUnsubscribe implements WatchEvent {
     public constructor() { }
   
@@ -28,8 +38,9 @@ export class PushSubscribe implements WatchEvent {
       }
       return PushNotificationService.unsubscribe().pipe(
         map((ans) => {
-          console.log(ans)
-          
+          if(ans?.affected){
+            store.emit(new UpdateSubscribe(false))
+          }
         }),
       );
     }
