@@ -7,7 +7,7 @@ import {
 } from '@src/shared/helpers/uuid.helper';
 import { UserCredentialService } from '../user-credential/user-credential.service';
 import { MailService } from '../mail/mail.service';
-import { User } from '../user/user.entity';
+import { User, UserProfile } from '../user/user.entity';
 import { StorageService } from '../storage/storage.service';
 import { Role } from '@src/shared/types/roles';
 import { UserCredential } from '../user-credential/user-credential.entity';
@@ -21,6 +21,7 @@ import { ErrorName } from '@src/shared/types/error.list';
 import { isImageData } from '@src/shared/helpers/imageIsFile';
 import { NetworkService } from '../network/network.service';
 import { InviteService } from '../invite/invite.service';
+import { plainToInstance } from 'class-transformer';
 
 
 @Injectable()
@@ -267,7 +268,11 @@ export class AuthService {
     return accesstoken;
   }
   getCurrentUser(userId) {
-    return this.userService.findById(userId, true);
+    return this.userService.findById(userId, true)
+    .then((user) => {
+      const whoAmIUser = plainToInstance(UserProfile, user, { excludeExtraneousValues: true })
+      return {...whoAmIUser, pushSubscribed: user.endpoint ? true : false}
+    })
   }
 
   async update(currentUser, data: UserUpdateDto, avatar: Express.Multer.File) {

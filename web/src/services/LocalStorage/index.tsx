@@ -26,7 +26,7 @@ function save(name: LocalStorageVars, data: any) {
       }
     }
   }
-  console.error('You rejected cookies previously')
+  console.info('You rejected cookies previously')
 }
 
 // get variable from localStorage
