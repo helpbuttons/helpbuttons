@@ -113,7 +113,8 @@ export default function HomeInfo({ metadata }) {
               <HomeSloganCard selectedNetwork={selectedNetwork} config={config} />
 
               <HomeInfoPinnedButtons />
-              
+              <HomeInfoInstallCard selectedNetwork={selectedNetwork} />
+
               <HomeInfoStatsCard selectedNetwork={selectedNetwork} config={config} />
               <HomeInfoKeyLocations selectedNetwork={selectedNetwork} />
 
@@ -125,7 +126,6 @@ export default function HomeInfo({ metadata }) {
               <HomeInfoPinnedHashTags selectedNetwork={selectedNetwork} />
 
               <HomeInfoAdministeredBy scrollToContact={scrollToContact} />
-              <HomeInfoInstallCard selectedNetwork={selectedNetwork} />
             </div>
 
             <div
@@ -446,9 +446,6 @@ function HomeInfoInstallCard({ selectedNetwork }) {
     (state: GlobalState) =>
       state.activities.notificationsPermissionGranted,
   );
-  if(!prompt && notificationsPermissionGranted){
-    return <></>
-  }
   return (    
     <div className="homeinfo-card homeinfo-card--wrap">
       <div className="homeinfo-card__header">

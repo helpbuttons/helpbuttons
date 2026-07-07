@@ -329,7 +329,7 @@ export class NetworkService {
       return {
         name: network.name,
         short_name: network.name,
-        start_url: '.',
+        start_url: '/',
         display: 'standalone',
         background_color: network.backgroundColor,
         description: network.description,
