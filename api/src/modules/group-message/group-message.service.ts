@@ -47,7 +47,7 @@ export class GroupMessageService {
             }
 
             let unreadCommunity = 0
-            if(user?.readGroupMessages.community){
+            if(user?.readGroupMessages?.community){
                 unreadCommunity = await this.groupMessageRepository.count({where: {created_at: MoreThan(user?.readGroupMessages.community), to: GroupMessageType.community}})
             }else{
                 unreadCommunity = await this.groupMessageRepository.count({where: {to: GroupMessageType.community}})
