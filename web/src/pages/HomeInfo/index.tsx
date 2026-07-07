@@ -39,7 +39,7 @@ import {  ListButtonTypes } from 'components/nav/ButtonTypes';
 import getConfig from 'next/config';
 import { logoImageUri } from 'shared/sys.helper';
 import { FindLatestNetworkActivity } from 'state/Networks';
-import { InstallButton, InstallPrompt } from 'components/install';
+import { HomeInfoInstallCard } from 'components/install';
 import { TagsNav } from 'elements/Fields/FieldTags';
 import { FindAndSetMainPopupCurrentButton, MainPopupPage, SetMainPopup } from 'state/HomeInfo';
 import { DesktopNotificationsButton } from 'components/notifications';
@@ -439,30 +439,6 @@ function HomeSloganCard({ selectedNetwork, config }) {
 }
         
 
-function HomeInfoInstallCard({ selectedNetwork }) {
-  const [prompt, promptToInstall] = InstallPrompt();
-
-  const notificationsPermissionGranted = useGlobalStore(
-    (state: GlobalState) =>
-      state.activities.notificationsPermissionGranted,
-  );
-  return (    
-    <div className="homeinfo-card homeinfo-card--wrap">
-      <div className="homeinfo-card__header">
-        <h3 className="homeinfo-card__header-title">
-          <IoDownloadOutline />
-          {t('homeinfo.install', [
-            selectedNetwork?.name,
-          ])}
-        </h3>
-        </div>
-        <div className="homeinfo__description">
-          <InstallButton isInstallable={prompt} promptToInstall={promptToInstall}/>
-          <DesktopNotificationsButton allowedToNotify={notificationsPermissionGranted}/>
-        </div>
-    </div>
-  )
-}
 function HomeInfoExploreButton() {
   return (
 

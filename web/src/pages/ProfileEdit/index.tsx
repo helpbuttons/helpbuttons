@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 //imported internal classes, variables, files or functions
-import { GlobalState, store } from 'state';
+import { GlobalState, store, useGlobalStore } from 'state';
 import { FetchUserData, UpdateProfile } from 'state/Profile';
 
 //imported react components
@@ -41,6 +41,7 @@ import { LocationSearchBarSimple } from 'elements/LocationSearchBar';
 import { useNetworkCenter } from 'state/Networks';
 import FieldImageUpload from 'elements/Fields/FieldImageUpload';
 import { RadiusSlider } from 'components/search/AdvancedFilters/filter-by-location';
+import { DesktopNotificationsButton } from 'components/notifications';
 
 export default function ProfileEdit() {
   const {
@@ -131,7 +132,10 @@ export default function ProfileEdit() {
       reset(sessionUser);
     }
   }, [sessionUser]);
-
+  const notificationsPermissionGranted = useGlobalStore(
+    (state: GlobalState) =>
+      state.activities.notificationsPermissionGranted,
+  );
   const radius = watch('radius')
   const coordinates = watch('center')
   return (
@@ -264,7 +268,7 @@ export default function ProfileEdit() {
                   tags={watch('tags')}
                   maxTags={10}
                 />
-                
+                <DesktopNotificationsButton allowedToNotify={notificationsPermissionGranted}/>
                 </Accordion>
 
 

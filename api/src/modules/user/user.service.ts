@@ -360,4 +360,25 @@ COALESCE(
         });
       })
   }
+
+  async addEndPoint(userId, endpoint, p256dh, auth, expirationTime){
+    return this.userRepository.update(userId, {
+      endpoint, p256dh, auth, expirationTime
+    })
+  }
+
+  async removeEndPoint(userId){
+    return this.userRepository.update(userId, {
+      endpoint: null,
+    })
+  }
+  allEndPoints() {
+    return this.userRepository.find({select: 
+      {
+      endpoint: true,
+        p256dh: true,
+        auth: true,
+        expirationTime: true
+    }})
+  }
 }

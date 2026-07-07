@@ -14,8 +14,16 @@ import { store } from "state";
 import { MainPopupPage, SetMainPopup } from "state/HomeInfo";
 import { Login as LoginRequest } from 'state/Profile';
 import { IllustrationHead } from "../CreateAdminForm";
+import { useSelectedNetwork } from "state/Networks";
 
 export default function Login() {
+    const selectedNetwork = useSelectedNetwork()
+
+    useEffect(() => {
+        if(selectedNetwork.id){
+            router.push('/')
+        }
+    }, [selectedNetwork])
     const {
         register,
         handleSubmit,

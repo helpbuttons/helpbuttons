@@ -326,10 +326,12 @@ export class NetworkService {
   manifest() {
     return this.findDefaultNetwork().then(network => {
       const apiUrl = `${configs().WEB_URL}/api/networks`
+      
       return {
         name: network.name,
         short_name: network.name,
-        start_url: '/',
+        start_url: `${configs().WEB_URL}/`,
+        scope: `${configs().WEB_URL}/`,
         display: 'standalone',
         background_color: network.backgroundColor,
         description: network.description,
@@ -362,6 +364,11 @@ export class NetworkService {
           {
             src: `${apiUrl}/logo/192`,
             sizes: '192x192',
+            type: 'image/png',
+          },
+          {
+            src: `${apiUrl}/logo/512`,
+            sizes: '512x512',
             type: 'image/png',
           },
         ],
