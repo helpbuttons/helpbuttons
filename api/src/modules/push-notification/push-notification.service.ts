@@ -10,7 +10,7 @@ export class PushNotificationService implements OnModuleInit {
   private readonly logger = new Logger(PushNotificationService.name)
 
   private subscriptions: Map<string, SubscribeDto> = new Map()
-
+  private vapidkeysOk :boolean = false;
   constructor(
     private readonly configService: ConfigService,
     private readonly userService: UserService,
@@ -23,10 +23,12 @@ export class PushNotificationService implements OnModuleInit {
 
     if (!publicKey || !privateKey) {
       this.logger.error('VAPID keys are not configured!')
+      return;
       // throw new Error('VAPID_PUBLIC_KEY and VAPID_PRIVATE_KEY must be set')
     }
 
     webpush.setVapidDetails(email, publicKey, privateKey)
+    this.vapidkeysOk = true;
     this.logger.log('VAPID details configured successfully')
   }
 
@@ -53,6 +55,11 @@ export class PushNotificationService implements OnModuleInit {
         let failed = 0
         const staleEndpoints: string[] = []
 
+        if(!this.vapidkeysOk)
+        {
+          this.logger.error('VAPID keys are not configured')
+          return
+        }
         await this.userService.allEndPoints().then((users) => {
             users.map((subscription) => {
                 try {
@@ -103,7 +110,13 @@ export class PushNotificationService implements OnModuleInit {
       body: dto.message,
       icon: dto.icon || '/icon.png',
     })
-
+    
+    if(!this.vapidkeysOk)
+    {
+      this.logger.error('VAPID keys are not configured')
+      return
+    }
+    
     try {
       await webpush.sendNotification(
         {
