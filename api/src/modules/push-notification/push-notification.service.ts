@@ -23,7 +23,7 @@ export class PushNotificationService implements OnModuleInit {
 
     if (!publicKey || !privateKey) {
       this.logger.error('VAPID keys are not configured!')
-      throw new Error('VAPID_PUBLIC_KEY and VAPID_PRIVATE_KEY must be set')
+      // throw new Error('VAPID_PUBLIC_KEY and VAPID_PRIVATE_KEY must be set')
     }
 
     webpush.setVapidDetails(email, publicKey, privateKey)
