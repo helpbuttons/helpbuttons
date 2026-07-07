@@ -47,17 +47,23 @@ Connect and manage messages
    ```
    Add the generated `jwtSecret` to your `.env` file.
 
-4. Start the stack:
+4. Generate a vapid keys secret:
+   ```bash
+   docker-compose run api yarn cli config:vapidpush
+   ```
+   will generate and add vapid keys, to use push notifications
+
+5. Start the stack:
    ```bash
    docker-compose up
    ```
 
-5. Run database migrations:
+6. Run database migrations:
    ```bash
    docker-compose run api yarn migration:run
    ```
 
-6. Open the app at **http://localhost:3000**
+7. Open the app at **http://localhost:3000**
 
 ### Upgrade
 
