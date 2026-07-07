@@ -1,4 +1,3 @@
-'use client'
 import getEnvConfig from 'next/config';
 import Btn, { BtnType, ContentAlignment, IconType } from 'elements/Btn';
 import t from 'i18n';
@@ -34,7 +33,11 @@ function urlBase64ToUint8Array(base64String: string) {
 }
 
 export function DesktopNotificationsButton({ allowedToNotify }) {
-
+  const { publicRuntimeConfig } = getEnvConfig();
+  if(!publicRuntimeConfig.vapiPublicKey){
+    console.error('vapid is empty')
+  }
+  const vapidPublicKey = publicRuntimeConfig.vapiPublicKey
   const [subscription, setSubscription] = useState<PushSubscription | null>(
     null
   )
@@ -61,12 +64,12 @@ export function DesktopNotificationsButton({ allowedToNotify }) {
 
 
   async function subscribeToPush() {
-    const { publicRuntimeConfig } = getEnvConfig();
+    
     const registration = await navigator.serviceWorker.ready
     const sub = await registration.pushManager.subscribe({
       userVisibleOnly: true,
       applicationServerKey: urlBase64ToUint8Array(
-        publicRuntimeConfig.vapiPublicKey
+        vapidPublicKey
       ),
     })
     setSubscription(sub)
