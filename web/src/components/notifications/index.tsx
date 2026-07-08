@@ -11,6 +11,7 @@ import {
 import { useGlobalStore } from 'state';
 import dconsole from 'shared/debugger';
 import { PushSubscribe, PushUnsubscribe } from 'state/Push';
+import { useConfig } from 'state/Setup';
 
 const isSupported = () =>
   'Notification' in window &&
@@ -33,11 +34,15 @@ function urlBase64ToUint8Array(base64String: string) {
 }
 
 export function DesktopNotificationsButton({ allowedToNotify }) {
-  const { publicRuntimeConfig } = getEnvConfig();
-  if(!publicRuntimeConfig.vapiPublicKey){
-    console.error('vapid is empty')
-  }
-  const vapidPublicKey = publicRuntimeConfig.vapiPublicKey
+  const config = useConfig(null, () => console.log('error fetching config'));
+  const [vapidPublicKey, setVapidPublicKey] = useState(null)
+  useEffect(() => {
+    if(config){
+      console.log(config)
+      setVapidPublicKey(() => config.vapidPublicKey)
+    }
+    
+  }, [config])
   const [subscription, setSubscription] = useState<PushSubscription | null>(
     null
   )
@@ -49,12 +54,17 @@ export function DesktopNotificationsButton({ allowedToNotify }) {
       store.emit(new PermissionGranted());
     }
   }, []);
-  const requestPermission = () => {
+  const requestPermission = (vapidPublicKey) => {
 
     if (isSupported()) {
       Notification.requestPermission().then(function (getperm) {
         if (getperm == 'granted') {
-          subscribeToPush()
+          if(vapidPublicKey){
+            subscribeToPush(vapidPublicKey)
+          }else{
+            console.error('empty vapid public key')
+          }
+          store.emit(new PermissionGranted());
         } else {
           unsubscribeFromPush()
         }
@@ -63,7 +73,7 @@ export function DesktopNotificationsButton({ allowedToNotify }) {
   };
 
 
-  async function subscribeToPush() {
+  async function subscribeToPush(vapidPublicKey) {
     
     const registration = await navigator.serviceWorker.ready
     const sub = await registration.pushManager.subscribe({
@@ -73,7 +83,6 @@ export function DesktopNotificationsButton({ allowedToNotify }) {
       ),
     })
     setSubscription(sub)
-    store.emit(new PermissionGranted());
     store.emit(new PushSubscribe(sub))
   }
   async function unsubscribeFromPush() {
@@ -94,7 +103,7 @@ export function DesktopNotificationsButton({ allowedToNotify }) {
           caption={t('homeinfo.notificationsPermission')}
           iconLeft={IconType.circle}
           contentAlignment={ContentAlignment.center}
-          onClick={requestPermission}
+          onClick={() => requestPermission(vapidPublicKey)}
         />
       ) :
         <Btn

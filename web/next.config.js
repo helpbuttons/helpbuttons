@@ -9,7 +9,6 @@ module.exports = {
     description: `${process.env?.description ? process.env.description : ''}`,
     title: `${process.env?.title ? process.env.title : ''}`,
     adminemail: `${process.env?.adminemail ? process.env.adminemail : ''}`,
-    vapiPublicKey: `${process?.env?.VAPID_PUBLIC_KEY }`
   },
   typescript: {
     ignoreBuildErrors: true,

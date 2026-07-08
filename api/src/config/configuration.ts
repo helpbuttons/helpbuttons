@@ -20,6 +20,7 @@ let configs = {
   GEOCODE_HOST: process.env?.GEOCODE_HOST ? process.env.GEOCODE_HOST : 'https://api.geocode.earth/',
   GEO_SIMULATE : process.env?.GEO_SIMULATE ? true : false,
   maxUploadSize: process.env?.MAX_UPLOAD_SIZE ? process.env.MAX_UPLOAD_SIZE : '10M',
+  vapidPublicKey: process.env?.VAPID_PUBLIC_KEY ? process.env?.VAPID_PUBLIC_KEY : ''
 }
 
 if (fs.existsSync(`${__dirname}/../../config/config.json`)) {
