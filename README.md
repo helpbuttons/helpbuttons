@@ -43,15 +43,15 @@ Connect and manage messages
 
 3. Generate a JWT secret:
    ```bash
-   docker-compose run api yarn cli config:genjwt
+   docker-compose run api yarn run config:genjwt
    ```
    Add the generated `jwtSecret` to your `.env` file.
 
 4. Generate a vapid keys secret:
    ```bash
-   docker-compose run api yarn cli config:vapidpush
+   docker-compose run api yarn run config:vapidpush
    ```
-   will generate and add vapid keys, to use push notifications
+   will generate and add vapid keys, to use push notifications. will be add as VAPID_PUBLIC_KEY and VAPID_PRIVATE_KEY. this will use mozilla servers, but all data is encrypted between your backend and the user receive the notification. To do this manually you can also use: ```bash yarn run config:vapidpushmanual```
 
 5. Start the stack:
    ```bash

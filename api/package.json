@@ -34,6 +34,7 @@
     "cron:buttons:removepast": "yarn cli cron:buttons:removepast",
     "config:genjwt": "yarn cli config:genjwt",
     "config:vapidpush": "node_modules/.bin/web-push generate-vapid-keys | grep -A 1 'Key' | grep -v '\\--' | grep  -v 'Key' | { read PUB && read PRIV && sed -i 's|^VAPID_PRIVATE_KEY=.*|VAPID_PRIVATE_KEY='$PRIV'|;s|^VAPID_PUBLIC_KEY=.*|VAPID_PUBLIC_KEY='$PUB'|' .env;}",
+    "config:vapidpushmanual": "node_modules/.bin/web-push generate-vapid-keys &&  cat README.md | grep 'Generate a vapid' -A4",
     "connect-web": "cp -r ../web/src/shared/types/* src/shared/types/ && yarn translations"
   },
   "dependencies": {
