@@ -11,6 +11,8 @@ import { UserService } from "../user/user.service";
 import translate from "@src/shared/helpers/i18n.helper";
 import { OnEvent } from "@nestjs/event-emitter";
 import { AdminActivityEventName } from "@src/shared/types/activity.list";
+import { PushNotificationService } from "../push-notification/push-notification.service";
+import { SendNotificationDto } from "../push-notification/push-notification.dto";
 
 @Injectable()
 export class GroupMessageService {
@@ -18,6 +20,7 @@ export class GroupMessageService {
         @InjectRepository(GroupMessage)
         private readonly groupMessageRepository: Repository<GroupMessage>,
         private readonly userService: UserService,
+        private readonly pushNotificationService: PushNotificationService,
     ) { }
 
     findByUser(user): Promise<GroupMessages> 
@@ -40,7 +43,7 @@ export class GroupMessageService {
             let unreadAdmin = 0
             if(user.role != Role.admin){
                 unreadAdmin = 0
-            }else if(user?.readGroupMessages.admin){
+            }else if(user?.readGroupMessages?.admin){
                 unreadAdmin = await this.groupMessageRepository.count({where: {created_at: MoreThan(user?.readGroupMessages.admin), to: GroupMessageType.admin }})
             }else{ 
                 unreadAdmin = await this.groupMessageRepository.count({where: {to: GroupMessageType.admin}})
@@ -70,6 +73,7 @@ export class GroupMessageService {
             last: true,
             message: message
         }
+        this.sendPushNotification(groupMessageType, message)
 
         return this.groupMessageRepository.update({ to: groupMessageType }, { last: false })
         .then(()=> {
@@ -93,6 +97,39 @@ export class GroupMessageService {
         .then(()=> {
             return this.groupMessageRepository.insert([groupMessage])
         })
+        
+    }
+
+    sendPushNotification(groupMessageType : GroupMessageType, message)
+    {
+
+        if (groupMessageType == GroupMessageType.admin){
+            this.userService.findAdministrators().then((admins) => {
+                admins.map((admin) => {
+
+                    const endpoint: string = admin.endpoint
+                    const dto: SendNotificationDto = {
+                        message: message,
+                        title: translate(admin.locale, `groupChat.${groupMessageType}`),
+                    }
+                    if(endpoint){
+                        this.pushNotificationService.sendNotificationToOne(admin.endpoint, dto, admin.id, admin.p256dh, admin.auth)
+                    }
+                })
+            })
+        }
+        if(groupMessageType == GroupMessageType.community){
+            this.userService.findCommunity().then((users) => {
+                
+                users.filter((usr) => {console.log(usr); return usr?.endpoint}).map((user) => {
+                    const dto: SendNotificationDto = {
+                        message: message,
+                        title: translate(user.locale, `groupChat.${groupMessageType}`),
+                    }
+                    this.pushNotificationService.sendNotificationToOne(user.endpoint, dto, user.id, user.p256dh, user.auth)
+                })
+            })
+        }
         
     }
 

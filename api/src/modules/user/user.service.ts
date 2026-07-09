@@ -30,7 +30,11 @@ export class UserService {
     private readonly storageService: StorageService,
     private readonly mailService: MailService
   ) { }
-
+  conditionsActive() {
+    const allowed = {role: In([Role.admin, Role.registered])}
+    return allowed
+  }
+    
   createUser(user: User) {
     const _user = this.userRepository.create(user);
     return this.userRepository.save(_user)
@@ -44,8 +48,9 @@ export class UserService {
     }).catch(() => false)
   }
 
-  findById(id: string, includeCounts = false) {
-    return this.userRepository.findOne({ where: { id } })
+
+  findById(id: string, includeCounts = false) : Promise<User>{
+    return this.userRepository.findOne({ where: { id: id, ...this.conditionsActive()} } )
       .then((user) => {
         if (includeCounts) {
           return this.findCounts(user)
@@ -76,11 +81,20 @@ export class UserService {
       );
   }
 
+  findCommunity() {
+    return this.userRepository
+      .find({
+        where: this.conditionsActive(),
+        order: { id: 'DESC' },
+      })
+  }
+
   findOneByEmail(email: string) {
     return this.userRepository.findOne({
-      where: { email: `${email}` },
+      where: { email: `${email}`, ...this.conditionsActive() },
     });
   }
+  
   async findCounts(user) {
     const q = `SELECT COALESCE(
         (select sum(cardinality("followedBy")) as "followsCount" from button where "ownerId"= $1), 
@@ -137,22 +151,6 @@ COALESCE(
       tags: this.tagService.formatTags(newUser.tags),
     });
   }
-
-  notifyMail(userId, content, subject, link, linkCaption) {
-    return this.userRepository.findOneBy({ id: userId })
-      .then((user) => {
-        this.mailService.sendWithLink({
-          to: user.email,
-          content,
-          subject,
-          link,
-          linkCaption,
-        });
-      })
-      ;
-
-  }
-
   loginToken(verificationToken: string) {
     if (verificationToken.length < 2) {
       throw new HttpException(
@@ -207,6 +205,7 @@ COALESCE(
     return await this.userRepository.find({
       where: {
         id: In(usersIds),
+        ...this.conditionsActive(),
         receiveNotifications: true,
       },
     });
@@ -271,7 +270,7 @@ COALESCE(
   }
 
   public findQrCode(qrcode: string) {
-    return this.userRepository.findOne({ where: { qrcode: qrcode } })
+    return this.userRepository.findOne({ where: { qrcode: qrcode,  ...this.conditionsActive() } })
   }
 
   public endorse(userId: string) {
@@ -329,7 +328,7 @@ COALESCE(
   }
 
   findByIds(userIds : string[]) {
-    return this.userRepository.find({where: {id: In(userIds)}})
+    return this.userRepository.find({where: {id: In(userIds), ...this.conditionsActive()}})
     .then((users) => users.map((user) => {
       return {username: user.username, name: user.name, id: user.id, avatar: user.avatar};
     }))
@@ -379,6 +378,6 @@ COALESCE(
         p256dh: true,
         auth: true,
         expirationTime: true
-    }})
+    }, where: {...this.conditionsActive()}})
   }
 }

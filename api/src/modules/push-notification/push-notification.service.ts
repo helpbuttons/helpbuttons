@@ -4,6 +4,9 @@ import * as webpush from 'web-push'
 import { SendNotificationDto, SubscribeDto } from './push-notification.dto'
 import { UserService } from '../user/user.service'
 import { User } from '../user/user.entity'
+import { ActivityTemplateVars } from '../activity/out/activity'
+import { NetworkService } from '../network/network.service'
+import { GroupMessageType } from '@src/shared/types/group-message.enum'
 
 @Injectable()
 export class PushNotificationService implements OnModuleInit {
@@ -14,6 +17,7 @@ export class PushNotificationService implements OnModuleInit {
   constructor(
     private readonly configService: ConfigService,
     private readonly userService: UserService,
+    private readonly networkService: NetworkService
  ) {}
 
   onModuleInit() {
@@ -97,20 +101,35 @@ export class PushNotificationService implements OnModuleInit {
     return { success: true, sent, failed }
   }
 
+  async sendNotificationToUser(templateVars: ActivityTemplateVars){
+    const network = await this.networkService.findDefaultNetwork()
+    
+    if(!templateVars.to){
+      this.logger.warn('could not send notification to user ', JSON.stringify(templateVars))
+      return;
+    }
+    const user = await this.userService.findOneByEmail(templateVars.to)
+    
+    const dto: SendNotificationDto = {message: templateVars.content, title: templateVars.subject, icon: '/api' + network.logo};
+    this.sendNotificationToOne(user.endpoint, dto, user.id, user.p256dh, user.auth)
+  }
+
   async sendNotificationToOne(
     endpoint: string,
     dto: SendNotificationDto,
+    userId,
+    p256dh, 
+    auth
   ): Promise<{ success: boolean }> {
-    const subscription = this.subscriptions.get(endpoint)
-
-    if (!subscription) {
-      throw new Error('Subscription not found')
+    if (!endpoint) {
+      this.logger.error('user subscrition not found - ' + userId)
+      return;
     }
 
     const payload = JSON.stringify({
       title: dto.title || 'Notification',
       body: dto.message,
-      icon: dto.icon || '/icon.png',
+      icon: dto.icon || '/api/networks/logo/144',
     })
     
     if(!this.vapidkeysOk)
@@ -122,10 +141,10 @@ export class PushNotificationService implements OnModuleInit {
     try {
       await webpush.sendNotification(
         {
-          endpoint: subscription.endpoint,
+          endpoint: endpoint,
           keys: {
-            p256dh: subscription.keys.p256dh,
-            auth: subscription.keys.auth,
+            p256dh: p256dh,
+            auth: auth,
           },
         },
         payload,

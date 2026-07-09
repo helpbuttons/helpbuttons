@@ -38,9 +38,7 @@ export function HomeInfoInstallCard({ selectedNetwork }) {
     (state: GlobalState) =>
       state.activities.notificationsPermissionGranted,
   );
-  if(isInstalled && notificationsPermissionGranted){
-    return <></>
-  }
+  
   return (    
     <div className="homeinfo-card homeinfo-card--wrap">
       <div className="homeinfo-card__header">

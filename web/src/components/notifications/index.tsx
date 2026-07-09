@@ -46,7 +46,10 @@ export function DesktopNotificationsButton({ allowedToNotify }) {
   const [subscription, setSubscription] = useState<PushSubscription | null>(
     null
   )
-
+  const notificationsPermissionGranted = useGlobalStore(
+    (state: GlobalState) =>
+      state.activities.notificationsPermissionGranted,
+  );
 
   useEffect(() => {
     if (isSupported() && Notification.permission === 'granted') {
@@ -74,7 +77,6 @@ export function DesktopNotificationsButton({ allowedToNotify }) {
 
 
   async function subscribeToPush(vapidPublicKey) {
-    
     const registration = await navigator.serviceWorker.ready
     const sub = await registration.pushManager.subscribe({
       userVisibleOnly: true,
@@ -90,13 +92,9 @@ export function DesktopNotificationsButton({ allowedToNotify }) {
     store.emit(new PushUnsubscribe())
     setSubscription(null)
   }
-  const sessionUser = useGlobalStore(
-    (state: GlobalState) => state.sessionUser,
-);
-  const isSubscribe = sessionUser.pushSubscribed;
   return (
     <>
-      {!isSubscribe ? (
+      {!notificationsPermissionGranted ? (
         <Btn
           btnType={BtnType.filterCorp}
           iconLink={<IoNotificationsOutline />}

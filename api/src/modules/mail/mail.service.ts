@@ -7,6 +7,9 @@ import { InjectQueue } from '@nestjs/bull';
 import translate from '@src/shared/helpers/i18n.helper';
 import { getUrl } from '@src/shared/helpers/mail.helper';
 import { uuid } from '@src/shared/helpers/uuid.helper';
+import { ActivityTemplateVars } from '../activity/out/activity';
+
+
 
 @Injectable()
 export class MailService {
@@ -175,7 +178,7 @@ export class MailService {
     address,
     type,
     networkName
-  }){
+  }: ActivityTemplateVars){
     return this.sendMail({
       to: to,
       cc: null,
