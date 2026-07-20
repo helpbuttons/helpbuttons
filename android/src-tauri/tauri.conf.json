@@ -4,10 +4,10 @@
   "version": "0.1.0",
   "identifier": "org.bru.app",
   "build": {
-    "beforeDevCommand": "npm run dev",
-    "devUrl": "http://localhost:1420",
-    "beforeBuildCommand": "npm run build",
-    "frontendDist": "../../web/out"
+    "beforeDevCommand": "cd ../web && yarn dev",
+    "devUrl": "http://localhost:3000",
+    "beforeBuildCommand": "cd ../web && NEXT_PUBLIC_API_URL=https://dev.helpbuttons.org TAURI_BUILD=1 yarn build",
+    "frontendDist": "../out"
   },
   "app": {
     "windows": [
