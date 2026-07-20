@@ -41,7 +41,6 @@ yarn-error.log*
 # compiled output
 /dist
 /node_modules
-/android
 
 # Logs
 logs
@@ -86,3 +85,7 @@ web/android/*
 web/src/shared/commit.tsx
 .github-token
 last_version
+android/keystore.jks
+android/.yarn
+android/.vscode
+android/.vscode
