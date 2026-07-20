@@ -107,11 +107,6 @@ export const bootstrap = async () => {
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
   });
-
-  app.use((req, res, next) => {
-    res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin');
-    next();
-  });
   // Enable CORS with proper configuration
   // app.enableCors({
   //   origin: configs().WEB_URL || true, // Allow configured origin or any in development
