@@ -10,6 +10,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { LinkAdmins } from 'components/user/LinkAdmins';
 import { useGlobalStore } from 'state';
+import { getServerSidePropsHandler, shouldEnableSSR } from 'shared/tauri.utils';
 import { GlobalState } from 'state';
 
 export default function Error({ metadata }) {
@@ -67,6 +68,6 @@ export function ErrorLink({ errorMessage = null }) {
     </>
   );
 }
-export const getServerSideProps = async (ctx: NextPageContext) => {
-  return setMetadata('Error', ctx);
-};
+export const getServerSideProps = shouldEnableSSR
+  ? (ctx) => getServerSidePropsHandler('Error', ctx)
+  : undefined;

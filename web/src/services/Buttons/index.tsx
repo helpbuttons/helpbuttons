@@ -1,10 +1,7 @@
 import { Observable, of } from "rxjs";
 import { HttpService, httpService } from "services/HttpService";
-import getConfig from "next/config";
 import { Button } from "shared/entities/button.entity";
 import { UpdateButtonDto } from "shared/dtos/button.dto";
-const { publicRuntimeConfig } = getConfig();
-const baseUrl = `${publicRuntimeConfig.apiUrl}`;
 
 export class ButtonService {
 

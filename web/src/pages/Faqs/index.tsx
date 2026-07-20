@@ -10,6 +10,7 @@ import { GlobalState, store } from 'state';
 import { LoadabledComponent } from 'components/loading';
 import { useMetadataTitle } from 'state/Metadata';
 import { PoweredExtra } from 'components/brand/powered';
+import { getServerSidePropsHandler, shouldEnableSSR } from 'shared/tauri.utils';
 
 export default function Faqs({ metadata }) {
   useMetadataTitle('F.A.Q.')
@@ -74,6 +75,6 @@ export function FaqSections() {
     </>
   );
 }
-export const getServerSideProps = async (ctx: NextPageContext) => {
-  return setMetadata('F.A.Q.', ctx);
-};
+export const getServerSideProps = shouldEnableSSR
+  ? (ctx) => getServerSidePropsHandler('F.A.Q.', ctx)
+  : undefined;

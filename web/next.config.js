@@ -1,8 +1,10 @@
-/** @type {import('next').NextConfig} */
-const { i18n } = require('./next-i18next.config');
+const isTauri = process.env.TAURI_BUILD === 'true';
 
 module.exports = {
   reactStrictMode: true,
+  env: {
+    NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL || '',
+  },
   publicRuntimeConfig: {
     apiUrl: '/api',
     debug: `${process.env.DEBUG}`,
@@ -13,30 +15,32 @@ module.exports = {
   typescript: {
     ignoreBuildErrors: true,
   },
-  async rewrites() {
-    return [
-      {
-        source: '/api/:path*',
-        destination: `${process.env.API_URL}/:path*`,
-      },
-      {
-        source: '/manifest.json',
-        destination: `${process.env.API_URL}/networks/manifest.json`,
-      },
-      {
-        source: '/rss',
-        destination: `${process.env.API_URL}/buttons/rss`,
-      }
-    ];
-  },
+  ...(!isTauri && {
+    async rewrites() {
+      return [
+        {
+          source: '/api/:path*',
+          destination: `${process.env.API_URL}/:path*`,
+        },
+        {
+          source: '/manifest.json',
+          destination: `${process.env.API_URL}/networks/manifest.json`,
+        },
+        {
+          source: '/rss',
+          destination: `${process.env.API_URL}/buttons/rss`,
+        }
+      ];
+    },
+  }),
   images: {
     formats: ['image/avif', 'image/webp'],
     remotePatterns: [
       { hostname: 'dummyimage.com' },
     ],
+    ...(isTauri && { unoptimized: true }),
   },
-  i18n,
-  output: 'standalone',
+  output: isTauri ? 'export' : 'standalone',
   sassOptions: {
     includePaths: [__dirname + '/styles'],
   },

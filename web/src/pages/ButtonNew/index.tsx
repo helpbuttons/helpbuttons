@@ -10,6 +10,7 @@ import { Button } from 'shared/entities/button.entity';
 import { CreateNewPost } from 'state/Posts';
 import { readableDate } from 'shared/date.utils';
 import { useEffect, useState } from 'react';
+import { getServerSidePropsHandler, shouldEnableSSR } from 'shared/tauri.utils';
 import { NextPageContext } from 'next';
 import { setMetadata } from 'services/ServerProps';
 import { useStore } from 'state';
@@ -208,6 +209,6 @@ function useButtonDraft({ watch, getValues, reset, defaultValues }) {
   return { loadedDraft }
 }
 
-export const getServerSideProps = async (ctx: NextPageContext) => {
-  return setMetadata(t('menu.create'), ctx)
-};
+export const getServerSideProps = shouldEnableSSR
+  ? (ctx) => getServerSidePropsHandler(t('menu.create'), ctx)
+  : undefined;

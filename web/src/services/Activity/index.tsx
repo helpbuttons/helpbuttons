@@ -1,10 +1,7 @@
 import { Observable } from "rxjs";
 import { httpService } from "services/HttpService";
-import getConfig from "next/config";
 import { Activity} from "shared/entities/activity.entity";
 import { Activities, ActivityDtoOut } from "shared/dtos/activity.dto";
-const { publicRuntimeConfig } = getConfig();
-const baseUrl = `${publicRuntimeConfig.apiUrl}`;
 
 export class ActivityService {
 

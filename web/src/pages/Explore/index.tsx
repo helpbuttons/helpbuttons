@@ -10,6 +10,7 @@ import HoneyComb from "./HoneyComb";
 import { useSelectedNetwork } from "state/Networks";
 import { SetHideNavBottom } from "state/HomeInfo";
 import { useOnPageExit } from "shared/custom.hooks";
+import { getServerSidePropsHandler, shouldEnableSSR } from 'shared/tauri.utils';
 import { ResetFilters } from "state/Explore";
 import { roundCoords } from "shared/honeycomb.utils";
 
@@ -55,6 +56,6 @@ export const ExplorePage = () => {
 }
 
 
-export const getServerSideProps = async (ctx: NextPageContext) => {
-  return setMetadata(t('menu.explore'), ctx);
-};
+export const getServerSideProps = shouldEnableSSR
+  ? (ctx) => getServerSidePropsHandler(t('menu.explore'), ctx)
+  : undefined;

@@ -7,6 +7,7 @@ import { useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
 import { roundCoord } from 'shared/honeycomb.utils';
 import { ExplorePage } from 'pages/Explore';
+import { getServerSidePropsHandler, shouldEnableSSR } from 'shared/tauri.utils';
 
 export default function Explore({
     metadata
@@ -29,7 +30,7 @@ export default function Explore({
     return <ExplorePage/>
 }
 
-export const getServerSideProps = async (ctx: NextPageContext) => {
-    return setMetadata(t('menu.explore'), ctx);
-};
+export const getServerSideProps = shouldEnableSSR
+  ? (ctx) => getServerSidePropsHandler(t('menu.explore'), ctx)
+  : undefined;
 

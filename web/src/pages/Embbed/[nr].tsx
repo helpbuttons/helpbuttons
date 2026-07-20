@@ -8,6 +8,7 @@ import { useEffect, useRef, useState } from 'react';
 import { setMetadata } from 'services/ServerProps';
 import { useButtonTypes } from 'shared/buttonTypes';
 import { FindEmbbedButtons } from 'state/Button';
+import { getServerSidePropsHandler, shouldEnableSSR } from 'shared/tauri.utils';
 
 export default function Embbed() {
   const buttonTypes = useButtonTypes();
@@ -67,6 +68,6 @@ export default function Embbed() {
   );
 }
 
-export const getServerSideProps = async (ctx: NextPageContext) => {
-  return setMetadata(t('seo.embbed'), ctx);
-};
+export const getServerSideProps = shouldEnableSSR
+  ? (ctx) => getServerSidePropsHandler(t('seo.embbed'), ctx)
+  : undefined;

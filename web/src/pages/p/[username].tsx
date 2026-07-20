@@ -10,6 +10,7 @@ import { setMetadata } from 'services/ServerProps';
 import CardProfile from 'components/user/CardProfile';
 import { useMetadataTitle } from 'state/Metadata';
 import dconsole from 'shared/debugger';
+import { getServerSidePropsHandler, shouldEnableSSR } from 'shared/tauri.utils';
 import { SetMainPopupCurrentProfile } from 'state/HomeInfo';
 import HomeInfo from 'pages/HomeInfo';
 import { CardProfileButtonList } from 'components/user/CardProfileButtons';
@@ -63,7 +64,7 @@ export function ShowProfile({
   );
 }
 
-export const getServerSideProps = async (ctx: NextPageContext) => {
-  return setMetadata(t('menu.profile'), ctx);
-};
+export const getServerSideProps = shouldEnableSSR
+  ? (ctx) => getServerSidePropsHandler(t('menu.profile'), ctx)
+  : undefined;
 
