@@ -102,7 +102,11 @@ export const bootstrap = async () => {
     });
 
   const app = await NestFactory.create(AppModule);
-
+  app.enableCors({
+    origin: '*',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+  });
   // Enable CORS with proper configuration
   // app.enableCors({
   //   origin: configs().WEB_URL || true, // Allow configured origin or any in development
