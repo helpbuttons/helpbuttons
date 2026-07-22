@@ -93,7 +93,7 @@ import {
   @AllowGuest()
   @Get('logo/:resolution')
   async logo(@Param('resolution') resolution : number, @Res() res) {
-    if([16, 32, 48, 72, 96, 144, 168, 180, 192, 512].indexOf(resolution) > -1)
+    if([16, 32, 48, 72, 96, 128, 144, 168, 180, 192, 256, 512].indexOf(resolution) > -1)
     {
       return this.networkService.getLogo(res,resolution)
     }
