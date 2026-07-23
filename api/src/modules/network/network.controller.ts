@@ -7,6 +7,7 @@ import {
     Res,
     UseInterceptors,
     UploadedFiles,
+    Header,
   } from '@nestjs/common';
   import { ApiTags } from '@nestjs/swagger';
   import { AllowGuest, OnlyAdmin } from '@src/shared/decorator/roles.decorator';
@@ -90,6 +91,7 @@ import {
     return await this.networkService.manifest();
   }
 
+  @Header('Cross-Origin-Resource-Policy', 'cross-origin')
   @AllowGuest()
   @Get('logo/:resolution')
   async logo(@Param('resolution') resolution : number, @Res() res) {
