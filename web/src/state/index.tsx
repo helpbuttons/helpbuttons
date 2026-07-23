@@ -1,4 +1,4 @@
-import { User } from 'shared/entities/user.entity';
+import { User, UserProfile } from 'shared/entities/user.entity';
 import { NetworksState, networksInitial } from './Networks';
 import { ExploreState, exploreInitial } from './Explore';
 import { Alert } from './Alerts';
@@ -15,7 +15,7 @@ import { KeyLocation } from 'shared/entities/keylocation.entity';
 // -- estado global --
 export interface GlobalState {
   networks: NetworksState;
-  sessionUser: User;
+  sessionUser: UserProfile;
   knownUsers: User[];
   explore: ExploreState;
   alerts: Alert[];

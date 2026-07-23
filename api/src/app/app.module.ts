@@ -32,6 +32,7 @@ import { CommandModule } from 'nestjs-command';
 import { ButtonCron } from '@src/modules/button/button.cron';
 import { SetupModule } from '@src/modules/setup/setup.module';
 import { DeletemeModule } from '@src/modules/deleteme/deleteme.module';
+import { PushNotifcationModule } from '@src/modules/push-notification/push-notification.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -72,7 +73,8 @@ import { DeletemeModule } from '@src/modules/deleteme/deleteme.module';
       }
     }),
     SetupModule,
-    DeletemeModule
+    DeletemeModule,
+    PushNotifcationModule
   ],
   controllers: [AppController],
   providers: [

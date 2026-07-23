@@ -103,6 +103,7 @@ export const getConfig = async () => {
         databaseNumberMigrations: migrationsNumber,
         userCount: userCount,
         commit: 'todo',
+        vapidPublicKey: configs().vapidPublicKey
       };
 
       return dataToWeb;

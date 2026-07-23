@@ -33,6 +33,8 @@
     "cli": "CLI_PATH=./dist/cli.js npx nestjs-command",
     "cron:buttons:removepast": "yarn cli cron:buttons:removepast",
     "config:genjwt": "yarn cli config:genjwt",
+    "config:vapidpush": "node_modules/.bin/web-push generate-vapid-keys | grep -A 1 'Key' | grep -v '\\--' | grep  -v 'Key' | { read PUB && read PRIV && sed -i 's|^VAPID_PRIVATE_KEY=.*|VAPID_PRIVATE_KEY='$PRIV'|;s|^VAPID_PUBLIC_KEY=.*|VAPID_PUBLIC_KEY='$PUB'|' .env;}",
+    "config:vapidpushmanual": "node_modules/.bin/web-push generate-vapid-keys &&  cat README.md | grep 'Generate a vapid' -A4",
     "connect-web": "cp -r ../web/src/shared/types/* src/shared/types/ && yarn translations"
   },
   "dependencies": {
@@ -86,7 +88,8 @@
     "swagger-ui-express": "^5.0.1",
     "typeorm": "0.3.28",
     "typeorm-seeding": "^1.6.1",
-    "typeorm-transactional-cls-hooked": "^0.1.21"
+    "typeorm-transactional-cls-hooked": "^0.1.21",
+    "web-push": "^3.6.7"
   },
   "devDependencies": {
     "@nestjs/cli": "^11.0.16",

@@ -1,6 +1,7 @@
 import {
   Controller,
   Get,
+  Header,
   Param,
   Res,
 } from '@nestjs/common';
@@ -18,6 +19,7 @@ import * as fs from 'fs';
 export class StorageController {
   constructor(private readonly storageService: StorageService) {}
 
+  @Header('Cross-Origin-Resource-Policy', 'cross-origin')
   @Get('get/:imgpath')
   async get(@Param('imgpath') image, @Res() res) {
     return this.storageService.send(image, res)

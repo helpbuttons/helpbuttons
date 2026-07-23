@@ -102,16 +102,20 @@ export const bootstrap = async () => {
     });
 
   const app = await NestFactory.create(AppModule);
-
-  // Enable CORS with proper configuration
   app.enableCors({
-    origin: configs().WEB_URL || true, // Allow configured origin or any in development
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'X-Requested-With'],
-    exposedHeaders: ['Content-Disposition'],
+    origin: '*',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
-    maxAge: 86400, // 24 hours preflight cache
   });
+  // Enable CORS with proper configuration
+  // app.enableCors({
+  //   origin: configs().WEB_URL || true, // Allow configured origin or any in development
+  //   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  //   allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'X-Requested-With'],
+  //   exposedHeaders: ['Content-Disposition'],
+  //   credentials: true,
+  //   maxAge: 86400, // 24 hours preflight cache
+  // });
 
   app.use(function (req, res, next) {
     res.setHeader("Content-Security-Policy", `script-src 'self' ${configs().WEB_URL || 'self'}`);

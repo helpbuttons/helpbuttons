@@ -12,6 +12,7 @@ import { ButtonModule } from '../button/button.module';
 import { ActivityCommand } from './activity.command';
 import { PostModule } from '../post/post.module';
 import { GroupMessageModule } from '../group-message/group-message.module';
+import { PushNotifcationModule } from '../push-notification/push-notification.module';
 
 
 @Module({
@@ -23,7 +24,8 @@ import { GroupMessageModule } from '../group-message/group-message.module';
     ScheduleModule.forRoot(),
     ButtonModule,
     PostModule,
-    GroupMessageModule
+    GroupMessageModule,
+    PushNotifcationModule
   ],
   controllers: [
     ActivityController

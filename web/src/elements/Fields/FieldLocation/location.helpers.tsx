@@ -48,7 +48,7 @@ export const useGeoReverse = () => {
           },
         ),
       );
-    }, 500),
+    }, 100),
     [],
   );
 

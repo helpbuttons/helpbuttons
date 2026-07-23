@@ -15,31 +15,33 @@ import { ShowMobileOnly } from "elements/SizeOnly";
 import router from "next/router";
 
 export default function ActivityGroup({ selectedGroupType }) {
-  const sessionUser = useGlobalStore(
-    (state: GlobalState) => state.sessionUser,
-  );
   const userGroupMessages = useGlobalStore((state: GlobalState) => state.activities)
-  const isAdmin = sessionUser.role == Role.admin;
-  if (isAdmin) {
+  if (userGroupMessages?.admin) {
     return <>
       <ActivityGroupMessageEntry selectedGroupType={selectedGroupType} groupType={GroupMessageType.admin} groupMessages={userGroupMessages.admin?.lastMessage} />
       <ActivityGroupMessageEntry selectedGroupType={selectedGroupType} groupType={GroupMessageType.community} groupMessages={userGroupMessages.community?.lastMessage} />
     </>
   }
-  if (!isAdmin) {
-    return <></>
+  if(userGroupMessages?.community){
+    return (<>
+      <ActivityGroupMessageEntry selectedGroupType={selectedGroupType} groupType={GroupMessageType.community} groupMessages={userGroupMessages.community?.lastMessage} />
+    </>)
   }
-  return (<>
-    <ActivityGroupMessageEntry selectedGroupType={selectedGroupType} groupType={GroupMessageType.community} groupMessages={userGroupMessages.community?.lastMessage} />
-  </>)
+  return <></>
+  
 }
 
 function ActivityGroupMessageEntry({ groupMessages, selectedGroupType, groupType }) {
-
-  if (!groupMessages) {
+  const sessionUser = useGlobalStore(
+    (state: GlobalState) => state.sessionUser,
+  );
+  const isAdmin = sessionUser.role == Role.admin
+  if (!groupMessages && isAdmin) {
     return <ActivityGroupCreate selectedGroupType={selectedGroupType} groupType={groupType} onClick={() => router.push(`/Activity/${groupType}`)} />
   }
-
+  if(!groupMessages){
+    return <></>
+  }
   return <ActivityListEntryCard selected={groupType == selectedGroupType} activity={{ ...groupMessages, type: t(`groupChat.${groupType}`) }} onClick={() => router.push(`/Activity/${groupType}`)} />
 }
 

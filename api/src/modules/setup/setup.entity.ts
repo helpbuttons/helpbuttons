@@ -102,6 +102,10 @@ export class SetupDtoOut {
   @ApiProperty({
   })
   commit: string;
+  
+  @ApiProperty({
+  })
+  vapidPublicKey: string;
 }
 
 export class SmtpConfigTest {

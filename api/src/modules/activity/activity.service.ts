@@ -21,6 +21,8 @@ import { IsNull } from "typeorm"
 import { GroupMessageService } from '../group-message/group-message.service';
 import { getUrl } from '@src/shared/helpers/mail.helper';
 import { SourceCodeLogger } from '@src/shared/helpers/source-code-logger.helper';
+import { ActivityTemplateVars } from './out/activity';
+import { PushNotificationService } from '../push-notification/push-notification.service';
 
 @Injectable()
 export class ActivityService {
@@ -35,7 +37,8 @@ export class ActivityService {
     private readonly buttonService: ButtonService,
     private readonly networkService: NetworkService,
     private readonly postService: PostService,
-    private readonly groupMessageService: GroupMessageService
+    private readonly groupMessageService: GroupMessageService,
+    private readonly pushNotificationService: PushNotificationService,
   ) { }
 
   @OnEvent(ActivityEventName.NewPost)
@@ -162,17 +165,15 @@ export class ActivityService {
           const tagQuery = button.tags
             .map((tag) => `'${tag.toLowerCase()}' = any(tags)`)
             .join(' OR ');
-          const query = `select id, radius,center,ST_Distance(center, ST_Point(${button.longitude}, ${button.latitude},4326)::geography ) / 1000 as distance, tags from public.user where ${tagQuery}`;
+          const query = `select id,username, radius,center,ST_Distance(center, ST_Point(${button.longitude}, ${button.latitude},4326)::geography ) / 1000 as distance, tags from public.user where ${tagQuery}`;
           return this.entityManager
             .query(query)
             .then((usersDistanceToNotify) => {
               return usersDistanceToNotify.filter((user) => {
                 if (user.radius < 1) {
                   return true;
-                } else {
-                  if (user.distance <= user.radius) {
+                } else if (user.distance <= user.radius) {
                     return true;
-                  }
                 }
                 return false;
               });
@@ -260,7 +261,7 @@ export class ActivityService {
       })
   }
 
-  private async notifyByEmail(insertResult) {
+  private async notifyByOut(insertResult, sendActivity = (templateVars: ActivityTemplateVars) => {}) {
     const activityId = insertResult.identifiers[0].id
     const network = await this.networkService.findDefaultNetwork()
     const btnTypes = await this.networkService.findButtonTypes()
@@ -288,7 +289,7 @@ export class ActivityService {
                 switch(activity.eventName){
                   // this activities are exclude in the daily resume, on line activity.cron.ts:71
                   case ActivityEventName.Message:
-                    this.mailService.sendActivity({
+                    sendActivity({
                       to: activity.to.email,
                       content: translate(locale, 'activities.newMessageContent', [fromName, _activity.message]),
                       subject: translate(locale, 'activities.newMessageSubject', [fromName]),
@@ -300,7 +301,7 @@ export class ActivityService {
                   case ActivityEventName.NewPostComment:
                     // @ts-ignore
                     const {comment} = activity.data
-                    this.mailService.sendActivity({
+                    sendActivity({
                       to: activity.to.email,
                       content: 
                       translate(locale, 'activities.newPostCommentContent', [fromName, comment.message, publicationTitle]),
@@ -311,7 +312,7 @@ export class ActivityService {
                     })
                     break;
                   case ActivityEventName.NewMention:
-                    this.mailService.sendActivity({
+                    sendActivity({
                       to: activity.to.email,
                       content: translate(locale, 'activities.newMentionContent', [ _activity.message]),
                       subject: translate(locale, 'activities.newMentionSubject', [fromName]),
@@ -321,7 +322,7 @@ export class ActivityService {
                     })
                     break;
                     case ActivityEventName.ExpiredButton:
-                    this.mailService.sendActivity({
+                    sendActivity({
                       to: activity.to.email,
                       content: translate(locale, 'customTemplates.schedulerExpired'),
                       subject: translate(locale, 'customTemplates.schedulerExpiredMailSubject', [activity.button.title]),
@@ -331,7 +332,7 @@ export class ActivityService {
                     })
                     break;
                     case ActivityEventName.SchedulerExpiredButton:
-                    this.mailService.sendActivity({
+                    sendActivity({
                       to: activity.to.email,
                       content: translate(locale, 'customTemplates.eventExpired'),
                       subject: translate(locale, 'customTemplates.eventExpiredMailSubject', [activity.button.title]),
@@ -341,7 +342,7 @@ export class ActivityService {
                     })
                     break;
                     case ActivityEventName.Endorsed: {
-                      this.mailService.sendActivity({
+                      sendActivity({
                         to: activity.to.email,
                         content: translate(locale, 'activities.endorsed'),
                         subject: translate(locale, 'activities.endorsed'),
@@ -355,7 +356,7 @@ export class ActivityService {
                       const { role } = activity.data
                       const roleName = translate(locale, `roles.${role}`);
 
-                      this.mailService.sendActivity({
+                      sendActivity({
                         to: activity.to.email,
                         content: translate(locale, 'activities.roleupdate', [roleName]),
                         subject: translate(locale, 'activities.roleupdate', [roleName]),
@@ -428,7 +429,7 @@ export class ActivityService {
     )
   }
 
-  async newActivity(button, to, from, consumer, payload, setAsLastButtonConsumer = true, setAsLastButtonOwner = false, notifyToEmail = false) {
+  async newActivity(button, to, from, consumer: {id: string}, payload, setAsLastButtonConsumer = true, setAsLastButtonOwner = false, notifyToEmail = false) {
     const activity = {
       id: uuid(),
       button,
@@ -459,8 +460,17 @@ export class ActivityService {
     return this.activityRepository.insert([activity])
     .then((insertResult) => {
       if(notifyToEmail) {
-        this.notifyByEmail(insertResult)
+        const notifyByEmail = (templateVars: ActivityTemplateVars) => {this.mailService.sendActivity(templateVars)}
+        
+        this.notifyByOut(insertResult, notifyByEmail)
       }
+      
+      const notifyByPushNotification = (templateVars: ActivityTemplateVars) => {
+        this.pushNotificationService.sendNotificationToUser(templateVars)
+      }
+      
+      this.notifyByOut(insertResult, notifyByPushNotification)
+      
       return insertResult
     })
   }

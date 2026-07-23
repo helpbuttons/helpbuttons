@@ -14,7 +14,7 @@ export class TagService {
 
   formatTags(tags: string[])
   {
-    return tags.map((tag) => tagify(tag))
+    return tags?.map((tag) => tagify(tag))
   }
 
   async createTag(tag: Tag) {

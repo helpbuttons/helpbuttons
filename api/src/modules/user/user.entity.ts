@@ -141,8 +141,98 @@ export class User extends BaseEntity {
   @Expose()
   @Column({type: 'jsonb', default: {}})
   readGroupMessages?: string;
+
+  @Column('text', {nullable: true})
+  endpoint?: string;
+
+  @Column('text', {nullable: true})
+  p256dh?: string
+
+  @Column('text', {nullable: true})
+  auth?: string
+  
+  @Column('text', {nullable: true})
+  expirationTime?: number | null
+
 }
 
+export class UserProfile {
+
+@Expose()
+id?: string;
+
+@Expose()
+username: string;
+
+@Expose()
+email: string;
+
+@Expose()
+name: string;
+
+@Expose()
+emailVerified?: boolean;
+
+@Expose()
+role: string;
+
+@Expose()
+description: string;
+
+@Expose()
+avatar?: string;
+
+@Expose()
+locale: string;
+
+@Expose()
+receiveNotifications: boolean;
+
+@Expose()
+showButtons: boolean;
+
+@Expose()
+tags: string[];
+
+@Expose()
+address?: string;
+
+@Expose()
+center?: object;
+
+@Expose()
+radius: number;
+
+@Expose()
+phone?: string;
+
+@Expose()
+publishPhone?: boolean;
+
+@Expose()
+qrcode?: string;
+
+@Expose()
+showWassap: boolean;
+
+@Expose()
+endorsed?: boolean;
+
+// @Expose()
+// follows: string[];
+
+@Expose()
+hasPhone?: boolean;
+
+// @Expose()
+// readGroupMessages?: string;
+followsCount: number;
+commentCount: number;
+buttonCount: number;
+
+pushSubscribed: boolean;
+
+}
 export interface UserRelations {
   // describe navigational properties here
 }
