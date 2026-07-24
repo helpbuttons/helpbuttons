@@ -79,3 +79,5 @@ src/web/shared/commit.tsx
 src/api/shared/commit.tsx
 
 public/assets/images/logo.png
+
+web/.yarn
