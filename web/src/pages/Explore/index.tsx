@@ -10,7 +10,7 @@ import HoneyComb from "./HoneyComb";
 import { useSelectedNetwork } from "state/Networks";
 import { SetHideNavBottom } from "state/HomeInfo";
 import { useOnPageExit } from "shared/custom.hooks";
-import { getServerSidePropsHandler, shouldEnableSSR } from 'shared/tauri.utils';
+import { getServerSidePropsHandler, shouldEnableSSR } from 'shared/staticapp.utils';
 import { ResetFilters } from "state/Explore";
 import { roundCoords } from "shared/honeycomb.utils";
 

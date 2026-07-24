@@ -4,7 +4,7 @@ import HomeInfo from "./HomeInfo";
 import t from "i18n";
 import Explore from "./Explore";
 import { localStorageService, LocalStorageVars } from "services/LocalStorage";
-import { getServerSidePropsHandler, shouldEnableSSR } from "shared/tauri.utils";
+import { getServerSidePropsHandler, shouldEnableSSR } from "shared/staticapp.utils";
 
 
 export const Home: NextPage = (props) => {

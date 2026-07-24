@@ -1,21 +1,21 @@
-const isTauri = process.env.TAURI_BUILD === 'true';
+const isStaticApp = process.env.STATICAPP_BACKEND_URL ? true : false;
 
+console.log('color: ' + process.env.bgcolor)
 module.exports = {
   reactStrictMode: true,
-  env: {
-    NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL || '',
-  },
   publicRuntimeConfig: {
-    apiUrl: '/api',
+    isStaticApp: isStaticApp,
+    apiUrl:  process.env?.STATICAPP_BACKEND_URL ?  process.env.STATICAPP_BACKEND_URL : '/api',
     debug: `${process.env.DEBUG}`,
     description: `${process.env?.description ? process.env.description : ''}`,
-    title: `${process.env?.title ? process.env.title : ''}`,
+    title: `${process.env?.title ? process.env.title : 'helpbuttons title'}`,
     adminemail: `${process.env?.adminemail ? process.env.adminemail : ''}`,
+    bgcolor: `${process.env?.bgcolor ? process.env.bgcolor : 'red'}`,
   },
   typescript: {
     ignoreBuildErrors: true,
   },
-  ...(!isTauri && {
+  ...(!isStaticApp && {
     async rewrites() {
       return [
         {
@@ -38,9 +38,9 @@ module.exports = {
     remotePatterns: [
       { hostname: 'dummyimage.com' },
     ],
-    ...(isTauri && { unoptimized: true }),
+    ...(isStaticApp && { unoptimized: true }),
   },
-  output: isTauri ? 'export' : 'standalone',
+  output: isStaticApp ? 'export' : 'standalone',
   sassOptions: {
     includePaths: [__dirname + '/styles'],
   },

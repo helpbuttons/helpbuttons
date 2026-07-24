@@ -10,7 +10,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { LinkAdmins } from 'components/user/LinkAdmins';
 import { useGlobalStore } from 'state';
-import { getServerSidePropsHandler, shouldEnableSSR } from 'shared/tauri.utils';
+import { getServerSidePropsHandler, shouldEnableSSR } from 'shared/staticapp.utils';
 import { GlobalState } from 'state';
 
 export default function Error({ metadata }) {

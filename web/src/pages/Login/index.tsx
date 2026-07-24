@@ -6,7 +6,7 @@ import {  setMetadata } from 'services/ServerProps';
 import { store } from 'state';
 import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
 import { useMetadataTitle } from 'state/Metadata';
-import { getServerSidePropsHandler, shouldEnableSSR } from 'shared/tauri.utils';
+import { getServerSidePropsHandler, shouldEnableSSR } from 'shared/staticapp.utils';
 export default Login;
 
 function Login({metadata}) {

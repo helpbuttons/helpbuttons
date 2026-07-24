@@ -8,7 +8,7 @@ import { useEffect, useRef, useState } from 'react';
 import { setMetadata } from 'services/ServerProps';
 import { useButtonTypes } from 'shared/buttonTypes';
 import { FindEmbbedButtons } from 'state/Button';
-import { getServerSidePropsHandler, shouldEnableSSR } from 'shared/tauri.utils';
+import { getServerSidePropsHandler, shouldEnableSSR } from 'shared/staticapp.utils';
 
 export default function Embbed() {
   const buttonTypes = useButtonTypes();

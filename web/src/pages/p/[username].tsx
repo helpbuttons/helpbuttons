@@ -10,7 +10,7 @@ import { setMetadata } from 'services/ServerProps';
 import CardProfile from 'components/user/CardProfile';
 import { useMetadataTitle } from 'state/Metadata';
 import dconsole from 'shared/debugger';
-import { getServerSidePropsHandler, shouldEnableSSR } from 'shared/tauri.utils';
+import { getServerSidePropsHandler, shouldEnableSSR } from 'shared/staticapp.utils';
 import { SetMainPopupCurrentProfile } from 'state/HomeInfo';
 import HomeInfo from 'pages/HomeInfo';
 import { CardProfileButtonList } from 'components/user/CardProfileButtons';

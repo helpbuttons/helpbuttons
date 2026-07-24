@@ -1,4 +1,4 @@
-import { getApiUrl } from "shared/apiUrl";
+import { getApiUrl } from "shared/environment";
 
 const MAX_PREVIEW_SIZE = 300;
 export const createThumbnail = async (file: File): Promise<string> => {

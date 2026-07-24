@@ -6,7 +6,7 @@ import t from 'i18n'
 import { ExploreSettings, FindButton, UpdateExploreSettings } from 'state/Explore'
 import { store } from 'state'
 import { markerFocusZoom, maxZoom } from 'components/map/Map/Map.consts'
-import { getServerSidePropsHandler, shouldEnableSSR } from 'shared/tauri.utils'
+import { getServerSidePropsHandler, shouldEnableSSR } from 'shared/staticapp.utils'
 export default function ButtonFile({
   metadata,
 }) {

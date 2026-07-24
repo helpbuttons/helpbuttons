@@ -7,7 +7,8 @@ import { useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
 import { roundCoord } from 'shared/honeycomb.utils';
 import { ExplorePage } from 'pages/Explore';
-import { getServerSidePropsHandler, shouldEnableSSR } from 'shared/tauri.utils';
+import { getServerSidePropsHandler, shouldEnableSSR } from 
+'shared/staticapp.utils';
 
 export default function Explore({
     metadata

@@ -7,7 +7,7 @@ import {
 } from 'services/LocalStorage';
 import { rxjsHelper } from 'shared/helpers/rxjs.helper';
 import dconsole from 'shared/debugger';
-import { getApiUrl } from 'shared/apiUrl';
+import { getApiUrl } from 'shared/environment';
 
 export function isHttpError(err: object) {
   return err && err.statusCode && err.message;

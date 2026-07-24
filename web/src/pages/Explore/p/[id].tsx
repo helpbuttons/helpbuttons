@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import Loading from 'components/loading';
 import { useKeyLocations } from 'state/Geo';
 import { keyLocationZoom } from 'components/map/Map/Map.consts';
-import { getServerSidePropsHandler, shouldEnableSSR } from 'shared/tauri.utils';
+import { getServerSidePropsHandler, shouldEnableSSR } from 'shared/staticapp.utils';
 
 export default function ExploreButtonId({
     metadata

@@ -10,7 +10,7 @@ import Btn, {
 } from 'elements/Btn';
 import NetworkLogo from 'components/network/Components';
 import NavHeader from 'components/nav/NavHeader'; //just for mobile
-import { getServerSidePropsHandler, shouldEnableSSR } from 'shared/tauri.utils';
+import { getServerSidePropsHandler, shouldEnableSSR } from 'shared/staticapp.utils';
 import {
   IoAddCircle,
   IoArrowBackSharp,
@@ -37,7 +37,7 @@ import { TextFormatted } from 'elements/Message';
 import { LinkAdmins } from 'components/user/LinkAdmins';
 import { ShowDesktopOnly, ShowMobileOnly } from 'elements/SizeOnly';
 import {  ListButtonTypes } from 'components/nav/ButtonTypes';
-import { getApiUrl } from 'shared/apiUrl';
+import { getApiUrl } from 'shared/environment';
 import { logoImageUri } from 'shared/sys.helper';
 import { FindLatestNetworkActivity } from 'state/Networks';
 import { HomeInfoInstallCard } from 'components/install';

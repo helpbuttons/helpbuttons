@@ -10,7 +10,7 @@ import { GlobalState, store } from 'state';
 import { LoadabledComponent } from 'components/loading';
 import { useMetadataTitle } from 'state/Metadata';
 import { PoweredExtra } from 'components/brand/powered';
-import { getServerSidePropsHandler, shouldEnableSSR } from 'shared/tauri.utils';
+import { getServerSidePropsHandler, shouldEnableSSR } from 'shared/staticapp.utils';
 
 export default function Faqs({ metadata }) {
   useMetadataTitle('F.A.Q.')

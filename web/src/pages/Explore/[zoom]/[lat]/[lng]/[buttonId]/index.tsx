@@ -8,7 +8,7 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { ExplorePage } from 'pages/Explore';
 import { alertService } from 'services/Alert';
-import { getServerSidePropsHandler, shouldEnableSSR } from 'shared/tauri.utils';
+import { getServerSidePropsHandler, shouldEnableSSR } from 'shared/staticapp.utils';
 
 export default function Explore({
     metadata

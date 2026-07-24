@@ -10,7 +10,7 @@ import { ErrorName } from 'shared/types/error.list';
 import { alertService } from 'services/Alert';
 import { useSelectedNetwork } from 'state/Networks';
 import Loading from 'components/loading';
-import { getServerSidePropsHandler, shouldEnableSSR } from 'shared/tauri.utils';
+import { getServerSidePropsHandler, shouldEnableSSR } from 'shared/staticapp.utils';
 
 export default function ExploreButtonId({
     metadata

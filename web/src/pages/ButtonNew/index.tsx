@@ -10,7 +10,7 @@ import { Button } from 'shared/entities/button.entity';
 import { CreateNewPost } from 'state/Posts';
 import { readableDate } from 'shared/date.utils';
 import { useEffect, useState } from 'react';
-import { getServerSidePropsHandler, shouldEnableSSR } from 'shared/tauri.utils';
+import { getServerSidePropsHandler, shouldEnableSSR } from 'shared/staticapp.utils';
 import { NextPageContext } from 'next';
 import { setMetadata } from 'services/ServerProps';
 import { useStore } from 'state';

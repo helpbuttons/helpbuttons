@@ -2,7 +2,7 @@ import t from "i18n";
 import { NextPageContext } from "next";
 import ExploreButtonId from "pages/Explore/b/[buttonId]";
 import { setMetadata } from "services/ServerProps";
-import { getServerSidePropsHandler, shouldEnableSSR } from 'shared/tauri.utils';
+import { getServerSidePropsHandler, shouldEnableSSR } from 'shared/staticapp.utils';
 
 export default function Show({
   metadata
