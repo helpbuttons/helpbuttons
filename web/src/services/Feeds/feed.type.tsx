@@ -1,6 +1,5 @@
 export interface IFeed {
   //required data
-  id: any || null;
+  id: any;
   name: string; //
-
 }

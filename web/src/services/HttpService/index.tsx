@@ -5,9 +5,9 @@ import {
   localStorageService,
   LocalStorageVars,
 } from 'services/LocalStorage';
-import getConfig from 'next/config';
 import { rxjsHelper } from 'shared/helpers/rxjs.helper';
 import dconsole from 'shared/debugger';
+import { getApiUrl } from 'shared/environment';
 
 export function isHttpError(err: object) {
   return err && err.statusCode && err.message;
@@ -27,8 +27,7 @@ export class HttpService {
     if (this.accessToken) {
       this.isAuthenticated$.next(true);
     }
-    const { publicRuntimeConfig } = getConfig();
-    this.apiUrl = `${publicRuntimeConfig.apiUrl}/`;
+    this.apiUrl = `${getApiUrl()}/`;
   }
   public getAccessToken() {
     return localStorageService.read(LocalStorageVars.ACCESS_TOKEN);

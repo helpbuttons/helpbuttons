@@ -1,4 +1,4 @@
-import getConfig from "next/config";
+import { getApiUrl } from "shared/environment";
 
 const MAX_PREVIEW_SIZE = 300;
 export const createThumbnail = async (file: File): Promise<string> => {
@@ -34,10 +34,9 @@ export function makeImageUrl(image, localUrl = false) {
   if (localUrl) {
     return image
   }
-  const { publicRuntimeConfig } = getConfig()
 
   if (!image) {
-    // return `${publicRuntimeConfig.apiUrl}/networks/logo/192`;
+    // return `${getApiUrl()}/networks/logo/192`;
     return "/assets/svg/logo/no-image.svg";
   }
   const regex = /^data\:image/gm;
@@ -47,7 +46,7 @@ export function makeImageUrl(image, localUrl = false) {
     if (image.match(regexHref)) {
       return image;
     }
-    return `${publicRuntimeConfig.apiUrl}${image}`;
+    return `${getApiUrl()}${image}`;
   }
   return image;
 }

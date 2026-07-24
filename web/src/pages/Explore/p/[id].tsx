@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 import Loading from 'components/loading';
 import { useKeyLocations } from 'state/Geo';
 import { keyLocationZoom } from 'components/map/Map/Map.consts';
+import { getServerSidePropsHandler, shouldEnableSSR } from 'shared/staticapp.utils';
 
 export default function ExploreButtonId({
     metadata
@@ -27,6 +28,6 @@ export default function ExploreButtonId({
     return <Loading/>
 }
 
-export const getServerSideProps = async (ctx: NextPageContext) => {
-    return setMetadata(t('menu.explore'), ctx);
-};
+export const getServerSideProps = shouldEnableSSR
+  ? (ctx) => getServerSidePropsHandler(t('menu.explore'), ctx)
+  : undefined;

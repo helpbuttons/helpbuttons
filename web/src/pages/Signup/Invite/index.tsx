@@ -10,6 +10,7 @@ import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
 import t from 'i18n';
 import {  LoginQR, SignupQR } from 'state/Profile';
 import { alertService } from 'services/Alert';
+import { getServerSidePropsHandler, shouldEnableSSR } from 'shared/staticapp.utils';
 import { getLocale } from 'shared/sys.helper';
 import { NextPageContext } from 'next';
 import { setMetadata } from 'services/ServerProps';
@@ -199,6 +200,6 @@ export function InviteScan() {
   );
 }
 
-export const getServerSideProps = async (ctx: NextPageContext) => {
-  return setMetadata(t('seo.invite'), ctx);
-};
+export const getServerSideProps = shouldEnableSSR
+  ? (ctx) => getServerSidePropsHandler(t('seo.invite'), ctx)
+  : undefined;

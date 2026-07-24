@@ -32,6 +32,7 @@ import dconsole from 'shared/debugger';
 import HomeInfo from 'pages/HomeInfo';
 import { getInvitationLink } from 'pages/Profile/Invites';
 import { IoQrCode, IoWarningOutline } from 'react-icons/io5';
+import { getServerSidePropsHandler, shouldEnableSSR } from 'shared/staticapp.utils';
 
 export default function Signup( {metadata})
 {
@@ -269,6 +270,6 @@ export function SignupAsGuestForm() {
 }
 
 
-export const getServerSideProps = async (ctx: NextPageContext) => {
-  return setMetadata(t('user.register'), ctx)
-};
+export const getServerSideProps = shouldEnableSSR 
+  ? (ctx) => getServerSidePropsHandler(t('user.register'), ctx)
+  : undefined;

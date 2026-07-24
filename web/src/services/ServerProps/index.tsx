@@ -1,10 +1,11 @@
+import { getApiUrl } from 'shared/environment';
 import dconsole from 'shared/debugger';
 import { Button } from 'shared/entities/button.entity';
 import { makeImageUrl } from 'shared/helpers/images.helper';
 import { HttpStatus } from 'shared/types/http-status.enum';
 export class ServerPropsService {
   public static async general(subtitle, ctx) {
-    const baseURL = `${process.env.API_URL}/`;
+    const baseURL = getApiUrl()
     const configURL = `${baseURL}networks/config`;
     const networkConfigURL = `${baseURL}networks/findById`;
 
@@ -94,7 +95,7 @@ export class ServerPropsService {
     
     if (ctx.query?.buttonId) {
       const buttonId = ctx.query.buttonId;
-      const buttonUrl = `${process.env.API_URL}/buttons/findById/${buttonId}`;
+      const buttonUrl = `${getApiUrl()}/buttons/findById/${buttonId}`;
       const currentButtonFetch = await fetch(buttonUrl, {
         next: { revalidate: 10 },
       });
@@ -117,7 +118,7 @@ export class ServerPropsService {
     }
 
   if (ctx.query?.username) {
-      const profileUrl = `${process.env.API_URL}/users/find/${ctx.params.username}`;
+      const profileUrl = `${getApiUrl()}/users/find/${ctx.params.username}`;
       const userProfileFetch = await fetch(profileUrl, {
         next: { revalidate: 10 },
       });

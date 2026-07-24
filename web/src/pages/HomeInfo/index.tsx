@@ -10,6 +10,7 @@ import Btn, {
 } from 'elements/Btn';
 import NetworkLogo from 'components/network/Components';
 import NavHeader from 'components/nav/NavHeader'; //just for mobile
+import { getServerSidePropsHandler, shouldEnableSSR } from 'shared/staticapp.utils';
 import {
   IoAddCircle,
   IoArrowBackSharp,
@@ -36,7 +37,7 @@ import { TextFormatted } from 'elements/Message';
 import { LinkAdmins } from 'components/user/LinkAdmins';
 import { ShowDesktopOnly, ShowMobileOnly } from 'elements/SizeOnly';
 import {  ListButtonTypes } from 'components/nav/ButtonTypes';
-import getConfig from 'next/config';
+import { getApiUrl } from 'shared/environment';
 import { logoImageUri } from 'shared/sys.helper';
 import { FindLatestNetworkActivity } from 'state/Networks';
 import { HomeInfoInstallCard } from 'components/install';
@@ -65,8 +66,7 @@ export default function HomeInfo({ metadata }) {
     (state: GlobalState) => state.config,
   );
 
-  const { publicRuntimeConfig } = getConfig();
-  const apiUrl = publicRuntimeConfig.apiUrl;
+  const apiUrl = getApiUrl();
 
   const currentUser = useStore(
     store,
@@ -132,7 +132,7 @@ export default function HomeInfo({ metadata }) {
               className="homeinfo-card homeinfo__card--title-card"
               style={
                 {
-                  '--network-jumbo': `url('${selectedNetwork.jumbo ? apiUrl + selectedNetwork.jumbo : '/api' + logoImageUri}'`,
+                  '--network-jumbo': `url('${selectedNetwork.jumbo ? apiUrl + selectedNetwork.jumbo : apiUrl + logoImageUri}'`,
                 } as React.CSSProperties
               }
             >
@@ -149,9 +149,9 @@ export default function HomeInfo({ metadata }) {
   );
 }
 
-export const getServerSideProps = async (ctx: NextPageContext) => {
-  return setMetadata(t('menu.home'), ctx);
-};
+export const getServerSideProps = shouldEnableSSR
+  ? (ctx) => getServerSidePropsHandler(t('menu.home'), ctx)
+  : undefined;
 
 function NavigatorCoordsButton() {
   const [navigatorCoordinates, setNavigatorCoordinates] =

@@ -6,6 +6,7 @@ import {  setMetadata } from 'services/ServerProps';
 import { store } from 'state';
 import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
 import { useMetadataTitle } from 'state/Metadata';
+import { getServerSidePropsHandler, shouldEnableSSR } from 'shared/staticapp.utils';
 export default Login;
 
 function Login({metadata}) {
@@ -20,6 +21,6 @@ function Login({metadata}) {
     );
 }
 
-export const getServerSideProps = async (ctx: NextPageContext) => {
-    return setMetadata(t('menu.login'), ctx)
-  };
+export const getServerSideProps = shouldEnableSSR
+  ? (ctx) => getServerSidePropsHandler(t('menu.login'), ctx)
+  : undefined;

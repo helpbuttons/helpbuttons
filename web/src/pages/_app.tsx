@@ -36,12 +36,14 @@ import { localStorageService, LocalStorageVars } from 'services/LocalStorage';
 import { usePoolFindNewActivities } from 'state/Activity';
 import { ResetFilters } from 'state/Explore';
 import { ErrorPopup } from './Error';
+import ImageWrapper, { ImageType } from 'elements/ImageWrapper';
+import { getApiUrl, getBgcolor } from 'shared/environment';
 
 export default appWithTranslation(MyApp);
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
-
+  const staticAppBackendUrl = getApiUrl();
   const [authorized, setAuthorized] = useState(null);
   const [isLoadingUser, setIsLoadingUser] = useState(false);
   const [fetchingNetworkError, setFetchingNetworkError] = useState(false)
@@ -49,11 +51,13 @@ function MyApp({ Component, pageProps }) {
   const nonce = randomBytes(128).toString('base64')
   const isSetup = useIsSetup(path);
 
+  const [loadingMessage, setLoadingMessage] = useState('') 
   const sessionUser = useGlobalStore((state: GlobalState) => state.sessionUser)
   const pageName = useGlobalStore((state: GlobalState) => state.homeInfo.pageName)
 
   const onFetchingConfigError = (error) => {
     dconsole.error(error);
+    setLoadingMessage((prev) => prev + ' ; fetching config error')
     dconsole.error('fetching config error...');
     if (error == 'not-found' || error == 'nosysadminconfig') {
       console.error(error);
@@ -96,6 +100,7 @@ function MyApp({ Component, pageProps }) {
       );
       setFetchingNetworkError(() => true)
     }
+    setLoadingMessage((prev) => prev + '; '+ error + ' ' + staticAppBackendUrl)
     dconsole.log(error);
     return;
   };
@@ -316,7 +321,16 @@ function MyApp({ Component, pageProps }) {
         if(fetchingNetworkError){
           return <ErrorPopup/>
         }
-        return <><Loading /></>;
+
+        return <>
+            {staticAppBackendUrl && 
+              <div id="splash" style={{backgroundColor: getBgcolor()}}>
+                <ImageWrapper imageType={ImageType.formIllustration} src={`/assets/images/logo.png`} alt={selectedNetwork?.name} localUrl={true}/>
+                <div>{getApiUrl()} . {loadingMessage}</div>
+              </div> 
+            } 
+            <Loading />
+            </>;
       }
 
     }).call(this)}
