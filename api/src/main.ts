@@ -21,6 +21,7 @@ import { map, Observable } from 'rxjs';
 import { Role } from './shared/types/roles';
 
 import helmet from 'helmet';
+import { TypeOrmExceptionFilter } from './shared/middlewares/errors/psql-filter.middleware';
 
 @Injectable()
 export class RolesSerializerInterceptor extends ClassSerializerInterceptor {
@@ -138,6 +139,8 @@ export const bootstrap = async () => {
   app.useGlobalFilters(new HttpExceptionFilter());
   // validation filters
   app.useGlobalFilters(new ValidationFilter());
+  
+  app.useGlobalFilters(new TypeOrmExceptionFilter());
   app.useGlobalPipes(
     new ValidationPipe({
       transform: true,
