@@ -28,8 +28,8 @@ import { AllowIfNetworkIsPublic } from '@src/shared/decorator/privacy.decorator'
 import { CustomHttpException } from '@src/shared/middlewares/errors/custom-http-exception.middleware';
 import { ErrorName } from '@src/shared/types/error.list';
 import { EventEmitter2 } from '@nestjs/event-emitter'
-import { notifyAdmins, notifyUser } from '@src/app/app.event';
-import { ActivityEventName, AdminActivityEventName } from '@src/shared/types/activity.list';
+import { notifyGroup, notifyUser } from '@src/app/app.event';
+import { ActivityEventName, GroupActivityEventName } from '@src/shared/types/activity.list';
 import { PostService } from '../post/post.service';
 import { plainToInstance } from 'class-transformer';
 import { Button } from './button.entity';
@@ -66,7 +66,7 @@ export class ButtonController {
       user,
     ).then((button) => {
         if(button.awaitingApproval){
-          notifyAdmins(this.eventEmitter,AdminActivityEventName.AwaitApprovalButton,{button: button })  
+          notifyGroup(this.eventEmitter,GroupActivityEventName.AwaitApprovalButton,{button: button })  
         }else{
           notifyUser(this.eventEmitter,ActivityEventName.NewButton,{button})  
         }

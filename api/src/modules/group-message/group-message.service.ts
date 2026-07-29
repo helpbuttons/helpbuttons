@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, Logger } from "@nestjs/common";
 import { Role } from "@src/shared/types/roles";
 import {  GroupMessages } from "./group-message.dto";
 import { GroupMessage } from "./group-message.entity";
@@ -10,12 +10,15 @@ import { ActivitiesPageSize } from "../activity/activity.dto";
 import { UserService } from "../user/user.service";
 import translate from "@src/shared/helpers/i18n.helper";
 import { OnEvent } from "@nestjs/event-emitter";
-import { AdminActivityEventName } from "@src/shared/types/activity.list";
+import { GroupActivityEventName } from "@src/shared/types/activity.list";
 import { PushNotificationService } from "../push-notification/push-notification.service";
 import { SendNotificationDto } from "../push-notification/push-notification.dto";
 
 @Injectable()
 export class GroupMessageService {
+    private readonly logger = new Logger('GROUPMESSAGE');
+    private notificationLock: Promise<void> = Promise.resolve();
+
     constructor(
         @InjectRepository(GroupMessage)
         private readonly groupMessageRepository: Repository<GroupMessage>,
@@ -82,22 +85,29 @@ export class GroupMessageService {
         
     }
 
-    sendNotification(link, groupMessageType : GroupMessageType, eventName: AdminActivityEventName)
+    async sendNotification(link, groupMessageType: GroupMessageType, eventName: GroupActivityEventName)
     {
-        const groupMessage = {
-            id: uuid(),
-            to: groupMessageType,
-            last: true,
-            message: '',
-            link,
-            eventName: eventName
-        }
+        let unlock: () => void;
+        const nextLock = new Promise<void>((resolve) => { unlock = resolve; });
+        const currentLock = this.notificationLock;
+        this.notificationLock = nextLock;
+        await currentLock;
 
-        return this.groupMessageRepository.update({ to: groupMessageType }, { last: false })
-        .then(()=> {
-            return this.groupMessageRepository.insert([groupMessage])
-        })
-        
+        try {
+            const groupMessage = {
+                id: uuid(),
+                to: groupMessageType,
+                last: true,
+                message: '',
+                link,
+                eventName: eventName,
+            };
+
+            await this.groupMessageRepository.update({ to: groupMessageType }, { last: false });
+            await this.groupMessageRepository.insert([groupMessage]);
+        } finally {
+            unlock!();
+        }
     }
 
     sendPushNotification(groupMessageType : GroupMessageType, message)
@@ -142,8 +152,17 @@ export class GroupMessageService {
         let message = groupMessage.message
         if(groupMessage.eventName) {
             switch(groupMessage.eventName){
-                case AdminActivityEventName.AwaitApprovalButton:
+                case GroupActivityEventName.AwaitApprovalButton:
                     message = translate(user.locale, `button.awaitApproval`)
+                    break;
+                case GroupActivityEventName.EventTomorrow:
+                    message = translate(user.locale, `button.tomorrowEvent`)
+                    break;
+                case GroupActivityEventName.NewUser:
+                        message = translate(user.locale, `admin.newUser`)
+                        break;
+                default:
+                    this.logger.error(`pls define group event name ${groupMessage.eventName}`)
             }
         }
         if(groupMessage?.from?.id == user.id)
@@ -186,9 +205,21 @@ export class GroupMessageService {
     }
 
 
-    @OnEvent(AdminActivityEventName.AwaitApprovalButton)
+    @OnEvent(GroupActivityEventName.AwaitApprovalButton)
     onAwaitApprovalButton(payload: any){
         const { button } = payload.data
-        this.sendNotification(`/Show/${button.id}`, GroupMessageType.admin, AdminActivityEventName.AwaitApprovalButton)
+        this.sendNotification(`/Show/${button.id}`, GroupMessageType.admin, GroupActivityEventName.AwaitApprovalButton)
+    }
+
+    @OnEvent(GroupActivityEventName.EventTomorrow)
+    onEventTomorrow(payload: any){
+        const { button } = payload.data
+        this.sendNotification(`/Show/${button.id}`, GroupMessageType.community, GroupActivityEventName.EventTomorrow)
+    }
+
+    @OnEvent(GroupActivityEventName.NewUser)
+    onNewUser(payload: any){
+        const { user } = payload.data
+        this.sendNotification(`/p/${user.username}`, GroupMessageType.admin, GroupActivityEventName.NewUser)
     }
 }

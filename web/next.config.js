@@ -1,6 +1,5 @@
 const isStaticApp = process.env.STATICAPP_BACKEND_URL ? true : false;
 
-console.log('color: ' + process.env.bgcolor)
 module.exports = {
   reactStrictMode: true,
   publicRuntimeConfig: {

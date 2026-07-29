@@ -69,4 +69,10 @@ export class ActivityController {
   {
     return await this.activityCron.triggerNotifications()
   }
+
+  @Get('tomorrow')
+  async tomorrow()
+  {
+    return await this.activityCron.notifyCommunityOfTomorrowEvents()
+  }
 }

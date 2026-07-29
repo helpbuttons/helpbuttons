@@ -25,7 +25,8 @@ import { PushNotifcationModule } from '../push-notification/push-notification.mo
     ButtonModule,
     PostModule,
     GroupMessageModule,
-    PushNotifcationModule
+    PushNotifcationModule,
+    ButtonModule
   ],
   controllers: [
     ActivityController

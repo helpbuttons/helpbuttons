@@ -261,6 +261,22 @@ export class ActivityService {
       })
   }
 
+  @OnEvent(ActivityEventName.EventTomorrow)
+  async onTomorrowEvent(payload: any) {
+    const { button } = payload.data;
+    const author = button.owner;
+    return this.findUsersToNotify(button)
+      .then((users) => {
+        return users.map((_user) => {
+          console.log(users)
+          return this.newActivity(button, _user, author, _user, payload, true)
+        })
+      })
+      .then(() => {
+        return this.newNetworkActivity(button, author, payload);
+      });
+  }
+
   private async notifyByOut(insertResult, sendActivity = (templateVars: ActivityTemplateVars) => {}) {
     const activityId = insertResult.identifiers[0].id
     const network = await this.networkService.findDefaultNetwork()
@@ -865,18 +881,6 @@ export class ActivityService {
             });
           })
       });
-  }
-
-  @OnEvent(ActivityEventName.NotifyAdmins)
-  public notifyAdmins(payload: any) {
-    this.userService.findAdministrators()
-      .then((admins) => {
-        // console.log(admins)
-        admins.map((admin) => {
-          // this.createActivity(admin, payload, false);
-        })
-      })
-
   }
 
   public addLoginParams(link, loginParams){

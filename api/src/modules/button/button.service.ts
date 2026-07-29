@@ -19,6 +19,7 @@ import {
   Not,
   Between,
   LessThan,
+  Raw,
 } from 'typeorm';
 import { TagService } from '../tag/tag.service';
 import { CreateButtonDto, UpdateButtonDto } from './button.dto';
@@ -781,7 +782,6 @@ export class ButtonService {
     return this.buttonRepository.findOneBy({id: buttonId})
     .then((button) => {
       return this.userService.findByIds(button.followedBy)
-      .then((dd) => {console.log(dd); return dd;})
     })
   }
 
@@ -841,5 +841,12 @@ export class ButtonService {
       }
     }
     return eventData;
+  }
+
+  findTomorrowEvents() {
+    return this.buttonRepository.find({where: {
+      eventStart: Raw((alias) => `${alias} > NOW() AND ${alias} < NOW() + INTERVAL '90 DAY'`),
+      ...this.expiredBlockedConditions(false, false)
+    }, relations: ['owner']})
   }
 }

@@ -11,11 +11,13 @@ export enum ActivityEventName {
   Endorsed = 'user.endorsed',
   EndorseRevoked = 'user.endorseRevoked',
   RoleUpdate = 'user.roleChange',
-  NotifyAdmins = 'admin.notify',
   Message = 'message',
-  UnfollowButton = 'unfollow.button'
+  UnfollowButton = 'unfollow.button',
+  EventTomorrow = 'followers.eventtomorrow'
 }
 
-export enum AdminActivityEventName {
-  AwaitApprovalButton = 'awaitApproval.button'
+export enum GroupActivityEventName {
+  AwaitApprovalButton = 'awaitApproval.button',
+  EventTomorrow = 'community.eventtomorrow',
+  NewUser = "user.new"
 }

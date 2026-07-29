@@ -7,7 +7,7 @@ import {
 } from '@nestjs/typeorm';
 import { Activity } from './activity.entity';
 import { Between, EntityManager, Repository } from 'typeorm';
-import { ActivityEventName } from '@src/shared/types/activity.list';
+import { ActivityEventName, GroupActivityEventName } from '@src/shared/types/activity.list';
 import translate, {
   readableDate,
 } from '@src/shared/helpers/i18n.helper';
@@ -17,6 +17,9 @@ import { NetworkService } from '../network/network.service';
 import { ActivityService } from './activity.service';
 import { MailButtonActivity } from '../mail/mail.interface';
 import { unique } from '@src/shared/helpers/array.helper';
+import { notifyGroup, notifyUser } from '@src/app/app.event';
+import { EventEmitter2 } from '@nestjs/event-emitter';
+import { ButtonService } from '../button/button.service';
 
 const outboxConditions = `activity.created_at between now() - INTERVAL '1 day' AND now()`;
 @Injectable()
@@ -31,10 +34,24 @@ export class ActivityCron {
     @InjectEntityManager()
     private readonly entityManager: EntityManager,
     private readonly networkService: NetworkService,
+    private readonly buttonService: ButtonService,
     private readonly activityService: ActivityService,
+    private eventEmitter: EventEmitter2
   ) {}
 
-  @Cron(CronExpression.EVERY_DAY_AT_5PM)
+  @Cron(CronExpression.EVERY_DAY_AT_1AM)
+  async notifyCommunityOfTomorrowEvents() {
+    await this.buttonService.findTomorrowEvents()
+      .then((buttons) => {
+        buttons.map((button) => {
+          notifyGroup(this.eventEmitter, GroupActivityEventName.EventTomorrow, { button })
+          notifyUser(this.eventEmitter,ActivityEventName.EventTomorrow,{button})
+        })
+      })
+    
+  }
+
+  @Cron(CronExpression.EVERY_DAY_AT_9AM)
   async triggerNotifications() {
     this.logger.log('Starting to notify all outboxes')
     

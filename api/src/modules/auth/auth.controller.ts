@@ -22,8 +22,8 @@ import { User } from '../user/user.entity';
 import { SignupQRRequestDto, SignupRequestDto } from './auth.dto';
 import { AuthService } from './auth.service';
 import { LocalAuthGuard } from './guards/local-auth.guard';
-import { notifyUser } from '@src/app/app.event';
-import { ActivityEventName } from '@src/shared/types/activity.list';
+import { notifyGroup } from '@src/app/app.event';
+import { ActivityEventName, GroupActivityEventName } from '@src/shared/types/activity.list';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { imageFileFilter } from '../storage/storage.utils';
 import { FileFieldsUploadInterceptor } from '@src/shared/decorators/file-upload.decorator';
@@ -57,8 +57,7 @@ export class AuthController {
       if (typeof newUser === typeof undefined) {
         throw new HttpException('could not create token', HttpStatus.BAD_GATEWAY)
       }
-      // this.notifyAdmins()
-      notifyUser(this.eventEmitter,ActivityEventName.NotifyAdmins,{user: newUser })  
+      notifyGroup(this.eventEmitter, GroupActivityEventName.NewUser, { user: newUser })
 
       return newUser;
     });
