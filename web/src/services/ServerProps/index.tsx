@@ -5,10 +5,9 @@ import { makeImageUrl } from 'shared/helpers/images.helper';
 import { HttpStatus } from 'shared/types/http-status.enum';
 export class ServerPropsService {
   public static async general(subtitle, ctx) {
-    const baseURL = getApiUrl()
-    const configURL = `${baseURL}networks/config`;
-    const networkConfigURL = `${baseURL}networks/findById`;
-
+    const baseURL = process.env.API_URL
+    const configURL = `${baseURL}/networks/config`;
+    const networkConfigURL = `${baseURL}/networks/findById`;
     const catchMetadata = {
       metadata: {
         title: '...',
