@@ -33,6 +33,7 @@ import HomeInfo from 'pages/HomeInfo';
 import { getInvitationLink } from 'pages/Profile/Invites';
 import { IoQrCode, IoWarningOutline } from 'react-icons/io5';
 import { getServerSidePropsHandler, shouldEnableSSR } from 'shared/staticapp.utils';
+import { useSelectedNetwork } from 'state/Networks';
 
 export default function Signup( {metadata})
 {
@@ -65,10 +66,7 @@ export function SignupForm() {
   });
   const router = useRouter();
 
-  const selectedNetwork: Network = useStore(
-    store,
-    (state: GlobalState) => state.networks.selectedNetwork,
-  );
+  const selectedNetwork: Network = useSelectedNetwork()
   useMetadataTitle(t('menu.register'))
 
   const [isSubmitting, setIsSubmitting] = useState(false);

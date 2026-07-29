@@ -81,6 +81,7 @@ export class AuthService {
             if (!newUserDto.emailVerified) {
               this.sendLoginToken(newUserDto, true);
             }
+            this.inviteService.destroyInviteCode(signupQRUserDto.qrCode)
             return user;
           },
         );
@@ -90,12 +91,12 @@ export class AuthService {
     let emailVerified = false;
     let userRole = Role.registered;
     const userCount = await this.userService.userCount();
+    const selectedNetwork = await this.networkService.findDefaultNetwork();
+
     if (userCount < 1) {
       userRole = Role.admin;
     } else {
       try {
-        const selectedNetwork = await this.networkService.findDefaultNetwork();
-
         if (selectedNetwork.inviteOnly) {
           const validInviteCode = await this.inviteService.isInviteCodeValid(signupUserDto.inviteCode)
           if (!validInviteCode) {
@@ -125,16 +126,35 @@ export class AuthService {
       showWassap: false,
     };
 
+    
+    return this.createUser(newUserDto, signupUserDto).
+      then((newUser) => {
+        this.sendWelcomeMail(newUser.name, newUser.email, newUser.locale)
+        if (selectedNetwork.inviteOnly) {
+          this.inviteService.destroyInviteCode(signupUserDto.inviteCode)
+        }
+
+        // verify email address
+        // if (!newUser.emailVerified && userCount > 1) {
+        //   this.sendLoginToken(newUser, true);
+        // }
+        return newUser;
+      });
+  }
+
+  private async createUser(newUserDto, signupUserDto) {
     const regex = /^[a-zA-Z0-9\_\-\.]+$/gm;
     if (!signupUserDto.username.match(regex)) {
       throw new CustomHttpException(ErrorName.InvalidUsername);
     }
 
-    const emailExists = await this.userService.isEmailExists(
-      signupUserDto.email,
-    );
-    if (emailExists) {
-      throw new CustomHttpException(ErrorName.EmailAlreadyRegistered);
+    if(signupUserDto.email){
+      const emailExists = await this.userService.isEmailExists(
+        signupUserDto.email,
+      );
+      if (emailExists) {
+        throw new CustomHttpException(ErrorName.EmailAlreadyRegistered);
+      }
     }
 
     const usernameExists = await this.userService.findByUsername(
@@ -146,21 +166,9 @@ export class AuthService {
       );
     }
     if (signupUserDto.avatar) {
-      newUserDto.avatar = this.storageService.uploadAndConvertImage(avatar)
+      newUserDto.avatar = this.storageService.uploadAndConvertImage(signupUserDto.avatar)
     }
-    return this.createUser(newUserDto, signupUserDto).
-      then((newUser) => {
-        this.sendWelcomeMail(newUser.name, newUser.email, newUser.locale)
 
-        // verify email address
-        // if (!newUser.emailVerified && userCount > 1) {
-        //   this.sendLoginToken(newUser, true);
-        // }
-        return newUser;
-      });
-  }
-
-  private createUser(newUserDto, signupUserDto) {
     return this.userService.createUser(newUserDto)
       .then((user: User) => {
         return this.createUserCredential(

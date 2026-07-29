@@ -101,7 +101,14 @@ export class InviteService {
       return false;
     }
 
-    await this.inviteRepository.update(invite.id, {...invite, usage: invite.usage + 1 })
     return true;
+  }
+
+  destroyInviteCode(inviteCode: string){
+    return this.inviteRepository.findOne({where: {id: inviteCode}})
+    .then((invite) => {
+      return this.inviteRepository.update(invite.id, { usage: invite.usage + 1 })
+    } )
+    
   }
 }

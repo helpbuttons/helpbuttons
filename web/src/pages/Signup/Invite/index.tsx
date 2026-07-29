@@ -19,6 +19,7 @@ import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
 import HomeInfo from 'pages/HomeInfo';
 import { Scanner } from '@yudiel/react-qr-scanner';
 import FieldText from 'elements/Fields/FieldText';
+import { setValidationErrors } from 'state/helper';
 
 export default function Invite( {metadata})
 {
@@ -41,7 +42,7 @@ export function InviteForm() {
     setValue,
     watch,
     setError,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm({
     defaultValues: {
       username: '',
@@ -54,7 +55,8 @@ export function InviteForm() {
   });
 
   const [loading, setLoading] = useState(true)
-  
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   useEffect(() => {
     const loginCode = code ? code : null
     if(loginCode)
@@ -88,17 +90,27 @@ export function InviteForm() {
             phone: data.phone,
             email: data.email
           },
-          () => {
-            alertService.success(t('user.loginSucess'))
-            store.emit(new SetMainPopup(MainPopupPage.HIDE))
-          },
-          () => {
-            alertService.error(t('user.inviteLoginError'))
-          },
+          onSuccess,
+          onError
         ),
       );
   };
-  
+  const onSuccess = (userData) => {
+    setIsSubmitting(false)
+    store.emit(new SetMainPopup(MainPopupPage.HIDE))
+    alertService.success(t('user.loginSucess'))
+  };
+
+  const onError = (error) => {
+    setIsSubmitting(false)
+    if(error?.validationErrors){
+      setValidationErrors(error?.validationErrors, setError);
+      dconsole.error(error);
+      alertService.error(error.caption);
+    }else{
+      alertService.error(t('user.inviteLoginError'))
+    }
+  };
   
   return (
     <>
