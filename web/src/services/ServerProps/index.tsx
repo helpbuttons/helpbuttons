@@ -1,4 +1,3 @@
-import { getApiUrl } from 'shared/environment';
 import dconsole from 'shared/debugger';
 import { Button } from 'shared/entities/button.entity';
 import { makeImageUrl } from 'shared/helpers/images.helper';
@@ -94,7 +93,7 @@ export class ServerPropsService {
     
     if (ctx.query?.buttonId) {
       const buttonId = ctx.query.buttonId;
-      const buttonUrl = `${getApiUrl()}/buttons/findById/${buttonId}`;
+      const buttonUrl = `${baseURL}/buttons/findById/${buttonId}`;
       const currentButtonFetch = await fetch(buttonUrl, {
         next: { revalidate: 10 },
       });
@@ -117,7 +116,7 @@ export class ServerPropsService {
     }
 
   if (ctx.query?.username) {
-      const profileUrl = `${getApiUrl()}/users/find/${ctx.params.username}`;
+      const profileUrl = `${baseURL}/users/find/${ctx.params.username}`;
       const userProfileFetch = await fetch(profileUrl, {
         next: { revalidate: 10 },
       });
