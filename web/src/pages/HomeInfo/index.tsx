@@ -39,7 +39,7 @@ import { ShowDesktopOnly, ShowMobileOnly } from 'elements/SizeOnly';
 import {  ListButtonTypes } from 'components/nav/ButtonTypes';
 import { getApiUrl } from 'shared/environment';
 import { logoImageUri } from 'shared/sys.helper';
-import { FindLatestNetworkActivity } from 'state/Networks';
+import { FindLatestNetworkActivity, useSelectedNetwork } from 'state/Networks';
 import { HomeInfoInstallCard } from 'components/install';
 import { TagsNav } from 'elements/Fields/FieldTags';
 import { FindAndSetMainPopupCurrentButton, MainPopupPage, SetMainPopup } from 'state/HomeInfo';
@@ -56,10 +56,7 @@ import Link from 'next/link';
 
 export default function HomeInfo({ metadata }) {
 
-  const selectedNetwork = useStore(
-    store,
-    (state: GlobalState) => state.networks.selectedNetwork,
-  );
+  const selectedNetwork = useSelectedNetwork()
 
   const config = useStore(
     store,
@@ -98,7 +95,6 @@ export default function HomeInfo({ metadata }) {
       {!currentUser && (
         <SupportBanner scrollToContact={scrollToContact} />
       )} */}
-      {selectedNetwork && (
         <>
         <div className="homeinfo__container">
           <div className="homeinfo__content">
@@ -132,7 +128,7 @@ export default function HomeInfo({ metadata }) {
               className="homeinfo-card homeinfo__card--title-card"
               style={
                 {
-                  '--network-jumbo': `url('${selectedNetwork.jumbo ? apiUrl + selectedNetwork.jumbo : apiUrl + logoImageUri}'`,
+                  '--network-jumbo': `url('${selectedNetwork?.jumbo ? apiUrl + selectedNetwork.jumbo : apiUrl + logoImageUri}'`,
                 } as React.CSSProperties
               }
             >
@@ -144,7 +140,6 @@ export default function HomeInfo({ metadata }) {
         </div>
                   </>
 
-      )}
     </>
   );
 }
@@ -180,7 +175,7 @@ function HomeInfoNetworkLogo({ selectedNetwork }) {
             <NetworkLogo network={selectedNetwork} />
           </div>
           <h3 className="homeinfo__network-title-text">
-            {selectedNetwork.name}
+            {selectedNetwork?.name}
           </h3>
       </div>
   )
@@ -201,7 +196,7 @@ function HomeInfoInfoCard({ selectedNetwork }) {
     if (selectedNetwork)
     {
       setDescription(() => {
-        return trimCharactersRemoveLastIncompleteWord(selectedNetwork.description, 200)+ "..."
+        return trimCharactersRemoveLastIncompleteWord(selectedNetwork?.description, 200)+ "..."
       })
     }
   },[])
@@ -211,7 +206,7 @@ function HomeInfoInfoCard({ selectedNetwork }) {
         <div className="homeinfo-card__header homeinfo-card__header--openable" onClick={toggleShowInfo}>
                 <h3 className="homeinfo-card__header-title" >
                     <IoBookOutline/>
-                    {t('homeinfo.knowMore',[selectedNetwork.name])}
+                    {t('homeinfo.knowMore',[selectedNetwork?.name])}
                 </h3>
 
         </div>
@@ -245,7 +240,7 @@ function HomeInfoStatsCard({ selectedNetwork, config }) {
       <div className="homeinfo-card__header">
         <h3 className="homeinfo-card__header-title">
           <IoEaselSharp/>
-          {t('homeinfo.stats', [selectedNetwork.name])}
+          {t('homeinfo.stats', [selectedNetwork?.name])}
         </h3>
         <div className="homeinfo-card__controls">
 
@@ -279,7 +274,7 @@ function HomeInfoTopHashTags({ selectedNetwork }) {
       </div>
       <div className="homeinfo__hashtags">
         <TagsNav
-          tags={selectedNetwork.topTags.map(
+          tags={selectedNetwork?.topTags.map(
             (tag) => tag.tag,
           )}
         />
@@ -427,7 +422,7 @@ function HomeSloganCard({ selectedNetwork, config }) {
     <div className="homeinfo-card homeinfo__card--slogan-card homeinfo-card--full-width">
       <div className="homeinfo-card__header homeinfo-card__header--slogan-card">
         <h3 className="homeinfo-card__header-title--slogan">
-          {selectedNetwork.slogan}
+          {selectedNetwork?.slogan}
         </h3>
       </div><hr></hr>
       <HomeInfoActionButton>

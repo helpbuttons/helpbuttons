@@ -9,7 +9,7 @@ module.exports = {
     description: `${process.env?.description ? process.env.description : ''}`,
     title: `${process.env?.title ? process.env.title : 'helpbuttons title'}`,
     adminemail: `${process.env?.adminemail ? process.env.adminemail : ''}`,
-    bgcolor: `${process.env?.bgcolor ? process.env.bgcolor : 'red'}`,
+    bgcolor: `${process.env?.bgcolor ? process.env.bgcolor : '#7fdfce'}`,
   },
   typescript: {
     ignoreBuildErrors: true,

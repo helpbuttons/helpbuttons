@@ -36,14 +36,12 @@ import { localStorageService, LocalStorageVars } from 'services/LocalStorage';
 import { usePoolFindNewActivities } from 'state/Activity';
 import { ResetFilters } from 'state/Explore';
 import { ErrorPopup } from './Error';
-import ImageWrapper, { ImageType } from 'elements/ImageWrapper';
 import { getApiUrl, getBgcolor } from 'shared/environment';
 
 export default appWithTranslation(MyApp);
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
-  const staticAppBackendUrl = getApiUrl();
   const [authorized, setAuthorized] = useState(null);
   const [isLoadingUser, setIsLoadingUser] = useState(false);
   const [fetchingNetworkError, setFetchingNetworkError] = useState(false)
@@ -100,7 +98,7 @@ function MyApp({ Component, pageProps }) {
       );
       setFetchingNetworkError(() => true)
     }
-    setLoadingMessage((prev) => prev + '; '+ error + ' ' + staticAppBackendUrl)
+    setLoadingMessage((prev) => prev + '; '+ error + getApiUrl())
     dconsole.log(error);
     return;
   };
@@ -237,7 +235,7 @@ function MyApp({ Component, pageProps }) {
     }
   }, [selectedNetwork]);
 
-  useWhichLocale({ sessionLocale: sessionUser?.locale, networkLocale: selectedNetwork.locale });
+  useWhichLocale({ sessionLocale: sessionUser?.locale, networkLocale: selectedNetwork?.locale });
 
   const searchParams = useSearchParams();
 
@@ -279,7 +277,10 @@ function MyApp({ Component, pageProps }) {
         return (
           <Component {...pageProps} />
         );
-      } else if (selectedNetwork.id) {
+      } else {
+        if(fetchingNetworkError){
+          return <ErrorPopup/>
+        }
         return (
           <>
             <MetadataSEOFromStore nonce={nonce} />
@@ -295,8 +296,8 @@ function MyApp({ Component, pageProps }) {
                     '--network-text-over-color': getReadableTextColor(selectedNetwork.backgroundColor),
                   } as React.CSSProperties)
                   : ({
-                    '--network-background-color': 'grey',
-                    '--network-accent-color': 'pink',
+                    '--network-background-color': getBgcolor(),
+                    '--network-accent-color': 'grey',
                     '--network-text-over-color': 'black',
                   } as React.CSSProperties)
               }
@@ -317,20 +318,6 @@ function MyApp({ Component, pageProps }) {
             </div>
           </>
         );
-      } else {
-        if(fetchingNetworkError){
-          return <ErrorPopup/>
-        }
-
-        return <>
-            {staticAppBackendUrl && 
-              <div id="splash" style={{backgroundColor: getBgcolor()}}>
-                <ImageWrapper imageType={ImageType.formIllustration} src={`/assets/images/logo.png`} alt={selectedNetwork?.name} localUrl={true}/>
-                <div>{getApiUrl()} . {loadingMessage}</div>
-              </div> 
-            } 
-            <Loading />
-            </>;
       }
 
     }).call(this)}

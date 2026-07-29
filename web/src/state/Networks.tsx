@@ -18,6 +18,7 @@ import { ButtonService } from 'services/Buttons';
 import { handleError } from './helper';
 import { Role } from 'shared/types/roles';
 import { CustomFields } from 'shared/types/customFields.type';
+import { getBgcolor } from 'shared/environment';
 
 export interface NetworksState {
   // networks: Network[];
@@ -31,8 +32,8 @@ export const networksInitial = {
     description: '',
     buttonTemplates: [],
     topTags: [],
-    backgroundColor: 'grey',
-    textColor: 'pink',
+    backgroundColor: getBgcolor(),
+    textColor: 'black',
   },
   initialized: false,
 };

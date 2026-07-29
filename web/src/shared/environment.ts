@@ -15,5 +15,5 @@ export function isStaticApp(): string {
 export function getBgcolor(): string {
 
   const { publicRuntimeConfig } = getEnvConfig();
-  return publicRuntimeConfig?.bgcolor ? publicRuntimeConfig?.bgcolor : '#7fdfce'
+  return publicRuntimeConfig.bgcolor
 }

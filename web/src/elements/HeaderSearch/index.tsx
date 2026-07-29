@@ -12,7 +12,7 @@ import { readableDistance } from 'shared/sys.helper';
 import { Network } from 'shared/entities/network.entity';
 
 export function HeaderSearch({ toggleAdvancedFilters, exploreMapState, selectedNetwork}: {toggleAdvancedFilters: any, exploreMapState: ExploreMapState, selectedNetwork: any}) {
-  const [buttonCount, setButtonCount] = useState(selectedNetwork.buttonCount)
+  const [buttonCount, setButtonCount] = useState(selectedNetwork?.buttonCount ? selectedNetwork.buttonCount : 0)
   const pageName = useGlobalStore((state: GlobalState) => state.homeInfo.pageName)
 
   useEffect(() => {
@@ -20,10 +20,10 @@ export function HeaderSearch({ toggleAdvancedFilters, exploreMapState, selectedN
     {
       setButtonCount(() => exploreMapState.listButtons.length)
     }else {
-      setButtonCount(() => selectedNetwork.buttonCount)
+      setButtonCount(() => selectedNetwork?.buttonCount)
       
     }
-  }, [exploreMapState.listButtons, selectedNetwork.buttonCount])
+  }, [exploreMapState.listButtons, selectedNetwork?.buttonCount])
 
   const clearButton = useRef(null);
   const filtered = isFiltering()

@@ -11,10 +11,10 @@ export const useButtonTypes = () => {
   const [buttonTemplates, setButtonTemplates] = useState([])
   const selectedNetwork = useSelectedNetwork()
   useEffect(() => {
-    if(selectedNetwork.buttonTemplates){
+    if(selectedNetwork?.buttonTemplates){
       setButtonTemplates(() => selectedNetwork.buttonTemplates.filter((_btnTemplate) => !_btnTemplate.hide))
     }
-  }, [selectedNetwork.buttonTemplates])
+  }, [selectedNetwork?.buttonTemplates])
   return buttonTemplates;
 }
 
