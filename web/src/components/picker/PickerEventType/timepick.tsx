@@ -1,19 +1,12 @@
 import { useEffect, useState } from 'react';
 import { DropdownSearch } from 'elements/Dropdown/DropdownSearch';
 import t from 'i18n';
+import { FieldCheckbox } from 'elements/Fields/FieldCheckbox';
+import { useToggle } from 'shared/custom.hooks';
 
-export function TimePickInput({defaultDateTime, handleChange}) {
+export function TimePickInput({input, setInput, handleChange}) {
   const [results, setResults] = useState([])
   const [invalid, setInvalid] = useState(false)
-
-  const dateToTime = (date) => {
-    if(date){
-      return `${date.getHours()}:${ String(date.getMinutes()).padStart(2, '0')}`
-    }
-    return ''
-  }
-  const defaultTime = dateToTime(defaultDateTime);
-  const [input, setInput] = useState(defaultTime)
 
   const timeRegex = /^([01]?\d|2[0-3])(:([0-5]?\d?)?)?$/gm;
 
@@ -127,13 +120,32 @@ export function TimePickInput({defaultDateTime, handleChange}) {
 }
 
 export function TimeRangePicker({defaultStart, defaultEnd, handleChangeStart, handleChangeEnd}) {
+  const dateToTime = (date) => {
+    if(date){
+      return `${date.getHours()}:${ String(date.getMinutes()).padStart(2, '0')}`
+    }
+    return ''
+  }
+  const defaultTime = dateToTime(defaultStart);
+  const [start, setStart] = useState(defaultTime)
+  const [end, setEnd] = useState(defaultTime)
+  const [allDay, setAllDay] = useToggle(false)
   return (
-      <div className='picker__hours'>
-            <TimePickInput defaultDateTime={defaultStart}
-              handleChange={(value) => handleChangeStart(value)} /> <span className='picker__hours-dash'>-</span>
-            <TimePickInput defaultDateTime={defaultEnd}
-              handleChange={(value) => handleChangeEnd(value)} />
-      </div>
+    <>
+      <FieldCheckbox
+        text={t('eventType.allDay')}
+        defaultValue={allDay}
+        onChanged={() => { setStart(() => '00:01'); setEnd(() => '23:59'); setAllDay((prev) => !prev)}}
+      />
+      {!allDay && 
+        <div className='picker__hours'>
+              <TimePickInput input={start} setInput={setStart}
+                handleChange={(value) => handleChangeStart(value)} /> <span className='picker__hours-dash'>-</span>
+              <TimePickInput input={end} setInput={setEnd}
+                handleChange={(value) => handleChangeEnd(value)} />
+        </div>
+      }
+      </>
       
   )
 }

@@ -485,7 +485,8 @@
     "beforeEnd": "Please select a time/date before {0}",
     "changeToMultipleDates": "Press here to select several days",
     "everyMonth": "Each month",
-    "everyWeek": "Each week"
+    "everyWeek": "Each week",
+    "allDay": "All day"
   },
   "validation": {
     "fieldRequired": "field is required.",
