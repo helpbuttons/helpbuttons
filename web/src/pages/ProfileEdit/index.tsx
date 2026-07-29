@@ -42,6 +42,7 @@ import { useNetworkCenter } from 'state/Networks';
 import FieldImageUpload from 'elements/Fields/FieldImageUpload';
 import { RadiusSlider } from 'components/search/AdvancedFilters/filter-by-location';
 import { DesktopNotificationsButton } from 'components/notifications';
+import { browserAllowsNotifications } from 'services/PushNotification';
 
 export default function ProfileEdit() {
   const {
@@ -132,10 +133,7 @@ export default function ProfileEdit() {
       reset(sessionUser);
     }
   }, [sessionUser]);
-  const notificationsPermissionGranted = useGlobalStore(
-    (state: GlobalState) =>
-      state.activities.notificationsPermissionGranted,
-  );
+  const notificationsPermissionGranted = browserAllowsNotifications()
   const radius = watch('radius')
   const coordinates = watch('center')
   return (

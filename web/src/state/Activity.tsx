@@ -6,10 +6,6 @@ import { UpdateEvent, WatchEvent } from 'store/Event';
 import { of } from 'rxjs';
 import { useCallback } from 'react';
 import { useInterval } from 'shared/custom.hooks';
-import {
-  LocalStorageVars,
-  localStorageService,
-} from 'services/LocalStorage';
 import { ActivityDtoOut } from 'shared/dtos/activity.dto';
 import { Activities as AllActivities}  from 'shared/dtos/activity.dto';
 
@@ -21,7 +17,6 @@ import { GroupMessageDtoOut } from 'shared/dtos/group-message.dto';
 export interface Activities {
   buttons: ActivityDtoOut[];
   activitiesPage: number;
-  notificationsPermissionGranted: boolean;
   focusMessageId: string;
   focusPostId: string;
   draftButton: ButtonEntry;
@@ -33,35 +28,12 @@ export const activitiesInitialState: Activities = {
   //@ts-ignore
   buttons: [],
   activitiesPage: 0,
-  notificationsPermissionGranted: false,
   focusMessageId: null,
   focusPostId: null,
   draftButton: null,
   community: null,
   admin: null,
 };
-
-export class PermissionGranted implements UpdateEvent {
-  public update(state: GlobalState) {
-    return produce(state, (newState) => {
-      localStorageService.save(
-        LocalStorageVars.HAS_PERMISSION_NOTIFICATIONS,
-        true,
-      );
-      newState.activities.notificationsPermissionGranted = true;
-    });
-  }
-}
-export class PermissionRevoke implements UpdateEvent {
-  public update(state: GlobalState) {
-    return produce(state, (newState) => {
-      localStorageService.remove(
-        LocalStorageVars.HAS_PERMISSION_NOTIFICATIONS,
-      );
-      newState.activities.notificationsPermissionGranted = false;
-    });
-  }
-}
 
 
 export const usePoolFindNewActivities = ({sessionUser, timeMs }) => {

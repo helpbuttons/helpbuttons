@@ -8,6 +8,7 @@ import t from 'i18n';
 import router from 'next/router';
 import { useCallback, useEffect, useState } from 'react';
 import { IoDownload, IoDownloadOutline } from 'react-icons/io5';
+import { browserAllowsNotifications } from 'services/PushNotification';
 import { GlobalState, useGlobalStore } from 'state';
 
 
@@ -34,10 +35,7 @@ export function HomeInfoInstallCard({ selectedNetwork }) {
   const sessionUser = useGlobalStore(
     (state: GlobalState) => state.sessionUser,
   );
-  const notificationsPermissionGranted = useGlobalStore(
-    (state: GlobalState) =>
-      state.activities.notificationsPermissionGranted,
-  );
+  const notificationsPermissionGranted = browserAllowsNotifications()
   
   return (    
     <div className="homeinfo-card homeinfo-card--wrap">

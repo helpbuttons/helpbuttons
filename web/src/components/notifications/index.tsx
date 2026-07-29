@@ -1,17 +1,11 @@
-import getEnvConfig from 'next/config';
 import Btn, { BtnType, ContentAlignment, IconType } from 'elements/Btn';
 import t from 'i18n';
-import { GlobalState, store } from 'state';
-import { useCallback, useEffect, useState } from 'react';
+import {  store } from 'state';
+import {  useEffect, useState } from 'react';
 import { IoNotificationsOutline } from 'react-icons/io5';
-import {
-  PermissionGranted,
-  PermissionRevoke,
-} from 'state/Activity';
-import { useGlobalStore } from 'state';
-import dconsole from 'shared/debugger';
 import { PushSubscribe, PushUnsubscribe } from 'state/Push';
 import { useConfig } from 'state/Setup';
+import { browserAllowsNotifications } from 'services/PushNotification';
 
 const isSupported = () =>
   'Notification' in window &&
@@ -46,17 +40,8 @@ export function DesktopNotificationsButton({ allowedToNotify }) {
   const [subscription, setSubscription] = useState<PushSubscription | null>(
     null
   )
-  const notificationsPermissionGranted = useGlobalStore(
-    (state: GlobalState) =>
-      state.activities.notificationsPermissionGranted,
-  );
+  const notificationsPermissionGranted = browserAllowsNotifications()
 
-  useEffect(() => {
-    if (isSupported() && Notification.permission === 'granted') {
-      // Check if the browser supports notifications
-      store.emit(new PermissionGranted());
-    }
-  }, []);
   const requestPermission = (vapidPublicKey) => {
 
     if (isSupported()) {
@@ -67,7 +52,6 @@ export function DesktopNotificationsButton({ allowedToNotify }) {
           }else{
             console.error('empty vapid public key')
           }
-          store.emit(new PermissionGranted());
         } else {
           unsubscribeFromPush()
         }
@@ -88,7 +72,6 @@ export function DesktopNotificationsButton({ allowedToNotify }) {
     store.emit(new PushSubscribe(sub))
   }
   async function unsubscribeFromPush() {
-    store.emit(new PermissionRevoke());
     store.emit(new PushUnsubscribe())
     setSubscription(null)
   }

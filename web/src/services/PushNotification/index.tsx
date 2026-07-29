@@ -14,4 +14,9 @@ export class PushNotificationService {
     return httpService.delete("push/unsubscribe");
   }
   
+  
+}
+
+export const browserAllowsNotifications = () => {
+  return Notification.permission === 'granted';
 }
