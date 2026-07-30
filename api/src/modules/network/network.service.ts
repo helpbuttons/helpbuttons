@@ -323,6 +323,13 @@ export class NetworkService {
 
   }
 
+  async getJumbo(res) {
+    const defaultNetwork = await this.findDefaultNetwork()
+    
+    const jumboPath = defaultNetwork.jumbo.replace('/files/get/','')
+    return res.sendFile(jumboPath, { root: uploadDir });
+  }
+
   manifest() {
     return this.findDefaultNetwork().then(network => {
       const apiUrl = `${configs().WEB_URL}/api/networks`

@@ -25,7 +25,7 @@ export const useConfig = (_config, onError) => {
   useEffect(() => {
     if (!fetchingConfig.current && !config) {
       if (isStaticApp()) {
-        const staticAppCompiledConfig = require('../../public/config.json')
+        const staticAppCompiledConfig = require('../../config.json')
         store.emit(new ConfigFound(staticAppCompiledConfig))
       } else if (_config) {
         store.emit(new ConfigFound(_config))

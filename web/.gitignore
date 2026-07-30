@@ -82,5 +82,9 @@ public/assets/images/logo.png
 
 .yarn
 
-public/config.json
-public/network.json
+config.json
+network.json
+
+public/assets/images/logo.png
+public/assets/images/logo_rgba.png
+public/assets/images/jumbo.png

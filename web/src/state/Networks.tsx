@@ -46,8 +46,8 @@ export const useSelectedNetwork = (_selectedNetwork = null, onError = (err) => {
   useEffect(() => {
     if (!initialized && !fetching.current) {
       if(isStaticApp() && !(selectedNetwork?.id)){
-        const staticAppCompiledNetwork = require('../../public/network.json')
-        store.emit(new SelectedNetworkFetched(staticAppCompiledNetwork))
+        const staticAppCompiledNetwork = require('../../network.json')
+        store.emit(new SelectedNetworkFetched({...staticAppCompiledNetwork, logo: '/assets/images/logo.png'}))
       }else
       if (_selectedNetwork?.id) {
         store.emit(new SelectedNetworkFetched(_selectedNetwork))

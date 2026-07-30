@@ -101,4 +101,11 @@ import {
     }
     throw Error('resolution not allowed')
   }
+
+  @Header('Cross-Origin-Resource-Policy', 'cross-origin')
+  @AllowGuest()
+  @Get('jumbo')
+  async jumbo(@Param('resolution') resolution : number, @Res() res) {
+    return this.networkService.getJumbo(res)
+  }
 }

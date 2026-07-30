@@ -37,7 +37,7 @@ import { TextFormatted } from 'elements/Message';
 import { LinkAdmins } from 'components/user/LinkAdmins';
 import { ShowDesktopOnly, ShowMobileOnly } from 'elements/SizeOnly';
 import {  ListButtonTypes } from 'components/nav/ButtonTypes';
-import { getApiUrl } from 'shared/environment';
+import { getApiUrl, isStaticApp } from 'shared/environment';
 import { logoImageUri } from 'shared/sys.helper';
 import { FindLatestNetworkActivity, useSelectedNetwork } from 'state/Networks';
 import { HomeInfoInstallCard } from 'components/install';
@@ -104,7 +104,6 @@ export default function HomeInfo({ metadata }) {
 
 
             <div className="homeinfo__sections">
-              
               <HomeInfoNetworkLogo selectedNetwork={selectedNetwork} />
               <HomeSloganCard selectedNetwork={selectedNetwork} config={config} />
 
@@ -128,7 +127,7 @@ export default function HomeInfo({ metadata }) {
               className="homeinfo-card homeinfo__card--title-card"
               style={
                 {
-                  '--network-jumbo': `url('${selectedNetwork?.jumbo ? apiUrl + selectedNetwork.jumbo : apiUrl + logoImageUri}'`,
+                  '--network-jumbo': `url('${isStaticApp() ? '/assets/images/jumbo.png' : getApiUrl() + selectedNetwork?.jumbo}'`,
                 } as React.CSSProperties
               }
             >
@@ -393,7 +392,7 @@ function ActivityListHomeInfo ({activities}) {
     
   }
 
-  return  <>{activities.map((activity, idx) => <ActivityListEntryCard activity={activity} onClick={() => onActivityClicked(activity)} key={idx} />)}</>
+  return  <>{activities?.map((activity, idx) => <ActivityListEntryCard activity={activity} onClick={() => onActivityClicked(activity)} key={idx} />)}</>
 }
 function HomeInfoAdministeredBy({ scrollToContact }) {
 
@@ -502,7 +501,7 @@ function HomeInfoKeyLocations({selectedNetwork}) {
   
   
   return  (<>
-  {keyLocations.length > 0 && 
+  {keyLocations?.length > 0 && 
     <div className="homeinfo-card homeinfo-card--wrap">
       <div className="homeinfo-card__header">
         <h3 className="homeinfo-card__header-title">
@@ -517,7 +516,7 @@ function HomeInfoKeyLocations({selectedNetwork}) {
       <hr></hr>
 
       <div className="homeinfo__hashtags">
-        {keyLocations.map((place, idx) => {
+        {keyLocations?.map((place, idx) => {
           return <div key={idx} className="hashtags__list-item">
             <Link href={`/Explore/p/${place.id}`} >
             <BtnCaption

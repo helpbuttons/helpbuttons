@@ -179,7 +179,7 @@ export function ImageContainer({
 
   return (
     <HbImage
-      src={makeImageUrl(src)}
+      src={makeImageUrl(src,localUrl)}
       alt={alt}
       width={width}
       height={height}

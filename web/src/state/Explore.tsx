@@ -107,8 +107,10 @@ export class FindButtons implements WatchEvent {
     // add cache
     return ButtonService.find(this.resolution, this.hexagons).pipe(
       map((buttons) => {
-        store.emit(new UpdateTagsList(buttons))
-        store.emit(new StoreFindButtons(buttons))
+        if(buttons.length > 0){
+          store.emit(new UpdateTagsList(buttons))
+          store.emit(new StoreFindButtons(buttons))
+        }
         this.onSuccess(buttons)
       }),
       catchError((error) => handleError(this.onError, error)),
