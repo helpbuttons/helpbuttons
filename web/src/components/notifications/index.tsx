@@ -32,7 +32,6 @@ export function DesktopNotificationsButton({ allowedToNotify }) {
   const [vapidPublicKey, setVapidPublicKey] = useState(null)
   useEffect(() => {
     if(config){
-      console.log(config)
       setVapidPublicKey(() => config.vapidPublicKey)
     }
     
