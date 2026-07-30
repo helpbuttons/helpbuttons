@@ -18,7 +18,7 @@ import { ButtonService } from 'services/Buttons';
 import { handleError } from './helper';
 import { Role } from 'shared/types/roles';
 import { CustomFields } from 'shared/types/customFields.type';
-import { getBgcolor } from 'shared/environment';
+import { getBgcolor, isStaticApp } from 'shared/environment';
 
 export interface NetworksState {
   // networks: Network[];
@@ -45,6 +45,10 @@ export const useSelectedNetwork = (_selectedNetwork = null, onError = (err) => {
   const fetching = useRef(false)
   useEffect(() => {
     if (!initialized && !fetching.current) {
+      if(isStaticApp() && !(selectedNetwork?.id)){
+        const staticAppCompiledNetwork = require('../../public/network.json')
+        store.emit(new SelectedNetworkFetched(staticAppCompiledNetwork))
+      }else
       if (_selectedNetwork?.id) {
         store.emit(new SelectedNetworkFetched(_selectedNetwork))
         return;

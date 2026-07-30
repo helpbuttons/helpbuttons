@@ -1,5 +1,5 @@
 import produce from 'immer';
-import { GlobalState, store } from 'state';
+import { GlobalState, store, useGlobalStore } from 'state';
 import { of, tap } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { isHttpError } from 'services/HttpService';
@@ -15,18 +15,26 @@ import { alertService } from 'services/Alert';
 import { useEffect, useRef } from 'react';
 import { useStore } from 'state';
 import dconsole from 'shared/debugger';
+import { isStaticApp } from 'shared/environment';
 
 
 export const useConfig = (_config, onError) => {
+  const config = useGlobalStore((state: GlobalState) => state.config);
+
   const fetchingConfig = useRef(false)
   useEffect(() => {
-    if(!_config && !fetchingConfig.current)
-    {
-      fetchingConfig.current = true
-      store.emit(new GetConfig(() => dconsole.log('got config!'), onError))
-    }else if(_config){
-      store.emit(new ConfigFound(_config))
+    if (!fetchingConfig.current && !config) {
+      if (isStaticApp()) {
+        const staticAppCompiledConfig = require('../../public/config.json')
+        store.emit(new ConfigFound(staticAppCompiledConfig))
+      } else if (_config) {
+        store.emit(new ConfigFound(_config))
+      } else if (!_config && !fetchingConfig.current) {
+        fetchingConfig.current = true
+        store.emit(new GetConfig(() => dconsole.log('got config!'), onError))
+      }
     }
+
   }, [_config])
   return useStore(
     store,

@@ -36,14 +36,14 @@ import { localStorageService, LocalStorageVars } from 'services/LocalStorage';
 import { usePoolFindNewActivities } from 'state/Activity';
 import { ResetFilters } from 'state/Explore';
 import { ErrorPopup } from './Error';
-import { getApiUrl, getBgcolor } from 'shared/environment';
+import { getApiUrl, getBgcolor, isStaticApp } from 'shared/environment';
 
 export default appWithTranslation(MyApp);
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
   const [authorized, setAuthorized] = useState(null);
-  const [isLoadingUser, setIsLoadingUser] = useState(false);
+  const isLoadingUser = useRef(false)
   const [fetchingNetworkError, setFetchingNetworkError] = useState(false)
   const path = router.asPath.split('?')[0];
   const nonce = randomBytes(128).toString('base64')
@@ -102,7 +102,6 @@ function MyApp({ Component, pageProps }) {
     dconsole.log(error);
     return;
   };
-    
   const config = useConfig(pageProps._config, onFetchingConfigError);
   const selectedNetwork = useSelectedNetwork(pageProps._selectedNetwork, onFetchingNetworkError);
 
@@ -169,22 +168,22 @@ function MyApp({ Component, pageProps }) {
 
     const loginToken = localStorageService.read(LocalStorageVars.ACCESS_TOKEN);
     if (loginToken && sessionUser === false && ['Embbed'].indexOf(pageName) < 0) {
-      if (!isLoadingUser) {
-        setIsLoadingUser(true);
+      if (!isLoadingUser.current) {
+        isLoadingUser.current = true;
         store.emit(
           new FetchUserData(
             () => {
-              setIsLoadingUser(false);
+              isLoadingUser.current = false;
             },
             (error) => {
-              setIsLoadingUser(false);
+              isLoadingUser.current = false;
             },
           ),
         );
       }
       return;
     }
-    if (isLoadingUser) {
+    if (isLoadingUser.current && !isStaticApp()) {
       return;
     }
     if (sessionUser) {
@@ -194,7 +193,7 @@ function MyApp({ Component, pageProps }) {
     const isAllowed = isRoleAllowed(Role.guest, path)
 
     if (!isAllowed) {
-      console.log('not allowd')
+      console.log('not allowed ' + path)
       store.emit(new ResetFilters()) // TODO: bug when using router.back
       store.emit(new SetMainPopup(MainPopupPage.LOGIN))
       // router.back()

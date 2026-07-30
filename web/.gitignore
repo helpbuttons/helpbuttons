@@ -80,4 +80,7 @@ src/api/shared/commit.tsx
 
 public/assets/images/logo.png
 
-web/.yarn
+.yarn
+
+public/config.json
+public/network.json
