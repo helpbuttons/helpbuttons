@@ -11,7 +11,8 @@
     "sync": "yarn connect-api",
     "connect-api": "cp ../api/src/**/**/*.dto.ts src/shared/dtos && cp ../api/src/**/**/*.entity.ts src/shared/entities && cp -r ../api/src/shared/types/ src/shared/",
     "hb": "tsx hb.ts",
-    "update-translations": "cd scripts && node updateTranslationStrings.js"
+    "update-translations": "cd scripts && node updateTranslationStrings.js",
+    "spain-geojson": "cp node_modules/geojsonspain/provinces.json public/geojson/"
   },
   "dependencies": {
     "@emoji-mart/data": "^1.1.2",
@@ -72,7 +73,8 @@
     "sass": "^1.38.2",
     "sharp": "^0.35.3",
     "tsx": "^3.12.1",
-    "yup": "^0.32.9"
+    "yup": "^0.32.9",
+    "geojsonspain": "git+https://github.com/helpbuttons/GeoJson_SPAIN.git"
   },
   "devDependencies": {
     "@svgr/cli": "^5.5.0",
