@@ -140,6 +140,8 @@ export default function HexagonExploreMap({
     store.emit(new UpdateFiltersHexButtonType(hexagonSelected, btnTypeName))
   }
 
+  const provinces = require('../../../../public/geojson/provinces.json')
+
   return (
     <>
       {(exploreSettings.center && selectedNetwork) && (
@@ -156,7 +158,9 @@ export default function HexagonExploreMap({
             {filteredCircle && <GeoJsonFeature feature={filteredCircle}/>}
             {/* {geoJsonFeatures && <GeoJsonFeature feature={geoJsonFeatures}/>} */}
             </GeoJson>
-            
+            {provinces?.map((province,) => {
+                return (<GeoJson key={province.name} data={JSON.parse(province.content)}/>)
+            })}
             {/*
             show count of buttons per hexagon
             */}
