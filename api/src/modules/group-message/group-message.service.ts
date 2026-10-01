@@ -105,6 +105,9 @@ export class GroupMessageService {
 
             await this.groupMessageRepository.update({ to: groupMessageType }, { last: false });
             await this.groupMessageRepository.insert([groupMessage]);
+        }catch(err){
+            console.log('error on sending notification!!!')
+            console.log(err)
         } finally {
             unlock!();
         }
