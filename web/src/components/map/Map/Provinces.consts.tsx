@@ -4,6 +4,7 @@ import {hexesProvincesMaxResolution } from "shared/provinces.consts.cjs"
 export const provincesMaxZoom = 9;
 
 export const provincesH3GeoJson = require('../../../../public/geo/provinces_h3.json')
+export const provincesPolygonsGeoJson = require('../../../../public/geo/spain-provinces-simplified.json')
 
 export function findVisibleProvincesHexes(boundsHexes, hexes, resolution) {
   

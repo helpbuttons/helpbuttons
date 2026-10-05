@@ -29,7 +29,7 @@ import { getCenter } from 'geolib';
 import { useIsMobile } from 'elements/SizeOnly';
 import { isPointInBounds } from 'elements/Fields/FieldLocation/location.helpers';
 import { UpdateProvinceButtonTypeClicked, UpdateProvinceClicked } from 'state/ExploreProvince';
-import { provincesH3GeoJson, provincesMaxZoom } from './Provinces.consts';
+import { provincesH3GeoJson, provincesMaxZoom, provincesPolygonsGeoJson } from './Provinces.consts';
 
 export default function HexagonExploreMap({
   h3TypeDensityHexes,
@@ -185,15 +185,11 @@ export default function HexagonExploreMap({
             {filteredCircle && <GeoJsonFeature feature={filteredCircle}/>}
             </GeoJson>
             {showProvinces && 
-              <GeoJsonLoader
-                link={'/geo/spain-provinces-simplified.json'}
-                styleCallback={(feature, hover) =>{return { fill: '#f2c8d400', strokeWidth: '2', stroke: "black"}}}
-              />
-            }
-            {showProvinces && provinceClickedPolygon && 
-            <GeoJson>
-                <GeoJsonFeature svgAttributes={{fill: 'red'}} feature={provinceClickedPolygon} />
-            </GeoJson>
+              <GeoJson>
+                {provincesPolygonsGeoJson.features.map((provincePolygon) => {
+                  return (<GeoJsonFeature svgAttributes={{fill: `${provincePolygon.properties.Codigo}${provincePolygon.properties.Cod_CCAA}` != provinceClicked ? "#d4e6ec99" : 'black',strokeWidth: "1",stroke: "white",r: "20"}} onClick={() => {store.emit(new UpdateProvinceClicked(`${provincePolygon.properties.Codigo}${provincePolygon.properties.Cod_CCAA}`));console.log(provincePolygon.properties.Texto)}} feature={provincePolygon}/>)
+                })}
+              </GeoJson>
             }
             {showProvinces && buttonsPerProvince.map((p, idx) => {
               return (
@@ -203,9 +199,7 @@ export default function HexagonExploreMap({
                 key={idx}
               >
                 {provinceClicked && p.code == provinceClicked && <MapGroupedType typesGrouped={p.grouped} buttonTypes={buttonTypes} onTypeClicked={(btnTypeName) => store.emit(new UpdateProvinceButtonTypeClicked(btnTypeName))}/>}
-                {p.code != provinceClicked && (<MapCircleNumber caption={`${p.name} ${p.count}`} onClick={() => {
-                  store.emit(new UpdateProvinceClicked(p.code))
-                }}/>)}
+                {p.code != provinceClicked && (<>{`${p.name} ${p.count}`}</>)}
                 
               </Overlay>
             )
