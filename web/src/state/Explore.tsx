@@ -482,15 +482,20 @@ export class UpdateHexagonClicked implements UpdateEvent {
     return produce(state, (newState) => {
       newState.explore.map.filters.hexClicked = this.hexagonClicked;
       if (this.hexagonClicked) {
-        newState.explore.map.showInstructions = false;
-        newState.explore.currentButton = null
-        if (state.explore.settings.viewMode == ExploreViewMode.MAP) {
-          newState.explore.settings.viewMode = ExploreViewMode.BOTH
-        }
+        newState = clearOnSelection(newState, state)
       }
       newState.explore.map.filters.hexClickedBtnType = null;
     });
   }
+}
+
+export const clearOnSelection = (newState, state) => {
+  newState.explore.map.showInstructions = false;
+  newState.explore.currentButton = null
+  if (state.explore.settings.viewMode == ExploreViewMode.MAP) {
+    newState.explore.settings.viewMode = ExploreViewMode.BOTH
+  }
+  return newState;
 }
 
 export class HoverButtonList implements UpdateEvent {

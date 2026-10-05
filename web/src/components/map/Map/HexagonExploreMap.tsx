@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { GeoJson, GeoJsonFeature, Overlay, Point } from 'pigeon-maps';
+import { GeoJson, GeoJsonFeature, GeoJsonLoader, Overlay, Point } from 'pigeon-maps';
 import { GlobalState, store, useGlobalStore } from 'state';
 import {
   ExploreViewMode,
@@ -14,7 +14,8 @@ import { HbMap } from '.';
 import {
   cellToZoom,
   convertH3DensityToFeatures,
-  getZoomResolution} from 'shared/honeycomb.utils';
+  getZoomResolution
+} from 'shared/honeycomb.utils';
 import _ from 'lodash';
 import { buttonColorStyle } from 'shared/buttonTypes';
 import Loading from 'components/loading';
@@ -27,6 +28,8 @@ import { circleGeoJSON } from 'shared/geo.utils';
 import { getCenter } from 'geolib';
 import { useIsMobile } from 'elements/SizeOnly';
 import { isPointInBounds } from 'elements/Fields/FieldLocation/location.helpers';
+import { UpdateProvinceButtonTypeClicked, UpdateProvinceClicked } from 'state/ExploreProvince';
+import { provincesH3GeoJson, provincesMaxZoom } from './Provinces.consts';
 
 export default function HexagonExploreMap({
   h3TypeDensityHexes,
@@ -34,7 +37,9 @@ export default function HexagonExploreMap({
   exploreSettings,
   selectedNetwork,
   countFilteredButtons,
-  keyLocations = []
+  keyLocations = [],
+  boundsHexagons = [],
+  buttonsPerProvince = [],
 }) {
   const [centerBounds, setCenterBounds] = useState<Point>(null);
   const [geoJsonFeatures, setGeoJsonFeatures] = useState([])
@@ -45,6 +50,10 @@ export default function HexagonExploreMap({
   const hexagonClicked = useStore(
     store,
     (state: GlobalState) => state.explore.map.filters.hexClicked
+  );
+  const provinceClicked = useStore(
+    store,
+    (state: GlobalState) => state.explore.map.filters.provinceClicked
   );
 
   const hoverButtonList = useStore(
@@ -91,6 +100,7 @@ export default function HexagonExploreMap({
     store.emit(new UpdateHexagonClicked(null))
     store.emit(new updateCurrentButton(null))
     store.emit(new HoverButtonList(null))
+    store.emit(new UpdateProvinceClicked(null))
   };
 
   useEffect(() => {
@@ -140,8 +150,25 @@ export default function HexagonExploreMap({
     store.emit(new UpdateFiltersHexButtonType(hexagonSelected, btnTypeName))
   }
 
-  const provinces = require('../../../../public/geojson/provinces.json')
+  const [provinceClickedPolygon, setProvinceClickedPolygon] = useState(null)
+  useEffect(() => {
+    if(exploreSettings.zoom > provincesMaxZoom)
+    {
+      setProvinceClickedPolygon(() => null)
+      store.emit(new UpdateProvinceClicked(null))
+      return;
+    }
+  }, [boundsHexagons, resolution])
 
+  useEffect(() => {
+    if(!provinceClicked){
+      setProvinceClickedPolygon(() => null)
+    }else{
+      setProvinceClickedPolygon(() => provincesH3GeoJson.find((prov) => prov.code == provinceClicked)?.polygon)
+    }
+  }, [provinceClicked])
+
+  const showProvinces = exploreSettings.zoom <= provincesMaxZoom;
   return (
     <>
       {(exploreSettings.center && selectedNetwork) && (
@@ -156,15 +183,37 @@ export default function HexagonExploreMap({
             <DisplayHiddenButtonsWarning countFilteredButtons={countFilteredButtons} />
             <GeoJson>
             {filteredCircle && <GeoJsonFeature feature={filteredCircle}/>}
-            {/* {geoJsonFeatures && <GeoJsonFeature feature={geoJsonFeatures}/>} */}
             </GeoJson>
-            {provinces?.map((province,) => {
-                return (<GeoJson key={province.name} data={JSON.parse(province.content)}/>)
+            {showProvinces && 
+              <GeoJsonLoader
+                link={'/geo/spain-provinces-simplified.json'}
+                styleCallback={(feature, hover) =>{return { fill: '#f2c8d400', strokeWidth: '2', stroke: "black"}}}
+              />
+            }
+            {showProvinces && provinceClickedPolygon && 
+            <GeoJson>
+                <GeoJsonFeature svgAttributes={{fill: 'red'}} feature={provinceClickedPolygon} />
+            </GeoJson>
+            }
+            {showProvinces && buttonsPerProvince.map((p, idx) => {
+              return (
+                <Overlay
+                anchor={[p.centroid.geometry.coordinates[1], p.centroid.geometry.coordinates[0]]}
+                className="pigeon-map__custom-block"
+                key={idx}
+              >
+                {provinceClicked && p.code == provinceClicked && <MapGroupedType typesGrouped={p.grouped} buttonTypes={buttonTypes} onTypeClicked={(btnTypeName) => store.emit(new UpdateProvinceButtonTypeClicked(btnTypeName))}/>}
+                {p.code != provinceClicked && (<MapCircleNumber caption={`${p.name} ${p.count}`} onClick={() => {
+                  store.emit(new UpdateProvinceClicked(p.code))
+                }}/>)}
+                
+              </Overlay>
+            )
             })}
             {/*
             show count of buttons per hexagon
             */}
-            {hexagonsMedianCenters && hexagonsMedianCenters.filter((feat) => feat.count > 1 && hexagonClickedFeatures?.hexagon != feat.hexagon).map((hexagonMedianCenter) => {
+            {!showProvinces && hexagonsMedianCenters && hexagonsMedianCenters.filter((feat) => feat.count > 1 && hexagonClickedFeatures?.hexagon != feat.hexagon).map((hexagonMedianCenter) => {
               return <Overlay
                 anchor={hexagonMedianCenter.center}
                 className="pigeon-map__custom-block"
@@ -174,7 +223,7 @@ export default function HexagonExploreMap({
               </Overlay>
             })}
 
-            {hexagonsMedianCenters && hexagonsMedianCenters.filter((feat) => feat.count == 1).map((hexagonMedianCenter,idx) => {
+            {!showProvinces && hexagonsMedianCenters && hexagonsMedianCenters.filter((feat) => feat.count == 1).map((hexagonMedianCenter,idx) => {
               return (
                 <Overlay
                   anchor={hexagonMedianCenter.center}
@@ -209,7 +258,9 @@ export default function HexagonExploreMap({
                   className="pigeon-map__custom-block"
                   key={hexagonClickedFeatures.hex}
                 >
-                  <MapSelectedHexagon hexagonClickedFeatures={hexagonClickedFeatures} buttonTypes={buttonTypes} filterButtonType={filterButtonType}/>
+                  <MapGroupedType typesGrouped={hexagonClickedFeatures.groupByType} buttonTypes={buttonTypes} onTypeClicked={(buttonTypeName) => {
+                    filterButtonType(hexagonClickedFeatures.hexagon, buttonTypeName)
+                  }}/>
                 </Overlay>
               )}
             {/* draw go to center icon */}
@@ -306,21 +357,24 @@ function DisplayHiddenButtonsWarning({ countFilteredButtons }) {
 }
 
 function MapCircleButtonsCount({ hexagonCenter}) {
+  return (<MapCircleNumber caption={hexagonCenter.count} onClick={() =>
+    store.emit(
+      new UpdateHexagonClicked(
+        hexagonCenter.hexagon,
+      ),
+    )}/>)
+}
+
+function MapCircleNumber({ caption, onClick = () => {}}) {
   return (
     <div
-      onClick={() =>
-        store.emit(
-          new UpdateHexagonClicked(
-            hexagonCenter.hexagon,
-          ),
-        )
-      }
+      onClick={onClick}
       className="pigeon-map__hex-wrap"
     >
       <span className="pigeon-map__hex-element">
         <div className="pigeon-map__hex-info--unselect">
           <div className="pigeon-map__hex-info--text-unselect">
-            {hexagonCenter.count}
+            {caption}
           </div>
         </div>
       </span>
@@ -370,20 +424,18 @@ function MapButtonIcon({ button, buttonTypes }) {
   )
 }
 
-function MapSelectedHexagon({ hexagonClickedFeatures, buttonTypes, filterButtonType }) {
+function MapGroupedType({ typesGrouped, buttonTypes, onTypeClicked = (btnTypeName) => {} }) {
+
+  const displayButtonsTypes = buttonTypes.map((_btnType) => {
+    const findType = typesGrouped.find((_tGrouped) => _tGrouped.type == _btnType.name)
+    return { ..._btnType, count: findType?.count }
+  }).filter((_b) => _b.count > 0)
+
+
   return (
-    <div className="pigeon-map__hex-wrap pigeon-map__hex-wrap--selected">
-      {hexagonClickedFeatures.groupByType.map(
-        (hexagonBtnType, idx) => {
-          if (hexagonBtnType.count < 1) {
-            return;
-          }
-          const btnType = buttonTypes.find((type) => {
-            return type.name == hexagonBtnType.type;
-          });
-          if (!btnType) {
-            return <></>;
-          }
+    <>
+      <div className="pigeon-map__hex-wrap pigeon-map__hex-wrap--selected">
+        {displayButtonsTypes.map((btnType, idx) => {
           return (
             <span
               className="pigeon-map__hex-element--selected"
@@ -393,7 +445,7 @@ function MapSelectedHexagon({ hexagonClickedFeatures, buttonTypes, filterButtonT
                 cursor: 'pointer',
               }}
               key={btnType.name}
-              onClick={() => filterButtonType(hexagonClickedFeatures.hexagon, btnType.name)}
+              onClick={() => onTypeClicked(btnType.name)}
             >
               <div
                 className="pigeon-map__hex-info"
@@ -404,13 +456,14 @@ function MapSelectedHexagon({ hexagonClickedFeatures, buttonTypes, filterButtonT
               >
                 <div className="pigeon-map__emoji pigeon-map__hex-info--icon">{btnType.icon}</div>
                 <div className="pigeon-map__hex-info--text">
-                  {hexagonBtnType.count.toString()}
+                  {/* {JSON.stringify(btnType)} */}
+                  {btnType.count}
+                  {/* {hexagonBtnType.count.toString()} */}
                 </div>
               </div>
-            </span>
-          );
-        },
-      )}
-    </div>
+            </span>)
+        })}
+      </div>
+    </>
   )
 }

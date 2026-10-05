@@ -12,7 +12,6 @@
     "connect-api": "cp ../api/src/**/**/*.dto.ts src/shared/dtos && cp ../api/src/**/**/*.entity.ts src/shared/entities && cp -r ../api/src/shared/types/ src/shared/",
     "hb": "tsx hb.ts",
     "update-translations": "cd scripts && node updateTranslationStrings.js",
-    "spain-geojson": "cp node_modules/geojsonspain/provinces.json public/geojson/"
   },
   "dependencies": {
     "@emoji-mart/data": "^1.1.2",
@@ -34,7 +33,7 @@
     "formik": "^2.2.9",
     "fs": "^0.0.1-security",
     "geo-coordinates-parser": "^1.7.4",
-    "geojson2h3": "^1.2.0",
+    "geojson2h3": "^1.3.2",
     "geolib": "^3.3.3",
     "h3-js": "^4.4.0",
     "html-entities": "^2.5.2",
@@ -73,8 +72,7 @@
     "sass": "^1.38.2",
     "sharp": "^0.35.3",
     "tsx": "^3.12.1",
-    "yup": "^0.32.9",
-    "geojsonspain": "git+https://github.com/helpbuttons/GeoJson_SPAIN.git"
+    "yup": "^0.32.9"
   },
   "devDependencies": {
     "@svgr/cli": "^5.5.0",
