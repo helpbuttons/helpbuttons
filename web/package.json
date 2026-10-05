@@ -11,7 +11,7 @@
     "sync": "yarn connect-api",
     "connect-api": "cp ../api/src/**/**/*.dto.ts src/shared/dtos && cp ../api/src/**/**/*.entity.ts src/shared/entities && cp -r ../api/src/shared/types/ src/shared/",
     "hb": "tsx hb.ts",
-    "update-translations": "cd scripts && node updateTranslationStrings.js",
+    "update-translations": "cd scripts && node updateTranslationStrings.js"
   },
   "dependencies": {
     "@emoji-mart/data": "^1.1.2",
