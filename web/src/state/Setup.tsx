@@ -16,6 +16,7 @@ import { useEffect, useRef } from 'react';
 import { useStore } from 'state';
 import dconsole from 'shared/debugger';
 import { isStaticApp } from 'shared/environment';
+import { require_try } from 'shared/static.utils';
 
 
 export const useConfig = (_config, onError) => {
@@ -25,7 +26,11 @@ export const useConfig = (_config, onError) => {
   useEffect(() => {
     if (!fetchingConfig.current && !config) {
       if (isStaticApp()) {
-        const staticAppCompiledConfig = require('../../config.json')
+        const staticAppCompiledConfig = require_try('../../config.json')
+        if(!staticAppCompiledConfig){
+          console.log('could not load static config?')
+          return;
+        }
         store.emit(new ConfigFound(staticAppCompiledConfig))
       } else if (_config) {
         store.emit(new ConfigFound(_config))
