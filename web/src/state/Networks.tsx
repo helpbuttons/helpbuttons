@@ -19,6 +19,7 @@ import { handleError } from './helper';
 import { Role } from 'shared/types/roles';
 import { CustomFields } from 'shared/types/customFields.type';
 import { getBgcolor, isStaticApp } from 'shared/environment';
+import { require_try } from 'shared/static.utils';
 
 export interface NetworksState {
   // networks: Network[];
@@ -46,7 +47,11 @@ export const useSelectedNetwork = (_selectedNetwork = null, onError = (err) => {
   useEffect(() => {
     if (!initialized && !fetching.current) {
       if(isStaticApp() && !(selectedNetwork?.id)){
-        const staticAppCompiledNetwork = require('../../network.json')
+        const staticAppCompiledNetwork = require_try('../../network.json')
+        if(!staticAppCompiledNetwork){
+          console.log('could not load network?')
+          return;
+        }
         store.emit(new SelectedNetworkFetched({...staticAppCompiledNetwork, logo: '/assets/images/logo.png'}))
       }else
       if (_selectedNetwork?.id) {
@@ -147,6 +152,9 @@ export class FetchDefaultNetwork implements UpdateEvent, WatchEvent {
       // With no Id, find the default network
 
       map((network) => {
+        if(!network){
+          throw Error('No backend found')
+        }
         store.emit(new SelectedNetworkFetched(network));
         if (network && this.onSuccess) {
           this.onSuccess(network);
