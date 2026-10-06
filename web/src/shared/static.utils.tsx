@@ -1,12 +1,13 @@
-import { isStaticApp } from "./environment"
+import { isStaticApp } from './environment';
 
-export function require_try(path) : any {
-    if(isStaticApp()){
-        try{
-            require(path)
-        }catch(err){
-            console.log(err)
-        }
-    }
-    return false;
+export function require_try<T>(path: string): T | undefined {
+  if (!isStaticApp()) return undefined;
+
+  try {
+    const dynamicRequire = eval('require') as NodeRequire;
+    return dynamicRequire(path) as T;
+  } catch (err) {
+    console.error('Could not load optional module:', err);
+    return undefined;
+  }
 }
