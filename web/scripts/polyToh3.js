@@ -16,6 +16,12 @@ grr.then((hexesProvincesMaxResolution) => {
     console.log(hexesProvincesMaxResolution)
 
     // npx simplify-geojson -t 0.02 spain-provinces.json > spain-provinces-simplified.json
+    // npx simplify-geojson -innerlines -t 0.02 spain-provinces.json > spain-provinces-simplified.json 
+    // npx simplify-geojson  -t 0.02 spain-provinces.json > spain-provinces-simplified.json 
+
+    // npx mapshaper spain-provinces.json -simplify 12% keep-shapes snap -o format=geojson -innerlines spain-provinces-simplified.json
+    // npx mapshaper spain-provinces.json snap -simplify 12% keep-shapes -innerlines -o format=geojson spain-provinces-simplified.json
+    // npx mapshaper spain-provinces.json snap -simplify 12% -o format=geojson spain-provinces-simplified.json
     const provinceHexes = provinces.features.map((prov) => {
         const rnd = () => {
             return `rgb(${Math.floor(Math.random() * 256)},${Math.floor(Math.random() * 256)},${Math.floor(Math.random() * 256)}, 0.3)`;
