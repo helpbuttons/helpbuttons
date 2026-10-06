@@ -90,17 +90,18 @@ function MyApp({ Component, pageProps }) {
     if (error == 'network-not-found') {
       alertService.error(t('networkNotFound'))
       setFetchingNetworkError(() => true)
-    }
-
-    if (error == 'nobackend') {
+    }else if (error == 'nobackend') {
       alertService.error(
         `Error: Backend not foundddd, something went terribly wrong.`,
       );
       setFetchingNetworkError(() => true)
+    }else{
+      console.log(error);
+      alertService.error(
+        `Unkown error, is the backend running?`,
+      );
+      setFetchingNetworkError(() => true)
     }
-    setLoadingMessage((prev) => prev + '; '+ error + getApiUrl())
-    dconsole.log(error);
-    return;
   };
   const config = useConfig(pageProps._config, onFetchingConfigError);
   const selectedNetwork = useSelectedNetwork(pageProps._selectedNetwork, onFetchingNetworkError);
@@ -278,7 +279,7 @@ function MyApp({ Component, pageProps }) {
         );
       } else {
         if(fetchingNetworkError){
-          return <ErrorPopup/>
+          return <ErrorPopup errorTitle={'Fatal error'} errorMessage={'Fetching network from api: failed'}/>
         }
         return (
           <>

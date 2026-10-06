@@ -30,20 +30,20 @@ export default function Error({ metadata }) {
   );
 }
 
-export function ErrorPopup({ errorCustomRaw = null }) {
+export function ErrorPopup({ errorCustomRaw = null, errorTitle = null, errorMessage = null }) {
   const selectedNetwork = useGlobalStore(
     (state: GlobalState) => state.networks.selectedNetwork,
   );
   return (
     <Popup
-      title={t('common.error')}
+      title={errorTitle ? errorTitle : t('common.error')}
       linkBack={() => {
         // router.back()
         router.push('/');
       }}
     >
       <div className="error__message">
-        {t('error.notFoundMessage')}
+        {errorMessage ? errorMessage : t('error.notFoundMessage')}
       </div>
       {errorCustomRaw && <code>{errorCustomRaw}</code>}
       <div className="homeinfo__description">
