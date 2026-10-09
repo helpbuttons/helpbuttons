@@ -1,5 +1,5 @@
-const isStaticApp = process.env.STATICAPP_BACKEND_URL ? true : false;
-
+// const isStaticApp = process.env.STATICAPP_BACKEND_URL ? true : false;
+const isStaticApp = false;
 module.exports = {
   reactStrictMode: true,
   publicRuntimeConfig: {
