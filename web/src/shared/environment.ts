@@ -6,10 +6,11 @@ export function getApiUrl(): string {
   return publicRuntimeConfig.apiUrl
 }
 
-export function isStaticApp(): string {
+export function isStaticApp(): boolean {
 
   const { publicRuntimeConfig } = getEnvConfig();
-  return publicRuntimeConfig.isStaticApp
+  return false;
+  // return publicRuntimeConfig.isStaticApp
 }
 
 export function getBgcolor(): string {
