@@ -87,8 +87,8 @@ function MyApp({ Component, pageProps }) {
   }, [path])
 
   const onFetchingNetworkError = (error) => {
-    if (error == 'network-not-found') {
-      alertService.error(t('networkNotFound'))
+    if (error == 'network-not-found') {      
+      // router.push(SetupSteps.CREATE_ADMIN_FORM);
       setFetchingNetworkError(() => true)
     }else if (error == 'nobackend') {
       alertService.error(
@@ -132,12 +132,12 @@ function MyApp({ Component, pageProps }) {
 
   useEffect(() => {
     setAuthorized(() => false)
-
     if (
       config &&
       config.userCount < 1 &&
       SetupSteps.CREATE_ADMIN_FORM != path &&
-      sessionUser === false
+      !sessionUser &&
+      fetchingNetworkError
     ) {
       router.push(SetupSteps.CREATE_ADMIN_FORM);
     } else if (
