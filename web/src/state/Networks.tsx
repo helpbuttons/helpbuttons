@@ -153,7 +153,8 @@ export class FetchDefaultNetwork implements UpdateEvent, WatchEvent {
 
       map((network) => {
         if(!network){
-          throw Error('No backend found')
+          this.onError('network-not-found');
+          return of(undefined);
         }
         store.emit(new SelectedNetworkFetched(network));
         if (network && this.onSuccess) {

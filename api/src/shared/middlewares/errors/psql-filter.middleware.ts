@@ -7,6 +7,7 @@ import {
     BadRequestException,
     ConflictException,
     ExceptionFilter,
+    HttpException,
     HttpStatus,
     Injectable,
     InternalServerErrorException,
@@ -24,14 +25,10 @@ import {
       const res = ctx.getResponse<Response>();
       const req = ctx.getRequest<Request>();
   
-    //   // Entity not found → 404 (from findOneOrFail etc.)
-    //   if (exception instanceof EntityNotFoundError) {
-    //     return res.status(HttpStatus.NOT_FOUND).json({
-    //       statusCode: HttpStatus.NOT_FOUND,
-    //       path: req.url,
-    //       message: 'Entity not found',
-    //     });
-    //   }
+      if (exception instanceof HttpException) {
+        throw exception;
+      }
+    
         console.log(exception)
       // TypeORM query failure with vendor codes
       if (exception instanceof QueryFailedError) {
