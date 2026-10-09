@@ -222,7 +222,7 @@ export function calculateDensityMap(
         (_btn) => {
           return hexToResolution(hexagon, resolution, _btn.hideAddress) == _btn.hexagon
         }
-          
+
       );
       if (group) {
         group.buttons.push(button);
@@ -344,5 +344,3 @@ export function hexToResolution(hexagon, resolution, hiddenAddress = false)
   }
   return -1;
 }
-// console.log(debounceHexagonsToFetch.resolution)
-        
