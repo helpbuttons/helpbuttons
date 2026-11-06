@@ -279,6 +279,9 @@ function MyApp({ Component, pageProps }) {
         );
       } else {
         if(fetchingNetworkError){
+          if(config.userCount < 1){
+            return <>...</>
+          }
           return <ErrorPopup errorTitle={'Fatal error'} errorMessage={'Fetching network from api: failed'}/>
         }
         return (
