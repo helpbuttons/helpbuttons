@@ -91,20 +91,16 @@ export class AuthService {
     let emailVerified = false;
     let userRole = Role.registered;
     const userCount = await this.userService.userCount();
-    const selectedNetwork = await this.networkService.findDefaultNetwork();
 
     if (userCount < 1) {
       userRole = Role.admin;
     } else {
-      try {
-        if (selectedNetwork.inviteOnly) {
-          const validInviteCode = await this.inviteService.isInviteCodeValid(signupUserDto.inviteCode)
-          if (!validInviteCode) {
-            throw new CustomHttpException(ErrorName.inviteOnly)
-          }
+      const selectedNetwork = await this.networkService.findDefaultNetwork();
+      if (selectedNetwork.inviteOnly) {
+        const validInviteCode = await this.inviteService.isInviteCodeValid(signupUserDto.inviteCode)
+        if (!validInviteCode) {
+          throw new CustomHttpException(ErrorName.inviteOnly)
         }
-      } catch (error) {
-        console.error('network not found?')
       }
     }
 
@@ -129,11 +125,14 @@ export class AuthService {
     
     return this.createUser(newUserDto, signupUserDto).
       then((newUser) => {
-        this.sendWelcomeMail(newUser.name, newUser.email, newUser.locale)
-        if (selectedNetwork.inviteOnly) {
-          this.inviteService.destroyInviteCode(signupUserDto.inviteCode)
+        if (userCount > 0) {
+          this.sendWelcomeMail(newUser.name, newUser.email, newUser.locale)
+          this.networkService.findDefaultNetwork().then((selectedNetwork) => {
+            if (selectedNetwork.inviteOnly) {
+              this.inviteService.destroyInviteCode(signupUserDto.inviteCode)
+            }
+          });
         }
-
         // verify email address
         // if (!newUser.emailVerified && userCount > 1) {
         //   this.sendLoginToken(newUser, true);
