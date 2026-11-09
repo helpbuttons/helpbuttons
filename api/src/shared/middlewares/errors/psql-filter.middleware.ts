@@ -20,7 +20,6 @@ import {
   @Injectable()
   export class TypeOrmExceptionFilter implements ExceptionFilter {
     catch(exception: unknown, host: ArgumentsHost) {
-        console.log('filter catched it...')
       const ctx = host.switchToHttp();
       const res = ctx.getResponse<Response>();
       const req = ctx.getRequest<Request>();
@@ -29,7 +28,6 @@ import {
         throw exception;
       }
     
-        console.log(exception)
       // TypeORM query failure with vendor codes
       if (exception instanceof QueryFailedError) {
         const drv: any = (exception as any).driverError || {};

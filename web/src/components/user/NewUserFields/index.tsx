@@ -47,7 +47,9 @@ export default function NewUserFields({
   const name = watch('name');
   useEffect(() => {
     const nameToUsername = (name) => {
-      let cleanName = name.toLowerCase().replace(/\s+/g, '_');
+      let cleanName = name
+      .toLowerCase()
+      .replace(/[^a-z0-9]/g, '');
 
       if (!cleanName.match(/^[a-z]/i)) {
         cleanName =
@@ -221,8 +223,9 @@ export default function NewUserFields({
           }
         }
         }
+        
         validationError={errors.acceptPrivacyPolicy ? {message: t('user.pleaseAcceptPrivacy')} : null}
-        {...register('acceptPrivacyPolicy')}
+        {...register('acceptPrivacyPolicy',  { validate: { func : async (value) => value == 'yes'}})}
       />
       
       {/* <Accordion title={t('user.signupOptions')}>

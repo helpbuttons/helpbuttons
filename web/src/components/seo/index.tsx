@@ -2,7 +2,6 @@
 
 import Head from 'next/head';
 import { GlobalState } from 'state';
-import { useEffect, useState } from 'react';
 import { useGlobalStore } from 'state';
 import { getApiUrl } from 'shared/environment';
 
@@ -25,12 +24,16 @@ export function MetadataSEO(props) {
     siteTitle,
     color,
     nonce,
-    webUrl = getApiUrl()
+    webUrl = getApiUrl(),
+    isSetup = false
   } =  props;
 
   const url = getApiUrl()
   const csp = `object-src 'none'; base-uri 'none'; script-src 'self' 'unsafe-eval' 'unsafe-inline' https: http: 'nonce-${nonce}' 'strict-dynamic'`
 
+  if(isSetup){
+    return <></>
+  }
   return (
       // <Head nonce={nonce}>
         <Head>

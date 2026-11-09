@@ -44,7 +44,6 @@ function MyApp({ Component, pageProps }) {
   const router = useRouter();
   const [authorized, setAuthorized] = useState(null);
   const isLoadingUser = useRef(false)
-  const [fetchingNetworkError, setFetchingNetworkError] = useState(false)
   const path = router.asPath.split('?')[0];
   const nonce = randomBytes(128).toString('base64')
   const isSetup = useIsSetup(path);
@@ -66,7 +65,6 @@ function MyApp({ Component, pageProps }) {
       alertService.error(
         `Error: Backend not found, something went terribly wrong.`,
       );
-      setFetchingNetworkError(() => true)
     }
     dconsole.log(error);
     return;
@@ -86,29 +84,10 @@ function MyApp({ Component, pageProps }) {
     }
   }, [path])
 
-  const onFetchingNetworkError = (error) => {
-    if (error == 'network-not-found') {      
-      // router.push(SetupSteps.CREATE_ADMIN_FORM);
-      setFetchingNetworkError(() => true)
-    }else if (error == 'nobackend') {
-      alertService.error(
-        `Error: Backend not foundddd, something went terribly wrong.`,
-      );
-      setFetchingNetworkError(() => true)
-    }else{
-      console.log(error);
-      alertService.error(
-        `Unkown error, is the backend running?`,
-      );
-      setFetchingNetworkError(() => true)
-    }
-  };
   const config = useConfig(pageProps._config, onFetchingConfigError);
-  const selectedNetwork = useSelectedNetwork(pageProps._selectedNetwork, onFetchingNetworkError);
 
   useEffect(() => {
     if (
-      fetchingNetworkError &&
       sessionUser &&
       config &&
       config.userCount > 0 &&
@@ -116,7 +95,7 @@ function MyApp({ Component, pageProps }) {
       path != SetupSteps.NETWORK_CREATION
     ) {
       router.push(SetupSteps.FIRST_OPEN);
-    }else if(fetchingNetworkError &&
+    }else if(
       !sessionUser &&
       config &&
       config.userCount > 0 &&
@@ -128,7 +107,7 @@ function MyApp({ Component, pageProps }) {
         console.log('permission denied... you in setup')
         router.push(SetupSteps.SETUP_LOGIN);
       }
-  }, [fetchingNetworkError, sessionUser, config])
+  }, [sessionUser, config])
 
   useEffect(() => {
     setAuthorized(() => false)
@@ -136,9 +115,9 @@ function MyApp({ Component, pageProps }) {
       config &&
       config.userCount < 1 &&
       SetupSteps.CREATE_ADMIN_FORM != path &&
-      !sessionUser &&
-      fetchingNetworkError
+      !sessionUser
     ) {
+      console.log('pushme to form!')
       router.push(SetupSteps.CREATE_ADMIN_FORM);
     } else if (
       SetupSteps.CREATE_ADMIN_FORM == path &&
@@ -205,37 +184,18 @@ function MyApp({ Component, pageProps }) {
   }, [path, config, sessionUser, pageName]);
 
   useEffect(() => {
-    // Function to adjust the height of the index__container based on the actual viewport height
     const adjustHeight = () => {
       const vh = window.innerHeight;
       document.documentElement.style.setProperty('--vh', `${vh}px`);
     };
 
-    // Call the function on initial load and whenever the window is resized
     adjustHeight();
     window.addEventListener('resize', adjustHeight);
 
-    // Clean up the event listener on unmount
     return () => {
       window.removeEventListener('resize', adjustHeight);
     };
-  }, [config, selectedNetwork]);
-
-
-
-  useEffect(() => {
-    if (selectedNetwork) {
-      updateNomeclature(
-        selectedNetwork.nomeclature,
-        selectedNetwork.nomeclaturePlural,
-      );
-    }
-    if(([SetupSteps.CREATE_ADMIN_FORM.toString(), SetupSteps.FIRST_OPEN.toString(), SetupSteps.NETWORK_CREATION.toString()].indexOf(path) > -1 )&& selectedNetwork && selectedNetwork.id ){
-      router.push('/')
-    }
-  }, [selectedNetwork]);
-
-  useWhichLocale({ sessionLocale: sessionUser?.locale, networkLocale: selectedNetwork?.locale });
+  }, [config]);
 
   const searchParams = useSearchParams();
 
@@ -267,28 +227,81 @@ function MyApp({ Component, pageProps }) {
   }, [pageProps])
 
   return <>
-    <MetadataSEO {...pageProps.metadata} nonce={nonce} />
+    <MetadataSEO {...pageProps.metadata} isSetup={config?.userCount > 0} nonce={nonce} />
     {(function () {
-
-      if (isSetup) {
+      if(!config){
+        return <Loading/>
+      }else if (isSetup) {
         return <> <Head>
           <title>Creating new helpbuttons network...</title></Head><Component {...pageProps} /><SetupMainPopup/></>;
       } else if (pageName == 'Embbed') {
         return (
           <Component {...pageProps} />
         );
+      }else if(config?.userCount < 1){
+        return <>...</>
       } else {
-        if(fetchingNetworkError){
-          if(config.userCount < 1){
-            return <>...</>
-          }
-          return <ErrorPopup errorTitle={'Fatal error'} errorMessage={'Fetching network from api: failed'}/>
-        }
         return (
           <>
             <MetadataSEOFromStore nonce={nonce} />
             <ActivityPool sessionUser={sessionUser} />
-            <div
+            <Home pageProps={pageProps} sessionUser={sessionUser}>
+              {authorized && <Component {...pageProps} />}
+              {!authorized && <><Loading /></>}
+            </Home>
+          </>
+        );
+      }
+
+    }).call(this)}
+  </>
+}
+
+export const Home = ({pageProps, sessionUser, children}) => {
+  const [fetchingNetworkError, setFetchingNetworkError] = useState(false)
+
+  const onFetchingNetworkError = (error) => {
+    if (error == 'network-not-found') {      
+      // router.push(SetupSteps.CREATE_ADMIN_FORM);
+      setFetchingNetworkError(() => true)
+    }else if (error == 'nobackend') {
+      alertService.error(
+        `Error: Backend not foundddd, something went terribly wrong.`,
+      );
+      setFetchingNetworkError(() => true)
+    }else{
+      console.log(error);
+      alertService.error(
+        `Unkown error, is the backend running?`,
+      );
+      setFetchingNetworkError(() => true)
+    }
+  };
+
+  const selectedNetwork = useSelectedNetwork(pageProps._selectedNetwork, onFetchingNetworkError);
+  // const selectedNetwork = null;
+  const router = useRouter();
+  const path = router.asPath.split('?')[0];
+  useWhichLocale({ sessionLocale: sessionUser?.locale, networkLocale: selectedNetwork?.locale });
+
+  useEffect(() => {
+    if (selectedNetwork) {
+      updateNomeclature(
+        selectedNetwork.nomeclature,
+        selectedNetwork.nomeclaturePlural,
+      );
+    }
+    
+    if(([SetupSteps.CREATE_ADMIN_FORM.toString(), SetupSteps.FIRST_OPEN.toString(), SetupSteps.NETWORK_CREATION.toString()].indexOf(path) > -1 )&& selectedNetwork && selectedNetwork.id ){
+      router.push('/')
+    }
+  }, [selectedNetwork]);
+  
+  if(fetchingNetworkError){
+    return <ErrorPopup errorTitle={'Fatal error'} errorMessage={'Fetching network from api: failed'}/>
+  }
+  
+  return (<div
               className="index__container"
               style={
                 selectedNetwork
@@ -313,20 +326,12 @@ function MyApp({ Component, pageProps }) {
                     selectedNetwork={selectedNetwork}
                   />
                 </ShowDesktopOnly>
-                {authorized && <Component {...pageProps} />}
-                {!authorized && <><Loading /></>}
+                {children}
                 <NavBottomMobile sessionUser={sessionUser}/>
                 <MainPopup/>
               </div>
-            </div>
-          </>
-        );
-      }
-
-    }).call(this)}
-  </>
+            </div>)
 }
-
 export const ClienteSideRendering = ({ children }) => {
   const [isClient, setIsClient] = useState(false);
   useEffect(() => setIsClient(true), []);
