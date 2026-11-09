@@ -113,7 +113,7 @@ export default function CreateAdminForm() {
             locale: data.locale,
             inviteCode: '',
             name: data.name,
-            acceptPrivacyPolicy: data.acceptPrivacyPolicy
+            acceptPrivacyPolicy: data.acceptPrivacyPolicy,
           },
           () => {
             // let url = `${SetupSteps.FIRST_OPEN}`;

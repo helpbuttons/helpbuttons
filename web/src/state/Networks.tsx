@@ -149,8 +149,6 @@ export class FetchDefaultNetwork implements UpdateEvent, WatchEvent {
 
   public watch(state: GlobalState) {
     return NetworkService.findById().pipe(
-      // With no Id, find the default network
-
       map((network) => {
         if(!network){
           this.onError('network-not-found');

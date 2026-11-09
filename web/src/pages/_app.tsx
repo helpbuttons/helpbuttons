@@ -97,18 +97,36 @@ function MyApp({ Component, pageProps }) {
       router.push(SetupSteps.FIRST_OPEN);
     }else if(
       !sessionUser &&
+      sessionUser != null &&
       config &&
       config.userCount > 0 &&
       path != SetupSteps.FIRST_OPEN &&
       path != SetupSteps.NETWORK_CREATION &&
       !path.startsWith('/LoginClick')
     ){
-        console.log(path)
-        console.log('permission denied... you in setup')
         router.push(SetupSteps.SETUP_LOGIN);
       }
   }, [sessionUser, config])
 
+  useEffect(() => {
+    const loginToken = localStorageService.read(LocalStorageVars.ACCESS_TOKEN);
+    if (loginToken && sessionUser == null && ['Embbed'].indexOf(pageName) < 0) {
+      if (!isLoadingUser.current) {
+        isLoadingUser.current = true;
+        store.emit(
+          new FetchUserData(
+            () => {
+              isLoadingUser.current = false;
+            },
+            (error) => {
+              isLoadingUser.current = false;
+            },
+          ),
+        );
+      }
+      return;
+    }
+  }, [])
   useEffect(() => {
     setAuthorized(() => false)
     if (
@@ -117,7 +135,6 @@ function MyApp({ Component, pageProps }) {
       SetupSteps.CREATE_ADMIN_FORM != path &&
       !sessionUser
     ) {
-      console.log('pushme to form!')
       router.push(SetupSteps.CREATE_ADMIN_FORM);
     } else if (
       SetupSteps.CREATE_ADMIN_FORM == path &&
@@ -129,7 +146,6 @@ function MyApp({ Component, pageProps }) {
     if (SetupSteps.CREATE_ADMIN_FORM.toString() == path) {
       return;
     }
-
     if (!config) {
       return;
     }
@@ -146,23 +162,6 @@ function MyApp({ Component, pageProps }) {
       return;
     }
 
-    const loginToken = localStorageService.read(LocalStorageVars.ACCESS_TOKEN);
-    if (loginToken && sessionUser === false && ['Embbed'].indexOf(pageName) < 0) {
-      if (!isLoadingUser.current) {
-        isLoadingUser.current = true;
-        store.emit(
-          new FetchUserData(
-            () => {
-              isLoadingUser.current = false;
-            },
-            (error) => {
-              isLoadingUser.current = false;
-            },
-          ),
-        );
-      }
-      return;
-    }
     if (isLoadingUser.current && !isStaticApp()) {
       return;
     }
@@ -229,18 +228,17 @@ function MyApp({ Component, pageProps }) {
   return <>
     <MetadataSEO {...pageProps.metadata} isSetup={config?.userCount > 0} nonce={nonce} />
     {(function () {
-      if(!config){
+      if(!config || sessionUser === null){
         return <Loading/>
       }else if (isSetup) {
-        return <> <Head>
-          <title>Creating new helpbuttons network...</title></Head><Component {...pageProps} /><SetupMainPopup/></>;
+        return <><Component {...pageProps} /><SetupMainPopup/></>;
       } else if (pageName == 'Embbed') {
         return (
           <Component {...pageProps} />
         );
       }else if(config?.userCount < 1){
         return <>...</>
-      } else {
+      } else{
         return (
           <>
             <MetadataSEOFromStore nonce={nonce} />
@@ -297,10 +295,12 @@ export const Home = ({pageProps, sessionUser, children}) => {
     }
   }, [selectedNetwork]);
   
-  if(fetchingNetworkError){
+  if(!fetchingNetworkError){
     return <ErrorPopup errorTitle={'Fatal error'} errorMessage={'Fetching network from api: failed'}/>
   }
-  
+  if(!selectedNetwork?.initialized){
+    return <Loading/>
+  }
   return (<div
               className="index__container"
               style={
