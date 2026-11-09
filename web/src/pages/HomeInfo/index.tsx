@@ -28,7 +28,7 @@ import {
   IoStatsChart,
   IoTrophySharp,
 } from 'react-icons/io5';
-import { setMetadata } from 'services/ServerProps';
+import { setMetadata } from 'pages/_serverprops';
 import { NextPageContext } from 'next';
 import { useEffect, useRef, useState } from 'react';
 import AdvancedFilters from 'components/search/AdvancedFilters';

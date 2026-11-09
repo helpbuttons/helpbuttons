@@ -4,7 +4,7 @@ import Popup from 'components/popup/Popup';
 import router from 'next/router';
 import t from 'i18n';
 import { NextPageContext } from 'next';
-import { setMetadata } from 'services/ServerProps';
+import { setMetadata } from 'pages/_serverprops';
 import { useMetadataTitle } from 'state/Metadata';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';

@@ -34,7 +34,8 @@ export const useConfig = (_config, onError) => {
         store.emit(new ConfigFound(staticAppCompiledConfig))
       } else if (_config) {
         store.emit(new ConfigFound(_config))
-      } else if (!_config && !fetchingConfig.current) {
+      }
+       else if (!_config && !fetchingConfig.current) {
         fetchingConfig.current = true
         store.emit(new GetConfig(() => dconsole.log('got config!'), onError))
       }
@@ -227,7 +228,7 @@ export class CreateAdmin implements WatchEvent {
           err.statusCode === HttpStatus.CONFLICT
         ) {
           this.onError(err);
-        } else if(err.statusCode == HttpStatus.NOT_ACCEPTABLE) {          
+        } else if(err && err.statusCode == HttpStatus.NOT_ACCEPTABLE) {          
           this.onError(err)
         }else{
           throw error;

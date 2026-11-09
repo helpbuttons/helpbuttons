@@ -5,7 +5,7 @@ import { NextPageContext } from 'next';
 import router from 'next/router';
 import { store } from 'state';
 import { useEffect, useRef, useState } from 'react';
-import { setMetadata } from 'services/ServerProps';
+import { setMetadata } from 'pages/_serverprops';
 import { useButtonTypes } from 'shared/buttonTypes';
 import { FindEmbbedButtons } from 'state/Button';
 import { getServerSidePropsHandler, shouldEnableSSR } from 'shared/staticapp.utils';

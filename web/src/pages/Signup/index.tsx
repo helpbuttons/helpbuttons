@@ -25,7 +25,7 @@ import { getLocale, getShareLink } from 'shared/sys.helper';
 import { useStore } from 'state';
 import { Network } from 'shared/entities/network.entity';
 import { NextPageContext } from 'next';
-import { setMetadata } from 'services/ServerProps';
+import { setMetadata } from 'pages/_serverprops';
 import { CookiesState, MainPopupPage, SetInvitationPopup, SetMainPopup } from 'state/HomeInfo';
 import { useMetadataTitle } from 'state/Metadata';
 import dconsole from 'shared/debugger';

@@ -111,7 +111,7 @@ export class SignupRequestDto {
   @IsIn(['yes'])
   acceptPrivacyPolicy
 
-  qrcode: string;
+  qrcode?: string;
 
   phone?: string;
 }

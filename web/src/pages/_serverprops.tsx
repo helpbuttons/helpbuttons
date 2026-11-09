@@ -35,51 +35,55 @@ export class ServerPropsService {
       description: 'error',
       logo: 'error',
       locale: 'en',
+      backgroundColor: 'pink'
     };
-    try {
-      const networkConfigRes = await fetch(networkConfigURL, {
-        next: { revalidate: 30 },
-      });
-      networkConfigData = await networkConfigRes.json();
-    } catch (error) {
-      const errorMsg = 'error getting network configuration';
-      dconsole.error(errorMsg, error);
-      return {
-        ...catchMetadata,
-        error: { message: errorMsg, ...error },
-      };
-      // throw new Error(errorMsg);
+    if(configData?.userCount > 0) {
+      try {
+        const networkConfigRes = await fetch(networkConfigURL, {
+          next: { revalidate: 30 },
+        });
+        networkConfigData = await networkConfigRes.json();
+      } catch (error) {
+        const errorMsg = 'error getting network configuration';
+        dconsole.error(errorMsg, error);
+        return {
+          ...catchMetadata,
+          error: { message: errorMsg, ...error },
+        };
+        // throw new Error(errorMsg);
+      }
+      if (
+        networkConfigData?.statusCode &&
+        networkConfigData?.statusCode == 404
+      ) {
+        const errorMsg = 'error getting network configuration 2';
+        dconsole.error(errorMsg, networkConfigData);
+  
+        return {
+          ...catchMetadata,
+          error: {
+            message: errorMsg,
+            statusCode: networkConfigData?.statusCode,
+          },
+        };
+      }
+      if (
+        networkConfigData?.statusCode == HttpStatus.INTERNAL_SERVER_ERROR
+      ) {
+        const errorMsg = 'error getting network configuration internal server error, did you run migrations?';
+        dconsole.error(errorMsg, networkConfigData);
+  
+        return {
+          ...catchMetadata,
+          error: {
+            message: errorMsg,
+            statusCode: networkConfigData?.statusCode,
+          },
+        };
+      }
     }
-    if (
-      networkConfigData?.statusCode &&
-      networkConfigData?.statusCode == 404
-    ) {
-      const errorMsg = 'error getting network configuration 2';
-      dconsole.error(errorMsg, networkConfigData);
-
-      return {
-        ...catchMetadata,
-        error: {
-          message: errorMsg,
-          statusCode: networkConfigData?.statusCode,
-        },
-      };
-    }
-    if (
-      networkConfigData?.statusCode == HttpStatus.INTERNAL_SERVER_ERROR
-    ) {
-      const errorMsg = 'error getting network configuration internal server error, did you run migrations?';
-      dconsole.error(errorMsg, networkConfigData);
-
-      return {
-        ...catchMetadata,
-        error: {
-          message: errorMsg,
-          statusCode: networkConfigData?.statusCode,
-        },
-      };
-    }
-    const version = require('../../../public/version.json').version
+    
+    const version = require('../../public/version.json').version
     let serverProps = {
       metadata: {...getMetadata(
         subtitle,
@@ -90,7 +94,7 @@ export class ServerPropsService {
       _selectedNetwork: networkConfigData,
       _config: configData,
     };
-    
+
     if (ctx.query?.buttonId) {
       const buttonId = ctx.query.buttonId;
       const buttonUrl = `${baseURL}/buttons/findById/${buttonId}`;

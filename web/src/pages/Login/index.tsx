@@ -2,7 +2,7 @@ import t from 'i18n';
 import { NextPageContext } from 'next';
 import HomeInfo from 'pages/HomeInfo';
 import { useEffect } from 'react';
-import {  setMetadata } from 'services/ServerProps';
+import {  setMetadata } from 'pages/_serverprops';
 import { store } from 'state';
 import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
 import { useMetadataTitle } from 'state/Metadata';

@@ -1,5 +1,5 @@
 import { NextPageContext } from 'next';
-import { setMetadata } from 'services/ServerProps';
+import { setMetadata } from 'pages/_serverprops';
 import t from 'i18n';
 import { useGlobalStore } from 'state';
 import { GlobalState, store } from 'state';

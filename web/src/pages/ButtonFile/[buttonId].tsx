@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { NextPageContext } from 'next'
-import { setMetadata } from 'services/ServerProps'
+import { setMetadata } from 'pages/_serverprops'
 import t from 'i18n'
 import { ExploreSettings, FindButton, UpdateExploreSettings } from 'state/Explore'
 import { store } from 'state'

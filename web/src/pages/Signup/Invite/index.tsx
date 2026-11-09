@@ -13,7 +13,7 @@ import { alertService } from 'services/Alert';
 import { getServerSidePropsHandler, shouldEnableSSR } from 'shared/staticapp.utils';
 import { getLocale } from 'shared/sys.helper';
 import { NextPageContext } from 'next';
-import { setMetadata } from 'services/ServerProps';
+import { setMetadata } from 'pages/_serverprops';
 import dconsole from 'shared/debugger';
 import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
 import HomeInfo from 'pages/HomeInfo';

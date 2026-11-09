@@ -4,7 +4,7 @@ import { NextPageContext } from "next";
 import { useRouter } from "next/router";
 import { ClienteSideRendering } from "pages/_app";
 import { useEffect } from "react";
-import { setMetadata } from "services/ServerProps";
+import { setMetadata } from "pages/_serverprops";
 import { GlobalState, store, useGlobalStore } from "state";
 import HoneyComb from "./HoneyComb";
 import { useSelectedNetwork } from "state/Networks";

@@ -1,5 +1,5 @@
 import { NextPageContext } from 'next';
-import { setMetadata } from 'services/ServerProps';
+import { setMetadata } from 'pages/_serverprops';
 import t from 'i18n';
 import { store } from 'state';
 import { ExploreSettings, ResetExploreSettings } from 'state/Explore';

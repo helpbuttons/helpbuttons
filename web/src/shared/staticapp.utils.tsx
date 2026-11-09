@@ -1,5 +1,5 @@
 import { NextPageContext } from 'next';
-import { setMetadata } from 'services/ServerProps';
+import { setMetadata } from 'pages/_serverprops';
 import { isStaticApp } from './environment';
 
 export const  shouldEnableSSR = !(isStaticApp());

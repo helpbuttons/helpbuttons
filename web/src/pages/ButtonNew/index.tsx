@@ -12,7 +12,7 @@ import { readableDate } from 'shared/date.utils';
 import { useEffect, useState } from 'react';
 import { getServerSidePropsHandler, shouldEnableSSR } from 'shared/staticapp.utils';
 import { NextPageContext } from 'next';
-import { setMetadata } from 'services/ServerProps';
+import { setMetadata } from 'pages/_serverprops';
 import { useStore } from 'state';
 import Loading from 'components/loading';
 import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';

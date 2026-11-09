@@ -1,4 +1,4 @@
-import { setMetadata } from 'services/ServerProps';
+import { setMetadata } from 'pages/_serverprops';
 import Accordion from '../../elements/Accordion';
 import Popup from 'components/popup/Popup';
 import t from 'i18n';
