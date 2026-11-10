@@ -7,6 +7,7 @@ import { store } from "state"
 import { ActivityMarkAsRead, FindMoreActivities } from "state/Activity"
 import { ActivityListEntryCard, DraftActivityListEntryCard } from "./ActivityListEntry"
 import { ActivitiesPageSize } from "shared/dtos/activity.dto"
+import { ActivityEventName } from "shared/types/activity.list"
 
 
 export default function ActivityList({ setSelectedActivity, selectedActivity, activities, isDrafting }) {
@@ -23,14 +24,18 @@ export default function ActivityList({ setSelectedActivity, selectedActivity, ac
     );
 
     const onActivityClicked = (activity) => {
-        setSelectedActivity(() => activity) 
+        
         if(!activity.read)
         {
             store.emit(new ActivityMarkAsRead(activity.id))
         }
+        if([ActivityEventName.Endorsed, ActivityEventName.RoleUpdate, ActivityEventName.EndorseRevoked].indexOf(activity.eventName) !== -1){
+            return;
+        }
+        router.push(`/Activity/${activity.id}`);
     }
     return (<>
-        {scrollIsLoading && <Loading />}
+        {(scrollIsLoading && activities.length > ActivitiesPageSize) && <Loading />}
         {isDrafting && <DraftActivityListEntryCard/>}
         {activities && (
             <>

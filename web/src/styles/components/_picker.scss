@@ -1,3 +1,5 @@
+@use '../variables' as *;
+
 $picker-background: rgba(0,0,0,.2);
 $picker-header-height: 50px;
 $picker-max-width: 680px;
@@ -40,7 +42,7 @@ $picker-comments-item-padding: 25px;
   padding: $padding-big;
   overflow-y: auto;
   height: 100%;
-  // min-height: 300px;
+  min-height: 300px;
 
 }
 
@@ -60,6 +62,7 @@ $picker-comments-item-padding: 25px;
 
   width: 100% !important;
   height: 100px !important;
+  margin-bottom: $padding-xbig;
 
 }
 
@@ -100,7 +103,7 @@ $picker-comments-item-padding: 25px;
 //picker HEADERS
 .picker__header {
   width: 100%;
-  font-size: $font-size-medium;
+  font-size: $font-size-big;
   font-weight: $font-weight-regular;
   text-align: center;
 }
@@ -138,6 +141,7 @@ $picker-comments-item-padding: 25px;
 
 .picker__header-left {
   text-align: left;
+  min-width: 25px;
 }
 
 .picker__header-right {
@@ -155,7 +159,7 @@ $picker-comments-item-padding: 25px;
 }
 
 .picker__header-title  {
-  font-size: $font-size-general;
+  font-size: $font-size-medium;
 
   font-weight: $font-weight-bold;
   color: $color-dark-gray;
@@ -195,7 +199,7 @@ $picker-comments-item-padding: 25px;
 // contents
 .picker__paragraph {
 
-  font-size: $font-size-general;
+  font-size: $font-size-medium;
   line-height: 1.5rem;
   padding: $picker-paragraph-padding;
 }
@@ -316,7 +320,7 @@ $picker-comments-item-padding: 25px;
 }
 
 .picker__option-btn--txt{
-  font-size: $font-size-general;
+  font-size: $font-size-medium;
 }
 
 .picker__map {
@@ -326,9 +330,9 @@ $picker-comments-item-padding: 25px;
   height: auto;
   width: auto;
   display: flex;
-  margin-bottom: $padding-huge ;
+  margin-bottom: $padding-xbig ;
 
-  // padding-bottom: $padding-huge ;
+  // padding-bottom: $padding-xbig ;
   min-height: 250px;
 
   .pigeon-zoom-buttons {
@@ -402,7 +406,7 @@ $picker-comments-item-padding: 25px;
   }
 
   .picker__content {
-    padding: $padding-huge $padding-huge;
+    padding: $padding-xbig $padding-xbig;
   }
 
   .picker__content--nopadding {

@@ -1,12 +1,14 @@
 import produce from 'immer';
 import { GlobalState, store } from 'state';
-import { map } from 'rxjs';
+import { catchError, map, of } from 'rxjs';
+import { alertService } from 'services/Alert';
 import { UserService } from 'services/Users';
 import { Button } from 'shared/entities/button.entity';
 import { User } from 'shared/entities/user.entity';
 import { UpdateEvent, WatchEvent } from 'store/Event';
 import { ButtonService } from 'services/Buttons';
 import { ButtonEntry } from 'shared/dtos/button.dto';
+import t from 'i18n';
 
 export enum MainPopupPage {
   HIDE = 'hide',
@@ -57,7 +59,6 @@ export class SetMainPopup implements UpdateEvent {
     return produce(state, (newState) => {
       newState.homeInfo.mainPopupPage = this.newPage;
       newState.homeInfo.mainPopupButton = null;
-      // newState.explore.currentButton = null;
       newState.homeInfo.mainPopupUserProfile = null;
     });
   }
@@ -70,7 +71,6 @@ export class SetInvitationPopup implements UpdateEvent {
     return produce(state, (newState) => {
       newState.homeInfo.mainPopupPage = MainPopupPage.INVITE;
       newState.homeInfo.mainPopupButton = null;
-      // newState.explore.currentButton = null;
       newState.homeInfo.mainPopupUserProfile = null;
       newState.homeInfo.invitationCode = this.invitationCode;
     });
@@ -100,7 +100,13 @@ export class FindAndSetMainPopupCurrentButton implements WatchEvent {
   public constructor(private buttonId) {}
   public watch(state: GlobalState) {
     return ButtonService.findById(this.buttonId).pipe(
-      map((data) => store.emit(new SetMainPopupCurrentButton(data)))
+      map((data) => store.emit(new SetMainPopupCurrentButton(data))),
+      catchError((error) => {
+        if (error?.response?.statusCode === 404 || error?.status === 404) {
+          alertService.warn( t("common.notFoundMessage") );
+        }
+        return of(undefined);
+      })
     );
   }
 
@@ -115,11 +121,7 @@ export class SetMainPopupCurrentButton implements UpdateEvent {
       newState.homeInfo.mainPopupUserProfile = null;
       // newState.explore.currentButton = this.button;
       newState.homeInfo.mainPopupButton = this.button;
-      if(state.homeInfo.pageName == 'Explore' && this.button)
-        {
-          newState.homeInfo.mainPopupButton = null;
-          newState.explore.settings.center = [this.button.latitude,this.button.longitude]
-        }
+      // newState.explore.currentButton = this.button
     });
   }
 }

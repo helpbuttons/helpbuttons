@@ -1,3 +1,5 @@
+@use '../variables' as *;
+
 $textarea-textarea-border-radius: $border-general-height;
 $textarea-textarea-padding-big: $padding-big;
 $textarea-textarea-width: 100%;
@@ -6,7 +8,7 @@ $textarea-textarea-min-height: 6.25rem;
 $textarea-textarea-color-gray: $color-gray;
 
 .textarea__textarea {
-  font-size: $font-size-general;
+  font-size: $font-size-medium;
   border: 1px solid $color-gray-border;
   border-radius: $textarea-textarea-border-radius;
   min-height: $textarea-textarea-min-height;
@@ -34,27 +36,6 @@ $textarea-textarea-color-gray: $color-gray;
   // HTML css default
   textarea {
     @extend .textarea__textarea;
-  }
-}
-
-.emoji-picker{
-  position: relative;
-  right: 15px;
-  float: right;
-  bottom: 30px;
-  margin: auto;
-  font-size: 2.2rem;
-
-  & section {
-
-    width: 100%;
-
-  }
-
-  &:hover {
-
-    cursor: pointer;
-
   }
 }
 

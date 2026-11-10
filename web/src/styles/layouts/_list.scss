@@ -1,3 +1,5 @@
+@use '../variables' as *;
+
 $list-container-height: 300px;
 $list-drag-tab-height: 35px;
 $list-container-hide-height: calc($footer-height-mobile - $list-container-height);
@@ -5,7 +7,7 @@ $list-order-tabs-bottom: calc($footer-height-mobile + $list-container-height);
 $list-container-hide-nohover-height: calc($footer-height-mobile - $list-container-height + 15px);
 $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-height - 40px);
 $list-content-height-full-screen-mobile: calc(var(--vh) - 220px );
-$list-content-height-mid-screen-mobile: calc(var(--vh) );
+$list-content-height-mid-screen-mobile: calc(345px - $list-drag-tab-height);
 
 
 ///shouldd be the posts list
@@ -33,32 +35,6 @@ $list-content-height-mid-screen-mobile: calc(var(--vh) );
 //   // padding-bottom: calc($footer-height-mobile + 2*$margin-medium);
 
 // }
-
-.list__show-map-button {
-
-  position: relative;
-  display: flex;
-  width: auto;
-  z-index: $z-index-04;  
-  // right: $padding-big;
-
- .btn--center {
-  // width: 80px;
-  padding: $padding-small;
-  margin: auto;
-
- }
-
-}
-
-.list__show-map-button--hideList {
-
-  bottom: 40px;
-  position: absolute;
-  right: 0;
-  padding-right: $padding-big;
-
-}
 
 .list__content {
 
@@ -161,12 +137,6 @@ $list-content-height-mid-screen-mobile: calc(var(--vh) );
 
 }
 
-.list__empty-message--create{
-
-  width: 50%;
-
-}
-
 .list__empty-message--button {
 
   display: flex;
@@ -223,12 +193,6 @@ $list-content-height-mid-screen-mobile: calc(var(--vh) );
 
 }
 
-.list__order--hide {
-
-  background-color: $color-corporative;
-
-}
-
 @media #{$breakpoints-medium} {
 
   .list__empty-message{
@@ -244,10 +208,6 @@ $list-content-height-mid-screen-mobile: calc(var(--vh) );
     font-size: $font-size-small;
     grid-column: 1 / -1; 
 
-  }
-
-  .list__show-map-button--hideList {
-    bottom: 40px;
   }
 
   .list__content--full-screen {
@@ -295,9 +255,8 @@ $list-content-height-mid-screen-mobile: calc(var(--vh) );
   }
 
   .list__element {
-    width: 100%;
     flex-basis: 30%;
-    
+    flex: 0 1 50%; 
     min-width: $card-button-list-width;
   }
 

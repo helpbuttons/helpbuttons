@@ -35,6 +35,7 @@ function List({
   showMap,
   isListOpen,
   setListOpen,
+  onDragPos,
   toggleShowMap = (e) => {},
 }) {
   const filters = useStore(
@@ -55,7 +56,7 @@ function List({
 
   const hexagonClicked = useStore(
     store,
-    (state: GlobalState) => state.explore.settings.hexagonClicked,
+    (state: GlobalState) => state.explore.map.filters.hexClicked,
   );
 
   const showMapIcon = showMap ? <IoClose /> : <IoMapOutline />;
@@ -136,6 +137,8 @@ function List({
               isListFullScreen={isListFullScreen}
               setListOpen={setListOpen}
               viewMode={viewMode}
+              onDragPos={onDragPos} 
+              onScroll={undefined}
             >
               <div
                 className={

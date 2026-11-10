@@ -7,7 +7,7 @@ import {
 } from '@src/shared/helpers/uuid.helper';
 import { UserCredentialService } from '../user-credential/user-credential.service';
 import { MailService } from '../mail/mail.service';
-import { User } from '../user/user.entity';
+import { User, UserProfile } from '../user/user.entity';
 import { StorageService } from '../storage/storage.service';
 import { Role } from '@src/shared/types/roles';
 import { UserCredential } from '../user-credential/user-credential.entity';
@@ -21,8 +21,8 @@ import { ErrorName } from '@src/shared/types/error.list';
 import { isImageData } from '@src/shared/helpers/imageIsFile';
 import { NetworkService } from '../network/network.service';
 import { InviteService } from '../invite/invite.service';
+import { plainToInstance } from 'class-transformer';
 
-export const nomailString = '@nomail.com';
 
 @Injectable()
 export class AuthService {
@@ -46,19 +46,19 @@ export class AuthService {
         return {
           username: signupQRUserDto.username,
           qrcode: signupQRUserDto.qrCode,
-          email: signupQRUserDto.qrCode + nomailString,
           name: signupQRUserDto.name,
           password: token(),
           locale: signupQRUserDto.locale,
           acceptPrivacyPolicy: signupQRUserDto.acceptPrivacyPolicy,
           phone: signupQRUserDto.phone,
+          email: signupQRUserDto.email
         }
       })
       .then((signupUserDto: SignupRequestDto) => {
         const newUserDto = {
           username: signupUserDto.username,
-          email: signupUserDto.email,
           role: Role.registered,
+          email: signupUserDto.email ? signupUserDto.email : null,
           name: signupUserDto.name,
           verificationToken: token(),
           emailVerified: false,
@@ -81,29 +81,26 @@ export class AuthService {
             if (!newUserDto.emailVerified) {
               this.sendLoginToken(newUserDto, true);
             }
+            this.inviteService.destroyInviteCode(signupQRUserDto.qrCode)
             return user;
           },
         );
       });
   }
-  async signup(signupUserDto: SignupRequestDto): Promise<UserOutDto> {
+  async signup(signupUserDto: SignupRequestDto, avatar: Express.Multer.File): Promise<UserOutDto> {
     let emailVerified = false;
     let userRole = Role.registered;
     const userCount = await this.userService.userCount();
+
     if (userCount < 1) {
       userRole = Role.admin;
     } else {
-      try {
-        const selectedNetwork = await this.networkService.findDefaultNetwork();
-
-        if (selectedNetwork.inviteOnly) {
-          const validInviteCode = await this.inviteService.isInviteCodeValid(signupUserDto.inviteCode)
-          if (!validInviteCode) {
-            throw new CustomHttpException(ErrorName.inviteOnly)
-          }
+      const selectedNetwork = await this.networkService.findDefaultNetwork();
+      if (selectedNetwork.inviteOnly) {
+        const validInviteCode = await this.inviteService.isInviteCodeValid(signupUserDto.inviteCode)
+        if (!validInviteCode) {
+          throw new CustomHttpException(ErrorName.inviteOnly)
         }
-      } catch (error) {
-        console.error('network not found?')
       }
     }
 
@@ -125,16 +122,38 @@ export class AuthService {
       showWassap: false,
     };
 
+    
+    return this.createUser(newUserDto, signupUserDto).
+      then((newUser) => {
+        if (userCount > 0) {
+          this.sendWelcomeMail(newUser.name, newUser.email, newUser.locale)
+          this.networkService.findDefaultNetwork().then((selectedNetwork) => {
+            if (selectedNetwork.inviteOnly) {
+              this.inviteService.destroyInviteCode(signupUserDto.inviteCode)
+            }
+          });
+        }
+        // verify email address
+        // if (!newUser.emailVerified && userCount > 1) {
+        //   this.sendLoginToken(newUser, true);
+        // }
+        return newUser;
+      });
+  }
+
+  private async createUser(newUserDto, signupUserDto) {
     const regex = /^[a-zA-Z0-9\_\-\.]+$/gm;
     if (!signupUserDto.username.match(regex)) {
       throw new CustomHttpException(ErrorName.InvalidUsername);
     }
 
-    const emailExists = await this.userService.isEmailExists(
-      signupUserDto.email,
-    );
-    if (emailExists) {
-      throw new CustomHttpException(ErrorName.EmailAlreadyRegistered);
+    if(signupUserDto.email){
+      const emailExists = await this.userService.isEmailExists(
+        signupUserDto.email,
+      );
+      if (emailExists) {
+        throw new CustomHttpException(ErrorName.EmailAlreadyRegistered);
+      }
     }
 
     const usernameExists = await this.userService.findByUsername(
@@ -146,27 +165,9 @@ export class AuthService {
       );
     }
     if (signupUserDto.avatar) {
-      try {
-        newUserDto.avatar = await this.storageService.newImage64(
-          signupUserDto.avatar,
-        );
-      } catch (err) {
-        throw new CustomHttpException(ErrorName.InvalidMimetype);
-      }
+      newUserDto.avatar = this.storageService.uploadAndConvertImage(signupUserDto.avatar)
     }
-    return this.createUser(newUserDto, signupUserDto).
-      then((newUser) => {
-        this.sendWelcomeMail(newUser.name, newUser.email, newUser.locale)
 
-        // verify email address
-        // if (!newUser.emailVerified && userCount > 1) {
-        //   this.sendLoginToken(newUser, true);
-        // }
-        return newUser;
-      });
-  }
-
-  private createUser(newUserDto, signupUserDto) {
     return this.userService.createUser(newUserDto)
       .then((user: User) => {
         return this.createUserCredential(
@@ -274,10 +275,14 @@ export class AuthService {
     return accesstoken;
   }
   getCurrentUser(userId) {
-    return this.userService.findById(userId, true);
+    return this.userService.findById(userId, true)
+    .then((user) => {
+      const whoAmIUser = plainToInstance(UserProfile, user, { excludeExtraneousValues: true })
+      return {...whoAmIUser, pushSubscribed: user.endpoint ? true : false}
+    })
   }
 
-  async update(data: UserUpdateDto, currentUser) {
+  async update(currentUser, data: UserUpdateDto, avatar: Express.Multer.File) {
     let newUser = {
       avatar: null,
       email: data.email,
@@ -289,24 +294,14 @@ export class AuthService {
       tags: data.tags,
       center: data.center,
       address: data.address,
-      radius: data.radius,
+      radius: data.radius ? data.radius : 0,
       phone: data.phone,
       publishPhone: data.publishPhone,
       showWassap: data.showWassap
     };
 
-    if (isImageData(data.avatar)) {
-      try {
-        newUser.avatar = await this.storageService.newImage64(
-          data.avatar,
-        );
-        if(currentUser.avatar != newUser.avatar)
-        {
-          this.storageService.delete(currentUser.avatar)
-        }
-      } catch (err) {
-        throw new CustomHttpException(ErrorName.InvalidMimetype);
-      }
+    if (avatar) {
+      newUser.avatar = (await this.storageService.uploadAndConvertImage(avatar)).name
     }else if(data.avatar){
       newUser.avatar = data.avatar;
     }

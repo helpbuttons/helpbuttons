@@ -16,7 +16,6 @@ import { NetworkModule } from '@src/modules/network/network.module';
 // import { PostModule } from '@src/modules/post/post.module';
 import { StorageModule } from '@src/modules/storage/storage.module';
 import { TagModule } from '@src/modules/tag/tag.module';
-import { TemplateButtonModule } from '@src/modules/template-button/template-button.module';
 import { UserCredentialModule } from '@src/modules/user-credential/user-credential.module';
 import { UserModule } from '@src/modules/user/user.module';
 import { AppLogger } from '@src/shared/middlewares/app-logger.middleware';
@@ -39,6 +38,8 @@ import { FEDIFY_FEDERATION, FedifyModule, integrateFederation } from '@fedify/ne
 import { Federation, InProcessMessageQueue, MemoryKvStore } from '@fedify/fedify';
 import * as express from 'express';
 import { FederationModule } from '@src/modules/federation/federation.module';
+
+import { PushNotifcationModule } from '@src/modules/push-notification/push-notification.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -58,7 +59,6 @@ import { FederationModule } from '@src/modules/federation/federation.module';
     ButtonModule,
     TagModule,
     NetworkModule,
-    TemplateButtonModule,
     UserModule,
     AuthModule,
     UserCredentialModule,
@@ -86,7 +86,8 @@ import { FederationModule } from '@src/modules/federation/federation.module';
     }),
     FederationModule,
     SetupModule,
-    DeletemeModule
+    DeletemeModule,
+    PushNotifcationModule
   ],
   controllers: [AppController],
   providers: [

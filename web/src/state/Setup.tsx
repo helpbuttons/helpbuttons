@@ -1,5 +1,5 @@
 import produce from 'immer';
-import { GlobalState, store } from 'state';
+import { GlobalState, store, useGlobalStore } from 'state';
 import { of, tap } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { isHttpError } from 'services/HttpService';
@@ -10,23 +10,37 @@ import { UserService } from 'services/Users';
 import { SignupRequestDto } from 'shared/dtos/auth.dto';
 import { HttpStatus } from 'shared/types/http-status.enum';
 import { UpdateEvent, WatchEvent } from 'store/Event';
-import { FetchUserData } from './Profile';
+import { FetchUserData, SessionUserLogout } from './Profile';
 import { alertService } from 'services/Alert';
 import { useEffect, useRef } from 'react';
 import { useStore } from 'state';
 import dconsole from 'shared/debugger';
+import { isStaticApp } from 'shared/environment';
+import { require_try } from 'shared/static.utils';
 
 
 export const useConfig = (_config, onError) => {
+  const config = useGlobalStore((state: GlobalState) => state.config);
+
   const fetchingConfig = useRef(false)
   useEffect(() => {
-    if(!_config && !fetchingConfig.current)
-    {
-      fetchingConfig.current = true
-      store.emit(new GetConfig(() => dconsole.log('got config!'), onError))
-    }else if(_config){
-      store.emit(new ConfigFound(_config))
+    if (!fetchingConfig.current && !config) {
+      if (isStaticApp()) {
+        const staticAppCompiledConfig = require_try('../../config.json')
+        if(!staticAppCompiledConfig){
+          console.log('could not load static config?')
+          return;
+        }
+        store.emit(new ConfigFound(staticAppCompiledConfig))
+      } else if (_config) {
+        store.emit(new ConfigFound(_config))
+      }
+       else if (!_config && !fetchingConfig.current) {
+        fetchingConfig.current = true
+        store.emit(new GetConfig(() => dconsole.log('got config!'), onError))
+      }
     }
+
   }, [_config])
   return useStore(
     store,
@@ -60,6 +74,13 @@ export class GetConfig implements WatchEvent {
             err.statusCode === HttpStatus.SERVICE_UNAVAILABLE
           ) {
             alertService.error('backend error: ' + err.message)
+        } else if (
+              isHttpError(err) &&
+              err.statusCode === HttpStatus.FORBIDDEN
+            ) {
+              UserService.logout();
+              store.emit(new SessionUserLogout())
+              alertService.error('not allowed, have you been blocked?')
         } else if (
           error.status === HttpStatus.INTERNAL_SERVER_ERROR
         ) {
@@ -207,7 +228,7 @@ export class CreateAdmin implements WatchEvent {
           err.statusCode === HttpStatus.CONFLICT
         ) {
           this.onError(err);
-        } else if(err.statusCode == HttpStatus.NOT_ACCEPTABLE) {          
+        } else if(err && err.statusCode == HttpStatus.NOT_ACCEPTABLE) {          
           this.onError(err)
         }else{
           throw error;

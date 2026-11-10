@@ -1,6 +1,6 @@
 import { store } from 'state';
-import { LocalStorageVars, localStorageService } from 'services/LocalStorage';
 import { AddAlert, RemoveAlert, RemoveAllAlerts } from 'state/Alerts';
+import { browserAllowsNotifications } from 'services/PushNotification';
 
 export const alertService = {
   success,
@@ -42,9 +42,9 @@ function warn(message, options = {}) {
 function alert(alert) {
   alert.autoClose =
     alert.autoClose === undefined ? true : alert.autoClose;
-    const hasNotificationPermissions = localStorageService.read(LocalStorageVars.HAS_PERMISSION_NOTIFICATIONS)
- 
-  if (hasNotificationPermissions) {
+    const hasNotificationPermissions = browserAllowsNotifications()
+
+    if (hasNotificationPermissions) {
     let message = alert.message;
     // switch (alert.type) {
     //   case AlertType.Success:

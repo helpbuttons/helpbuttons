@@ -1,3 +1,5 @@
+@use '../variables' as *;
+
 .form-list__wrapper {
 
     width: 100%;
@@ -19,30 +21,21 @@
 .form-list__table-body-cell {
 
   padding: $padding-small;
-}
-
-.form-list__table-body-cell--email {
-
-  font-weight: $font-weight-bolder;
+  gap: $padding-small;
 
 }
 
 .form-list__table-body-row {
 
-  // display: flex;
+  display: table-row;
+  width: 100%;
 
-  flex-direction: row;
-  justify-content: space-between;
-  
   padding: $padding-small;
 
 }
 
-.form-list__table-container {
-    min-width: 800px;
-  }
-  
   .form-list__table {
+    display: table;
     width: 100%;
     border-collapse: collapse;
     font-size: $font-size-small;
@@ -57,7 +50,7 @@
       }
   
       &-cell {
-        padding: 12px;
+        padding: $padding-medium;
         font-weight: bold;
         text-align: left; // Align headers with columns
         white-space: nowrap; // Prevent headers from wrapping
@@ -65,6 +58,9 @@
     }
   
     &-body {
+      display: table-row-group;
+      width: 100%;
+
       &-row {
         &:nth-child(even) {
           background-color: #fafafa; // Zebra striping for rows
@@ -73,7 +69,7 @@
 
   
       &-cell {
-        padding: 12px;
+        padding: $padding-medium;
         border-bottom: 1px solid #D4D4D4; // Border for each cell
         white-space: nowrap; // Prevent cell text from wrapping
       }

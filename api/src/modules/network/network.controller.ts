@@ -5,13 +5,16 @@ import {
     Body,
     Param,
     Res,
+    UseInterceptors,
+    UploadedFiles,
+    Header,
   } from '@nestjs/common';
   import { ApiTags } from '@nestjs/swagger';
-import { AllowGuest, OnlyAdmin } from '@src/shared/decorator/roles.decorator';
+  import { AllowGuest, OnlyAdmin } from '@src/shared/decorator/roles.decorator';
+  import { FileFieldsUploadInterceptor, videoImageFilter } from '@src/shared/decorators/file-upload.decorator';
   
   import { CreateNetworkDto, UpdateNetworkDto } from './network.dto';
   import { NetworkService } from './network.service';
-  // import { FilterNetworksOrmDto } from '../dto/requests/filter-networks-orm.dto';
   
   @ApiTags('networks')
   @Controller('networks')
@@ -20,9 +23,25 @@ import { AllowGuest, OnlyAdmin } from '@src/shared/decorator/roles.decorator';
     
     @OnlyAdmin()
     @Post('new')
-    async create(@Body() createDto: CreateNetworkDto
+    @UseInterceptors(
+      FileFieldsUploadInterceptor(
+        [
+          { name: 'logo', maxCount: 1 },
+          { name: 'jumbo', maxCount: 1 },
+        ],
+        videoImageFilter
+      )
+    )
+    async create(
+      @Body() body: any,
+      @UploadedFiles() files: { logo?: Express.Multer.File[]; jumbo?: Express.Multer.File[] },
     ){
-      return await this.networkService.create(createDto);
+      // Parse the JSON data field
+      const createDto = JSON.parse(body.data);
+      const logo = files?.logo?.length > 0 ? files.logo[0] : null;
+      const jumbo = files?.jumbo?.length > 0 ? files.jumbo[0] : null;
+
+      return await this.networkService.create(createDto, logo, jumbo);
     }
 
     @AllowGuest()
@@ -39,10 +58,24 @@ import { AllowGuest, OnlyAdmin } from '@src/shared/decorator/roles.decorator';
     
     @OnlyAdmin()
     @Post('update')
+    @UseInterceptors(
+      FileFieldsUploadInterceptor(
+        [
+          { name: 'logo', maxCount: 1 },
+          { name: 'jumbo', maxCount: 1 },
+        ],
+        videoImageFilter
+      )
+    )
     async update(
-      @Body() updateNetworkDto: UpdateNetworkDto,
+      @Body() body: any,
+      @UploadedFiles() files: { logo?: Express.Multer.File[]; jumbo?: Express.Multer.File[] },
     ) {
-      return await this.networkService.update(updateNetworkDto);
+      // Parse the JSON data field
+      const updateDto = JSON.parse(body.data);
+      const logo = files?.logo?.length > 0 ? files.logo[0] : null;
+      const jumbo = files?.jumbo?.length > 0 ? files.jumbo[0] : null;
+      return await this.networkService.update(updateDto, logo, jumbo);
     }
   
 
@@ -58,13 +91,21 @@ import { AllowGuest, OnlyAdmin } from '@src/shared/decorator/roles.decorator';
     return await this.networkService.manifest();
   }
 
+  @Header('Cross-Origin-Resource-Policy', 'cross-origin')
   @AllowGuest()
   @Get('logo/:resolution')
   async logo(@Param('resolution') resolution : number, @Res() res) {
-    if([16, 32, 48, 72, 96, 144, 168, 180, 192].indexOf(resolution) > -1)
+    if([16, 32, 48, 72, 96, 128, 144, 168, 180, 192, 256, 512].indexOf(resolution) > -1)
     {
       return this.networkService.getLogo(res,resolution)
     }
     throw Error('resolution not allowed')
+  }
+
+  @Header('Cross-Origin-Resource-Policy', 'cross-origin')
+  @AllowGuest()
+  @Get('jumbo')
+  async jumbo(@Param('resolution') resolution : number, @Res() res) {
+    return this.networkService.getJumbo(res)
   }
 }

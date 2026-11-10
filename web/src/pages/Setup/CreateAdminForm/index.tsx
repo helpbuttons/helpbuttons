@@ -2,7 +2,7 @@ import Popup from 'components/popup/Popup';
 import NewUserFields, {
   passwordsMatch,
 } from 'components/user/NewUserFields';
-import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
+import Btn, { BtnSubmit, BtnType, ContentAlignment } from 'elements/Btn';
 import Form from 'elements/Form';
 import router from 'next/router';
 import { GlobalState, store } from 'state';
@@ -113,7 +113,7 @@ export default function CreateAdminForm() {
             locale: data.locale,
             inviteCode: '',
             name: data.name,
-            acceptPrivacyPolicy: data.acceptPrivacyPolicy
+            acceptPrivacyPolicy: data.acceptPrivacyPolicy,
           },
           () => {
             // let url = `${SetupSteps.FIRST_OPEN}`;
@@ -147,7 +147,7 @@ export default function CreateAdminForm() {
       <Popup
         title={t('setup.createAdminTitle')}
       >
-        <IllustrationHead title={t('setup.createAdmin')}/>
+        <IllustrationHead imageSrc={'/assets/images/create_network.jpg'} title={t('setup.createAdmin')}/>
         <Form
           onSubmit={handleSubmit(onSubmit)}
           classNameExtra="create-admin"
@@ -165,14 +165,7 @@ export default function CreateAdminForm() {
             </div>
           </div>
           <div className="form__btn-wrapper">
-            <Btn
-              submit={true}
-              btnType={BtnType.submit}
-              caption={t('common.next')}
-              contentAlignment={ContentAlignment.center}
-              isSubmitting={isSubmitting}
-              disabled={disableSave}
-            />
+            <BtnSubmit isSubmitting={isSubmitting} errors={errors} caption={t('common.save')} disabled={disableSave}/>
             {disableSave && 
               <Btn
                 btnType={BtnType.splitIcon}
@@ -191,17 +184,17 @@ export default function CreateAdminForm() {
 export function IllustrationHead({imageSrc = null, title}) {
   return (
       <div className='form__field'>
-
+        {imageSrc && 
+                      <div className='form__illustration'>
+                          <ImageWrapper
+                              imageType={ImageType.formIllustration}
+                              alt={title} src={imageSrc} localUrl={true} />
+                      </div>
+                  }
           <div className='form__header'>
               {title}
           </div>
-          {imageSrc && 
-              <div className='form__illustration'>
-                  <ImageWrapper
-                      imageType={ImageType.formIllustration}
-                      alt={title} src={imageSrc} localUrl={true} />
-              </div>
-          }
+          
       </div>
   )
 }

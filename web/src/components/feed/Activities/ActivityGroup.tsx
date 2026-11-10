@@ -5,52 +5,52 @@ import { useSelectedNetwork } from "state/Networks";
 import t from "i18n";
 import { GroupMessageType } from "shared/types/group-message.enum";
 import ImageWrapper, { ImageType } from "elements/ImageWrapper";
-import { IoArrowBack, IoSend } from "react-icons/io5";
-import { useEffect, useRef, useState } from "react";
-import FieldText from "elements/Fields/FieldText";
-import Btn, { BtnType, ContentAlignment, IconType } from "elements/Btn";
+import { IoArrowBack } from "react-icons/io5";
+import { useEffect, useState } from "react";
 import { FindGroupMessages, FindLatestActivities, SendNewGroupMessage, uniqById } from "state/Activity";
 import { useScroll } from "shared/helpers/scroll.helper";
-import { ActivityDetailMessage } from "./ActivityButton";
+import { ActivityDetailMessage, ChatMessageForm } from "./ActivityButton";
 import { ActivitiesPageSize } from "shared/dtos/activity.dto";
+import { ShowMobileOnly } from "elements/SizeOnly";
+import router from "next/router";
 
-export default function ActivityGroup({ setGroupMessageType, groupMessageType }) {
+export default function ActivityGroup({ selectedGroupType }) {
+  const userGroupMessages = useGlobalStore((state: GlobalState) => state.activities)
+  if (userGroupMessages?.admin) {
+    return <>
+      <ActivityGroupMessageEntry selectedGroupType={selectedGroupType} groupType={GroupMessageType.admin} groupMessages={userGroupMessages.admin?.lastMessage} />
+      <ActivityGroupMessageEntry selectedGroupType={selectedGroupType} groupType={GroupMessageType.community} groupMessages={userGroupMessages.community?.lastMessage} />
+    </>
+  }
+  if(userGroupMessages?.community){
+    return (<>
+      <ActivityGroupMessageEntry selectedGroupType={selectedGroupType} groupType={GroupMessageType.community} groupMessages={userGroupMessages.community?.lastMessage} />
+    </>)
+  }
+  return <></>
+  
+}
+
+function ActivityGroupMessageEntry({ groupMessages, selectedGroupType, groupType }) {
   const sessionUser = useGlobalStore(
     (state: GlobalState) => state.sessionUser,
   );
-  const userGroupMessages = useGlobalStore((state: GlobalState) => state.activities)
-  const isAdmin = sessionUser.role == Role.admin;
-  if (isAdmin) {
-    return <>
-      {/* <div>{t('groupChat.admin_community')}</div> */}
-      <ActivityGroupMessageEntry creatingNewChat={groupMessageType} setCreatingNewChat={setGroupMessageType} groupType={GroupMessageType.admin} groupMessages={userGroupMessages.admin} />
-      <ActivityGroupMessageEntry creatingNewChat={groupMessageType} setCreatingNewChat={setGroupMessageType} groupType={GroupMessageType.community} groupMessages={userGroupMessages.community} />
-    </>
+  const isAdmin = sessionUser.role == Role.admin
+  if (!groupMessages && isAdmin) {
+    return <ActivityGroupCreate selectedGroupType={selectedGroupType} groupType={groupType} onClick={() => router.push(`/Activity/${groupType}`)} />
   }
-  if (!userGroupMessages.community && !isAdmin) {
+  if(!groupMessages){
     return <></>
   }
-  return (<>
-    {/* <div>{t('groupChat.community')}</div> */}
-    <ActivityGroupMessageEntry creatingNewChat={groupMessageType} setCreatingNewChat={setGroupMessageType} groupType={GroupMessageType.community} groupMessages={userGroupMessages.community} />
-  </>)
+  return <ActivityListEntryCard selected={groupType == selectedGroupType} activity={{ ...groupMessages, type: t(`groupChat.${groupType}`) }} onClick={() => router.push(`/Activity/${groupType}`)} />
 }
 
-function ActivityGroupMessageEntry({ groupMessages, groupType, creatingNewChat, setCreatingNewChat }) {
-
-  if (!groupMessages) {
-    return <ActivityGroupCreate creatingNewChat={creatingNewChat} groupType={groupType} onClick={() => setCreatingNewChat(() => groupType)} />
-  }
-
-  return <ActivityListEntryCard selected={creatingNewChat == groupType} activity={{ ...groupMessages, type: t(`groupChat.${groupType}`) }} onClick={() => setCreatingNewChat(() => groupType)} />
-}
-
-export function ActivityGroupCreate({ groupType, onClick, creatingNewChat }) {
+export function ActivityGroupCreate({ selectedGroupType, groupType, onClick }) {
   const selectedNetwork = useSelectedNetwork()
 
   return (
     <div className="feed-element">
-      <div className={`card-notification ${creatingNewChat == groupType ? 'card-notification--selected' : ''}`} onClick={onClick}>
+      <div className={`card-notification ${selectedGroupType == groupType ? 'card-notification--selected' : ''}`} onClick={onClick}>
 
         <ActivityListEntryCardInner image={selectedNetwork.logo} createdAt={null} type={t(`groupChat.${groupType}`)} read={false} premessage={null} message={t('groupChat.create', [t(`groupChat.${groupType}`)])} footer="" title="" />
       </div>
@@ -72,18 +72,16 @@ export function ActivityGroupChat({ groupType, close }) {
   useEffect(() => {
     let latestMessageFromPoll = null
     if(groupType == GroupMessageType.admin){
-      if(!activities.admin){
-        return;
+      if(activities.admin){
+        latestMessageFromPoll = activities.admin?.lastMessage?.createdAt;
       }
-      latestMessageFromPoll = activities.admin.createdAt;
-    }
-    if(groupType == GroupMessageType.community){
-      if(!activities.community){
-        return;
-      }
-      latestMessageFromPoll = activities.community.createdAt;
     }
 
+    if(groupType == GroupMessageType.community){
+      if(activities.community){
+        latestMessageFromPoll = activities.community?.lastMessage?.createdAt;
+      }
+    }
     if(messages?.length > 0)
     {
       const latestMessage = messages[0].createdAt
@@ -93,10 +91,16 @@ export function ActivityGroupChat({ groupType, close }) {
         })
       }
     }
+    else if(latestMessageFromPoll){
+      loadMessages(0, (_msgs) => {
+        setMessages((prev) => uniqById( _msgs, prev))
+      })
+    }
     
   }, [activities])
 
   const sendNewMessage = (message, groupType, onSuccess) => {
+    if(message.length < 1) return ;
     store.emit(new SendNewGroupMessage(groupType, message, () => {
       onSuccess()
       store.emit(new FindLatestActivities())
@@ -108,7 +112,8 @@ export function ActivityGroupChat({ groupType, close }) {
       <ActivityGroupChatDetailHeader closeConversation={close} groupType={groupType} />
       <ActivityGroupMessages messages={messages} loadMessages={loadMessages} groupType={groupType} setMessages={setMessages}/>
       {(messages?.length < 1 ) && <div className="chat__notice">{t('groupChat.creating')}</div>}
-      <ActivityGroupMessageForm sendNewMessage={sendNewMessage} groupType={groupType} />
+      {/* //refactored.  activitybutton import */}
+      <ChatMessageForm onSend={(message: string, clear: () => void) => sendNewMessage(message, groupType, clear)} />
     </>
   )
 }
@@ -152,15 +157,17 @@ function ActivityGroupChatDetailHeader({ closeConversation, groupType }) {
   return (
     <div className="chat__header">
       <header className="chat__header-content">
-        <div className="chat__header-left">
-          <div className="btn-circle__icon">
-            {closeConversation &&
-              <a href="#" onClick={() => { closeConversation() }}>
-                <IoArrowBack />
-              </a>
-            }
+          <div className="chat__header-left">
+            <ShowMobileOnly>
+              <div className="chat__header-button">
+                {closeConversation &&
+                  <a href="#" onClick={() => { closeConversation() }} className="chat__header-button__icon">
+                    <IoArrowBack />
+                  </a>
+                }
+              </div>
+           </ShowMobileOnly>
           </div>
-        </div>
         <div className="chat__header-center">
           <h1 className="chat__header-title">
             {t(`groupChat.${groupType}`)}
@@ -183,53 +190,3 @@ function ActivityGroupChatDetailHeader({ closeConversation, groupType }) {
 }
 
 
-// TODO: refator to unite with  MessageForm from ActivityButton
-function ActivityGroupMessageForm({ sendNewMessage, groupType }) {
-  const messageContent = useRef(null)
-  const inputKeyDown = (e) => {
-    const val = e.target.value;
-    if ((e.key === 'Enter' || e.key === ',') && val) {
-      e.preventDefault();
-      sendMessage()
-    }
-  }
-
-  const sendMessage = () => {
-    // TODO: IMPLEMENT SEND NEW GROUP MESSAGE
-    //   sendNewGroupMessage(messageContent.current.value, groupType)
-    const message = messageContent.current.value; 
-    if(message.length < 1)
-    {
-      return;
-    }
-    sendNewMessage(messageContent.current.value, groupType, () => {
-      messageContent.current.value = ''
-    })
-  }
-  return (
-    <form className="chat__new-message">
-      <div className="chat__new-message__message">
-        <FieldText
-          name="message"
-          ref={messageContent}
-          label={""}
-          classNameInput={"form__input"}
-          onInputKeyDown={inputKeyDown}
-          multiInput={true}
-        />
-      </div>
-      <div className="chat__new-message__send">
-        <Btn
-          btnType={BtnType.circle}
-          iconLink={<IoSend />}
-          iconLeft={IconType.circle}
-          contentAlignment={ContentAlignment.center}
-          onClick={() => {
-            sendMessage()
-          }}
-        />
-      </div>
-
-    </form>
-  )
-}

@@ -1,3 +1,4 @@
+import t from 'i18n';
 import { debounce } from 'lodash';
 import { useCallback } from 'react';
 
@@ -47,7 +48,7 @@ export const useGeoReverse = () => {
           },
         ),
       );
-    }, 500),
+    }, 100),
     [],
   );
 
@@ -85,9 +86,16 @@ export const formatedCoords = (place) => {
 }
 
 export const isPointInBounds = (point, bounds) => {
-  if(point[0] <= bounds.ne[0] && point[0] >= bounds.sw[0] && point[1] <= bounds.ne[1] && point[1] >= bounds.sw[1])
+  if(point[0] <= bounds?.ne[0] && point[0] >= bounds?.sw[0] && point[1] <= bounds?.ne[1] && point[1] >= bounds?.sw[1])
   {
     return true;
   }
   return false;
+}
+
+export const getUnkownAddress = (lat, lng, hideAddress = false) => {
+  if(hideAddress){
+    return t('button.unknownPlace')
+  }
+  return getCoordinatesDMS(`${lat}, ${lng}`)
 }

@@ -11,8 +11,9 @@ import { useSelectedNetwork } from "state/Networks";
 import { LocationKeyIcon } from "../Map/MarkerButton";
 import { FieldMapZoomSlide } from "elements/Fields/FieldAreaMap";
 import { MapLocationKey } from "../Map/NetworkMapConfigure";
-import { useGeoReverse } from "elements/Fields/FieldLocation/location.helpers";
+import { getUnkownAddress, useGeoReverse } from "elements/Fields/FieldLocation/location.helpers";
 import { alertService } from "services/Alert";
+import { TableHeader, TableLine, TableLineCell } from "components/table";
 
 export function FieldKeySpots() {
     const [showPopup, setShowPopup] = useState(false)
@@ -38,18 +39,25 @@ export function FieldKeySpots() {
 
 export function LocationKeyItem({ place, deleteAction }) {
 
-    return <div className="form-list__table-body-row">
-        <LocationCoordinates latitude={place.latitude} longitude={place.longitude} address={place.address} label={'no'} />
-        <Btn
-            btnType={BtnType.iconActions}
-            iconLink={<IoTrashBinOutline />}
-            iconLeft={IconType.circle}
-            contentAlignment={ContentAlignment.center}
-            onClick={() => {
-                deleteAction(place.id)
-            }}
-        />
-    </div>
+    return <>
+        <TableLine>
+                <TableLineCell>
+                <LocationCoordinates latitude={place.latitude} longitude={place.longitude} address={place.address} label={'no'} />
+                </TableLineCell>
+                <TableLineCell>
+                    <Btn
+                        btnType={BtnType.iconActions}
+                        iconLink={<IoTrashBinOutline />}
+                        iconLeft={IconType.circle}
+                        contentAlignment={ContentAlignment.center}
+                        onClick={() => {
+                            deleteAction(place.id)
+                        }}
+                    />
+                </TableLineCell>
+            </TableLine>
+        </>  
+   
 }
 
 
@@ -91,16 +99,25 @@ export function LocationKeyTable({showForm,
                 showForm={showForm}
                 setShowForm={setShowForm}
             />
-            : 'Please choose a network location, before adding key spots'}
-            <div className="form-list__table form-list__wrapper">
-                {(!showForm && locations?.length > 0) && (
+            : t('configuration.noNetworkLocation')}
+            
+            <div className="form-list__wrapper">
+
+                <div className="form-list__table ">
+              
                     <>
-                        {locations.map((place, idx) =>
-                            <LocationKeyItem key={idx} place={place} deleteAction={deleteLocation} />
+                        {(!showForm && locations?.length > 0) && (
+                            <>
+                                {locations.map((place, idx) =>
+                                    <LocationKeyItem key={idx} place={place} deleteAction={deleteLocation} />
+                                )}
+                            </>
                         )}
                     </>
-                )}
+                                        
+                </div>
             </div>
+
         </>
     )
 }
@@ -144,13 +161,12 @@ export function FieldLocationKeyMap({
     const findAddressFromPosition = (latLng) => {
         setIsLoading(() => true)
         getLatLngAddress(latLng, false, (place) => {
-            console.log(place)
             setFoundAddress(() => place.formatted)
             setIsLoading(() => false)
         },
             (error) => {
                 setIsLoading(() => false)
-                setFoundAddress(() => t('button.unknownPlace'))
+                setFoundAddress(() => getUnkownAddress(latLng[0], latLng[1]))
             }
         );
     }
@@ -190,7 +206,7 @@ export function FieldLocationKeyMap({
                     <MapLocationKey
                         center={center}
                         zoom={zoom}
-                        tileType={undefined}
+                        tileType={selectedNetwork.exploreSettings.tileType}
                         onBoundsChanged={onBoundsChange}
                         handleMapClick={onMapClick}
                     >

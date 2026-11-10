@@ -1,6 +1,6 @@
-import { map } from 'rxjs/operators';
-import { ajax } from 'rxjs/ajax';
-import { Observable } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
+import { ajax, AjaxError } from 'rxjs/ajax';
+import { Observable, of, throwError } from 'rxjs';
 
 class RxjsHelper {
   public delete<T>(
@@ -36,7 +36,13 @@ class RxjsHelper {
       method: method,
       body: body,
       headers: headers,
-    }).pipe(map((result) => result.response as T | undefined));
+    }).pipe(
+      map((result) => result.response as T | undefined),
+      catchError((error: AjaxError) => {
+        console.error(`AJAX ${method} ${path} failed:`, error.message);
+        return of(undefined)
+      }),
+    );
   }
 }
 

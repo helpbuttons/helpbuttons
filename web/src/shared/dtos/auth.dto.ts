@@ -38,7 +38,7 @@ export class SignupRequestDto {
   })
   @IsEmail()
   @Transform((email) => email.value.toLowerCase())
-  email: string;
+  email?: string;
 
   @ApiProperty({
     default: '',
@@ -111,7 +111,7 @@ export class SignupRequestDto {
   @IsIn(['yes'])
   acceptPrivacyPolicy
 
-  qrcode: string;
+  qrcode?: string;
 
   phone?: string;
 }
@@ -152,6 +152,7 @@ export class SignupQRRequestDto {
   acceptPrivacyPolicy;
   
   phone?: string;
+  email?: string;
 }
 
 export class LoginRequestDto {

@@ -1,6 +1,6 @@
-//Revise: Esto puede ir en un breakpoint
+@use '../variables' as *;
 
-$scrollbar-width: 8px;
+//Revise: Esto puede ir en un breakpoint
 
   ::-webkit-scrollbar {
     display: block;

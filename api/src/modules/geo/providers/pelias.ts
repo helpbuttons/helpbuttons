@@ -20,9 +20,9 @@ export class PeliasProvider implements GeoProvider {
   }
 
   // focus.point
-  searchQuery(query: string, lat: string, lon: string): Promise<GeoAddress[]> {
+  searchQuery(query: string, lat: string, lon: string, hideCountry :boolean = false): Promise<GeoAddress[]> {
     return this.queryGeo(`${query}&layers=venue,address,localadmin,locality,borough&focus.point.lat=${lat}&focus.point.lon=${lon}`).then((res) => {
-      return res.data.features.map((item) => this.hydratePlace(item));
+      return res.data.features.map((item) => this.hydratePlace(item, false, hideCountry));
     });
   }
   
@@ -40,9 +40,9 @@ export class PeliasProvider implements GeoProvider {
     return this.httpHelper.get(url);
   }
 
-  getAddress(position: GeoPosition): Promise<GeoAddress> {
+  getAddress(position: GeoPosition, hideCountry = false): Promise<GeoAddress> {
     return this.reverseGeo(position.lat, position.lng).then((res) =>
-      this.hydratePlace(res.data.features[0]),
+      this.hydratePlace(res.data.features[0], false, hideCountry),
     );
   }
 
@@ -58,14 +58,16 @@ export class PeliasProvider implements GeoProvider {
     return this.httpHelper.get(url);
   }
 
-  hydratePlace(place: any, limited = false): GeoAddress {
+  hydratePlace(place: any, limited = false, hideCountry = false): GeoAddress {
     const placeProperties = place.properties;
     let label = placeProperties.label.replace(placeProperties.region_a, placeProperties.region)
     if(limited)
     {
       label = `${placeProperties.localadmin ? placeProperties.localadmin+', ' : ''}${placeProperties.region ? placeProperties.region+', ' : ''}${placeProperties.country ? placeProperties.country : ''}`
     }
-    
+    if(hideCountry){
+      label = label.replace(', '+placeProperties.country, '')
+    }
     return {
       formatted: label,
       geometry: {

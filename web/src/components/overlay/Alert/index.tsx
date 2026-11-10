@@ -90,7 +90,7 @@ function Alert({ id, fade }) {
     );
 }
 
-export function FixedAlert({ alertType = AlertType.Info, message }) {
+export function FixedAlert({ alertType = AlertType.Info, children }) {
   return (
     <div className="card-alert__container">
         <div className={alertTypeClass[alertType]+' card-alert'}>
@@ -100,8 +100,7 @@ export function FixedAlert({ alertType = AlertType.Info, message }) {
             </div>
             <span
               className="card-alert__title"
-              dangerouslySetInnerHTML={{ __html: message }}
-            ></span>
+            >{children}</span>
           </div>
         </div>
     </div>

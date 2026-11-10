@@ -1,11 +1,12 @@
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { NextPageContext } from 'next'
-import { setMetadata } from 'services/ServerProps'
+import { setMetadata } from 'pages/_serverprops'
 import t from 'i18n'
 import { ExploreSettings, FindButton, UpdateExploreSettings } from 'state/Explore'
 import { store } from 'state'
 import { markerFocusZoom, maxZoom } from 'components/map/Map/Map.consts'
+import { getServerSidePropsHandler, shouldEnableSSR } from 'shared/staticapp.utils'
 export default function ButtonFile({
   metadata,
 }) {
@@ -29,6 +30,6 @@ export default function ButtonFile({
   
 }
 
-export const getServerSideProps = async (ctx: NextPageContext) => {
-  return setMetadata(t('seo.buttonEdit'), ctx);
-};
+export const getServerSideProps = shouldEnableSSR
+  ? (ctx) => getServerSidePropsHandler(t('seo.buttonEdit'), ctx)
+  : undefined;

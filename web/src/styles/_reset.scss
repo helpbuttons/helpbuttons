@@ -1,3 +1,5 @@
+@use 'variables' as *;
+
 html,
 body,
 div,
@@ -71,8 +73,8 @@ td {
   text-decoration: none;
   vertical-align: baseline;
   box-sizing: border-box;
-  word-wrap: break-word;
-  word-break: keep-all;
+  // word-wrap: break-word;
+  // word-break: keep-all;
   hyphens: auto;
   -webkit-hyphens:auto;
   -webkit-hyphenate-limit-after:1;
@@ -129,7 +131,7 @@ body,
 
 .homeinfo__container {
 
-  height: calc(var(--vh) - 60px) !important;
+  height: var(--vh) !important;
 
 }
 
@@ -158,12 +160,17 @@ body,
 
 }
 
+.feed-section--activity-content {
+
+    height: calc(var(--vh) - $footer-height-mobile) !important;
+
+}
+
 .popup,
 .filters__wrapper,
 .feed-section__center--mobile
 {
-  height: calc(var(--vh) ) !important;
-  /* Add other styles as needed */
+  height: var(--vh) !important;
 }
 
 ol,
@@ -195,13 +202,8 @@ q {
 a {
   color: $color-dark-gray; 
   font-weight: $font-weight-regular; 
-  word-break: break-all;
+  hyphens: auto;
 
-  &:hover {
-
-    color: $color-gray;
-
-  }
 }
 
 p {

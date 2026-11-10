@@ -1,4 +1,4 @@
-import { catchError, tap, map } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { produce } from 'immer';
 
 import { WatchEvent, UpdateEvent, EffectEvent } from 'store/Event';
@@ -15,7 +15,11 @@ import { useGlobalStore } from 'state';
 import { useEffect, useRef, useState } from 'react';
 import { getLocale } from 'shared/sys.helper';
 import { ButtonService } from 'services/Buttons';
-// import router from 'next/router';
+import { handleError } from './helper';
+import { Role } from 'shared/types/roles';
+import { CustomFields } from 'shared/types/customFields.type';
+import { getBgcolor, isStaticApp } from 'shared/environment';
+import { require_try } from 'shared/static.utils';
 
 export interface NetworksState {
   // networks: Network[];
@@ -29,8 +33,8 @@ export const networksInitial = {
     description: '',
     buttonTemplates: [],
     topTags: [],
-    backgroundColor: 'grey',
-    textColor: 'pink',
+    backgroundColor: getBgcolor(),
+    textColor: 'black',
   },
   initialized: false,
 };
@@ -42,6 +46,14 @@ export const useSelectedNetwork = (_selectedNetwork = null, onError = (err) => {
   const fetching = useRef(false)
   useEffect(() => {
     if (!initialized && !fetching.current) {
+      if(isStaticApp() && !(selectedNetwork?.id)){
+        const staticAppCompiledNetwork = require_try('../../network.json')
+        if(!staticAppCompiledNetwork){
+          console.log('could not load network?')
+          return;
+        }
+        store.emit(new SelectedNetworkFetched({...staticAppCompiledNetwork, logo: '/assets/images/logo.png'}))
+      }else
       if (_selectedNetwork?.id) {
         store.emit(new SelectedNetworkFetched(_selectedNetwork))
         return;
@@ -137,9 +149,11 @@ export class FetchDefaultNetwork implements UpdateEvent, WatchEvent {
 
   public watch(state: GlobalState) {
     return NetworkService.findById().pipe(
-      // With no Id, find the default network
-
       map((network) => {
+        if(!network){
+          this.onError('network-not-found');
+          return of(undefined);
+        }
         store.emit(new SelectedNetworkFetched(network));
         if (network && this.onSuccess) {
           this.onSuccess(network);
@@ -170,13 +184,34 @@ export class SelectedNetworkFetched implements UpdateEvent {
 
   public update(state: GlobalState) {
     return produce(state, (newState) => {
+
       newState.networks.selectedNetwork = this.network
+
+      newState.networks.selectedNetwork.buttonTemplates = findAvailableButtonTemplates(this.network.buttonTemplates, state.sessionUser)
+
       newState.explore.settings.viewMode = this.network.exploreSettings?.viewMode ? this.network.exploreSettings.viewMode : ExploreViewMode.LIST
       newState.networks.initialized = true;
     });
   }
 }
 
+export function findAvailableButtonTemplates(allButtonTemplates, user) {
+  const buttonTemplates = allButtonTemplates.map((_btnTemplate) => {
+    const isOnlyForEndorsed = _btnTemplate?.customFields?.find((_cstomfield) => {
+      return _cstomfield.type == CustomFields.OnlyEndorsed
+    })
+    if(isOnlyForEndorsed)
+    {
+      if(user && (user.role == Role.admin || user.endorsed))
+      {
+        return {..._btnTemplate, hide: false}  
+      }
+      return {..._btnTemplate, hide: true}
+    }
+    return {..._btnTemplate, hide: false}
+  })
+  return buttonTemplates
+}
 export class CreateNetwork implements WatchEvent {
   public constructor(
     private network,
@@ -220,23 +255,7 @@ export class UpdateNetwork implements WatchEvent {
       map((networkData) => {
         this.onSuccess(networkData.response);
       }),
-      catchError((error) => {
-        if (!error.response) {
-          this.onError(error, this.network);
-          throw error
-        }
-        let err = error.response;
-
-        if (isHttpError(err) && err.statusCode === 401) { // Unauthorized
-          this.onError("unauthorized", this.network);
-        } else if (err.statusCode === HttpStatus.BAD_REQUEST && err.message === "validation-error" && err.validationErrors) {
-          this.onError(err)
-        } else {
-          this.onError(err)
-          throw error;
-        }
-        return of(undefined);
-      })
+      catchError((error) => handleError(this.onError, error))
     );
   }
 }

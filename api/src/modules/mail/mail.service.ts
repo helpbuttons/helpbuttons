@@ -1,5 +1,5 @@
 import { MailerService } from '@nestjs-modules/mailer';
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { NetworkService } from '../network/network.service';
 import configs from '@src/config/configuration';
 import { Queue } from 'bull';
@@ -7,9 +7,14 @@ import { InjectQueue } from '@nestjs/bull';
 import translate from '@src/shared/helpers/i18n.helper';
 import { getUrl } from '@src/shared/helpers/mail.helper';
 import { uuid } from '@src/shared/helpers/uuid.helper';
+import { ActivityTemplateVars } from '../activity/out/activity';
+
+
 
 @Injectable()
 export class MailService {
+  private readonly logger = new Logger('MAIL');
+
   constructor(
     private readonly mailerService: MailerService,
     private readonly networkService: NetworkService,
@@ -37,7 +42,7 @@ export class MailService {
           locale,
           'email.activateSubject'
         ),
-        link: getUrl(locale, activationUrl),
+        link: activationUrl,
         linkCaption: translate(
           locale,
           'email.activateLinkCaption'
@@ -75,7 +80,7 @@ export class MailService {
           locale,
           'email.loginTokenSubject'
         ),
-        link: getUrl(locale, activationUrl),
+        link: activationUrl,
         linkCaption: translate(
           locale,
           'email.loginTokenLinkCaption'
@@ -113,24 +118,32 @@ export class MailService {
 
   sendMailDirectly( {to, cc, bcc, subject, template, context})
   {
+    if(!to) {
+      console.log('no recipient defined, skipping mail send')
+      return;
+    }
     this.networkService
       .findDefaultNetwork()
       .then((network) => {
-        return {name: network.name, logo: configs().WEB_URL + '/api' + network.logo}
+        return {
+          name: network.name,
+          logo: configs().WEB_URL + '/api' + network.logo,
+          jumbo: network.jumbo ? configs().WEB_URL + '/api' + network.jumbo : '',
+        }
       })
       .catch((err) => {
-        console.log(err)
-        console.log('catched, is it in setup?')
-        return {name: 'continue the setup of your network...', logo: 'no'}
+        this.logger.error(err)
+        this.logger.error('catched, is it in setup?')
+        return {name: 'continue the setup of your network...', logo: 'no', jumbo: ''}
       })
-      .then(({name, logo}) => {
+      .then(({name, logo, jumbo}) => {
         let from  = configs().from
           from = name + configs().from.slice(configs().from.indexOf('<'))
-        
+
 
         if(!configs().smtpHost)
         {
-          console.log('smtp host not set. not sending')
+          this.logger.warn('smtp host not set. not sending mails')
           return;
         }
         return this.mailerService
@@ -141,21 +154,50 @@ export class MailService {
             from: from,
             subject: subject,
             template,
-            context: {...context, url: configs().WEB_URL, to: to, logo},
+            context: {...context, url: configs().WEB_URL, to: to, logo, jumbo, networkName: context.networkName ?? name},
             headers: {'Message-ID': `<${uuid()}@${configs().hostName}>`}
           })
           .then((mail) => {
-            console.log(
-              `>> mail sent to ${to} with template '${template}'`,
+            this.logger.log(
+              `mail sent to ${to} with template '${template}'`,
             );
           })
           .catch((error) => {
-            console.log(error);
+            this.logger.error(error);
             console.trace();
           });
       })
   }
-
+  sendActivity({
+    to,
+    content,
+    subject,
+    link = null,
+    linkCaption = null,
+    title, 
+    address,
+    type,
+    networkName
+  }: ActivityTemplateVars){
+    return this.sendMail({
+      to: to,
+      cc: null,
+      bcc: null,
+      subject: subject,
+      template: 'mail',
+      context: {
+        subject: subject,
+        content: content,
+        link: link, 
+        linkCaption: linkCaption,
+        to: to,
+        title,
+        address,
+        type,
+        networkName,
+      },
+    });
+  }
   sendWithLink({
     to,
     content,
@@ -172,7 +214,7 @@ export class MailService {
       context: {
         subject: subject,
         content: content,
-        link: link, 
+        link: getUrl(link), 
         linkCaption: linkCaption,
         to: to,
       },
@@ -182,7 +224,9 @@ export class MailService {
   sendDailyOutbox({
     activities,
     to,
-    subject
+    subject,
+    date,
+    networkName
   })
   {
     return this.sendMail({
@@ -193,7 +237,9 @@ export class MailService {
       template: 'daily-outbox',
       context: {
           activities,
-          subject
+          subject,
+          networkName,
+          date
       },
     });
   }

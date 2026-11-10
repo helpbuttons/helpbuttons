@@ -1,5 +1,5 @@
 import { Observable, map } from "rxjs";
-import { httpService } from "services/HttpService";
+import { httpService, HttpService } from "services/HttpService";
 
 import getConfig from "next/config";
 import { Network } from "shared/entities/network.entity";
@@ -8,7 +8,9 @@ import { SetupDtoOut } from "shared/entities/setup.entity";
 export class NetworkService {
 
   public static new(data: CreateNetworkDto): Observable<any> {
-    return httpService.post("networks/new", data);
+    // Use toFormData to handle logo and jumbo images
+    const formData = HttpService.toFormData(data, ['logo', 'jumbo']);
+    return httpService.post("networks/new", formData);
   }
   // //Get network by id
   public static findById(id: string = ""): Observable<Network | undefined> {
@@ -21,7 +23,9 @@ export class NetworkService {
   }
 
   public static update(data: UpdateNetworkDto): Observable<any>{
-    return httpService.post("networks/update", data)
+    // Use toFormData to handle logo and jumbo images
+    const formData = HttpService.toFormData(data, ['logo', 'jumbo']);
+    return httpService.post("networks/update", formData)
   }
 
   public static activity(locale): Observable<any>{

@@ -1,4 +1,4 @@
-import { setMetadata } from 'services/ServerProps';
+import { setMetadata } from 'pages/_serverprops';
 import Accordion from '../../elements/Accordion';
 import Popup from 'components/popup/Popup';
 import t from 'i18n';
@@ -10,6 +10,7 @@ import { GlobalState, store } from 'state';
 import { LoadabledComponent } from 'components/loading';
 import { useMetadataTitle } from 'state/Metadata';
 import { PoweredExtra } from 'components/brand/powered';
+import { getServerSidePropsHandler, shouldEnableSSR } from 'shared/staticapp.utils';
 
 export default function Faqs({ metadata }) {
   useMetadataTitle('F.A.Q.')
@@ -74,6 +75,6 @@ export function FaqSections() {
     </>
   );
 }
-export const getServerSideProps = async (ctx: NextPageContext) => {
-  return setMetadata('F.A.Q.', ctx);
-};
+export const getServerSideProps = shouldEnableSSR
+  ? (ctx) => getServerSidePropsHandler('F.A.Q.', ctx)
+  : undefined;

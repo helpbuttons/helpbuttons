@@ -1,13 +1,11 @@
 //EXPLORE MAP
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 //components
 import {
   ExploreMapState,
   FindButtons,
-  UpdateBoundsFilteredButtons,
   UpdateCachedHexagons,
-  UpdateExploreUpdating,
   UpdateExploreSettings,
   ExploreSettings,
   UpdateHexagonClicked,
@@ -26,6 +24,8 @@ import {
   cellToZoom,
   convertBoundsToGeoJsonHexagons,
   getZoomResolution,
+  hexToResolution,
+  roundCoords,
 } from 'shared/honeycomb.utils';
 import _ from 'lodash';
 import {
@@ -46,11 +46,15 @@ import {
 } from 'components/button/ButtonType/CustomFields/AdvancedFiltersCustomFields';
 import PopupButtonFile from 'components/popup/PopupButtonFile';
 import { ButtonShow } from 'components/button/ButtonShow';
-import { showMarkersZoom } from 'components/map/Map/Map.consts';
-import { applyFiltersHex } from 'components/search/AdvancedFilters/filters.type';
+import { applyBounds, applyFilters } from 'components/search/AdvancedFilters/filters.type';
 import { Button } from 'shared/entities/button.entity';
 import { replaceUrl } from 'components/uri/builder';
 import { ListKeyLocation } from 'state/Geo';
+import { getResolution } from 'h3-js';
+import { CustomFields } from 'shared/types/customFields.type';
+import { UpdateButtonList } from 'state/Button';
+import Loading from 'components/loading';
+import { hideAddressResolution } from 'shared/types/honeycomb.const';
 
 
 function HoneyComb({ selectedNetwork }) {
@@ -80,6 +84,19 @@ function HoneyComb({ selectedNetwork }) {
   const [showMap, toggleShowMap] = useToggle(true);
   const [isListOpen, setListOpen] = useState<boolean>(true);
 
+  const bottomRef = useRef<HTMLDivElement>(null); 
+
+  const handleDragPos = (y: number, transitioning: boolean) => {
+    if (!bottomRef.current) return;
+    const listOrder = bottomRef.current.querySelector('.list__order') as HTMLElement;
+    const listOrderHeight = listOrder?.offsetHeight ?? 0;
+    const h = Math.max(0, window.innerHeight - y - listOrderHeight);
+    bottomRef.current.style.transition = transitioning
+      ? 'height 0.35s cubic-bezier(0.32, 0.72, 0, 1)'
+      : 'none';
+    bottomRef.current.style.height = `${h}px`;
+  };
+
   useExploreSettings({
     exploreSettings,
     router,
@@ -106,15 +123,16 @@ function HoneyComb({ selectedNetwork }) {
                 )}
               </PopupButtonFile>
             )}
-            <ExploreContainerList
-             listButtons={listButtons}
-             showLeftColumn={showLeftColumn}
-             showMap={true}
-             isListOpen={isListOpen}
-             setListOpen={setListOpen}
-             toggleShowMap={toggleShowMap}
-             toggleShowLeftColumn={toggleShowLeftColumn}
-            />
+              <ExploreContainerList
+              listButtons={listButtons}
+              showLeftColumn={showLeftColumn}
+              showMap={true}
+              isListOpen={isListOpen}
+              setListOpen={setListOpen}
+              toggleShowMap={toggleShowMap}
+              toggleShowLeftColumn={toggleShowLeftColumn}
+              onDragPos={null}
+              />
           </ExploreContainerLeftColumn>
           <ExploreHexagonMap toggleShowLeftColumn={toggleShowLeftColumn} exploreSettings={exploreSettings} selectedNetwork={selectedNetwork}/>
           
@@ -135,29 +153,30 @@ function HoneyComb({ selectedNetwork }) {
               </PopupButtonFile>
             )}
           </ExploreContainerLeftColumn>
-          <ExploreHexagonMap toggleShowLeftColumn={toggleShowLeftColumn} exploreSettings={exploreSettings} selectedNetwork={selectedNetwork}/>
+          <div className="explore__map-wrapper">
+            <ExploreHexagonMap toggleShowLeftColumn={toggleShowLeftColumn} exploreSettings={exploreSettings} selectedNetwork={selectedNetwork}/>
+          </div>
           <div
-          className={
-            'index__content-bottom ' +
-            (showMap ? '' : 'index__content-bottom') +
-            (isListOpen
-              ? ' index__content-bottom--mid-screen'
-              : '') +
-            (showLeftColumn ? '' : ' index__content-bottom--hide') +
-            (currentButton
-              ? ' index__content-bottom--noscroll'
-              : '')
+            ref={bottomRef}
+            className={
+              'index__content-bottom ' +
+              (showLeftColumn ? '' : ' index__content-bottom--hide') +
+              (currentButton ? ' index__content-bottom--noscroll' : '')
+            }
+          >
+          {exploreSettings.loading && <Loading/>}
+          {!exploreSettings.loading && 
+            <ExploreContainerList
+              listButtons={listButtons}
+              showLeftColumn={showLeftColumn}
+              showMap={showMap}
+              isListOpen={isListOpen}
+              setListOpen={setListOpen}
+              toggleShowMap={toggleShowMap}
+              toggleShowLeftColumn={toggleShowLeftColumn}
+              onDragPos={handleDragPos} 
+            />
           }
-        >
-          <ExploreContainerList
-             listButtons={listButtons}
-             showLeftColumn={showLeftColumn}
-             showMap={showMap}
-             isListOpen={isListOpen}
-             setListOpen={setListOpen}
-             toggleShowMap={toggleShowMap}
-             toggleShowLeftColumn={toggleShowLeftColumn}
-          />
         </div>
         </ExploreContainer>
         
@@ -208,7 +227,7 @@ function useExploreSettings({
         );
         if (btnType?.customFields) {
           const btnTypeEvents = btnType.customFields.find(
-            (customField) => customField.type == 'event',
+            (customField) => customField.type == CustomFields.Event,
           );
           if (btnTypeEvents) {
             newFilters = {
@@ -264,10 +283,17 @@ function useExploreSettings({
       }
 
       const urlParams = new URLSearchParams(obj);
-      const newUrl = `/Explore/${Math.floor(exploreSettings.zoom)}/${exploreSettings.center[0]
-        }/${exploreSettings.center[1]}/${currentButton ? currentButton.id + '/': ''}${urlParams.size ? '?' + urlParams.toString() : ''}`;
+      if(currentButton)
+      {
+        replaceUrl(`/Show/${currentButton.id}`)
+      }else{
+        const center = roundCoords(exploreSettings.center)
+        const newUrl = `/Explore/${Math.floor(exploreSettings.zoom)}/${center[0]
+        }/${center[1]}/${currentButton ? currentButton.id + '/': ''}${urlParams.size ? '?' + urlParams.toString() : ''}`;
         replaceUrl(newUrl)
       }
+      }
+      
   }, [exploreSettings, currentButton, filters, currentProfile]);
 }
 
@@ -279,12 +305,13 @@ function useHexagonMap({
   boundsFilteredButtons,
   cachedHexagons,
   buttonTypes,
-  forceRefetch,
+  cachedButtons,
+  setCountFilteredButtons
 }) {
 
   
   const [hexagonsToFetch, setHexagonsToFetch] = useState({
-    resolution: 1,
+    resolution: -1,
     hexagons: [],
     init: false,
   });
@@ -299,12 +326,6 @@ function useHexagonMap({
       fetchBounds(exploreSettings.bounds, exploreSettings.zoom);
     }
   }, [cachedHexagons]);
-  useEffect(() => {
-    if(forceRefetch)
-    {
-      cachedH3Hexes.current = []
-    }
-  }, [forceRefetch])
   const calculateNonCachedHexagons = (
     debounceHexagonsToFetch,
     cachedH3Hexes,
@@ -332,75 +353,96 @@ function useHexagonMap({
   };
 
   useEffect(() => {
-    if (debounceHexagonsToFetch.hexagons.length > 0) {
-      const hexesToFetch = calculateNonCachedHexagons(
-        debounceHexagonsToFetch,
-        cachedH3Hexes,
-      );
-      if (hexesToFetch.length > 0) {
-        store.emit(new UpdateExploreUpdating());
-        store.emit(
-          new FindButtons(
-            debounceHexagonsToFetch.resolution,
-            hexesToFetch,
-            (buttons) => {
-              const newDensityMapHexagons = calculateDensityMap(
-                buttons,
-                debounceHexagonsToFetch.resolution,
-                hexesToFetch,
-              );
-              recalculateCacheH3Hexes(newDensityMapHexagons);
-              updateDensityMap();
-            },
-            (error) => {
-              console.error(error);
-            },
-          ),
+    if (debounceHexagonsToFetch.init) {
+      if (hexagonsToFetch.hexagons.length > 0) {
+        const newHexagons = calculateNonCachedHexagons(
+          hexagonsToFetch,
+          cachedH3Hexes,
         );
-      } else {
-        updateDensityMap();
+        if (newHexagons.length > 0) {
+          store.emit(
+            new FindButtons(
+              hexagonsToFetch.resolution,
+              newHexagons,
+              (buttons) => {
+
+              }, (error) => console.log(error)))
+        }
       }
     }
-  }, [debounceHexagonsToFetch]);
+  }, [debounceHexagonsToFetch])
 
-  function updateDensityMap() {
-    if (exploreSettings.loading) {
+  const hexagonClicked : Button[] = useGlobalStore((state: GlobalState) => state.explore.map.filters.hexClicked);
+  const bounds = useGlobalStore((state: GlobalState) => state.explore.settings.bounds);
+  const [boundsButtons, setBoundsButtons] = useState([])
+  useEffect(() => {
+    setBoundsButtons(() => applyBounds(cachedButtons, bounds))
+  }, [bounds, cachedButtons])
+  
+  useEffect(() => {
+    if(hexagonsToFetch.resolution < 1){
       return;
     }
-    store.emit(new UpdateExploreUpdating());
-    const boundsButtons = cachedH3Hexes.current.filter(
-      (cachedHex) => {
-        return debounceHexagonsToFetch.hexagons.find(
-          (hexagon) => hexagon == cachedHex.hexagon,
-        );
-      },
-    );
-    const { filteredButtons, filteredHexagons } = applyFiltersHex(
+    const applyHideAddress = (boundsButtons) => {
+      return boundsButtons.map((_btn) => {
+        const btnResolution = getResolution(_btn.hexagon)
+        if(_btn.hideAddress && hexagonsToFetch.resolution > hideAddressResolution){
+          // in here we find if the hexagon of the button hidden is parent of the hexagons showing on the screen
+          const hexagon = hexagonsToFetch.hexagons.find((hexagon) => _btn.hexagon == hexToResolution(hexagon, btnResolution ))
+          if(hexagon){
+            return {hideMap: true, ..._btn};
+          }
+        }
+        return {hideMap: false, ..._btn};
+      })
+    }
+
+    const mapButtons = applyHideAddress(boundsButtons)
+
+    setCountFilteredButtons(() => mapButtons.filter((_btn) => _btn.hideMap).length)
+    const { filteredButtons } = applyFilters(
       filters,
-      boundsButtons,
+      mapButtons,
       buttonTypes,
     );
-
+    
     const orderedFilteredButtons = orderBy(
       filteredButtons,
       filters.orderBy,
-      exploreSettings.center,
+      exploreSettings?.center,
+    );
+
+    const filteredHexagons = calculateDensityMap(
+      orderedFilteredButtons.filter((_btn) => _btn?.hideMap == false),
+      hexagonsToFetch.resolution,
+      debounceHexagonsToFetch.hexagons, // TODO: understand why cant get hexagons from hexgonsToFetch.. and only works from debounce ? 
     );
 
     seth3TypeDensityHexes(() => {
       return filteredHexagons;
     });
-    store.emit(
-      new UpdateBoundsFilteredButtons(orderedFilteredButtons),
-    );
-  }
-
-  useEffect(() => {
-    if(hexagonsToFetch.init)
-    {
-      updateDensityMap();
+    recalculateCacheH3Hexes(filteredHexagons);
+    
+    if(hexagonClicked){
+      const applyHexagonFilter = (filteredButtons, hexagonClicked, hexagonClickedtype, resolutionRequested) => {
+        return filteredButtons.filter(
+                (button) => hexToResolution(button.hexagon, resolutionRequested, button.hideAddress) == hexagonClicked
+              )
+              .filter((button) => {
+                if(hexagonClickedtype){
+                    return button.type == hexagonClickedtype
+                }
+                return true;
+              })
+              ;
+      }
+      const hexagonButtonList = applyHexagonFilter(orderedFilteredButtons, hexagonClicked, filters.hexClickedBtnType, hexagonsToFetch.resolution)
+      store.emit(new UpdateButtonList(hexagonButtonList))
+      return;
     }
-  }, [filters]);
+
+    store.emit(new UpdateButtonList(orderedFilteredButtons))
+  }, [filters, hexagonClicked, boundsButtons])
 
   const handleBoundsChange = (bounds, center: Point, zoom) => {
     if (bounds) {
@@ -408,7 +450,7 @@ function useHexagonMap({
         new UpdateExploreSettings({
           zoom: zoom,
           bounds: bounds,
-          loading: true,
+          // loading: true, // Loading removed...
           center: center,
         }),
       );
@@ -466,7 +508,7 @@ const orderByClosestToCenter = (center, buttons) => {
 };
 
 export const orderByCreated = (buttons) => {
-  return buttons.sort((a,b) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime());
+  return buttons.sort((a,b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
 };
 
 export const orderBy = (buttons, orderBy, center) => {
@@ -482,7 +524,7 @@ export const orderBy = (buttons, orderBy, center) => {
   if (orderBy == ButtonsOrderBy.EVENT_DATE) {
     return orderByEventDate(buttons);
   }
-  return buttons;
+  return orderByCreated(buttons);
 };
 
 
@@ -506,7 +548,7 @@ function ExploreContainerLeftColumn(props) {
     >{children}</div>)
 }
 
-function ExploreContainerList({listButtons, showLeftColumn, showMap, isListOpen, setListOpen, toggleShowMap, toggleShowLeftColumn})
+function ExploreContainerList({listButtons, showLeftColumn, showMap, isListOpen, setListOpen, toggleShowMap, toggleShowLeftColumn, onDragPos})
 {
   return <List
             buttons={listButtons}
@@ -516,6 +558,8 @@ function ExploreContainerList({listButtons, showLeftColumn, showMap, isListOpen,
             setListOpen={setListOpen}
             toggleShowMap={toggleShowMap}
             onLeftColumnToggle={toggleShowLeftColumn}
+            onDragPos={onDragPos} 
+
           />
 }
 
@@ -526,6 +570,8 @@ function ExploreHexagonMap({toggleShowLeftColumn, exploreSettings, selectedNetwo
     (state: GlobalState) => state.explore.map,
     false,
   );
+  const [countFilteredButtons, setCountFilteredButtons] = useState(0)
+
   const boundsFilteredButtons = exploreMapState.boundsFilteredButtons
   const { handleBoundsChange, h3TypeDensityHexes } = useHexagonMap({
     toggleShowLeftColumn,
@@ -534,20 +580,20 @@ function ExploreHexagonMap({toggleShowLeftColumn, exploreSettings, selectedNetwo
     boundsFilteredButtons: boundsFilteredButtons,
     cachedHexagons: exploreMapState.cachedHexagons,
     buttonTypes: selectedNetwork?.buttonTemplates,
-    forceRefetch: exploreSettings.forceRefetch
+    cachedButtons: exploreSettings.cachedButtons,
+    setCountFilteredButtons: setCountFilteredButtons,
   });
-  const [countFilteredButtons, setCountFilteredButtons] = useState(0)
 
-  useEffect(() => {
-    const allHiddenButtons = boundsFilteredButtons.filter((elem) => elem.hideAddress === true)
+  // useEffect(() => {
+  //   const allHiddenButtons = boundsFilteredButtons.filter((elem) => elem.hideAddress === true)
     
-    if(exploreSettings.zoom >= showMarkersZoom ){
-      setCountFilteredButtons(allHiddenButtons.length)
-    }else{
-      setCountFilteredButtons(0)
-    }
+  //   if(exploreSettings.zoom >= showMarkersZoom ){
+  //     setCountFilteredButtons(allHiddenButtons.length)
+  //   }else{
+  //     setCountFilteredButtons(0)
+  //   }
     
-  }, [boundsFilteredButtons, exploreSettings.zoom])
+  // }, [boundsFilteredButtons, exploreSettings.zoom])
 
   const [keyLocations, setKeyLocations] = useState([])
   useEffect(() => {

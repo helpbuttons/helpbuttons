@@ -5,7 +5,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { KeyLocation } from "./keylocation.entity";
 import { Repository } from "typeorm";
 import { maxResolution } from "@src/shared/types/honeycomb.const";
-import { uuid } from "@src/shared/helpers/uuid.helper";
+import { newsguuid } from "@src/shared/helpers/uuid.helper";
 
 @Injectable()
 export class KeyLocationService {
@@ -18,23 +18,36 @@ export class KeyLocationService {
         createDto: CreateKeyLocationDto,
         user: User
       ) {
+
+        const findById = (id) => {
+          return this.findById(id)
+        }
         
-        const newKeyLocation: KeyLocation = {
+        newsguuid(createDto.address, findById)
+        .then((uuid) => {
+          return {
             ...createDto,
-            id: uuid(),
+            id: uuid,
             //@ts-ignore
             hexagon: () => `h3_lat_lng_to_cell(POINT(${createDto.longitude}, ${createDto.latitude}), ${maxResolution})`,
             location: () =>
                 `ST_MakePoint(${createDto.latitude}, ${createDto.longitude})`,
             zoom: createDto.zoom
         }
-        console.log(newKeyLocation)
-        return this.keyLocationRepository.insert(newKeyLocation)
+        })
+        .then((newKeyLocation) => this.keyLocationRepository.insert(newKeyLocation))
+        
+      }
+
+      async findById(
+        id: string,
+      ): Promise<any> {
+        return this.keyLocationRepository.findOne({where: {id: id}})
       }
 
       list(
       ) {
-        return this.keyLocationRepository.find({ order: { address: 'ASC' }})
+        return this.keyLocationRepository.find({order: { address: 'ASC' }})
       }
 
       delete(id: string)

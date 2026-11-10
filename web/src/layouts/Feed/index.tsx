@@ -21,7 +21,6 @@ import {
 import { GlobalState, store } from 'state';
 import { useEffect, useRef, useState } from 'react';
 import { alertService } from 'services/Alert';
-import { Button } from 'shared/entities/button.entity';
 import {
   CreateNewCommentReply,
   CreateNewPost,
@@ -32,13 +31,12 @@ import {
 import { isAdmin } from 'state/Users';
 import { useStore } from 'state';
 import MessageNew from 'components/feed/MessageNew';
-import { PrivacyType } from 'shared/types/privacy.enum';
 import { useToggle } from 'shared/custom.hooks';
 import { ButtonOwnerPhone, CardButtonHeadActions, sendCurrentButtonMessage } from 'components/button/CardButton';
 import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
 import router from 'next/router';
 
-export default function Feed({ button,showReplyFirstPost, toggleShowReplyFirstPost  }: { button: Button, showReplyFirstPost: boolean, toggleShowReplyFirstPost: () => void }) {
+export default function Feed({ button,showReplyFirstPost, toggleShowReplyFirstPost, hideSendPrivateMessage = false  }) {
   const [posts, setPosts] = useState(null);
   const [showNewPostForm, toggleShowNewPostForm] = useToggle(false);
   const [isPrivateMessage, setPrivateMessage] = useToggle(false);
@@ -69,7 +67,7 @@ export default function Feed({ button,showReplyFirstPost, toggleShowReplyFirstPo
 
   useEffect(() => {
     reloadPosts();
-  }, []);
+  }, [button.id]);
 
   const isButtonOwner = sessionUser?.id == button.owner.id;
   const buttonOwnerId = button.owner.id;
@@ -80,12 +78,12 @@ export default function Feed({ button,showReplyFirstPost, toggleShowReplyFirstPo
         <ButtonOwnerPhone user={button.owner} button={button}/>
 
         <>
-          {sessionUser && (
+          {(sessionUser && !hideSendPrivateMessage) && (
             <CardButtonHeadActions
               button={button}
               isButtonOwner={isButtonOwner}
               action={() => {
-                sendCurrentButtonMessage()
+                sendCurrentButtonMessage(button)
               } }
             />
           )}
@@ -159,7 +157,7 @@ export function FeedHeader ({
       <div className="feed-line">
           
       {t('feed.messages')}
-      {sessionUser && isButtonOwner && (
+      {sessionUser && isButtonOwner && !button.expired && (
           <>
             <ComposePost
               referer={{ button: button.id }}
@@ -434,17 +432,11 @@ export function Compose({ referer, onCreate, onCancel }) {
         </div>
         <MessageNew
           isComment={true}
-          privateMessage={referer?.privateMessage}
           onCreate={(message, images) => {
-            let privacy = PrivacyType.PUBLIC;
-            if (referer?.privateMessage) {
-              privacy = PrivacyType.PRIVATE;
-            }
             store.emit(
               new CreateNewCommentReply(
                 referer.post,
                 referer.comment,
-                privacy,
                 { message, images },
                 () => {
                   alertService.info(t('comment.posted'));
@@ -478,16 +470,10 @@ export function Compose({ referer, onCreate, onCancel }) {
         </div>
         <MessageNew
           isComment={true}
-          privateMessage={referer?.privateMessage}
           onCreate={(message, images) => {
-            let privacy = PrivacyType.PUBLIC;
-            if (referer?.privateMessage) {
-              privacy = PrivacyType.PRIVATE;
-            }
             store.emit(
               new CreateNewPostComment(
                 referer.post,
-                privacy,
                 { message, images },
                 () => {
                   alertService.info(t('comment.posted'));

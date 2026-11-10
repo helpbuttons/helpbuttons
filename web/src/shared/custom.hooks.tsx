@@ -191,3 +191,39 @@ export const useWarnIfUnsavedChanges = (unsavedChanges: boolean, callback: () =>
     }
   }, [unsavedChanges])
 }
+
+export const useOnPageExit = (onPageExit) => {
+  useEffect(() => {
+    const routeChangeStart = () => {
+      onPageExit()
+    }
+    Router.events.on("routeChangeStart", routeChangeStart)
+  
+    return () => {
+      Router.events.off("routeChangeStart", routeChangeStart)
+    }
+  }, [])
+}
+
+export const useEscapeAndEnter = (onEscape, onEnter = (event) => {}) => {
+
+  useEffect(() => {
+    const keyDownHandler = event => {
+      if (event.key === 'Enter' ) {
+        event.preventDefault();
+        onEnter(event)
+      }
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        onEscape(event)
+      }
+    };
+
+    document.addEventListener('keydown', keyDownHandler);
+
+    return () => {
+      document.removeEventListener('keydown', keyDownHandler);
+    };
+  }, []);
+
+}

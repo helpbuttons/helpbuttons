@@ -1,3 +1,4 @@
+@use '../variables' as *;
 
 ///Separate this in components, elements and layouts
 
@@ -21,6 +22,11 @@
 
 }
 
+.chat__new-message__send {
+    align-self: flex-end;
+    margin-bottom: $padding-medium;
+}
+
 .chat__header {
 
     width: 100%;
@@ -29,8 +35,13 @@
 }
 
 .chat__header-title {
-
+    font-size: $font-size-big;
     a { font-weight: $font-weight-bolder; }
+}
+
+.chat__header-subtitle{
+    font-size: $font-size-small;
+    color: $color-ligth-gray;
 }
 
 .chat__header-title,
@@ -51,6 +62,7 @@
     background-color: $color-white;
     padding: $padding-medium;
     min-height: 50px;
+    font-size: $font-size-xbig;
 
 
 }
@@ -79,13 +91,18 @@
 .chat__time-passed {
 
     width: 100%;
-    display: flex;
+    display: block;
     justify-content: center;
     align-items: center;
     text-align: center;
     font-weight: $font-weight-bold;
     color: $color-dark-gray;
     padding-bottom: $padding-big;
+    font-size: $font-size-small;
+    
+    &:first-letter {
+      text-transform: uppercase;
+    }
 
 }
 
@@ -108,5 +125,37 @@
         font-weight: $font-weight-bold;
 
     }
+
+}
+
+
+.chat__header-button {
+  background-color: transparent;
+  border-style: none;
+  color: $color-dark-gray;
+
+  cursor: pointer;
+  &:active,
+  &:focus {
+    outline: none;
+  }
+
+  .chat__header-button__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    // max-height: 30px;
+    & svg {
+        height: 25px;
+        width: 25px;
+    }
+  }
+}
+
+.chat__new-message__attach {
+
+    margin: 0 $padding-small 0 0 ;
+    align-self: flex-end;
+    padding-bottom: $padding-medium;
 
 }

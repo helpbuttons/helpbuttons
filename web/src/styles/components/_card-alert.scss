@@ -1,3 +1,5 @@
+@use '../variables' as *;
+
 $card-alert-padding: $padding-big;
 $card-alert-margin: $margin-big;
 $card-alert-text-margin: $margin-xsmall;
@@ -46,18 +48,26 @@ $card-alert-icon-size: 30px;
 
 .card-alert--success {
   background-color: $color-green;
+      color: $color-white;
+
 }
 
 .card-alert--error {
   background-color: $color-red;
+      color: $color-white;
+
 }
 
 .card-alert--warning {
   background-color: $color-corporative;
+    color: $color-text-over-corporative;
+
 }
 
 .card-alert--info {
   background-color: var(--network-accent-color);
+    color: $color-white;
+
 }
 
 .card-alert__content {
@@ -68,7 +78,6 @@ $card-alert-icon-size: 30px;
   margin: auto 0;
   padding-right: $padding-big;
   font-weight: $font-weight-bold;
-  color: $color-white;
   gap: $padding-small;
 
 
@@ -91,12 +100,22 @@ $card-alert-icon-size: 30px;
 
 .card-alert__title {
 
-  font-size: $font-size-general;
+  font-size: $font-size-medium;
   font-weight: bold;
   margin: auto 0;
   height: 100%;
-  word-wrap: break-all;
-  word-break: break-all;
+
+  a {
+    font-weight: $font-weight-bolder;
+    background-color: $color-ligth-gray;
+    padding: $padding-small $padding-medium;
+    border-radius: $border-radius-circle;
+  }
+
+  &:first-letter {
+    text-transform: uppercase;
+  }
+
 }
 
 .card-alert__top-text,
@@ -107,16 +126,6 @@ $card-alert-icon-size: 30px;
 
 }
 
-
-.card-alert__btn-options {
-
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  gap: $padding-small;
-
-
-}
 
 
 

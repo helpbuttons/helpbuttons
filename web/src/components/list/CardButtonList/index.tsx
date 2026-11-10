@@ -22,7 +22,6 @@ export default function CardButtonList({ buttonTypes, button, showMap, linkType 
   if(!buttonType && buttonTypes.length > 0)
   {
     alertService.error(`type of button not found '${button.type}'`)
-    console.error(`type of button not found '${button.type}'`)
   }
   return (
     <>
@@ -91,6 +90,7 @@ export function CardButtonLink({ button, linkType, children }) {
         onMouseLeave={!touch ? () => store.emit(new HoverButtonList(null)) : undefined}
         onClick={(e) => {
           e.preventDefault();
+          store.emit(new SetMainPopupCurrentButton(null))
           store.emit(new updateCurrentButton(button));
         }}
         style={{ display: 'block', cursor: 'pointer' }}

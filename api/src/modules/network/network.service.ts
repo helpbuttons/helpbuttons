@@ -3,7 +3,6 @@ import {
   Inject,
   forwardRef,
   Injectable,
-  UseInterceptors,
 } from '@nestjs/common';
 import { HttpStatus } from '@src/shared/types/http-status.enum';
 
@@ -20,7 +19,6 @@ import {
   UpdateNetworkDto,
 } from './network.dto';
 import { Network } from './network.entity';
-import { getManager } from 'typeorm';
 import { StorageService } from '../storage/storage.service';
 import { ValidationException } from '@src/shared/middlewares/errors/validation-filter.middleware';
 import { UserService } from '../user/user.service';
@@ -28,9 +26,6 @@ import { isImageData } from '@src/shared/helpers/imageIsFile';
 import { removeUndefined } from '@src/shared/helpers/removeUndefined';
 import {
   CACHE_MANAGER,
-  CacheInterceptor,
-  CacheKey,
-  CacheTTL,
 } from '@nestjs/cache-manager';
 import { updateNomeclature } from '@src/shared/helpers/i18n.helper';
 import { getConfig } from '@src/shared/helpers/config.helper';
@@ -38,9 +33,13 @@ import { SetupDtoOut } from '../setup/setup.entity';
 import configs from '@src/config/configuration';
 import { uploadDir } from '../storage/storage.utils';
 import { Cache } from 'cache-manager';
+import { PrivacyNetworkType } from '@src/shared/types/privacy.enum';
+import { SourceCodeLogger } from '@src/shared/helpers/source-code-logger.helper';
 
 @Injectable()
 export class NetworkService {
+  private logger = new SourceCodeLogger('Files')
+
   constructor(
     @InjectRepository(Network)
     private readonly networkRepository: Repository<Network>,
@@ -53,7 +52,10 @@ export class NetworkService {
     @Inject(CACHE_MANAGER) private cacheManager: Cache
   ) { }
 
-  async create(createDto: CreateNetworkDto) {
+  async create(createDto: CreateNetworkDto, logo: Express.Multer.File, jumbo: Express.Multer.File) {
+    if(createDto.allowGuestCreation && createDto.privacyNetworkType != PrivacyNetworkType.ANYONE_CAN){
+      createDto.allowGuestCreation = false;
+    }
     const network = {
       id: uuid(),
       description: createDto.description,
@@ -77,7 +79,9 @@ export class NetworkService {
       allowGuestCreation: createDto.allowGuestCreation,
       privacyPolicy: createDto.privacyPolicy,
       ethicsPolicy: createDto.ethicsPolicy,
-      contactEmail: createDto.contactEmail
+      contactEmail: createDto.contactEmail,
+      hideCountryOnAddresses: createDto.hideCountryOnAddresses,
+      privacyNetworkType: createDto.privacyNetworkType
     };
     if (Array.isArray(createDto.tags)) {
       await this.tagService
@@ -89,27 +93,14 @@ export class NetworkService {
           );
         });
     }
-
-    try {
-      network.logo = await this.storageService.newImage64(
-        createDto.logo,
-      );
-    } catch (err) {
-      console.log(err)
-      throw new ValidationException({ logo: err.message });
+    if(logo){
+      network.logo = await this.storageService.uploadAndConvertImage(logo).then((val) => val.name);
+    }
+    
+    if(jumbo){
+      network.jumbo = await this.storageService.uploadAndConvertImage(jumbo).then((val) => val.name);
     }
 
-    try {
-      network.jumbo = await this.storageService.newImage64(
-        createDto.jumbo,
-      );
-    } catch (err) {
-      console.log(`errorjumboooooror: ${err.message}`);
-      throw new ValidationException({ jumbo: err.message });
-    }
-    console.log(
-      `network.logo ${network.logo} jumbo ${network.jumbo}`,
-    );
     await this.networkRepository.insert([network]);
     await this.userService.setAdminLocale(createDto.locale)
 
@@ -152,6 +143,7 @@ export class NetworkService {
                   }
                   return {
                     ...defaultNetwork,
+                    inviteOnly: defaultNetwork.privacyNetworkType != PrivacyNetworkType.ANYONE_CAN,
                     buttonTypesCount: networkByButtonTypes,
                     exploreSettings: defaultNetwork.exploreSettings,
                     buttonCount: networkByButtonTypes.reduce(
@@ -189,6 +181,7 @@ export class NetworkService {
         }
       })
       .catch((err) => {
+        console.log(err)
         console.log('no networks found?')
         throw new HttpException(
           { message: '🙆🏼‍♂️Default network not found' },
@@ -205,17 +198,19 @@ export class NetworkService {
     return this.findDefaultNetwork();
   }
 
-  async update(updateDto: UpdateNetworkDto) {
+  async update(updateDto: UpdateNetworkDto, logo, jumbo) {
     const defaultNetwork = await this.findDefaultNetwork();
-
+    if(updateDto.allowGuestCreation && updateDto.privacyNetworkType != PrivacyNetworkType.ANYONE_CAN){
+      updateDto.allowGuestCreation = false;
+    }
     const network = {
       id: defaultNetwork.id,
       description: updateDto.description,
       slogan: updateDto.slogan,
       tags: this.tagService.formatTags(updateDto.tags),
       privacy: updateDto.privacy,
-      logo: null,
-      jumbo: null,
+      logo: updateDto.logo,
+      jumbo: updateDto.jumbo,
       name: updateDto.name,
       exploreSettings: updateDto.exploreSettings,
       backgroundColor: updateDto.backgroundColor,
@@ -231,9 +226,10 @@ export class NetworkService {
       allowGuestCreation: updateDto.allowGuestCreation,
       privacyPolicy: updateDto.privacyPolicy,
       ethicsPolicy: updateDto.ethicsPolicy,
-      contactEmail: updateDto.contactEmail
+      contactEmail: updateDto.contactEmail,
+      hideCountryOnAddresses: updateDto.hideCountryOnAddresses,
+      privacyNetworkType: updateDto.privacyNetworkType
     };
-
     /** Dont need to check for orphans no more... ! */
     const buttonTemplatesNew = network.buttonTemplates.filter((btnTemplate) => !btnTemplate.hide).map((btnTemplate) => btnTemplate.name)
 
@@ -261,31 +257,14 @@ export class NetworkService {
         });
     }
 
-    if (isImageData(updateDto.logo)) {
-      try {
-        network.logo = await this.storageService.newImage64(
-          updateDto.logo,
-        );
-        if (defaultNetwork.logo != network.logo) {
-          await this.storageService.delete(defaultNetwork.logo)
-        }
-      } catch (err) {
-        throw new ValidationException({ logo: err.message });
-      }
+    if (logo && defaultNetwork.logo != logo) {
+      network.logo = await this.storageService.uploadAndConvertImage(logo).then((val) => val.name);
+    }
+    
+    if (jumbo && defaultNetwork.jumbo != jumbo) {
+      network.jumbo = await this.storageService.uploadAndConvertImage(jumbo).then((val) => val.name);
     }
 
-    if (isImageData(updateDto.jumbo)) {
-      try {
-        network.jumbo = await this.storageService.newImage64(
-          updateDto.jumbo,
-        );
-        if (defaultNetwork.jumbo != network.jumbo) {
-          await this.storageService.delete(defaultNetwork.jumbo)
-        }
-      } catch (err) {
-        throw new ValidationException({ jumbo: err.message });
-      }
-    }
     await this.networkRepository.update(
       defaultNetwork.id,
       removeUndefined(network),
@@ -299,7 +278,7 @@ export class NetworkService {
     return getConfig();
   }
 
-  getButtonTypesWithEventField() {
+  getButtonTypesWith(customFields) {
     return this.findButtonTypes()
       .then((buttonTemplates) => {
         return buttonTemplates
@@ -309,7 +288,7 @@ export class NetworkService {
             }
             const buttonTemplatesEvents =
               buttonTemplate.customFields.filter((customField) => {
-                return customField.type == 'event';
+                return customFields.indexOf(customField.type) > -1
               });
             if (buttonTemplatesEvents.length > 0) {
               return true;
@@ -327,6 +306,10 @@ export class NetworkService {
       const fs = require('fs');
       const logo = network.logo.replace('/files/get/', '');
       const logoResized = `logo_${resolution}_${logo}`;
+      if(!fs.existsSync(`${uploadDir}${logo}`)){
+        this.logger.error(`'${uploadDir}${logo}' logo not found`)
+        return null;
+      }
       if (!fs.existsSync(`${uploadDir}${logoResized}`)) {
         await this.storageService.createImage(
           `${uploadDir}${logo}`,
@@ -340,13 +323,22 @@ export class NetworkService {
 
   }
 
+  async getJumbo(res) {
+    const defaultNetwork = await this.findDefaultNetwork()
+    
+    const jumboPath = defaultNetwork.jumbo.replace('/files/get/','')
+    return res.sendFile(jumboPath, { root: uploadDir });
+  }
+
   manifest() {
     return this.findDefaultNetwork().then(network => {
       const apiUrl = `${configs().WEB_URL}/api/networks`
+      
       return {
         name: network.name,
         short_name: network.name,
-        start_url: '.',
+        start_url: `${configs().WEB_URL}/`,
+        scope: `${configs().WEB_URL}/`,
         display: 'standalone',
         background_color: network.backgroundColor,
         description: network.description,
@@ -379,6 +371,11 @@ export class NetworkService {
           {
             src: `${apiUrl}/logo/192`,
             sizes: '192x192',
+            type: 'image/png',
+          },
+          {
+            src: `${apiUrl}/logo/512`,
+            sizes: '512x512',
             type: 'image/png',
           },
         ],

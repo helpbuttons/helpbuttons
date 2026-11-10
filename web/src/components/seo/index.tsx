@@ -2,8 +2,8 @@
 
 import Head from 'next/head';
 import { GlobalState } from 'state';
-import { useEffect, useState } from 'react';
 import { useGlobalStore } from 'state';
+import { getApiUrl } from 'shared/environment';
 
 export default function MetadataSEOFromStore({nonce}) {
   const metadataStore = useGlobalStore(
@@ -24,22 +24,26 @@ export function MetadataSEO(props) {
     siteTitle,
     color,
     nonce,
-    webUrl = '/'
+    webUrl = getApiUrl(),
+    isSetup = false
   } =  props;
 
+  const url = getApiUrl()
   const csp = `object-src 'none'; base-uri 'none'; script-src 'self' 'unsafe-eval' 'unsafe-inline' https: http: 'nonce-${nonce}' 'strict-dynamic'`
 
+  if(isSetup){
+    return <></>
+  }
   return (
       // <Head nonce={nonce}>
         <Head>
-        <title>{title}</title>
+        <title>{process.env?.TITLE ? process.env.TITLE : title}</title>
         <meta name="description" content={description} />
         {/* <meta httpEquiv="Content-Security-Policy" content={csp} /> */}
         {/* <!-- Schema.org markup for Google+ --> */}
         <meta itemProp="name" content={title} />
         <meta itemProp="description" content={description} />
         <meta itemProp="image" content={image} />
-
         {/* <!-- Twitter Card data --> */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={title} />
@@ -58,18 +62,18 @@ export function MetadataSEO(props) {
           rel="icon"
           type="image/png"
           sizes="32x32"
-          href={`${webUrl}/api/networks/logo/32`}
+          href={`${url}/networks/logo/32`}
         />
         <link
           rel="icon"
           type="image/png"
           sizes="16x16"
-          href={`${webUrl}/api/networks/logo/16`}
+          href={`${url}/networks/logo/16`}
         />
         <link rel="manifest" href={`${webUrl}/manifest.json`} />
         <link
           rel="mask-icon"
-          href={`${webUrl}api/networks/logo/32`}
+          href={`${url}/networks/logo/32`}
           color={color}
         />
         <meta name="msapplication-TileColor" content={color} />
@@ -78,7 +82,7 @@ export function MetadataSEO(props) {
         <link
           rel="apple-touch-icon"
           sizes="180x180"
-          href={`${webUrl}/api/networks/logo/180`}
+          href={`${url}/networks/logo/180`}
         />
       </Head>
 

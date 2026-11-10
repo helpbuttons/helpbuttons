@@ -1,14 +1,13 @@
 import React from "react";
-import type { NextPage, NextPageContext } from "next";
+import type { NextPage } from "next";
 import HomeInfo from "./HomeInfo";
-import { setLocale } from "shared/sys.helper";
-import { setMetadata } from "services/ServerProps";
 import t from "i18n";
 import Explore from "./Explore";
 import { localStorageService, LocalStorageVars } from "services/LocalStorage";
+import { getServerSidePropsHandler, shouldEnableSSR } from "shared/staticapp.utils";
 
 
-const Home: NextPage = (props) => {
+export const Home: NextPage = (props) => {
   const cookiesAccepted = localStorageService.read(LocalStorageVars.COOKIES_ACCEPTANCE)
   
   if(cookiesAccepted)
@@ -22,6 +21,7 @@ const Home: NextPage = (props) => {
 
 export default Home;
 
-export const getServerSideProps = async (ctx: NextPageContext) => {
-  return setMetadata(t('menu.home'), ctx);
-};
+
+export const getServerSideProps = shouldEnableSSR
+  ? (ctx) => getServerSidePropsHandler(t('menu.home'), ctx)
+  : undefined;

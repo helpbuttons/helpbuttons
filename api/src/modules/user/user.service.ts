@@ -17,6 +17,7 @@ import { plainToClass } from 'class-transformer';
 import { StorageService } from '../storage/storage.service';
 import { MailService } from '../mail/mail.service';
 import { GroupMessageType } from '@src/shared/types/group-message.enum';
+import translate from '@src/shared/helpers/i18n.helper';
 
 @Injectable()
 export class UserService {
@@ -29,7 +30,11 @@ export class UserService {
     private readonly storageService: StorageService,
     private readonly mailService: MailService
   ) { }
-
+  conditionsActive() {
+    const allowed = {role: In([Role.admin, Role.registered])}
+    return allowed
+  }
+    
   createUser(user: User) {
     const _user = this.userRepository.create(user);
     return this.userRepository.save(_user)
@@ -43,8 +48,9 @@ export class UserService {
     }).catch(() => false)
   }
 
-  findById(id: string, includeCounts = false) {
-    return this.userRepository.findOne({ where: { id } })
+
+  findById(id: string, includeCounts = false) : Promise<User>{
+    return this.userRepository.findOne({ where: { id: id, ...this.conditionsActive()} } )
       .then((user) => {
         if (includeCounts) {
           return this.findCounts(user)
@@ -75,11 +81,20 @@ export class UserService {
       );
   }
 
+  findCommunity() {
+    return this.userRepository
+      .find({
+        where: this.conditionsActive(),
+        order: { id: 'DESC' },
+      })
+  }
+
   findOneByEmail(email: string) {
     return this.userRepository.findOne({
-      where: { email: `${email}` },
+      where: { email: `${email}`, ...this.conditionsActive() },
     });
   }
+  
   async findCounts(user) {
     const q = `SELECT COALESCE(
         (select sum(cardinality("followedBy")) as "followsCount" from button where "ownerId"= $1), 
@@ -125,7 +140,10 @@ COALESCE(
     }
 
     delete newUser.center;
-    
+    if(!newUser.email)
+    {
+      newUser.email = null
+    }
     newUser.hasPhone = newUser.phone ? true : false
     
     return this.userRepository.update(userId, {
@@ -133,22 +151,6 @@ COALESCE(
       tags: this.tagService.formatTags(newUser.tags),
     });
   }
-
-  notifyMail(userId, content, subject, link, linkCaption) {
-    return this.userRepository.findOneBy({ id: userId })
-      .then((user) => {
-        this.mailService.sendWithLink({
-          to: user.email,
-          content,
-          subject,
-          link,
-          linkCaption,
-        });
-      })
-      ;
-
-  }
-
   loginToken(verificationToken: string) {
     if (verificationToken.length < 2) {
       throw new HttpException(
@@ -203,6 +205,7 @@ COALESCE(
     return await this.userRepository.find({
       where: {
         id: In(usersIds),
+        ...this.conditionsActive(),
         receiveNotifications: true,
       },
     });
@@ -267,7 +270,7 @@ COALESCE(
   }
 
   public findQrCode(qrcode: string) {
-    return this.userRepository.findOne({ where: { qrcode: qrcode } })
+    return this.userRepository.findOne({ where: { qrcode: qrcode,  ...this.conditionsActive() } })
   }
 
   public endorse(userId: string) {
@@ -325,9 +328,56 @@ COALESCE(
   }
 
   findByIds(userIds : string[]) {
-    return this.userRepository.find({where: {id: In(userIds)}})
+    return this.userRepository.find({where: {id: In(userIds), ...this.conditionsActive()}})
     .then((users) => users.map((user) => {
       return {username: user.username, name: user.name, id: user.id, avatar: user.avatar};
     }))
+  }
+
+  notifyByEmailEndorsedAndAdmins(message) {
+    return this.userRepository
+      .find({
+        where: [{ role: Role.admin }, { endorsed: true }],
+        order: { id: 'DESC' },
+      })
+      .then(
+        (endorsedAndAdmins) =>
+          endorsedAndAdmins.map((user) => {
+            this.notifyByEmail(message, translate(user.locale, 'activities.newEndorsedMessageSubject'), user.locale, user.id, user.email, '/Activity/community')
+          }),
+      );
+  }
+  async notifyByEmail(message, subject, locale, userId, email, path = '/Explore') {
+    return this.getUserLoginParams(userId)
+      .then((loginParams) => {
+        this.mailService.sendWithLink({
+          to: email,
+          content: message,
+          subject: subject,
+          link: `${path}${loginParams}`,
+          linkCaption: translate(locale, 'activities.view'),
+        });
+      })
+  }
+
+  async addEndPoint(userId, endpoint, p256dh, auth, expirationTime){
+    return this.userRepository.update(userId, {
+      endpoint, p256dh, auth, expirationTime
+    })
+  }
+
+  async removeEndPoint(userId){
+    return this.userRepository.update(userId, {
+      endpoint: null,
+    })
+  }
+  allEndPoints() {
+    return this.userRepository.find({select: 
+      {
+      endpoint: true,
+        p256dh: true,
+        auth: true,
+        expirationTime: true
+    }, where: {...this.conditionsActive()}})
   }
 }

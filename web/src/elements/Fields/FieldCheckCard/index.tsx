@@ -15,8 +15,9 @@ export const FieldCheckCard = React.forwardRef(({
 
     const onChange = () => {
       setChecked((prevValue) => {
-        onChanged(!prevValue)
-        return !prevValue
+        const newValue = prevValue ? false : true
+        onChanged(newValue)
+        return newValue
       })
       
     }

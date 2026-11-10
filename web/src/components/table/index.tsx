@@ -22,8 +22,8 @@ export function TableBody({ children }) {
 }
 
 
-export function TableLine({ children, idx }) {
-    return <tr className='form-list__table-body-row' key={idx}>{children}</tr>
+export function TableLine({ children }) {
+    return <tr className='form-list__table-body-row'>{children}</tr>
 }
 
 export function TableLineCell({ children }) {
@@ -52,7 +52,6 @@ export function Pagination({ page, setPage, array, take }) {
 
   export function useFilterItems(setItems, pageItems, searchString, compFunc) {
     useEffect(() => {
-      console.log(searchString)
         if (!searchString) {
             setItems(() => pageItems)
         } else {

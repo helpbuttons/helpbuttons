@@ -8,7 +8,7 @@ export const ShowMobileOnly = ({children}) => {
     {
         return <>{children}</>
     }
-    return ;
+    return null;
 }
 
 export const useIsMobile = () => {
@@ -52,7 +52,7 @@ export const ShowDesktopOnly = ({children}) => {
     {
         return <>{children}</>
     }
-    return ;
+    return null;
 }
 
 

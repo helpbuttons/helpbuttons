@@ -9,7 +9,6 @@ import { User } from '../user/user.entity';
 import { KeyLocationService } from './keylocation.service';
 @ApiTags('geo')
 @Controller('geo')
-@UseInterceptors(CacheInterceptor)
 export class GeoController {
   constructor(private readonly geoService: GeoService, private readonly keyLocationService: KeyLocationService) {}
 

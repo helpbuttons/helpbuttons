@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import router, { useRouter } from 'next/router';
 
 export function replaceUrl(url) {
@@ -35,7 +35,9 @@ export function usePreviousUrl() {
     setPreviousUrl(router.asPath);
   };
 
-  router.events.on('routeChangeComplete', handleRouteChange);
+  useEffect(() => {
+    router?.events.on('routeChangeComplete', handleRouteChange);
+  }, [router])
 
   return previousUrl;
 }

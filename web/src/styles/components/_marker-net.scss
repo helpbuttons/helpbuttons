@@ -1,3 +1,4 @@
+@use '../variables' as *;
 
 $marker-net-height: 70px;
 $marker-net-height-name: 20px;
@@ -85,30 +86,6 @@ $marker-arrow-height: 25px;
       }
     }
 
-.marker-net__icon {
-
-  height: auto;
-  transition: transform 0.2s;
-  width: 30px;
-
-  + .marker-net__text {
-    margin-left: 2rem;
-  }
-
-  & > .icon {
-    fill: $color-black;
-  }
-
-}
-
-.marker-net__text {
-
-  & + .marker-net__icon {
-    margin-left: 10px;
-  }
-
-}
-
 
 .marker-net__name {
 
@@ -133,7 +110,7 @@ $marker-arrow-height: 25px;
   background: $color-black;
   border-radius: $border-radius-semicircle;
   color: $color-corporative;
-  font-size: $font-size-general;
+  font-size: $font-size-medium;
   font-weight: $font-weight-bold;
   padding: $padding-small $padding-medium;
 
@@ -143,17 +120,5 @@ $marker-arrow-height: 25px;
 .marker-net__link-name--alone {
 
   @extend .marker-net__link-name;
-
-}
-
-.marker-net--hover {
-
-  cursor: pointer;
-  background: #343a40;
-  color: #ffdd02;
-
-  & svg {
-    fill: #ffdd02;
-  }
 
 }

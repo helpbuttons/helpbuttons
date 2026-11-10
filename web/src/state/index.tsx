@@ -1,4 +1,4 @@
-import { User } from 'shared/entities/user.entity';
+import { User, UserProfile } from 'shared/entities/user.entity';
 import { NetworksState, networksInitial } from './Networks';
 import { ExploreState, exploreInitial } from './Explore';
 import { Alert } from './Alerts';
@@ -10,11 +10,12 @@ import { MetadataState, metadataInitialState } from './Metadata';
 import { CacheValue } from './Cache';
 import { Store, useRef } from '../store/Store';
 import { Button } from 'shared/entities/button.entity';
+import { KeyLocation } from 'shared/entities/keylocation.entity';
 
 // -- estado global --
 export interface GlobalState {
   networks: NetworksState;
-  sessionUser: User;
+  sessionUser: UserProfile;
   knownUsers: User[];
   explore: ExploreState;
   alerts: Alert[];
@@ -27,6 +28,7 @@ export interface GlobalState {
   cacheValues: CacheValue[];
   signupTags: string[];
   myButtons: Button[];
+  keylocations: KeyLocation[];
   // newNotifications: NewNotification[]
 }
 
@@ -38,7 +40,7 @@ export interface GlobalState {
 
 export const store = new Store<GlobalState>({
   networks: networksInitial,
-  sessionUser: false,
+  sessionUser: null,
   knownUsers: [],
   explore: exploreInitial,
   alerts: [],

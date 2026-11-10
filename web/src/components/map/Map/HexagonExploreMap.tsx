@@ -4,11 +4,10 @@ import { GlobalState, store, useGlobalStore } from 'state';
 import {
   ExploreViewMode,
   HoverButtonList,
-  ListOnlyButtonType,
   RecenterExplore,
   UpdateExploreSettings,
   UpdateExploreViewMode,
-  UpdateFiltersToFilterButtonType,
+  UpdateFiltersHexButtonType,
   UpdateHexagonClicked, updateCurrentButton,
 } from 'state/Explore';
 import { HbMap } from '.';
@@ -17,7 +16,7 @@ import {
   convertH3DensityToFeatures,
   getZoomResolution} from 'shared/honeycomb.utils';
 import _ from 'lodash';
-import { buttonColorStyle, useButtonType } from 'shared/buttonTypes';
+import { buttonColorStyle } from 'shared/buttonTypes';
 import Loading from 'components/loading';
 import { IoContract, IoResize, IoStorefrontSharp } from 'react-icons/io5';
 import { useStore } from 'state';
@@ -26,7 +25,8 @@ import { LocationKeyIcon } from './MarkerButton';
 import t from 'i18n';
 import { circleGeoJSON } from 'shared/geo.utils';
 import { getCenter } from 'geolib';
-import { isMobile, useIsMobile } from 'elements/SizeOnly';
+import { useIsMobile } from 'elements/SizeOnly';
+import { isPointInBounds } from 'elements/Fields/FieldLocation/location.helpers';
 
 export default function HexagonExploreMap({
   h3TypeDensityHexes,
@@ -39,13 +39,12 @@ export default function HexagonExploreMap({
   const [centerBounds, setCenterBounds] = useState<Point>(null);
   const [geoJsonFeatures, setGeoJsonFeatures] = useState([])
   const [resolution, setResolution] = useState(0)
-  const maxButtonsHexagon = useRef(1)
-
+  const [keyLocationsInBounds, setKeyLocationsInBounds] = useState([])
   const currentButton = useGlobalStore((state: GlobalState) => state.explore.currentButton)
 
   const hexagonClicked = useStore(
     store,
-    (state: GlobalState) => state.explore.settings.hexagonClicked
+    (state: GlobalState) => state.explore.map.filters.hexClicked
   );
 
   const hoverButtonList = useStore(
@@ -84,6 +83,8 @@ export default function HexagonExploreMap({
     }
     handleBoundsChange(bounds, center, zoom)
     setCenterBounds(center);
+
+    setKeyLocationsInBounds(() => keyLocations.filter((_kl) => isPointInBounds([_kl.latitude, _kl.longitude], bounds)))
   };
 
   const onMapClick = () => {
@@ -94,9 +95,6 @@ export default function HexagonExploreMap({
 
   useEffect(() => {
     setGeoJsonFeatures(() => convertH3DensityToFeatures(h3TypeDensityHexes).filter((hex) => hex.properties.count > 0));
-    maxButtonsHexagon.current = h3TypeDensityHexes.reduce((accumulator, currentValue) => {
-      return Math.max(accumulator, currentValue.count);
-    }, 1);
   }, [h3TypeDensityHexes]);
 
   useEffect(() => {
@@ -106,12 +104,18 @@ export default function HexagonExploreMap({
         if(exploreSettings.zoom > showMarkersZoom){
           btns = btns.filter((btn) => !btn.hideAddress)
         }
-        const coordinates = btns.map((btn) => { return { latitude: btn.latitude, longitude: btn.longitude } })
+        const coordinates = btns.map((btn) => { 
+          if(btn.hideAddress){
+            return { latitude: btn.latitude, longitude: btn.longitude } 
+          }
+          return { latitude: btn.latitude, longitude: btn.longitude } 
+        })
 
         const medianCenterOfButtons = getCenter(coordinates)
         const center = medianCenterOfButtons ? [medianCenterOfButtons.latitude, medianCenterOfButtons.longitude] : hex.center
         return { center: center, groupByType: hex.groupByType ? hex.groupByType : [], count: btns.length, hexagon: hex.hexagon, buttons: btns }
-      }).filter((h) => h.count > 0)
+      })
+      .filter((h) => h.count > 0)
     })
   }, [h3TypeDensityHexes, exploreSettings.zoom])
   const buttonTypes = selectedNetwork.buttonTemplates;
@@ -119,7 +123,7 @@ export default function HexagonExploreMap({
   useEffect(() => {
     if (!hoverButtonList && !hexagonClicked && !currentButton) {
       setHexagonClickedFeatures(() => null)
-    } else if (hexagonClicked) {
+    } else if (hexagonClicked && !currentButton) {
       setHexagonClickedFeatures(() => hexagonsMedianCenters.find((feature) => feature.hexagon == hexagonClicked))
     } else if(currentButton) {
       const highLightHexagon = cellToZoom(currentButton.hexagon, exploreSettings.zoom)
@@ -133,8 +137,7 @@ export default function HexagonExploreMap({
   }, [hoverButtonList, hexagonClicked, hexagonsMedianCenters, currentButton, exploreSettings.zoom])
   
   const filterButtonType = (hexagonSelected, btnTypeName) => {
-    
-    store.emit(new ListOnlyButtonType(hexagonSelected, btnTypeName))
+    store.emit(new UpdateFiltersHexButtonType(hexagonSelected, btnTypeName))
   }
 
   return (
@@ -148,12 +151,12 @@ export default function HexagonExploreMap({
             tileType={selectedNetwork.exploreSettings.tileType}
             handleClick={onMapClick}
           >
-            <DisplayInstructions />
             <DisplayHiddenButtonsWarning countFilteredButtons={countFilteredButtons} />
             <GeoJson>
             {filteredCircle && <GeoJsonFeature feature={filteredCircle}/>}
-
+            {/* {geoJsonFeatures && <GeoJsonFeature feature={geoJsonFeatures}/>} */}
             </GeoJson>
+            
             {/*
             show count of buttons per hexagon
             */}
@@ -350,6 +353,11 @@ function MapButtonIcon({ button, buttonTypes }) {
       store.emit(new updateCurrentButton(button))
     }
     
+  }
+  if(!btnType.icon){
+    return <div onClick={handleClick} className={`${button.id == currentButton?.id || hoverButtonList?.id == button.id ? 'pigeon-map__hex-element--emoji-selected' : ''}  pigeon-map__emoji`}>
+    1
+  </div>
   }
   return (
     <div onClick={handleClick} className={`${button.id == currentButton?.id || hoverButtonList?.id == button.id ? 'pigeon-map__hex-element--emoji-selected' : ''}  pigeon-map__emoji`}>

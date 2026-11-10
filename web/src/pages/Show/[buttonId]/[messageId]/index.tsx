@@ -19,7 +19,7 @@ export default function Show({
         }
         if(buttonId)
         {
-            router.push(`/Explore/0/0/0/${buttonId}`, undefined, { shallow: true });
+            router.push(`/Explore/b/${buttonId}`, undefined, { shallow: true });
         }
     }, [buttonId,messageId])
     return <></>

@@ -6,10 +6,11 @@ import { FindUserButtons } from 'state/Users';
 import { Role } from 'shared/types/roles';
 import t from 'i18n';
 import { NextPageContext } from 'next';
-import { setMetadata } from 'services/ServerProps';
+import { setMetadata } from 'pages/_serverprops';
 import CardProfile from 'components/user/CardProfile';
 import { useMetadataTitle } from 'state/Metadata';
 import dconsole from 'shared/debugger';
+import { getServerSidePropsHandler, shouldEnableSSR } from 'shared/staticapp.utils';
 import { SetMainPopupCurrentProfile } from 'state/HomeInfo';
 import HomeInfo from 'pages/HomeInfo';
 import { CardProfileButtonList } from 'components/user/CardProfileButtons';
@@ -36,7 +37,6 @@ export function ShowProfile({
   useEffect(() => {
     if (userProfile) {
       if (userProfile.showButtons) {
-        dconsole.log('getting user btns');
         store.emit(
           new FindUserButtons(userProfile.id, (userButtons) =>
             setUserButtons(userButtons),
@@ -64,7 +64,7 @@ export function ShowProfile({
   );
 }
 
-export const getServerSideProps = async (ctx: NextPageContext) => {
-  return setMetadata(t('menu.profile'), ctx);
-};
+export const getServerSideProps = shouldEnableSSR
+  ? (ctx) => getServerSidePropsHandler(t('menu.profile'), ctx)
+  : undefined;
 

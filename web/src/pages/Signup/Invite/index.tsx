@@ -10,14 +10,16 @@ import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
 import t from 'i18n';
 import {  LoginQR, SignupQR } from 'state/Profile';
 import { alertService } from 'services/Alert';
+import { getServerSidePropsHandler, shouldEnableSSR } from 'shared/staticapp.utils';
 import { getLocale } from 'shared/sys.helper';
 import { NextPageContext } from 'next';
-import { setMetadata } from 'services/ServerProps';
+import { setMetadata } from 'pages/_serverprops';
 import dconsole from 'shared/debugger';
 import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
 import HomeInfo from 'pages/HomeInfo';
 import { Scanner } from '@yudiel/react-qr-scanner';
 import FieldText from 'elements/Fields/FieldText';
+import { setValidationErrors } from 'state/helper';
 
 export default function Invite( {metadata})
 {
@@ -40,24 +42,27 @@ export function InviteForm() {
     setValue,
     watch,
     setError,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm({
     defaultValues: {
       username: '',
       qrCode: '',
       locale: 'en',
       tags: [],
-      acceptPrivacyPolicy: 'no'
+      acceptPrivacyPolicy: 'no',
+      email: ''
     },
   });
 
   const [loading, setLoading] = useState(true)
-  
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   useEffect(() => {
     const loginCode = code ? code : null
     if(loginCode)
     {
       const onLoggingInSuccess = () => {
+        alertService.success(t('user.loginSucess'))
         store.emit(new SetMainPopup(MainPopupPage.HIDE))
         router.push(`/HomeInfo`)
       }
@@ -82,19 +87,30 @@ export function InviteForm() {
             qrCode:  code ? code : invitationCode,
             locale: getLocale(),
             acceptPrivacyPolicy: data.acceptPrivacyPolicy,
-            phone: data.phone
+            phone: data.phone,
+            email: data.email
           },
-          () => {
-            // router.push(`/HomeInfo`)
-            store.emit(new SetMainPopup(MainPopupPage.HIDE))
-          },
-          () => {
-            alertService.error('Error, invitation code not valid')
-          },
+          onSuccess,
+          onError
         ),
       );
   };
-  
+  const onSuccess = (userData) => {
+    setIsSubmitting(false)
+    store.emit(new SetMainPopup(MainPopupPage.HIDE))
+    alertService.success(t('user.loginSucess'))
+  };
+
+  const onError = (error) => {
+    setIsSubmitting(false)
+    if(error?.validationErrors){
+      setValidationErrors(error?.validationErrors, setError);
+      dconsole.error(error);
+      alertService.error(error.caption);
+    }else{
+      alertService.error(t('user.inviteLoginError'))
+    }
+  };
   
   return (
     <>
@@ -131,26 +147,47 @@ export function InviteForm() {
   );
 }
 
-
+const loginWithCode = (code) => {
+  const onLoggingInSuccess = () => {
+    alertService.success(t('user.loginSucess'))
+    store.emit(new SetMainPopup(MainPopupPage.HIDE))
+    router.push(`/HomeInfo`)
+  }
+  store.emit(new LoginQR(code, null, onLoggingInSuccess, (err) => { 
+    if(err == 'login-incorrect')
+    {
+      dconsole.log('tryin to login, failed, its ok, qr code is not registered yet')
+    }else{
+      dconsole.error(err)
+    }
+  }))
+}
 export function InviteScan() {
+  const regex = /Signup\/Invite\/(([a-zA-Z]|[0-9])*)/gm;
+
   
   const [qrCode, setQrCode] = useState('')
   const handleScan = (detectedCodes) => {
-    const regex = /Signup\/Invite\/(([a-zA-Z]|[0-9])*)/gm;
     detectedCodes.forEach(code => {
       if(code.format == 'qr_code'){
         const found = [...code.rawValue.matchAll(regex)];
         if(found.length > 0){
           const code = found[0][1]
-          router.push(`/Signup/Invite/${code}`)
-          console.log('invite code found' + code)
+          // router.push(`/Explore?code=${code}`)
+          loginWithCode(code)
         }
-
       }
     });
   };
   const handleSubmit = () => {
-    router.push(`/Signup/Invite/${qrCode}`)
+    if(qrCode.search('/') > -1 ){
+      const found = Array.from(qrCode.matchAll(regex))
+      const code = found[0][1]
+      loginWithCode(code)
+    }else{
+      loginWithCode(qrCode)
+    }
+    
   }
   return (
     <>
@@ -175,6 +212,6 @@ export function InviteScan() {
   );
 }
 
-export const getServerSideProps = async (ctx: NextPageContext) => {
-  return setMetadata(t('seo.invite'), ctx);
-};
+export const getServerSideProps = shouldEnableSSR
+  ? (ctx) => getServerSidePropsHandler(t('seo.invite'), ctx)
+  : undefined;

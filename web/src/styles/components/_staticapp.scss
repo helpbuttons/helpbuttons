@@ -1,0 +1,29 @@
+#splash {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #ffffff;
+    z-index: 9999;
+    transition: opacity 0.5s ease;
+  }
+  
+  #splash.hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+  
+  #splash img {
+    max-width: 200px;
+    max-height: 200px;
+    animation: pulse 2s infinite;
+  }
+  
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+  }

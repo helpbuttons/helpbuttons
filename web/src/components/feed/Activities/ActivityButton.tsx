@@ -1,32 +1,32 @@
-import Loading from "components/loading"
+import { LoadingWrapper } from "components/loading"
 import Btn, { BtnType, ContentAlignment, IconType } from "elements/Btn"
 import FieldText from "elements/Fields/FieldText"
 import ImageWrapper, { ImageType } from "elements/ImageWrapper"
+import { FormatMessage } from "elements/Message"
 import { ShowMobileOnly } from "elements/SizeOnly"
 import t from "i18n"
 import router from "next/router"
 import { useEffect, useRef, useState } from "react"
 import { IoAdd, IoArrowBack, IoSend } from "react-icons/io5"
-import { alertService } from "services/Alert"
 import { readableTimeLeftToDate } from "shared/date.utils"
 import { ActivitiesPageSize } from "shared/dtos/activity.dto"
 import { useScroll } from "shared/helpers/scroll.helper"
 import { ActivityEventName } from "shared/types/activity.list"
+import { GroupMessageType } from "shared/types/group-message.enum"
 import { GlobalState, store, useGlobalStore } from "state"
 import { FindActivityDetails, FindLatestActivities, SendNewMessage, SetFocusOnMessage, SetFocusOnPost } from "state/Activity"
 import { FindButton } from "state/Explore"
 import { FindAndSetMainPopupCurrentButton, FindAndSetMainPopupCurrentProfile } from "state/HomeInfo"
 
-export function ActivityButton({ selectedActivity, setSelectedActivity, closeConversation, isDrafting }) {
+export function ActivityButton({ selectedActivity, setSelectedActivity, closeConversation, isDrafting, selectedButton }) {
   if (isDrafting) {
     return <ActivityDetailDraft setSelectedActivity={setSelectedActivity} />
   }
-  return <ActivityDetailConversation selectedActivity={selectedActivity} closeConversation={closeConversation} />
+  return <ActivityDetailConversation setSelectedActivity={setSelectedActivity} selectedActivity={selectedActivity} selectedButton={selectedButton} closeConversation={closeConversation} />
 }
 
-export function ActivityDetailConversation({ selectedActivity, closeConversation }) {
+export function ActivityDetailConversation({ selectedActivity, closeConversation, selectedButton, setSelectedActivity}) {
   const [buttonActivities, setButtonActivities] = useState([])
-  const [selectedButton, setSelectedButton] = useState(null)
 
   const loadButtonActivities = () => {
     if (!selectedActivity.buttonId) {
@@ -34,13 +34,8 @@ export function ActivityDetailConversation({ selectedActivity, closeConversation
     }
     store.emit(new FindActivityDetails(selectedActivity.buttonId, selectedActivity.consumerId, 0,
       (_activites) => {
+        setSelectedActivity(() => _activites[0])
         setButtonActivities(() => _activites)
-        if(!selectedButton || selectedButton.id != selectedActivity.buttonId)
-          {
-            store.emit(new FindButton(selectedActivity.buttonId, (button) => {
-              setSelectedButton(() => button)
-            }))
-          }
       }
     ))
   }
@@ -49,7 +44,9 @@ export function ActivityDetailConversation({ selectedActivity, closeConversation
     if (!selectedActivity) {
       return;
     }
-    loadButtonActivities()
+    if(buttonActivities.length < 1 || selectedActivity.id != buttonActivities[0].id){
+      loadButtonActivities()
+    }
   }, [selectedActivity])
 
   const buttonsActivities = useGlobalStore((state: GlobalState) => state.activities.buttons)
@@ -66,6 +63,7 @@ export function ActivityDetailConversation({ selectedActivity, closeConversation
   }, [buttonsActivities])
 
   const sendNewMessage = (message, buttonId, consumerId) => {
+    if(message.length < 1) return ;
     store.emit(new SendNewMessage(message, buttonId, consumerId, () => { 
       loadButtonActivities(); 
       // alertService.success(t('activities.sent')) 
@@ -74,35 +72,30 @@ export function ActivityDetailConversation({ selectedActivity, closeConversation
 
   const lastBtnActivity = buttonActivities.length > 0 ? buttonActivities[0] : -1
 
-  if (!selectedButton || !selectedActivity) {
-    return (<ShowMobileOnly><Loading /></ShowMobileOnly>)
-  }
 
   if (!selectedActivity.activityFrom) {
-    return (<>?</>)
+    return (<></>)
   }
 
   return (
     <>
       <ActivityDetailHeader button={selectedButton} selectedActivity={selectedActivity} closeConversation={closeConversation} />
-      <ActivityDetailList buttonActivities={buttonActivities} setButtonActivities={setButtonActivities} buttonId={selectedButton.id} consumerId={selectedActivity.consumerId} selectedActivity={selectedActivity} lastButtonActivityId={lastBtnActivity.id}/>
-      {!selectedActivity?.disableChat && <MessageForm sendNewMessage={sendNewMessage} buttonId={selectedButton.id} consumerId={selectedActivity.consumerId} />}
+      <ActivityDetailList buttonActivities={buttonActivities} setButtonActivities={setButtonActivities} buttonId={selectedActivity?.buttonId} consumerId={selectedActivity.consumerId} selectedActivity={selectedActivity} lastButtonActivityId={lastBtnActivity.id}/>
+      {(!lastBtnActivity?.disableChat && selectedButton?.id)&& <MessageForm sendNewMessage={sendNewMessage} buttonId={selectedButton.id} consumerId={selectedActivity.consumerId} />}
     </>
   )
 }
 
 export function ActivityDetailDraft({ setSelectedActivity }) {
   const sendNewMessage = (message, buttonId, consumerId) => {
+    if(message.length < 1) return ;
     store.emit(new SendNewMessage(message, buttonId, consumerId, (res) => {
+      
       store.emit(new FindLatestActivities((_activities) => {
         const _draftActivity = _activities.find((_activity) => _activity.buttonId == buttonId)
 
         if (_draftActivity) {
-          setSelectedActivity(() => _draftActivity)
-          const { draft, ...routerQuery } = router.query;
-          router.replace({
-            query: { ...routerQuery },
-          });
+          router.push(`/Activity/${_draftActivity.id}`)
         }
       }))
     }))
@@ -140,39 +133,34 @@ export function ActivityDetailDraft({ setSelectedActivity }) {
 }
 
 
-function MessageForm({ sendNewMessage, buttonId, consumerId }) {
+export function ChatMessageForm({ onSend }) {
   const messageContent = useRef(null)
-  const inputKeyDown = (e) => {
-    const val = e.target.value;
-    if ((e.key === 'Enter' || e.key === ',') && val) {
+
+  const sendMessage = () => {
+    const message = messageContent.current.value;
+    if (message.length < 1) return;
+    onSend(message, () => { messageContent.current.value = '' });
+  }
+
+  const inputKeyDown = (e: any) => {
+    if ((e.key === 'Enter' || e.key === ',') && e.target.value && !e.shiftKey) {
       e.preventDefault();
-      sendMessage()
+      sendMessage();
     }
   }
 
-  const sendMessage = () => {
-    sendNewMessage(messageContent.current.value, buttonId, consumerId)
-    messageContent.current.value = ''
-  }
   return (
     <form className="chat__new-message">
-
-      {/* <Btn
-        btnType={BtnType.circle}
-        iconLink={<IoAdd />}
-        iconLeft={IconType.circle}
-        contentAlignment={ContentAlignment.center}
-        onClick={() => {
-        }}
-      /> */}
       <div className="chat__new-message__message">
         <FieldText
           name="message"
           ref={messageContent}
           label={""}
+          multiLine={true}
           classNameInput={"form__input"}
           onInputKeyDown={inputKeyDown}
           multiInput={true}
+          autoFocus={true}
         />
       </div>
       <div className="chat__new-message__send">
@@ -181,15 +169,25 @@ function MessageForm({ sendNewMessage, buttonId, consumerId }) {
           iconLink={<IoSend />}
           iconLeft={IconType.circle}
           contentAlignment={ContentAlignment.center}
-          onClick={() => {
-            sendMessage()
-          }}
+          onClick={sendMessage}
         />
       </div>
-
     </form>
   )
 }
+
+function MessageForm({ sendNewMessage, buttonId, consumerId }) {
+  return (
+    <ChatMessageForm
+      onSend={(message: string, clear: () => void) => {
+        sendNewMessage(message, buttonId, consumerId);
+        clear();
+      }}
+    />
+  )
+}
+
+
 function ActivityDetailCard({ activity, isLast = false }) {
   if (activity.eventName == ActivityEventName.Message) {
     return <ActivityDetailMessage activity={activity} isLast={isLast} />
@@ -248,7 +246,7 @@ function ActivityDetailCard({ activity, isLast = false }) {
         <div className="chat__notice">
           {activity.message}
           <a href={activity.link}>
-            Show</a>
+            {t('common.show')}</a>
         </div>
       </>
 
@@ -256,18 +254,44 @@ function ActivityDetailCard({ activity, isLast = false }) {
   }
   return (
     <>
+      <div className="chat__time-passed">
+        {readableTimeLeftToDate(activity.createdAt)}
+      </div>
       <div className="chat__notice">
         {activity.message}
-      </div>
-      <div className="message__hour message__hour--me">
-        {readableTimeLeftToDate(activity.createdAt)}
       </div>
     </>
   )
 }
 
 export function ActivityDetailMessage({ activity, isLast = false }) {
-  if (activity.from) {
+  if(activity.link){
+    return (
+      <>
+        <div className="chat__time-passed">
+          {readableTimeLeftToDate(activity.createdAt)}
+        </div>
+        <div className="chat__notice">
+          {activity.message}
+          <a href={activity.link}>
+            {t('common.show')}</a>
+        </div>
+      </>
+    )
+  }
+  if(activity.to == GroupMessageType.endorsed){
+    return (
+      <>
+        <div className="chat__time-passed">
+          {readableTimeLeftToDate(activity.createdAt)}
+        </div>
+        <div className="chat__notice">
+          {activity.message}
+        </div>
+      </>
+    )
+  }
+  if (activity?.from) {
     return (
       <>
         <div className="message__hour">
@@ -275,16 +299,16 @@ export function ActivityDetailMessage({ activity, isLast = false }) {
         </div>
         <div className="message message--you">
           <div className="message__header">
-            <div className="message__avatar">
+            <div className="message__avatar" onClick={() => store.emit(new FindAndSetMainPopupCurrentProfile(activity.activityFrom.username))} style={{cursor:'pointer'}}>
               <ImageWrapper imageType={ImageType.avatar} src={activity.activityFrom.avatar} alt={activity.activityFrom.name}  />
             </div>
 
             <div className="message__user-name-container">
-              <p className="message__user-name">{activity.from}</p>
+              <p className="message__user-name" onClick={() => store.emit(new FindAndSetMainPopupCurrentProfile(activity.activityFrom.username))} style={{cursor:'pointer'}}>{activity.from}</p>
             </div>
           </div>
           <div className="message__content">
-            {activity.message}
+            <FormatMessage text={activity.message} />
           </div>
         </div>
 
@@ -295,17 +319,14 @@ export function ActivityDetailMessage({ activity, isLast = false }) {
 
   } else {
     return (<>
-
       <div className="message__hour message__hour--me">
       {isLast ? t('activities.sent') : readableTimeLeftToDate(activity.createdAt)}
       </div>
       <div className="message message--me">
         <div className="message__content">
-          {activity.message}
+          <FormatMessage text={activity.message} />
         </div>
       </div>
-
-
     </>)
   }
 
@@ -353,20 +374,23 @@ function ActivityDetailHeader({ closeConversation, button, selectedActivity }) {
     <div className="chat__header">
       <header className="chat__header-content">
         <div className="chat__header-left">
-          <div className="btn-circle__icon">
-            {closeConversation &&
-              <a href="#" onClick={() => { closeConversation() }}>
-                <IoArrowBack />
-              </a>
-            }
-          </div>
+          <ShowMobileOnly>
+            <div className="chat__header-button">
+              {closeConversation &&
+                <a href="#" onClick={() => { closeConversation() }} className="chat__header-button__icon">
+                  <IoArrowBack />
+                </a>
+              }
+            </div>
+         </ShowMobileOnly>
+
         </div>
         <div className="chat__header-center">
           <h1 className="chat__header-title">
             <a href="#" onClick={() => showUser(selectedActivity.activityFrom.username)}>{selectedActivity.activityFrom.name}</a>
           </h1>
           <h2 className="chat__header-subtitle">
-            <a href="#" onClick={() => showButton(selectedActivity.buttonId)}>{button.title}</a>
+            <a href="#" onClick={() => showButton(selectedActivity.buttonId)}>{button?.title}</a>
           </h2>
         </div>
         <div className="chat__header-right">

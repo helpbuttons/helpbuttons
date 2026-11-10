@@ -5,9 +5,10 @@ import { NextPageContext } from 'next';
 import router from 'next/router';
 import { store } from 'state';
 import { useEffect, useRef, useState } from 'react';
-import { setMetadata } from 'services/ServerProps';
+import { setMetadata } from 'pages/_serverprops';
 import { useButtonTypes } from 'shared/buttonTypes';
 import { FindEmbbedButtons } from 'state/Button';
+import { getServerSidePropsHandler, shouldEnableSSR } from 'shared/staticapp.utils';
 
 export default function Embbed() {
   const buttonTypes = useButtonTypes();
@@ -67,6 +68,6 @@ export default function Embbed() {
   );
 }
 
-export const getServerSideProps = async (ctx: NextPageContext) => {
-  return setMetadata(t('seo.embbed'), ctx);
-};
+export const getServerSideProps = shouldEnableSSR
+  ? (ctx) => getServerSidePropsHandler(t('seo.embbed'), ctx)
+  : undefined;

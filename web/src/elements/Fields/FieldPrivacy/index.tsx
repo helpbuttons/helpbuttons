@@ -16,7 +16,7 @@ React.forwardRef(
     setValue(name, !isPrivate ? 'private' : 'public')
   };
   return (
-   
+   <></>
     //revise to add new field type or change to use FieldCheckbox
 
   );

@@ -11,7 +11,7 @@ import {
   InjectEntityManager,
   InjectRepository,
 } from '@nestjs/typeorm';
-import { uuid } from '@src/shared/helpers/uuid.helper';
+import { slugify, uuid } from '@src/shared/helpers/uuid.helper';
 import {
   Repository,
   In,
@@ -19,6 +19,7 @@ import {
   Not,
   Between,
   LessThan,
+  Raw,
 } from 'typeorm';
 import { TagService } from '../tag/tag.service';
 import { CreateButtonDto, UpdateButtonDto } from './button.dto';
@@ -55,6 +56,8 @@ import {
 import { Cache } from 'cache-manager';
 import { CacheKeys } from '@src/shared/types/cache.keys';
 import { cellToLatLng, cellToParent } from 'h3-js';
+import { calculateExpiringDate } from '@src/shared/types/scheduler.type';
+import { CustomFields } from '@src/shared/types/customFields.type';
 
 @Injectable()
 export class ButtonService {
@@ -77,7 +80,7 @@ export class ButtonService {
   async create(
     createDto: CreateButtonDto,
     networkId: string,
-    images: File[],
+    mediaFiles: Express.Multer.File[],
     user: User,
   ) {
     const network = await this.networkService.findOne(networkId);
@@ -98,33 +101,22 @@ export class ButtonService {
     const buttonTemplate = buttonTemplates.find(
       (btnTemplate) => btnTemplate.name == createDto.type,
     );
+    const customData = this.saveCustomFields(network.buttonTemplates, createDto)
 
-    if (buttonTemplate?.customFields) {
-      const isEvent = buttonTemplate?.customFields.find(
-        (customField) => customField.type == 'event',
-      );
-      if (isEvent) {
-        if (
-          !createDto.eventEnd ||
-          !createDto.eventStart ||
-          !createDto.eventType
-        ) {
-          throw new CustomHttpException(ErrorName.invalidDates);
-        }
-        if (
-          new Date(createDto.eventEnd).getTime() <
-          new Date(createDto.eventStart).getTime()
-        ) {
-          throw new CustomHttpException(ErrorName.invalidDates);
-        }
-      }
-    }
     let awaitingApproval = false;
     if (network.requireApproval && user.role != Role.admin) {
       awaitingApproval = true;
+    }else if(!network.requireApproval){
+      awaitingApproval = false
+    }
+    if(!buttonTemplate){
+      throw new HttpException(
+        { message: 'Button template not found' },
+        HttpStatus.BAD_REQUEST,
+      );
     }
     const button = {
-      id: uuid(),
+      id: await this.getNewSlug(createDto.title),
       type: createDto.type,
       description: createDto.description,
       latitude: createDto.latitude,
@@ -145,9 +137,7 @@ export class ButtonService {
         `h3_lat_lng_to_cell(POINT(${createDto.longitude}, ${createDto.latitude}), ${maxResolution})`,
       hideAddress: createDto.hideAddress,
       price: createDto.price,
-      eventStart: createDto.eventStart,
-      eventEnd: createDto.eventEnd,
-      eventType: createDto.eventType,
+      ...customData,
       hasPhone,
       eventData: createDto.eventData,
       awaitingApproval,
@@ -169,67 +159,112 @@ export class ButtonService {
           });
       }
 
-      if (createDto.images?.length > 0) {
-        await Promise.all(
-          createDto.images.map(async (image) => {
-            if (isImageData(image)) {
-              try {
-                const newImage = await this.storageService.newImage64(
-                  image,
-                );
-                if (newImage) {
-                  button.images.push(newImage);
-                }
-              } catch (err) {
-                throw new CustomHttpException(
-                  ErrorName.InvalidMimetype,
-                );
-              }
-            } else if (isImageUrl(image)) {
-              if(image)
-              {
-                button.images.push(image);
-              }
-            } else {
-              console.error('no image data, or image url?');
-              console.log(image);
-            }
-          }),
-        );
-      }
+    if (Array.isArray(button.tags)) {
+      await this.tagService
+        .addTags('button', button.id, button.tags)
+        .catch((err) => {
+          console.log(
+            `Error adding tags ${JSON.stringify(
+              button.tags,
+            )} to button ${button.id}`,
+          );
+          throw new HttpException(
+            { message: err.message },
+            HttpStatus.BAD_REQUEST,
+          );
+        });
+    }
+    if (mediaFiles.length > 0) {
+      button.images = (await this.storageService.uploadMultipleImages(mediaFiles)).map((uploadResult) => uploadResult.name)
       if (button.images.length > 0) {
         button.image = button.images[0];
       }
-      await this.buttonRepository.insert([button]);
-
-    return await button;
+    }
+    
+    return this.buttonRepository.insert([button])
+    .then((btn) => {
+      return this.findById(button.id, true, true, user)
+          .then((_btn) => this.transformButton(_btn, user))
+    })
   }
 
+
+  async getNewSlug (title) {
+    let slug = slugify(title);
+
+    const checkIfExists = async (newId) => {
+      try {
+        const found = await this.findById(newId)
+        if (found) {
+          return true;
+        }
+      } catch (exception) {
+        if (exception.response == 'button-not-found') {
+          return false;
+        }
+        console.log(exception)
+      }
+      return false;
+    }
+    let append = '';
+
+    let buttonIdExists = await checkIfExists(slug)
+    while (buttonIdExists) {
+      slug = slugify(title + append);
+      append = append + '_'
+      buttonIdExists = await checkIfExists(slug)
+      if (append.length > 10) {
+        slug = uuid()
+        break;
+      }
+    }
+    return slug;
+  }
+ 
   async findById(
     id: string,
     includeExpired: boolean = false,
+    includeForApproval: boolean = false,
     currentUser = null,
   ): Promise<Button> {
     let button: Button = await this.buttonRepository.findOne({
-      where: { id, ...this.expiredBlockedConditions(includeExpired) },
+      where: { id, ...this.expiredBlockedConditions(includeExpired, includeForApproval) },
       relations: ['owner'],
     });
+    
     if (!button) {
       throw new HttpException(
         'button-not-found',
         HttpStatus.NOT_FOUND,
       );
     }
-    return await this.checkAndSetExpired(button).then((btn) => this.transformButton(btn, currentUser));
-    // return this.transformButton(button, currentUser)
+    const isButtonOwner = currentUser?.id == button?.owner?.id;
+    if (!(isButtonOwner || currentUser?.role == Role.admin || currentUser?.endorsed)) {
+      const buttonTypes = await this.networkService.findButtonTypes()
+
+      const hide = this.isOnlyEndorsed(button,buttonTypes)
+
+      if(hide)
+      {
+        throw new HttpException(
+          'button-not-found',
+          HttpStatus.NOT_FOUND,
+        );
+      }
+    }
+    
+
+    return this.transformButton(button, currentUser, isButtonOwner);
   }
 
   async update(
     id: string,
     updateDto: UpdateButtonDto,
+    mediaFiles: Express.Multer.File[],
     currentUser: User,
   ) {
-    const currentButton = await this.findById(id, true);
+    const network = await this.networkService.findDefaultNetwork();
+    const currentButton = await this.findById(id, true, true, currentUser);
     this.cacheManager.del(CacheKeys.FINDH3_CACHE_KEY)
     let location = {};
     let hexagon = {};
@@ -246,10 +281,14 @@ export class ButtonService {
     if (currentButton.owner.phone) {
       hasPhone = true;
     }
-    const button: Partial<Button> = {
+    
+    const customData = this.saveCustomFields(network.buttonTemplates, updateDto)
+    
+    let button: Partial<Button> = {
       ...updateDto,
       ...location,
       ...hexagon,
+      ...customData,
       hasPhone,
       images: [],
       id,
@@ -261,42 +300,30 @@ export class ButtonService {
       await this.tagService.updateTags('button', id, button.tags);
     }
 
-    if (updateDto.images?.length > 0) {
-      await Promise.all(
-        updateDto.images.map(async (image) => {
-          if (isImageData(image)) {
-            try {
-              const newImage = await this.storageService.newImage64(
-                image,
-              );
-              if (newImage) {
-                button.images.push(newImage);
-              }
-            } catch (err) {
-              throw new CustomHttpException(
-                ErrorName.InvalidMimetype,
-              );
-            }
-          } else if (isImageUrl(image)) {
-            if(image)
-            {
-              button.images.push(image);
-            }
-          } else {
-            console.error('no image data, or image url?');
-            console.log(image);
+    if (updateDto.images?.length > 0 || mediaFiles.length > 0) {
+      button.images = [];
+      
+      // Keep existing image URLs/paths
+      if (updateDto.images?.length > 0) {
+        updateDto.images.forEach((image) => {
+          if (image && typeof image === 'string') {
+            button.images.push(image);
           }
-        }),
-      );
-    }
-    if (button.images.length > 0) {
-      button.image = button.images[0];
-    }else{
-      button.image = null;
+        });
+      }
+      
+      // Add new uploaded files
+      if (mediaFiles.length > 0) {
+        const newImages = (await this.storageService.uploadMultipleImages(mediaFiles)).map((uploadResult) => uploadResult.name);
+        button.images = [...button.images, ...newImages];
+        if (button.images.length > 0) {
+          button.image = button.images[0];
+        }
+      }
     }
 
-    this.buttonRepository
-      .findOne({ where: { id: id } })
+    return this.buttonRepository
+      .findOne({ where: { id: id }, relations:['owner'] })
       .then((storeButton) => {
         if (button.images.length < 0) {
           this.storageService.deleteMany(storeButton.images);
@@ -310,14 +337,16 @@ export class ButtonService {
             this.storageService.deleteMany(deleteImages);
           }
         }
+        return this.buttonRepository.save([button]).then((btn) => {
+          if(storeButton.expired && !button.expired){
+            notifyUser(this.eventEmitter,ActivityEventName.RenewButton,{button, owner: storeButton.owner})
+          }
+          return this.findById(button.id, true, true, currentUser)
+          .then((_btn) => this.transformButton(_btn, currentUser))
+        })
+
       });
 
-    return this.isEventExpired(button).then((isExpired) => {
-      if (isExpired) {
-        throw new CustomHttpException(ErrorName.expiredDates);
-      }
-      return this.buttonRepository.save([button]);
-    });
   }
 
   @UseInterceptors(CacheInterceptor)
@@ -335,8 +364,10 @@ export class ButtonService {
         .createQueryBuilder('button')
         .select('id')
         .where(
-          `h3_cell_to_parent(cast (button.hexagon as h3index),${resolution}) IN(:...hexagons) AND deleted = false AND expired = false AND "awaitingApproval" = false`,
-          { hexagons: hexagons },
+          `h3_cell_to_parent(cast (button.hexagon as h3index),:resolution) IN(:...hexagons) AND 
+          h3_get_resolution(cast(button.hexagon as h3index)) > :resolution AND 
+          deleted = false AND expired = false AND ("ownerId" = :userId OR "awaitingApproval" = false)`,
+          { hexagons: hexagons, resolution: resolution, userId: currentUser.id },
         )
         .execute();
       const buttonsIds = buttonsOnHexagons.map((button) => button.id);
@@ -364,21 +395,13 @@ export class ButtonService {
               });
             });
         })
-        .then((buttons) => {
-          return Promise.all(
-            buttons.map(async (button) => {
-              return this.checkAndSetExpired(button);
-            }),
-          )
-            .then((btns) => {
-              return btns.filter((btn) => !btn.expired);
-            })
-            .then((btns) => {
-              return btns.map((btn) => 
-                this.transformButton(btn, currentUser)
-              );
-            });
-          // return Promise.all(btns)
+        .then((btns) => {
+          return this.filterOnlyEndorsed(currentUser, btns)
+        })
+        .then((btns) => {
+          return btns.map((btn) => 
+            this.transformButton(btn, currentUser)
+          );
         });
     } catch (err) {
       console.log(err);
@@ -386,10 +409,9 @@ export class ButtonService {
     }
   }
 
-  transformButton(btn, currentUser = null) {
+  transformButton(btn, currentUser = null, buttonOwnerIsEditing = false) {
     const isFollowing = currentUser ? btn.followedBy.includes(currentUser.id) : false
-
-    if(btn.hideAddress)
+    if(btn.hideAddress && !buttonOwnerIsEditing)
     {
       btn.hexagon = cellToParent(btn.hexagon, hideAddressResolution)
       const hexCenter = cellToLatLng(btn.hexagon)
@@ -397,17 +419,50 @@ export class ButtonService {
       btn.longitude = hexCenter[1]
       btn.location = {type: 'Point', coordinates: hexCenter}
     }
+    const buttonStatus = (button) => {
+      if(button.expired){
+        return 'expired'
+      }else if(button.deleted){
+        return 'deleted'
+      }else{
+        return 'active'
+      }
+    }
     return {
       ...btn,
+      status: buttonStatus(btn),
       postsCount: btn.feed ? btn.feed.length : 0,
       followCount: btn.followedBy ? btn.followedBy.length : 0,
       hasPhone: btn.owner.phone ? true : false,
       isFollowing: isFollowing,
     };
   }
-  async delete(buttonId: string) {
+
+  filterOnlyEndorsed(currentUser, btns) {
+    return this.networkService.findButtonTypes()
+      .then((buttonTypes) => {
+        if (currentUser.endorsed || currentUser.role == Role.admin) {
+          return btns;
+        }
+        return btns.filter((btn) => {
+          return !this.isOnlyEndorsed(btn,buttonTypes)
+        })
+      })
+  }
+  
+  isOnlyEndorsed(button, buttonTypes) {
+    const buttonType = buttonTypes.find((_btnType) => _btnType.name == button.type)
+    if(!buttonType?.customFields){
+      return false;
+    }
+    return buttonType?.customFields.find((_cstomfield) => {
+      return _cstomfield.type == CustomFields.OnlyEndorsed
+    })
+  }
+
+  async delete(buttonId: string, currentUser) {
     this.cacheManager.del(CacheKeys.FINDH3_CACHE_KEY)
-    return this.findById(buttonId, true).then((button) => {
+    return this.findById(buttonId, true, true, currentUser).then((button) => {
       return this.buttonRepository
         .update(button.id, { deleted: true })
         .then((res) => {
@@ -419,9 +474,8 @@ export class ButtonService {
   public isOwner(
     currentUser: User,
     buttonId: string,
-    includeExpired: boolean = false,
   ) {
-    return this.findById(buttonId, includeExpired).then((button) => {
+    return this.findById(buttonId, true, true, currentUser).then((button) => {
       if (
         currentUser.role == Role.admin ||
         currentUser.id == button.owner.id
@@ -449,11 +503,12 @@ export class ButtonService {
     return button;
   }
 
-  async findByOwner(ownerId: string) {
+  async findByOwner(ownerId: string, includeExpired: boolean = false) {
+    const { owner: ownerConditions, ...restConditions } = this.expiredBlockedConditions(includeExpired);
     let buttons: Button[] = await this.buttonRepository.find({
       where: {
-        owner: { id: ownerId, role: Not(Role.blocked)},
-        deleted: false
+        owner: { id: ownerId, ...ownerConditions },
+        ...restConditions,
       },
       relations: ['owner'],
     });
@@ -461,13 +516,17 @@ export class ButtonService {
   }
 
   async follow(buttonId: string, userId: string) {
-    const button = await this.findById(buttonId);
-    const index = button.followedBy.indexOf(userId);
-    if (index < 0) {
-      button.followedBy.push(userId);
-      return await this.buttonRepository.save(button);
-    }
-    return button;
+    return this.findById(buttonId)
+    .then((button) => {
+      const index = button.followedBy.indexOf(userId);
+      if (index < 0 && button.owner.id != userId) {
+        button.followedBy.push(userId);
+        return this.buttonRepository.save(button)
+        .then((_btn) => {
+          return button
+        })
+      }
+    })
   }
 
   async unfollow(buttonId: string, userId: string) {
@@ -500,98 +559,76 @@ export class ButtonService {
     });
   }
 
-  expiredBlockedConditions(includeExpired: boolean = false) {
+  expiredBlockedConditions(includeExpired: boolean = false, includeForApproval: boolean = false) {
     const blocked = {
       owner: { role: Not(Role.blocked) },
       deleted: false,
     };
-    if (includeExpired) {
-      return blocked;
+
+    // its always false.. except when owner of button! 
+    if (!includeExpired && !includeForApproval) {
+      return { expired: false, awaitingApproval: false, ...blocked };
+    }else if(includeExpired && !includeForApproval){
+      return { awaitingApproval: false, ...blocked };
+    }else if(!includeExpired && includeForApproval){
+      return { expired: false, ...blocked };
+    } // else includeExpired & includeForApproval
+    return blocked;
+  }
+    
+
+  async renew(dto: Button) {
+    const network = await this.networkService.findDefaultNetwork();
+    const buttonTemplate = network.buttonTemplates.find(
+      (btnTemplate) => btnTemplate.name == dto.type,
+    );
+    const isScheduled = buttonTemplate?.customFields.find(
+      (customField) => customField.type == CustomFields.Scheduler,
+    );
+    if(isScheduled)
+    {
+      // @ts-ignore
+      const updateButton = {id: dto.id, expired: false, expirationDate: calculateExpiringDate(isScheduled.unity, parseInt(isScheduled.value))}
+      return this.buttonRepository.save([updateButton]).then((btn) => {return true})
     }
-    return { expired: false, ...blocked };
-  }
-
-  @OnEvent(ActivityEventName.NewPost)
-  async updateDate(payload: any) {
-    const buttonId = payload.data.post.button.id;
-    await this.updateModifiedDate(buttonId);
-  }
-
-  @OnEvent(ActivityEventName.NewPostComment)
-  async autoFollowButton(payload: any) {
-    switch (payload.activityEventName) {
-      case ActivityEventName.NewPostComment:
-        const buttonId = payload.data.comment.button.id;
-        const userId = payload.data.comment.author.id;
-        this.follow(buttonId, userId);
-        break;
-    }
-    const buttonId = payload.data.comment.post.button.id;
-    await this.updateModifiedDate(buttonId);
-  }
-
-  renew(button: Button, user: User) {
-    return this.isEventExpired(button).then(async (isExpired) => {
-      if (isExpired) {
-        throw new CustomHttpException(ErrorName.expiredDates);
-      } else {
-        return this.updateModifiedDate(button.id).then(() => {
-          return button;
-        });
-      }
-    });
+    return false ;
   }
 
   updateModifiedDate(buttonId: string) {
     return this.entityManager.query(`UPDATE button SET updated_at = CURRENT_TIMESTAMP, deleted = false, expired = false WHERE id = $1`, [buttonId]);
   }
 
-  checkAndSetExpired(button: Button) {
-    if (button.expired) {
-      return Promise.resolve(button);
-    }
-    return this.isEventExpired(button).then(async (isExpired) => {
-      if (isExpired) {
-        await this.setExpired(button.id);
+  checkAndSetExpiredEvent(button: Button) {
+    const now = new Date();
+    if (new Date(button.eventEnd) < now) {
+      return this.setExpired(button.id)
+      .then(() => {
         notifyUser(
           this.eventEmitter,
           ActivityEventName.ExpiredButton,
           { button },
         );
         return { ...button, expired: true };
-      }
-      return button;
-    });
-    // deactivating to expire buttons after 3 months...
-    // https://github.com/helpbuttons/helpbuttons/issues/703
-    /*.then(async (button) => {
-      var expiredUpdatesDate = new Date();
-      expiredUpdatesDate.setMonth(expiredUpdatesDate.getMonth() - 3);
-      if (button.updated_at < expiredUpdatesDate) {
-        const now = new Date();
-        if (button.updated_at < now) {
-          await this.setExpired(button.id)
-          await this.notifyOwnerExpiredButton(button)
-          return {...button, expired: true};
-        }
-      }
-      return button;
-    });*/
+      })
+    }
+    return Promise.resolve(button)
   }
 
-  isEventExpired(button: Partial<Button>) {
-    return this.networkService
-      .getButtonTypesWithEventField()
-      .then((btnTemplateEvents) => {
-        // if its a button type with an event field
-        if (btnTemplateEvents.indexOf(button.type) > -1) {
-          const now = new Date();
-          if (new Date(button.eventEnd) < now) {
-            return true;
-          }
-        }
-        return false;
-      });
+  async checkAndSetExpiredScheduler(button)
+  {
+    const now = new Date();
+    if (new Date(button.expirationDate) < now) {
+      return this.setExpired(button.id)
+      .then(() => {
+        notifyUser(
+          this.eventEmitter,
+          ActivityEventName.SchedulerExpiredButton,
+          { button },
+        );
+        return { ...button, expired: true };
+      })
+    }
+    return Promise.resolve(button)
   }
 
   setExpired(buttonId: string) {
@@ -637,12 +674,14 @@ export class ButtonService {
             new Date(year, month, 1),
             new Date(year, month, 31),
           ),
+          ...this.expiredBlockedConditions(),
         },
         {
           eventStart: Between(
             new Date(year, month, 1),
             new Date(year, month, 31),
           ),
+          ...this.expiredBlockedConditions(),
         },
       ],
     });
@@ -654,13 +693,12 @@ export class ButtonService {
       skip: page * 10,
       order: { created_at: 'DESC' },
       where: {
-        awaitingApproval: true,
-        ...this.expiredBlockedConditions(),
+        ...this.expiredBlockedConditions(true, true),
       },
     });
   }
 
-  findAll(page: number) {
+  findAll(page: number, currentUser: User) {
     return this.buttonRepository.find({
       take: 10,
       skip: page * 10,
@@ -669,7 +707,8 @@ export class ButtonService {
         awaitingApproval: false,
       },
       relations: ['owner']
-    });
+    })
+    .then((buttons) => buttons.map((btn) => this.transformButton(btn)))
   }
 
   approve(buttonId: string) {
@@ -695,7 +734,6 @@ export class ButtonService {
         },
         relations: ['owner']
       })
-      .then((buttons) => this.filterExpired(buttons));
   }
 
   embbed(page: number, take: number) {
@@ -710,17 +748,6 @@ export class ButtonService {
           updated_at: 'DESC',
         },
       })
-      .then((buttons) => this.filterExpired(buttons));
-  }
-
-  filterExpired(buttons) {
-    return Promise.all(
-      buttons.map(async (button) => {
-        return this.checkAndSetExpired(button);
-      }),
-    ).then((btns) => {
-      return btns.filter((btn) => !btn.expired);
-    });
   }
 
   public rss() {
@@ -734,7 +761,6 @@ export class ButtonService {
           updated_at: 'DESC',
         },
       })
-      .then((buttons) => this.filterExpired(buttons))
       .then(async (buttons) => {
         const network: Network =
           await this.networkService.findDefaultNetwork();
@@ -771,11 +797,71 @@ export class ButtonService {
     return this.buttonRepository.findOneBy({id: buttonId})
     .then((button) => {
       return this.userService.findByIds(button.followedBy)
-      .then((dd) => {console.log(dd); return dd;})
     })
   }
 
   public deleteAllButtonsFromType(type: string) {
     return this.buttonRepository.update({ type: type }, {deleted: true})
+  }
+
+  validateEventFields(eventStart, eventEnd, eventType) {
+
+        if (
+          !eventEnd ||
+          !eventStart ||
+          !eventType
+        ) {
+          throw new CustomHttpException(ErrorName.invalidDates);
+        }
+        if (
+          new Date(eventEnd).getTime() <
+          new Date(eventStart).getTime()
+        ) {
+          // adding one day to event Start, plus the hour set on end time
+          const eventNewEndDate = new Date(eventStart);
+          const eventEndDate = new Date(eventEnd);
+          eventNewEndDate.setDate(eventNewEndDate.getDate() + 1);
+          eventNewEndDate.setHours(
+            eventEndDate.getHours(),
+            eventEndDate.getMinutes(),
+            eventEndDate.getSeconds(),
+            eventEndDate.getMilliseconds()
+          );
+          eventEnd = eventNewEndDate;
+        }
+
+    return {eventStart, eventEnd, eventType, expirationDate: eventEnd}
+  }
+
+  saveCustomFields(buttonTemplates, dto)
+  {
+    let eventData = {}
+    const buttonTemplate = buttonTemplates.find(
+      (btnTemplate) => btnTemplate.name == dto.type,
+    );
+    if (buttonTemplate?.customFields) {
+      const isEvent = buttonTemplate?.customFields.find(
+        (customField) => customField.type == CustomFields.Event,
+      );
+      if (isEvent) {
+        eventData = this.validateEventFields(dto.eventStart, dto.eventEnd, dto.eventType)
+      }
+
+      const isScheduled = buttonTemplate?.customFields.find(
+        (customField) => customField.type == CustomFields.Scheduler,
+      );
+      if(isScheduled)
+      {
+        eventData = {expirationDate: calculateExpiringDate(isScheduled.unity, parseInt(isScheduled.value))}
+      }
+    }
+    return eventData;
+  }
+
+  findTomorrowEvents() {
+    return this.buttonRepository.find({where: {
+      eventStart: Raw((alias) => `${alias} > NOW() AND ${alias} < NOW() + INTERVAL '90 DAY'`),
+      ...this.expiredBlockedConditions(false, false)
+    }, relations: ['owner']})
   }
 }

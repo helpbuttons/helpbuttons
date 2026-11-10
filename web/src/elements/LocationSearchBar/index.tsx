@@ -1,6 +1,6 @@
 import Loading, { LoadabledComponent } from "components/loading";
 import Btn, { BtnType, ContentAlignment, IconType } from "elements/Btn";
-import { formatedCoords, getCoordinatesDegrees, getCoordinatesDMS, useGeoReverse, useGeoSearch } from "elements/Fields/FieldLocation/location.helpers";
+import { formatedCoords, getCoordinatesDegrees, getCoordinatesDMS, getUnkownAddress, useGeoReverse, useGeoSearch } from "elements/Fields/FieldLocation/location.helpers";
 import t from "i18n";
 import { useEffect, useRef, useState } from "react";
 import { IoAdd, IoCloseOutline, IoLocationOutline } from "react-icons/io5";
@@ -118,7 +118,7 @@ export default function LocationSearchBar({
                     <SearchResultsList handleAddressPicked={handleAddressPicked} results={results} hideAddress={hideAddress} />
                 }
                 {(showAddCustomButton && (results && results.length < 1) && isCustomAddress !== null) &&
-                    <SearchCustomAddress handleClick={() => { setIsCustomAddress(() => true); toggleShowAddCustomButton(() => false) }} />
+                    <SetCustomAddress handleClick={() => { setIsCustomAddress(() => true); toggleShowAddCustomButton(() => false) }} />
                 }
 
                 
@@ -178,12 +178,13 @@ function FieldLocationSearch({ isCustomAddress = false, placeholder, setResults,
     const findAddressFromPosition = (latLng, hideAddress) => {
         setIsLoading(() => true)
         getLatLngAddress(latLng, hideAddress, (place) => {
-            setResults(() => [place])
+            const coordinatesPlace = {formatted: getCoordinatesDMS(`${latLng[0]}, ${latLng[1]}`), geometry: {lat: latLng[0], lng: latLng[1]}}
+            setResults(() => [place,coordinatesPlace])
             setIsLoading(() => false)
         },
             (error) => {
                 setIsLoading(() => false)
-                setResults(() => [{ formatted: t('button.unknownPlace'), geometry: { lat: latLng[0], lng: latLng[1] } }])
+                setResults(() => [{ formatted: getUnkownAddress(latLng[0], latLng[1], hideAddress), geometry: { lat: latLng[0], lng: latLng[1] } }])
             }
         );
     }
@@ -238,6 +239,12 @@ function FieldCustomAddress({ isCustomAddress, setIsCustomAddress, setPickedAddr
         setInput(value)
     }
 
+    useEffect(() => {
+        if(isCustomAddress)
+        {
+            setPickedAddress(() => input)
+        }
+    }, [isCustomAddress])
     return (<>
     
         {isCustomAddress &&
@@ -269,7 +276,7 @@ function FieldCustomAddress({ isCustomAddress, setIsCustomAddress, setPickedAddr
     
 )
 }
-export function SearchCustomAddress({ handleClick }) {
+export function SetCustomAddress({ handleClick }) {
     const selectedNetworkName = useSelectedNetwork().name
     return (<div className="dropdown__dropdown-option-wrapper--add-location">
         <hr />

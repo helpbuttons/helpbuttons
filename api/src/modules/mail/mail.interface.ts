@@ -6,3 +6,21 @@ export interface MailJob {
     template: string;
     context: any;
   }
+
+export interface MailActivity {
+  subject?: string,
+  content: string,
+  link: string,
+  linkCaption: string;
+}
+
+
+export interface MailButtonActivity {
+  subject?: string,
+  content: string,
+  link?: string,
+  linkCaption?: string;
+  title?: string;
+  address?: string;
+  type?: string;
+}

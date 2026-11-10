@@ -1,10 +1,13 @@
-import { GlobalState, store } from "state";
+import { GlobalState, store, useGlobalStore } from "state";
 import { catchError, map, of } from "rxjs";
 import { GeoService, KeyLocationService } from "services/Geo";
-import { WatchEvent } from "store/Event";
+import { UpdateEvent, WatchEvent } from "store/Event";
 import { CacheMatch, CachePut } from "./Cache";
 import dconsole from "shared/debugger";
 import { CreateKeyLocationDto } from "shared/dtos/keylocation.dto";
+import { KeyLocation } from "shared/entities/keylocation.entity";
+import produce from "immer";
+import { useEffect, useRef } from "react";
 
 export class GeoFindAddress implements WatchEvent {
     uid = '';
@@ -93,15 +96,43 @@ export class DeleteKeyLocation implements WatchEvent {
 
 export class ListKeyLocation implements WatchEvent {
   public constructor(
-    private onSuccess = undefined,
+    private onSuccess = (x) => {},
   ) {}
 
   public watch(state: GlobalState) {
     return KeyLocationService.list().pipe(
       map((list) => { 
+        store.emit(new StoreListKeyLocations(list))
         this.onSuccess(list);
       }),
       catchError((error) => {this.onSuccess([]); return  of(undefined)})
     )
   }
+}
+
+export class StoreListKeyLocations implements UpdateEvent{
+  public constructor(private keylocations: KeyLocation[]){
+        
+  }
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      newState.keylocations = this.keylocations
+    });
+  }
+}
+
+
+
+export const useKeyLocations = () => {
+  const keyLocations = useGlobalStore((store) => store.keylocations)
+  const fetching = useRef(false)
+
+  useEffect(() => {
+    if (!keyLocations && !fetching.current) {
+      fetching.current = true;
+      store.emit(new ListKeyLocation())
+    }
+  }, [keyLocations])
+
+  return keyLocations;
 }

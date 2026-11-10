@@ -1,0 +1,17 @@
+// Variable index - forward all variable modules
+// Pure variables (no cross-deps)
+@forward 'fonts';
+@forward 'colors';
+@forward 'margins';
+@forward 'paddings';
+@forward 'breakpoints';
+@forward 'z-index';
+
+// Variables with cross-deps (they @use their deps internally)
+@forward 'border';
+@forward 'box-shadow';
+@forward 'animations';
+@forward 'text-style';
+@forward 'btn-animation';
+@forward 'grid';
+@forward 'dimensions';

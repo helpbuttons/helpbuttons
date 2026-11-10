@@ -1,21 +1,29 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, Logger } from "@nestjs/common";
 import { Role } from "@src/shared/types/roles";
 import {  GroupMessages } from "./group-message.dto";
 import { GroupMessage } from "./group-message.entity";
-import { In, Repository } from "typeorm";
+import { In, MoreThan, Repository } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
 import { GroupMessageType } from "@src/shared/types/group-message.enum";
 import { uuid } from "@src/shared/helpers/uuid.helper";
 import { ActivitiesPageSize } from "../activity/activity.dto";
 import { UserService } from "../user/user.service";
 import translate from "@src/shared/helpers/i18n.helper";
+import { OnEvent } from "@nestjs/event-emitter";
+import { GroupActivityEventName } from "@src/shared/types/activity.list";
+import { PushNotificationService } from "../push-notification/push-notification.service";
+import { SendNotificationDto } from "../push-notification/push-notification.dto";
 
 @Injectable()
 export class GroupMessageService {
+    private readonly logger = new Logger('GROUPMESSAGE');
+    private notificationLock: Promise<void> = Promise.resolve();
+
     constructor(
         @InjectRepository(GroupMessage)
         private readonly groupMessageRepository: Repository<GroupMessage>,
         private readonly userService: UserService,
+        private readonly pushNotificationService: PushNotificationService,
     ) { }
 
     findByUser(user): Promise<GroupMessages> 
@@ -27,7 +35,7 @@ export class GroupMessageService {
             conditions = {last: true, to: In([GroupMessageType.community, GroupMessageType.admin])}
             
         }
-        return this.groupMessageRepository.find({where: conditions, relations: ['from']}).then((groupMessages) => {
+        return this.groupMessageRepository.find({where: conditions, relations: ['from']}).then(async (groupMessages) => {
             
             const commmunityLastMessage = groupMessages.find((groupMessage) => groupMessage.to == GroupMessageType.community)
 
@@ -35,11 +43,26 @@ export class GroupMessageService {
 
             const readAdmin = user?.readGroupMessages?.admin ? this.isRead(adminLastMessage?.created_at, user?.readGroupMessages?.admin) : false;
 
-            const readCommunity = user?.readGroupMessages?.community ? this.isRead(commmunityLastMessage?.created_at, user?.readGroupMessages?.community) : false;
+            let unreadAdmin = 0
+            if(user.role != Role.admin){
+                unreadAdmin = 0
+            }else if(user?.readGroupMessages?.admin){
+                unreadAdmin = await this.groupMessageRepository.count({where: {created_at: MoreThan(user?.readGroupMessages.admin), to: GroupMessageType.admin }})
+            }else{ 
+                unreadAdmin = await this.groupMessageRepository.count({where: {to: GroupMessageType.admin}})
+            }
 
+            let unreadCommunity = 0
+            if(user?.readGroupMessages?.community){
+                unreadCommunity = await this.groupMessageRepository.count({where: {created_at: MoreThan(user?.readGroupMessages.community), to: GroupMessageType.community}})
+            }else{
+                unreadCommunity = await this.groupMessageRepository.count({where: {to: GroupMessageType.community}})
+            }
+            
+            const readCommunity = user?.readGroupMessages?.community ? this.isRead(commmunityLastMessage?.created_at, user?.readGroupMessages?.community) : false;
             return {
-                community: this.transformGroupMessage(commmunityLastMessage, user, readCommunity),
-                admin: this.transformGroupMessage(adminLastMessage, user, readAdmin)
+                community: {lastMessage: this.transformGroupMessage(commmunityLastMessage, user, readCommunity), unreadCount: unreadCommunity},
+                admin: {lastMessage: this.transformGroupMessage(adminLastMessage, user, readAdmin), unreadCount: unreadAdmin}
             }
         }) 
     }
@@ -53,11 +76,73 @@ export class GroupMessageService {
             last: true,
             message: message
         }
+        this.sendPushNotification(groupMessageType, message)
 
         return this.groupMessageRepository.update({ to: groupMessageType }, { last: false })
         .then(()=> {
-            this.groupMessageRepository.insert([groupMessage])
+            return this.groupMessageRepository.insert([groupMessage])
         })
+        
+    }
+
+    async sendNotification(link, groupMessageType: GroupMessageType, eventName: GroupActivityEventName)
+    {
+        let unlock: () => void;
+        const nextLock = new Promise<void>((resolve) => { unlock = resolve; });
+        const currentLock = this.notificationLock;
+        this.notificationLock = nextLock;
+        await currentLock;
+
+        try {
+            const groupMessage = {
+                id: uuid(),
+                to: groupMessageType,
+                last: true,
+                message: '',
+                link,
+                eventName: eventName,
+            };
+
+            await this.groupMessageRepository.update({ to: groupMessageType }, { last: false });
+            await this.groupMessageRepository.insert([groupMessage]);
+        }catch(err){
+            console.log('error on sending notification!!!')
+            console.log(err)
+        } finally {
+            unlock!();
+        }
+    }
+
+    sendPushNotification(groupMessageType : GroupMessageType, message)
+    {
+
+        if (groupMessageType == GroupMessageType.admin){
+            this.userService.findAdministrators().then((admins) => {
+                admins.map((admin) => {
+
+                    const endpoint: string = admin.endpoint
+                    const dto: SendNotificationDto = {
+                        message: message,
+                        title: translate(admin.locale, `groupChat.${groupMessageType}`),
+                    }
+                    if(endpoint){
+                        this.pushNotificationService.sendNotificationToOne(admin.endpoint, dto, admin.id, admin.p256dh, admin.auth)
+                    }
+                })
+            })
+        }
+        if(groupMessageType == GroupMessageType.community){
+            this.userService.findCommunity().then((users) => {
+                
+                users.filter((usr) => {console.log(usr); return usr?.endpoint}).map((user) => {
+                    const dto: SendNotificationDto = {
+                        message: message,
+                        title: translate(user.locale, `groupChat.${groupMessageType}`),
+                    }
+                    this.pushNotificationService.sendNotificationToOne(user.endpoint, dto, user.id, user.p256dh, user.auth)
+                })
+            })
+        }
         
     }
 
@@ -67,11 +152,27 @@ export class GroupMessageService {
             return null;
         }
 
-        if(groupMessage.from.id == user.id)
+        let message = groupMessage.message
+        if(groupMessage.eventName) {
+            switch(groupMessage.eventName){
+                case GroupActivityEventName.AwaitApprovalButton:
+                    message = translate(user.locale, `button.awaitApproval`)
+                    break;
+                case GroupActivityEventName.EventTomorrow:
+                    message = translate(user.locale, `button.tomorrowEvent`)
+                    break;
+                case GroupActivityEventName.NewUser:
+                        message = translate(user.locale, `admin.newUser`)
+                        break;
+                default:
+                    this.logger.error(`pls define group event name ${groupMessage.eventName}`)
+            }
+        }
+        if(groupMessage?.from?.id == user.id)
         {
-            return {id: groupMessage.id, createdAt: groupMessage.created_at, title: translate(user.locale,'groupChat.you') , message: groupMessage.message, read: true};
+            return {id: groupMessage.id, createdAt: groupMessage.created_at, title: translate(user.locale,'groupChat.you') , message: message, read: true, to: groupMessage.to, link: groupMessage.link};
         }else{            
-            return {id: groupMessage.id, createdAt: groupMessage.created_at, title:groupMessage.from.name, message: groupMessage.message, read: read, from: groupMessage.from.name, activityFrom: groupMessage?.from};
+            return {id: groupMessage.id, createdAt: groupMessage.created_at, title: groupMessage?.from?.name, message: message, read: read, from: groupMessage?.from?.name, activityFrom: groupMessage?.from, to: groupMessage.to, link: groupMessage.link};
         }
         
     }
@@ -88,7 +189,7 @@ export class GroupMessageService {
     findCommunityMessages(user, page = 0)
     {
         this.markAsRead(user, GroupMessageType.community)
-        return this.groupMessageRepository.find({where: { to:GroupMessageType.community}, relations: ['from'], take: ActivitiesPageSize, skip: page * ActivitiesPageSize,order: { created_at: 'DESC' }})
+        return this.groupMessageRepository.find({where: { to: In([GroupMessageType.community, GroupMessageType.endorsed])}, relations: ['from'], take: ActivitiesPageSize, skip: page * ActivitiesPageSize,order: { created_at: 'DESC' }})
         .then((messages) => messages.map(_msg => {
             return this.transformGroupMessage(_msg, user, true) 
         } ))
@@ -104,5 +205,24 @@ export class GroupMessageService {
             return false;
         }
         return true;
+    }
+
+
+    @OnEvent(GroupActivityEventName.AwaitApprovalButton)
+    onAwaitApprovalButton(payload: any){
+        const { button } = payload.data
+        this.sendNotification(`/Show/${button.id}`, GroupMessageType.admin, GroupActivityEventName.AwaitApprovalButton)
+    }
+
+    @OnEvent(GroupActivityEventName.EventTomorrow)
+    onEventTomorrow(payload: any){
+        const { button } = payload.data
+        this.sendNotification(`/Show/${button.id}`, GroupMessageType.community, GroupActivityEventName.EventTomorrow)
+    }
+
+    @OnEvent(GroupActivityEventName.NewUser)
+    onNewUser(payload: any){
+        const { user } = payload.data
+        this.sendNotification(`/p/${user.username}`, GroupMessageType.admin, GroupActivityEventName.NewUser)
     }
 }

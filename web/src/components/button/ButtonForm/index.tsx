@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Form from 'elements/Form';
 import FieldButtonType from 'components/button/ButtonType';
-import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
+import { BtnSubmit } from 'elements/Btn';
 import FieldLocation from 'elements/Fields/FieldLocation';
 import { FieldTextArea } from 'elements/Fields/FieldTextArea';
 import FieldText from 'elements/Fields/FieldText';
@@ -14,9 +14,9 @@ import t from 'i18n';
 import Loading, { LoadabledComponent } from 'components/loading';
 import { useButtonTypes } from 'shared/buttonTypes';
 import FieldCustomFields from '../ButtonType/CustomFields/FieldCustomFields';
-import FieldImageUploads from 'elements/Fields/FieldImagesUpload';
 import { alertService } from 'services/Alert';
 import { CookiesState } from 'state/HomeInfo';
+import FieldImageUploads from 'elements/Fields/FieldImageUploads';
 
 export default function ButtonForm({
   onSubmit,
@@ -103,8 +103,11 @@ export default function ButtonForm({
     clearErrors('eventStart')
   }, [watch('eventStart')])
   useEffect(() => {
-    clearErrors()
+    clearErrors('type')
   }, [watch('type')])
+  useEffect(() => {
+    clearErrors('address')
+  }, [watch('address')])
   const onError = (errors, e) => alertService.error(t('validation.error'))
   return (
     <LoadabledComponent loading={!selectedNetwork}>
@@ -140,7 +143,7 @@ export default function ButtonForm({
                       setValue={setValue}
                       explain={t('button.titleExplain')}
                       setFocus={setFocus}
-                      {...register('title', { required: true, minLength: 10 })}
+                      {...register('title', { required: true })}
                     />
                     <FieldTextArea
                       label={t('button.descriptionLabel')}
@@ -171,11 +174,11 @@ export default function ButtonForm({
                       label={t('button.imagesLabel')}
                       explain={t('button.imagesExplain')}
                       maxNumber={5}
-                      setValue={(images) => setValue('images', images)}
+                      setValue={setValue}
                       validationError={errors.images} />
                     <div className="form__btn-search">
                       <FieldLocation
-                        label={t('button.whereLabel')}
+                        label={t('button.whereButtonLabel')}
                         setLatitude={(lat) => setValue('latitude', lat)}
                         setLongitude={(lng) => setValue('longitude', lng)}
                         markerPosition={[watch('latitude'), watch('longitude')]}
@@ -185,7 +188,7 @@ export default function ButtonForm({
                         setHideAddress={(value) => setValue('hideAddress', value)}
                         hideAddress={watch('hideAddress')}
                         markerAddress={watch('address')}
-                        markerImage={image}
+                        markerImage={image?.thumbnail}
                         markerCaption={watch('title')}
                         markerColor={markerColor}
                         selectedNetwork={selectedNetwork}
@@ -198,14 +201,7 @@ export default function ButtonForm({
                     <FieldCustomFields customFields={customFields} watch={watch} setValue={setValue} setFocus={setFocus} register={register} errors={errors} currency={selectedNetwork.currency} />
                     <ButtonShare />
                     <div className="publish__submit">
-                      <Btn
-                        btnType={BtnType.submit}
-                        contentAlignment={ContentAlignment.center}
-                        caption={t('common.publish')}
-                        isSubmitting={isSubmitting}
-                        submit={true}
-                        disabled={isSubmitting || cookieState != CookiesState.ACCEPTED}
-                      />
+                      <BtnSubmit disabled={isSubmitting || cookieState != CookiesState.ACCEPTED} isSubmitting={isSubmitting} errors={errors} caption={t('common.publish')}/>
                     </div>
                   </div>
                 </div>

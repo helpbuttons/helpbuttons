@@ -16,7 +16,7 @@ import {
   Svg,
   Path,
 } from '@react-pdf/renderer';
-import { getShareLink, makeImageUrl } from 'shared/sys.helper';
+import { makeImageUrl } from 'shared/helpers/images.helper';
 import { useButtonTypes } from 'shared/buttonTypes';
 import AdvancedFilters from 'components/search/AdvancedFilters';
 import {
@@ -38,6 +38,7 @@ import Loading from 'components/loading';
 import { FilterByDays } from 'components/search/AdvancedFilters/filter-by-days';
 import Popup from 'components/popup/Popup';
 import { PdfIframe, usePdfGenerateBlob } from '../pdf';
+import { getShareLink } from 'shared/sys.helper';
 
 export default function ShareBulletinForm() {
   const [bulletinButtons, setBulletinButtons] = useState(null);
@@ -346,6 +347,11 @@ const ButtonRows = ({ buttons, buttonTypes }) => {
 //     </>
 //   );
 // };
+const truncate = (text: string, maxChars: number) => {
+  if (!text || text.length <= maxChars) return text;
+  return text.substring(0, maxChars) + '…';
+};
+
 const ButtonRow = ({ button, buttonType }) => {
   const rowColor = buttonType.cssColor;
 
@@ -362,7 +368,6 @@ const ButtonRow = ({ button, buttonType }) => {
       alignItems: 'center',
       marginRight: '10px',
       margin: 'auto',
-
     },
     button_type: {
       color: rowColor,
@@ -375,41 +380,31 @@ const ButtonRow = ({ button, buttonType }) => {
       fontSize: 16,
       marginBottom: 4,
       marginTop: 1,
-
-      textOverflow: 'ellipsis',
-      display: 'flex',
-      flexWrap: 'nowrap',
+      maxWidth: '340',
     },
     textGroup: {
       flexDirection: 'column',
       justifyContent: 'center',
-      textOverflow: 'ellipsis',
-      // maxWidth: '300px',
-      overflow: 'hidden',
-      overflowWrap: 'nowrap',
-      flexGrow: 1,  // Ensures this section takes up available space
-      flexBasis: 'auto',
-      padding: 0,
+      flexGrow: 1,
+      flexShrink: 1,
+      minWidth: 0,
       paddingLeft: 10,
-      // maxHeight: '100px',
     },
     description: {
       fontSize: 12,
       color: 'gray',
-      maxHeight:100,
-      height:20,
-      textOverflow: 'ellipsis',
-      minWidth:0,
-
+      maxWidth: '340',
     },
     place: {
       fontSize: 12,
       marginTop: 'auto',
     },
     qrcode: {
-      width: '80px',
-      height: '80px',
-      marginLeft: '10px',
+      width: 80,
+      height: 80,
+      minWidth: 80,
+      flexShrink: 0,
+      marginLeft: 10,
     },
     date: {
       fontSize: 12,
@@ -447,17 +442,13 @@ const ButtonRow = ({ button, buttonType }) => {
           </View>
           <View style={styles.textGroup}>
             <Text style={styles.button_type}>{buttonType.caption}</Text>
-            <Text style={styles.title}>{button.title}</Text>
-            <Text style={styles.description}>{button.description}</Text>
-
+            <Text style={styles.title}>{truncate(button.title, 90)}</Text>
+            <Text style={styles.description}>{truncate(button.description, 120)}</Text>
             <Text style={styles.place}>{button.address}</Text>
              <Text style={styles.date}>
                  {button.eventStart && (readableDate(button.eventStart))} {button.eventStart && (readableTime(button.eventStart))} {button.eventEnd && (" - " + readableDate(button.eventEnd))} {button.eventEnd && (" " + readableTime(button.eventEnd))}{'  '}
               </Text>
               <View style={styles.phoneContainer}>
-
- 
- 
 
                   {button.owner?.phone && (
                     <>
@@ -471,7 +462,6 @@ const ButtonRow = ({ button, buttonType }) => {
                     </>
                   )}
               </View>
-
           </View>
           <Image style={styles.qrcode} src={button.qrcode} />
         </View>

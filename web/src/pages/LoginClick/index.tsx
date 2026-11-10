@@ -23,6 +23,8 @@ export default function LoginClick() {
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   const router = useRouter()
+  const path = router.asPath.split('?')[0];
+
   const onSubmit = (data) => {
     setIsSubmitting(() => true)
     store.emit(
@@ -40,7 +42,7 @@ export default function LoginClick() {
     );
   };
 
-  const isSetup = useIsSetup();
+  const isSetup = useIsSetup(path);
   const [params, setParams] = useState([])
   useEffect(() => {
     if(!router.isReady)

@@ -13,6 +13,8 @@ import { activitiesInitialState } from "./Activity";
 import { UserUpdateDto } from "shared/dtos/user.dto";
 import { InviteCreateDto } from "shared/dtos/invite.dto";
 import { Invite } from "shared/entities/invite.entity";
+import { findAvailableButtonTemplates } from "./Networks";
+import { localStorageService, LocalStorageVars } from "services/LocalStorage";
 
 export interface UsersState {
     currentUser: IUser;
@@ -135,15 +137,19 @@ export class FetchUserData implements WatchEvent {
     ) { }
 
     public watch(state: GlobalState) {
-        return UserService.whoAmI().pipe(
-            tap((userData) => {
-                if (userData && this.onSuccess) {
-                    this.onSuccess(userData);
-                }
-            }),
-            map((userData) => store.emit(new SetCurrentUser(userData))),
-            catchError((error) => { store.emit(new SetCurrentUser(null)); return handleError(this.onError, error) })
-        );
+        const accessToken = localStorageService.read(LocalStorageVars.ACCESS_TOKEN)
+        if(accessToken){
+            return UserService.whoAmI().pipe(
+                tap((userData) => {
+                    if (userData && this.onSuccess) {
+                        this.onSuccess(userData);
+                    }
+                }),
+                map((userData) => store.emit(new SetCurrentUser(userData))),
+                catchError((error) => { store.emit(new SetCurrentUser(null)); return handleError(this.onError, error) })
+            );
+        }
+        return of(undefined)
     }
 }
 
@@ -153,6 +159,7 @@ export class SetCurrentUser implements UpdateEvent {
     public update(state: GlobalState) {
         return produce(state, (newState) => {
             newState.sessionUser = this.currentUser;
+            newState.networks.selectedNetwork.buttonTemplates = findAvailableButtonTemplates(state.networks.selectedNetwork.buttonTemplates, this.currentUser)
         });
     }
 }

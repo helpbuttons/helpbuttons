@@ -1,7 +1,7 @@
 ///image included in ButtonCard
 ///Btn is the project convention for tradittional buttons, in order to avoidd confussion with app's buttons
 import React, { useState } from 'react';
-import { makeImageUrl } from 'shared/sys.helper';
+import { makeImageUrl } from 'shared/helpers/images.helper';
 import { ImageLoader } from './ImageLoader';
 
 export enum ImageType {
@@ -143,10 +143,10 @@ export default function ImageWrapper({
   if (imageType == ImageType.formIllustration) {
     return (
       <HbImage
-        style={{ objectFit: 'contain', objectPosition: 'center' }}
+        style={{ objectFit: 'cover', objectPosition: 'center' }}
         src={makeImageUrl(src, localUrl)}
         alt={alt}
-        width={200}
+        width={600}
         height={200}
       />
     );
@@ -179,7 +179,7 @@ export function ImageContainer({
 
   return (
     <HbImage
-      src={makeImageUrl(src)}
+      src={makeImageUrl(src,localUrl)}
       alt={alt}
       width={width}
       height={height}

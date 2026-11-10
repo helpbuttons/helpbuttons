@@ -40,6 +40,8 @@ export function HbMap({
   return (
     <Map
       center={mapCenter}
+      defaultHeight={0}
+      defaultWidth={0}
       zoom={mapZoom}
       onBoundsChanged={({ center, zoom, bounds }) => {
         onBoundsChanged({

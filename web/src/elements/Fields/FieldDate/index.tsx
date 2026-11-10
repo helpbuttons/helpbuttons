@@ -1,5 +1,5 @@
 //is the component or element integrated in buttonNewPublish. Right before activate button. It displays the current selected date and a button to chang it, that ddisplays a picker with the date options for the net that's selecte
-import React, {  useState } from 'react';
+import React, { useState } from 'react';
 import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
 import {
   DateTypes,
@@ -14,7 +14,7 @@ import PickerEventTypeMultipleForm from 'components/picker/PickerEventType/multi
 import FieldError from '../FieldError';
 import PickerEventTypeRecurrentForm, { loadRrules, recurrentToText } from 'components/picker/PickerEventType/recurrent';
 import PickerField from 'components/picker/PickerField';
-import { IoAtCircleOutline, IoCalendarClearOutline, IoCalendarNumberSharp, IoExpandOutline, IoIceCreamOutline, IoRepeat, IoTimeOutline } from 'react-icons/io5';
+import { IoExpandOutline, IoIceCreamOutline, IoRepeat, IoTimeOutline } from 'react-icons/io5';
 
 export default function FieldDate({
   title,

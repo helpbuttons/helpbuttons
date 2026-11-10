@@ -3,15 +3,16 @@ import ContentList, { ButtonsListEmpty } from "components/list/ContentList";
 import t from "i18n";
 import { useButtonTypes } from "shared/buttonTypes";
 import { Role } from "shared/types/roles";
-import { useGlobalStore } from "state";
+import { GlobalState, useGlobalStore } from "state";
 
 export function CardProfileButtonList({user, buttons})
 {
+  const pageName = useGlobalStore((state: GlobalState) => state.homeInfo.pageName)
   const buttonTypes = useButtonTypes();
 
   if(!buttons ||
     buttons?.length < 1){
-        return (<ButtonsListEmpty isLoadingButtons={false} buttons={buttons} filtered={false} isProfileList={true}/>)
+        return (<ButtonsListEmpty buttons={buttons} filtered={false} hideEmptyListWarning={true}/>)
     }
   
   return (<div className="card-profile__button-list-wrapper">
@@ -22,8 +23,8 @@ export function CardProfileButtonList({user, buttons})
             <ContentList
               buttons={buttons}
               buttonTypes={buttonTypes}
-              linkType={ButtonLinkType.MAINPOPUP}
-              isProfileList={true}
+              linkType={pageName != 'Explore' ? ButtonLinkType.MAINPOPUP : ButtonLinkType.EXPLORE}
+              hideEmptyListWarning={true}
             />
             
           </div>

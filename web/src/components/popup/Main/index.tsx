@@ -26,7 +26,6 @@ export default function MainPopup() {
 
   const sessionUser = useGlobalStore((state: GlobalState) => state.sessionUser);
   const popupPage: MainPopupPage = useGlobalStore((state: GlobalState) => state.homeInfo.mainPopupPage)
-  const currentButton = useGlobalStore((state: GlobalState) => state.explore.currentButton)
   const mainPopupUserProfile = useGlobalStore((state: GlobalState) => state.homeInfo.mainPopupUserProfile)
   const mainPopupButton = useGlobalStore((state: GlobalState) => state.homeInfo.mainPopupButton)
   const isMobile = useIsMobile()
@@ -103,10 +102,10 @@ export default function MainPopup() {
           <ShowProfile userProfile={mainPopupUserProfile} sessionUser={sessionUser} />
         </Picker>
       )}
-      {mainPopupButton && (pageName != 'Activity' || isMobile) && (
+      {(mainPopupButton && !(!isMobile && pageName == 'Activity')) && (
         <Picker
-          headerText={mainPopupButton.title}
-          closeAction={() => { store.emit(new SetMainPopupCurrentButton(null)); closePopup() }}
+          headerText={null}
+          closeAction={() => {store.emit(new SetMainPopupCurrentButton(null)); closePopup() }}
           extraClass={'picker__content--nopadding'}
         >
           <ButtonShow button={mainPopupButton} />
@@ -127,7 +126,7 @@ function useReplaceUrl(mainPopupUserProfile, mainPopupButton, popupPage) {
 
   useEffect(() => {
     if (mainPopupButton) {
-      replaceUrl(`/Show/${mainPopupButton.id}`);
+      replaceUrl(`/Show/${mainPopupButton?.id}`);
     }
   }, [mainPopupButton])
 

@@ -15,9 +15,7 @@ import { SetupSteps } from '../shared/setupSteps';
 
 import { Role } from 'shared/types/roles';
 import {
-  getLocaleFromUrl,
   isRoleAllowed,
-  locale,
   setLocale,
 } from 'shared/sys.helper';
 import t, { updateNomeclature } from 'i18n';
@@ -32,29 +30,31 @@ import { randomBytes } from 'crypto'
 import MetadataSEOFromStore, { MetadataSEO } from 'components/seo';
 import dconsole from 'shared/debugger';
 import Head from 'next/head';
-import CookiesBanner from 'components/home/CookiesBanner';
+import CookiesBanner, { handleAcceptCookies } from 'components/home/CookiesBanner';
 import { MainPopupPage, SetMainPopup, SetPageName } from 'state/HomeInfo';
 import { localStorageService, LocalStorageVars } from 'services/LocalStorage';
 import { usePoolFindNewActivities } from 'state/Activity';
 import { ResetFilters } from 'state/Explore';
+import { ErrorPopup } from './Error';
+import { getApiUrl, getBgcolor, isStaticApp } from 'shared/environment';
 
 export default appWithTranslation(MyApp);
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
-
   const [authorized, setAuthorized] = useState(null);
-  const [isLoadingUser, setIsLoadingUser] = useState(false);
-  const [fetchingNetworkError, setFetchingNetworkError] = useState(false)
+  const isLoadingUser = useRef(false)
   const path = router.asPath.split('?')[0];
   const nonce = randomBytes(128).toString('base64')
   const isSetup = useIsSetup(path);
 
+  const [loadingMessage, setLoadingMessage] = useState('') 
   const sessionUser = useGlobalStore((state: GlobalState) => state.sessionUser)
   const pageName = useGlobalStore((state: GlobalState) => state.homeInfo.pageName)
 
   const onFetchingConfigError = (error) => {
     dconsole.error(error);
+    setLoadingMessage((prev) => prev + ' ; fetching config error')
     dconsole.error('fetching config error...');
     if (error == 'not-found' || error == 'nosysadminconfig') {
       console.error(error);
@@ -65,7 +65,6 @@ function MyApp({ Component, pageProps }) {
       alertService.error(
         `Error: Backend not found, something went terribly wrong.`,
       );
-      router.push('/Error');
     }
     dconsole.log(error);
     return;
@@ -85,29 +84,10 @@ function MyApp({ Component, pageProps }) {
     }
   }, [path])
 
-  const onFetchingNetworkError = (error) => {
-    if (error == 'network-not-found') {
-      alertService.error(t('networkNotFound'))
-      setFetchingNetworkError(true)
-    }
-
-    if (error == 'nobackend') {
-      alertService.error(
-        `Error: Backend not found, something went terribly wrong.`,
-      );
-      router.push('/Error');
-    }
-    dconsole.log(error);
-    return;
-  };
-  
-
   const config = useConfig(pageProps._config, onFetchingConfigError);
-  const selectedNetwork = useSelectedNetwork(pageProps._selectedNetwork, onFetchingNetworkError);
 
   useEffect(() => {
     if (
-      fetchingNetworkError &&
       sessionUser &&
       config &&
       config.userCount > 0 &&
@@ -115,28 +95,45 @@ function MyApp({ Component, pageProps }) {
       path != SetupSteps.NETWORK_CREATION
     ) {
       router.push(SetupSteps.FIRST_OPEN);
-    }else if(fetchingNetworkError &&
+    }else if(
       !sessionUser &&
+      sessionUser != null &&
       config &&
       config.userCount > 0 &&
       path != SetupSteps.FIRST_OPEN &&
       path != SetupSteps.NETWORK_CREATION &&
       !path.startsWith('/LoginClick')
     ){
-        console.log(path)
-        console.log('permission denied... you in setup')
         router.push(SetupSteps.SETUP_LOGIN);
       }
-  }, [fetchingNetworkError, sessionUser, config])
+  }, [sessionUser, config])
 
   useEffect(() => {
+    const loginToken = localStorageService.read(LocalStorageVars.ACCESS_TOKEN);
+    if (loginToken && sessionUser == null && ['Embbed'].indexOf(pageName) < 0) {
+      if (!isLoadingUser.current) {
+        isLoadingUser.current = true;
+        store.emit(
+          new FetchUserData(
+            () => {
+              isLoadingUser.current = false;
+            },
+            (error) => {
+              isLoadingUser.current = false;
+            },
+          ),
+        );
+      }
+      return;
+    }
+  }, [])
+  useEffect(() => {
     setAuthorized(() => false)
-
     if (
       config &&
       config.userCount < 1 &&
       SetupSteps.CREATE_ADMIN_FORM != path &&
-      sessionUser === false
+      !sessionUser
     ) {
       router.push(SetupSteps.CREATE_ADMIN_FORM);
     } else if (
@@ -149,7 +146,6 @@ function MyApp({ Component, pageProps }) {
     if (SetupSteps.CREATE_ADMIN_FORM.toString() == path) {
       return;
     }
-
     if (!config) {
       return;
     }
@@ -166,24 +162,7 @@ function MyApp({ Component, pageProps }) {
       return;
     }
 
-    const loginToken = localStorageService.read(LocalStorageVars.ACCESS_TOKEN);
-    if (loginToken && sessionUser === false && ['Embbed'].indexOf(pageName) < 0) {
-      if (!isLoadingUser) {
-        setIsLoadingUser(true);
-        store.emit(
-          new FetchUserData(
-            () => {
-              setIsLoadingUser(false);
-            },
-            (error) => {
-              setIsLoadingUser(false);
-            },
-          ),
-        );
-      }
-      return;
-    }
-    if (isLoadingUser) {
+    if (isLoadingUser.current && !isStaticApp()) {
       return;
     }
     if (sessionUser) {
@@ -193,10 +172,10 @@ function MyApp({ Component, pageProps }) {
     const isAllowed = isRoleAllowed(Role.guest, path)
 
     if (!isAllowed) {
-      console.log('not allowd')
+      console.log('not allowed ' + path)
       store.emit(new ResetFilters()) // TODO: bug when using router.back
       store.emit(new SetMainPopup(MainPopupPage.LOGIN))
-      router.back()
+      // router.back()
       return;
     }
     setAuthorized(() => isAllowed);
@@ -204,37 +183,18 @@ function MyApp({ Component, pageProps }) {
   }, [path, config, sessionUser, pageName]);
 
   useEffect(() => {
-    // Function to adjust the height of the index__container based on the actual viewport height
     const adjustHeight = () => {
       const vh = window.innerHeight;
       document.documentElement.style.setProperty('--vh', `${vh}px`);
     };
 
-    // Call the function on initial load and whenever the window is resized
     adjustHeight();
     window.addEventListener('resize', adjustHeight);
 
-    // Clean up the event listener on unmount
     return () => {
       window.removeEventListener('resize', adjustHeight);
     };
-  }, [config, selectedNetwork]);
-
-
-
-  useEffect(() => {
-    if (selectedNetwork) {
-      updateNomeclature(
-        selectedNetwork.nomeclature,
-        selectedNetwork.nomeclaturePlural,
-      );
-    }
-    if(([SetupSteps.CREATE_ADMIN_FORM.toString(), SetupSteps.FIRST_OPEN.toString(), SetupSteps.NETWORK_CREATION.toString()].indexOf(path) > -1 )&& selectedNetwork && selectedNetwork.id ){
-      router.push('/')
-    }
-  }, [selectedNetwork]);
-
-  useWhichLocale({ sessionLocale: sessionUser?.locale, networkLocale: selectedNetwork.locale });
+  }, [config]);
 
   const searchParams = useSearchParams();
 
@@ -251,10 +211,10 @@ function MyApp({ Component, pageProps }) {
       };
 
       const onError = (err) => {
-        alertService.error(t('login.error'));
+        alertService.error(t('user.loginError'));
       };
+      handleAcceptCookies()
       store.emit(new LoginToken(loginToken, onSuccess, onError));
-    } else if (loginToken) {
       triedToLogin.current = true;
     }
   }, [searchParams]);
@@ -266,22 +226,82 @@ function MyApp({ Component, pageProps }) {
   }, [pageProps])
 
   return <>
-    <MetadataSEO {...pageProps.metadata} nonce={nonce} />
+    <MetadataSEO {...pageProps.metadata} isSetup={config?.userCount > 0} nonce={nonce} />
     {(function () {
-
-      if (isSetup) {
-        return <> <Head>
-          <title>Creating new helpbuttons network...</title></Head><Component {...pageProps} /><SetupMainPopup/></>;
+      if(!config || sessionUser === null){
+        return <Loading/>
+      }else if (isSetup) {
+        return <><Component {...pageProps} /><SetupMainPopup/></>;
       } else if (pageName == 'Embbed') {
         return (
           <Component {...pageProps} />
         );
-      } else if (selectedNetwork.id) {
+      }else if(config?.userCount < 1){
+        return <>...</>
+      } else{
         return (
           <>
             <MetadataSEOFromStore nonce={nonce} />
             <ActivityPool sessionUser={sessionUser} />
-            <div
+            <Home pageProps={pageProps} sessionUser={sessionUser}>
+              {authorized && <Component {...pageProps} />}
+              {!authorized && <><Loading /></>}
+            </Home>
+          </>
+        );
+      }
+
+    }).call(this)}
+  </>
+}
+
+export const Home = ({pageProps, sessionUser, children}) => {
+  const [fetchingNetworkError, setFetchingNetworkError] = useState(false)
+
+  const onFetchingNetworkError = (error) => {
+    if (error == 'network-not-found') {      
+      // router.push(SetupSteps.CREATE_ADMIN_FORM);
+      setFetchingNetworkError(() => true)
+    }else if (error == 'nobackend') {
+      alertService.error(
+        `Error: Backend not foundddd, something went terribly wrong.`,
+      );
+      setFetchingNetworkError(() => true)
+    }else{
+      console.log(error);
+      alertService.error(
+        `Unkown error, is the backend running?`,
+      );
+      setFetchingNetworkError(() => true)
+    }
+  };
+
+  const selectedNetwork = useSelectedNetwork(pageProps._selectedNetwork, onFetchingNetworkError);
+  // const selectedNetwork = null;
+  const router = useRouter();
+  const path = router.asPath.split('?')[0];
+  useWhichLocale({ sessionLocale: sessionUser?.locale, networkLocale: selectedNetwork?.locale });
+
+  useEffect(() => {
+    if (selectedNetwork) {
+      updateNomeclature(
+        selectedNetwork.nomeclature,
+        selectedNetwork.nomeclaturePlural,
+      );
+    }
+    
+    if(([SetupSteps.CREATE_ADMIN_FORM.toString(), SetupSteps.FIRST_OPEN.toString(), SetupSteps.NETWORK_CREATION.toString()].indexOf(path) > -1 )&& selectedNetwork && selectedNetwork.id ){
+      router.push('/')
+    }
+  }, [selectedNetwork]);
+  
+  if(!fetchingNetworkError){
+    return <ErrorPopup errorTitle={'Fatal error'} errorMessage={'Fetching network from api: failed'}/>
+  }
+  if(!selectedNetwork?.initialized){
+    return <Loading/>
+  }
+  return (<div
               className="index__container"
               style={
                 selectedNetwork
@@ -292,8 +312,8 @@ function MyApp({ Component, pageProps }) {
                     '--network-text-over-color': getReadableTextColor(selectedNetwork.backgroundColor),
                   } as React.CSSProperties)
                   : ({
-                    '--network-background-color': 'grey',
-                    '--network-accent-color': 'pink',
+                    '--network-background-color': getBgcolor(),
+                    '--network-accent-color': 'grey',
                     '--network-text-over-color': 'black',
                   } as React.CSSProperties)
               }
@@ -306,22 +326,12 @@ function MyApp({ Component, pageProps }) {
                     selectedNetwork={selectedNetwork}
                   />
                 </ShowDesktopOnly>
-                {authorized && <Component {...pageProps} />}
-                {!authorized && <><Loading /></>}
+                {children}
                 <NavBottomMobile sessionUser={sessionUser}/>
                 <MainPopup/>
               </div>
-            </div>
-          </>
-        );
-      } else {
-        return <><Loading /></>;
-      }
-
-    }).call(this)}
-  </>
+            </div>)
 }
-
 export const ClienteSideRendering = ({ children }) => {
   const [isClient, setIsClient] = useState(false);
   useEffect(() => setIsClient(true), []);
@@ -334,26 +344,13 @@ function ActivityPool({ sessionUser }) {
   return (<></>);
 }
 
-
 const useWhichLocale = ({ sessionLocale, networkLocale }) => {
-
-  const [_locale, set_Locale] = useState('en');
-
   useEffect(() => {
-    const localeFromUrl = getLocaleFromUrl();
-    if (localeFromUrl) {
-      setLocale(localeFromUrl);
-    } else if (sessionLocale && networkLocale) {
+    if (sessionLocale && networkLocale) {
       setLocale(sessionLocale);
     } else if (networkLocale) {
       setLocale(networkLocale);
     }
-    set_Locale((prevLocale) => {
-      if (locale !== prevLocale && prevLocale && locale) {
-        return locale;
-      }
-      return locale;
-    });
   }, [networkLocale, sessionLocale]);
   return;
 }
@@ -370,7 +367,7 @@ export const useIsSetup = (path) => {
       SetupSteps.SETUP_LOGIN
     ];
   
-    if (setupPaths.includes(path) || path.startsWith('/LoginClick')) {
+    if (path && (setupPaths.includes(path) || path.startsWith('/LoginClick'))) {
       setIsSetup(() => true);
     } else {
       setIsSetup(() => false);

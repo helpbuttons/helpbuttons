@@ -7,6 +7,7 @@ import {
   updateCurrentButton,
   UpdateFilters,
   UpdateFiltersToFilterButtonType,
+  UpdateHexagonClicked,
 } from 'state/Explore';
 import { useStore } from 'state';
 import FieldMultiSelect from 'elements/Fields/FieldMultiSelect';
@@ -27,7 +28,7 @@ export function ListButtonTypes() {
 
   useEffect(() => {
     const selectedTypes = filters.helpButtonTypes;
-    if (selectedTypes) {
+    if (selectedTypes && buttonTypes) {
       const bttypes = buttonTypes.map((buttonType) => {
         const typeCount = selectedNetwork.buttonTypesCount.find(
           (buttonTypeCount) =>
@@ -58,7 +59,7 @@ export function ListButtonTypes() {
 
     store.emit(new UpdateFilters(newFilters));
     store.emit(new updateCurrentButton(null));
-    
+    store.emit(new UpdateHexagonClicked(null))
     if (pageName != 'Explore') {
       router.push('/Explore');
     }

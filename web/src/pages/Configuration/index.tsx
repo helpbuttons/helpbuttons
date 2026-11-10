@@ -39,6 +39,7 @@ function Configuration() {
     setError,
     reset,
     setFocus,
+    clearErrors
   } = useForm({});
 
   const backgroundColor = watch('backgroundColor');
@@ -95,10 +96,12 @@ function Configuration() {
           requireApproval: data.requireApproval,
           slogan: data.slogan,
           hideLocationDefault: data.hideLocationDefault,
+          hideCountryOnAddresses: data.hideCountryOnAddresses,
           allowGuestCreation: data.allowGuestCreation,
-          privacyPolicy: data. privacyPolicy,
-          ethicsPolicy: data. ethicsPolicy,
-          contactEmail: data. contactEmail,
+          privacyPolicy: data.privacyPolicy,
+          ethicsPolicy: data.ethicsPolicy,
+          contactEmail: data.contactEmail,
+          privacyNetworkType: data.privacyNetworkType
         },
         (network) => {
           store.emit(new UpdateExploreSettings(data.exploreSettings));
@@ -121,50 +124,13 @@ function Configuration() {
             ),
           );
         },
-        (err) => {
-          if (err?.message.indexOf('validation-error') === 0) {
-            const mimetypeError = 'invalid-mimetype-';
-            if (
-              err?.validationErrors?.jumbo &&
-              err.validationErrors.jumbo.indexOf(mimetypeError) === 0
-            ) {
-              const mimetype = err.validationErrors.jumbo.substr(
-                mimetypeError.length,
-              );
-              dconsole.log(mimetype);
-              const mimetypeErrorMessage = t(
-                'common.invalidMimeType',
-                ['background image', mimetype],
-              );
-              setError('background image', {
-                type: 'custom',
-                message: mimetypeErrorMessage,
-              });
-            } else if (
-              err?.validationErrors?.logo &&
-              err.validationErrors.logo.indexOf(mimetypeError) === 0
-            ) {
-              const mimetype = err.validationErrors.logo.substr(
-                mimetypeError.length,
-              );
-              const mimetypeErrorMessage = t(
-                'common.invalidMimeType',
-                ['logo', mimetype],
-              );
-              setError('logo', {
-                type: 'custom',
-                message: mimetypeErrorMessage,
-              });
-            } else if (err?.validationErrors?.buttonTemplates) {
-              alertService.warn(err.validationErrors.buttonTemplates);
-            } else {
-              alertService.warn(
-                `Validation errors ${JSON.stringify(err)}`,
-              );
-            }
-          } else {
-            dconsole.error(err);
+        (error) => {
+          if(error.caption){
+            alertService.error(error.caption)
+          }else{
+            alertService.error(JSON.stringify(error))
           }
+          
           setSubmitting(() => false)
         },
       ),
@@ -190,6 +156,7 @@ function Configuration() {
               captionAction={t('common.save')}
               linkFwd="/Profile"
               description={t('configuration.description')}
+              clearErrors={clearErrors}
             />
           </Popup>
         )}

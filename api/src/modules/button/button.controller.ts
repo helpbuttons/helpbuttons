@@ -12,18 +12,11 @@ import {
   Header,
 } from '@nestjs/common';
 
-import { FilesInterceptor } from '@nestjs/platform-express';
-import { diskStorage } from 'multer';
-
 import { ApiTags } from '@nestjs/swagger';
 
 import { ButtonEntry, ButtonView, CreateButtonDto, UpdateButtonDto } from './button.dto';
 import { ButtonService } from './button.service';
-// import { FilterButtonsOrmDto } from '../dto/requests/filter-buttons-orm.dto';
-import {
-  editFileName,
-  imageFileFilter,
-} from '../storage/storage.utils';
+import { FileUploadInterceptor, videoImageFilter } from '@src/shared/decorators/file-upload.decorator';
 import { CurrentUser } from '@src/shared/decorator/current-user';
 import { User } from '../user/user.entity';
 import {
@@ -35,12 +28,13 @@ import { AllowIfNetworkIsPublic } from '@src/shared/decorator/privacy.decorator'
 import { CustomHttpException } from '@src/shared/middlewares/errors/custom-http-exception.middleware';
 import { ErrorName } from '@src/shared/types/error.list';
 import { EventEmitter2 } from '@nestjs/event-emitter'
-import { notifyUser } from '@src/app/app.event';
-import { ActivityEventName } from '@src/shared/types/activity.list';
+import { notifyGroup, notifyUser } from '@src/app/app.event';
+import { ActivityEventName, GroupActivityEventName } from '@src/shared/types/activity.list';
 import { PostService } from '../post/post.service';
 import { plainToInstance } from 'class-transformer';
 import { Button } from './button.entity';
 import { UserService } from '../user/user.service';
+import { ButtonCron } from './button.cron';
 
 @ApiTags('buttons')
 @Controller('buttons')
@@ -49,34 +43,30 @@ export class ButtonController {
     private readonly buttonService: ButtonService,
     private readonly postService: PostService,
     private readonly userService: UserService,
+    private readonly buttonCron: ButtonCron,
     private eventEmitter: EventEmitter2
     ) {}
 
   @OnlyRegistered()
   @Post('new')
   @UseInterceptors(
-    FilesInterceptor('images[]', 4, {
-      storage: diskStorage({
-        destination: process.env.UPLOADS_PATH,
-        filename: editFileName,
-      }),
-      fileFilter: imageFileFilter,
-    }),
+    FileUploadInterceptor('images[]', 10, videoImageFilter)
   )
   create(
     @Query('networkId') networkId: string,
-    @UploadedFiles() images,
-    @Body() createDto: CreateButtonDto,
+    @UploadedFiles() images : Express.Multer.File[],
+    @Body() body: any,
     @CurrentUser() user: User,
   ) {
+    const createButtonDto : CreateButtonDto = JSON.parse(body.data);
     return this.buttonService.create(
-      createDto,
+      createButtonDto,
       networkId,
       images,
       user,
     ).then((button) => {
         if(button.awaitingApproval){
-          // notify admins that button is for approval
+          notifyGroup(this.eventEmitter,GroupActivityEventName.AwaitApprovalButton,{button: button })  
         }else{
           notifyUser(this.eventEmitter,ActivityEventName.NewButton,{button})  
         }
@@ -102,24 +92,32 @@ export class ButtonController {
   @AllowGuest()
   @AllowIfNetworkIsPublic()
   @Get('findById/:buttonId')
-  async findOne(@Param('buttonId') buttonId: string, @CurrentUser() user: User){
-    return this.buttonService.findById(buttonId, true, user)
+  async findOne(
+    @Param('buttonId') buttonId: string,
+    @CurrentUser() user: User,
+  ){
+    return this.buttonService.findById(buttonId, true, false, user)
   }
 
   @OnlyRegistered()
   @Post('update/:buttonId')
+  @UseInterceptors(
+    FileUploadInterceptor('images[]', 10, videoImageFilter)
+  )
   async update(
     @Param('buttonId') buttonId: string,
-    @Body() updateDto: UpdateButtonDto,
+    @Body() body: any,
     @CurrentUser() user: User,
+    @UploadedFiles() images : Express.Multer.File[],
   ) {
+    const updateDto : UpdateButtonDto = JSON.parse(body.data);
     return await this.buttonService
-      .isOwner(user, buttonId, true)
+      .isOwner(user, buttonId)
       .then((isOwner) => {
         if (!isOwner) {
           throw new CustomHttpException(ErrorName.NoOwnerShip);
         }
-        return this.buttonService.update(buttonId, updateDto, user);
+        return this.buttonService.update(buttonId, updateDto, images, user);
       });
   }
 
@@ -130,13 +128,14 @@ export class ButtonController {
     @Param('buttonId') buttonId: string,
     @CurrentUser() user: User,
   ) {
-    return await this.buttonService
-      .isOwner(user, buttonId, true)
+    return this.buttonService
+      .isOwner(user, buttonId)
       .then((isOwner) => {
         if (!isOwner) {
           throw new CustomHttpException(ErrorName.NoOwnerShip);
         }
-        return this.buttonService.delete(buttonId).then((button) => {
+        console.log('dskajdlsa')
+        return this.buttonService.delete(buttonId, user).then((button) => {
           notifyUser(this.eventEmitter,ActivityEventName.DeleteButton,{button, user})
           return true;
         });
@@ -151,11 +150,11 @@ export class ButtonController {
   )
   {
     return this.buttonService.follow(buttonId, user.id).then((button) => {
-      return this.userService.follow(buttonId, user.id)
-      .then(() => {
-        notifyUser(this.eventEmitter,ActivityEventName.NewFollowingButton,{button, user})
+        if(button){
+          notifyUser(this.eventEmitter,ActivityEventName.NewFollowingButton,{button, user})
+        }
+        return this.userService.follow(buttonId, user.id)
       })
-    })
   }
 
   @OnlyRegistered()
@@ -189,7 +188,7 @@ export class ButtonController {
   @OnlyRegistered()
   @Get('mine')
   findMyButtons(@CurrentUser() user: User) {
-    return this.buttonService.findByOwner(user.id);
+    return this.buttonService.findByOwner(user.id, true);
   }
 
   @OnlyRegistered()
@@ -197,7 +196,7 @@ export class ButtonController {
   async renew(@Param('buttonId') buttonId: string, @CurrentUser() user: User)
   {
     return await this.buttonService
-    .isOwner(user, buttonId, true)
+    .isOwner(user, buttonId)
     .then((isOwner) => {
       if (!isOwner) {
         throw new CustomHttpException(ErrorName.NoOwnerShip);
@@ -205,17 +204,13 @@ export class ButtonController {
       // return ;
       return this.buttonService.findById(buttonId, true)
       .then((button) => {
-        return this.buttonService.renew(button, user)
-        .then((button) => {
-          notifyUser(this.eventEmitter,ActivityEventName.RenewButton,{button, owner: user})
-          return button;
-        }).then((button) => {
-          return this.postService.renewButtonPost(user, button)
-          .then((post) => {
-            notifyUser(this.eventEmitter,ActivityEventName.NewPost,{post})
-            
-            return post;  
-          })
+        return this.buttonService.renew(button)
+        .then((renewd) => {
+          if(renewd)
+          {
+            notifyUser(this.eventEmitter,ActivityEventName.RenewButton,{button, owner: user})
+            return this.buttonService.findById(buttonId)
+          }
         })
       })
     });
@@ -291,10 +286,10 @@ export class ButtonController {
   @Get('findAll/:page')
   findAll(@Param('page') page: number, @CurrentUser() user: User)
   {
-    return this.buttonService.findAll(page)
+    return this.buttonService.findAll(page, user)
   }
 
-  @AllowGuest()
+  @OnlyRegistered()
   @Get('followers/:buttonId')
   findFollowers(@Param('buttonId') buttonId: string){
     return this.buttonService.findFollowers(buttonId)
@@ -304,5 +299,12 @@ export class ButtonController {
   @Get('deleteType/:type')
   deleteType(@Param('type') type: string) {
     return this.buttonService.deleteAllButtonsFromType(type)
+  }
+
+
+  @Get('triggerCron')
+  async triggerCron()
+  {
+    return await this.buttonCron.clearEventButtons()
   }
 }

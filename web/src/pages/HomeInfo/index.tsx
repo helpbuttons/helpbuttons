@@ -10,6 +10,7 @@ import Btn, {
 } from 'elements/Btn';
 import NetworkLogo from 'components/network/Components';
 import NavHeader from 'components/nav/NavHeader'; //just for mobile
+import { getServerSidePropsHandler, shouldEnableSSR } from 'shared/staticapp.utils';
 import {
   IoAddCircle,
   IoArrowBackSharp,
@@ -27,7 +28,7 @@ import {
   IoStatsChart,
   IoTrophySharp,
 } from 'react-icons/io5';
-import { setMetadata } from 'services/ServerProps';
+import { setMetadata } from 'pages/_serverprops';
 import { NextPageContext } from 'next';
 import { useEffect, useRef, useState } from 'react';
 import AdvancedFilters from 'components/search/AdvancedFilters';
@@ -36,10 +37,10 @@ import { TextFormatted } from 'elements/Message';
 import { LinkAdmins } from 'components/user/LinkAdmins';
 import { ShowDesktopOnly, ShowMobileOnly } from 'elements/SizeOnly';
 import {  ListButtonTypes } from 'components/nav/ButtonTypes';
-import getConfig from 'next/config';
+import { getApiUrl, isStaticApp } from 'shared/environment';
 import { logoImageUri } from 'shared/sys.helper';
-import { FindLatestNetworkActivity } from 'state/Networks';
-import { InstallButton } from 'components/install';
+import { FindLatestNetworkActivity, useSelectedNetwork } from 'state/Networks';
+import { HomeInfoInstallCard } from 'components/install';
 import { TagsNav } from 'elements/Fields/FieldTags';
 import { FindAndSetMainPopupCurrentButton, MainPopupPage, SetMainPopup } from 'state/HomeInfo';
 import { DesktopNotificationsButton } from 'components/notifications';
@@ -50,27 +51,29 @@ import Footer from 'components/footer';
 import { ActivityListEntryCard } from 'components/feed/Activities/ActivityListEntry';
 import { ActivityEventName } from 'shared/types/activity.list';
 import { SetFocusOnPost } from 'state/Activity';
+import { ResetFilters } from 'state/Explore';
+import Link from 'next/link';
 
 export default function HomeInfo({ metadata }) {
 
-  const selectedNetwork = useStore(
-    store,
-    (state: GlobalState) => state.networks.selectedNetwork,
-  );
+  const selectedNetwork = useSelectedNetwork()
 
   const config = useStore(
     store,
     (state: GlobalState) => state.config,
   );
 
-  const { publicRuntimeConfig } = getConfig();
-  const apiUrl = publicRuntimeConfig.apiUrl;
+  const apiUrl = getApiUrl();
 
   const currentUser = useStore(
     store,
     (state: GlobalState) => state.sessionUser,
   );
   useMetadataTitle(t('menu.home'));
+
+  useEffect(() => {
+    store.emit(new ResetFilters())
+  }, [])
 
   const scrollToContact = useRef();
   return (
@@ -92,7 +95,6 @@ export default function HomeInfo({ metadata }) {
       {!currentUser && (
         <SupportBanner scrollToContact={scrollToContact} />
       )} */}
-      {selectedNetwork && (
         <>
         <div className="homeinfo__container">
           <div className="homeinfo__content">
@@ -102,18 +104,16 @@ export default function HomeInfo({ metadata }) {
 
 
             <div className="homeinfo__sections">
-              
               <HomeInfoNetworkLogo selectedNetwork={selectedNetwork} />
               <HomeSloganCard selectedNetwork={selectedNetwork} config={config} />
 
               <HomeInfoPinnedButtons />
-              
+              <HomeInfoInstallCard selectedNetwork={selectedNetwork} />
+
               <HomeInfoStatsCard selectedNetwork={selectedNetwork} config={config} />
+              <HomeInfoKeyLocations selectedNetwork={selectedNetwork} />
 
               <HomeInfoInfoCard selectedNetwork={selectedNetwork} />
-
-              <HomeInfoKeyLocations selectedNetwork={selectedNetwork} />
-              <HomeInfoInstallCard selectedNetwork={selectedNetwork} />
 
               <HomeInfoRecentActivity selectedNetwork={selectedNetwork} />
 
@@ -127,7 +127,7 @@ export default function HomeInfo({ metadata }) {
               className="homeinfo-card homeinfo__card--title-card"
               style={
                 {
-                  '--network-jumbo': `url('${selectedNetwork.jumbo ? apiUrl + selectedNetwork.jumbo : '/api' + logoImageUri}'`,
+                  '--network-jumbo': `url('${isStaticApp() ? '/assets/images/jumbo.png' : getApiUrl() + selectedNetwork?.jumbo}'`,
                 } as React.CSSProperties
               }
             >
@@ -139,14 +139,13 @@ export default function HomeInfo({ metadata }) {
         </div>
                   </>
 
-      )}
     </>
   );
 }
 
-export const getServerSideProps = async (ctx: NextPageContext) => {
-  return setMetadata(t('menu.home'), ctx);
-};
+export const getServerSideProps = shouldEnableSSR
+  ? (ctx) => getServerSidePropsHandler(t('menu.home'), ctx)
+  : undefined;
 
 function NavigatorCoordsButton() {
   const [navigatorCoordinates, setNavigatorCoordinates] =
@@ -170,12 +169,12 @@ function NavigatorCoordsButton() {
 function HomeInfoNetworkLogo({ selectedNetwork }) {
   return (
 
-        <div className="homeinfo__network-title">
+        <div className="homeinfo__network-title homeinfo-card--full-width">
           <div className="avatar-medium--home">
             <NetworkLogo network={selectedNetwork} />
           </div>
           <h3 className="homeinfo__network-title-text">
-            {selectedNetwork.name}
+            {selectedNetwork?.name}
           </h3>
       </div>
   )
@@ -196,31 +195,22 @@ function HomeInfoInfoCard({ selectedNetwork }) {
     if (selectedNetwork)
     {
       setDescription(() => {
-        return trimCharactersRemoveLastIncompleteWord(selectedNetwork.description, 100)
+        return trimCharactersRemoveLastIncompleteWord(selectedNetwork?.description, 200)+ "..."
       })
     }
   },[])
   return (<>
   {/*  INFO CARD */}
-    <div className={(showInfo ? "homeinfo-card--opened ":" ") + " homeinfo-card homeinfo-card--network-description"}>
+    <div className={(showInfo ? "homeinfo-card--opened ":" ") + " homeinfo-card homeinfo-card--wrap"}>
         <div className="homeinfo-card__header homeinfo-card__header--openable" onClick={toggleShowInfo}>
                 <h3 className="homeinfo-card__header-title" >
-                  <ShowMobileOnly>
                     <IoBookOutline/>
-                  </ShowMobileOnly>
-                    {t('homeinfo.knowMore',[selectedNetwork.name])}
+                    {t('homeinfo.knowMore',[selectedNetwork?.name])}
                 </h3>
-                <div className="homeinfo-card__controls homeinfo-card__controls--openable">
-                  <Btn
-                    btnType={BtnType.circle}
-                    iconLink={showInfo ? <IoArrowBackSharp/> : <IoInformation/>}
-                    iconLeft={IconType.circle}
-                    contentAlignment={ContentAlignment.center}
-                  />
-                </div>
+
         </div>
         <div className="homeinfo__description homeinfo__description--openable">
-          <TextFormatted text={selectedNetwork.description} />
+          <TextFormatted text={description} />
           <HomeFAQButton/>
         </div>
     </div></>
@@ -245,11 +235,11 @@ function HomeFAQButton() {
 function HomeInfoStatsCard({ selectedNetwork, config }) {
   return (<>
     {/* STATS CARD */}
-    <div className="homeinfo-card">
+    <div className="homeinfo-card homeinfo-card--wrap">
       <div className="homeinfo-card__header">
         <h3 className="homeinfo-card__header-title">
           <IoEaselSharp/>
-          {t('homeinfo.stats', [selectedNetwork.name])}
+          {t('homeinfo.stats', [selectedNetwork?.name])}
         </h3>
         <div className="homeinfo-card__controls">
 
@@ -270,7 +260,7 @@ function HomeInfoStatsCard({ selectedNetwork, config }) {
 function HomeInfoTopHashTags({ selectedNetwork }) {
   return (<>
     {/* TOP 10 HASHTAGS CARD OF NETWORK */}
-    <div className="homeinfo-card">
+    <div className="homeinfo-card homeinfo-card--wrap">
       <div className="homeinfo-card__header">
         <h3 className="homeinfo-card__header-title">
           <IoTrophySharp/>
@@ -283,7 +273,7 @@ function HomeInfoTopHashTags({ selectedNetwork }) {
       </div>
       <div className="homeinfo__hashtags">
         <TagsNav
-          tags={selectedNetwork.topTags.map(
+          tags={selectedNetwork?.topTags.map(
             (tag) => tag.tag,
           )}
         />
@@ -299,7 +289,7 @@ function HomeInfoPinnedHashTags({ selectedNetwork }) {
 
     {selectedNetwork?.tags &&
       selectedNetwork?.tags.length > 0 && (
-        <div className="homeinfo-card">
+        <div className="homeinfo-card homeinfo-card--wrap">
           <div className="homeinfo-card__header homeinfo-card__header--openable" onClick={toggleShowInfo}>
               <h3 className="homeinfo-card__header-title">
                 <IoPulseOutline/>
@@ -346,9 +336,9 @@ function HomeInfoRecentActivity({ selectedNetwork }) {
   }, [selectedNetwork]);
   return (<>
     {/*  RECENT ACTIVITY IN THE APP */}
-      <div className={(showInfo ? "homeinfo-card--opened-right ":" ") + " homeinfo-card homeinfo-card--activity"}>
-      <div className="homeinfo-card__header homeinfo-card__header--openable" onClick={toggleShowInfo}>
-          <ShowDesktopOnly>
+      <div className= "homeinfo-card homeinfo-card--wrap">
+      <div className="homeinfo-card__header " onClick={toggleShowInfo}>
+          {/* <ShowDesktopOnly>
             <div className="homeinfo-card__controls--openable-right">
                   <Btn
                     btnType={BtnType.circle}
@@ -358,12 +348,12 @@ function HomeInfoRecentActivity({ selectedNetwork }) {
                   />
                   
             </div>
-          </ShowDesktopOnly>
+          </ShowDesktopOnly> */}
 
           <h3 className="homeinfo-card__header-title" >
-              <ShowMobileOnly>
+              {/* <ShowMobileOnly> */}
                 <IoStatsChart/> 
-              </ShowMobileOnly>
+              {/* </ShowMobileOnly> */}
               {t('homeinfo.activity')}
           </h3>
           {/* <ShowMobileOnly>
@@ -391,23 +381,23 @@ function ActivityListHomeInfo ({activities}) {
   const onActivityClicked = (activity) => {
     switch(activity.eventName){
       case ActivityEventName.NewButton:
-        store.emit(new FindAndSetMainPopupCurrentButton(activity.buttonId))
+        store.emit(new FindAndSetMainPopupCurrentButton(activity?.buttonId))
         // router.push(`/Show/${activity.buttonId}`)
         break;
       case ActivityEventName.NewPost:
-          store.emit(new SetFocusOnPost(activity.postId))
-          store.emit(new FindAndSetMainPopupCurrentButton(activity.buttonId))
+          store.emit(new SetFocusOnPost(activity?.postId))
+          store.emit(new FindAndSetMainPopupCurrentButton(activity?.buttonId))
           break;
     }
     
   }
 
-  return  <>{activities.map((activity, idx) => <ActivityListEntryCard activity={activity} onClick={() => onActivityClicked(activity)} key={idx} />)}</>
+  return  <>{activities?.map((activity, idx) => <ActivityListEntryCard activity={activity} onClick={() => onActivityClicked(activity)} key={idx} />)}</>
 }
 function HomeInfoAdministeredBy({ scrollToContact }) {
 
   return (<>
-    <div id="Admin" className="homeinfo-card" ref={scrollToContact}>
+    <div id="Admin" className="homeinfo-card homeinfo-card--wrap" ref={scrollToContact}>
       <div className="homeinfo-card__header">
         <h3 className="homeinfo-card__header-title">
           <IoHelpOutline/>
@@ -428,10 +418,10 @@ function HomeInfoAdministeredBy({ scrollToContact }) {
 function HomeSloganCard({ selectedNetwork, config }) {
   return (<>
     {/* SLOGAN CARD */}
-    <div className="homeinfo-card homeinfo__card--slogan-card">
+    <div className="homeinfo-card homeinfo__card--slogan-card homeinfo-card--full-width">
       <div className="homeinfo-card__header homeinfo-card__header--slogan-card">
         <h3 className="homeinfo-card__header-title--slogan">
-          {selectedNetwork.slogan}
+          {selectedNetwork?.slogan}
         </h3>
       </div><hr></hr>
       <HomeInfoActionButton>
@@ -443,39 +433,6 @@ function HomeSloganCard({ selectedNetwork, config }) {
 }
         
 
-function HomeInfoInstallCard({ selectedNetwork }) {
-  const hasNotificationPermissions = useGlobalStore(
-    (state: GlobalState) =>
-      state.activities.notificationsPermissionGranted,
-  );
-  const isInstallable = useGlobalStore(
-    (state: GlobalState) =>
-      state.homeInfo.isInstallable,
-  );
-  return (
-    <>
-      {(isInstallable || hasNotificationPermissions) &&
-        <div className="homeinfo-card">
-          <div className="homeinfo-card__header">
-            <h3 className="homeinfo-card__header-title">
-              <IoDownloadOutline/>
-              {t('homeinfo.install', [
-                selectedNetwork?.name,
-              ])}
-            </h3>
-
-            <div className="homeinfo-card__controls">
-
-            </div>
-          </div>
-          <hr></hr>
-          <HomeInfoActionButton>
-            <InstallButton />
-            <DesktopNotificationsButton />
-          </HomeInfoActionButton></div>
-      }</>)
-
-}
 function HomeInfoExploreButton() {
   return (
 
@@ -542,12 +499,10 @@ function HomeInfoKeyLocations({selectedNetwork}) {
     );
   }, []);
   
-  const handleClick = (place) => {
-    router.push(`/Explore/${place.zoom}/${place.latitude}/${place.longitude}/`)
-  }
+  
   return  (<>
-  {keyLocations.length > 0 && 
-    <div className="homeinfo-card">
+  {keyLocations?.length > 0 && 
+    <div className="homeinfo-card homeinfo-card--wrap">
       <div className="homeinfo-card__header">
         <h3 className="homeinfo-card__header-title">
           <IoLocateOutline/>
@@ -561,17 +516,15 @@ function HomeInfoKeyLocations({selectedNetwork}) {
       <hr></hr>
 
       <div className="homeinfo__hashtags">
-        {keyLocations.map((place, idx) => {
+        {keyLocations?.map((place, idx) => {
           return <div key={idx} className="hashtags__list-item">
+            <Link href={`/Explore/p/${place.id}`} >
             <BtnCaption
               caption={`${place.address}`}
               selected={false}
               icon={null}
               color={'black'}
-              onClick={() =>
-                handleClick(place)
-              }
-            />
+            /></Link>
           </div>
 
         })}

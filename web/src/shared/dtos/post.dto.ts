@@ -1,5 +1,6 @@
 import { MaxLength } from 'class-validator';
 import { Column } from 'typeorm';
+import { Post } from './post.entity';
 
 export class MessageDto {
   @Column({})

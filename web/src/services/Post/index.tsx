@@ -1,5 +1,5 @@
 import { Observable } from "rxjs";
-import { httpService } from "services/HttpService";
+import { HttpService, httpService } from "services/HttpService";
 import { MessageDto } from "shared/dtos/post.dto";
 import { PrivacyType } from "shared/types/privacy.enum";
 
@@ -9,7 +9,8 @@ export class PostService {
     buttonId: string,
     data: MessageDto,
   ): Observable<any> {
-    return httpService.post("post/new/" + buttonId, data);
+    const formData = HttpService.toFormData(data, ['images']);
+    return httpService.post("post/new/" + buttonId, formData);
   }
 
   public static findByButtonId(
@@ -20,19 +21,19 @@ export class PostService {
   
   public static newComment(
     postId: string,
-    privacy: PrivacyType,
     data: MessageDto,
   ): Observable<any> {
-    return httpService.post(`post/new/comment/${privacy}/${postId}`, data);
+    const formData = HttpService.toFormData(data, ['images']);
+    return httpService.post(`post/new/comment/${postId}`, formData);
   }
 
   public static newCommentReply(
     postId: string,
     commentId: string,
-    privacy: PrivacyType,
     data: MessageDto,
   ): Observable<any> {
-    return httpService.post(`post/new/comment/${privacy}/${postId}/${commentId}`, data);
+    const formData = HttpService.toFormData(data, ['images']);
+    return httpService.post(`post/new/comment/${postId}/${commentId}`, formData);
   }
 
   public static delete(
