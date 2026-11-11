@@ -828,5 +828,8 @@
     "willExpire": "Expires ",
     "renewed": "Renewed",
     "eventExpiredMailSubject": "{0} expired"
+  },
+  "admin": {
+    "newUser": "New user signed-up"
   }
 }
