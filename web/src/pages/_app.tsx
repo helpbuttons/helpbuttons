@@ -91,6 +91,7 @@ function MyApp({ Component, pageProps }) {
       sessionUser &&
       config &&
       config.userCount > 0 &&
+      fetchingNetworkError &&
       path != SetupSteps.FIRST_OPEN &&
       path != SetupSteps.NETWORK_CREATION
     ) {
@@ -225,42 +226,10 @@ function MyApp({ Component, pageProps }) {
     }
   }, [pageProps])
 
-  return <>
-    <MetadataSEO {...pageProps.metadata} isSetup={config?.userCount > 0} nonce={nonce} />
-    {(function () {
-      if(!config || sessionUser === null){
-        return <Loading/>
-      }else if (isSetup) {
-        return <><Component {...pageProps} /><SetupMainPopup/></>;
-      } else if (pageName == 'Embbed') {
-        return (
-          <Component {...pageProps} />
-        );
-      }else if(config?.userCount < 1){
-        return <>...</>
-      } else{
-        return (
-          <>
-            <MetadataSEOFromStore nonce={nonce} />
-            <ActivityPool sessionUser={sessionUser} />
-            <Home pageProps={pageProps} sessionUser={sessionUser}>
-              {authorized && <Component {...pageProps} />}
-              {!authorized && <><Loading /></>}
-            </Home>
-          </>
-        );
-      }
-
-    }).call(this)}
-  </>
-}
-
-export const Home = ({pageProps, sessionUser, children}) => {
-  const [fetchingNetworkError, setFetchingNetworkError] = useState(false)
-
   const onFetchingNetworkError = (error) => {
+    console.log(JSON.stringify(selectedNetwork))
     if (error == 'network-not-found') {      
-      // router.push(SetupSteps.CREATE_ADMIN_FORM);
+      console.log('network not found?')
       setFetchingNetworkError(() => true)
     }else if (error == 'nobackend') {
       alertService.error(
@@ -268,7 +237,6 @@ export const Home = ({pageProps, sessionUser, children}) => {
       );
       setFetchingNetworkError(() => true)
     }else{
-      console.log(error);
       alertService.error(
         `Unkown error, is the backend running?`,
       );
@@ -277,6 +245,45 @@ export const Home = ({pageProps, sessionUser, children}) => {
   };
 
   const selectedNetwork = useSelectedNetwork(pageProps._selectedNetwork, onFetchingNetworkError);
+  const [fetchingNetworkError, setFetchingNetworkError] = useState(false)
+
+  return <>
+    <MetadataSEO {...pageProps.metadata} nonce={nonce} />
+    {(function () {
+      if(!config && sessionUser === null){
+        return <Loading/>
+      }else if (isSetup) {
+        return <><Component {...pageProps} /><SetupMainPopup/></>;
+      } else if (pageName == 'Embbed') {
+        return (
+          <Component {...pageProps} />
+        );
+      }else if(config?.userCount < 1){
+        return <Loading/>
+      }else if(fetchingNetworkError){
+        return <ErrorPopup errorTitle={'Fatal error'} errorMessage={'Fetching network from api: failed'}/>
+      } else{
+        return (
+          <>
+            <MetadataSEOFromStore nonce={nonce} />
+            <ActivityPool sessionUser={sessionUser} />
+            {!(selectedNetwork?.initialized == false) &&
+              <Home pageProps={pageProps} sessionUser={sessionUser} selectedNetwork={selectedNetwork}>
+                 {authorized && <Component {...pageProps} />} */}
+                 {!authorized && <><Loading /></>}
+              </Home>
+            }
+          </>
+        );
+      }
+
+    }).call(this)}
+  </>
+}
+
+export const Home = ({pageProps, sessionUser, selectedNetwork, children}) => {
+
+
   // const selectedNetwork = null;
   const router = useRouter();
   const path = router.asPath.split('?')[0];
@@ -294,13 +301,7 @@ export const Home = ({pageProps, sessionUser, children}) => {
       router.push('/')
     }
   }, [selectedNetwork]);
-  
-  if(!fetchingNetworkError){
-    return <ErrorPopup errorTitle={'Fatal error'} errorMessage={'Fetching network from api: failed'}/>
-  }
-  if(!selectedNetwork?.initialized){
-    return <Loading/>
-  }
+
   return (<div
               className="index__container"
               style={

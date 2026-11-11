@@ -146,7 +146,12 @@ export class FetchUserData implements WatchEvent {
                     }
                 }),
                 map((userData) => store.emit(new SetCurrentUser(userData))),
-                catchError((error) => { store.emit(new SetCurrentUser(null)); return handleError(this.onError, error) })
+                catchError((error) => {
+                    store.emit(new SetCurrentUser(null));
+                    console.log('deleting access token')
+                    localStorageService.remove(LocalStorageVars.ACCESS_TOKEN)
+                    return handleError(this.onError, error) 
+                })
             );
         }
         return of(undefined)

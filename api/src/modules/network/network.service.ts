@@ -302,6 +302,10 @@ export class NetworkService {
   }
 
   async getLogo(res, resolution: number) {
+    const userCount = await this.userService.userCount()
+    if(userCount < 1){
+      return ;
+    }
     return await this.findDefaultNetwork().then(async (network) => {
       const fs = require('fs');
       const logo = network.logo.replace('/files/get/', '');

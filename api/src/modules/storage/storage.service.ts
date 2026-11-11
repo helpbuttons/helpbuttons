@@ -25,7 +25,7 @@ import {
   getFileExtension,
   parseSizeToBytes,
 } from '@src/shared/types/files';
-import * as sharp from 'sharp';
+import sharp from 'sharp';
 import * as fs from 'fs';
 import * as path from 'path';
 import { CustomHttpException } from '@src/shared/middlewares/errors/custom-http-exception.middleware';

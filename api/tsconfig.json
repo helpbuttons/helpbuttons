@@ -2,6 +2,7 @@
   "include": ["src/**/*", "src/**/*.json", "prisma/**/*.json"],
   "compilerOptions": {
     "module": "commonjs",
+    "esModuleInterop": true,
     "declaration": true,
     "removeComments": true,
     "emitDecoratorMetadata": true,

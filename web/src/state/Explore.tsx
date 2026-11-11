@@ -547,9 +547,8 @@ export class UpdateExploreSettings implements UpdateEvent {
   ) { }
 
   public update(state: GlobalState) {
-
     return produce(state, (newState) => {
-      const newSettings = { ...state.explore.settings, ...this.newExploreSettings }
+      const newSettings = { ...state.explore.settings, ...this.newExploreSettings, loading: false }
       const prevSettings = state.explore.settings;
       if (prevSettings.center != null && JSON.stringify(prevSettings.center) != JSON.stringify(this.newExploreSettings.center)) {
         newState.explore.map.showInstructions = false;

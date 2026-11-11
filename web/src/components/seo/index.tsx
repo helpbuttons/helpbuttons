@@ -4,6 +4,7 @@ import Head from 'next/head';
 import { GlobalState } from 'state';
 import { useGlobalStore } from 'state';
 import { getApiUrl } from 'shared/environment';
+import { useNetworkIsReady } from 'state/Networks';
 
 export default function MetadataSEOFromStore({nonce}) {
   const metadataStore = useGlobalStore(
@@ -15,6 +16,7 @@ export default function MetadataSEOFromStore({nonce}) {
   );
 }
 export function MetadataSEO(props) {
+  const isNetworkReady = useNetworkIsReady()
 
   const {
     title,
@@ -25,15 +27,10 @@ export function MetadataSEO(props) {
     color,
     nonce,
     webUrl = getApiUrl(),
-    isSetup = false
   } =  props;
 
   const url = getApiUrl()
   const csp = `object-src 'none'; base-uri 'none'; script-src 'self' 'unsafe-eval' 'unsafe-inline' https: http: 'nonce-${nonce}' 'strict-dynamic'`
-
-  if(isSetup){
-    return <></>
-  }
   return (
       // <Head nonce={nonce}>
         <Head>
@@ -58,32 +55,37 @@ export function MetadataSEO(props) {
         <meta property="og:description" content={description} />
         <meta property="og:site_name" content={siteTitle} />
 
-        <link
-          rel="icon"
-          type="image/png"
-          sizes="32x32"
-          href={`${url}/networks/logo/32`}
-        />
-        <link
-          rel="icon"
-          type="image/png"
-          sizes="16x16"
-          href={`${url}/networks/logo/16`}
-        />
-        <link rel="manifest" href={`${webUrl}/manifest.json`} />
-        <link
-          rel="mask-icon"
-          href={`${url}/networks/logo/32`}
-          color={color}
-        />
+        {isNetworkReady && 
+        <>
+          <link
+            rel="icon"
+            type="image/png"
+            sizes="32x32"
+            href={`${url}/networks/logo/32`}
+          />
+          <link
+            rel="icon"
+            type="image/png"
+            sizes="16x16"
+            href={`${url}/networks/logo/16`}
+          />
+          <link rel="manifest" href={`${webUrl}/manifest.json`} />
+          <link
+            rel="mask-icon"
+            href={`${url}/networks/logo/32`}
+            color={color}
+          />
+          <link
+            rel="apple-touch-icon"
+            sizes="180x180"
+            href={`${url}/networks/logo/180`}
+          />
+        </>
+        }
         <meta name="msapplication-TileColor" content={color} />
         <meta name="theme-color" content={color} />
 
-        <link
-          rel="apple-touch-icon"
-          sizes="180x180"
-          href={`${url}/networks/logo/180`}
-        />
+        
       </Head>
 
   );

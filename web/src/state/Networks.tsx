@@ -1,7 +1,7 @@
 import { catchError, map } from 'rxjs/operators';
 import { produce } from 'immer';
 
-import { WatchEvent, UpdateEvent, EffectEvent } from 'store/Event';
+import { WatchEvent, UpdateEvent } from 'store/Event';
 
 
 import { NetworkService } from 'services/Networks';
@@ -20,6 +20,7 @@ import { Role } from 'shared/types/roles';
 import { CustomFields } from 'shared/types/customFields.type';
 import { getBgcolor, isStaticApp } from 'shared/environment';
 import { require_try } from 'shared/static.utils';
+import { useConfigIsReady } from './Setup';
 
 export interface NetworksState {
   // networks: Network[];
@@ -35,8 +36,8 @@ export const networksInitial = {
     topTags: [],
     backgroundColor: getBgcolor(),
     textColor: 'black',
+    initialized: false,
   },
-  initialized: false,
 };
 
 
@@ -44,7 +45,11 @@ export const useSelectedNetwork = (_selectedNetwork = null, onError = (err) => {
   const selectedNetwork = useGlobalStore((state: GlobalState) => state.networks.selectedNetwork);
   const initialized = useGlobalStore((state: GlobalState) => state.networks.initialized);
   const fetching = useRef(false)
+  const configIsReady = useConfigIsReady();
   useEffect(() => {
+    if(!configIsReady){
+      return;
+    }
     if (!initialized && !fetching.current) {
       if(isStaticApp() && !(selectedNetwork?.id)){
         const staticAppCompiledNetwork = require_try('../../network.json')
@@ -66,11 +71,25 @@ export const useSelectedNetwork = (_selectedNetwork = null, onError = (err) => {
 
       }
     }
-  }, [initialized])
+  }, [initialized, configIsReady])
 
   return selectedNetwork;
 }
 
+export const useNetworkIsReady = () => {
+  const selectedNetwork = useGlobalStore((state: GlobalState) => state.networks.selectedNetwork);
+
+  const [isReady, setIsReady] = useState(false)
+  useEffect(() => {
+    if(selectedNetwork?.initialized == false){
+      setIsReady(() => false)
+      return;
+    }
+    
+    setIsReady(() => true)
+  }, [selectedNetwork])
+  return isReady
+}
 
 export const useNetworkCenter = () => {
   const selectedNetwork = useSelectedNetwork();

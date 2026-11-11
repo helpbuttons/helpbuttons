@@ -12,7 +12,7 @@ import { HttpStatus } from 'shared/types/http-status.enum';
 import { UpdateEvent, WatchEvent } from 'store/Event';
 import { FetchUserData, SessionUserLogout } from './Profile';
 import { alertService } from 'services/Alert';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useStore } from 'state';
 import dconsole from 'shared/debugger';
 import { isStaticApp } from 'shared/environment';
@@ -248,3 +248,18 @@ export class setConfig implements UpdateEvent {
     });
   }
 }
+export const useConfigIsReady = () => {
+  const config = useGlobalStore((state: GlobalState) => state.config);
+  const [isReady, setIsReady] = useState(false)
+  useEffect(() => {
+    if(!config || parseInt(config?.userCount) < 1){
+      setIsReady(() => false)
+      return;
+    }
+    
+    setIsReady(() => true)
+  }, [config])
+  return isReady
+}
+
+
