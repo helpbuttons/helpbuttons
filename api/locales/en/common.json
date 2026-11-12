@@ -236,7 +236,8 @@
     "replyToMessage": "Reply to message",
     "view": "View",
     "newpostfollower": "A new post was published in a _helpbutton_ you follow",
-    "newEndorsedMessageSubject": "A new message from your network coordinator"
+    "newEndorsedMessageSubject": "A new message from your network coordinator",
+    "newUser": "New user signed-up"
   },
   "common": {
     "notfound": "No {0} found. 🤔",
@@ -828,8 +829,5 @@
     "willExpire": "Expires ",
     "renewed": "Renewed",
     "eventExpiredMailSubject": "{0} expired"
-  },
-  "admin": {
-    "newUser": "New user signed-up"
   }
 }
