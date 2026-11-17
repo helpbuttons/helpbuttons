@@ -1,7 +1,9 @@
 import {
+  Inject,
   MiddlewareConsumer,
   Module,
   NestModule,
+  RequestMethod,
 } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { MulterModule } from '@nestjs/platform-express';
@@ -32,6 +34,11 @@ import { CommandModule } from 'nestjs-command';
 import { ButtonCron } from '@src/modules/button/button.cron';
 import { SetupModule } from '@src/modules/setup/setup.module';
 import { DeletemeModule } from '@src/modules/deleteme/deleteme.module';
+import { FEDIFY_FEDERATION, FedifyModule, integrateFederation } from '@fedify/nestjs';
+import { Federation, InProcessMessageQueue, MemoryKvStore } from '@fedify/fedify';
+import * as express from 'express';
+import { FederationModule } from '@src/modules/federation/federation.module';
+
 import { PushNotifcationModule } from '@src/modules/push-notification/push-notification.module';
 @Module({
   imports: [
@@ -72,6 +79,12 @@ import { PushNotifcationModule } from '@src/modules/push-notification/push-notif
         backoff: 1000*10,
       }
     }),
+    FedifyModule.forRoot({
+      kv: new MemoryKvStore(),
+      queue: new InProcessMessageQueue(),
+      origin: process.env.WEB_URL,
+    }),
+    FederationModule,
     SetupModule,
     DeletemeModule,
     PushNotifcationModule
@@ -83,8 +96,26 @@ import { PushNotifcationModule } from '@src/modules/push-notification/push-notif
   ],
 })
 export class AppModule implements NestModule {
+  constructor(
+    @Inject(FEDIFY_FEDERATION) private federation: Federation<unknown>,
+  ) { }
+  
   configure(consumer: MiddlewareConsumer): void {
+    const fedifyMiddleware = integrateFederation(
+      this.federation,
+      async (req, res) => {
+        return {
+          request: req,
+          response: res,
+          url: new URL(req.url, process.env.WEB_URL ),
+        };
+      },
+    );
+    
+    consumer.apply(
+      express.raw({ type: '*/*' }),
+      fedifyMiddleware,
+    ).forRoutes({ path: '*', method: RequestMethod.ALL})
     consumer.apply(AppLogger).forRoutes('*');
   }
 }
-

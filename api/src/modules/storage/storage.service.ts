@@ -404,5 +404,9 @@ export class StorageService {
     this.logger.error(`'${path}' image not found`)
     return null;
   }
+
+  async findFileType(imgpath){
+    return await this.imageFilesRepository.findOne({where: {name: imgpath}}).then((image) => image.mimetype)
+  }
 }
 

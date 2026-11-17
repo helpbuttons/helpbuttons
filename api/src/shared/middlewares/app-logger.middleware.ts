@@ -22,8 +22,8 @@ export class AppLogger implements NestMiddleware {
 
       const [seconds, nanoseconds] = process.hrtime(startTime);
       const durationInMs = seconds * 1000 + nanoseconds / 1e6;
-
-      const message = `${method} ${request.url} ${statusCode} ${contentLength}B - ${userAgent} ${ip} took ${durationInMs.toFixed(3)} ms`;
+      
+      const message = `${method} ${request.headers?.accept} ${request.url} ${statusCode} ${contentLength}B - ${userAgent} ${ip} took ${durationInMs.toFixed(3)} ms`;
       if (statusCode < 200 || statusCode > 299) {
         this.logger.log(`\x1b[31m${message}\x1b[0m`);
       } else {

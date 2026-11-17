@@ -143,6 +143,21 @@ export class ButtonService {
       awaitingApproval,
       isCustomAddress: createDto.isCustomAddress
     };
+      if (Array.isArray(button.tags)) {
+        await this.tagService
+          .addTags('button', button.id, button.tags)
+          .catch((err) => {
+            console.log(
+              `Error adding tags ${JSON.stringify(
+                button.tags,
+              )} to button ${button.id}`,
+            );
+            throw new HttpException(
+              { message: err.message },
+              HttpStatus.BAD_REQUEST,
+            );
+          });
+      }
 
     if (Array.isArray(button.tags)) {
       await this.tagService
