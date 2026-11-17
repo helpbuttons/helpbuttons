@@ -55,6 +55,8 @@ import { CustomFields } from 'shared/types/customFields.type';
 import { UpdateButtonList } from 'state/Button';
 import Loading from 'components/loading';
 import { hideAddressResolution } from 'shared/types/honeycomb.const';
+import { findVisibleProvincesHexes, provincesH3GeoJson, provincesMaxZoom } from 'components/map/Map/Provinces.consts';
+import { hexesProvincesMaxResolution } from 'shared/provinces.consts.cjs';
 
 
 function HoneyComb({ selectedNetwork }) {
@@ -319,7 +321,10 @@ function useHexagonMap({
 
   const foundTags = React.useRef([]);
   const [h3TypeDensityHexes, seth3TypeDensityHexes] = useState([]);
+  const [buttonsPerProvince, setButtonsPerProvince] = useState([]);
+
   let cachedH3Hexes = React.useRef(cachedHexagons);
+  const allProvincesHexes = _.flatten(provincesH3GeoJson.map((provi) => provi.hexes))
   useEffect(() => {
     if (cachedHexagons.length < 1 && exploreSettings.bounds) {
       cachedH3Hexes.current = [];
@@ -418,6 +423,39 @@ function useHexagonMap({
       debounceHexagonsToFetch.hexagons, // TODO: understand why cant get hexagons from hexgonsToFetch.. and only works from debounce ? 
     );
 
+    if(exploreSettings.zoom < provincesMaxZoom){
+      const provincesHexesOnBounds = findVisibleProvincesHexes(debounceHexagonsToFetch.hexagons, allProvincesHexes, hexesProvincesMaxResolution)
+      
+      const preparingLookupButtons = calculateDensityMap(
+        orderedFilteredButtons.filter((_btn) => _btn?.hideMap == false),
+        hexesProvincesMaxResolution,
+        provincesHexesOnBounds,
+      )
+      // .filter((hex) => hex.count > 0);
+
+      const provincesWithButtons = provincesH3GeoJson.map((_province) => {
+        const buttons = preparingLookupButtons.filter((_hex) => {
+          if(_province.hexes.indexOf(_hex.hexagon) > -1){            
+            return true;
+          }
+          return false;
+        })
+
+        const grouped = _(buttons)
+          .flatMap('groupByType')
+          .groupBy('type')
+          .map((items, type) => ({ type, count: _.sumBy(items, 'count') }))
+          .value();
+        const count = grouped.reduce(
+          (accumulator, currentValue) => accumulator + currentValue.count,
+          0)
+        return {..._province, buttons: buttons,grouped, count }
+      })
+      
+      setButtonsPerProvince(() => provincesWithButtons)
+    }else{
+      setButtonsPerProvince(() => [])
+    }
     seth3TypeDensityHexes(() => {
       return filteredHexagons;
     });
@@ -433,13 +471,30 @@ function useHexagonMap({
                     return button.type == hexagonClickedtype
                 }
                 return true;
-              })
-              ;
+              });
       }
       const hexagonButtonList = applyHexagonFilter(orderedFilteredButtons, hexagonClicked, filters.hexClickedBtnType, hexagonsToFetch.resolution)
       store.emit(new UpdateButtonList(hexagonButtonList))
       return;
     }
+
+    if(filters.provinceClicked){
+      const applyProvinceFilter = (filteredButtons, provinceClicked, hexagonClickedtype, resolutionRequested) => {
+        const hexagonsProvince = buttonsPerProvince.find((_p) => _p.code == provinceClicked)?.buttons;
+        const buttonsProvince = hexagonsProvince?.reduce((acc, current) => [...acc, ...current.buttons], [])
+        
+        return buttonsProvince?.filter((button) => {
+          if(filters.provinceBtnTypeClicked){
+              return button.type == filters.provinceBtnTypeClicked
+          }
+          return true;
+        });
+      }
+      const hexagonButtonList = applyProvinceFilter(orderedFilteredButtons, filters.provinceClicked, filters.hexClickedBtnType, hexagonsToFetch.resolution)
+      store.emit(new UpdateButtonList(hexagonButtonList))
+      return;
+    }
+
 
     store.emit(new UpdateButtonList(orderedFilteredButtons))
   }, [filters, hexagonClicked, boundsButtons])
@@ -477,6 +532,8 @@ function useHexagonMap({
     handleBoundsChange,
     setHexagonsToFetch,
     h3TypeDensityHexes,
+    boundsHexagons: debounceHexagonsToFetch.hexagons,
+    buttonsPerProvince
   };
 }
 
@@ -573,7 +630,7 @@ function ExploreHexagonMap({toggleShowLeftColumn, exploreSettings, selectedNetwo
   const [countFilteredButtons, setCountFilteredButtons] = useState(0)
 
   const boundsFilteredButtons = exploreMapState.boundsFilteredButtons
-  const { handleBoundsChange, h3TypeDensityHexes } = useHexagonMap({
+  const { handleBoundsChange, h3TypeDensityHexes, boundsHexagons, buttonsPerProvince } = useHexagonMap({
     toggleShowLeftColumn,
     exploreSettings,
     filters: exploreMapState.filters,
@@ -611,5 +668,7 @@ function ExploreHexagonMap({toggleShowLeftColumn, exploreSettings, selectedNetwo
             selectedNetwork={selectedNetwork}
             countFilteredButtons={countFilteredButtons}
             keyLocations={keyLocations}
+            boundsHexagons={boundsHexagons}
+            buttonsPerProvince={buttonsPerProvince}
           />)
   }

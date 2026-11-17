@@ -17,6 +17,8 @@ export interface ButtonFilters {
     days: number;
     hexClicked: string;
     hexClickedBtnType: string;
+    provinceClicked: string;
+    provinceBtnTypeClicked: string;
   }
   
   export const defaultFilters: ButtonFilters = {
@@ -27,7 +29,9 @@ export interface ButtonFilters {
     tags: [],
     days: defaultDaysForBulletin,
     hexClicked: null,
-    hexClickedBtnType: null
+    hexClickedBtnType: null,
+    provinceClicked: null,
+    provinceBtnTypeClicked: null
   };
   
   const applyButtonTypesFilter = (button, buttonTypes) => {
