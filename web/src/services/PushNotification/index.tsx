@@ -18,5 +18,6 @@ export class PushNotificationService {
 }
 
 export const browserAllowsNotifications = () => {
-  return Notification.permission === 'granted';
+  return;
+  // return Notification.permission === 'granted';
 }
