@@ -244,7 +244,19 @@ export default function ProfileEdit() {
                     defaultValue={sessionUser.receiveNotifications}
                     text={t('user.textReceiveNotifications')}
                     onChanged={(value) => {setValue('receiveNotifications', value)}}
-                  />     
+                  /> 
+
+                  <FieldCheckbox
+                    label={t('user.receivePushNotifications')}
+                    explain={t('user.receivePushNotificationsExplain')}                                 
+                    name='receivePushNotifications'
+                    defaultValue={sessionUser.receivePushNotifications}
+                    text={t('user.textReceivePushNotifications')}
+                    onChanged={(value) => {setValue('receivePushNotifications', value)}}
+                  />   
+                  {/* Chnage this component so it uses styles */}
+                  <DesktopNotificationsButton allowedToNotify={notificationsPermissionGranted}/>
+  
                   <LocationSearchBarSimple 
                     placeholder={t('user.location')}
                     markerAddress={sessionUser.address}
@@ -266,7 +278,6 @@ export default function ProfileEdit() {
                   tags={watch('tags')}
                   maxTags={10}
                 />
-                <DesktopNotificationsButton allowedToNotify={notificationsPermissionGranted}/>
                 </Accordion>
 
 
