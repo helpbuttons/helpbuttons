@@ -346,7 +346,8 @@
     "pickPosition": "Please pick a position on the map",
     "expired": "_helpbutton_ expired, it won't show on search results.",
     "statusLabel": "Status",
-    "awaitApproval": "A _helpbutton_ is awaiting approval"
+    "awaitApproval": "A _helpbutton_ is awaiting approval",
+    "errorAddressFetch": "Problem fetching address"
   },
   "user": {
     "login": "Write your credentials",
