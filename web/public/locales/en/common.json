@@ -53,7 +53,8 @@
     "powered": "2026 - Powered by",
     "keyLocations": "Key Spots",
     "inviteToNetwork": "Share",
-    "inviteCopied": "Link copied to clipboard"
+    "inviteCopied": "Link copied to clipboard",
+    "unsubscribePush": "Disallow notifications"
   },
   "share": {
     "header": "Share this app",
@@ -236,7 +237,8 @@
     "replyToMessage": "Reply to message",
     "view": "View",
     "newpostfollower": "A new post was published in a _helpbutton_ you follow",
-    "newEndorsedMessageSubject": "A new message from your network coordinator"
+    "newEndorsedMessageSubject": "A new message from your network coordinator",
+    "newUser": "New user signed-up"
   },
   "common": {
     "notfound": "No {0} found. 🤔",
@@ -344,7 +346,8 @@
     "pickPosition": "Please pick a position on the map",
     "expired": "_helpbutton_ expired, it won't show on search results.",
     "statusLabel": "Status",
-    "awaitApproval": "A _helpbutton_ is awaiting approval"
+    "awaitApproval": "A _helpbutton_ is awaiting approval",
+    "errorAddressFetch": "Problem fetching address"
   },
   "user": {
     "login": "Write your credentials",
@@ -828,8 +831,5 @@
     "willExpire": "Expires ",
     "renewed": "Renewed",
     "eventExpiredMailSubject": "{0} expired"
-  },
-  "admin": {
-    "newUser": "New user signed-up"
   }
 }

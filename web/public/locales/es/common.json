@@ -56,7 +56,8 @@
     "inviteCopied": "Enlace copiado al portapapeles",
     "keyLocations": "Lugares Clave",
     "knowMore": "Sobre {0}",
-    "print": "Imprimir actividad"
+    "print": "Imprimir actividad",
+    "unsubscribePush": "No permitir notificaciones"
   },
   "share": {
     "showSharePopup": "Comparte esta aplicación",
@@ -289,7 +290,8 @@
     "replyToMessage": "Responder al mensaje",
     "view": "Ver",
     "newpostfollower": "Se publicó una nueva entrada en _helpbutton_ que sigues",
-    "newEndorsedMessageSubject": "Nuevo mensaje de coordinación de la Red"
+    "newEndorsedMessageSubject": "Nuevo mensaje de coordinación de la Red",
+    "newUser": "Nuevo usuario/a registrado"
   },
   "activitiesWithSubject": {
     "newbutton": "{0} creó _helpbutton_ en {1}",

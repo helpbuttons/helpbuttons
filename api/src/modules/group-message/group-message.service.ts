@@ -162,7 +162,7 @@ export class GroupMessageService {
                     message = translate(user.locale, `button.tomorrowEvent`)
                     break;
                 case GroupActivityEventName.NewUser:
-                        message = translate(user.locale, `admin.newUser`)
+                        message = translate(user.locale, `activities.newUser`)
                         break;
                 default:
                     this.logger.error(`pls define group event name ${groupMessage.eventName}`)

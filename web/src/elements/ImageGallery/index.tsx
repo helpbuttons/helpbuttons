@@ -19,6 +19,7 @@ export function ImageGallery({ images }) {
     
     // const [selectedImage, setSelectedImage] = useState(null)
     const [showSingleImage, setShowSingleImage] = useState(false)
+    const [isComment, setIsComment] = useState(false)
 
     const touchStartX = useRef<number>(0);
     const touchEndX = useRef<number>(0);
@@ -81,7 +82,7 @@ export function ImageGallery({ images }) {
     };
 
     return (
-      <div className="card-button__image-gallery">
+      <div className={""+ isComment?("card-button__comment-image-gallery"):("card-button__comment-image-gallery")}>
       {showSingleImage && 
           <div className="card-button__gallery-zoom"
             onTouchStart={handleTouchStart}

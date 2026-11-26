@@ -48,9 +48,11 @@ export function HomeInfoInstallCard({ selectedNetwork }) {
         </h3>
         </div>
         <div className="homeinfo__description">
-          <PWADebug/>
-          {!isInstalled && <InstallButton setIsInstalled={setIsInstalled} isInstalled={isInstalled}/>}
-          {sessionUser && <DesktopNotificationsButton allowedToNotify={notificationsPermissionGranted}/>}
+          <div className=" homeinfo-card__action-bottom">
+            <PWADebug/>
+            {!isInstalled && <InstallButton setIsInstalled={setIsInstalled} isInstalled={isInstalled}/>}
+            {sessionUser && <DesktopNotificationsButton allowedToNotify={notificationsPermissionGranted}/>}
+          </div>
         </div>
     </div>
   )
