@@ -1,4 +1,5 @@
 import Btn, { BtnType, ContentAlignment, IconType } from 'elements/Btn';
+import { FieldCheckbox } from 'elements/Fields/FieldCheckbox';
 import t from 'i18n';
 import {  store } from 'state';
 import {  useEffect, useState } from 'react';
@@ -27,7 +28,7 @@ function urlBase64ToUint8Array(base64String: string) {
   return outputArray
 }
 
-export function DesktopNotificationsButton({ allowedToNotify }) {
+export function DesktopNotificationsButton({ allowedToNotify, isProfile=false }) {
   const config = useConfig(null, () => console.log('error fetching config'));
   const [vapidPublicKey, setVapidPublicKey] = useState(null)
   useEffect(() => {
@@ -44,17 +45,18 @@ export function DesktopNotificationsButton({ allowedToNotify }) {
   const requestPermission = (vapidPublicKey) => {
 
     if (isSupported()) {
-      Notification.requestPermission().then(function (getperm) {
-        if (getperm == 'granted') {
-          if(vapidPublicKey){
-            subscribeToPush(vapidPublicKey)
-          }else{
-            console.error('empty vapid public key')
-          }
-        } else {
-          unsubscribeFromPush()
-        }
-      });
+      console.log("notif")
+      // Notification.requestPermission().then(function (getperm) {
+      //   if (getperm == 'granted') {
+      //     if(vapidPublicKey){
+      //       subscribeToPush(vapidPublicKey)
+      //     }else{
+      //       console.error('empty vapid public key')
+      //     }
+      //   } else {
+      //     unsubscribeFromPush()
+      //   }
+      // });
     }
   };
 
@@ -76,7 +78,18 @@ export function DesktopNotificationsButton({ allowedToNotify }) {
   }
   return (
     <>
-      {!notificationsPermissionGranted ? (
+      {isProfile ? (
+        <FieldCheckbox
+          label={t('user.receivePushNotifications')}
+          explain={t('user.receivePushNotificationsExplain')}
+          name='receivePushNotifications'
+          defaultValue={notificationsPermissionGranted}
+          text={t('user.textReceivePushNotifications')}
+          onChanged={(value) =>
+            value ? requestPermission(vapidPublicKey) : unsubscribeFromPush()
+          }
+        />
+      ) : !notificationsPermissionGranted ? (
         <Btn
           btnType={BtnType.filterCorp}
           iconLink={<IoNotificationsOutline />}
@@ -85,7 +98,7 @@ export function DesktopNotificationsButton({ allowedToNotify }) {
           contentAlignment={ContentAlignment.center}
           onClick={() => requestPermission(vapidPublicKey)}
         />
-      ) :
+      ) : (
         <Btn
           btnType={BtnType.filterCorp}
           iconLink={<IoNotificationsOutline />}
@@ -94,7 +107,7 @@ export function DesktopNotificationsButton({ allowedToNotify }) {
           contentAlignment={ContentAlignment.center}
           onClick={unsubscribeFromPush}
         />
-      }
+      )}
     </>
   );
 }
